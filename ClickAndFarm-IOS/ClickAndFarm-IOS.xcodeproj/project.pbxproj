@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		0413D82D20F8AEAE00BC4F05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D82C20F8AEAE00BC4F05 /* AppDelegate.swift */; };
 		0413D82F20F8AEAE00BC4F05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D82E20F8AEAE00BC4F05 /* ViewController.swift */; };
-		0413D83220F8AEAE00BC4F05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0413D83020F8AEAE00BC4F05 /* Main.storyboard */; };
-		0413D83420F8AEB100BC4F05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0413D83320F8AEB100BC4F05 /* Assets.xcassets */; };
-		0413D83720F8AEB100BC4F05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0413D83520F8AEB100BC4F05 /* LaunchScreen.storyboard */; };
 		0413D84220F8AEB100BC4F05 /* ClickAndFarm_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D84120F8AEB100BC4F05 /* ClickAndFarm_IOSTests.swift */; };
 		0413D84D20F8AEB100BC4F05 /* ClickAndFarm_IOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D84C20F8AEB100BC4F05 /* ClickAndFarm_IOSUITests.swift */; };
+		6B1933A220FE2B8B0050DB87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B19339B20FE2B8A0050DB87 /* Main.storyboard */; };
+		6B1933A320FE2B8B0050DB87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B19339C20FE2B8A0050DB87 /* Assets.xcassets */; };
+		6B1933A420FE2B8B0050DB87 /* InterventionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19339D20FE2B8A0050DB87 /* InterventionTableViewCell.swift */; };
+		6B1933A620FE2B8B0050DB87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B19339F20FE2B8A0050DB87 /* LaunchScreen.storyboard */; };
+		6B1933A720FE2B8B0050DB87 /* Intervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1933A020FE2B8B0050DB87 /* Intervention.swift */; };
+		6B1933A820FE2B8B0050DB87 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1933A120FE2B8B0050DB87 /* InterventionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +40,6 @@
 		0413D82920F8AEAE00BC4F05 /* ClickAndFarm-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ClickAndFarm-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0413D82C20F8AEAE00BC4F05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0413D82E20F8AEAE00BC4F05 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		0413D83120F8AEAE00BC4F05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0413D83320F8AEB100BC4F05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0413D83620F8AEB100BC4F05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0413D83820F8AEB100BC4F05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0413D83D20F8AEB100BC4F05 /* ClickAndFarm-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ClickAndFarm-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0413D84120F8AEB100BC4F05 /* ClickAndFarm_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickAndFarm_IOSTests.swift; sourceTree = "<group>"; };
@@ -47,6 +47,12 @@
 		0413D84820F8AEB100BC4F05 /* ClickAndFarm-IOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ClickAndFarm-IOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0413D84C20F8AEB100BC4F05 /* ClickAndFarm_IOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickAndFarm_IOSUITests.swift; sourceTree = "<group>"; };
 		0413D84E20F8AEB100BC4F05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B19339B20FE2B8A0050DB87 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		6B19339C20FE2B8A0050DB87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6B19339D20FE2B8A0050DB87 /* InterventionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionTableViewCell.swift; sourceTree = "<group>"; };
+		6B19339F20FE2B8A0050DB87 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6B1933A020FE2B8B0050DB87 /* Intervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intervention.swift; sourceTree = "<group>"; };
+		6B1933A120FE2B8B0050DB87 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +108,12 @@
 			children = (
 				0413D82C20F8AEAE00BC4F05 /* AppDelegate.swift */,
 				0413D82E20F8AEAE00BC4F05 /* ViewController.swift */,
-				0413D83020F8AEAE00BC4F05 /* Main.storyboard */,
-				0413D83320F8AEB100BC4F05 /* Assets.xcassets */,
-				0413D83520F8AEB100BC4F05 /* LaunchScreen.storyboard */,
+				6B1933A020FE2B8B0050DB87 /* Intervention.swift */,
+				6B19339D20FE2B8A0050DB87 /* InterventionTableViewCell.swift */,
+				6B1933A120FE2B8B0050DB87 /* InterventionViewController.swift */,
+				6B19339B20FE2B8A0050DB87 /* Main.storyboard */,
+				6B19339F20FE2B8A0050DB87 /* LaunchScreen.storyboard */,
+				6B19339C20FE2B8A0050DB87 /* Assets.xcassets */,
 				0413D83820F8AEB100BC4F05 /* Info.plist */,
 			);
 			path = "ClickAndFarm-IOS";
@@ -253,9 +262,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0413D83720F8AEB100BC4F05 /* LaunchScreen.storyboard in Resources */,
-				0413D83420F8AEB100BC4F05 /* Assets.xcassets in Resources */,
-				0413D83220F8AEAE00BC4F05 /* Main.storyboard in Resources */,
+				6B1933A620FE2B8B0050DB87 /* LaunchScreen.storyboard in Resources */,
+				6B1933A220FE2B8B0050DB87 /* Main.storyboard in Resources */,
+				6B1933A320FE2B8B0050DB87 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +289,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B1933A420FE2B8B0050DB87 /* InterventionTableViewCell.swift in Sources */,
 				0413D82F20F8AEAE00BC4F05 /* ViewController.swift in Sources */,
+				6B1933A720FE2B8B0050DB87 /* Intervention.swift in Sources */,
+				6B1933A820FE2B8B0050DB87 /* InterventionViewController.swift in Sources */,
 				0413D82D20F8AEAE00BC4F05 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,25 +327,6 @@
 			targetProxy = 0413D84920F8AEB100BC4F05 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		0413D83020F8AEAE00BC4F05 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0413D83120F8AEAE00BC4F05 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		0413D83520F8AEB100BC4F05 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0413D83620F8AEB100BC4F05 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0413D84F20F8AEB100BC4F05 /* Debug */ = {
