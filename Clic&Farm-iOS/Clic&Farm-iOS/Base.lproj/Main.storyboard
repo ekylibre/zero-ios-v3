@@ -105,6 +105,7 @@
                                                 <constraint firstItem="cxk-n3-g4I" firstAttribute="leading" secondItem="bnZ-Ve-doS" secondAttribute="leadingMargin" id="GHb-li-3OO"/>
                                                 <constraint firstItem="Ii2-La-EhX" firstAttribute="trailing" secondItem="bnZ-Ve-doS" secondAttribute="trailingMargin" id="XnZ-Dx-OZI"/>
                                                 <constraint firstItem="cxk-n3-g4I" firstAttribute="top" secondItem="bnZ-Ve-doS" secondAttribute="topMargin" constant="5" id="mLq-0K-KzI"/>
+                                                <constraint firstItem="Ii2-La-EhX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bnZ-Ve-doS" secondAttribute="leadingMargin" id="mih-sn-ReY"/>
                                                 <constraint firstItem="Ii2-La-EhX" firstAttribute="trailing" secondItem="bnZ-Ve-doS" secondAttribute="trailingMargin" id="qOr-Ta-yBm"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -272,7 +273,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <action selector="openForgottenPasswordLinkWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="2kh-dX-32a"/>
+                                    <action selector="openForgottenPasswordLinkWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="1rn-ME-Wsc"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clic&amp;farm-logo" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Rz-CQ-sdc">
@@ -288,8 +289,7 @@
                                     <color key="titleColor" red="0.34509803919999998" green="0.34901960780000002" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="checkAuthentificationWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="X4f-BZ-Cqv"/>
-                                    <action selector="savePasswordIfProfileAutorized:" destination="krK-gd-8UN" eventType="touchUpInside" id="ZWU-fC-ixC"/>
+                                    <action selector="testFetchingWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="UsF-Qx-8YL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -329,8 +329,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="Hax-Z6-6hg"/>
                     <connections>
-                        <outlet property="tfAccount" destination="vfb-X0-1tk" id="U0X-I1-xju"/>
-                        <outlet property="tfPassword" destination="ScR-OF-ai0" id="G0E-PX-yYH"/>
+                        <outlet property="tfPassword" destination="ScR-OF-ai0" id="P0t-T0-YS2"/>
+                        <outlet property="tfUsername" destination="vfb-X0-1tk" id="dtW-12-Gpl"/>
                         <segue destination="Ym6-0E-qVT" kind="presentation" identifier="SegueFromLogScreenToConnected" id="aDw-i0-Y4L"/>
                         <segue destination="CoO-3Z-MeU" kind="show" identifier="SegueNoInternetOnFirstConnection" id="16Z-w0-5gb"/>
                     </connections>
