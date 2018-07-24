@@ -1,6 +1,6 @@
 //
 //  SaveAccount.swift
-//  ClickAndFarm-IOS
+//  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 16/07/2018.
 //  Copyright © 2018 Ekylibre. All rights reserved.
