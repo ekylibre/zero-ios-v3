@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 extension Users {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Users> {
@@ -18,5 +17,5 @@ extension Users {
     }
 
     @NSManaged public var userName: String?
-
+    @NSManaged public var firstConnection: Bool
 }
