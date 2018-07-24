@@ -18,7 +18,7 @@ class KeychainService: NSObject {
 
         if status != errSecSuccess {
             if let err = SecCopyErrorMessageString(status, nil) {
-                print("Échec de l'enregistrement: \(err)")
+                print("Saving failed: \(err)")
             }
         }
     }

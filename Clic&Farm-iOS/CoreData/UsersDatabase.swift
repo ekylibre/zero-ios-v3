@@ -51,6 +51,7 @@ public class UsersDatabase: UIViewController {
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context) as! Users
 
         newUser.userName = userName
+        newUser.firstConnection = true
         appDelegate.saveContext()
     }
 
