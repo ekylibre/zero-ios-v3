@@ -9,7 +9,7 @@
 import Foundation
 
 class Crop {
-    
+
     //MARK: Properties
-    
+
 }

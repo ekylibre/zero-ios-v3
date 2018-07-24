@@ -22,7 +22,8 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.tfUsername.delegate = self
 
         if entityIsEmpty(entity: "Users") {
-            addNewUser(userName: "jdehaay@ekylibre.com")
+            addNewUser(userName: "jdehaay@gmail.com")
+            addNewUser(userName: "toto@yahoo.gouv")
        }
     }
 
@@ -53,13 +54,21 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         return false
     }
 
-    func checkUser() {
-        if getPasswordIfExist() {
-            profileAutorized = true
-            self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+    func checkUser(data: NSManagedObject) {
+        if tfUsername.text == data.value(forKey: "userName") as? String {
+            if getPasswordIfExist() {
+                profileAutorized = true
+                if data.value(forKey: "firstConnection") as? Bool == true && !Connectivity.isConnectedToInternet() {
+                    self.performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
+                } else {
+                    self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+                    data.setValue(false, forKey: "firstConnection")
+                    print("FirstConnection: \(data.value(forKey: "firstConnection") as! Bool)")
+                }
+            }
         }
     }
-    
+
     @IBAction func checkAuthentification(sender: UIButton) {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
@@ -68,12 +77,15 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         do {
             let result = try context.fetch(request)
             for data in result as! [NSManagedObject] {
-                if tfUsername.text == data.value(forKey: "userName") as? String {
-                    checkUser()
-                }
+                checkUser(data: data)
             }
         } catch {
             print("Fetch failed")
+        }
+        if !profileAutorized {
+            let alert = UIAlertController(title: "Veuillez réessayer", message: "Identifiant inconnu ou mot de passe incorrect.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
         }
     }
 }
