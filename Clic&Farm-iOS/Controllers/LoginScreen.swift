@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SQLite3
 import CoreData
 
 class LoginScreen: UsersDatabase, UITextFieldDelegate {
@@ -36,15 +35,16 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     func savePassword() {
         if (tfPassword.text?.count)! > 0 {
             let token = KeychainService.stringToNSDATA(string: tfPassword.text!)
-        
+
             KeychainService.save(key: tfUsername.text!, data: token)
         }
     }
 
     func getPasswordIfExist() -> Bool {
         if let token = KeychainService.load(key: tfUsername.text!) {
+            print("token: \(token)")
             let loadedPassword = KeychainService.NSDATAtoString(data: token)
-            
+
             if tfPassword.text == loadedPassword {
                 return true
             }
