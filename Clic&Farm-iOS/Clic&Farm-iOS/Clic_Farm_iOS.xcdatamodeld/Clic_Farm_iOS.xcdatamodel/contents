@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
+        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="crops" inverseEntity="Interventions" syncable="YES"/>
+    </entity>
+    <entity name="Interventions" representedClassName="Interventions" syncable="YES" codeGenerationType="class">
+        <attribute name="infos" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="crops" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crops" inverseName="interventions" inverseEntity="Crops" syncable="YES"/>
+        <relationship name="workingDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingDays" inverseName="interventions" inverseEntity="WorkingDays" syncable="YES"/>
+    </entity>
+    <entity name="WorkingDays" representedClassName="WorkingDays" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingDays" inverseEntity="Interventions" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Interventions" positionX="349" positionY="-144" width="128" height="118"/>
+        <element name="WorkingDays" positionX="108" positionY="-57" width="128" height="73"/>
+        <element name="Crops" positionX="108" positionY="-141" width="128" height="60"/>
+    </elements>
 </model>
