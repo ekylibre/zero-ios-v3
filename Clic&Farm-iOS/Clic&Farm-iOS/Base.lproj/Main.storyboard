@@ -289,7 +289,7 @@
                                     <color key="titleColor" red="0.34509803919999998" green="0.34901960780000002" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="testFetchingWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="UsF-Qx-8YL"/>
+                                    <action selector="checkAuthentificationWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="FuF-9G-WlB"/>
                                 </connections>
                             </button>
                         </subviews>
