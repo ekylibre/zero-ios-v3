@@ -17,15 +17,37 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var synchroLabel: UILabel!
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var leftInterventionButton: UIButton!
+    @IBOutlet weak var rightInterventionButton: UIButton!
     
     var interventions = [NSManagedObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Change status bar appearance
+        UIApplication.shared.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor(rgb: 0x175FC8)
+        
+        // Rounded buttons
         leftInterventionButton.layer.cornerRadius = 3
         leftInterventionButton.clipsToBounds = true
+        rightInterventionButton.layer.cornerRadius = 3
+        rightInterventionButton.clipsToBounds = true
+        
+        let addView = UIView()
+        addView.frame = CGRect(x: 0, y: 517, width: 375, height: 150)
+        addView.backgroundColor = UIColor.blue
+        self.view.addSubview(addView)
+        addView.isHidden = false
+        
+        addView.translatesAutoresizingMaskIntoConstraints = false
+        let horizontalConstraint = NSLayoutConstraint(item: addView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        let verticalConstraint = NSLayoutConstraint(item: addView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
+        //let widthConstraint = NSLayoutConstraint(item: addView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)
+        //let heightConstraint = NSLayoutConstraint(item: addView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .notAnAttribute, multiplier: 1, constant: 150)
+        view.addConstraints([horizontalConstraint, verticalConstraint/*, widthConstraint, heightConstraint*/])
         
         // Updates synchronisation label
         if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
@@ -60,14 +82,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         let firstButton = UIButton(frame: secondFrame)
         firstButton.setTitle("test", for: .normal)
         navigationBar.addSubview(firstButton)
-
-        /*
-        let saveText = UIBarButtonItem(title: "ENREGISTRER UNE INTERVENTION", style: UIBarButtonItemStyle.plain, target: self, action: nil)
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.alignment = .center
-        saveText.setTitleTextAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: 17.0), NSAttributedStringKey.foregroundColor : UIColor.white], for: UIControlState.normal)
-        
-        toolbar.items = [saveText]*/
 
         // Load table view
         self.tableView.dataSource = self
@@ -148,35 +162,40 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         let intervention = interventions[indexPath.row]
         
         switch intervention.value(forKeyPath: "type") as! Int16 {
-        case Intervention.InterventionType.Semis.rawValue:
-            cell.typeLabel.text = "Semis"
-            cell.typeImageView.image = UIImage(named: "semis")!
-        case Intervention.InterventionType.TravailSol.rawValue:
+        case Intervention.InterventionType.Care.rawValue:
+            cell.typeLabel.text = "Entretien"
+            cell.typeImageView.image = UIImage(named: "care")!
+        case Intervention.InterventionType.CropProtection.rawValue:
+            cell.typeLabel.text = "Pulvérisation"
+            cell.typeImageView.image = UIImage(named: "cropProtection")!
+        case Intervention.InterventionType.Fertilization.rawValue:
+            cell.typeLabel.text = "Fertilisation"
+            cell.typeImageView.image = UIImage(named: "fertilization")!
+        case Intervention.InterventionType.GroundWork.rawValue:
             cell.typeLabel.text = "Travail du sol"
-            cell.typeImageView.image = UIImage(named: "travailSol")!
+            cell.typeImageView.image = UIImage(named: "groundWork")!
+        case Intervention.InterventionType.Harvest.rawValue:
+            cell.typeLabel.text = "Récolte"
+            cell.typeImageView.image = UIImage(named: "harvest")!
+        case Intervention.InterventionType.Implantation.rawValue:
+            cell.typeLabel.text = "Semis"
+            cell.typeImageView.image = UIImage(named: "implantation")!
         case Intervention.InterventionType.Irrigation.rawValue:
             cell.typeLabel.text = "Irrigation"
             cell.typeImageView.image = UIImage(named: "irrigation")!
-        case Intervention.InterventionType.Recolte.rawValue:
-            cell.typeLabel.text = "Récolte"
-            cell.typeImageView.image = UIImage(named: "recolte")!
-        case Intervention.InterventionType.Entretien.rawValue:
-            cell.typeLabel.text = "Entretien"
-            cell.typeImageView.image = UIImage(named: "entretien")!
-        case Intervention.InterventionType.Fertilisation.rawValue:
-            cell.typeLabel.text = "Fertilisation"
-            cell.typeImageView.image = UIImage(named: "fertilisation")!
-        case Intervention.InterventionType.Pulverisation.rawValue:
-            cell.typeLabel.text = "Pulvérisation"
-            cell.typeImageView.image = UIImage(named: "pulverisation")!
         default:
-            cell.typeLabel.text = "erreur"
+            cell.typeLabel.text = "Erreur"
         }
         
         //cell.cropsLabel.text = intervention.value(forKeyPath: "crops") as? String
         cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
         //cell.dateLabel.text = transformDate(date: intervention.value(forKeyPath: "date") as! Date)
         //cell.dateLabel.text = transformDate(date: intervention.date)
+        
+        // Resize labels according to their text
+        cell.typeLabel.sizeToFit()
+        cell.cropsLabel.sizeToFit()
+        cell.infosLabel.sizeToFit()
         
         if intervention.value(forKeyPath: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
             cell.syncImage.backgroundColor = UIColor.orange
@@ -266,5 +285,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         tableView.reloadData()
+    }
+    
+    @IBAction func addIntervention(_ sender: Any) {
+        bottomView.isHidden = true
+        
+        /*leftInterventionButton.isEnabled = false
+        leftInterventionButton.isHidden = true
+        rightInterventionButton.isEnabled = false
+        rightInterventionButton.isHidden = true*/
+        print("oui")
     }
 }

@@ -60,21 +60,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qg1-zw-twO">
-                                                    <rect key="frame" x="88" y="16" width="116" height="16"/>
+                                                    <rect key="frame" x="88" y="16" width="66" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.4039215686" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Crops Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgV-or-pGj">
-                                                    <rect key="frame" x="88" y="37" width="116" height="16"/>
+                                                    <rect key="frame" x="88" y="37" width="73" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Infos Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="342-8b-SlZ">
-                                                    <rect key="frame" x="88" y="59" width="116" height="16"/>
+                                                    <rect key="frame" x="88" y="59" width="67" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -87,17 +87,16 @@
                                                         <constraint firstAttribute="height" constant="59" id="lbn-Xl-TqT"/>
                                                     </constraints>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M8T-ht-ZY6">
-                                                    <rect key="frame" x="212" y="16" width="16" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ii2-La-EhX">
                                                     <rect key="frame" x="286" y="16" width="74" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U4a-e8-TIi">
+                                                    <rect key="frame" x="162" y="16" width="16" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Ii2-La-EhX" firstAttribute="top" secondItem="bnZ-Ve-doS" secondAttribute="topMargin" constant="5" id="Bty-5x-DGd"/>
@@ -111,7 +110,7 @@
                                             <outlet property="cropsLabel" destination="EgV-or-pGj" id="Qjt-5O-9u2"/>
                                             <outlet property="dateLabel" destination="Ii2-La-EhX" id="hPL-9o-s9k"/>
                                             <outlet property="infosLabel" destination="342-8b-SlZ" id="1Pn-Tl-arD"/>
-                                            <outlet property="syncImage" destination="M8T-ht-ZY6" id="cNf-YB-D6u"/>
+                                            <outlet property="syncImage" destination="U4a-e8-TIi" id="JmX-tB-PH4"/>
                                             <outlet property="typeImageView" destination="cxk-n3-g4I" id="IPc-FA-OIz"/>
                                             <outlet property="typeLabel" destination="qg1-zw-twO" id="OwF-Qb-zkI"/>
                                         </connections>
@@ -127,6 +126,9 @@
                                         <state key="normal" title="DÉJÀ RÉALISÉE">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="addIntervention:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="MiT-95-7SW"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHP-kl-RhJ">
                                         <rect key="frame" x="194" y="37" width="166" height="30"/>
@@ -191,8 +193,10 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bottomView" destination="L1h-B8-3FP" id="OFz-wX-08P"/>
                         <outlet property="leftInterventionButton" destination="XRU-Wr-aoY" id="JgT-wD-RLh"/>
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
+                        <outlet property="rightInterventionButton" destination="jHP-kl-RhJ" id="lY5-qW-rPg"/>
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                     </connections>
