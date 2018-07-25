@@ -14,13 +14,13 @@ class Intervention {
     //MARK: Properties
     
     enum InterventionType: Int16 {
-        case Semis = 0
-        case TravailSol = 1
-        case Irrigation = 2
-        case Recolte = 3
-        case Entretien = 4
-        case Fertilisation = 5
-        case Pulverisation = 6
+        case Care = 0
+        case CropProtection = 1
+        case Fertilization = 2
+        case GroundWork = 3
+        case Harvest = 4
+        case Implantation = 5
+        case Irrigation = 6
     }
     
     enum Status: Int16 {
