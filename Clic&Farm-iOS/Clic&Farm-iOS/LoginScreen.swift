@@ -22,6 +22,10 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.tfAccount.delegate = self
 
+        // Change status bar appearance
+        UIApplication.shared.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor(rgb: 0x175FC8)
+        
         let dataBaseUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("AccountDatabase.sqlite")
 

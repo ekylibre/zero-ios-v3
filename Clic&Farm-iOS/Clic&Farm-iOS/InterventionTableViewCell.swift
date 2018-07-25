@@ -15,7 +15,7 @@ class InterventionTableViewCell: UITableViewCell {
     @IBOutlet weak var cropsLabel: UILabel!
     @IBOutlet weak var infosLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var syncImage: UIView!
+    @IBOutlet weak var syncImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
