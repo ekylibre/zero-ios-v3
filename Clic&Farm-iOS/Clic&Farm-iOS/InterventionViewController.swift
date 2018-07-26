@@ -20,8 +20,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var leftInterventionButton: UIButton!
     @IBOutlet weak var rightInterventionButton: UIButton!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var addInterventionLabel: UILabel!
     
     var interventions = [NSManagedObject]()
+    var workingPeriods = [NSManagedObject]()
+    
+    var interventionButtons: [UIButton] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +88,31 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         firstButton.setTitle("test", for: .normal)
         navigationBar.addSubview(firstButton)
 
+        initialiseInterventionButtons()
+        
         // Load table view
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    func initialiseInterventionButtons() {
+        
+        let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
+        let interventionImages: [UIImage] = [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "groundWork"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "cropProtection")]
+        
+        for buttonCount in 0...6 {
+            
+            let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
+            
+            interventionButton.backgroundColor = UIColor.white
+            interventionButton.setBackgroundImage(interventionImages[buttonCount], for: .normal)
+            interventionButton.setTitle(interventionNames[buttonCount], for: .normal)
+            interventionButton.setTitleColor(UIColor.white, for: .normal)
+            interventionButton.layer.cornerRadius = 3
+            interventionButton.isHidden = false
+            interventionButtons.append(interventionButton)
+            bottomView.addSubview(interventionButton)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,13 +124,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
+        let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
+        let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
         
         do {
-            interventions = try managedContext.fetch(fetchRequest)
+            interventions = try managedContext.fetch(interventionsFetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        do {
+            workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
         if interventions.count == 0 {
             loadSampleInterventions()
         }
@@ -160,6 +195,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         
         // Fetches the appropriate intervention for the data source layout
         let intervention = interventions[indexPath.row]
+        let workingPeriod = workingPeriods[indexPath.row]
         
         switch intervention.value(forKeyPath: "type") as! Int16 {
         case Intervention.InterventionType.Care.rawValue:
@@ -187,28 +223,30 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
             cell.typeLabel.text = "Erreur"
         }
         
+        switch intervention.value(forKeyPath: "status") as! Int16 {
+        case Intervention.Status.OutOfSync.rawValue:
+            cell.syncImage.backgroundColor = UIColor.orange
+        case Intervention.Status.Synchronised.rawValue:
+            cell.syncImage.backgroundColor = UIColor.yellow
+        case Intervention.Status.Validated.rawValue:
+            cell.syncImage.backgroundColor = UIColor.green
+        default:
+            cell.syncImage.backgroundColor = UIColor.purple
+        }
+        
         //cell.cropsLabel.text = intervention.value(forKeyPath: "crops") as? String
         cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
-        //cell.dateLabel.text = transformDate(date: intervention.value(forKeyPath: "date") as! Date)
-        //cell.dateLabel.text = transformDate(date: intervention.date)
+        cell.dateLabel.text = transformDate(date: workingPeriod.value(forKeyPath: "executionDate") as! Date)
         
         // Resize labels according to their text
         cell.typeLabel.sizeToFit()
         cell.cropsLabel.sizeToFit()
         cell.infosLabel.sizeToFit()
         
-        if intervention.value(forKeyPath: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
-            cell.syncImage.backgroundColor = UIColor.orange
-        } else if intervention.value(forKeyPath: "status") as? Int16 == Intervention.Status.Synchronised.rawValue {
-            cell.syncImage.backgroundColor = UIColor.yellow
-        } else {
-            cell.syncImage.backgroundColor = UIColor.green
-        }
-        
         return cell
     }
     
-    func save(type: Int16, crops: String, infos: String, date: Date) {
+    func createIntervention(type: Int16, infos: String, status: Int16, executionDate: Date) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -216,18 +254,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        let entity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
+        let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
+        let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
         
-        let intervention = NSManagedObject(entity: entity, insertInto: managedContext)
+        let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
+        let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
         
         intervention.setValue(type, forKeyPath: "type")
-        //intervention.setValue(crops, forKeyPath: "crops")
         intervention.setValue(infos, forKeyPath: "infos")
-        //intervention.setValue(date, forKeyPath: "date")
+        intervention.setValue(status, forKeyPath: "status")
+        workingPeriod.setValue(executionDate, forKeyPath: "executionDate")
         
         do {
             try managedContext.save()
             interventions.append(intervention)
+            workingPeriods.append(workingPeriod)
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
@@ -249,20 +290,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     private func loadSampleInterventions() {
-        let date1 = makeDate(year: 2018, month: 7, day: 20, hour: 9, minute: 5, second: 0)
+        
+        let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
         //let inter1 = Intervention(type: .Irrigation, crops: "2 cultures", infos: "Volume 50", date: date1, status: .OutOfSync)
-        let date2 = makeDate(year: 2018, month: 7, day: 19, hour: 9, minute: 5, second: 0)
+        let date2 = makeDate(year: 2018, month: 7, day: 24, hour: 9, minute: 5, second: 0)
         //let inter2 = Intervention(type: .TravailSol, crops: "1 culture", infos: "Kuhn Prolander", date: date2, status: .OutOfSync)
-        let date3 = makeDate(year: 2018, month: 7, day: 18, hour: 9, minute: 5, second: 0)
+        let date3 = makeDate(year: 2018, month: 7, day: 23, hour: 9, minute: 5, second: 0)
         //let inter3 = Intervention(type: .Pulverisation, crops: "2 cultures", infos: "PRIORI GOLD", date: date3, status: .OutOfSync)
-        let date4 = makeDate(year: 2017, month: 7, day: 17, hour: 9, minute: 5, second: 0)
+        let date4 = makeDate(year: 2017, month: 7, day: 22, hour: 9, minute: 5, second: 0)
         //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
         
-        save(type: 0, crops: "2 cultures", infos: "Volume 50mL", date: date1)
-        save(type: 1, crops: "1 culture", infos: "Kuhn Prolander", date: date2)
-        save(type: 2, crops: "2 cultures", infos: "PRIORI GOLD", date: date3)
-        save(type: 3, crops: "4 cultures", infos: "oui", date: date4)
-        //interventions += [inter1, inter2, inter3, inter4]
+        createIntervention(type: 0, infos: "Volume 50mL", status: 0, executionDate: date1)
+        createIntervention(type: 1, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+        createIntervention(type: 2, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+        createIntervention(type: 3, infos: "oui", status: 2, executionDate: date4)
     }
     
     //MARK: Actions
@@ -279,21 +320,59 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
         
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
         for intervention in interventions {
             if intervention.value(forKeyPath: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
                 intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
             }
         }
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
         tableView.reloadData()
     }
     
-    @IBAction func addIntervention(_ sender: Any) {
+    @objc func action(sender: UIButton) {
         bottomView.isHidden = true
+    }
+    
+    @IBAction func addIntervention(_ sender: Any) {
         
-        /*leftInterventionButton.isEnabled = false
+        heightConstraint.constant = 240
+        addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION DE..."
         leftInterventionButton.isHidden = true
-        rightInterventionButton.isEnabled = false
-        rightInterventionButton.isHidden = true*/
-        print("oui")
+        rightInterventionButton.isHidden = true
+        bottomView.layoutIfNeeded()
+        var index: CGFloat = 1
+        var line: CGFloat = 0
+        let width = bottomView.frame.size.width
+        //let height = bottomView.frame.size.height
+        
+        print("count: \(interventionButtons.count)")
+        for interventionButton in interventionButtons {
+            
+            interventionButton.isHidden = false
+            interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 35 + line * 100, width: 70, height: 70)
+            interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
+            interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+            //implantationButton.imageEdgeInsets = UIEdgeInsets(top: 50, left: 50, bottom: implantationButton.titleLabel!.frame.size.height, right: 0)
+            bottomView.layoutIfNeeded()
+            
+            if index > 2 {
+                line += 1
+                index = 0
+            } else {
+                index += 1
+            }
+        }
     }
 }
