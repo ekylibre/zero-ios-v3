@@ -28,6 +28,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     
     var interventionButtons: [UIButton] = []
     
+    let dimView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,18 +43,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         rightInterventionButton.layer.cornerRadius = 3
         rightInterventionButton.clipsToBounds = true
         
-        let addView = UIView()
-        addView.frame = CGRect(x: 0, y: 517, width: 375, height: 150)
-        addView.backgroundColor = UIColor.blue
-        self.view.addSubview(addView)
-        addView.isHidden = false
+        // Dim view
+        self.view.addSubview(dimView)
         
-        addView.translatesAutoresizingMaskIntoConstraints = false
-        let horizontalConstraint = NSLayoutConstraint(item: addView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-        let verticalConstraint = NSLayoutConstraint(item: addView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
-        //let widthConstraint = NSLayoutConstraint(item: addView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)
-        //let heightConstraint = NSLayoutConstraint(item: addView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .notAnAttribute, multiplier: 1, constant: 150)
-        view.addConstraints([horizontalConstraint, verticalConstraint/*, widthConstraint, heightConstraint*/])
+        dimView.translatesAutoresizingMaskIntoConstraints = false
+        dimView.backgroundColor = UIColor.black
+        dimView.alpha = 0.6
+        let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
+        let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
+        dimView.isUserInteractionEnabled = true
+        let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
+        gesture.numberOfTapsRequired = 1
+        dimView.addGestureRecognizer(gesture)
+        dimView.isHidden = true
         
         // Updates synchronisation label
         if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
@@ -272,6 +278,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+        
+        tableView.reloadData()
     }
     /*
     // MARK: - Navigation
@@ -342,7 +350,40 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func action(sender: UIButton) {
-        bottomView.isHidden = true
+        
+        var type: Int16 = 0
+        
+        switch sender.titleLabel?.text {
+        case "Entretien":
+            type = 0
+        case "Pulvérisation":
+            type = 1
+        case "Fertilisation":
+            type = 2
+        case "Travail du sol":
+            type = 3
+        case "Récolte":
+            type = 4
+        case "Semis":
+            type = 5
+        case "Irrigation":
+            type = 6
+        default:
+            type = -1
+        }
+        createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())
+        hideInterventionAdd()
+    }
+    
+    @objc func hideInterventionAdd() {
+        addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION"
+        for interventionButton in interventionButtons {
+            interventionButton.isHidden = true
+        }
+        leftInterventionButton.isHidden = false
+        rightInterventionButton.isHidden = false
+        heightConstraint.constant = 80
+        dimView.isHidden = true
     }
     
     @IBAction func addIntervention(_ sender: Any) {
@@ -355,9 +396,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         var index: CGFloat = 1
         var line: CGFloat = 0
         let width = bottomView.frame.size.width
-        //let height = bottomView.frame.size.height
         
-        print("count: \(interventionButtons.count)")
         for interventionButton in interventionButtons {
             
             interventionButton.isHidden = false
@@ -374,5 +413,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
                 index += 1
             }
         }
+        dimView.isHidden = false
     }
 }
