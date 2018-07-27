@@ -88,7 +88,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             accountList.append(Account(id: 0, email: "toto@ekylibre.com", password: "Totodu33", firstConnection: true))
             accountList.append(Account(id: 1, email: "jdehaay@ekylibre.com", password: "Jonathandu33", firstConnection: true))
             accountList.append(Account(id: 2, email: "jdehaay@yahoo.org", password: "Jonathandu33", firstConnection: true))
-            accountList.append(Account(id: 3, email: "test", password: "oui", firstConnection: true))
+            accountList.append(Account(id: 3, email: "login", password: "pass", firstConnection: true))
             print("New items added")
         }
     }
