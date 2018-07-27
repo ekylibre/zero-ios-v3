@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreData
+import OAuthSwift
 
-public class UsersDatabase: UIViewController {
+class UsersDatabase: AuthentificationService {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
