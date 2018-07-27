@@ -84,15 +84,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         // Top label : name
         //toolbar.frame = CGRect(x: 0, y: 623, width: 375, height: 100)
         let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-        let secondFrame = CGRect(x: navigationBar.frame.width - 150, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
         
         let firstLabel = UILabel(frame: firstFrame)
         firstLabel.text = "GAEC du Bois Joli"
         firstLabel.textColor = UIColor.white
         navigationBar.addSubview(firstLabel)
-        let firstButton = UIButton(frame: secondFrame)
-        firstButton.setTitle("test", for: .normal)
-        navigationBar.addSubview(firstButton)
 
         initialiseInterventionButtons()
         
@@ -135,11 +131,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         
         do {
             interventions = try managedContext.fetch(interventionsFetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        do {
             workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
