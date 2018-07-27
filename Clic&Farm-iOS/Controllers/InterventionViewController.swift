@@ -13,7 +13,7 @@ import CoreData
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //MARK: Properties
-    
+
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var synchroLabel: UILabel!
@@ -66,12 +66,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "fr_FR")
             dateFormatter.dateFormat = "MMMM"
-            
+
             let hour = calendar.component(.hour, from: date)
             let minute = calendar.component(.minute, from: date)
             let day = calendar.component(.day, from: date)
             let month = dateFormatter.string(from: date)
-            
+
             if calendar.isDateInToday(date) {
                 synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
             } else {
@@ -80,11 +80,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             synchroLabel.text = "Aucune synchronisation répertoriée"
         }
-        
+
         // Top label : name
         //toolbar.frame = CGRect(x: 0, y: 623, width: 375, height: 100)
         let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-        
         let firstLabel = UILabel(frame: firstFrame)
         firstLabel.text = "GAEC du Bois Joli"
         firstLabel.textColor = UIColor.white
@@ -145,24 +144,24 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return interventions.count
     }
-    
+
     func transformDate(date: Date) -> String {
         let calendar = Calendar.current
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
         dateFormatter.dateFormat = "dd MMMM"
-        
+
         var dateString = dateFormatter.string(from: date)
         let year = calendar.component(.year, from: date)
-        
+
         if calendar.isDateInToday(date) {
             return "aujourd'hui"
         } else if calendar.isDateInYesterday(date) {
@@ -174,22 +173,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
             return dateString
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "InterventionTableViewCell"
-        
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? InterventionTableViewCell else {
             fatalError("The dequeued cell is not an instance of InterventionTableViewCell")
         }
-        
+
         if indexPath.row % 2 == 0 {
             cell.backgroundColor = UIColor.white
         } else {
             cell.backgroundColor = UIColor(rgb: 0xECEBEB)
         }
-        
+
         // Fetches the appropriate intervention for the data source layout
         let intervention = interventions[indexPath.row]
         let workingPeriod = workingPeriods[indexPath.row]
@@ -272,6 +271,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         
         tableView.reloadData()
     }
+
     /*
     // MARK: - Navigation
 
@@ -287,7 +287,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         let components = DateComponents(year: year, month: month, day: day, hour: hour, minute: minute, second: second)
         return calendar.date(from: components)!
     }
-    
+
     private func loadSampleInterventions() {
         
         let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
@@ -304,17 +304,17 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         createIntervention(type: 2, infos: "PRIORI GOLD", status: 1, executionDate: date3)
         createIntervention(type: 3, infos: "oui", status: 2, executionDate: date4)
     }
-    
+
     //MARK: Actions
-    
+
     @IBAction func synchronise(_ sender: Any) {
-        
+
         let date = Date()
         let calendar = Calendar.current
-        
+
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
-        
+
         synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()

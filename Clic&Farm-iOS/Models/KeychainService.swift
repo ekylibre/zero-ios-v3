@@ -10,7 +10,24 @@ import UIKit
 
 class KeychainService: NSObject {
 
+    enum KeychainError: Error {
+        case noPassword
+        case unexpectedPasswordData
+        case unhandledError(status: OSStatus)
+    }
+
     class func save(key: String, data: NSData) {
+        let query = [kSecClass as String: kSecClassGenericPassword as String, kSecAttrAccount as String: key, kSecValueData as String: data] as [String: Any]
+        let status: OSStatus = SecItemAdd(query as CFDictionary, nil)
+
+        if status != errSecSuccess {
+            if let err = SecCopyErrorMessageString(status, nil) {
+                print("Saving failed: \(err)")
+            }
+        }
+    }
+
+    class func update(key: String, data: NSData) {
         let query = [kSecClass as String: kSecClassGenericPassword as String, kSecAttrAccount as String: key, kSecValueData as String: data] as [String: Any]
 
         SecItemDelete(query as CFDictionary)
@@ -18,7 +35,7 @@ class KeychainService: NSObject {
 
         if status != errSecSuccess {
             if let err = SecCopyErrorMessageString(status, nil) {
-                print("Échec de l'enregistrement: \(err)")
+                print("Update failed: \(err)")
             }
         }
     }
@@ -29,16 +46,16 @@ class KeychainService: NSObject {
         let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
 
         if status == noErr {
-            return (dataTypeRef! as! NSData)
+           return (dataTypeRef! as! NSData)
         } else {
             return nil
         }
     }
 
     class func stringToNSDATA(string: String) -> NSData {
-        let _Data = (string as NSString).data(using: String.Encoding.utf8.rawValue)
+        let data = (string as NSString).data(using: String.Encoding.utf8.rawValue)
 
-        return _Data! as NSData
+        return data! as NSData
     }
 
     class func NSDATAtoString(data: NSData) -> String {
