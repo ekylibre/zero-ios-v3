@@ -9,7 +9,7 @@
 import UIKit
 
 class InterventionTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var typeImageView: UIImageView!
     @IBOutlet weak var cropsLabel: UILabel!

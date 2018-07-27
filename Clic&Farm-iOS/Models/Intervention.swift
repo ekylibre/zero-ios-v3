@@ -28,15 +28,15 @@ class Intervention {
         case Synchronised = 1
         case Validated = 2
     }
-    
+
     var type: InterventionType
     var crops: String
     var infos: String
     var date: Date
     var status: Status
-    
+
     //MARK: Initialization
-    
+
     init(type: InterventionType, crops: String, infos: String, date: Date, status: Status) {
         self.type = type
         self.crops = crops
