@@ -14,6 +14,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     @IBOutlet var tfUsername: UITextField!
     @IBOutlet var tfPassword: UITextField!
 
+    let temporaryKey = "TestKey"
     var profileAutorized: Bool = false
 
     override func viewDidLoad() {
@@ -42,7 +43,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
     func getPasswordIfExist() -> Bool {
         if let token = KeychainService.load(key: tfUsername.text!) {
-            print("token: \(token)")
             let loadedPassword = KeychainService.NSDATAtoString(data: token)
 
             if tfPassword.text == loadedPassword {
@@ -54,6 +54,23 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         return false
     }
 
+    func saveToken() {
+        let token = authentificate(consumerKey: tfUsername.text!, consumerSecret: tfPassword.text!)
+        if token != nil {
+            let securedToken = KeychainService.stringToNSDATA(string: token!)
+            KeychainService.save(key: temporaryKey, data: securedToken)
+        }
+    }
+
+    func loadTokenIfStillValid() -> String? {
+        if let securedToken = KeychainService.load(key: temporaryKey) {
+            let token = KeychainService.NSDATAtoString(data: securedToken)
+
+            return token
+        }
+        return nil
+    }
+
     func checkUser(data: NSManagedObject) {
         if tfUsername.text == data.value(forKey: "userName") as? String {
             if getPasswordIfExist() {
@@ -63,7 +80,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
                 } else {
                     self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
                     data.setValue(false, forKey: "firstConnection")
-                    print("FirstConnection: \(data.value(forKey: "firstConnection") as! Bool)")
                 }
             }
         }

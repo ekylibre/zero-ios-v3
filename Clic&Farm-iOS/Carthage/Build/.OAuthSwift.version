@@ -1,0 +1,27 @@
+{
+  "Mac" : [
+    {
+      "name" : "OAuthSwift",
+      "hash" : "1104a8ace29994a6fe469d15d8c994b83b04befffa74f516dca20b7ebba02d02"
+    }
+  ],
+  "watchOS" : [
+    {
+      "name" : "OAuthSwift",
+      "hash" : "f192910eac0cb63479c40f0053b1d3b379cd6f566b8075b77fe3f67dddf3dc1d"
+    }
+  ],
+  "tvOS" : [
+    {
+      "name" : "OAuthSwift",
+      "hash" : "03bf2e8a244440d2494b1ea52a5ff7b969e9baaf31a82798f786026123d0202c"
+    }
+  ],
+  "commitish" : "1.2.2",
+  "iOS" : [
+    {
+      "name" : "OAuthSwift",
+      "hash" : "8e2f52c97f4252f3e348023b9090cfdd43927b80b9bf73405ad366ef69352b35"
+    }
+  ]
+}
