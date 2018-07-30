@@ -1,6 +1,6 @@
 //
 //  InterventionTableViewCell.swift
-//  ClickAndFarm-IOS
+//  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 16/07/2018.
 //  Copyright © 2018 Ekylibre. All rights reserved.
@@ -15,8 +15,8 @@ class InterventionTableViewCell: UITableViewCell {
     @IBOutlet weak var cropsLabel: UILabel!
     @IBOutlet weak var infosLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var syncImage: UIView!
-
+    @IBOutlet weak var syncImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
