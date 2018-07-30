@@ -12,74 +12,43 @@ import UIKit
 
 public class AuthentificationService: OAuthViewController {
 
-    func authentificate(consumerKey: String, consumerSecret: String) -> String? {
+    func authentificate(username: String, password: String) -> String? {
 
-        var token: String!
-        let oauth2 = OAuth2Swift(
-            consumerKey: consumerKey,
-            consumerSecret: consumerSecret,
-            authorizeUrl: "https://ekylibre.com/oauth/authorize",
+        let oauthSwift = OAuth2Swift(
+            consumerKey: "3b6579e1ce312d7b0fdf8f2f0eb61c9d644e3081f102264c7e5d2a999926429f",
+            consumerSecret: "c7e7749a8bb4e3bf67d0402b6a1b06707717d59f41e304b466a32b86b8873d29",
+            authorizeUrl: "https://ekylibre-test.com/oauth/authorize",
+            accessTokenUrl: "https://ekylibre-test.com/oauth/token",
             responseType: "token"
         )
-        let state = generateState(withLength: 20)
 
-        oauth2.authorize(
-            withCallbackURL: URL(string: "Clic&Farm-iOS://oauth-callback")!,
-            scope: "",
-            state: state,
-            success: { credential, response, parameters in
-                token = credential.oauthToken
-                print("OAuth Token: \(token)")
-                self.launchRequest(oauth2: oauth2)
-                self.launchPost(oauth2: oauth2)
-        },
-            failure: { error in
-                print("Error: \(error.localizedDescription)")
-        }
-        )
-        launchRequest(oauth2: oauth2)
-        launchPost(oauth2: oauth2)
-        print("Oauth2: \(oauth2)")
-        return token
+        return postRequest(oauthSwift: oauthSwift, username: username, password: password)
     }
 
-    func launchRequest(oauth2: OAuth2Swift) {
-        let parameters: Dictionary = Dictionary<String, AnyObject>()
-        let request = oauth2.client.get(
-            "https://ekylibre.com?access_token=\(oauth2.client.credential.oauthToken)",
+    func postRequest(oauthSwift: OAuth2Swift, username: String, password: String) -> String? {
+        var token: String?
+        var parameters = OAuthSwift.Parameters()
+
+        parameters["grant_type"] = "password"
+        parameters["username"] = username
+        parameters["password"] = password
+
+        let _ = oauthSwift.client.request(
+            "https://ekylibre-test.com/oauth/token",
+            method: .POST,
             parameters: parameters,
+            headers: ["scope": "public read:profile read:lexicon read:plots read:crops read:interventions write:interventions read:equipment write:equipment read:articles write:articles read:person write:person"],
             success: { response in
-                let jsonDict = try? response.jsonObject()
+                let jsonResult = try? response.jsonObject()
+                let jsonDict = jsonResult as! [String: AnyObject]
 
-                print("JsonDict: \(String(describing: jsonDict))")
-                print("Response: \(response)")
+                token = jsonDict["access_token"] as? String
+                print("JsonDict: \(jsonResult!)")
         },
             failure: { error in
-                print("Error: \(error.localizedDescription)")
-        }
-        )
+                print("ErrorRequest: \(error.localizedDescription)")
+        })
 
-        print("Request: \(request!)")
-    }
-
-    func launchPost(oauth2: OAuth2Swift) {
-        let token = oauth2.client.credential.oauthToken
-        let parameters = ["token": token]
-        let post = oauth2.client.post(
-            "https://ekylibre.com",
-            parameters: parameters,
-            success: {
-                data in
-                let jsonDict = try? data.jsonObject()
-
-                print("Json: \(String(describing: jsonDict))")
-                print("data: \(data)")
-        },
-            failure: { error in
-                print("error: \(error.localizedDescription)")
-        }
-        )
-
-        print("Post: \(post!)")
+        return token
     }
 }

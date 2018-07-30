@@ -10,41 +10,41 @@ import UIKit
 import CoreData
 
 class LoginScreen: UsersDatabase, UITextFieldDelegate {
-    
+
     @IBOutlet var tfUsername: UITextField!
     @IBOutlet var tfPassword: UITextField!
-    
+
     let temporaryKey = "TestKey"
     var profileAutorized: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tfUsername.delegate = self
-        
+
         if entityIsEmpty(entity: "Users") {
             addNewUser(userName: "jdehaay@gmail.com")
             addNewUser(userName: "toto@yahoo.gouv")
         }
     }
-    
+
     @IBAction func openForgottenPasswordLink(sender: UIButton) {
         if UIApplication.shared.canOpenURL(URL(string: "https://ekylibre.com/password/new")!) {
             UIApplication.shared.open(URL(string: "https://ekylibre.com/password/new")!, options: [:], completionHandler: nil)
         }
     }
-    
+
     func savePassword() {
         if (tfPassword.text?.count)! > 0 {
             let token = KeychainService.stringToNSDATA(string: tfPassword.text!)
-            
+
             KeychainService.save(key: tfUsername.text!, data: token)
         }
     }
-    
+
     func getPasswordIfExist() -> Bool {
         if let token = KeychainService.load(key: tfUsername.text!) {
             let loadedPassword = KeychainService.NSDATAtoString(data: token)
-            
+
             if tfPassword.text == loadedPassword {
                 return true
             }
@@ -53,25 +53,26 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         }
         return false
     }
-    
+
     func saveToken() {
-        let token = authentificate(consumerKey: tfUsername.text!, consumerSecret: tfPassword.text!)
+        let token = authentificate(username: tfUsername.text!, password: tfPassword.text!)
+        print("Token: \(String(describing: token))")
         if token != nil {
             let securedToken = KeychainService.stringToNSDATA(string: token!)
-            
+
             KeychainService.save(key: temporaryKey, data: securedToken)
         }
     }
-    
+
     func loadTokenIfStillValid() -> String? {
         if let securedToken = KeychainService.load(key: temporaryKey) {
             let token = KeychainService.NSDATAtoString(data: securedToken)
-            
+
             return token
         }
         return nil
     }
-    
+
     func checkUser(data: NSManagedObject) {
         if tfUsername.text == data.value(forKey: "userName") as? String {
             if getPasswordIfExist() {
@@ -89,11 +90,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     @IBAction func checkAuthentification(sender: UIButton) {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
-        
-        saveToken()
-        let token = loadTokenIfStillValid()
-        
-        print("Token: \(String(describing: token))")
+
         request.returnsObjectsAsFaults = false
         do {
             let result = try context.fetch(request)
