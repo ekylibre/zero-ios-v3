@@ -32,10 +32,10 @@ public class AuthentificationService: OAuthViewController {
                 print("OAuth Token: \(token)")
                 self.launchRequest(oauth2: oauth2)
                 self.launchPost(oauth2: oauth2)
-                            },
+        },
             failure: { error in
                 print("Error: \(error.localizedDescription)")
-            }
+        }
         )
         launchRequest(oauth2: oauth2)
         launchPost(oauth2: oauth2)
@@ -46,17 +46,17 @@ public class AuthentificationService: OAuthViewController {
     func launchRequest(oauth2: OAuth2Swift) {
         let parameters: Dictionary = Dictionary<String, AnyObject>()
         let request = oauth2.client.get(
-            "https://ekylibre.com/?access_token=\(oauth2.client.credential.oauthToken)",
+            "https://ekylibre.com?access_token=\(oauth2.client.credential.oauthToken)",
             parameters: parameters,
             success: { response in
                 let jsonDict = try? response.jsonObject()
 
                 print("JsonDict: \(String(describing: jsonDict))")
                 print("Response: \(response)")
-            },
+        },
             failure: { error in
                 print("Error: \(error.localizedDescription)")
-            }
+        }
         )
 
         print("Request: \(request!)")
@@ -74,10 +74,10 @@ public class AuthentificationService: OAuthViewController {
 
                 print("Json: \(String(describing: jsonDict))")
                 print("data: \(data)")
-            },
+        },
             failure: { error in
                 print("error: \(error.localizedDescription)")
-            }
+        }
         )
 
         print("Post: \(post!)")
