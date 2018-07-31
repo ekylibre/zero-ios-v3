@@ -99,7 +99,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     func initialiseInterventionButtons() {
         
         let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
-        let interventionImages: [UIImage] = [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "groundWork"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "cropProtection")]
+        let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "groundWork"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "cropProtection")]
         
         for buttonCount in 0...6 {
             
@@ -272,15 +272,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         tableView.reloadData()
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let destViewController = segue.destination as! AddInterventionViewController
+        
+        if let type = (sender as? UIButton)?.titleLabel?.text {
+            destViewController.interventionType = type
+        }
     }
-    */
 
     func makeDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
         let calendar = Calendar(identifier: .gregorian)
@@ -364,6 +365,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         }
         createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())
         hideInterventionAdd()
+        performSegue(withIdentifier: "addIntervention", sender: sender)
     }
     
     @objc func hideInterventionAdd() {
