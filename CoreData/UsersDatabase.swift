@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import OAuthSwift
 
 class UsersDatabase: AuthentificationService {
 

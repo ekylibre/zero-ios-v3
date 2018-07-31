@@ -14,7 +14,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     @IBOutlet var tfUsername: UITextField!
     @IBOutlet var tfPassword: UITextField!
 
-    let temporaryKey = "TestKey"
     var profileAutorized: Bool = false
 
     override func viewDidLoad() {
@@ -54,25 +53,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         return false
     }
 
-    func saveToken() {
-        let token = authentificate(username: tfUsername.text!, password: tfPassword.text!)
-        print("Token: \(String(describing: token))")
-        if token != nil {
-            let securedToken = KeychainService.stringToNSDATA(string: token!)
-
-            KeychainService.save(key: temporaryKey, data: securedToken)
-        }
-    }
-
-    func loadTokenIfStillValid() -> String? {
-        if let securedToken = KeychainService.load(key: temporaryKey) {
-            let token = KeychainService.NSDATAtoString(data: securedToken)
-
-            return token
-        }
-        return nil
-    }
-
     func checkUser(data: NSManagedObject) {
         if tfUsername.text == data.value(forKey: "userName") as? String {
             if getPasswordIfExist() {
@@ -86,11 +66,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
             }
         }
     }
-    
+
     @IBAction func checkAuthentification(sender: UIButton) {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
 
+        //authentificate(username: tfUsername.text!, password: tfPassword.text!)
         request.returnsObjectsAsFaults = false
         do {
             let result = try context.fetch(request)
