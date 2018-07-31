@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OAuth2
 import CoreData
 
 class LoginScreen: UsersDatabase, UITextFieldDelegate {
@@ -14,6 +15,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     @IBOutlet var tfUsername: UITextField!
     @IBOutlet var tfPassword: UITextField!
 
+    var authentificationService: AuthentificationService?
     var profileAutorized: Bool = false
 
     override func viewDidLoad() {
@@ -67,11 +69,31 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         }
     }
 
+    func checkLoginStatus() {
+        let userLoggedIn = UserDefaults.standard.bool(forKey: "LOGGED_IN")
+
+        let token = authentificationService?.oauth2.accessToken
+
+        if (!userLoggedIn) || (userLoggedIn && token == nil) {
+            authentificationService?.authorize(presenting: self)
+        }
+    }
+
+    public func logout() {
+        authentificationService?.logout()
+        self.checkLoginStatus()
+    }
+
+    @objc internal func handleLogoutButton(sender: UIButton) {
+        logout()
+    }
+
     @IBAction func checkAuthentification(sender: UIButton) {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
 
-        //authentificate(username: tfUsername.text!, password: tfPassword.text!)
+        authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
+        checkLoginStatus()
         request.returnsObjectsAsFaults = false
         do {
             let result = try context.fetch(request)

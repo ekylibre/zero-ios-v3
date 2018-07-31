@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class UsersDatabase: AuthentificationService {
+class UsersDatabase: UIViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
