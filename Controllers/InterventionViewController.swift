@@ -12,6 +12,8 @@ import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    var authentificationService: AuthentificationService?
+    
     //MARK: Properties
 
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -42,10 +44,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         leftInterventionButton.clipsToBounds = true
         rightInterventionButton.layer.cornerRadius = 3
         rightInterventionButton.clipsToBounds = true
-        
+
         // Dim view
         self.view.addSubview(dimView)
-        
+
         dimView.translatesAutoresizingMaskIntoConstraints = false
         dimView.backgroundColor = UIColor.black
         dimView.alpha = 0.6
@@ -59,7 +61,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         gesture.numberOfTapsRequired = 1
         dimView.addGestureRecognizer(gesture)
         dimView.isHidden = true
-        
+
         // Updates synchronisation label
         if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
             let calendar = Calendar.current
@@ -90,12 +92,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         navigationBar.addSubview(firstLabel)
 
         initialiseInterventionButtons()
-        
+
         // Load table view
         self.tableView.dataSource = self
         self.tableView.delegate = self
     }
-    
+
+    @IBAction func handleLogoutButton(sender: UIButton) {
+        authentificationService = AuthentificationService(username: "", password: "")
+        authentificationService?.logout()
+        self.performSegue(withIdentifier: "SegueLogOut", sender: self)
+    }
+
     func initialiseInterventionButtons() {
         
         let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
