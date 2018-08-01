@@ -297,7 +297,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     private func loadSampleInterventions() {
-        
+
         let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
         //let inter1 = Intervention(type: .Irrigation, crops: "2 cultures", infos: "Volume 50", date: date1, status: .OutOfSync)
         let date2 = makeDate(year: 2018, month: 7, day: 24, hour: 9, minute: 5, second: 0)
@@ -326,11 +326,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
-        
+
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
+
         let managedContext = appDelegate.persistentContainer.viewContext
         
         for intervention in interventions {
@@ -338,16 +338,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
                 intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
             }
         }
-        
+
         do {
             try managedContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        
+
         tableView.reloadData()
     }
-    
+
     @objc func action(sender: UIButton) {
         
         var type: Int16 = 0

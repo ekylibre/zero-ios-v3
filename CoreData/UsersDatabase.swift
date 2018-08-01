@@ -45,15 +45,6 @@ class UsersDatabase: UIViewController {
         return false
     }
 
-    func addNewUser(userName: String) {
-        let context = appDelegate.persistentContainer.viewContext
-        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context) as! Users
-
-        newUser.userName = userName
-        newUser.firstConnection = true
-        appDelegate.saveContext()
-    }
-
     func fetchData(entity: String, dataToFetch: String) {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)

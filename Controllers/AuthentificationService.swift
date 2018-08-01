@@ -9,10 +9,12 @@
 import Foundation
 import UIKit
 import OAuth2
+import CoreData
 
 open class AuthentificationService {
 
     public var oauth2: OAuth2PasswordGrant
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     public init(username: String, password: String) {
         oauth2 = OAuth2PasswordGrant(settings: [
@@ -27,24 +29,44 @@ open class AuthentificationService {
             ] as OAuth2JSON)
     }
 
+    func emptyUsersList() {
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                context.delete(data)
+            }
+            try context.save()
+        } catch {
+            print("Remove failed")
+        }
+    }
+
     public func authorize(presenting view: UIViewController) {
+        emptyUsersList()
+        let context = appDelegate.persistentContainer.viewContext
+        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context) as! Users
 
         oauth2.authorizeEmbedded(from: view) { (authParameters, error) in
             if let _ = authParameters {
                 print("\n\(authParameters!)\n")
-                UserDefaults.standard.set(true, forKey: "LOGGED_IN")
+                newUser.loggedStatus = true
             }
             else {
-                UserDefaults.standard.set(false, forKey: "LOGGED_IN")
+                newUser.loggedStatus = false
                 print("\nAuthorization was canceled or went wrong: \(String(describing: error?.description))\n")
             }
+            self.appDelegate.saveContext()
         }
     }
 
     public func logout() {
-        print("Logout func")
+        emptyUsersList()
+        oauth2.username = nil
+        oauth2.password = nil
         oauth2.forgetTokens()
-        UserDefaults.standard.set(false, forKey: "LOGGED_IN")
-        print("Logged status: \(String(describing: UserDefaults.standard.value(forKey: "LOGGED_IN")))")
     }
 }
