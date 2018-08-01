@@ -21,10 +21,15 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tfUsername.delegate = self
+        self.tfPassword.delegate = self
 
-        if entityIsEmpty(entity: "Users") {
-            addNewUser(userName: "jdehaay@gmail.com")
-            addNewUser(userName: "toto@yahoo.gouv")
+        struct staticIndex {
+            static var index: Int = 0
+        }
+        if staticIndex.index == 0 {
+            authentificationService = AuthentificationService(username: "", password: "")
+            self.checkLoginStatus()
+            staticIndex.index = 1
         }
     }
 
@@ -34,79 +39,25 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         }
     }
 
-    func savePassword() {
-        if (tfPassword.text?.count)! > 0 {
-            let token = KeychainService.stringToNSDATA(string: tfPassword.text!)
-
-            KeychainService.save(key: tfUsername.text!, data: token)
-        }
-    }
-
-    func getPasswordIfExist() -> Bool {
-        if let token = KeychainService.load(key: tfUsername.text!) {
-            let loadedPassword = KeychainService.NSDATAtoString(data: token)
-
-            if tfPassword.text == loadedPassword {
-                return true
-            }
-        } else {
-            savePassword()
-        }
-        return false
-    }
-
-    func checkUser(data: NSManagedObject) {
-        if tfUsername.text == data.value(forKey: "userName") as? String {
-            if getPasswordIfExist() {
-                profileAutorized = true
-                if data.value(forKey: "firstConnection") as? Bool == true && !Connectivity.isConnectedToInternet() {
-                    self.performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
-                } else {
-                    self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
-                    data.setValue(false, forKey: "firstConnection")
-                }
-            }
-        }
+    func changeViewController(segueId: String) {
+        self.performSegue(withIdentifier: segueId, sender: self)
     }
 
     func checkLoginStatus() {
         let userLoggedIn = UserDefaults.standard.bool(forKey: "LOGGED_IN")
-
         let token = authentificationService?.oauth2.accessToken
 
         if (!userLoggedIn) || (userLoggedIn && token == nil) {
+            print("Not loged in or token has expired")
             authentificationService?.authorize(presenting: self)
+        } else if userLoggedIn && token != nil {
+            self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+            print("Loged in")
         }
-    }
-
-    public func logout() {
-        authentificationService?.logout()
-        self.checkLoginStatus()
-    }
-
-    @objc internal func handleLogoutButton(sender: UIButton) {
-        logout()
     }
 
     @IBAction func checkAuthentification(sender: UIButton) {
-        let context = appDelegate.persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
-
         authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
         checkLoginStatus()
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-                checkUser(data: data)
-            }
-        } catch {
-            print("Fetch failed")
-        }
-        if !profileAutorized {
-            let alert = UIAlertController(title: "Veuillez réessayer", message: "Identifiant inconnu ou mot de passe incorrect.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true)
-        }
     }
 }
