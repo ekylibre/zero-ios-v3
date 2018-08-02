@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
+		04234A282113523C007DE682 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04234A272113523C007DE682 /* oauthInfo.plist */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
 		047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
+		04234A272113523C007DE682 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
 		047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				6BEA657A2105C5EF0072840F /* Assets.xcassets */,
 				6BEA657F2105C5EF0072840F /* Info.plist */,
 				6BEA65772105C5EE0072840F /* Clic_Farm_iOS.xcdatamodeld */,
+				04234A272113523C007DE682 /* oauthInfo.plist */,
 			);
 			path = "Clic&Farm-iOS";
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				6BEA657E2105C5EF0072840F /* LaunchScreen.storyboard in Resources */,
 				6BEA657B2105C5EF0072840F /* Assets.xcassets in Resources */,
+				04234A282113523C007DE682 /* oauthInfo.plist in Resources */,
 				6BEA65762105C5EE0072840F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
