@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		043D920921087EAB006B11D5 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043D920821087EAB006B11D5 /* OAuthSwift.framework */; };
+		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
 		047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */; };
@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		043D920821087EAB006B11D5 /* OAuthSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuthSwift.framework; path = Carthage/Build/iOS/OAuthSwift.framework; sourceTree = "<group>"; };
+		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
 		047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				043D920921087EAB006B11D5 /* OAuthSwift.framework in Frameworks */,
+				0411295A2110937300AE884D /* OAuth2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 		047B57CB2108605400C48F68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				043D920821087EAB006B11D5 /* OAuthSwift.framework */,
+				041129592110937300AE884D /* OAuth2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,7 +193,7 @@
 				6BEA65692105C5EE0072840F /* Sources */,
 				6BEA656A2105C5EE0072840F /* Frameworks */,
 				6BEA656B2105C5EE0072840F /* Resources */,
-				047B57CE2108609F00C48F68 /* ShellScript */,
+				0411295B2110939D00AE884D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -281,13 +281,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		047B57CE2108609F00C48F68 /* ShellScript */ = {
+		0411295B2110939D00AE884D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOs/OAuthSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
 			);
 			outputPaths = (
 			);
