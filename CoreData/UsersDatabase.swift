@@ -8,9 +8,8 @@
 
 import UIKit
 import CoreData
-import OAuthSwift
 
-class UsersDatabase: AuthentificationService {
+class UsersDatabase: UIViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
@@ -44,15 +43,6 @@ class UsersDatabase: AuthentificationService {
             print("Fetch failed")
         }
         return false
-    }
-
-    func addNewUser(userName: String) {
-        let context = appDelegate.persistentContainer.viewContext
-        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context) as! Users
-
-        newUser.userName = userName
-        newUser.firstConnection = true
-        appDelegate.saveContext()
     }
 
     func fetchData(entity: String, dataToFetch: String) {
