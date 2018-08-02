@@ -17,10 +17,14 @@ open class AuthentificationService {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     public init(username: String, password: String) {
+        var keys: NSDictionary!
+        if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
         oauth2 = OAuth2PasswordGrant(settings: [
-            "client_id": "3b6579e1ce312d7b0fdf8f2f0eb61c9d644e3081f102264c7e5d2a999926429f",
-            "client_secret": "c7e7749a8bb4e3bf67d0402b6a1b06707717d59f41e304b466a32b86b8873d29",
-            "token_uri": "https://ekylibre-test.com/oauth/token",
+            "client_id": keys["parseClientId"]!,
+            "client_secret": keys["parseClientSecret"]!,
+            "token_uri": keys["parseTokenUrl"]!,
             "username": username,
             "password": password,
             "grant_type": "password",
