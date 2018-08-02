@@ -12,8 +12,6 @@ import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var authentificationService: AuthentificationService?
-    
     //MARK: Properties
 
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -24,21 +22,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var rightInterventionButton: UIButton!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var addInterventionLabel: UILabel!
-    
+
+    var authentificationService: AuthentificationService?
+
     var interventions = [NSManagedObject]()
     var workingPeriods = [NSManagedObject]()
-    
+
     var interventionButtons: [UIButton] = []
-    
+
     let dimView = UIView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Change status bar appearance
         UIApplication.shared.statusBarStyle = .lightContent
         UIApplication.shared.statusBarView?.backgroundColor = UIColor(rgb: 0x175FC8)
-        
+
         // Rounded buttons
         leftInterventionButton.layer.cornerRadius = 3
         leftInterventionButton.clipsToBounds = true
@@ -105,14 +105,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func initialiseInterventionButtons() {
-        
+
         let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
         let interventionImages: [UIImage] = [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "groundWork"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "cropProtection")]
-        
+
         for buttonCount in 0...6 {
-            
+
             let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
-            
+
             interventionButton.backgroundColor = UIColor.white
             interventionButton.setBackgroundImage(interventionImages[buttonCount], for: .normal)
             interventionButton.setTitle(interventionNames[buttonCount], for: .normal)
@@ -123,31 +123,31 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
             bottomView.addSubview(interventionButton)
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
+
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+
         let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
         let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
-        
+
         do {
             interventions = try managedContext.fetch(interventionsFetchRequest)
             workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
+
         if interventions.count == 0 {
             loadSampleInterventions()
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -200,7 +200,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         // Fetches the appropriate intervention for the data source layout
         let intervention = interventions[indexPath.row]
         let workingPeriod = workingPeriods[indexPath.row]
-        
+
         switch intervention.value(forKeyPath: "type") as! Int16 {
         case Intervention.InterventionType.Care.rawValue:
             cell.typeLabel.text = "Entretien"
@@ -226,7 +226,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         default:
             cell.typeLabel.text = "Erreur"
         }
-        
+
         switch intervention.value(forKeyPath: "status") as! Int16 {
         case Intervention.Status.OutOfSync.rawValue:
             cell.syncImage.backgroundColor = UIColor.orange
@@ -237,38 +237,38 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         default:
             cell.syncImage.backgroundColor = UIColor.purple
         }
-        
+
         //cell.cropsLabel.text = intervention.value(forKeyPath: "crops") as? String
         cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
         cell.dateLabel.text = transformDate(date: workingPeriod.value(forKeyPath: "executionDate") as! Date)
-        
+
         // Resize labels according to their text
         cell.typeLabel.sizeToFit()
         cell.cropsLabel.sizeToFit()
         cell.infosLabel.sizeToFit()
-        
+
         return cell
     }
-    
+
     func createIntervention(type: Int16, infos: String, status: Int16, executionDate: Date) {
-        
+
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
+
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+
         let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
         let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-        
+
         let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
         let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
-        
+
         intervention.setValue(type, forKeyPath: "type")
         intervention.setValue(infos, forKeyPath: "infos")
         intervention.setValue(status, forKeyPath: "status")
         workingPeriod.setValue(executionDate, forKeyPath: "executionDate")
-        
+
         do {
             try managedContext.save()
             interventions.append(intervention)
@@ -276,7 +276,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        
+
         tableView.reloadData()
     }
 
@@ -306,7 +306,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         //let inter3 = Intervention(type: .Pulverisation, crops: "2 cultures", infos: "PRIORI GOLD", date: date3, status: .OutOfSync)
         let date4 = makeDate(year: 2017, month: 7, day: 22, hour: 9, minute: 5, second: 0)
         //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
-        
+
         createIntervention(type: 0, infos: "Volume 50mL", status: 0, executionDate: date1)
         createIntervention(type: 1, infos: "Kuhn Prolander", status: 0, executionDate: date2)
         createIntervention(type: 2, infos: "PRIORI GOLD", status: 1, executionDate: date3)
@@ -332,7 +332,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         }
 
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+
         for intervention in interventions {
             if intervention.value(forKeyPath: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
                 intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
@@ -349,9 +349,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     @objc func action(sender: UIButton) {
-        
+
         var type: Int16 = 0
-        
+
         switch sender.titleLabel?.text {
         case "Entretien":
             type = 0
@@ -373,7 +373,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())
         hideInterventionAdd()
     }
-    
+
     @objc func hideInterventionAdd() {
         addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION"
         for interventionButton in interventionButtons {
@@ -384,9 +384,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         heightConstraint.constant = 80
         dimView.isHidden = true
     }
-    
+
     @IBAction func addIntervention(_ sender: Any) {
-        
+
         heightConstraint.constant = 240
         addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION DE..."
         leftInterventionButton.isHidden = true
@@ -395,16 +395,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         var index: CGFloat = 1
         var line: CGFloat = 0
         let width = bottomView.frame.size.width
-        
+
         for interventionButton in interventionButtons {
-            
+
             interventionButton.isHidden = false
             interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 35 + line * 100, width: 70, height: 70)
             interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
             interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
             //implantationButton.imageEdgeInsets = UIEdgeInsets(top: 50, left: 50, bottom: implantationButton.titleLabel!.frame.size.height, right: 0)
             bottomView.layoutIfNeeded()
-            
+
             if index > 2 {
                 line += 1
                 index = 0
