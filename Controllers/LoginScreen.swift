@@ -27,7 +27,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         }
         if staticIndex.index == 0 {
             authentificationService = AuthentificationService(username: "", password: "")
-            self.checkLoggedStatus()
+            self.authentifyTheUser()
             staticIndex.index = 1
         }
     }
@@ -35,7 +35,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     func getLoggedStatus() -> Bool {
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
-
+        
         request.returnsObjectsAsFaults = false
         var usersInfo = [NSManagedObject]()
         
@@ -45,38 +45,48 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
             print("Fetch failed")
         }
         let loggedStatus: Bool = (usersInfo[(usersInfo.count) - 1].value(forKey: "loggedStatus") != nil)
-
+        
         return loggedStatus
     }
 
-    func checkLoggedStatus() {
+    func checkLoggedStatus(loggedStatus: Bool, token: String?, error: OAuth2Error?) {
+        if (!loggedStatus) || (loggedStatus && token == nil) {
+            if error?.description == "The Internet connection appears to be offline." {
+                self.performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
+            } else {
+                let alert = UIAlertController(title: "Veuillez réessayer", message: "Identifiant inconnu ou mot de passe incorrect.", preferredStyle: .alert)
+
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
+        } else if loggedStatus && token != nil {
+            self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+        }
+    }
+
+    func authentifyTheUser() {
         if !entityIsEmpty(entity: "Users") {
-            var token = authentificationService?.oauth2.accessToken
-            var loggedStatus = getLoggedStatus()
+            let _ = authentificationService?.authorize(presenting: self)
+            var token = self.authentificationService?.oauth2.accessToken
+            var loggedStatus = self.getLoggedStatus()
 
-            if (!loggedStatus) || (loggedStatus && token == nil) {
-                authentificationService?.authorize(presenting: self)
-                token = authentificationService?.oauth2.accessToken
-                loggedStatus = getLoggedStatus()
-                if !loggedStatus {
-                    let alert = UIAlertController(title: "Veuillez réessayer", message: "Identifiant inconnu ou mot de passe incorrect.", preferredStyle: .alert)
-
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    self.present(alert, animated: true)
-                } else if loggedStatus && token != nil {
-                    self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
-                }
-            } else if loggedStatus && token != nil {
+            authentificationService?.oauth2.afterAuthorizeOrFail = { authParameters, error in
+                token = self.authentificationService?.oauth2.accessToken
+                loggedStatus = self.getLoggedStatus()
+                self.checkLoggedStatus(loggedStatus: loggedStatus, token: token, error: error)
+            }
+            if loggedStatus && token != nil {
                 self.performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
             }
         } else {
-            authentificationService?.authorize(presenting: self)
+            let _ = authentificationService?.authorize(presenting: self)
+            authentifyTheUser()
         }
     }
 
     @IBAction func checkAuthentification(sender: UIButton) {
         authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
-        checkLoggedStatus()
+        authentifyTheUser()
     }
 
     @IBAction func openForgottenPasswordLink(sender: UIButton) {
