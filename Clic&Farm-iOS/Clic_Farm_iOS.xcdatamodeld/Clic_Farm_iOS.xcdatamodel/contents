@@ -31,23 +31,23 @@
         <relationship name="equipments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipments" inverseName="tools" inverseEntity="Equipments" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="tools" inverseEntity="Interventions" syncable="YES"/>
     </entity>
+    <entity name="Users" representedClassName="Users" syncable="YES">
+        <attribute name="loggedStatus" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="WorkingPeriods" representedClassName="WorkingPeriods" syncable="YES" codeGenerationType="class">
         <attribute name="executionDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="hourDuration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
-    <entity name="Users" representedClassName="Users" syncable="YES">
-        <attribute name="firstConnection" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <elements>
         <element name="Crops" positionX="502" positionY="-234" width="128" height="103"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="148"/>
-        <element name="WorkingPeriods" positionX="-9" positionY="-133" width="128" height="88"/>
-        <element name="Targets" positionX="333" positionY="-234" width="128" height="103"/>
-        <element name="Plots" positionX="349" positionY="-330" width="128" height="60"/>
-        <element name="Tools" positionX="-9" positionY="-252" width="128" height="73"/>
         <element name="Equipments" positionX="-198" positionY="-252" width="128" height="58"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="148"/>
+        <element name="Plots" positionX="349" positionY="-330" width="128" height="60"/>
+        <element name="Targets" positionX="333" positionY="-234" width="128" height="103"/>
+        <element name="Tools" positionX="-9" positionY="-252" width="128" height="73"/>
         <element name="Users" positionX="-54" positionY="-9" width="128" height="75"/>
+        <element name="WorkingPeriods" positionX="-9" positionY="-133" width="128" height="88"/>
     </elements>
 </model>
