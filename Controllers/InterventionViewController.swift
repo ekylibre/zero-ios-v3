@@ -40,7 +40,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
-    UIApplication.shared.statusBarView?.backgroundColor = UIColor(rgb: 0x175FC8)
+    UIApplication.shared.statusBarView?.backgroundColor = Constants.ThemeColors.Blue
 
     // Rounded buttons
     leftInterventionButton.layer.cornerRadius = 3
