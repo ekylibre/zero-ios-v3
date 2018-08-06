@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
+		042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F654B2118590500EC9E27 /* oauthInfo.plist */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
 		047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
+		042F654B2118590500EC9E27 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
 		047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		6BEA65642105C5EE0072840F = {
 			isa = PBXGroup;
 			children = (
+				042F654B2118590500EC9E27 /* oauthInfo.plist */,
 				6BB2253E211849090036E167 /* AppDelegate.swift */,
 				6BB2253A211849090036E167 /* Assets.xcassets */,
 				6BB2253D211849090036E167 /* Info.plist */,
@@ -261,6 +264,7 @@
 			files = (
 				6BB22547211849DD0036E167 /* Main.storyboard in Resources */,
 				6BB22548211849E00036E167 /* LaunchScreen.storyboard in Resources */,
+				042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */,
 				6BB225402118490A0036E167 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

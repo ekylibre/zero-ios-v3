@@ -10,17 +10,17 @@ import UIKit
 import CoreData
 
 class UsersDatabase: UIViewController {
-
+  
   // MARK: Properties
-
+  
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+  
   // MARK: Actions
-
+  
   func emptyEntity(entity: String) {
     let context = appDelegate.persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-
+    
     request.returnsObjectsAsFaults = false
     do {
       let result = try context.fetch(request)
@@ -32,11 +32,11 @@ class UsersDatabase: UIViewController {
       print("Remove failed")
     }
   }
-
+  
   func entityIsEmpty(entity: String) -> Bool {
     let context = appDelegate.persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-
+    
     request.returnsObjectsAsFaults = false
     do {
       let result = try context.fetch(request)
@@ -48,11 +48,11 @@ class UsersDatabase: UIViewController {
     }
     return false
   }
-
+  
   func fetchData(entity: String, dataToFetch: String) {
     let context = appDelegate.persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-
+    
     request.returnsObjectsAsFaults = false
     do {
       let result = try context.fetch(request)

@@ -38,5 +38,5 @@ Carthage/Checkouts
 Carthage/Build
 
 # .plist files
-Clic&Farm-iOS/oauthInfo.plist
+oauthInfo.plist
 
