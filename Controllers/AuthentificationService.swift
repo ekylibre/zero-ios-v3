@@ -6,15 +6,18 @@
 //  Copyright © 2018 Ekylibre. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import OAuth2
 import CoreData
 
 open class AuthentificationService {
 
+  // MARK: Properties
+
   public var oauth2: OAuth2PasswordGrant
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+  // MARK: Initialization
 
   public init(username: String, password: String) {
     var keys: NSDictionary!
@@ -32,6 +35,8 @@ open class AuthentificationService {
       "verbose": true
       ] as OAuth2JSON)
   }
+
+  // MARK: Actions
 
   func emptyUsersList() {
     let context = appDelegate.persistentContainer.viewContext
