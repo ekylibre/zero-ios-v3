@@ -15,12 +15,15 @@ class AddInterventionViewController: UIViewController {
 
   @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var selectCropsView: UIView!
+  @IBOutlet weak var cropsTableView: UITableView!
   @IBOutlet weak var interventionToolsTableView: UITableView!
   @IBOutlet weak var validateButton: UIButton!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
+
+  var crops = [NSManagedObject]()
 
   var interventionTools = [NSManagedObject]() {
     didSet {
@@ -62,6 +65,28 @@ class AddInterventionViewController: UIViewController {
     validateButton.layer.cornerRadius = 3
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if crops.count == 0 {
+      loadSampleCrops()
+    }
+  }
+
   //MARK: Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -69,22 +94,32 @@ class AddInterventionViewController: UIViewController {
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return interventionTools.count
+
+    switch tableView {
+    case  cropsTableView:
+      return crops.count
+    case interventionToolsTableView:
+      return interventionTools.count
+    default:
+      return 1
+    }
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = UITableViewCell()
+    let crop = crops[indexPath.row]
 
     switch tableView {
-    case interventionToolsTableView:
-      cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath)
-    default:
+    case cropsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "CropsTableViewCell", for: indexPath) as! CropsTableViewCell
+      cell.nameLabel.text = crop.value(forKey: "name") as? String
+      cell.surfaceAreaLabel.text = ("\(crop.value(forKey: "surfaceArea") ?? "") ha")
       return cell
+    case interventionToolsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath)
+      return cell
+    default:
+      fatalError("Swith error")
     }
-
-    //cell.layoutMargins = UIEdgeInsets.zero
-
-    return cell
   }
 
   /*
@@ -112,6 +147,36 @@ class AddInterventionViewController: UIViewController {
     }, completion: { _ in
       self.animationRunning = false
     })
+  }
+
+  func createCrop(name: String, surfaceArea: Double, uuid: UUID) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
+
+    let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
+
+    crop.setValue(name, forKeyPath: "name")
+    crop.setValue(surfaceArea, forKeyPath: "surfaceArea")
+    crop.setValue(uuid, forKeyPath: "uuid")
+
+    do {
+      try managedContext.save()
+      crops.append(crop)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func loadSampleCrops() {
+    createCrop(name: "Crop 1", surfaceArea: 7.5, uuid: UUID())
+    createCrop(name: "Crop 2", surfaceArea: 0.651, uuid: UUID())
+    createCrop(name: "Crop 3", surfaceArea: 12.02, uuid: UUID())
   }
 
   //MARK: - Actions
