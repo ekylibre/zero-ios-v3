@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+struct Constants {
+  struct ThemeColors {
+    static let Blue = UIColor.Blue
+  }
+}

@@ -99,6 +99,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Load table view
     self.tableView.dataSource = self
     self.tableView.delegate = self
+
+    tableView.alwaysBounceVertical = false
   }
 
   func initialiseInterventionButtons() {

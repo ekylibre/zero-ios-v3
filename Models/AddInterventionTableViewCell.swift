@@ -18,8 +18,13 @@ class InterventionToolsTableViewCell: UITableViewCell {
 
 }
 
-class InterventionCropsTableViewCell: UITableViewCell {
+class CropsTableViewCell: UITableViewCell {
 
+  @IBOutlet weak var checkboxButton: UIButton!
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var surfaceAreaLabel: UILabel!
+  @IBOutlet weak var collapseExpandButton: UIButton!
+  
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
 
