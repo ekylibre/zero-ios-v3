@@ -12,5 +12,5 @@ import CoreData
 
 @objc(Users)
 public class Users: NSManagedObject {
-  
+
 }
