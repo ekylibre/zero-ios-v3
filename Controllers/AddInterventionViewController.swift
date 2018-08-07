@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
   //MARK : Properties
 
@@ -63,6 +63,9 @@ class AddInterventionViewController: UIViewController {
 
     // Crops select
     validateButton.layer.cornerRadius = 3
+
+    self.cropsTableView.dataSource = self
+    self.cropsTableView.delegate = self
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +88,8 @@ class AddInterventionViewController: UIViewController {
     if crops.count == 0 {
       loadSampleCrops()
     }
+
+    cropsTableView.reloadData()
   }
 
   //MARK: Table view
@@ -110,9 +115,11 @@ class AddInterventionViewController: UIViewController {
 
     switch tableView {
     case cropsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "CropsTableViewCell", for: indexPath) as! CropsTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "cropsTableViewCell", for: indexPath) as! CropsTableViewCell
       cell.nameLabel.text = crop.value(forKey: "name") as? String
-      cell.surfaceAreaLabel.text = ("\(crop.value(forKey: "surfaceArea") ?? "") ha")
+      cell.nameLabel.sizeToFit()
+      cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKey: "surfaceArea") as! Double)
+      cell.surfaceAreaLabel.sizeToFit()
       return cell
     case interventionToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath)
@@ -175,8 +182,8 @@ class AddInterventionViewController: UIViewController {
 
   private func loadSampleCrops() {
     createCrop(name: "Crop 1", surfaceArea: 7.5, uuid: UUID())
-    createCrop(name: "Crop 2", surfaceArea: 0.651, uuid: UUID())
-    createCrop(name: "Crop 3", surfaceArea: 12.02, uuid: UUID())
+    createCrop(name: "Epoisses", surfaceArea: 0.651, uuid: UUID())
+    createCrop(name: "Cabécou", surfaceArea: 12.06, uuid: UUID())
   }
 
   //MARK: - Actions
