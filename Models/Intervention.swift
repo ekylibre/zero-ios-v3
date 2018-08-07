@@ -10,9 +10,9 @@ import UIKit
 import os.log
 
 class Intervention {
-  
+
   //MARK: Properties
-  
+
   enum InterventionType: Int16 {
     case Care = 0
     case CropProtection = 1
@@ -22,21 +22,21 @@ class Intervention {
     case Implantation = 5
     case Irrigation = 6
   }
-  
+
   enum Status: Int16 {
     case OutOfSync = 0
     case Synchronised = 1
     case Validated = 2
   }
-  
+
   var type: InterventionType
   var crops: String
   var infos: String
   var date: Date
   var status: Status
-  
+
   //MARK: Initialization
-  
+
   init(type: InterventionType, crops: String, infos: String, date: Date, status: Status) {
     self.type = type
     self.crops = crops
