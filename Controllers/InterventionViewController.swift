@@ -277,7 +277,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-
   // MARK: - Navigation
 
   // In a storyboard-based application, you will often want to do a little preparation before navigation
