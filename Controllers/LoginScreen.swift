@@ -72,7 +72,8 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   func authentifyUser() {
     if !entityIsEmpty(entity: "Users") {
-      let _ = authentificationService?.authorize(presenting: self)
+      authentificationService?.authorize(presenting: self)
+
       var token = authentificationService?.oauth2.accessToken
       var loggedStatus = getLoggedStatus()
 
@@ -85,7 +86,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
       }
     } else {
-      let _ = authentificationService?.authorize(presenting: self)
+      authentificationService?.authorize(presenting: self)
       authentifyUser()
     }
   }
@@ -96,8 +97,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   }
 
   @IBAction func openForgottenPasswordLink(sender: UIButton) {
-    if UIApplication.shared.canOpenURL(URL(string: "https://ekylibre.com/password/new")!) {
-      UIApplication.shared.open(URL(string: "https://ekylibre.com/password/new")!, options: [:], completionHandler: nil)
+    var keys: NSDictionary!
+    if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
+      keys = NSDictionary(contentsOfFile: path)
+    }
+    if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
+      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!, options: [:], completionHandler: nil)
     }
   }
 }

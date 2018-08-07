@@ -27,7 +27,7 @@ open class AuthentificationService {
     oauth2 = OAuth2PasswordGrant(settings: [
       "client_id": keys["parseClientId"]!,
       "client_secret": keys["parseClientSecret"]!,
-      "token_uri": keys["parseTokenUrl"]!,
+      "token_uri": "\(keys["parseUrl"]!)/oauth/token",
       "username": username,
       "password": password,
       "grant_type": "password",
