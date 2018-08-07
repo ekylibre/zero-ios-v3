@@ -31,7 +31,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
-      self.authentifyTheUser()
+      self.authentifyUser()
       staticIndex.firstLaunch = true
     }
   }
@@ -70,7 +70,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
-  func authentifyTheUser() {
+  func authentifyUser() {
     if !entityIsEmpty(entity: "Users") {
       let _ = authentificationService?.authorize(presenting: self)
       var token = authentificationService?.oauth2.accessToken
@@ -86,13 +86,13 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       }
     } else {
       let _ = authentificationService?.authorize(presenting: self)
-      authentifyTheUser()
+      authentifyUser()
     }
   }
 
   @IBAction func checkAuthentification(sender: UIButton) {
     authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
-    authentifyTheUser()
+    authentifyUser()
   }
 
   @IBAction func openForgottenPasswordLink(sender: UIButton) {
