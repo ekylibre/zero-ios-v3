@@ -55,9 +55,9 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     return loggedStatus
   }
 
-  func checkLoggedStatus(loggedStatus: Bool, token: String?, error: OAuth2Error?) {
-    if (!loggedStatus) || (loggedStatus && token == nil) {
-      if error?.description == "The Internet connection appears to be offline." {
+  func checkLoggedStatus(token: String?) {
+    if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
+      if !Connectivity.isConnectedToInternet() {
         performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
       } else {
         let alert = UIAlertController(title: "Veuillez réessayer", message: "Identifiant inconnu ou mot de passe incorrect.", preferredStyle: .alert)
@@ -65,7 +65,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true)
       }
-    } else if loggedStatus && token != nil {
+    } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
     }
   }
@@ -75,14 +75,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       authentificationService?.authorize(presenting: self)
 
       var token = authentificationService?.oauth2.accessToken
-      var loggedStatus = getLoggedStatus()
 
       authentificationService?.oauth2.afterAuthorizeOrFail = { authParameters, error in
         token = self.authentificationService?.oauth2.accessToken
-        loggedStatus = self.getLoggedStatus()
-        self.checkLoggedStatus(loggedStatus: loggedStatus, token: token, error: error)
+        self.checkLoggedStatus(token: token)
       }
-      if loggedStatus && token != nil {
+      if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
         performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
       }
     } else {

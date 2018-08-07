@@ -17,5 +17,4 @@ extension Users {
   }
 
   @NSManaged public var userName: String?
-  @NSManaged public var loggedStatus: Bool
 }

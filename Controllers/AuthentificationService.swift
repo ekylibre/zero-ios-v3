@@ -55,25 +55,18 @@ open class AuthentificationService {
   }
 
   public func authorize(presenting view: UIViewController) {
-    emptyUsersList()
-    let context = appDelegate.persistentContainer.viewContext
-    let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context) as! Users
-
     oauth2.authorizeEmbedded(from: view) { (authParameters, error) in
       if let _ = authParameters {
-        print("\n\(authParameters!)\n")
-        newUser.loggedStatus = true
+        print("Authrorization succed")
       }
       else {
-        newUser.loggedStatus = false
-        print("\nAuthorization was canceled or went wrong: \(String(describing: error?.description))\n")
+        print("Authorization was canceled or went wrong: \(String(describing: error?.description))")
       }
       self.appDelegate.saveContext()
     }
   }
 
   public func logout() {
-    emptyUsersList()
     oauth2.username = nil
     oauth2.password = nil
     oauth2.forgetTokens()
