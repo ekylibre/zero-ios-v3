@@ -23,6 +23,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var selectToolsView: UIView!
+  @IBOutlet weak var createToolsView: UIView!
+  @IBOutlet weak var darkLayerView: UIView!
+  @IBOutlet weak var toolName: UITextField!
+  @IBOutlet weak var toolNumber: UITextField!
 
   var crops = [NSManagedObject]()
 
@@ -193,14 +197,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func selectCrops(_ sender: Any) {
     self.dimView.isHidden = false
     self.selectCropsView.isHidden = false
-    UIView.animate(withDuration: 1, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
-    })
-  }
-
-  @IBAction func selectTools(_ sender: Any) {
-    self.dimView.isHidden = false
-    self.selectToolsView.isHidden = false
     UIView.animate(withDuration: 1, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
     })
