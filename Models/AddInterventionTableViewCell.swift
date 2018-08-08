@@ -15,7 +15,6 @@ class InterventionToolsTableViewCell: UITableViewCell {
 
     // Configure the view for the selected state
   }
-
 }
 
 class CropsTableViewCell: UITableViewCell {
@@ -30,5 +29,4 @@ class CropsTableViewCell: UITableViewCell {
 
     // Configure the view for the selected state
   }
-
 }
