@@ -22,6 +22,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
+  @IBOutlet weak var selectToolsView: UIView!
 
   var crops = [NSManagedObject]()
 
@@ -44,11 +45,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
     let typeLabel = UILabel()
+
     if interventionType != nil {
       typeLabel.text = interventionType
     }
+    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
     typeLabel.textColor = UIColor.white
-    typeLabel.sizeToFit()
 
     let leftItem = UIBarButtonItem.init(customView: typeLabel)
     navigationItem.leftBarButtonItem = leftItem
@@ -196,6 +198,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
   }
 
+  @IBAction func selectTools(_ sender: Any) {
+    self.dimView.isHidden = false
+    self.selectToolsView.isHidden = false
+    UIView.animate(withDuration: 1, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+    })
+  }
+
   @IBAction func validateCrops(_ sender: Any) {
     self.dimView.isHidden = true
     self.selectCropsView.isHidden = true
@@ -213,6 +223,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     animateView(isCollapse: shouldCollapse, angle: shouldCollapse ? CGFloat.pi : CGFloat.pi - 3.14159)
   }
+
   @IBAction func cancelAdding(_ sender: Any) {
     dismiss(animated: true, completion: nil)
   }
