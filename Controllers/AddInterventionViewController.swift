@@ -27,6 +27,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var darkLayerView: UIView!
   @IBOutlet weak var toolName: UITextField!
   @IBOutlet weak var toolNumber: UITextField!
+  @IBOutlet weak var toolType: UILabel!
 
   var crops = [NSManagedObject]()
 
@@ -124,11 +125,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "cropsTableViewCell", for: indexPath) as! CropsTableViewCell
       cell.nameLabel.text = crop.value(forKey: "name") as? String
       cell.nameLabel.sizeToFit()
-      cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKey: "surfaceArea") as! Double)
+      cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.value(forKey: "surfaceArea") as! Double)
       cell.surfaceAreaLabel.sizeToFit()
       return cell
     case interventionToolsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath)
+      let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionTableViewCell
       return cell
     default:
       fatalError("Swith error")
@@ -223,4 +224,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func cancelAdding(_ sender: Any) {
     dismiss(animated: true, completion: nil)
   }
+
+
 }

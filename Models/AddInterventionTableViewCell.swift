@@ -10,6 +10,10 @@ import UIKit
 
 class InterventionToolsTableViewCell: UITableViewCell {
 
+  @IBOutlet weak var toolNameLabel: UILabel!
+  @IBOutlet weak var toolTypeLabel: UILabel!
+  @IBOutlet weak var toolTypeImageView: UIImageView!
+
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
 

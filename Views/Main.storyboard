@@ -170,9 +170,6 @@
                                 <state key="normal" title="Log-Out Tmp">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <connections>
-                                    <action selector="handleLogoutButtonWithSender:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="6Lg-7x-k4i"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -798,7 +795,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="createTools:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="GUL-vc-rkU"/>
+                                                    <action selector="openCreateToolsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="gr1-AW-G7C"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -817,6 +814,50 @@
                                             <constraint firstAttribute="height" constant="0.5" id="Glp-BH-AEW"/>
                                         </constraints>
                                     </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2QD-fJ-aXc">
+                                        <rect key="frame" x="0.0" y="152.5" width="335" height="416.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionToolsTableViewCell" rowHeight="70" id="xwY-oT-on3">
+                                                <rect key="frame" x="0.0" y="28" width="335" height="70"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xwY-oT-on3" id="zbU-5b-dYp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="69.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OkW-E4-67T" userLabel="Tool Type Image View">
+                                                            <rect key="frame" x="15" y="15" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="6Mc-cl-JTC"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-Pa-mmw" userLabel="Tool Type Label">
+                                                            <rect key="frame" x="70" y="41" width="31" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSv-ix-pwS" userLabel="Tool Name Label">
+                                                            <rect key="frame" x="70" y="15" width="35.5" height="15"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="2xU-w5-GyM"/>
+                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="Na0-rP-3if"/>
+                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="11" id="QMU-8M-rkB"/>
+                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="topMargin" constant="4" id="UK7-jV-uYt"/>
+                                                        <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="top" constant="15" id="YxI-kN-eRA"/>
+                                                        <constraint firstItem="OkW-E4-67T" firstAttribute="leading" secondItem="zbU-5b-dYp" secondAttribute="leading" constant="15" id="chJ-WA-q1u"/>
+                                                        <constraint firstAttribute="bottom" secondItem="OkW-E4-67T" secondAttribute="bottom" constant="15" id="i86-qL-0PP"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="oDC-Pa-mmw" secondAttribute="bottom" constant="4" id="s8j-Ow-gS0"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7u-Pw-d2r" userLabel="Dark Layer View">
                                         <rect key="frame" x="-20" y="-51" width="375" height="679"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50476241438356162" colorSpace="custom" customColorSpace="sRGB"/>
@@ -873,6 +914,9 @@
                                                 <state key="normal" title="CRÉER">
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="createNewTool:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="NEE-fV-Fme"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLB-CA-7x6">
                                                 <rect key="frame" x="187" y="155" width="70" height="30"/>
@@ -880,7 +924,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="cancelToolCreation:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="DA5-OO-L6j"/>
+                                                    <action selector="closeToolsCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="A3C-Fk-JBE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -909,19 +953,23 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="2QD-fJ-aXc" firstAttribute="top" secondItem="01a-h3-lM4" secondAttribute="bottom" constant="1" id="3Bk-hs-y0O"/>
                                     <constraint firstItem="01a-h3-lM4" firstAttribute="leading" secondItem="3af-DS-yQg" secondAttribute="leading" id="4ep-B2-HZF"/>
                                     <constraint firstItem="3af-DS-yQg" firstAttribute="top" secondItem="FSb-Nn-Xag" secondAttribute="bottom" id="5tg-J9-ILk"/>
                                     <constraint firstItem="FSb-Nn-Xag" firstAttribute="top" secondItem="k1P-VF-83v" secondAttribute="top" id="701-js-bIJ"/>
                                     <constraint firstAttribute="bottom" secondItem="M7u-Pw-d2r" secondAttribute="bottom" constant="-59" id="7z1-sO-wQL"/>
+                                    <constraint firstAttribute="trailing" secondItem="2QD-fJ-aXc" secondAttribute="trailing" id="AR5-ao-c2J"/>
                                     <constraint firstItem="01a-h3-lM4" firstAttribute="top" secondItem="FSb-Nn-Xag" secondAttribute="bottom" constant="52" id="BDy-Qd-0Z4"/>
                                     <constraint firstItem="3a0-aF-uTT" firstAttribute="top" secondItem="01a-h3-lM4" secondAttribute="bottom" id="Crg-bN-Tfb"/>
                                     <constraint firstAttribute="bottom" secondItem="kHt-fp-S63" secondAttribute="bottom" constant="181" id="Fiy-vv-Ljf"/>
                                     <constraint firstItem="3a0-aF-uTT" firstAttribute="leading" secondItem="01a-h3-lM4" secondAttribute="leading" id="LBt-RY-Vbf"/>
                                     <constraint firstItem="3a0-aF-uTT" firstAttribute="leading" secondItem="k1P-VF-83v" secondAttribute="leading" id="PyY-9l-8oR"/>
                                     <constraint firstItem="3a0-aF-uTT" firstAttribute="trailing" secondItem="01a-h3-lM4" secondAttribute="trailing" id="S9e-T8-yYG"/>
+                                    <constraint firstItem="2QD-fJ-aXc" firstAttribute="leading" secondItem="k1P-VF-83v" secondAttribute="leading" id="VRW-3j-mTb"/>
                                     <constraint firstItem="3a0-aF-uTT" firstAttribute="trailing" secondItem="kHt-fp-S63" secondAttribute="trailing" id="XBk-iU-qm9"/>
+                                    <constraint firstAttribute="bottom" secondItem="2QD-fJ-aXc" secondAttribute="bottom" id="Xc2-Nq-q6O"/>
                                     <constraint firstItem="kHt-fp-S63" firstAttribute="top" secondItem="3a0-aF-uTT" secondAttribute="bottom" constant="35" id="btt-tq-fGQ"/>
                                     <constraint firstItem="01a-h3-lM4" firstAttribute="trailing" secondItem="3af-DS-yQg" secondAttribute="trailing" id="eWU-sf-acd"/>
                                     <constraint firstItem="3a0-aF-uTT" firstAttribute="leading" secondItem="kHt-fp-S63" secondAttribute="leading" id="fXv-D6-pov"/>
@@ -971,18 +1019,19 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collapseButton" destination="fJR-CJ-tlU" id="eiF-In-vl8"/>
-                        <outlet property="createToolsView" destination="kHt-fp-S63" id="Pr7-Us-lXT"/>
+                        <outlet property="createToolsView" destination="kHt-fp-S63" id="feJ-zZ-e2k"/>
                         <outlet property="cropsTableView" destination="8VN-SY-uWs" id="a1E-Pz-fGp"/>
                         <outlet property="darkLayerView" destination="M7u-Pw-d2r" id="dam-a9-WrY"/>
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
-                        <outlet property="interventionToolsTableView" destination="S1G-aq-VJB" id="IDH-rV-xyz"/>
+                        <outlet property="interventionToolsTableView" destination="2QD-fJ-aXc" id="jm4-Lz-32N"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="selectCropsView" destination="l2G-uL-Jfd" id="zi3-gC-8f0"/>
                         <outlet property="selectToolsView" destination="k1P-VF-83v" id="mew-3I-SmN"/>
                         <outlet property="toolName" destination="BuY-c0-rnF" id="Mvb-IX-fPE"/>
                         <outlet property="toolNumber" destination="3ay-Ie-glI" id="XTu-9z-L0H"/>
+                        <outlet property="toolType" destination="Tur-MK-R4c" id="OmJ-cc-mUm"/>
                         <outlet property="validateButton" destination="1QM-0U-Y2f" id="QW9-oU-3pa"/>
                     </connections>
                 </viewController>
