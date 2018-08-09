@@ -26,7 +26,7 @@ class CropsTableViewCell: UITableViewCell {
   @IBOutlet weak var expandCollapseButton: UIButton!
   
   override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
+    //super.setSelected(selected, animated: animated)
 
     // Configure the view for the selected state
   }
