@@ -27,3 +27,10 @@ class InterventionToolsTableViewCell: UITableViewCell {
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!
 }
+
+class SelectedToolsTableViewCell: UITableViewCell {
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var typeLabel: UILabel!
+  @IBOutlet weak var typeImageView: UIImageView!
+  @IBOutlet weak var deleteButton: UIButton!
+}
