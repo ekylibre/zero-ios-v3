@@ -27,6 +27,26 @@ extension AddInterventionViewController {
     })
   }
 
+  func fetchTools() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let toolsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Tools")
+
+    do {
+      interventionTools = try managedContext.fetch(toolsFetchRequest)
+      /*for data in fetchTools {
+        print("Name: \(String(describing: data.value(forKey: "name")))\n")
+        print("Nbr: \(String(describing: data.value(forKey: "number")))\n")
+        print("type: \(String(describing: data.value(forKey: "type")))\n")
+        print("Data: \(data)")
+      }*/
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
   @IBAction func closeToolsCreationView(_ sender: Any) {
     toolName.text = nil
     toolNumber.text = nil
@@ -35,6 +55,7 @@ extension AddInterventionViewController {
     UIView.animate(withDuration: 1, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = .black
     })
+    fetchTools()
   }
 
   @IBAction func createNewTool(_ sender: Any) {
