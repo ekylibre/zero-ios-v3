@@ -12,16 +12,18 @@
 		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
 		047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
-		6B16F9342110A4E900D63316 /* AddInterventionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B16F9332110A4E900D63316 /* AddInterventionTableViewCell.swift */; };
+		6B05A225211ADB4600969D8B /* CustomCropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B05A224211ADB4600969D8B /* CustomCropCell.swift */; };
+		6B05A227211ADF3A00969D8B /* PlotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B05A226211ADF3A00969D8B /* PlotTableViewCell.swift */; };
+		6B16F9342110A4E900D63316 /* CropTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B16F9332110A4E900D63316 /* CropTableViewCell.swift */; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
-		6B8CD00E21143DD800BB0399 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8CD00D21143DD800BB0399 /* Constant.swift */; };
+		6BAE3F4F211C2DF400E71558 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAE3F4E211C2DF400E71558 /* ColorConstants.swift */; };
 		6BB225402118490A0036E167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2253A211849090036E167 /* Assets.xcassets */; };
 		6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BB22547211849DD0036E167 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22546211849C20036E167 /* Main.storyboard */; };
 		6BB22548211849E00036E167 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22545211849C20036E167 /* LaunchScreen.storyboard */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
-		6BEA65D02105CC5A0072840F /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65CF2105CC590072840F /* UIColorExtensions.swift */; };
+		6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */; };
 		6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DA2105CD820072840F /* LoginScreen.swift */; };
 		6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DC2105CD820072840F /* InterventionViewController.swift */; };
 		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
@@ -47,9 +49,11 @@
 		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
 		047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
-		6B16F9332110A4E900D63316 /* AddInterventionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionTableViewCell.swift; sourceTree = "<group>"; };
+		6B05A224211ADB4600969D8B /* CustomCropCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCropCell.swift; sourceTree = "<group>"; };
+		6B05A226211ADF3A00969D8B /* PlotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotTableViewCell.swift; sourceTree = "<group>"; };
+		6B16F9332110A4E900D63316 /* CropTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropTableViewCell.swift; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
-		6B8CD00D21143DD800BB0399 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		6BAE3F4E211C2DF400E71558 /* ColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		6BB2253A211849090036E167 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
 		6BB2253D211849090036E167 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,7 +64,7 @@
 		6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
 		6BEA658A2105C5EF0072840F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6BEA65CF2105CC590072840F /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		6BEA65DA2105CD820072840F /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		6BEA65DC2105CD820072840F /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
@@ -114,7 +118,7 @@
 				6BB22546211849C20036E167 /* Main.storyboard */,
 				6BB22545211849C20036E167 /* LaunchScreen.storyboard */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
-				6BEA65CF2105CC590072840F /* UIColorExtensions.swift */,
+				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -126,8 +130,9 @@
 				6BEA65E12105CD8A0072840F /* KeychainService.swift */,
 				6BEA65E22105CD8A0072840F /* Intervention.swift */,
 				6BEA65E32105CD8A0072840F /* InterventionTableViewCell.swift */,
-				6B16F9332110A4E900D63316 /* AddInterventionTableViewCell.swift */,
-				6B8CD00D21143DD800BB0399 /* Constant.swift */,
+				6B16F9332110A4E900D63316 /* CropTableViewCell.swift */,
+				6B05A224211ADB4600969D8B /* CustomCropCell.swift */,
+				6B05A226211ADF3A00969D8B /* PlotTableViewCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +148,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		6BAE3F4D211C2DD300E71558 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				6BAE3F4E211C2DF400E71558 /* ColorConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		6BEA65642105C5EE0072840F = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +168,7 @@
 				047BF0B22105D20B009F3945 /* Models */,
 				6BEA656E2105C5EE0072840F /* Products */,
 				047BF0B12105D1F9009F3945 /* Views */,
+				6BAE3F4D211C2DD300E71558 /* Constants */,
 				047B57CB2108605400C48F68 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -296,16 +310,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B05A225211ADB4600969D8B /* CustomCropCell.swift in Sources */,
 				047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */,
-				6B16F9342110A4E900D63316 /* AddInterventionTableViewCell.swift in Sources */,
+				6B16F9342110A4E900D63316 /* CropTableViewCell.swift in Sources */,
+				6BAE3F4F211C2DF400E71558 /* ColorConstants.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */,
 				047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */,
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				6BEA65E82105CD8B0072840F /* InterventionTableViewCell.swift in Sources */,
-				6B8CD00E21143DD800BB0399 /* Constant.swift in Sources */,
-				6BEA65D02105CC5A0072840F /* UIColorExtensions.swift in Sources */,
+				6B05A227211ADF3A00969D8B /* PlotTableViewCell.swift in Sources */,
+				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */,
 				6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
