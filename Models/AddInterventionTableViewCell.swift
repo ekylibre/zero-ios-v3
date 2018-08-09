@@ -8,7 +8,17 @@
 
 import UIKit
 
-class CropTableViewCell: UITableViewCell {
+class InterventionToolsTableViewCell: UITableViewCell {
+
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
+
+    // Configure the view for the selected state
+  }
+
+}
+
+class CropsTableViewCell: UITableViewCell {
 
   @IBOutlet weak var checkboxButton: UIButton!
   @IBOutlet weak var nameLabel: UILabel!
@@ -16,6 +26,9 @@ class CropTableViewCell: UITableViewCell {
   @IBOutlet weak var expandCollapseButton: UIButton!
 
   override func setSelected(_ selected: Bool, animated: Bool) {
-    
+    super.setSelected(selected, animated: animated)
+
+    // Configure the view for the selected state
   }
+
 }
