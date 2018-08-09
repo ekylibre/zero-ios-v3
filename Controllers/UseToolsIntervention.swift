@@ -11,9 +11,17 @@ import CoreData
 
 extension AddInterventionViewController {
 
-  @IBAction func selectTools(_ sender: Any) {
+  @IBAction func openSelectToolsView(_ sender: Any) {
     dimView.isHidden = false
     selectToolsView.isHidden = false
+    UIView.animate(withDuration: 1, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = .black
+    })
+  }
+
+  func closeSelectToolsView() {
+    dimView.isHidden = true
+    selectToolsView.isHidden = true
     UIView.animate(withDuration: 1, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = .black
     })
@@ -36,12 +44,6 @@ extension AddInterventionViewController {
 
     do {
       interventionTools = try managedContext.fetch(toolsFetchRequest)
-      /*for data in fetchTools {
-        print("Name: \(String(describing: data.value(forKey: "name")))\n")
-        print("Nbr: \(String(describing: data.value(forKey: "number")))\n")
-        print("type: \(String(describing: data.value(forKey: "type")))\n")
-        print("Data: \(data)")
-      }*/
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -58,6 +60,17 @@ extension AddInterventionViewController {
     fetchTools()
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print("Selected row: \(indexPath.row)")
+    switch tableView {
+    case interventionToolsTableView:
+      selectedTools.append(interventionTools[indexPath.row])
+      closeSelectToolsView()
+    default:
+      fatalError("Switch Error")
+    }
+  }
+  
   @IBAction func createNewTool(_ sender: Any) {
     if (toolType.text?.count)! > 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
