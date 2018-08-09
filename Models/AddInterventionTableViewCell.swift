@@ -8,19 +8,6 @@
 
 import UIKit
 
-class InterventionToolsTableViewCell: UITableViewCell {
-
-  @IBOutlet weak var toolNameLabel: UILabel!
-  @IBOutlet weak var toolTypeLabel: UILabel!
-  @IBOutlet weak var toolTypeImageView: UIImageView!
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-
-    // Configure the view for the selected state
-  }
-}
-
 class CropsTableViewCell: UITableViewCell {
 
   @IBOutlet weak var checkboxButton: UIButton!
@@ -33,4 +20,10 @@ class CropsTableViewCell: UITableViewCell {
 
     // Configure the view for the selected state
   }
+}
+
+class InterventionToolsTableViewCell: UITableViewCell {
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var typeLabel: UILabel!
+  @IBOutlet weak var typeImageView: UIImageView!
 }

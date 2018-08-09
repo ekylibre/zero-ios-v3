@@ -241,7 +241,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="499"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="805"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="555"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSN-Vk-B4W" userLabel="Crops View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -353,7 +353,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-qs-cOy" userLabel="Tools View">
-                                                <rect key="frame" x="0.0" y="204" width="375" height="300"/>
+                                                <rect key="frame" x="0.0" y="204" width="375" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outils" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4G-sV-gkh">
                                                         <rect key="frame" x="20" y="15" width="48.5" height="20.5"/>
@@ -362,12 +362,12 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S1G-aq-VJB">
-                                                        <rect key="frame" x="20" y="70" width="335" height="205"/>
+                                                        <rect key="frame" x="20" y="70" width="335" height="0.0"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="interventionToolCell" rowHeight="70" id="iLS-rZ-s4M" customClass="InterventionToolsTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TempTableViewCell" rowHeight="70" id="iLS-rZ-s4M">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iLS-rZ-s4M" id="sE8-VA-Faw">
@@ -458,7 +458,7 @@
                                                     <constraint firstItem="S1G-aq-VJB" firstAttribute="leading" secondItem="Ta7-qs-cOy" secondAttribute="leading" priority="999" constant="20" id="4Eh-gf-Zpx"/>
                                                     <constraint firstAttribute="trailing" secondItem="fJR-CJ-tlU" secondAttribute="trailing" constant="20" id="4Rd-0h-oxz"/>
                                                     <constraint firstAttribute="trailing" secondItem="S1G-aq-VJB" secondAttribute="trailing" priority="999" constant="20" id="9nu-Qs-Mgc"/>
-                                                    <constraint firstAttribute="height" constant="300" id="HUo-Z0-DIF"/>
+                                                    <constraint firstAttribute="height" constant="50" id="HUo-Z0-DIF"/>
                                                     <constraint firstItem="S1G-aq-VJB" firstAttribute="top" secondItem="Ta7-qs-cOy" secondAttribute="top" constant="70" id="PSr-Bi-wnV"/>
                                                     <constraint firstAttribute="bottom" secondItem="S1G-aq-VJB" secondAttribute="bottom" priority="999" constant="25" id="ZAD-dn-U3q"/>
                                                     <constraint firstItem="5AO-Jj-0ZP" firstAttribute="leading" secondItem="v4G-sV-gkh" secondAttribute="trailing" constant="15" id="d6a-Nv-q8W"/>
@@ -467,14 +467,14 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JD0-3t-7Su" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="512" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="262" width="375" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="Q2B-U4-JNm"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-Ro-sdH" userLabel="People View">
-                                                <rect key="frame" x="0.0" y="521" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="271" width="375" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personnes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAh-c6-yzZ">
                                                         <rect key="frame" x="20" y="15" width="86.5" height="20.5"/>
@@ -509,14 +509,14 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8j-bw-dvL" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="579" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="329" width="375" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="j0D-5u-EXh"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-HU-750" userLabel="Weather View">
-                                                <rect key="frame" x="0.0" y="588" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="338" width="375" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Météo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJi-KE-5Mc">
                                                         <rect key="frame" x="20" y="15" width="52" height="20.5"/>
@@ -541,14 +541,14 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4uv-L3-5Pb" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="646" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="396" width="375" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="BMi-Jj-lxr"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prM-9G-bHc" userLabel="Notes View">
-                                                <rect key="frame" x="0.0" y="655" width="375" height="150"/>
+                                                <rect key="frame" x="0.0" y="405" width="375" height="150"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Notes" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uGn-VV-4Ti">
                                                         <rect key="frame" x="20" y="30" width="335" height="18"/>
@@ -818,26 +818,26 @@
                                         <rect key="frame" x="0.0" y="152.5" width="335" height="416.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionToolsTableViewCell" rowHeight="70" id="xwY-oT-on3">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionToolsTableViewCell" rowHeight="70" id="xwY-oT-on3" customClass="InterventionToolsTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xwY-oT-on3" id="zbU-5b-dYp">
                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="69.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OkW-E4-67T" userLabel="Tool Type Image View">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OkW-E4-67T">
                                                             <rect key="frame" x="15" y="15" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="6Mc-cl-JTC"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-Pa-mmw" userLabel="Tool Type Label">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-Pa-mmw" userLabel="Type Label">
                                                             <rect key="frame" x="70" y="41" width="31" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSv-ix-pwS" userLabel="Tool Name Label">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSv-ix-pwS" userLabel="Name Label">
                                                             <rect key="frame" x="70" y="15" width="35.5" height="15"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
@@ -855,6 +855,11 @@
                                                         <constraint firstAttribute="bottomMargin" secondItem="oDC-Pa-mmw" secondAttribute="bottom" constant="4" id="s8j-Ow-gS0"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="nameLabel" destination="SSv-ix-pwS" id="cfd-Jk-bUi"/>
+                                                    <outlet property="typeImageView" destination="OkW-E4-67T" id="AYh-uA-sRT"/>
+                                                    <outlet property="typeLabel" destination="oDC-Pa-mmw" id="VbX-wj-ocv"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -1025,7 +1030,7 @@
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
-                        <outlet property="interventionToolsTableView" destination="2QD-fJ-aXc" id="jm4-Lz-32N"/>
+                        <outlet property="interventionToolsTableView" destination="2QD-fJ-aXc" id="s9p-gY-u44"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="selectCropsView" destination="l2G-uL-Jfd" id="zi3-gC-8f0"/>
                         <outlet property="selectToolsView" destination="k1P-VF-83v" id="mew-3I-SmN"/>
