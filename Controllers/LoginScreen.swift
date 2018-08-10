@@ -14,8 +14,8 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   // MARK: Properties
 
-  @IBOutlet var tfUsername: UITextField!
-  @IBOutlet var tfPassword: UITextField!
+  @IBOutlet weak var tfUsername: UITextField!
+  @IBOutlet weak var tfPassword: UITextField!
 
   var authentificationService: AuthentificationService?
 
