@@ -28,9 +28,20 @@ class InterventionToolsTableViewCell: UITableViewCell {
   @IBOutlet weak var typeImageView: UIImageView!
 }
 
+protocol SelectedToolsTableViewCellDelegate: class {
+  func removeCellButton(_ indexPath: Int)
+}
+
 class SelectedToolsTableViewCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!
   @IBOutlet weak var deleteButton: UIButton!
+
+  weak var cellDelegate: SelectedToolsTableViewCellDelegate?
+  var indexPath: Int!
+
+  @IBAction func buttonPressed(_ sender: UIButton) {
+    cellDelegate?.removeCellButton(self.indexPath)
+  }
 }
