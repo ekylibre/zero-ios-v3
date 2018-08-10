@@ -25,6 +25,7 @@ extension AddInterventionViewController {
     UIView.animate(withDuration: 1, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = .black
     })
+    selectedToolsTableView.reloadData()
   }
 
   @IBAction func openCreateToolsView(_ sender: Any) {
@@ -47,6 +48,7 @@ extension AddInterventionViewController {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+    interventionToolsTableView.reloadData()
   }
 
   @IBAction func closeToolsCreationView(_ sender: Any) {
@@ -61,16 +63,15 @@ extension AddInterventionViewController {
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    print("Selected row: \(indexPath.row)")
     switch tableView {
     case interventionToolsTableView:
       selectedTools.append(interventionTools[indexPath.row])
       closeSelectToolsView()
     default:
-      fatalError("Switch Error")
+      print("Nothing to do")
     }
   }
-  
+
   @IBAction func createNewTool(_ sender: Any) {
     if (toolType.text?.count)! > 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -86,7 +87,6 @@ extension AddInterventionViewController {
       do {
         try managedContext.save()
         interventionTools.append(tools)
-        print("Stored")
         closeToolsCreationView(self)
       } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")

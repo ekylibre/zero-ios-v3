@@ -375,20 +375,19 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vap-II-Bqo">
-                                                                            <rect key="frame" x="15" y="15" width="40" height="40"/>
+                                                                            <rect key="frame" x="15" y="15" width="40" height="39.5"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="40" id="VQk-Kw-4jL"/>
-                                                                                <constraint firstAttribute="height" constant="40" id="aiu-cw-zGN"/>
+                                                                                <constraint firstAttribute="width" constant="40" id="iQI-LC-6e6"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvf-Sv-2Q5">
-                                                                            <rect key="frame" x="70" y="19" width="76" height="16"/>
+                                                                            <rect key="frame" x="70" y="11" width="76" height="16"/>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Type Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-pY-jcH">
-                                                                            <rect key="frame" x="55" y="46" width="66" height="16"/>
+                                                                            <rect key="frame" x="70" y="38" width="66" height="16"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -404,17 +403,15 @@
                                                                         </button>
                                                                     </subviews>
                                                                     <constraints>
-                                                                        <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="topMargin" constant="11" id="BnX-6u-DY0"/>
-                                                                        <constraint firstItem="vap-II-Bqo" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="15" id="H59-BZ-1Xi"/>
-                                                                        <constraint firstItem="HRC-pY-jcH" firstAttribute="leading" secondItem="vap-II-Bqo" secondAttribute="trailing" id="LIh-wi-X3x"/>
-                                                                        <constraint firstItem="vap-II-Bqo" firstAttribute="leading" secondItem="sE8-VA-Faw" secondAttribute="leading" constant="15" id="NUr-9V-I9W"/>
-                                                                        <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="leading" secondItem="vap-II-Bqo" secondAttribute="trailing" constant="15" id="PbI-uq-RdX"/>
-                                                                        <constraint firstAttribute="bottomMargin" secondItem="vap-II-Bqo" secondAttribute="bottom" constant="15" id="QnG-Nj-T5B"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="9XQ-uB-zG5" secondAttribute="trailing" constant="15" id="ScS-dv-IVn"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="HRC-pY-jcH" secondAttribute="bottom" constant="4" id="XyG-LW-wSM"/>
-                                                                        <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="topMargin" constant="11" id="nT7-Oj-hIf"/>
-                                                                        <constraint firstItem="HRC-pY-jcH" firstAttribute="top" secondItem="Uvf-Sv-2Q5" secondAttribute="bottom" constant="11" id="rdh-YE-N1W"/>
-                                                                        <constraint firstItem="9XQ-uB-zG5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="15" id="u1z-nc-vB4"/>
+                                                                        <constraint firstItem="vap-II-Bqo" firstAttribute="leading" secondItem="sE8-VA-Faw" secondAttribute="leading" constant="15" id="2gI-jZ-4kB"/>
+                                                                        <constraint firstItem="HRC-pY-jcH" firstAttribute="top" secondItem="Uvf-Sv-2Q5" secondAttribute="bottom" constant="11" id="EiM-Ny-Uk1"/>
+                                                                        <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="leading" secondItem="vap-II-Bqo" secondAttribute="trailing" constant="15" id="Kmo-e7-qoz"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="9XQ-uB-zG5" secondAttribute="trailing" constant="15" id="Tpz-h7-qk1"/>
+                                                                        <constraint firstItem="vap-II-Bqo" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="15" id="ckl-wM-vAG"/>
+                                                                        <constraint firstItem="HRC-pY-jcH" firstAttribute="leading" secondItem="vap-II-Bqo" secondAttribute="trailing" constant="15" id="iUo-a3-WOj"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="vap-II-Bqo" secondAttribute="bottom" constant="15" id="lIL-Yk-WsM"/>
+                                                                        <constraint firstItem="9XQ-uB-zG5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="15" id="lnH-XU-CX9"/>
+                                                                        <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="11" id="pIe-M9-JwG"/>
                                                                     </constraints>
                                                                 </tableViewCellContentView>
                                                                 <connections>
@@ -1173,8 +1170,8 @@
                     <navigationItem key="navigationItem" id="Hax-Z6-6hg"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="tfPassword" destination="ScR-OF-ai0" id="P0t-T0-YS2"/>
-                        <outlet property="tfUsername" destination="vfb-X0-1tk" id="dtW-12-Gpl"/>
+                        <outlet property="tfPassword" destination="ScR-OF-ai0" id="mBJ-fl-emB"/>
+                        <outlet property="tfUsername" destination="vfb-X0-1tk" id="j9I-cx-eB1"/>
                         <segue destination="Ym6-0E-qVT" kind="presentation" identifier="SegueFromLogScreenToConnected" id="aDw-i0-Y4L"/>
                         <segue destination="CoO-3Z-MeU" kind="show" identifier="SegueNoInternetOnFirstConnection" id="16Z-w0-5gb"/>
                     </connections>

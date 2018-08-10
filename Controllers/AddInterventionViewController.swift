@@ -51,15 +51,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     typeLabel.textColor = UIColor.white
 
     let leftItem = UIBarButtonItem.init(customView: typeLabel)
+
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
-
     selectCropsView.clipsToBounds = true
     selectCropsView.layer.cornerRadius = 3
-
-    interventionToolsTableView.layer.borderWidth  = 0.5
-    interventionToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    interventionToolsTableView.layer.cornerRadius = 4
+    selectedToolsTableView.layer.borderWidth  = 0.5
+    selectedToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedToolsTableView.backgroundColor = Constants.ThemeColors.darkWhite
+    selectedToolsTableView.layer.cornerRadius = 4
 
     // Crops select
     validateButton.layer.cornerRadius = 3
@@ -75,13 +75,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
     let managedContext = appDelegate.persistentContainer.viewContext
-
     let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
 
     do {
@@ -89,11 +86,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
     if crops.count == 0 {
       loadSampleCrops()
     }
-
     cropsTableView.reloadData()
   }
 
@@ -140,7 +135,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.nameLabel.sizeToFit()
       cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop?.value(forKey: "surfaceArea") as! Double)
       cell.surfaceAreaLabel.sizeToFit()
-      print("Cell crop: \(cell)")
       return cell
     case interventionToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionToolsTableViewCell
@@ -148,15 +142,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.nameLabel.text = tool?.value(forKey: "name") as? String
       cell.typeLabel.text = tool?.value(forKey: "type") as? String
       cell.typeImageView.image = #imageLiteral(resourceName: "clic&farm-logo")
-      print("Cell tools: \(cell)")
       return cell
     case selectedToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedToolsTableViewCell", for: indexPath) as! SelectedToolsTableViewCell
 
+      cell.backgroundColor = Constants.ThemeColors.darkWhite
       cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
       cell.typeImageView.image = #imageLiteral(resourceName: "clic&farm-logo")
-      print("Cell Selected: \(cell)")
       return cell
     default:
       fatalError("Switch error")
