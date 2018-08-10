@@ -261,9 +261,8 @@
                                                             <action selector="selectCrops:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Mjr-KX-leI"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzB-DF-7rh">
-                                                        <rect key="frame" x="146" y="15" width="83" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzB-DF-7rh">
+                                                        <rect key="frame" x="102.5" y="15" width="83" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -273,6 +272,8 @@
                                                 <constraints>
                                                     <constraint firstItem="9EF-jN-lYP" firstAttribute="leading" secondItem="nSN-Vk-B4W" secondAttribute="leading" constant="18" id="7Z3-NF-uIO"/>
                                                     <constraint firstItem="m7X-YZ-r0s" firstAttribute="centerY" secondItem="nSN-Vk-B4W" secondAttribute="centerY" id="UD0-PN-TVg"/>
+                                                    <constraint firstItem="AzB-DF-7rh" firstAttribute="top" secondItem="nSN-Vk-B4W" secondAttribute="top" constant="15" id="Wdp-7c-d7k"/>
+                                                    <constraint firstItem="AzB-DF-7rh" firstAttribute="leading" secondItem="9EF-jN-lYP" secondAttribute="trailing" constant="20" id="YOd-0q-Nxz"/>
                                                     <constraint firstAttribute="height" constant="50" id="b5R-1G-Fvv"/>
                                                     <constraint firstAttribute="trailing" secondItem="m7X-YZ-r0s" secondAttribute="trailing" constant="18" id="oYd-kS-cbV"/>
                                                     <constraint firstItem="9EF-jN-lYP" firstAttribute="centerY" secondItem="nSN-Vk-B4W" secondAttribute="centerY" id="red-wv-i3s"/>
@@ -603,7 +604,7 @@
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BpI-Nm-wvL">
                                                             <rect key="frame" x="15" y="21" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal" image="uncheckedCheckbox"/>
+                                                            <state key="normal" title="name" image="uncheckedCheckbox"/>
                                                             <state key="selected" image="checkedCheckbox"/>
                                                             <connections>
                                                                 <action selector="tapCheckbox:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="EeC-JG-y19"/>
@@ -616,25 +617,25 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKq-o3-eSa">
-                                                            <rect key="frame" x="294" y="24" width="20" height="12"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="aiB-oi-jUG"/>
-                                                                <constraint firstAttribute="height" constant="12" id="qDN-m7-AKB"/>
-                                                            </constraints>
-                                                            <state key="normal" image="expandCollapse"/>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snf-87-gXA">
                                                             <rect key="frame" x="241" y="22" width="33" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKq-o3-eSa">
+                                                            <rect key="frame" x="304" y="22" width="16" height="16"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="16" id="ABy-07-xM3"/>
+                                                                <constraint firstAttribute="height" constant="16" id="ibV-er-VOt"/>
+                                                            </constraints>
+                                                            <state key="normal" image="expandCollapse"/>
+                                                        </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="UKq-o3-eSa" firstAttribute="top" secondItem="QcX-Jq-Iug" secondAttribute="topMargin" constant="13" id="PXP-O3-3Rm"/>
-                                                        <constraint firstItem="UKq-o3-eSa" firstAttribute="leading" secondItem="snf-87-gXA" secondAttribute="trailing" constant="20" id="Z21-K9-cDG"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="UKq-o3-eSa" secondAttribute="trailing" constant="6" id="ruq-2g-4ty"/>
+                                                        <constraint firstItem="UKq-o3-eSa" firstAttribute="leading" secondItem="snf-87-gXA" secondAttribute="trailing" constant="30" id="7YC-uX-nKD"/>
+                                                        <constraint firstItem="UKq-o3-eSa" firstAttribute="trailing" secondItem="QcX-Jq-Iug" secondAttribute="trailingMargin" id="P0i-em-Dfm"/>
+                                                        <constraint firstItem="UKq-o3-eSa" firstAttribute="top" secondItem="QcX-Jq-Iug" secondAttribute="topMargin" constant="11" id="jig-7K-YgK"/>
                                                         <constraint firstItem="snf-87-gXA" firstAttribute="top" secondItem="QcX-Jq-Iug" secondAttribute="topMargin" constant="11" id="vxb-0G-3Bc"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
@@ -928,7 +929,7 @@
     <resources>
         <image name="checkedCheckbox" width="25" height="25"/>
         <image name="clic&amp;farm-logo" width="40" height="40"/>
-        <image name="expandCollapse" width="490" height="303"/>
+        <image name="expandCollapse" width="128" height="128"/>
         <image name="uncheckedCheckbox" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>

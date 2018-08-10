@@ -27,6 +27,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   var crops = [NSManagedObject]()
   var plots = [NSManagedObject]()
+  var cropPlots = [[NSManagedObject]]()
+
+  var viewsArray = [[UIView]]()
 
   var interventionTools = [NSManagedObject]() {
     didSet {
@@ -70,15 +73,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.cropsTableView.dataSource = self
     self.cropsTableView.delegate = self
 
+    cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
     cropsTableView.alwaysBounceVertical = false
   }
 
-  func fetchPlots(cropId: Int) -> [NSManagedObject] {
+  func fetchPlots(cropId: Int) {
 
-    var cropPlots = [NSManagedObject]()
+    var plots = [NSManagedObject]()
+
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return []
+      return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -88,11 +93,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     plotsFetchRequest.predicate = predicate
 
     do {
-      cropPlots = try managedContext.fetch(plotsFetchRequest)
+      plots = try managedContext.fetch(plotsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return cropPlots
+
+    cropPlots.append(plots)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +120,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     if crops.count == 0 {
       loadSampleCrops()
+    }
+
+    for crop in crops {
+      let cropId = crop.value(forKey: "id") as! Int
+      fetchPlots(cropId: cropId)
     }
 
     cropsTableView.reloadData()
@@ -148,10 +159,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKey: "surfaceArea") as! Double)
       cell.surfaceAreaLabel.sizeToFit()
 
-      let cropId = crop.value(forKey: "id") as! Int
-      let plots = fetchPlots(cropId: cropId)
+      var views = [UIView]()
 
-      for (index, plot) in plots.enumerated() {
+      for (index, plot) in cropPlots[indexPath.row].enumerated() {
         let view = UIView(frame: CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60))
         view.backgroundColor = UIColor.white
         view.layer.borderColor = UIColor.lightGray.cgColor
@@ -159,9 +169,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let plotImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         plotImageView.backgroundColor = UIColor.lightGray
         view.addSubview(plotImageView)
-        let checkboxButton = UIImageView(frame: CGRect(x: 7, y: 7, width: 16, height: 16))
-        checkboxButton.image = #imageLiteral(resourceName: "uncheckedCheckbox")
-        view.addSubview(checkboxButton)
+        let checkboxImage = UIImageView(frame: CGRect(x: 7, y: 7, width: 16, height: 16))
+        checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+        view.addSubview(checkboxImage)
         let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
         nameLabel.textColor = UIColor.black
         let name = plot.value(forKey: "name") as! String
@@ -181,7 +191,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         gesture.numberOfTapsRequired = 1
         view.addGestureRecognizer(gesture)
         cell.addSubview(view)
+        views.append(view)
       }
+      viewsArray.append(views)
 
       return cell
     default:
@@ -228,7 +240,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // Select crop
 
-  var cropsCount = 0
+  var plotsCount = 0
   var totalSurfaceArea: Double = 0
 
   @IBAction func tapCheckbox(_ sender: UIButton) {
@@ -237,29 +249,38 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return
     }
 
-    let indexPath = cropsTableView.indexPath(for: cell)
+    let indexPath = cropsTableView.indexPath(for: cell)!
 
-    let cropSurfaceArea = crops[indexPath!.row].value(forKey: "surfaceArea") as! Double
+    let cropSurfaceArea = crops[indexPath.row].value(forKey: "surfaceArea") as! Double
 
     if !sender.isSelected {
       sender.isSelected = true
-      cropsCount += 1
+      plotsCount += cropPlots[indexPath.row].count
       totalSurfaceArea += cropSurfaceArea
+      for view in cell.subviews[2...cropPlots[indexPath.row].count + 1] {
+        let checkboxImage = view.subviews[1] as! UIImageView
+        checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
+      }
     } else {
       sender.isSelected = false
-      cropsCount -= 1
-      totalSurfaceArea -= cropSurfaceArea
+      for (index, view) in cell.subviews[2...cropPlots[indexPath.row].count + 1].enumerated() {
+        let checkboxImage = view.subviews[1] as! UIImageView
+        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+          checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+          plotsCount -= 1
+          totalSurfaceArea -= cropPlots[indexPath.row][index].value(forKey: "surfaceArea") as! Double
+        }
+      }
     }
 
-    if cropsCount == 0 {
+    if plotsCount == 0 {
       selectedCropsLabel.text = "Aucune sélection"
-    } else if cropsCount == 1 {
+    } else if plotsCount == 1 {
       selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
     } else {
-      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", cropsCount, totalSurfaceArea)
+      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", plotsCount, totalSurfaceArea)
     }
   }
-  
 
   /*
    // MARK: - Navigation
@@ -377,22 +398,49 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func selectPlot(sender: UIGestureRecognizer) {
+    let cell = sender.view?.superview as! CropTableViewCell
     let view = sender.view!
 
-    var imageViews = [UIImageView]()
+    var cropIndex: Int = 0
+    var plotIndex: Int = 0
 
-    for subview in view.subviews {
-      if subview is UIImageView {
-        imageViews.append(subview as! UIImageView)
+    for views in viewsArray {
+      if let indexView = views.index(of: view) {
+        cropIndex = viewsArray.index(of: views)!
+        plotIndex = indexView
+        break
       }
     }
 
-    for imageView in imageViews {
-      if imageView.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
-        imageView.image = #imageLiteral(resourceName: "checkedCheckbox")
-      } else if imageView.image == #imageLiteral(resourceName: "checkedCheckbox") {
-        imageView.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+    let checkboxImage = view.subviews[1] as! UIImageView
+
+    if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
+      checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
+      plotsCount += 1
+      totalSurfaceArea += cropPlots[cropIndex][plotIndex].value(forKey: "surfaceArea") as! Double
+      if !cell.checkboxButton.isSelected {
+        cell.checkboxButton.isSelected = true
       }
+    } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+      checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+      plotsCount -= 1
+      totalSurfaceArea -= cropPlots[cropIndex][plotIndex].value(forKey: "surfaceArea") as! Double
+      for (index, view) in cell.subviews[2...cropPlots[cropIndex].count + 1].enumerated() {
+        let checkboxImage = view.subviews[1] as! UIImageView
+        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+          break
+        } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == cropPlots[cropIndex].count - 1 {
+          cell.checkboxButton.isSelected = false
+        }
+      }
+    }
+
+    if plotsCount == 0 {
+      selectedCropsLabel.text = "Aucune sélection"
+    } else if plotsCount == 1 {
+      selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
+    } else {
+      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", plotsCount, totalSurfaceArea)
     }
   }
 
