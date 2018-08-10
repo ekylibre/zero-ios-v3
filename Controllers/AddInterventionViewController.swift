@@ -29,6 +29,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var toolNumber: UITextField!
   @IBOutlet weak var toolType: UILabel!
   @IBOutlet weak var selectedToolsTableView: UITableView!
+  @IBOutlet weak var addToolButton: UIButton!
+  @IBOutlet weak var toolNumberLabel: UILabel!
 
   var crops = [NSManagedObject]()
   var interventionTools = [NSManagedObject]()
@@ -146,6 +148,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedToolsTableViewCell", for: indexPath) as! SelectedToolsTableViewCell
 
+      cell.cellDelegate = self
+      cell.indexPath = indexPath.row
       cell.backgroundColor = Constants.ThemeColors.darkWhite
       cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
@@ -176,11 +180,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     animationRunning = true
 
     UIView.animate(withDuration: 0.5, animations: {
+      self.collapseButton.isHidden = false
       self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: angle)
       self.view.layoutIfNeeded()
     }, completion: { _ in
       self.animationRunning = false
     })
+    showToolsNumber()
   }
 
   func createCrop(name: String, surfaceArea: Double, uuid: UUID) {

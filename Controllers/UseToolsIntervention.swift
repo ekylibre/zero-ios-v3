@@ -9,7 +9,26 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController {
+extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
+  func removeCellButton(_ indexPath: Int) {
+    selectedTools.remove(at: indexPath)
+    selectedToolsTableView.reloadData()
+    if selectedTools.count == 0 && firstView.frame.height != 50 {
+      collapseExpand(self)
+      collapseButton.isHidden = true
+    }
+  }
+
+  func showToolsNumber() {
+    if selectedTools.count > 0 && firstView.frame.height == 50 {
+      addToolButton.isHidden = true
+      toolNumberLabel.isHidden = false
+      toolNumberLabel.text = (selectedTools.count == 1 ? "1 outil" : "\(selectedTools.count) outils")
+    } else {
+      addToolButton.isHidden = false
+      toolNumberLabel.isHidden = true
+    }
+  }
 
   @IBAction func openSelectToolsView(_ sender: Any) {
     dimView.isHidden = false
@@ -25,6 +44,9 @@ extension AddInterventionViewController {
     UIView.animate(withDuration: 1, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = .black
     })
+    if selectedTools.count > 0 && firstView.frame.height == 50 {
+      collapseExpand(self)
+    }
     selectedToolsTableView.reloadData()
   }
 
