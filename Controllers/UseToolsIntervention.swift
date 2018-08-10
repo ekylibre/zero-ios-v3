@@ -58,6 +58,14 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     })
   }
 
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    searchedTools = searchText.isEmpty ? interventionTools : interventionTools.filter({(filterTool: NSManagedObject) -> Bool in
+      let toolName: String = filterTool.value(forKey: "name") as! String
+      return toolName.range(of: searchText) != nil
+    })
+    interventionToolsTableView.reloadData()
+  }
+
   func fetchTools() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return

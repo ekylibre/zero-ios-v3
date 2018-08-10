@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
   //MARK : Properties
 
@@ -31,10 +31,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedToolsTableView: UITableView!
   @IBOutlet weak var addToolButton: UIButton!
   @IBOutlet weak var toolNumberLabel: UILabel!
+  @IBOutlet weak var searchTool: UISearchBar!
 
   var crops = [NSManagedObject]()
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
+  var searchedTools = [NSManagedObject]()
   var interventionType: String?
 
   override func viewDidLoad() {
@@ -72,7 +74,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     interventionToolsTableView.delegate = self
     selectedToolsTableView.dataSource = self
     selectedToolsTableView.delegate = self
+    searchTool.delegate = self
+    searchTool.autocapitalizationType = .none
     fetchTools()
+    searchedTools = interventionTools
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -106,7 +111,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case cropsTableView:
       return crops.count
     case interventionToolsTableView:
-      return interventionTools.count
+      return searchedTools.count
     case selectedToolsTableView:
       return selectedTools.count
     default:
@@ -122,13 +127,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if indexPath.row < crops.count {
       crop = crops[indexPath.row]
     }
-    if indexPath.row < interventionTools.count {
-      tool = interventionTools[indexPath.row]
+    if indexPath.row < searchedTools.count {
+      tool = searchedTools[indexPath.row]
     }
     if indexPath.row < selectedTools.count {
       selectedTool = selectedTools[indexPath.row]
     }
-
     switch tableView {
     case cropsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "cropsTableViewCell", for: indexPath) as! CropsTableViewCell
