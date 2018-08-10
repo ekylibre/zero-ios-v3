@@ -40,7 +40,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
-    UIApplication.shared.statusBarView?.backgroundColor = Constants.ThemeColors.Blue
+    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Rounded buttons
     leftInterventionButton.layer.cornerRadius = 3
@@ -100,6 +100,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     self.tableView.dataSource = self
     self.tableView.delegate = self
 
+    tableView.bounces = false
     tableView.alwaysBounceVertical = false
   }
 
@@ -191,9 +192,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     if indexPath.row % 2 == 0 {
-      cell.backgroundColor = UIColor.white
+      cell.backgroundColor = AppColor.CellColors.white
     } else {
-      cell.backgroundColor = UIColor(rgb: 0xECEBEB)
+      cell.backgroundColor = AppColor.CellColors.lightGray
     }
 
     // Fetches the appropriate intervention for the data source layout
