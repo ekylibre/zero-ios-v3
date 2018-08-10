@@ -1037,6 +1037,7 @@
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
                         <outlet property="interventionToolsTableView" destination="2QD-fJ-aXc" id="s9p-gY-u44"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
+                        <outlet property="searchTool" destination="3af-DS-yQg" id="xNz-Nm-piP"/>
                         <outlet property="selectCropsView" destination="l2G-uL-Jfd" id="zi3-gC-8f0"/>
                         <outlet property="selectToolsView" destination="k1P-VF-83v" id="mew-3I-SmN"/>
                         <outlet property="selectedToolsTableView" destination="S1G-aq-VJB" id="jYJ-yR-ZMC"/>
