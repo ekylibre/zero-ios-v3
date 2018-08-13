@@ -11,8 +11,14 @@ import CoreData
 
 extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   func removeCellButton(_ indexPath: Int) {
-    selectedTools.remove(at: indexPath)
-    selectedToolsTableView.reloadData()
+    let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'outil ?", preferredStyle: .alert)
+
+    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+      self.selectedTools.remove(at: indexPath)
+      self.selectedToolsTableView.reloadData()
+    }))
+    present(alert, animated: true)
     if selectedTools.count == 0 && firstView.frame.height != 50 {
       collapseExpand(self)
       collapseButton.isHidden = true
@@ -78,6 +84,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+    searchedTools = interventionTools
     interventionToolsTableView.reloadData()
   }
 
