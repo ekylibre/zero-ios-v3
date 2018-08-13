@@ -26,8 +26,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseButton: UIButton!
 
   var crops = [NSManagedObject]()
-  var plots = [NSManagedObject]()
-  var cropPlots = [[NSManagedObject]]()
 
   var viewsArray = [[UIView]]()
 
@@ -78,29 +76,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.alwaysBounceVertical = false
   }
 
-  func fetchPlots(cropId: Int) {
-
-    var plots = [NSManagedObject]()
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
-    let predicate = NSPredicate(format: "cropId == \(cropId)")
-    plotsFetchRequest.predicate = predicate
-
-    do {
-      plots = try managedContext.fetch(plotsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    cropPlots.append(plots)
-  }
-
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
@@ -120,11 +95,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     if crops.count == 0 {
       loadSampleCrops()
-    }
-
-    for crop in crops {
-      let cropId = crop.value(forKey: "id") as! Int
-      fetchPlots(cropId: cropId)
     }
 
     cropsTableView.reloadData()
@@ -159,9 +129,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKey: "surfaceArea") as! Double)
       cell.surfaceAreaLabel.sizeToFit()
 
+      let plots = fetchPlots(crop)
+
       var views = [UIView]()
 
-      for (index, plot) in cropPlots[indexPath.row].enumerated() {
+      for (index, plot) in plots.enumerated() {
         let view = UIView(frame: CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60))
         view.backgroundColor = UIColor.white
         view.layer.borderColor = UIColor.lightGray.cgColor
@@ -199,6 +171,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       fatalError("Swith error")
     }
+  }
+
+  func fetchPlots(_ crop: NSManagedObject) -> [NSManagedObject] {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [NSManagedObject]()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
+
+    let predicate = NSPredicate(format: "crops == %@", crop)
+    plotsFetchRequest.predicate = predicate
+
+    var plots = [NSManagedObject]()
+
+    do {
+      plots = try managedContext.fetch(plotsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return plots
   }
 
   // Expand/collapse cell when tapped
@@ -250,25 +246,26 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let indexPath = cropsTableView.indexPath(for: cell)!
-
-    let cropSurfaceArea = crops[indexPath.row].value(forKey: "surfaceArea") as! Double
+    let crop = crops[indexPath.row]
+    let cropSurfaceArea = crop.value(forKey: "surfaceArea") as! Double
+    let plots = fetchPlots(crop)
 
     if !sender.isSelected {
       sender.isSelected = true
-      plotsCount += cropPlots[indexPath.row].count
+      plotsCount += plots.count
       totalSurfaceArea += cropSurfaceArea
-      for view in cell.subviews[2...cropPlots[indexPath.row].count + 1] {
+      for view in cell.subviews[2...plots.count + 1] {
         let checkboxImage = view.subviews[1] as! UIImageView
         checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       }
     } else {
       sender.isSelected = false
-      for (index, view) in cell.subviews[2...cropPlots[indexPath.row].count + 1].enumerated() {
+      for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
           plotsCount -= 1
-          totalSurfaceArea -= cropPlots[indexPath.row][index].value(forKey: "surfaceArea") as! Double
+          totalSurfaceArea -= plots[index].value(forKey: "surfaceArea") as! Double
         }
       }
     }
@@ -321,7 +318,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // Create crops data
 
-  func createCrop(id: Int16, name: String, surfaceArea: Double, uuid: UUID) {
+  func createCrop(name: String, surfaceArea: Double, uuid: UUID) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -333,7 +330,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
 
-    crop.setValue(id, forKey: "id")
     crop.setValue(name, forKeyPath: "name")
     crop.setValue(surfaceArea, forKeyPath: "surfaceArea")
     crop.setValue(uuid, forKeyPath: "uuid")
@@ -346,7 +342,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createPlot(cropId: Int16, name: String, surfaceArea: Double, startDate: Date, uuid: UUID) {
+  func createPlot(cropName: String, name: String, surfaceArea: Double, startDate: Date, uuid: UUID) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -358,7 +354,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
 
-    plot.setValue(cropId, forKey: "cropId")
+    let crop = fetchCrop(cropName)
+
+    plot.setValue(crop, forKeyPath: "crops")
     plot.setValue(name, forKeyPath: "name")
     plot.setValue(surfaceArea, forKeyPath: "surfaceArea")
     plot.setValue(startDate, forKey: "startDate")
@@ -366,25 +364,52 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     do {
       try managedContext.save()
-      plots.append(plot)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
+  func fetchCrop(_ cropName: String) -> NSManagedObject {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return NSManagedObject()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
+
+    let predicate = NSPredicate(format: "name == %@", cropName)
+    cropsFetchRequest.predicate = predicate
+
+    var crops: [NSManagedObject]!
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if crops.count == 1 {
+      return crops.first!
+    } else {
+      return NSManagedObject()
+    }
+  }
+
   private func loadSampleCrops() {
 
-    createCrop(id: 1, name: "Crop 1", surfaceArea: 7.5, uuid: UUID())
-    createPlot(cropId: 1, name: "Blé tendre", surfaceArea: 3, startDate: Date(), uuid: UUID())
-    createPlot(cropId: 1, name: "Maïs", surfaceArea: 4.5, startDate: Date(), uuid: UUID())
+    createCrop(name: "Crop 1", surfaceArea: 7.5, uuid: UUID())
+    createPlot(cropName: "Crop 1", name: "Blé tendre", surfaceArea: 3, startDate: Date(), uuid: UUID())
+    createPlot(cropName: "Crop 1", name: "Maïs", surfaceArea: 4.5, startDate: Date(), uuid: UUID())
 
-    createCrop(id: 2, name: "Epoisses", surfaceArea: 0.651, uuid: UUID())
-    createPlot(cropId: 2, name: "Artichaut", surfaceArea: 0.651, startDate: Date(), uuid: UUID())
+    createCrop(name: "Epoisses", surfaceArea: 0.651, uuid: UUID())
+    createPlot(cropName: "Epoisses", name: "Artichaut", surfaceArea: 0.651, startDate: Date(), uuid: UUID())
 
-    createCrop(id: 3, name: "Cabécou", surfaceArea: 12.06, uuid: UUID())
-    createPlot(cropId: 3, name: "Avoine", surfaceArea: 6.3, startDate: Date(), uuid: UUID())
-    createPlot(cropId: 3, name: "Ciboulette", surfaceArea: 0.92, startDate: Date(), uuid: UUID())
-    createPlot(cropId: 3, name: "Cornichon", surfaceArea: 4.84, startDate: Date(), uuid: UUID())
+    createCrop(name: "Cabécou", surfaceArea: 12.06, uuid: UUID())
+    createPlot(cropName: "Cabécou", name: "Avoine", surfaceArea: 6.3, startDate: Date(), uuid: UUID())
+    createPlot(cropName: "Cabécou", name: "Ciboulette", surfaceArea: 0.92, startDate: Date(), uuid: UUID())
+    createPlot(cropName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date(), uuid: UUID())
   }
 
   //MARK: - Actions
@@ -401,13 +426,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let cell = sender.view?.superview as! CropTableViewCell
     let view = sender.view!
 
-    var cropIndex: Int = 0
-    var plotIndex: Int = 0
+    var crop: NSManagedObject!
+    var plots: [NSManagedObject]!
+    var plot: NSManagedObject!
 
     for views in viewsArray {
       if let indexView = views.index(of: view) {
-        cropIndex = viewsArray.index(of: views)!
-        plotIndex = indexView
+        crop = crops[viewsArray.index(of: views)!]
+        plots = fetchPlots(crop)
+        plot = plots[indexView]
         break
       }
     }
@@ -417,19 +444,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       plotsCount += 1
-      totalSurfaceArea += cropPlots[cropIndex][plotIndex].value(forKey: "surfaceArea") as! Double
+      totalSurfaceArea += plot.value(forKey: "surfaceArea") as! Double
       if !cell.checkboxButton.isSelected {
         cell.checkboxButton.isSelected = true
       }
     } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
       plotsCount -= 1
-      totalSurfaceArea -= cropPlots[cropIndex][plotIndex].value(forKey: "surfaceArea") as! Double
-      for (index, view) in cell.subviews[2...cropPlots[cropIndex].count + 1].enumerated() {
+      totalSurfaceArea -= plot.value(forKey: "surfaceArea") as! Double
+      for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           break
-        } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == cropPlots[cropIndex].count - 1 {
+        } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == plots.count - 1 {
           cell.checkboxButton.isSelected = false
         }
       }
