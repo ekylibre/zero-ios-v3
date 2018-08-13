@@ -18,6 +18,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   @IBOutlet weak var tfPassword: UITextField!
 
   var authentificationService: AuthentificationService?
+  var buttonIsPressed: Bool = false
 
   // MARK: Initialization
 
@@ -31,29 +32,15 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
+      if entityIsEmpty(entity: "Users") {
+        authentificationService?.logout()
+      }
       self.authentifyUser()
       staticIndex.firstLaunch = true
     }
   }
 
   // MARK: Actions
-
-  func getLoggedStatus() -> Bool {
-    let context = appDelegate.persistentContainer.viewContext
-    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
-
-    request.returnsObjectsAsFaults = false
-    var usersInfo = [NSManagedObject]()
-
-    do {
-      usersInfo = try context.fetch(request) as! [NSManagedObject]
-    } catch {
-      print("Fetch failed")
-    }
-    let loggedStatus: Bool = (usersInfo[(usersInfo.count) - 1].value(forKey: "loggedStatus") != nil)
-
-    return loggedStatus
-  }
 
   func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
@@ -73,7 +60,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   func authentifyUser() {
     if !entityIsEmpty(entity: "Users") {
       authentificationService?.authorize(presenting: self)
-
       var token = authentificationService?.oauth2.accessToken
 
       authentificationService?.oauth2.afterAuthorizeOrFail = { authParameters, error in
@@ -83,15 +69,17 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
         performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
       }
-    } else {
-      authentificationService?.authorize(presenting: self)
+    } else if buttonIsPressed && tfUsername.text!.count > 0 {
+      authentificationService?.addNewUser(userName: tfUsername.text!)
       authentifyUser()
     }
   }
 
   @IBAction func checkAuthentification(sender: UIButton) {
+    buttonIsPressed = true
     authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
     authentifyUser()
+    buttonIsPressed = false
   }
 
   @IBAction func openForgottenPasswordLink(sender: UIButton) {
