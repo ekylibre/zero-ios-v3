@@ -392,7 +392,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func selectCrops(_ sender: Any) {
     dimView.isHidden = false
     selectCropsView.isHidden = false
-    UIView.animate(withDuration: 1, animations: {
+    UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
   }
@@ -445,11 +445,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func validateCrops(_ sender: Any) {
-    totalLabel.text = selectedCropsLabel.text
+
+    if selectedCropsLabel.text == "Aucune sélection" {
+      totalLabel.text = "+ SÉLECTIONNER"
+      totalLabel.textColor = AppColor.TextColors.Green
+    } else {
+      totalLabel.text = selectedCropsLabel.text
+      totalLabel.textColor = AppColor.TextColors.DarkGray
+    }
+
     totalLabel.sizeToFit()
     dimView.isHidden = true
     selectCropsView.isHidden = true
-    UIView.animate(withDuration: 1, animations: {
+    UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
   }
