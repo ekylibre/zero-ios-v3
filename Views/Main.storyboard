@@ -254,30 +254,25 @@
                                                         <color key="textColor" red="0.070588235294117646" green="0.41568627450980394" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7X-YZ-r0s">
-                                                        <rect key="frame" x="247" y="10" width="110" height="30"/>
-                                                        <state key="normal" title="SÉLECTIONNER"/>
-                                                        <connections>
-                                                            <action selector="selectCrops:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Mjr-KX-leI"/>
-                                                        </connections>
-                                                    </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzB-DF-7rh">
-                                                        <rect key="frame" x="102.5" y="15" width="83" height="20.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ SÉLECTIONNER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzB-DF-7rh">
+                                                        <rect key="frame" x="102.5" y="15" width="138" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" red="0.60392156862745094" green="0.78431372549019607" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstItem="9EF-jN-lYP" firstAttribute="leading" secondItem="nSN-Vk-B4W" secondAttribute="leading" constant="18" id="7Z3-NF-uIO"/>
-                                                    <constraint firstItem="m7X-YZ-r0s" firstAttribute="centerY" secondItem="nSN-Vk-B4W" secondAttribute="centerY" id="UD0-PN-TVg"/>
                                                     <constraint firstItem="AzB-DF-7rh" firstAttribute="top" secondItem="nSN-Vk-B4W" secondAttribute="top" constant="15" id="Wdp-7c-d7k"/>
                                                     <constraint firstItem="AzB-DF-7rh" firstAttribute="leading" secondItem="9EF-jN-lYP" secondAttribute="trailing" constant="20" id="YOd-0q-Nxz"/>
                                                     <constraint firstAttribute="height" constant="50" id="b5R-1G-Fvv"/>
-                                                    <constraint firstAttribute="trailing" secondItem="m7X-YZ-r0s" secondAttribute="trailing" constant="18" id="oYd-kS-cbV"/>
                                                     <constraint firstItem="9EF-jN-lYP" firstAttribute="centerY" secondItem="nSN-Vk-B4W" secondAttribute="centerY" id="red-wv-i3s"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="nC5-KW-HDz" appends="YES" id="lMK-dD-KLx"/>
+                                                </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-gK-3dJ">
                                                 <rect key="frame" x="0.0" y="50" width="375" height="0.5"/>
@@ -651,8 +646,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EuD-Ka-qns">
                                         <rect key="frame" x="0.0" y="503" width="335" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infos Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JqH-N4-eJk">
-                                                <rect key="frame" x="30" y="20.5" width="83.5" height="20.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aucune sélection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JqH-N4-eJk">
+                                                <rect key="frame" x="30" y="20.5" width="131.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -741,6 +736,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="nC5-KW-HDz">
+                    <connections>
+                        <action selector="selectCrops:" destination="pQK-Bk-vqJ" id="oRN-se-dOu"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1991.2" y="-100.29985007496252"/>
         </scene>

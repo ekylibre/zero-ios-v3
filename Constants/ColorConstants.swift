@@ -24,4 +24,11 @@ struct AppColor {
     static let white = UIColor.white
     static let lightGray = UIColor(red: 236/255, green: 235/255, blue: 235/255, alpha: 1)
   }
+
+  // These values may need changes
+  struct TextColors {
+    static let Blue = UIColor(red: 0/255, green: 98/255, blue: 202/255, alpha: 1)
+    static let Green = UIColor(red: 154/255, green: 200/255, blue: 106/255, alpha: 1)
+    static let DarkGray = UIColor.darkGray
+  }
 }
