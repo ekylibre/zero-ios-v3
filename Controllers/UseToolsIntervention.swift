@@ -92,16 +92,6 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     fetchTools()
   }
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    switch tableView {
-    case interventionToolsTableView:
-      selectedTools.append(interventionTools[indexPath.row])
-      closeSelectToolsView()
-    default:
-      print("Nothing to do")
-    }
-  }
-
   @IBAction func createNewTool(_ sender: Any) {
     if (toolType.text?.count)! > 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
