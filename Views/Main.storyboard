@@ -662,7 +662,7 @@
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="validateCrops:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="U2b-h4-lNk"/>
+                                                    <action selector="validatePlots:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="mpb-6K-vur"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -738,7 +738,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="nC5-KW-HDz">
                     <connections>
-                        <action selector="selectCrops:" destination="pQK-Bk-vqJ" id="oRN-se-dOu"/>
+                        <action selector="selectPlots:" destination="pQK-Bk-vqJ" id="Raj-jL-qFV"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
