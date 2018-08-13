@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
@@ -20,6 +21,12 @@
         <relationship name="workingPeriods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingPeriods" inverseName="interventions" inverseEntity="WorkingPeriods" syncable="YES"/>
     </entity>
     <entity name="Plots" representedClassName="Plots" syncable="YES" codeGenerationType="class">
+        <attribute name="cropId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="crops" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crops" inverseName="plots" inverseEntity="Crops" syncable="YES"/>
     </entity>
     <entity name="Targets" representedClassName="Targets" syncable="YES" codeGenerationType="class">
@@ -44,10 +51,10 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crops" positionX="502" positionY="-234" width="128" height="120"/>
+        <element name="Crops" positionX="502" positionY="-234" width="128" height="133"/>
         <element name="Equipments" positionX="-198" positionY="-252" width="128" height="58"/>
         <element name="Interventions" positionX="160" positionY="-252" width="128" height="148"/>
-        <element name="Plots" positionX="349" positionY="-330" width="128" height="60"/>
+        <element name="Plots" positionX="349" positionY="-330" width="128" height="148"/>
         <element name="Targets" positionX="333" positionY="-234" width="128" height="103"/>
         <element name="Tools" positionX="-9" positionY="-252" width="128" height="118"/>
         <element name="Users" positionX="-54" positionY="-9" width="128" height="60"/>
