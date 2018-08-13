@@ -85,7 +85,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchTool.delegate = self
     searchTool.autocapitalizationType = .none
     fetchTools()
-    searchedTools = interventionTools
   }
 
   func fetchPlots(cropId: Int) {
