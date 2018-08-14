@@ -45,6 +45,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var viewsArray = [[UIView]]()
   var interventionType: String?
   var toolTypes: [String]!
+  var selectedToolType: String!
+  var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -90,6 +92,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     toolTypeTableView.delegate = self
     defineToolTypes()
     fetchTools()
+    selectedToolType = toolTypes[0]
   }
 
   func fetchPlots(cropId: Int) {
@@ -168,18 +171,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var selectedTool: NSManagedObject?
     var toolType: String?
 
-    /*if indexPath.row < crops.count {
-      crop = crops[indexPath.row]
-    }
-    if indexPath.row < searchedTools.count {
-      tool = searchedTools[indexPath.row]
-    }
-    if indexPath.row < selectedTools.count {
-      selectedTool = selectedTools[indexPath.row]
-    }
-    if indexPath.row < toolTypes.count {
-      toolType = toolTypes[indexPath.row]
-    }*/
     switch tableView {
     case cropsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "cropTableViewCell", for: indexPath) as! CropTableViewCell
@@ -232,7 +223,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       tool = searchedTools[indexPath.row]
       cell.nameLabel.text = tool?.value(forKey: "name") as? String
       cell.typeLabel.text = tool?.value(forKey: "type") as? String
-      cell.typeImageView.image = #imageLiteral(resourceName: "clic&farm-logo")
+      cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
       return cell
     case selectedToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedToolsTableViewCell", for: indexPath) as! SelectedToolsTableViewCell
@@ -243,7 +234,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
-      cell.typeImageView.image = #imageLiteral(resourceName: "clic&farm-logo")
+      cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
       return cell
     case toolTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "ToolsTypeTableViewCell", for: indexPath) as! ToolsTypeTableViewCell
@@ -279,7 +270,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedTools.append(interventionTools[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-      showToolType(indexPath: selectedIndexPath!)
+      selectedToolType = toolTypes[indexPath.row]
     default:
       print("Nothing to do")
     }

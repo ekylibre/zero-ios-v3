@@ -55,10 +55,6 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     })
   }
 
-  func showToolType(indexPath: IndexPath) {
-    print("Tool type: \(toolTypes[indexPath.row])")
-  }
-
   func closeSelectToolsView() {
     dimView.isHidden = true
     selectToolsView.isHidden = true
@@ -115,26 +111,109 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   @IBAction func createNewTool(_ sender: Any) {
-    if (toolType.text?.count)! > 0 {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return
-      }
-      let managedContext = appDelegate.persistentContainer.viewContext
-      let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
-      let tools = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
+    let tools = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
 
-      tools.setValue(toolName.text, forKeyPath: "name")
-      tools.setValue(toolNumber.text, forKeyPath: "number")
-      tools.setValue(toolType.text, forKeyPath: "type")
-      do {
-        try managedContext.save()
-        interventionTools.append(tools)
-        closeToolsCreationView(self)
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    } else {
-      print("Choose a type")
+    tools.setValue(toolName.text, forKeyPath: "name")
+    tools.setValue(toolNumber.text, forKeyPath: "number")
+    tools.setValue(selectedToolType, forKeyPath: "type")
+    do {
+      try managedContext.save()
+      interventionTools.append(tools)
+      closeToolsCreationView(self)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+}
+
+extension AddInterventionViewController{
+  func defineToolImage(toolName: String) -> Int {
+    switch toolName {
+    case "Semoir monograines":
+      return 0
+    case "Presse enrubanneuse":
+      return 1
+    case "Castreuse":
+      return 2
+    case "Presse balle cubique":
+      return 3
+    case "Déchaumeur à disques":
+      return 4
+    case "Plateau":
+      return 5
+    case "Ensileuse":
+      return 6
+    case "Broyeur":
+      return 7
+    case "Herse":
+      return 8
+    case "Arracheuse":
+      return 9
+    case "Andaineur":
+      return 10
+    case "Butteuse":
+      return 11
+    case "Bineuse":
+      return 12
+    case "Désherbineuse":
+      return 13
+    case "Planteuse":
+      return 14
+    case "Tonne à lisier":
+      return 15
+    case "Faucheuse":
+      return 16
+    case "Faucheuse conditioneuse":
+      return 17
+    case "Charrue":
+      return 18
+    case "Moissonneuse-batteuse":
+      return 19
+    case "Rouleau":
+      return 20
+    case "Houe rotative":
+      return 21
+    case "Presse balle ronde":
+      return 22
+    case "Outil de préparation du lit de semances":
+      return 23
+    case "Décompacteur":
+      return 24
+    case "Semoir":
+      return 25
+    case "Pulvérisateur":
+      return 26
+    case "Épandeur à engrais":
+      return 27
+    case "Épandeur à fumier":
+      return 28
+    case "Sous soleuse":
+      return 29
+    case "Déchaumeur":
+      return 30
+    case "Faneuse":
+      return 31
+    case "Effaneuse":
+      return 32
+    case "Tracteur":
+      return 33
+    case "Remorque":
+      return 34
+    case "Écimeuse":
+      return 35
+    case "Vibroculteur":
+      return 36
+    case "Désherbeur":
+      return 37
+    case "Enrubanneuse":
+      return 38
+    default:
+      return 0
     }
   }
 }
