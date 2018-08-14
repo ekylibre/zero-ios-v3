@@ -30,6 +30,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   var newIntervention: NSManagedObject!
   var interventionType: String!
+  var selectedPlots = [NSManagedObject]()
 
   var crops = [NSManagedObject]()
 
@@ -114,9 +115,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     switch tableView {
     case cropsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "cropTableViewCell", for: indexPath) as! CropTableViewCell
-      cell.nameLabel.text = crop.value(forKey: "name") as? String
+      cell.nameLabel.text = crop.value(forKeyPath: "name") as? String
       cell.nameLabel.sizeToFit()
-      cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKey: "surfaceArea") as! Double)
+      cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKeyPath: "surfaceArea") as! Double)
       cell.surfaceAreaLabel.sizeToFit()
 
       let plots = fetchPlots(fromCrop: crop)
@@ -136,16 +137,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         view.addSubview(checkboxImage)
         let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
         nameLabel.textColor = UIColor.black
-        let name = plot.value(forKey: "name") as! String
+        let name = plot.value(forKeyPath: "name") as! String
         let calendar = Calendar.current
-        let date = plot.value(forKey: "startDate") as! Date
+        let date = plot.value(forKeyPath: "startDate") as! Date
         let year = calendar.component(.year, from: date)
         nameLabel.text = name + " | \(year)"
         nameLabel.font = UIFont.systemFont(ofSize: 13.0)
         view.addSubview(nameLabel)
         let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
         surfaceAreaLabel.textColor = UIColor.darkGray
-        let surfaceArea = plot.value(forKey: "surfaceArea") as! Double
+        let surfaceArea = plot.value(forKeyPath: "surfaceArea") as! Double
         surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
         surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
         view.addSubview(surfaceAreaLabel)
@@ -232,8 +233,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     newIntervention.setValue(interventionType, forKey: "type")
     newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
+    newIntervention.setValue("Infos", forKey: "infos")
     workingPeriod.setValue(newIntervention, forKey: "interventions")
     workingPeriod.setValue(Date(), forKey: "executionDate")
+    createTargets(intervention: newIntervention)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createTargets(intervention: NSManagedObject) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsEntity = NSEntityDescription.entity(forEntityName: "Targets", in: managedContext)!
+
+    for selectedPlot in selectedPlots {
+      let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
+      let surfaceArea = selectedPlot.value(forKeyPath: "surfaceArea") as! Double
+
+      target.setValue(intervention, forKey: "interventions")
+      target.setValue(surfaceArea, forKey: "surfaceArea")
+    }
 
     do {
       try managedContext.save()
@@ -366,7 +393,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let indexPath = cropsTableView.indexPath(for: cell)!
     let crop = crops[indexPath.row]
-    let cropSurfaceArea = crop.value(forKey: "surfaceArea") as! Double
+    let cropSurfaceArea = crop.value(forKeyPath: "surfaceArea") as! Double
     let plots = fetchPlots(fromCrop: crop)
 
     if !sender.isSelected {
@@ -377,6 +404,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let checkboxImage = view.subviews[1] as! UIImageView
         checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       }
+      for plot in plots {
+        selectedPlots.append(plot)
+      }
     } else {
       sender.isSelected = false
       for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
@@ -384,7 +414,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
           plotsCount -= 1
-          totalSurfaceArea -= plots[index].value(forKey: "surfaceArea") as! Double
+          totalSurfaceArea -= plots[index].value(forKeyPath: "surfaceArea") as! Double
+          if let index = selectedPlots.index(of: plots[index]) {
+            selectedPlots.remove(at: index)
+          }
         }
       }
     }
@@ -420,20 +453,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       plotsCount += 1
-      totalSurfaceArea += plot.value(forKey: "surfaceArea") as! Double
+      totalSurfaceArea += plot.value(forKeyPath: "surfaceArea") as! Double
       if !cell.checkboxButton.isSelected {
         cell.checkboxButton.isSelected = true
       }
+      selectedPlots.append(plot)
     } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
       plotsCount -= 1
-      totalSurfaceArea -= plot.value(forKey: "surfaceArea") as! Double
+      totalSurfaceArea -= plot.value(forKeyPath: "surfaceArea") as! Double
       for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           break
         } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == plots.count - 1 {
           cell.checkboxButton.isSelected = false
+        }
+
+        if let index = selectedPlots.index(of: plot) {
+          selectedPlots.remove(at: index)
         }
       }
     }
