@@ -270,7 +270,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedTools.append(interventionTools[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-      selectedToolType = toolTypes[indexPath.row]
+      if toolTypeTableView.frame.height == 50 {
+        toolTypeTableView.frame = CGRect(x: toolTypeTableView.frame.minX, y: toolTypeTableView.frame.minY, width: toolTypeTableView.frame.width, height: 350)
+      } else {
+        toolTypeTableView.frame = CGRect(x: toolTypeTableView.frame.minX, y: toolTypeTableView.frame.minY, width: toolTypeTableView.frame.width, height: 50)
+        toolTypeTableView.layer.shadowColor = UIColor.black.cgColor
+        toolTypeTableView.layer.shadowOpacity = 1
+        toolTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
+        toolTypeTableView.layer.shadowRadius = 10
+        selectedToolType = toolTypes[indexPath.row]
+        toolTypeTableView.reloadData()
+      }
     default:
       print("Nothing to do")
     }
