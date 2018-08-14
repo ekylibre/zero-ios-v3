@@ -12,7 +12,7 @@ import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-  //MARK: Properties
+  //MARK: - Outlets
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
@@ -24,11 +24,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
   @IBOutlet weak var addInterventionLabel: UILabel!
 
+  //MARK: - Properties
+
   var interventions = [NSManagedObject]() {
     didSet {
       tableView.reloadData()
     }
   }
+
   var workingPeriods = [NSManagedObject]()
 
   var interventionButtons: [UIButton] = []
@@ -153,6 +156,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Dispose of any resources that can be recreated.
   }
 
+  //MARK: - Table view data source
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
@@ -184,10 +189,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    // Table view cells are reused and should be dequeued using a cell identifier.
-    let cellIdentifier = "InterventionTableViewCell"
-
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? InterventionTableViewCell else {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionTableViewCell", for: indexPath) as? InterventionTableViewCell else {
       fatalError("The dequeued cell is not an instance of InterventionTableViewCell")
     }
 
@@ -280,12 +282,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Navigation
 
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destViewController = segue.destination as! AddInterventionViewController
+    let destVC = segue.destination as! AddInterventionViewController
 
     if let type = (sender as? UIButton)?.titleLabel?.text {
-      destViewController.interventionType = type
+      destVC.interventionType = type
+    }
+  }
+
+  @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
+
+    if sender.source is AddInterventionViewController {
+      if let senderVC = sender.source as? AddInterventionViewController {
+        interventions.append(senderVC.newIntervention)
+      }
+      tableView.reloadData()
     }
   }
 
@@ -312,7 +323,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createIntervention(type: 3, infos: "oui", status: 2, executionDate: date4)
   }
 
-  //MARK: Actions
+  //MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
 
@@ -349,7 +360,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
 
-    var type: Int16 = 0
+    /*var type: Int16 = 0
 
     switch sender.titleLabel?.text {
     case "Entretien":
@@ -369,7 +380,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     default:
       type = -1
     }
-    createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())
+    createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())*/
     hideInterventionAdd()
     performSegue(withIdentifier: "addIntervention", sender: sender)
   }

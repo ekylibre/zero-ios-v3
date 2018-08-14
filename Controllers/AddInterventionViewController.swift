@@ -11,6 +11,8 @@ import CoreData
 
 class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+  //MARK: - Outlets
+
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var selectCropsView: UIView!
@@ -22,7 +24,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
-  
+  @IBOutlet weak var saveInterventionButton: UIButton!
+
+  //MARK: - Properties
+
+  var newIntervention = NSManagedObject()
+  var interventionType: String?
+
   var crops = [NSManagedObject]()
 
   var viewsArray = [[UIView]]()
@@ -36,7 +44,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
     }
   }
-  var interventionType: String?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -63,7 +70,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     interventionToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
     interventionToolsTableView.layer.cornerRadius = 4
 
-    // Crops select
     validateButton.layer.cornerRadius = 3
 
     self.cropsTableView.dataSource = self
@@ -77,19 +83,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
-
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
+    fetchCrops()
 
     if crops.count == 0 {
       loadSampleCrops()
@@ -98,7 +92,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.reloadData()
   }
 
-  //MARK: - Table view
+  //MARK: - Table view data source
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -226,6 +220,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createPlot(cropName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date(), uuid: UUID())
   }
 
+  func createIntervention() {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
+    newIntervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
+
+    newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   func createCrop(name: String, surfaceArea: Double, uuid: UUID) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -258,7 +271,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let plotsEntity = NSEntityDescription.entity(forEntityName: "Plots", in: managedContext)!
     let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
 
-    let crop = fetchCrop(cropName)
+    let crop = fetchCrop(withName: cropName)
 
     plot.setValue(crop, forKeyPath: "crops")
     plot.setValue(name, forKeyPath: "name")
@@ -273,7 +286,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func fetchCrop(_ cropName: String) -> NSManagedObject {
+  func fetchCrops() {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func fetchCrop(withName cropName: String) -> NSManagedObject {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return NSManagedObject()
@@ -412,6 +441,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
     } else {
       selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", plotsCount, totalSurfaceArea)
+    }
+  }
+
+  //MARK: - Navigation
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
+
+    guard let button = sender as? UIButton, button === saveInterventionButton else {
+      return
     }
   }
 
