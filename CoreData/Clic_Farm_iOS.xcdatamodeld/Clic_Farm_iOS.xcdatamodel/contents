@@ -14,7 +14,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="infos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="interventions" inverseEntity="Targets" syncable="YES"/>
         <relationship name="tools" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tools" inverseName="interventions" inverseEntity="Tools" syncable="YES"/>
         <relationship name="workingPeriods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingPeriods" inverseName="interventions" inverseEntity="WorkingPeriods" syncable="YES"/>
@@ -48,7 +48,7 @@
     <elements>
         <element name="Crops" positionX="502" positionY="-234" width="128" height="118"/>
         <element name="Equipments" positionX="-198" positionY="-252" width="128" height="58"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="148"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="150"/>
         <element name="Plots" positionX="331" positionY="-409" width="128" height="133"/>
         <element name="Targets" positionX="333" positionY="-234" width="128" height="103"/>
         <element name="Tools" positionX="-9" positionY="-252" width="128" height="73"/>

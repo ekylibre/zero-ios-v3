@@ -29,7 +29,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   //MARK: - Properties
 
   var newIntervention = NSManagedObject()
-  var interventionType: String?
+  var interventionType: String!
 
   var crops = [NSManagedObject]()
 
@@ -53,9 +53,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
     let typeLabel = UILabel()
-    if interventionType != nil {
-      typeLabel.text = interventionType
-    }
+    typeLabel.text = interventionType
     typeLabel.textColor = UIColor.white
     typeLabel.sizeToFit()
 

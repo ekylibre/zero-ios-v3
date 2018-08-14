@@ -166,27 +166,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return interventions.count
   }
 
-  func transformDate(date: Date) -> String {
-    let calendar = Calendar.current
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "dd MMMM"
-
-    var dateString = dateFormatter.string(from: date)
-    let year = calendar.component(.year, from: date)
-
-    if calendar.isDateInToday(date) {
-      return "aujourd'hui"
-    } else if calendar.isDateInYesterday(date) {
-      return "hier"
-    } else {
-      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
-        dateString.append(" \(year)")
-      }
-      return dateString
-    }
-  }
-
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionTableViewCell", for: indexPath) as? InterventionTableViewCell else {
@@ -203,27 +182,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let intervention = interventions[indexPath.row]
     let workingPeriod = workingPeriods[indexPath.row]
 
-    switch intervention.value(forKeyPath: "type") as! Int16 {
+    cell.typeLabel.text = intervention.value(forKeyPath: "type") as? String
+    switch intervention.value(forKeyPath: "type") as! String {
     case Intervention.InterventionType.Care.rawValue:
-      cell.typeLabel.text = "Entretien"
       cell.typeImageView.image = UIImage(named: "care")!
     case Intervention.InterventionType.CropProtection.rawValue:
-      cell.typeLabel.text = "Pulvérisation"
       cell.typeImageView.image = UIImage(named: "cropProtection")!
     case Intervention.InterventionType.Fertilization.rawValue:
-      cell.typeLabel.text = "Fertilisation"
       cell.typeImageView.image = UIImage(named: "fertilization")!
     case Intervention.InterventionType.GroundWork.rawValue:
-      cell.typeLabel.text = "Travail du sol"
       cell.typeImageView.image = UIImage(named: "groundWork")!
     case Intervention.InterventionType.Harvest.rawValue:
-      cell.typeLabel.text = "Récolte"
       cell.typeImageView.image = UIImage(named: "harvest")!
     case Intervention.InterventionType.Implantation.rawValue:
-      cell.typeLabel.text = "Semis"
       cell.typeImageView.image = UIImage(named: "implantation")!
     case Intervention.InterventionType.Irrigation.rawValue:
-      cell.typeLabel.text = "Irrigation"
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
       cell.typeLabel.text = "Erreur"
@@ -252,7 +225,28 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func createIntervention(type: Int16, infos: String, status: Int16, executionDate: Date) {
+  func transformDate(date: Date) -> String {
+    let calendar = Calendar.current
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "dd MMMM"
+
+    var dateString = dateFormatter.string(from: date)
+    let year = calendar.component(.year, from: date)
+
+    if calendar.isDateInToday(date) {
+      return "aujourd'hui"
+    } else if calendar.isDateInYesterday(date) {
+      return "hier"
+    } else {
+      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
+        dateString.append(" \(year)")
+      }
+      return dateString
+    }
+  }
+
+  func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -286,7 +280,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let destVC = segue.destination as! AddInterventionViewController
 
     if let type = (sender as? UIButton)?.titleLabel?.text {
-      destVC.interventionType = type
+        destVC.interventionType = type
     }
   }
 
@@ -317,10 +311,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let date4 = makeDate(year: 2017, month: 7, day: 22, hour: 9, minute: 5, second: 0)
     //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
-    createIntervention(type: 0, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: 1, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: 2, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: 3, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
   //MARK: - Actions
@@ -360,27 +354,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
 
-    /*var type: Int16 = 0
-
-    switch sender.titleLabel?.text {
-    case "Entretien":
-      type = 0
-    case "Pulvérisation":
-      type = 1
-    case "Fertilisation":
-      type = 2
-    case "Travail du sol":
-      type = 3
-    case "Récolte":
-      type = 4
-    case "Semis":
-      type = 5
-    case "Irrigation":
-      type = 6
-    default:
-      type = -1
-    }
-    createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())*/
     hideInterventionAdd()
     performSegue(withIdentifier: "addIntervention", sender: sender)
   }
