@@ -543,6 +543,9 @@
                                         <state key="normal" title="ENREGISTRER">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="dWO-RQ-fIk" kind="unwind" unwindAction="unwindFromAddVC:" id="emv-yu-bDt"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -729,6 +732,7 @@
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
                         <outlet property="interventionToolsTableView" destination="S1G-aq-VJB" id="IDH-rV-xyz"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
+                        <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="selectCropsView" destination="l2G-uL-Jfd" id="zi3-gC-8f0"/>
                         <outlet property="selectedCropsLabel" destination="JqH-N4-eJk" id="m40-2i-F3m"/>
                         <outlet property="totalLabel" destination="AzB-DF-7rh" id="odU-0p-Kpm"/>
@@ -736,6 +740,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="dWO-RQ-fIk" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="nC5-KW-HDz">
                     <connections>
                         <action selector="selectPlots:" destination="pQK-Bk-vqJ" id="Raj-jL-qFV"/>
