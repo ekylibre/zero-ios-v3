@@ -31,3 +31,7 @@ class SelectedToolsTableViewCell: UITableViewCell {
     cellDelegate?.removeCellButton(self.indexPath)
   }
 }
+
+class ToolsTypeTableViewCell: UITableViewCell {
+  @IBOutlet weak var nameLabel: UILabel!
+}

@@ -34,6 +34,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var addToolButton: UIButton!
   @IBOutlet weak var toolNumberLabel: UILabel!
   @IBOutlet weak var searchTool: UISearchBar!
+  @IBOutlet weak var toolTypeTableView: UITableView!
 
   var crops = [NSManagedObject]()
   var interventionTools = [NSManagedObject]()
@@ -43,6 +44,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropPlots = [[NSManagedObject]]()
   var viewsArray = [[UIView]]()
   var interventionType: String?
+  var toolTypes: [String]!
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -84,6 +86,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedToolsTableView.delegate = self
     searchTool.delegate = self
     searchTool.autocapitalizationType = .none
+    toolTypeTableView.dataSource = self
+    toolTypeTableView.delegate = self
+    defineToolTypes()
     fetchTools()
   }
 
@@ -150,6 +155,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return searchedTools.count
     case selectedToolsTableView:
       return selectedTools.count
+    case toolTypeTableView:
+      return toolTypes.count
     default:
       return 1
     }
@@ -159,8 +166,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var crop: NSManagedObject?
     var tool: NSManagedObject?
     var selectedTool: NSManagedObject?
+    var toolType: String?
 
-    if indexPath.row < crops.count {
+    /*if indexPath.row < crops.count {
       crop = crops[indexPath.row]
     }
     if indexPath.row < searchedTools.count {
@@ -169,10 +177,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if indexPath.row < selectedTools.count {
       selectedTool = selectedTools[indexPath.row]
     }
+    if indexPath.row < toolTypes.count {
+      toolType = toolTypes[indexPath.row]
+    }*/
     switch tableView {
     case cropsTableView:
-
       let cell = tableView.dequeueReusableCell(withIdentifier: "cropTableViewCell", for: indexPath) as! CropTableViewCell
+
+      crop = crops[indexPath.row]
       cell.nameLabel.text = crop?.value(forKey: "name") as? String
       cell.nameLabel.sizeToFit()
       cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop?.value(forKey: "surfaceArea") as! Double)
@@ -217,6 +229,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case interventionToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionToolsTableViewCell
 
+      tool = searchedTools[indexPath.row]
       cell.nameLabel.text = tool?.value(forKey: "name") as? String
       cell.typeLabel.text = tool?.value(forKey: "type") as? String
       cell.typeImageView.image = #imageLiteral(resourceName: "clic&farm-logo")
@@ -224,12 +237,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedToolsTableViewCell", for: indexPath) as! SelectedToolsTableViewCell
 
+      selectedTool = selectedTools[indexPath.row]
       cell.cellDelegate = self
       cell.indexPath = indexPath.row
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
       cell.typeImageView.image = #imageLiteral(resourceName: "clic&farm-logo")
+      return cell
+    case toolTypeTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "ToolsTypeTableViewCell", for: indexPath) as! ToolsTypeTableViewCell
+
+      toolType = toolTypes[indexPath.row]
+      cell.nameLabel.text = toolType
       return cell
     default:
       fatalError("Switch error")
@@ -258,6 +278,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case interventionToolsTableView:
       selectedTools.append(interventionTools[indexPath.row])
       closeSelectToolsView()
+    case toolTypeTableView:
+      showToolType(indexPath: selectedIndexPath!)
     default:
       print("Nothing to do")
     }

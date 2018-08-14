@@ -25,6 +25,17 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     }
   }
 
+  func defineToolTypes() {
+    toolTypes = ["Semoir monograines", "Presse enrubanneuse", "Castreuse", "Presse balle cubique",
+                 "Déchaumeur à disques", "Plateau", "Ensileuse", "Broyeur", "Herse", "Arracheuse",
+                 "Andaineur", "Butteuse", "Bineuse", "Désherbineuse", "Planteuse", "Tonne à lisier",
+                 "Faucheuse", "Faucheuse conditioneuse", "Charrue", "Moissonneuse-batteuse", "Rouleau",
+                 "Houe rotative", "Presse balle ronde", "Outil de préparation du lit de semences",
+                 "Décompacteur", "Semoir", "Pulvérisateur", "Épandeur à engrais", "Épandeur à fumier",
+                 "Sous soleuse", "Déchaumeur", "Faneuse", "Effaneuse", "Tracteur", "Remorque", "Écimeuse",
+                 "Vibroculteur", "Désherbeur", "Enrubanneuse"]
+  }
+
   func showToolsNumber() {
     if selectedTools.count > 0 && firstView.frame.height == 50 {
       addToolButton.isHidden = true
@@ -42,6 +53,10 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     UIView.animate(withDuration: 1, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = .black
     })
+  }
+
+  func showToolType(indexPath: IndexPath) {
+    print("Tool type: \(toolTypes[indexPath.row])")
   }
 
   func closeSelectToolsView() {
