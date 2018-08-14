@@ -375,6 +375,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vap-II-Bqo">
                                                                             <rect key="frame" x="15" y="15" width="40" height="39.5"/>
+                                                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="40" id="iQI-LC-6e6"/>
                                                                             </constraints>
@@ -405,7 +406,6 @@
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstItem="vap-II-Bqo" firstAttribute="leading" secondItem="sE8-VA-Faw" secondAttribute="leading" constant="15" id="2gI-jZ-4kB"/>
-                                                                        <constraint firstItem="HRC-pY-jcH" firstAttribute="top" secondItem="Uvf-Sv-2Q5" secondAttribute="bottom" constant="11" id="EiM-Ny-Uk1"/>
                                                                         <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="leading" secondItem="vap-II-Bqo" secondAttribute="trailing" constant="15" id="Kmo-e7-qoz"/>
                                                                         <constraint firstAttribute="trailing" secondItem="9XQ-uB-zG5" secondAttribute="trailing" constant="15" id="Tpz-h7-qk1"/>
                                                                         <constraint firstItem="vap-II-Bqo" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="15" id="ckl-wM-vAG"/>
@@ -413,6 +413,7 @@
                                                                         <constraint firstAttribute="bottom" secondItem="vap-II-Bqo" secondAttribute="bottom" constant="15" id="lIL-Yk-WsM"/>
                                                                         <constraint firstItem="9XQ-uB-zG5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="15" id="lnH-XU-CX9"/>
                                                                         <constraint firstItem="Uvf-Sv-2Q5" firstAttribute="top" secondItem="sE8-VA-Faw" secondAttribute="top" constant="11" id="pIe-M9-JwG"/>
+                                                                        <constraint firstAttribute="bottomMargin" secondItem="HRC-pY-jcH" secondAttribute="bottom" constant="8" id="vxk-Pd-j2P"/>
                                                                     </constraints>
                                                                 </tableViewCellContentView>
                                                                 <connections>
@@ -832,18 +833,19 @@
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OkW-E4-67T">
                                                             <rect key="frame" x="15" y="15" width="40" height="40"/>
+                                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="6Mc-cl-JTC"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-Pa-mmw" userLabel="Type Label">
-                                                            <rect key="frame" x="70" y="41" width="31" height="14"/>
+                                                            <rect key="frame" x="70" y="37" width="31" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSv-ix-pwS" userLabel="Name Label">
-                                                            <rect key="frame" x="70" y="15" width="36" height="15"/>
+                                                            <rect key="frame" x="70" y="15" width="36" height="16"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -852,12 +854,11 @@
                                                     <constraints>
                                                         <constraint firstItem="oDC-Pa-mmw" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="00M-Pf-tkw"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="2xU-w5-GyM"/>
-                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="11" id="Bpy-gG-Us9"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="topMargin" constant="4" id="UK7-jV-uYt"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="top" constant="15" id="YxI-kN-eRA"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="leading" secondItem="zbU-5b-dYp" secondAttribute="leading" constant="15" id="chJ-WA-q1u"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="oDC-Pa-mmw" secondAttribute="bottom" constant="8" id="dJ9-Mh-ceD"/>
                                                         <constraint firstAttribute="bottom" secondItem="OkW-E4-67T" secondAttribute="bottom" constant="15" id="i86-qL-0PP"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="oDC-Pa-mmw" secondAttribute="bottom" constant="4" id="s8j-Ow-gS0"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
