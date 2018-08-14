@@ -174,7 +174,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let intervention = interventions[indexPath.row]
-    let workingPeriod = fetchWorkingPeriods(fromIntervention: intervention)
+    let targets = fetchTargets(of: intervention)
+    let workingPeriod = fetchWorkingPeriods(of: intervention)
 
     cell.typeLabel.text = intervention.value(forKeyPath: "type") as? String
     switch intervention.value(forKeyPath: "type") as! String {
@@ -207,7 +208,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.syncImage.backgroundColor = UIColor.purple
     }
 
-    //cell.cropsLabel.text = intervention.value(forKeyPath: "crops") as? String
+    cell.cropsLabel.text = updateCropsLabel(targets)
     cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
     cell.dateLabel.text = transformDate(date: workingPeriod.value(forKeyPath: "executionDate") as! Date)
 
@@ -219,7 +220,29 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func fetchWorkingPeriods(fromIntervention intervention: NSManagedObject) -> NSManagedObject {
+  func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [NSManagedObject]()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Targets")
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    targetsFetchRequest.predicate = predicate
+
+    var targets: [NSManagedObject]!
+
+    do {
+      targets = try managedContext.fetch(targetsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return targets
+  }
+
+  func fetchWorkingPeriods(of intervention: NSManagedObject) -> NSManagedObject {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return NSManagedObject()
@@ -239,6 +262,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     return workingPeriods.first!
+  }
+
+  func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
+
+    var totalSurfaceArea: Double = 0
+
+    for target in targets {
+      let surfaceArea = target.value(forKeyPath: "surfaceArea") as! Double
+      totalSurfaceArea += surfaceArea
+    }
+
+    if targets.count > 1 {
+      return String(format: "%d cultures • %.1f ha", targets.count, totalSurfaceArea)
+    } else {
+      return String(format: "1 culture • %.1f ha", totalSurfaceArea)
+    }
   }
 
   func transformDate(date: Date) -> String {
