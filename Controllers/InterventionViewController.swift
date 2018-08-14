@@ -32,8 +32,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  var workingPeriods = [NSManagedObject]()
-
   var interventionButtons: [UIButton] = []
 
   let dimView = UIView()
@@ -135,13 +133,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-
     let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
-    let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
-      workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -178,9 +173,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.backgroundColor = AppColor.CellColors.lightGray
     }
 
-    // Fetches the appropriate intervention for the data source layout
     let intervention = interventions[indexPath.row]
-    let workingPeriod = workingPeriods[indexPath.row]
+    let workingPeriod = fetchWorkingPeriods(fromIntervention: intervention)
 
     cell.typeLabel.text = intervention.value(forKeyPath: "type") as? String
     switch intervention.value(forKeyPath: "type") as! String {
@@ -225,6 +219,28 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
+  func fetchWorkingPeriods(fromIntervention intervention: NSManagedObject) -> NSManagedObject {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return NSManagedObject()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    workingPeriodsFetchRequest.predicate = predicate
+
+    var workingPeriods: [NSManagedObject]!
+
+    do {
+      workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return workingPeriods.first!
+  }
+
   func transformDate(date: Date) -> String {
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
@@ -253,22 +269,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-
     let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
     let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-
     let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
     let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
 
     intervention.setValue(type, forKeyPath: "type")
     intervention.setValue(infos, forKeyPath: "infos")
     intervention.setValue(status, forKeyPath: "status")
+    workingPeriod.setValue(intervention, forKey: "interventions")
     workingPeriod.setValue(executionDate, forKeyPath: "executionDate")
 
     do {
       try managedContext.save()
       interventions.append(intervention)
-      workingPeriods.append(workingPeriod)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }

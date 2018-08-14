@@ -28,7 +28,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   //MARK: - Properties
 
-  var newIntervention = NSManagedObject()
+  var newIntervention: NSManagedObject!
   var interventionType: String!
 
   var crops = [NSManagedObject]()
@@ -227,8 +227,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
     newIntervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
+    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
+    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
 
+    newIntervention.setValue(interventionType, forKey: "type")
     newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
+    workingPeriod.setValue(newIntervention, forKey: "interventions")
+    workingPeriod.setValue(Date(), forKey: "executionDate")
 
     do {
       try managedContext.save()
@@ -450,6 +455,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     guard let button = sender as? UIButton, button === saveInterventionButton else {
       return
     }
+
+    createIntervention()
   }
 
   //MARK: - Actions
