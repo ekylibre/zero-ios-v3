@@ -18,7 +18,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectCropsView: UIView!
   @IBOutlet weak var cropsTableView: UITableView!
   @IBOutlet weak var selectedPlotsLabel: UILabel!
-  @IBOutlet weak var interventionToolsTableView: UITableView!
+  @IBOutlet weak var equipmentsTableView: UITableView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
@@ -44,7 +44,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedPlots = [NSManagedObject]()
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
-  var interventionTools = [NSManagedObject]()
+  var equipments = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
   var searchedTools = [NSManagedObject]()
   var plots = [NSManagedObject]()
@@ -86,8 +86,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
     cropsTableView.alwaysBounceVertical = false
-    interventionToolsTableView.dataSource = self
-    interventionToolsTableView.delegate = self
+    equipmentsTableView.dataSource = self
+    equipmentsTableView.delegate = self
     selectedToolsTableView.dataSource = self
     selectedToolsTableView.delegate = self
     searchTool.delegate = self
@@ -123,7 +123,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     switch tableView {
     case cropsTableView:
       return crops.count
-    case interventionToolsTableView:
+    case equipmentsTableView:
       return searchedTools.count
     case selectedToolsTableView:
       return selectedTools.count
@@ -188,8 +188,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
-    case interventionToolsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionToolsTableViewCell
+    case equipmentsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
 
       tool = searchedTools[indexPath.row]
       cell.nameLabel.text = tool?.value(forKey: "name") as? String
@@ -246,8 +246,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       cropsTableView.beginUpdates()
       cropsTableView.endUpdates()
-    case interventionToolsTableView:
-      selectedTools.append(interventionTools[indexPath.row])
+    case equipmentsTableView:
+      selectedTools.append(equipments[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
         selectedToolType = toolTypes[indexPath.row]
@@ -311,6 +311,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     workingPeriod.setValue(newIntervention, forKey: "interventions")
     workingPeriod.setValue(Date(), forKey: "executionDate")
     createTargets(intervention: newIntervention)
+    createTools(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -340,6 +341,33 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createTools(intervention: NSManagedObject) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
+
+    for selectedTools in selectedTools {
+      let tools = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
+      let name = selectedTools.value(forKeyPath: "name") as! String
+      let type = selectedTools.value(forKey: "type") as! String
+      let equipment = selectedTools.value(forKey: "uuid") as! UUID
+
+      tools.setValue(intervention, forKey: "interventions")
+      tools.setValue(name, forKey: "name")
+      tools.setValue(type, forKey: "type")
+      tools.setValue(equipment, forKey: "equipment")
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
     }
   }
 

@@ -76,11 +76,11 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    searchedTools = searchText.isEmpty ? interventionTools : interventionTools.filter({(filterTool: NSManagedObject) -> Bool in
+    searchedTools = searchText.isEmpty ? equipments : equipments.filter({(filterTool: NSManagedObject) -> Bool in
       let toolName: String = filterTool.value(forKey: "name") as! String
       return toolName.range(of: searchText) != nil
     })
-    interventionToolsTableView.reloadData()
+    equipmentsTableView.reloadData()
   }
 
   func fetchTools() {
@@ -88,15 +88,15 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
       return
     }
     let managedContext = appDelegate.persistentContainer.viewContext
-    let toolsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Tools")
+    let toolsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
 
     do {
-      interventionTools = try managedContext.fetch(toolsFetchRequest)
+      equipments = try managedContext.fetch(toolsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    searchedTools = interventionTools
-    interventionToolsTableView.reloadData()
+    searchedTools = equipments
+    equipmentsTableView.reloadData()
   }
 
   @IBAction func closeToolsCreationView(_ sender: Any) {
@@ -110,20 +110,21 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     fetchTools()
   }
 
-  @IBAction func createNewTool(_ sender: Any) {
+  @IBAction func createNewEquipement(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
     let managedContext = appDelegate.persistentContainer.viewContext
-    let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
-    let tools = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
+    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
+    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
 
-    tools.setValue(toolName.text, forKeyPath: "name")
-    tools.setValue(toolNumber.text, forKeyPath: "number")
-    tools.setValue(selectedToolType, forKeyPath: "type")
+    equipment.setValue(toolName.text, forKeyPath: "name")
+    equipment.setValue(toolNumber.text, forKeyPath: "number")
+    equipment.setValue(selectedToolType, forKeyPath: "type")
+    equipment.setValue(UUID(), forKey: "uuid")
     do {
       try managedContext.save()
-      interventionTools.append(tools)
+      equipments.append(equipment)
       closeToolsCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
