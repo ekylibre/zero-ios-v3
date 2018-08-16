@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InterventionToolsTableViewCell: UITableViewCell {
+class EquipmentsTableViewCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!

@@ -393,10 +393,10 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9XQ-uB-zG5">
-                                                                            <rect key="frame" x="295" y="15" width="25" height="25"/>
+                                                                            <rect key="frame" x="300" y="15" width="20" height="20"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="25" id="SoX-Zs-Or7"/>
-                                                                                <constraint firstAttribute="height" constant="25" id="V5M-f5-wSU"/>
+                                                                                <constraint firstAttribute="width" constant="20" id="SoX-Zs-Or7"/>
+                                                                                <constraint firstAttribute="height" constant="20" id="V5M-f5-wSU"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button" image="delete"/>
                                                                             <connections>
@@ -833,7 +833,7 @@
                                         <rect key="frame" x="0.0" y="153" width="335" height="416"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="InterventionToolsTableViewCell" rowHeight="70" id="xwY-oT-on3" customClass="InterventionToolsTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EquipmentsTableViewCell" rowHeight="70" id="xwY-oT-on3" customClass="EquipmentsTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xwY-oT-on3" id="zbU-5b-dYp">
@@ -864,14 +864,14 @@
                                                         <constraint firstItem="oDC-Pa-mmw" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="00M-Pf-tkw"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="2xU-w5-GyM"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="topMargin" constant="4" id="UK7-jV-uYt"/>
+                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="6" id="XKp-6A-wNi"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="top" constant="15" id="YxI-kN-eRA"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="leading" secondItem="zbU-5b-dYp" secondAttribute="leading" constant="15" id="chJ-WA-q1u"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="oDC-Pa-mmw" secondAttribute="bottom" constant="8" id="dJ9-Mh-ceD"/>
                                                         <constraint firstAttribute="bottom" secondItem="OkW-E4-67T" secondAttribute="bottom" constant="15" id="i86-qL-0PP"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="nameLabel" destination="SSv-ix-pwS" id="cfd-Jk-bUi"/>
+                                                    <outlet property="nameLabel" destination="SSv-ix-pwS" id="RRO-NO-o1v"/>
                                                     <outlet property="typeImageView" destination="OkW-E4-67T" id="AYh-uA-sRT"/>
                                                     <outlet property="typeLabel" destination="oDC-Pa-mmw" id="VbX-wj-ocv"/>
                                                 </connections>
@@ -935,7 +935,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="createNewTool:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="NEE-fV-Fme"/>
+                                                    <action selector="createNewEquipement:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Jfq-vk-Rbx"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLB-CA-7x6">
@@ -1098,9 +1098,9 @@
                         <outlet property="cropsTableView" destination="SkX-IZ-Esi" id="F5a-UL-nmR"/>
                         <outlet property="darkLayerView" destination="M7u-Pw-d2r" id="dam-a9-WrY"/>
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
+                        <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
-                        <outlet property="interventionToolsTableView" destination="2QD-fJ-aXc" id="s9p-gY-u44"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="searchTool" destination="3af-DS-yQg" id="xNz-Nm-piP"/>
