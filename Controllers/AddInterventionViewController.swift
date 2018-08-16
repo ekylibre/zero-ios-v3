@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
   //MARK : Properties
 
@@ -24,23 +24,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
+  @IBOutlet weak var selectToolsView: UIView!
+  @IBOutlet weak var createToolsView: UIView!
+  @IBOutlet weak var darkLayerView: UIView!
+  @IBOutlet weak var toolName: UITextField!
+  @IBOutlet weak var toolNumber: UITextField!
+  @IBOutlet weak var toolType: UILabel!
+  @IBOutlet weak var selectedToolsTableView: UITableView!
+  @IBOutlet weak var addToolButton: UIButton!
+  @IBOutlet weak var toolNumberLabel: UILabel!
+  @IBOutlet weak var searchTool: UISearchBar!
+  @IBOutlet weak var toolTypeTableView: UITableView!
+  @IBOutlet weak var toolTypeButton: UIButton!
 
   var crops = [NSManagedObject]()
+  var interventionTools = [NSManagedObject]()
+  var selectedTools = [NSManagedObject]()
+  var searchedTools = [NSManagedObject]()
   var plots = [NSManagedObject]()
   var cropPlots = [[NSManagedObject]]()
-
   var viewsArray = [[UIView]]()
-
-  var interventionTools = [NSManagedObject]() {
-    didSet {
-      if interventionTools.count > 0 {
-        interventionToolsTableView.reloadData()
-      } else {
-        interventionToolsTableView.isHidden = true
-      }
-    }
-  }
   var interventionType: String?
+  var toolTypes: [String]!
+  var selectedToolType: String!
+  var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,32 +57,44 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
     let typeLabel = UILabel()
+
     if interventionType != nil {
       typeLabel.text = interventionType
     }
+    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
     typeLabel.textColor = UIColor.white
-    typeLabel.sizeToFit()
 
     let leftItem = UIBarButtonItem.init(customView: typeLabel)
+
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
-
     selectCropsView.clipsToBounds = true
     selectCropsView.layer.cornerRadius = 3
-
-    interventionToolsTableView.layer.borderWidth  = 0.5
-    interventionToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    interventionToolsTableView.layer.cornerRadius = 4
+    selectedToolsTableView.layer.borderWidth  = 0.5
+    selectedToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedToolsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    selectedToolsTableView.layer.cornerRadius = 4
 
     // Crops select
     validateButton.layer.cornerRadius = 3
 
-    self.cropsTableView.dataSource = self
-    self.cropsTableView.delegate = self
-
+    cropsTableView.dataSource = self
+    cropsTableView.delegate = self
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
     cropsTableView.alwaysBounceVertical = false
+    interventionToolsTableView.dataSource = self
+    interventionToolsTableView.delegate = self
+    selectedToolsTableView.dataSource = self
+    selectedToolsTableView.delegate = self
+    searchTool.delegate = self
+    searchTool.autocapitalizationType = .none
+    toolTypeTableView.dataSource = self
+    toolTypeTableView.delegate = self
+    defineToolTypes()
+    fetchTools()
+    selectedToolType = toolTypes[0]
+    toolTypeButton.setTitle(toolTypes[0], for: .normal)
   }
 
   func fetchPlots(cropId: Int) {
@@ -103,13 +122,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
     let managedContext = appDelegate.persistentContainer.viewContext
-
     let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
 
     do {
@@ -117,7 +133,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
     if crops.count == 0 {
       loadSampleCrops()
     }
@@ -139,24 +154,33 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
     switch tableView {
-    case  cropsTableView:
+    case cropsTableView:
       return crops.count
     case interventionToolsTableView:
-      return interventionTools.count
+      return searchedTools.count
+    case selectedToolsTableView:
+      return selectedTools.count
+    case toolTypeTableView:
+      return toolTypes.count
     default:
       return 1
     }
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let crop = crops[indexPath.row]
+    var crop: NSManagedObject?
+    var tool: NSManagedObject?
+    var selectedTool: NSManagedObject?
+    var toolType: String?
 
     switch tableView {
     case cropsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "cropTableViewCell", for: indexPath) as! CropTableViewCell
-      cell.nameLabel.text = crop.value(forKey: "name") as? String
+
+      crop = crops[indexPath.row]
+      cell.nameLabel.text = crop?.value(forKey: "name") as? String
       cell.nameLabel.sizeToFit()
-      cell.surfaceAreaLabel.text = String(format: "%.1f ha",crop.value(forKey: "surfaceArea") as! Double)
+      cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop?.value(forKey: "surfaceArea") as! Double)
       cell.surfaceAreaLabel.sizeToFit()
 
       var views = [UIView]()
@@ -194,11 +218,43 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         views.append(view)
       }
       viewsArray.append(views)
+      return cell
+    case interventionToolsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionToolsTableViewCell
 
+      tool = searchedTools[indexPath.row]
+      cell.nameLabel.text = tool?.value(forKey: "name") as? String
+      cell.typeLabel.text = tool?.value(forKey: "type") as? String
+      cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
+      return cell
+    case selectedToolsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedToolsTableViewCell", for: indexPath) as! SelectedToolsTableViewCell
+
+      selectedTool = selectedTools[indexPath.row]
+      cell.cellDelegate = self
+      cell.indexPath = indexPath.row
+      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
+      cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
+      cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
+      return cell
+    case toolTypeTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "ToolsTypeTableViewCell", for: indexPath) as! ToolsTypeTableViewCell
+
+      toolType = toolTypes[indexPath.row]
+      cell.nameLabel.text = toolType
       return cell
     default:
-      fatalError("Swith error")
+      fatalError("Switch error")
     }
+  }
+
+  @IBAction func toolTypeSelection(_ sender: UIButton) {
+    toolTypeTableView.isHidden = false
+    toolTypeTableView.layer.shadowColor = UIColor.black.cgColor
+    toolTypeTableView.layer.shadowOpacity = 1
+    toolTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
+    toolTypeTableView.layer.shadowRadius = 10
   }
 
   // Expand/collapse cell when tapped
@@ -206,20 +262,31 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var indexPaths: [IndexPath] = []
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
     selectedIndexPath = indexPath
-
-    let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropTableViewCell
-    if !indexPaths.contains(selectedIndexPath!) {
-      indexPaths += [selectedIndexPath!]
-      cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-    } else {
-      let index = indexPaths.index(of: selectedIndexPath!)
-      indexPaths.remove(at: index!)
-      cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+    switch tableView {
+    case cropsTableView:
+      let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropTableViewCell
+      if !indexPaths.contains(selectedIndexPath!) {
+        indexPaths += [selectedIndexPath!]
+        cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+      } else {
+        let index = indexPaths.index(of: selectedIndexPath!)
+        indexPaths.remove(at: index!)
+        cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+      }
+      cropsTableView.beginUpdates()
+      cropsTableView.endUpdates()
+    case interventionToolsTableView:
+      selectedTools.append(interventionTools[indexPath.row])
+      closeSelectToolsView()
+    case toolTypeTableView:
+        selectedToolType = toolTypes[indexPath.row]
+        toolTypeTableView.reloadData()
+        toolTypeButton.setTitle(selectedToolType, for: .normal)
+        toolTypeTableView.isHidden = true
+    default:
+      print("Nothing to do")
     }
-    cropsTableView.beginUpdates()
-    cropsTableView.endUpdates()
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -312,11 +379,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     animationRunning = true
 
     UIView.animate(withDuration: 0.5, animations: {
+      self.collapseButton.isHidden = false
       self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: angle)
       self.view.layoutIfNeeded()
     }, completion: { _ in
       self.animationRunning = false
     })
+    showToolsNumber()
   }
 
   // Create crops data

@@ -54,6 +54,19 @@ open class AuthentificationService {
     }
   }
 
+  func addNewUser(userName: String) {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let newUser = NSEntityDescription.entity(forEntityName: "Users", in: managedContext)!
+    let name = NSManagedObject(entity: newUser, insertInto: managedContext)
+
+    name.setValue(userName, forKeyPath: "userName")
+    do {
+      try managedContext.save()
+    } catch {
+      print("Save failed")
+    }
+  }
+
   public func authorize(presenting view: UIViewController) {
     oauth2.authorizeEmbedded(from: view) { (authParameters, error) in
       if let _ = authParameters {
@@ -67,6 +80,7 @@ open class AuthentificationService {
   }
 
   public func logout() {
+    emptyUsersList()
     oauth2.username = nil
     oauth2.password = nil
     oauth2.forgetTokens()
