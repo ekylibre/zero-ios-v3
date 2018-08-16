@@ -249,6 +249,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  @IBAction func toolTypeSelection(_ sender: UIButton) {
+    toolTypeTableView.isHidden = false
+    toolTypeTableView.layer.shadowColor = UIColor.black.cgColor
+    toolTypeTableView.layer.shadowOpacity = 1
+    toolTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
+    toolTypeTableView.layer.shadowRadius = 10
+  }
+
   // Expand/collapse cell when tapped
   var selectedIndexPath: IndexPath?
   var indexPaths: [IndexPath] = []
@@ -272,22 +280,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedTools.append(interventionTools[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-      if toolTypeTableView.frame.height == 50 {
-        toolTypeTableView.frame = CGRect(x: toolTypeTableView.frame.minX, y: toolTypeTableView.frame.minY, width: toolTypeTableView.frame.width, height: 350)
-      } else {
-        toolTypeTableView.frame = CGRect(x: toolTypeTableView.frame.minX, y: toolTypeTableView.frame.minY, width: toolTypeTableView.frame.width, height: 50)
-        toolTypeTableView.layer.shadowColor = UIColor.black.cgColor
-        toolTypeTableView.layer.shadowOpacity = 1
-        toolTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
-        toolTypeTableView.layer.shadowRadius = 10
         selectedToolType = toolTypes[indexPath.row]
         toolTypeTableView.reloadData()
-      }
+        toolTypeButton.setTitle(selectedToolType, for: .normal)
+        toolTypeTableView.isHidden = true
     default:
       print("Nothing to do")
     }
-
-
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
