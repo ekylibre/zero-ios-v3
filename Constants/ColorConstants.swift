@@ -31,4 +31,8 @@ struct AppColor {
     static let Green = UIColor(red: 154/255, green: 200/255, blue: 106/255, alpha: 1)
     static let DarkGray = UIColor.darkGray
   }
+
+  struct ThemeColors {
+    static let DarkWhite = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+  }
 }
