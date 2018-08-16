@@ -35,6 +35,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var toolNumberLabel: UILabel!
   @IBOutlet weak var searchTool: UISearchBar!
   @IBOutlet weak var toolTypeTableView: UITableView!
+  @IBOutlet weak var toolTypeButton: UIButton!
 
   var crops = [NSManagedObject]()
   var interventionTools = [NSManagedObject]()
@@ -93,6 +94,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     defineToolTypes()
     fetchTools()
     selectedToolType = toolTypes[0]
+    toolTypeButton.setTitle(toolTypes[0], for: .normal)
   }
 
   func fetchPlots(cropId: Int) {
