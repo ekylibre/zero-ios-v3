@@ -16,6 +16,5 @@ class CropTableViewCell: UITableViewCell {
   @IBOutlet weak var expandCollapseButton: UIButton!
 
   override func setSelected(_ selected: Bool, animated: Bool) {
-    
   }
 }
