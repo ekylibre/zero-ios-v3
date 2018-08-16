@@ -17,12 +17,12 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       self.selectedTools.remove(at: indexPath)
       self.selectedToolsTableView.reloadData()
+      if self.selectedTools.count == 0 && self.firstView.frame.height != 50 {
+        self.collapseExpand(self)
+        self.collapseButton.isHidden = true
+      }
     }))
     present(alert, animated: true)
-    if selectedTools.count == 0 && firstView.frame.height != 50 {
-      collapseExpand(self)
-      collapseButton.isHidden = true
-    }
   }
 
   func defineToolTypes() {
@@ -50,16 +50,16 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   @IBAction func openSelectToolsView(_ sender: Any) {
     dimView.isHidden = false
     selectToolsView.isHidden = false
-    UIView.animate(withDuration: 1, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = .black
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
   }
 
   func closeSelectToolsView() {
     dimView.isHidden = true
     selectToolsView.isHidden = true
-    UIView.animate(withDuration: 1, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = .black
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
     if selectedTools.count > 0 && firstView.frame.height == 50 {
       collapseExpand(self)
@@ -70,8 +70,8 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   @IBAction func openCreateToolsView(_ sender: Any) {
     darkLayerView.isHidden = false
     createToolsView.isHidden = false
-    UIView.animate(withDuration: 1, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = .black
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
   }
 
@@ -104,8 +104,8 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     toolNumber.text = nil
     darkLayerView.isHidden = true
     createToolsView.isHidden = true
-    UIView.animate(withDuration: 1, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = .black
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
     fetchTools()
   }
