@@ -51,7 +51,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     dimView.isHidden = false
     selectToolsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
   }
 
@@ -71,7 +71,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     darkLayerView.isHidden = false
     createToolsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
   }
 

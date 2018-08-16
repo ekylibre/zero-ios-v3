@@ -317,10 +317,10 @@
                                                         <locale key="locale" localeIdentifier="fr_FR"/>
                                                     </datePicker>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baT-aK-qUM">
-                                                        <rect key="frame" x="335" y="13" width="20" height="11"/>
+                                                        <rect key="frame" x="339" y="10" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="11" id="WxT-cL-Uxl"/>
-                                                            <constraint firstAttribute="width" constant="20" id="zCN-rU-Yrm"/>
+                                                            <constraint firstAttribute="height" constant="16" id="WxT-cL-Uxl"/>
+                                                            <constraint firstAttribute="width" constant="16" id="zCN-rU-Yrm"/>
                                                         </constraints>
                                                         <state key="normal" title="Collapse button" image="expandCollapse"/>
                                                     </button>
@@ -336,7 +336,7 @@
                                                     <constraint firstItem="tNP-rL-bIM" firstAttribute="leading" secondItem="mVH-pu-SgP" secondAttribute="trailing" constant="8" symbolic="YES" id="JIT-3w-ONH"/>
                                                     <constraint firstItem="wAO-eJ-lrk" firstAttribute="leading" secondItem="tS7-0f-DOT" secondAttribute="trailing" constant="15" id="L67-nC-DVO"/>
                                                     <constraint firstItem="FiN-Sz-A2V" firstAttribute="bottom" secondItem="vWi-dt-aMV" secondAttribute="bottomMargin" id="fs2-iR-Jqe"/>
-                                                    <constraint firstItem="baT-aK-qUM" firstAttribute="top" secondItem="vWi-dt-aMV" secondAttribute="top" constant="13" id="iAW-AS-Vr1"/>
+                                                    <constraint firstItem="baT-aK-qUM" firstAttribute="top" secondItem="vWi-dt-aMV" secondAttribute="top" constant="10" id="iAW-AS-Vr1"/>
                                                     <constraint firstItem="wAO-eJ-lrk" firstAttribute="top" secondItem="vWi-dt-aMV" secondAttribute="top" constant="8" id="idm-gZ-2dm"/>
                                                     <constraint firstItem="tS7-0f-DOT" firstAttribute="leading" secondItem="mVH-pu-SgP" secondAttribute="leading" id="ijP-TS-R61"/>
                                                     <constraint firstItem="tNP-rL-bIM" firstAttribute="centerY" secondItem="vWi-dt-aMV" secondAttribute="centerY" id="kcR-re-9vf"/>
@@ -436,10 +436,10 @@
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJR-CJ-tlU">
-                                                        <rect key="frame" x="335" y="20" width="20" height="11"/>
+                                                        <rect key="frame" x="339" y="20" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="11" id="EKZ-Yo-I3K"/>
-                                                            <constraint firstAttribute="width" constant="20" id="nfy-DG-WQf"/>
+                                                            <constraint firstAttribute="height" constant="16" id="EKZ-Yo-I3K"/>
+                                                            <constraint firstAttribute="width" constant="16" id="nfy-DG-WQf"/>
                                                         </constraints>
                                                         <state key="normal" title="Collapse" image="expandCollapse"/>
                                                         <connections>
@@ -493,10 +493,10 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-9o-YeQ">
-                                                        <rect key="frame" x="335" y="20" width="20" height="11"/>
+                                                        <rect key="frame" x="339" y="20" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="hLE-EX-3Pg"/>
-                                                            <constraint firstAttribute="height" constant="11" id="xIe-zP-1Aa"/>
+                                                            <constraint firstAttribute="width" constant="16" id="hLE-EX-3Pg"/>
+                                                            <constraint firstAttribute="height" constant="16" id="xIe-zP-1Aa"/>
                                                         </constraints>
                                                         <state key="normal" title="Collapse Button" image="expandCollapse"/>
                                                     </button>
