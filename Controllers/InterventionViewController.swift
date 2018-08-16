@@ -12,7 +12,7 @@ import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-  //MARK: Properties
+  //MARK: - Outlets
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
@@ -24,12 +24,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
   @IBOutlet weak var addInterventionLabel: UILabel!
 
+  //MARK: - Properties
+
   var interventions = [NSManagedObject]() {
     didSet {
       tableView.reloadData()
     }
   }
-  var workingPeriods = [NSManagedObject]()
 
   var interventionButtons: [UIButton] = []
 
@@ -132,13 +133,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-
     let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
-    let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
-      workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -153,12 +151,133 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Dispose of any resources that can be recreated.
   }
 
+  //MARK: - Table view data source
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return interventions.count
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionTableViewCell", for: indexPath) as? InterventionTableViewCell else {
+      fatalError("The dequeued cell is not an instance of InterventionTableViewCell")
+    }
+
+    if indexPath.row % 2 == 0 {
+      cell.backgroundColor = AppColor.CellColors.white
+    } else {
+      cell.backgroundColor = AppColor.CellColors.lightGray
+    }
+
+    let intervention = interventions[indexPath.row]
+    let targets = fetchTargets(of: intervention)
+    let workingPeriod = fetchWorkingPeriods(of: intervention)
+
+    cell.typeLabel.text = intervention.value(forKeyPath: "type") as? String
+    switch intervention.value(forKeyPath: "type") as! String {
+    case Intervention.InterventionType.Care.rawValue:
+      cell.typeImageView.image = UIImage(named: "care")!
+    case Intervention.InterventionType.CropProtection.rawValue:
+      cell.typeImageView.image = UIImage(named: "cropProtection")!
+    case Intervention.InterventionType.Fertilization.rawValue:
+      cell.typeImageView.image = UIImage(named: "fertilization")!
+    case Intervention.InterventionType.GroundWork.rawValue:
+      cell.typeImageView.image = UIImage(named: "groundWork")!
+    case Intervention.InterventionType.Harvest.rawValue:
+      cell.typeImageView.image = UIImage(named: "harvest")!
+    case Intervention.InterventionType.Implantation.rawValue:
+      cell.typeImageView.image = UIImage(named: "implantation")!
+    case Intervention.InterventionType.Irrigation.rawValue:
+      cell.typeImageView.image = UIImage(named: "irrigation")!
+    default:
+      cell.typeLabel.text = "Erreur"
+    }
+
+    switch intervention.value(forKeyPath: "status") as! Int16 {
+    case Intervention.Status.OutOfSync.rawValue:
+      cell.syncImage.backgroundColor = UIColor.orange
+    case Intervention.Status.Synchronised.rawValue:
+      cell.syncImage.backgroundColor = UIColor.yellow
+    case Intervention.Status.Validated.rawValue:
+      cell.syncImage.backgroundColor = UIColor.green
+    default:
+      cell.syncImage.backgroundColor = UIColor.purple
+    }
+
+    cell.cropsLabel.text = updateCropsLabel(targets)
+    cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
+    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKeyPath: "executionDate") as! Date)
+
+    // Resize labels according to their text
+    cell.typeLabel.sizeToFit()
+    cell.cropsLabel.sizeToFit()
+    cell.infosLabel.sizeToFit()
+
+    return cell
+  }
+
+  func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [NSManagedObject]()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Targets")
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    targetsFetchRequest.predicate = predicate
+
+    var targets: [NSManagedObject]!
+
+    do {
+      targets = try managedContext.fetch(targetsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return targets
+  }
+
+  func fetchWorkingPeriods(of intervention: NSManagedObject) -> NSManagedObject {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return NSManagedObject()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    workingPeriodsFetchRequest.predicate = predicate
+
+    var workingPeriods: [NSManagedObject]!
+
+    do {
+      workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return workingPeriods.first!
+  }
+
+  func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
+
+    var totalSurfaceArea: Double = 0
+
+    for target in targets {
+      let surfaceArea = target.value(forKeyPath: "surfaceArea") as! Double
+      totalSurfaceArea += surfaceArea
+    }
+
+    if targets.count > 1 {
+      return String(format: "%d cultures • %.1f ha", targets.count, totalSurfaceArea)
+    } else {
+      return String(format: "1 culture • %.1f ha", totalSurfaceArea)
+    }
   }
 
   func transformDate(date: Date) -> String {
@@ -182,97 +301,27 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-    // Table view cells are reused and should be dequeued using a cell identifier.
-    let cellIdentifier = "InterventionTableViewCell"
-
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? InterventionTableViewCell else {
-      fatalError("The dequeued cell is not an instance of InterventionTableViewCell")
-    }
-
-    if indexPath.row % 2 == 0 {
-      cell.backgroundColor = AppColor.CellColors.white
-    } else {
-      cell.backgroundColor = AppColor.CellColors.lightGray
-    }
-
-    // Fetches the appropriate intervention for the data source layout
-    let intervention = interventions[indexPath.row]
-    let workingPeriod = workingPeriods[indexPath.row]
-
-    switch intervention.value(forKeyPath: "type") as! Int16 {
-    case Intervention.InterventionType.Care.rawValue:
-      cell.typeLabel.text = "Entretien"
-      cell.typeImageView.image = UIImage(named: "care")!
-    case Intervention.InterventionType.CropProtection.rawValue:
-      cell.typeLabel.text = "Pulvérisation"
-      cell.typeImageView.image = UIImage(named: "cropProtection")!
-    case Intervention.InterventionType.Fertilization.rawValue:
-      cell.typeLabel.text = "Fertilisation"
-      cell.typeImageView.image = UIImage(named: "fertilization")!
-    case Intervention.InterventionType.GroundWork.rawValue:
-      cell.typeLabel.text = "Travail du sol"
-      cell.typeImageView.image = UIImage(named: "groundWork")!
-    case Intervention.InterventionType.Harvest.rawValue:
-      cell.typeLabel.text = "Récolte"
-      cell.typeImageView.image = UIImage(named: "harvest")!
-    case Intervention.InterventionType.Implantation.rawValue:
-      cell.typeLabel.text = "Semis"
-      cell.typeImageView.image = UIImage(named: "implantation")!
-    case Intervention.InterventionType.Irrigation.rawValue:
-      cell.typeLabel.text = "Irrigation"
-      cell.typeImageView.image = UIImage(named: "irrigation")!
-    default:
-      cell.typeLabel.text = "Erreur"
-    }
-
-    switch intervention.value(forKeyPath: "status") as! Int16 {
-    case Intervention.Status.OutOfSync.rawValue:
-      cell.syncImage.backgroundColor = UIColor.orange
-    case Intervention.Status.Synchronised.rawValue:
-      cell.syncImage.backgroundColor = UIColor.yellow
-    case Intervention.Status.Validated.rawValue:
-      cell.syncImage.backgroundColor = UIColor.green
-    default:
-      cell.syncImage.backgroundColor = UIColor.purple
-    }
-
-    //cell.cropsLabel.text = intervention.value(forKeyPath: "crops") as? String
-    cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
-    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKeyPath: "executionDate") as! Date)
-
-    // Resize labels according to their text
-    cell.typeLabel.sizeToFit()
-    cell.cropsLabel.sizeToFit()
-    cell.infosLabel.sizeToFit()
-
-    return cell
-  }
-
-  func createIntervention(type: Int16, infos: String, status: Int16, executionDate: Date) {
+  func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-
     let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
     let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-
     let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
     let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
 
     intervention.setValue(type, forKeyPath: "type")
     intervention.setValue(infos, forKeyPath: "infos")
     intervention.setValue(status, forKeyPath: "status")
+    workingPeriod.setValue(intervention, forKey: "interventions")
     workingPeriod.setValue(executionDate, forKeyPath: "executionDate")
 
     do {
       try managedContext.save()
       interventions.append(intervention)
-      workingPeriods.append(workingPeriod)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -280,13 +329,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Navigation
 
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
-
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destViewController = segue.destination as! AddInterventionViewController
+    let destVC = segue.destination as! AddInterventionViewController
 
     if let type = (sender as? UIButton)?.titleLabel?.text {
-      destViewController.interventionType = type
+        destVC.interventionType = type
+    }
+  }
+
+  @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
+
+    if sender.source is AddInterventionViewController {
+      if let senderVC = sender.source as? AddInterventionViewController {
+        interventions.append(senderVC.newIntervention)
+      }
+      tableView.reloadData()
     }
   }
 
@@ -307,13 +364,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let date4 = makeDate(year: 2017, month: 7, day: 22, hour: 9, minute: 5, second: 0)
     //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
-    createIntervention(type: 0, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: 1, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: 2, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: 3, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
-  //MARK: Actions
+  //MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
 
@@ -350,27 +407,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
 
-    var type: Int16 = 0
-
-    switch sender.titleLabel?.text {
-    case "Entretien":
-      type = 0
-    case "Pulvérisation":
-      type = 1
-    case "Fertilisation":
-      type = 2
-    case "Travail du sol":
-      type = 3
-    case "Récolte":
-      type = 4
-    case "Semis":
-      type = 5
-    case "Irrigation":
-      type = 6
-    default:
-      type = -1
-    }
-    createIntervention(type: type, infos: UUID().uuidString, status: 0, executionDate: Date())
     hideInterventionAdd()
     performSegue(withIdentifier: "addIntervention", sender: sender)
   }
