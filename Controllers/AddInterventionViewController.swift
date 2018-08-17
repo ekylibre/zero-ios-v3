@@ -43,6 +43,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var entitiesTableView: UITableView!
   @IBOutlet weak var entityRole: UITextField!
   @IBOutlet weak var entityDarkLayer: UIView!
+  @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var doersView: UIView!
 
   //MARK: - Properties
 
@@ -60,6 +62,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedToolType: String!
   var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var entities = [NSManagedObject]()
+  var doers = [NSManagedObject]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -276,6 +279,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         toolTypeTableView.reloadData()
         toolTypeButton.setTitle(selectedToolType, for: .normal)
         toolTypeTableView.isHidden = true
+    case entitiesTableView:
+      doers.append(entities[indexPath.row])
+      closeSelectEntitiesView()
     default:
       print("Nothing to do")
     }

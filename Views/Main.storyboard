@@ -495,7 +495,7 @@
                                                             <action selector="openSelectEntitiesView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="OUv-lZ-xPL"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-9o-YeQ">
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-9o-YeQ">
                                                         <rect key="frame" x="339" y="20" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="16" id="hLE-EX-3Pg"/>
@@ -1347,6 +1347,8 @@
                         <outlet property="createToolsView" destination="kHt-fp-S63" id="feJ-zZ-e2k"/>
                         <outlet property="cropsTableView" destination="SkX-IZ-Esi" id="F5a-UL-nmR"/>
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
+                        <outlet property="doersHeightConstraint" destination="Urd-xq-NHV" id="x74-Vy-yXr"/>
+                        <outlet property="doersView" destination="iGS-Ro-sdH" id="YK5-AR-X8J"/>
                         <outlet property="entitiesTableView" destination="LDT-gI-lv5" id="FC0-qR-O9o"/>
                         <outlet property="entityDarkLayer" destination="10k-Xe-E68" id="ud4-ym-08R"/>
                         <outlet property="entityFirstName" destination="rRC-EH-Dse" id="B6f-aq-1ZD"/>
