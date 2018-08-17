@@ -27,12 +27,29 @@ extension AddInterventionViewController {
     if doers.count > 0 && doersView.frame.height == 50 {
       doersHeightConstraint.constant = 300
       UIView.animate(withDuration: 0.5, animations: {
-        //self.collapseButton.isHidden = false
-        //self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        self.doersCollapsedButton.isHidden = false
+        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })
     }
+    doersTableView.reloadData()
     entitiesTableView.reloadData()
+  }
+
+  @IBAction func collapseDoersView(_ sender: UIButton) {
+    if doersView.frame.height != 50 {
+      doersHeightConstraint.constant = 50
+      UIView.animate(withDuration: 0.5, animations: {
+        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        self.view.layoutIfNeeded()
+      })
+    } else {
+      doersHeightConstraint.constant = 300
+      UIView.animate(withDuration: 0.5, animations: {
+        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        self.view.layoutIfNeeded()
+      })
+    }
   }
 
   func fetchEntities() {

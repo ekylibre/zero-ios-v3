@@ -43,8 +43,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var entitiesTableView: UITableView!
   @IBOutlet weak var entityRole: UITextField!
   @IBOutlet weak var entityDarkLayer: UIView!
+  @IBOutlet weak var doersTableView: UITableView!
   @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var doersView: UIView!
+  @IBOutlet weak var doersCollapsedButton: UIButton!
 
   //MARK: - Properties
 
@@ -89,9 +91,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedToolsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     selectedToolsTableView.layer.cornerRadius = 4
-
     saveInterventionButton.layer.cornerRadius = 3
-
     cropsTableView.dataSource = self
     cropsTableView.delegate = self
     cropsTableView.tableFooterView = UIView()
@@ -107,6 +107,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     toolTypeTableView.delegate = self
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
+    doersTableView.dataSource = self
+    doersTableView.delegate = self
     defineToolTypes()
     fetchTools()
     fetchEntities()
@@ -145,6 +147,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return toolTypes.count
     case entitiesTableView:
       return entities.count
+    case doersTableView:
+      print("Doers size: \(doers.count)")
+      return doers.count
     default:
       return 1
     }
@@ -156,6 +161,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var selectedTool: NSManagedObject?
     var toolType: String?
     var entitie: NSManagedObject?
+    var doer: NSManagedObject?
 
     switch tableView {
     case cropsTableView:
@@ -238,6 +244,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.lastName.text = entitie?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
       return cell
+    case doersTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "DoersTableViewCell", for: indexPath) as! DoersTableViewCell
+
+      doer = doers[indexPath.row]
+      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      cell.firstName.text = doer?.value(forKey: "firstName") as? String
+      cell.lastName.text = doer?.value(forKey: "lastName") as? String
+      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
+      print("Cell: \(String(describing: cell.firstName.text))")
+      return cell
     default:
       fatalError("Switch error")
     }
@@ -281,6 +297,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         toolTypeTableView.isHidden = true
     case entitiesTableView:
       doers.append(entities[indexPath.row])
+      doersTableView.reloadData()
       closeSelectEntitiesView()
     default:
       print("Nothing to do")
