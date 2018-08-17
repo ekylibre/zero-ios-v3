@@ -36,6 +36,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var searchTool: UISearchBar!
   @IBOutlet weak var toolTypeTableView: UITableView!
   @IBOutlet weak var toolTypeButton: UIButton!
+  @IBOutlet weak var selectEntitiesView: UIView!
+  @IBOutlet weak var createEntitiesView: UIView!
+  @IBOutlet weak var entitiesTableView: UITableView!
+  @IBOutlet weak var entityFirstName: UITextField!
+  @IBOutlet weak var entityLastName: UITextField!
+  @IBOutlet weak var entityTitle: UITextField!
 
   //MARK: - Properties
 
@@ -52,6 +58,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var toolTypes: [String]!
   var selectedToolType: String!
   var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
+  var entities = [NSManagedObject]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -94,6 +101,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchTool.autocapitalizationType = .none
     toolTypeTableView.dataSource = self
     toolTypeTableView.delegate = self
+    entitiesTableView.dataSource = self
+    entitiesTableView.delegate = self
     defineToolTypes()
     fetchTools()
     selectedToolType = toolTypes[0]
@@ -129,6 +138,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return selectedTools.count
     case toolTypeTableView:
       return toolTypes.count
+    case entitiesTableView:
+      return entities.count
     default:
       return 1
     }
@@ -139,6 +150,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var tool: NSManagedObject?
     var selectedTool: NSManagedObject?
     var toolType: String?
+    var entitie: NSManagedObject?
 
     switch tableView {
     case cropsTableView:
@@ -212,6 +224,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       toolType = toolTypes[indexPath.row]
       cell.nameLabel.text = toolType
+      return cell
+    case entitiesTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EntitiesTableViewCell", for: indexPath) as! EntitiesTableViewCell
+
+      entitie = entities[indexPath.row]
+      cell.firstName.text = entitie?.value(forKey: "firstName") as? String
+      cell.lastName.text = entitie?.value(forKey: "lastName") as? String
       return cell
     default:
       fatalError("Switch error")
