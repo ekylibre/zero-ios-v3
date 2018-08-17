@@ -44,6 +44,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedPlots = [NSManagedObject]()
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
+  var workingPeriodView: UIView!
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
   var searchedTools = [NSManagedObject]()
@@ -57,6 +58,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     super.viewDidLoad()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+
+    workingPeriodView = WorkingPeriodsView(frame: CGRect(x: 0, y: 0, width: 350, height: 400))
+    self.view.addSubview(workingPeriodView)
+    workingPeriodView.center.x = self.view.center.x
+    workingPeriodView.center.y = self.view.center.y
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -250,10 +256,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedTools.append(interventionTools[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-        selectedToolType = toolTypes[indexPath.row]
-        toolTypeTableView.reloadData()
-        toolTypeButton.setTitle(selectedToolType, for: .normal)
-        toolTypeTableView.isHidden = true
+      selectedToolType = toolTypes[indexPath.row]
+      toolTypeTableView.reloadData()
+      toolTypeButton.setTitle(selectedToolType, for: .normal)
+      toolTypeTableView.isHidden = true
     default:
       print("Nothing to do")
     }
@@ -604,9 +610,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func selectPlots(_ sender: Any) {
 
-    print("test")
     dimView.isHidden = false
     selectCropsView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  @IBAction func selectWorkingPeriod(_ sender: Any) {
+
+    dimView.isHidden = false
+    workingPeriodView.isHidden = false
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
