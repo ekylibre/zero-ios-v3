@@ -24,8 +24,13 @@ extension AddInterventionViewController {
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
-    if selectedTools.count > 0 && firstView.frame.height == 50 {
-      collapseExpand(self)
+    if doers.count > 0 && doersView.frame.height == 50 {
+      doersHeightConstraint.constant = 300
+      UIView.animate(withDuration: 0.5, animations: {
+        //self.collapseButton.isHidden = false
+        //self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        self.view.layoutIfNeeded()
+      })
     }
     entitiesTableView.reloadData()
   }
