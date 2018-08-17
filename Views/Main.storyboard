@@ -878,7 +878,7 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7u-Pw-d2r" userLabel="Dark Layer View">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7u-Pw-d2r" userLabel="Tool Dark Layer">
                                         <rect key="frame" x="-20" y="-51" width="375" height="679"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50476241438356162" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
@@ -1133,16 +1133,16 @@
                                                                 <constraint firstAttribute="width" constant="40" id="s0Z-jk-cwi"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10g-cZ-ZYp" userLabel="First Name Label">
-                                                            <rect key="frame" x="70" y="37" width="31" height="14"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKP-Fr-E6R" userLabel="Last Name Label">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKP-Fr-E6R" userLabel="First Name Label">
                                                             <rect key="frame" x="70" y="15" width="36" height="16"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10g-cZ-ZYp" userLabel="Last Name Label">
+                                                            <rect key="frame" x="70" y="37" width="31" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -1157,13 +1157,18 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="firstName" destination="10g-cZ-ZYp" id="n0U-bT-bHZ"/>
-                                                    <outlet property="lastName" destination="UKP-Fr-E6R" id="1pv-m6-qm1"/>
+                                                    <outlet property="firstName" destination="UKP-Fr-E6R" id="PlQ-ph-fYP"/>
+                                                    <outlet property="lastName" destination="10g-cZ-ZYp" id="KHf-kl-Uhu"/>
                                                     <outlet property="logo" destination="cXR-oW-rIT" id="cTg-Jz-CzZ"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10k-Xe-E68" userLabel="Entity Dark Layer">
+                                        <rect key="frame" x="-20" y="-55" width="375" height="679"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50476241440000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KmC-aZ-h9V" userLabel="Create Entities View">
                                         <rect key="frame" x="0.0" y="144.5" width="335" height="280"/>
                                         <subviews>
@@ -1341,12 +1346,12 @@
                         <outlet property="createEntitiesView" destination="KmC-aZ-h9V" id="k4F-wF-5ZR"/>
                         <outlet property="createToolsView" destination="kHt-fp-S63" id="feJ-zZ-e2k"/>
                         <outlet property="cropsTableView" destination="SkX-IZ-Esi" id="F5a-UL-nmR"/>
-                        <outlet property="darkLayerView" destination="M7u-Pw-d2r" id="dam-a9-WrY"/>
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
                         <outlet property="entitiesTableView" destination="LDT-gI-lv5" id="FC0-qR-O9o"/>
-                        <outlet property="entityFirstName" destination="rRC-EH-Dse" id="YJp-Uf-Ha1"/>
-                        <outlet property="entityLastName" destination="Gfz-0d-yzp" id="UgH-Uy-kcM"/>
-                        <outlet property="entityTitle" destination="lXs-eO-iv8" id="gvw-oi-f9w"/>
+                        <outlet property="entityDarkLayer" destination="10k-Xe-E68" id="ud4-ym-08R"/>
+                        <outlet property="entityFirstName" destination="rRC-EH-Dse" id="B6f-aq-1ZD"/>
+                        <outlet property="entityLastName" destination="Gfz-0d-yzp" id="2Ou-6G-XYZ"/>
+                        <outlet property="entityRole" destination="lXs-eO-iv8" id="VEf-rl-dKV"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
@@ -1364,6 +1369,7 @@
                         <outlet property="toolType" destination="Tur-MK-R4c" id="OmJ-cc-mUm"/>
                         <outlet property="toolTypeButton" destination="A58-eW-7tB" id="kxS-dn-2cF"/>
                         <outlet property="toolTypeTableView" destination="lyS-jh-cAc" id="0WN-xh-DkS"/>
+                        <outlet property="toolsDarkLayer" destination="M7u-Pw-d2r" id="fiV-Pc-88j"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
                     </connections>
                 </viewController>

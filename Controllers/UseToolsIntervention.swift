@@ -68,7 +68,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   @IBAction func openCreateToolsView(_ sender: Any) {
-    darkLayerView.isHidden = false
+    toolsDarkLayer.isHidden = false
     createToolsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
@@ -102,11 +102,8 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   @IBAction func closeToolsCreationView(_ sender: Any) {
     toolName.text = nil
     toolNumber.text = nil
-    darkLayerView.isHidden = true
+    toolsDarkLayer.isHidden = true
     createToolsView.isHidden = true
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
     fetchTools()
   }
 

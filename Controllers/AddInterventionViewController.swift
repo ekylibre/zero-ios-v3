@@ -26,7 +26,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var selectToolsView: UIView!
   @IBOutlet weak var createToolsView: UIView!
-  @IBOutlet weak var darkLayerView: UIView!
+  @IBOutlet weak var toolsDarkLayer: UIView!
   @IBOutlet weak var toolName: UITextField!
   @IBOutlet weak var toolNumber: UITextField!
   @IBOutlet weak var toolType: UILabel!
@@ -36,12 +36,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var searchTool: UISearchBar!
   @IBOutlet weak var toolTypeTableView: UITableView!
   @IBOutlet weak var toolTypeButton: UIButton!
+  @IBOutlet weak var entityFirstName: UITextField!
+  @IBOutlet weak var entityLastName: UITextField!
   @IBOutlet weak var selectEntitiesView: UIView!
   @IBOutlet weak var createEntitiesView: UIView!
   @IBOutlet weak var entitiesTableView: UITableView!
-  @IBOutlet weak var entityFirstName: UITextField!
-  @IBOutlet weak var entityLastName: UITextField!
-  @IBOutlet weak var entityTitle: UITextField!
+  @IBOutlet weak var entityRole: UITextField!
+  @IBOutlet weak var entityDarkLayer: UIView!
 
   //MARK: - Properties
 
@@ -105,6 +106,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     entitiesTableView.delegate = self
     defineToolTypes()
     fetchTools()
+    fetchEntities()
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
   }
@@ -231,6 +233,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       entitie = entities[indexPath.row]
       cell.firstName.text = entitie?.value(forKey: "firstName") as? String
       cell.lastName.text = entitie?.value(forKey: "lastName") as? String
+      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
       return cell
     default:
       fatalError("Switch error")
@@ -651,7 +654,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func selectPlots(_ sender: Any) {
 
-    print("test")
     dimView.isHidden = false
     selectCropsView.isHidden = false
 
