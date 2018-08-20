@@ -49,6 +49,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var doersCollapsedButton: UIButton!
   @IBOutlet weak var doersNumber: UILabel!
   @IBOutlet weak var addEntitiesButton: UIButton!
+  @IBOutlet weak var searchEntity: UISearchBar!
 
   //MARK: - Properties
 
@@ -66,6 +67,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedToolType: String!
   var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var entities = [NSManagedObject]()
+  var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
 
   override func viewDidLoad() {
@@ -105,6 +107,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedToolsTableView.delegate = self
     searchTool.delegate = self
     searchTool.autocapitalizationType = .none
+    searchEntity.delegate = self
+    searchEntity.autocapitalizationType = .none
     toolTypeTableView.dataSource = self
     toolTypeTableView.delegate = self
     entitiesTableView.dataSource = self
@@ -154,7 +158,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case toolTypeTableView:
       return toolTypes.count
     case entitiesTableView:
-      return entities.count
+      return searchedEntities.count
     case doersTableView:
       return doers.count
     default:
@@ -167,7 +171,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var tool: NSManagedObject?
     var selectedTool: NSManagedObject?
     var toolType: String?
-    var entitie: NSManagedObject?
+    var entity: NSManagedObject?
     var doer: NSManagedObject?
 
     switch tableView {
@@ -246,9 +250,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntitiesTableViewCell", for: indexPath) as! EntitiesTableViewCell
 
-      entitie = entities[indexPath.row]
-      cell.firstName.text = entitie?.value(forKey: "firstName") as? String
-      cell.lastName.text = entitie?.value(forKey: "lastName") as? String
+      entity = searchedEntities[indexPath.row]
+      //entity = entities[indexPath.row]
+      cell.firstName.text = entity?.value(forKey: "firstName") as? String
+      cell.lastName.text = entity?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
       return cell
     case doersTableView:
