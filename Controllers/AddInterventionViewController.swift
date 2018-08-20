@@ -18,6 +18,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectCropsView: UIView!
   @IBOutlet weak var cropsTableView: UITableView!
   @IBOutlet weak var selectedPlotsLabel: UILabel!
+  @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
+  @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
+  @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
+  @IBOutlet weak var selectDateButton: UIButton!
+  @IBOutlet weak var durationTextField: UITextField!
   @IBOutlet weak var interventionToolsTableView: UITableView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -44,7 +49,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedPlots = [NSManagedObject]()
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
-  var workingPeriodView: UIView!
+  var selectDateView: UIView!
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
   var searchedTools = [NSManagedObject]()
@@ -59,10 +64,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
-    workingPeriodView = WorkingPeriodsView(frame: CGRect(x: 0, y: 0, width: 350, height: 400))
-    self.view.addSubview(workingPeriodView)
-    workingPeriodView.center.x = self.view.center.x
-    workingPeriodView.center.y = self.view.center.y
+    selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
+    self.view.addSubview(selectDateView)
+    selectDateView.center.x = self.view.center.x
+    selectDateView.center.y = self.view.center.y
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "d MMMM"
+    let currentDateString = dateFormatter.string(from: Date())
+    selectDateButton.setTitle(currentDateString, for: .normal)
+    let validateButton = selectDateView.subviews.last as! UIButton
+    validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
+
+    selectDateButton.layer.cornerRadius = 5
+    selectDateButton.layer.borderWidth = 0.5
+    selectDateButton.layer.borderColor = UIColor.lightGray.cgColor
+    selectDateButton.clipsToBounds = true
+
+    durationTextField.layer.cornerRadius = 5
+    durationTextField.layer.borderWidth = 0.5
+    durationTextField.layer.borderColor = UIColor.lightGray.cgColor
+    durationTextField.clipsToBounds = true
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -315,7 +337,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
     newIntervention.setValue("Infos", forKey: "infos")
     workingPeriod.setValue(newIntervention, forKey: "interventions")
-    workingPeriod.setValue(Date(), forKey: "executionDate")
+    let datePicker = selectDateView.subviews.first as! UIDatePicker
+    workingPeriod.setValue(datePicker.date, forKey: "executionDate")
+    let hourDuration = Int(durationTextField.text!)
+    workingPeriod.setValue(hourDuration, forKey: "hourDuration")
     createTargets(intervention: newIntervention)
 
     do {
@@ -620,12 +645,38 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func selectWorkingPeriod(_ sender: Any) {
 
-    dimView.isHidden = false
+    if workingPeriodHeight.constant == 70 {
+      workingPeriodHeight.constant = 155
+      selectedWorkingPeriodLabel.isHidden = true
+      selectDateButton.isHidden = false
+    } else {
+      workingPeriodHeight.constant = 70
+      selectedWorkingPeriodLabel.isHidden = false
+      selectDateButton.isHidden = true
+      selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
+    }
+    collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
+    /*dimView.isHidden = false
     workingPeriodView.isHidden = false
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
+    })*/
+  }
+
+  func getSelectedWorkingPeriod() -> String {
+    var dateString: String!
+    var hoursNumber: String!
+
+    dateString = selectDateButton.titleLabel?.text
+
+    if durationTextField.text?.isEmpty == true {
+      hoursNumber = "0 h"
+    } else {
+      hoursNumber = durationTextField.text! + " h"
+    }
+
+    return dateString + " • " + hoursNumber
   }
 
   @IBAction func validatePlots(_ sender: Any) {
@@ -645,6 +696,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
+  }
+  
+  @IBAction func selectDate(_ sender: Any) {
+    dimView.isHidden = false
+    selectDateView.isHidden = false
+  }
+
+  @objc func validateDate() {
+    let datePicker = selectDateView.subviews.first as! UIDatePicker
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "d MMMM"
+    let selectedDate = dateFormatter.string(from: datePicker.date)
+    selectDateButton.setTitle(selectedDate, for: .normal)
+
+    dimView.isHidden = true
+    selectDateView.isHidden = true
   }
 
   @IBAction func cancelAdding(_ sender: Any) {

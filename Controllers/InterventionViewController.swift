@@ -71,17 +71,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "fr_FR")
-      dateFormatter.dateFormat = "MMMM"
+      dateFormatter.dateFormat = "d MMMM"
 
       let hour = calendar.component(.hour, from: date)
       let minute = calendar.component(.minute, from: date)
-      let day = calendar.component(.day, from: date)
-      let month = dateFormatter.string(from: date)
+      let dateString = dateFormatter.string(from: date)
 
       if calendar.isDateInToday(date) {
         synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
       } else {
-        synchroLabel.text = "Dernière synchronisation \(day) " + month
+        synchroLabel.text = "Dernière synchronisation " + dateString
       }
     } else {
       synchroLabel.text = "Aucune synchronisation répertoriée"
@@ -175,7 +174,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)
-    let workingPeriod = fetchWorkingPeriods(of: intervention)
+    let workingPeriod = fetchWorkingPeriod(of: intervention)
 
     cell.typeLabel.text = intervention.value(forKeyPath: "type") as? String
     switch intervention.value(forKeyPath: "type") as! String {
@@ -242,7 +241,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return targets
   }
 
-  func fetchWorkingPeriods(of intervention: NSManagedObject) -> NSManagedObject {
+  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return NSManagedObject()
@@ -284,7 +283,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "dd MMMM"
+    dateFormatter.dateFormat = "d MMMM"
 
     var dateString = dateFormatter.string(from: date)
     let year = calendar.component(.year, from: date)
@@ -361,7 +360,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     //let inter2 = Intervention(type: .TravailSol, crops: "1 culture", infos: "Kuhn Prolander", date: date2, status: .OutOfSync)
     let date3 = makeDate(year: 2018, month: 7, day: 23, hour: 9, minute: 5, second: 0)
     //let inter3 = Intervention(type: .Pulverisation, crops: "2 cultures", infos: "PRIORI GOLD", date: date3, status: .OutOfSync)
-    let date4 = makeDate(year: 2017, month: 7, day: 22, hour: 9, minute: 5, second: 0)
+    let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
     //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
     createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
