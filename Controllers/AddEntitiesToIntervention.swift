@@ -9,7 +9,38 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController {
+extension AddInterventionViewController: DoersTableViewCellDelegate {
+
+  func showDoersNumber() {
+    if doers.count > 0 && doersHeightConstraint.constant == 50 {
+      addEntitiesButton.isHidden = true
+      doersNumber.text = (doers.count == 1 ? "1 outil" : "\(doers.count) outils")
+      doersNumber.isHidden = false
+    } else {
+      doersNumber.isHidden = true
+      addEntitiesButton.isHidden = false
+    }
+  }
+
+  func removeDoersCell(_ indexPath: Int) {
+    let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+      self.doers.remove(at: indexPath)
+      if self.doers.count == 0 {
+        self.doersTableView.isHidden = true
+        self.doersHeightConstraint.constant = 50
+        self.doersCollapsedButton.isHidden = true
+      } else {
+        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
+        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 70
+        self.showDoersNumber()
+      }
+      self.doersTableView.reloadData()
+    }))
+    self.present(alert, animated: true)
+  }
+
   @IBAction func openSelectEntitiesView(_ sender: Any) {
     dimView.isHidden = false
     selectEntitiesView.isHidden = false
@@ -21,35 +52,38 @@ extension AddInterventionViewController {
   func closeSelectEntitiesView() {
     dimView.isHidden = true
     selectEntitiesView.isHidden = true
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-    if doers.count > 0 && doersView.frame.height == 50 {
-      doersHeightConstraint.constant = 300
+    if doers.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
-        self.doersCollapsedButton.isHidden = false
-        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.view.layoutIfNeeded()
+        self.doersCollapsedButton.isHidden = false
+        self.doersTableView.isHidden = false
+        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
+        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 70
+        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
     doersTableView.reloadData()
-    entitiesTableView.reloadData()
   }
 
-  @IBAction func collapseDoersView(_ sender: UIButton) {
-    if doersView.frame.height != 50 {
-      doersHeightConstraint.constant = 50
+  @IBAction func collapseDoersView(_ sender: Any) {
+    if doersHeightConstraint.constant != 50 {
       UIView.animate(withDuration: 0.5, animations: {
+        self.doersTableView.isHidden = true
+        self.doersHeightConstraint.constant = 50
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         self.view.layoutIfNeeded()
       })
     } else {
-      doersHeightConstraint.constant = 300
       UIView.animate(withDuration: 0.5, animations: {
+        self.doersTableView.isHidden = false
+        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
+        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 70
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })
     }
+    showDoersNumber()
   }
 
   func fetchEntities() {
@@ -64,7 +98,6 @@ extension AddInterventionViewController {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    //searchedTools = equipments
     entitiesTableView.reloadData()
   }
 

@@ -45,8 +45,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var entityDarkLayer: UIView!
   @IBOutlet weak var doersTableView: UITableView!
   @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var doersView: UIView!
+  @IBOutlet weak var doersTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var doersCollapsedButton: UIButton!
+  @IBOutlet weak var doersNumber: UILabel!
+  @IBOutlet weak var addEntitiesButton: UIButton!
 
   //MARK: - Properties
 
@@ -109,6 +111,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     entitiesTableView.delegate = self
     doersTableView.dataSource = self
     doersTableView.delegate = self
+    doersHeightConstraint.constant = 50
+    doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
+    doersTableView.layer.borderWidth  = 0.5
+    doersTableView.layer.borderColor = UIColor.lightGray.cgColor
+    doersTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    doersTableView.layer.cornerRadius = 4
     defineToolTypes()
     fetchTools()
     fetchEntities()
@@ -148,7 +156,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case entitiesTableView:
       return entities.count
     case doersTableView:
-      print("Doers size: \(doers.count)")
       return doers.count
     default:
       return 1
@@ -248,11 +255,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoersTableViewCell", for: indexPath) as! DoersTableViewCell
 
       doer = doers[indexPath.row]
+      cell.driver.isOn = false
+      cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+      cell.cellDelegate = self
+      cell.indexPath = indexPath.row
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
-      print("Cell: \(String(describing: cell.firstName.text))")
       return cell
     default:
       fatalError("Switch error")
@@ -296,7 +306,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         toolTypeButton.setTitle(selectedToolType, for: .normal)
         toolTypeTableView.isHidden = true
     case entitiesTableView:
+      doersTableView.isHidden = false
       doers.append(entities[indexPath.row])
+      doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
+      doersHeightConstraint.constant = doersTableViewHeightConstraint.constant + 70
       doersTableView.reloadData()
       closeSelectEntitiesView()
     default:
@@ -305,19 +318,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-    if indexPaths.count > 0 {
-      if indexPaths.contains(indexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else {
-          return 0
+    switch tableView {
+    case cropsTableView:
+      if indexPaths.count > 0 {
+        if indexPaths.contains(indexPath) {
+          guard let cell = tableView.cellForRow(at: indexPath) else {
+            return 0
+          }
+          let count = cell.subviews.count - 2
+          return CGFloat(count * 60 + 15)
+        } else {
+          return 60
         }
-        let count = cell.subviews.count - 2
-        return CGFloat(count * 60 + 15)
-      } else {
-        return 60
       }
+    case doersTableView:
+      return 75
+    default:
+      return 60
     }
-
     return 60
   }
 

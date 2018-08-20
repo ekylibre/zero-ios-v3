@@ -14,9 +14,20 @@ class EntitiesTableViewCell: UITableViewCell {
   @IBOutlet weak var logo: UIImageView!
 }
 
+protocol DoersTableViewCellDelegate: class {
+  func removeDoersCell(_ indexPath: Int)
+}
+
 class DoersTableViewCell: UITableViewCell {
   @IBOutlet weak var lastName: UILabel!
   @IBOutlet weak var firstName: UILabel!
   @IBOutlet weak var logo: UIImageView!
   @IBOutlet weak var driver: UISwitch!
+
+  weak var cellDelegate: DoersTableViewCellDelegate?
+  var indexPath: Int!
+
+  @IBAction func removeCellButton(_ sender: UIButton) {
+    cellDelegate?.removeDoersCell(self.indexPath)
+  }
 }
