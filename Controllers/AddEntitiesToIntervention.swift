@@ -63,6 +63,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
+    searchedEntities = entities
     doersTableView.reloadData()
   }
 
@@ -98,6 +99,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+    searchedEntities = entities
     entitiesTableView.reloadData()
   }
 

@@ -495,8 +495,8 @@
                                                             <action selector="openSelectEntitiesView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="OUv-lZ-xPL"/>
                                                         </connections>
                                                     </button>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doers Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orv-Jv-Mfq">
-                                                        <rect key="frame" x="117.5" y="15" width="100" height="18"/>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orv-Jv-Mfq">
+                                                        <rect key="frame" x="121.5" y="16" width="100" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -597,9 +597,9 @@
                                                     <constraint firstItem="PvZ-9o-YeQ" firstAttribute="trailing" secondItem="b7I-Kf-0GJ" secondAttribute="trailing" id="U4b-1a-7aB"/>
                                                     <constraint firstItem="IAh-c6-yzZ" firstAttribute="top" secondItem="iGS-Ro-sdH" secondAttribute="top" constant="15" id="UIG-WI-G1f"/>
                                                     <constraint firstItem="yGb-zU-Lzj" firstAttribute="leading" secondItem="IAh-c6-yzZ" secondAttribute="trailing" constant="15" id="UTW-4p-xHK"/>
-                                                    <constraint firstItem="orv-Jv-Mfq" firstAttribute="top" secondItem="iGS-Ro-sdH" secondAttribute="top" constant="15" id="Vg4-LE-JZ9"/>
+                                                    <constraint firstItem="orv-Jv-Mfq" firstAttribute="top" secondItem="iGS-Ro-sdH" secondAttribute="top" constant="16" id="Vg4-LE-JZ9"/>
                                                     <constraint firstItem="b7I-Kf-0GJ" firstAttribute="top" secondItem="yGb-zU-Lzj" secondAttribute="bottom" constant="15" id="aVR-3Y-4gv"/>
-                                                    <constraint firstItem="orv-Jv-Mfq" firstAttribute="leading" secondItem="IAh-c6-yzZ" secondAttribute="trailing" constant="11" id="dIN-99-OpS"/>
+                                                    <constraint firstItem="orv-Jv-Mfq" firstAttribute="leading" secondItem="IAh-c6-yzZ" secondAttribute="trailing" constant="15" id="dIN-99-OpS"/>
                                                     <constraint firstItem="PvZ-9o-YeQ" firstAttribute="top" secondItem="iGS-Ro-sdH" secondAttribute="top" constant="20" id="oyM-eJ-6mO"/>
                                                     <constraint firstAttribute="trailing" secondItem="b7I-Kf-0GJ" secondAttribute="trailing" constant="20" id="vg3-iR-5BS"/>
                                                 </constraints>
@@ -1452,6 +1452,7 @@
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
+                        <outlet property="searchEntity" destination="DKn-en-9g6" id="CHn-ZG-lJK"/>
                         <outlet property="searchTool" destination="3af-DS-yQg" id="xNz-Nm-piP"/>
                         <outlet property="selectCropsView" destination="O2V-tV-StC" id="ONM-wc-KyU"/>
                         <outlet property="selectEntitiesView" destination="vkl-cP-TQz" id="NQL-lo-hgJ"/>

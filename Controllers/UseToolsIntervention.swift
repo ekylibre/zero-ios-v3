@@ -63,6 +63,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     if selectedTools.count > 0 && firstView.frame.height == 50 {
       collapseExpand(self)
     }
+    searchedTools = equipments
     selectedToolsTableView.reloadData()
   }
 
@@ -75,10 +76,15 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    searchedEntities = searchText.isEmpty ? entities : entities.filter({(filterEntity: NSManagedObject) -> Bool in
+      let entityName: String = filterEntity.value(forKey: "firstName") as! String
+      return entityName.range(of: searchText) != nil
+    })
     searchedTools = searchText.isEmpty ? equipments : equipments.filter({(filterTool: NSManagedObject) -> Bool in
       let toolName: String = filterTool.value(forKey: "name") as! String
       return toolName.range(of: searchText) != nil
     })
+    entitiesTableView.reloadData()
     equipmentsTableView.reloadData()
   }
 
