@@ -19,6 +19,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var cropsTableView: UITableView!
   @IBOutlet weak var selectedPlotsLabel: UILabel!
   @IBOutlet weak var equipmentsTableView: UITableView!
+  @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
+  @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
+  @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
+  @IBOutlet weak var selectDateButton: UIButton!
+  @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var interventionToolsTableView: UITableView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
@@ -59,21 +65,52 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
   var equipments = [NSManagedObject]()
+  var selectDateView: UIView!
+  var inputsView: UIView!
+  var segmentedControl: UISegmentedControl!
+  var specificInputsTableView: UITableView!
+  var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
   var searchedTools = [NSManagedObject]()
   var plots = [NSManagedObject]()
   var cropPlots = [[NSManagedObject]]()
   var toolTypes: [String]!
   var selectedToolType: String!
-  var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var entities = [NSManagedObject]()
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
+  var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
+  var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
+  var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
+  var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+
+    // Working period
+    selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
+    self.view.addSubview(selectDateView)
+    selectDateView.center.x = self.view.center.x
+    selectDateView.center.y = self.view.center.y
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "d MMMM"
+    let currentDateString = dateFormatter.string(from: Date())
+    selectDateButton.setTitle(currentDateString, for: .normal)
+    let validateButton = selectDateView.subviews.last as! UIButton
+    validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
+
+    selectDateButton.layer.cornerRadius = 5
+    selectDateButton.layer.borderWidth = 0.5
+    selectDateButton.layer.borderColor = UIColor.lightGray.cgColor
+    selectDateButton.clipsToBounds = true
+
+    durationTextField.layer.cornerRadius = 5
+    durationTextField.layer.borderWidth = 0.5
+    durationTextField.layer.borderColor = UIColor.lightGray.cgColor
+    durationTextField.clipsToBounds = true
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -126,6 +163,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     fetchEntities()
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
+
+    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    self.view.addSubview(inputsView)
+    segmentedControl = inputsView.subviews.first as! UISegmentedControl
+    specificInputsTableView = inputsView.subviews.last as! UITableView
+    specificInputsTableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
+    specificInputsTableView.register(PhytosTableViewCell.self, forCellReuseIdentifier: "PhytosCell")
+    specificInputsTableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
+    specificInputsTableView.delegate = self
+    specificInputsTableView.dataSource = self
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    // Inputs
+    let guide = self.view.safeAreaLayoutGuide
+    let height = guide.layoutFrame.size.height
+    inputsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
+    inputsView.center.x = self.view.center.x
+    inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -151,6 +209,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     switch tableView {
     case cropsTableView:
       return crops.count
+    case specificInputsTableView:
+      return getNumberOfInputs()
     case equipmentsTableView:
       return searchedTools.count
     case selectedToolsTableView:
@@ -163,6 +223,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return doers.count
     default:
       return 1
+    }
+  }
+
+  func getNumberOfInputs() -> Int {
+
+    switch segmentedControl.selectedSegmentIndex {
+    case 0:
+      return sampleSeeds.count
+    case 1:
+      return samplePhytos.count
+    case 2:
+      return sampleFertilizers.count
+    default:
+      return 0
     }
   }
 
@@ -222,6 +296,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
+    case specificInputsTableView :
+      if segmentedControl.selectedSegmentIndex == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
+
+        cell.varietyLabel.text = sampleSeeds[indexPath.row][0]
+        cell.specieLabel.text = sampleSeeds[indexPath.row][1]
+        return cell
+      } else if segmentedControl.selectedSegmentIndex == 1 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
+
+        cell.nameLabel.text = samplePhytos[indexPath.row][0]
+        cell.firmNameLabel.text = samplePhytos[indexPath.row][1]
+        cell.maaIDLabel.text = samplePhytos[indexPath.row][2]
+        cell.inFieldReentryDelayLabel.text = samplePhytos[indexPath.row][3]
+        return cell
+      } else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizersCell", for: indexPath) as! FertilizersTableViewCell
+
+        cell.nameLabel.text = sampleFertilizers[indexPath.row][0]
+        cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
+        return cell
+      }
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
 
@@ -324,23 +420,26 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
     case cropsTableView:
-      if indexPaths.count > 0 {
-        if indexPaths.contains(indexPath) {
-          guard let cell = tableView.cellForRow(at: indexPath) else {
-            return 0
-          }
-          let count = cell.subviews.count - 2
-          return CGFloat(count * 60 + 15)
-        } else {
-          return 60
+      if indexPaths.contains(indexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else {
+          return 0
         }
+        let count = cell.subviews.count - 2
+        return CGFloat(count * 60 + 15)
+      } else {
+        return 60
       }
     case doersTableView:
       return 75
+    case specificInputsTableView:
+      if segmentedControl.selectedSegmentIndex == 1 {
+        return 100
+      } else {
+        return 60
+      }
     default:
       return 60
     }
-    return 60
   }
 
   //MARK: - Core Data
@@ -376,7 +475,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
     newIntervention.setValue("Infos", forKey: "infos")
     workingPeriod.setValue(newIntervention, forKey: "interventions")
-    workingPeriod.setValue(Date(), forKey: "executionDate")
+    let datePicker = selectDateView.subviews.first as! UIDatePicker
+    workingPeriod.setValue(datePicker.date, forKey: "executionDate")
+    let hourDuration = Int(durationTextField.text!)
+    workingPeriod.setValue(hourDuration, forKey: "hourDuration")
     createTargets(intervention: newIntervention)
     createTools(intervention: newIntervention)
     createDoers(intervention: newIntervention)
@@ -730,6 +832,42 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
   }
 
+  @IBAction func selectWorkingPeriod(_ sender: Any) {
+
+    if workingPeriodHeight.constant == 70 {
+      workingPeriodHeight.constant = 155
+      selectedWorkingPeriodLabel.isHidden = true
+      selectDateButton.isHidden = false
+    } else {
+      workingPeriodHeight.constant = 70
+      selectedWorkingPeriodLabel.isHidden = false
+      selectDateButton.isHidden = true
+      selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
+    }
+    collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
+    /*dimView.isHidden = false
+     workingPeriodView.isHidden = false
+
+     UIView.animate(withDuration: 0.5, animations: {
+     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+     })*/
+  }
+
+  func getSelectedWorkingPeriod() -> String {
+    var dateString: String!
+    var hoursNumber: String!
+
+    dateString = selectDateButton.titleLabel?.text
+
+    if durationTextField.text?.isEmpty == true {
+      hoursNumber = "0 h"
+    } else {
+      hoursNumber = durationTextField.text! + " h"
+    }
+
+    return dateString + " • " + hoursNumber
+  }
+
   @IBAction func validatePlots(_ sender: Any) {
 
     if selectedPlotsLabel.text == "Aucune sélection" {
@@ -747,6 +885,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
+  }
+  
+  @IBAction func selectDate(_ sender: Any) {
+    dimView.isHidden = false
+    selectDateView.isHidden = false
+  }
+
+  @objc func validateDate() {
+    let datePicker = selectDateView.subviews.first as! UIDatePicker
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "d MMMM"
+    let selectedDate = dateFormatter.string(from: datePicker.date)
+    selectDateButton.setTitle(selectedDate, for: .normal)
+
+    dimView.isHidden = true
+    selectDateView.isHidden = true
+  }
+
+  @IBAction func selectInput(_ sender: Any) {
+    dimView.isHidden = false
+    inputsView.isHidden = false
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
