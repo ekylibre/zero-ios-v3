@@ -152,7 +152,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     entitiesTableView.delegate = self
     doersTableView.dataSource = self
     doersTableView.delegate = self
-    doersHeightConstraint.constant = 50
+    doersHeightConstraint.constant = 70
     doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
     doersTableView.layer.borderWidth  = 0.5
     doersTableView.layer.borderColor = UIColor.lightGray.cgColor
@@ -801,7 +801,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return
     }
 
-    let shouldCollapse = firstView.frame.height != 50
+    let shouldCollapse = firstView.frame.height != 70
 
     animateView(isCollapse: shouldCollapse, angle: shouldCollapse ? CGFloat.pi : CGFloat.pi - 3.14159)
   }
@@ -810,7 +810,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     animationRunning = true
 
-    heightConstraint.constant = isCollapse ? 50 : 300
+    heightConstraint.constant = isCollapse ? 70 : 300
 
     UIView.animate(withDuration: 0.5, animations: {
       self.collapseButton.isHidden = false

@@ -16,7 +16,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       self.selectedTools.remove(at: indexPath)
       self.selectedToolsTableView.reloadData()
-      if self.selectedTools.count == 0 && self.firstView.frame.height != 50 {
+      if self.selectedTools.count == 0 && self.firstView.frame.height != 70 {
         self.collapseExpand(self)
         self.collapseButton.isHidden = true
       }
@@ -36,7 +36,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   func showToolsNumber() {
-    if selectedTools.count > 0 && firstView.frame.height == 50 {
+    if selectedTools.count > 0 && firstView.frame.height == 70 {
       addToolButton.isHidden = true
       toolNumberLabel.isHidden = false
       toolNumberLabel.text = (selectedTools.count == 1 ? "1 outil" : "\(selectedTools.count) outils")
@@ -60,7 +60,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
-    if selectedTools.count > 0 && firstView.frame.height == 50 {
+    if selectedTools.count > 0 && firstView.frame.height == 70 {
       collapseExpand(self)
     }
     searchedTools = equipments

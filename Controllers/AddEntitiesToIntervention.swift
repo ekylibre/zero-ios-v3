@@ -15,7 +15,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
   }
 
   func showDoersNumber() {
-    if doers.count > 0 && doersHeightConstraint.constant == 50 {
+    if doers.count > 0 && doersHeightConstraint.constant == 70 {
       addEntitiesButton.isHidden = true
       doersNumber.text = (doers.count == 1 ? "1 personne" : "\(doers.count) personnes")
       doersNumber.isHidden = false
@@ -32,11 +32,11 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
       self.doers.remove(at: indexPath)
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
-        self.doersHeightConstraint.constant = 50
+        self.doersHeightConstraint.constant = 70
         self.doersCollapsedButton.isHidden = true
       } else {
         self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 70
+        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
         self.showDoersNumber()
       }
       self.doersTableView.reloadData()
@@ -62,7 +62,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
         self.doersCollapsedButton.isHidden = false
         self.doersTableView.isHidden = false
         self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 70
+        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
@@ -71,10 +71,10 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
   }
 
   @IBAction func collapseDoersView(_ sender: Any) {
-    if doersHeightConstraint.constant != 50 {
+    if doersHeightConstraint.constant != 70 {
       UIView.animate(withDuration: 0.5, animations: {
         self.doersTableView.isHidden = true
-        self.doersHeightConstraint.constant = 50
+        self.doersHeightConstraint.constant = 70
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         self.view.layoutIfNeeded()
       })
@@ -82,7 +82,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
       UIView.animate(withDuration: 0.5, animations: {
         self.doersTableView.isHidden = false
         self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 70
+        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })
