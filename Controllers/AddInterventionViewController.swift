@@ -263,7 +263,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.cellDelegate = self
       cell.indexPath = indexPath.row
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.driver.isOn = false
+      cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
@@ -447,11 +447,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
 
-    for _ in doers {
+    for doers in doers {
       let doersArray = NSManagedObject(entity: doersEntity, insertInto: managedContext)
 
       doersArray.setValue(intervention, forKey: "interventions")
       doersArray.setValue(UUID(), forKey: "uuid")
+      doersArray.setValue(doers.value(forKey: "isDriver"), forKey: "isDriver")
     }
     do {
       try managedContext.save()

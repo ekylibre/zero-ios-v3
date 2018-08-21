@@ -8,13 +8,14 @@
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="crops" inverseEntity="Targets" syncable="YES"/>
     </entity>
     <entity name="Doers" representedClassName="Doers" syncable="YES" codeGenerationType="class">
+        <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="entities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entities" inverseName="doers" inverseEntity="Entities" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="doers" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="Entities" representedClassName="Entities" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isDriver" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="entities" inverseEntity="Doers" syncable="YES"/>
@@ -68,7 +69,7 @@
     </entity>
     <elements>
         <element name="Crops" positionX="502" positionY="-234" width="128" height="118"/>
-        <element name="Doers" positionX="-54" positionY="-405" width="128" height="90"/>
+        <element name="Doers" positionX="-54" positionY="-405" width="128" height="105"/>
         <element name="Entities" positionX="-270" positionY="-463" width="128" height="120"/>
         <element name="Equipments" positionX="-270" positionY="-144" width="128" height="120"/>
         <element name="Interventions" positionX="160" positionY="-252" width="128" height="163"/>

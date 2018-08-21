@@ -10,6 +10,9 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: DoersTableViewCellDelegate {
+  func updateDriverCell(_ indexPath: Int, driver: UISwitch) {
+    doers[indexPath].setValue(driver.isOn, forKey: "isDriver")
+  }
 
   func showDoersNumber() {
     if doers.count > 0 && doersHeightConstraint.constant == 50 {

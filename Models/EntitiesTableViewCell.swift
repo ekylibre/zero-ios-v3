@@ -16,6 +16,7 @@ class EntitiesTableViewCell: UITableViewCell {
 
 protocol DoersTableViewCellDelegate: class {
   func removeDoersCell(_ indexPath: Int)
+  func updateDriverCell(_ indexPath: Int, driver: UISwitch)
 }
 
 class DoersTableViewCell: UITableViewCell {
@@ -29,5 +30,9 @@ class DoersTableViewCell: UITableViewCell {
 
   @IBAction func removeCellButton(_ sender: UIButton) {
     cellDelegate?.removeDoersCell(self.indexPath)
+  }
+
+  @IBAction func updateDriverStatus(_ sender: UISwitch) {
+    cellDelegate?.updateDriverCell(self.indexPath, driver: self.driver)
   }
 }
