@@ -50,6 +50,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
   var selectDateView: UIView!
+  var inputsView: UIView!
+  var segmentedControl: UISegmentedControl!
+  var specificInputsTableView: UITableView!
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
   var searchedTools = [NSManagedObject]()
@@ -58,12 +61,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var toolTypes: [String]!
   var selectedToolType: String!
   var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
+  var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
+  var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
+  var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
+    // Working period
     selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
     self.view.addSubview(selectDateView)
     selectDateView.center.x = self.view.center.x
@@ -126,6 +133,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     fetchTools()
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
+
+    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    self.view.addSubview(inputsView)
+    segmentedControl = inputsView.subviews.first as! UISegmentedControl
+    specificInputsTableView = inputsView.subviews.last as! UITableView
+    specificInputsTableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
+    specificInputsTableView.register(PhytosTableViewCell.self, forCellReuseIdentifier: "PhytosCell")
+    specificInputsTableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
+    specificInputsTableView.delegate = self
+    specificInputsTableView.dataSource = self
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    // Inputs
+    let guide = self.view.safeAreaLayoutGuide
+    let height = guide.layoutFrame.size.height
+    inputsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
+    inputsView.center.x = self.view.center.x
+    inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -151,6 +179,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     switch tableView {
     case cropsTableView:
       return crops.count
+    case specificInputsTableView:
+      return getNumberOfInputs()
     case interventionToolsTableView:
       return searchedTools.count
     case selectedToolsTableView:
@@ -159,6 +189,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return toolTypes.count
     default:
       return 1
+    }
+  }
+
+  func getNumberOfInputs() -> Int {
+
+    switch segmentedControl.selectedSegmentIndex {
+    case 0:
+      return sampleSeeds.count
+    case 1:
+      return samplePhytos.count
+    case 2:
+      return sampleFertilizers.count
+    default:
+      return 0
     }
   }
 
@@ -216,6 +260,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
+    case specificInputsTableView :
+      if segmentedControl.selectedSegmentIndex == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
+
+        cell.varietyLabel.text = sampleSeeds[indexPath.row][0]
+        cell.specieLabel.text = sampleSeeds[indexPath.row][1]
+        return cell
+      } else if segmentedControl.selectedSegmentIndex == 1 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
+
+        cell.nameLabel.text = samplePhytos[indexPath.row][0]
+        cell.firmNameLabel.text = samplePhytos[indexPath.row][1]
+        cell.maaIDLabel.text = samplePhytos[indexPath.row][2]
+        cell.inFieldReentryDelayLabel.text = samplePhytos[indexPath.row][3]
+        return cell
+      } else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizersCell", for: indexPath) as! FertilizersTableViewCell
+
+        cell.nameLabel.text = sampleFertilizers[indexPath.row][0]
+        cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
+        return cell
+      }
     case interventionToolsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionToolsTableViewCell
 
@@ -289,7 +355,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-    if indexPaths.count > 0 {
+    switch tableView {
+    case cropsTableView:
       if indexPaths.contains(indexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else {
           return 0
@@ -299,9 +366,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       } else {
         return 60
       }
+    case specificInputsTableView:
+      if segmentedControl.selectedSegmentIndex == 1 {
+        return 100
+      } else {
+        return 60
+      }
+    default:
+      return 60
     }
-
-    return 60
   }
 
   //MARK: - Core Data
@@ -657,11 +730,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
     collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
     /*dimView.isHidden = false
-    workingPeriodView.isHidden = false
+     workingPeriodView.isHidden = false
 
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })*/
+     UIView.animate(withDuration: 0.5, animations: {
+     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+     })*/
   }
 
   func getSelectedWorkingPeriod() -> String {
@@ -713,6 +786,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     dimView.isHidden = true
     selectDateView.isHidden = true
+  }
+
+  @IBAction func selectInput(_ sender: Any) {
+    dimView.isHidden = false
+    inputsView.isHidden = false
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
