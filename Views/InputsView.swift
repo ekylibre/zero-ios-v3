@@ -10,7 +10,8 @@ import UIKit
 
 class InputsView: UIView {
   var segmentedControl: UISegmentedControl!
-  var searchTextField: UITextField!
+  //var searchTextField: UITextField!
+  var searchBar: UISearchBar!
   var createButton: UIButton!
   var label: UILabel!
   var tableView: UITableView!
@@ -29,13 +30,12 @@ class InputsView: UIView {
     NSLayoutConstraint(item: segmentedControl, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 15).isActive = true
     NSLayoutConstraint(item: segmentedControl, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
 
-    searchTextField = UITextField(frame: CGRect.zero)
-    searchTextField.backgroundColor = UIColor.red
-    self.addSubview(searchTextField)
-    searchTextField.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint(item: searchTextField, attribute: .top, relatedBy: .equal, toItem: segmentedControl, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
-    NSLayoutConstraint(item: searchTextField, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 15).isActive = true
-    NSLayoutConstraint(item: searchTextField, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+    searchBar = UISearchBar(frame: CGRect.zero)
+    self.addSubview(searchBar)
+    searchBar.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint(item: searchBar, attribute: .top, relatedBy: .equal, toItem: segmentedControl, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+    NSLayoutConstraint(item: searchBar, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 15).isActive = true
+    NSLayoutConstraint(item: searchBar, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
     //NSLayoutConstraint(item: searchTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50).isActive = true
 
     /*createButton = UIButton(frame: CGRect.zero)
@@ -57,7 +57,7 @@ class InputsView: UIView {
     tableView.tableFooterView = UIView()
     self.addSubview(tableView)
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: searchTextField, attribute: .bottom, multiplier: 1, constant: 60).isActive = true
+    NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: searchBar, attribute: .bottom, multiplier: 1, constant: 60).isActive = true
     NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
     NSLayoutConstraint(item: tableView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0).isActive = true
     NSLayoutConstraint(item: tableView, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0).isActive = true

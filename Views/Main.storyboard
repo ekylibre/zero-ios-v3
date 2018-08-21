@@ -523,7 +523,7 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vap-II-Bqo">
-                                                                            <rect key="frame" x="15" y="15" width="40" height="13.5"/>
+                                                                            <rect key="frame" x="15" y="15" width="40" height="39.5"/>
                                                                             <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="40" id="iQI-LC-6e6"/>
@@ -1603,6 +1603,7 @@
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
+                        <outlet property="inputSelectionView" destination="e04-dp-jck" id="Aw8-p9-zxP"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="searchEntity" destination="DKn-en-9g6" id="CHn-ZG-lJK"/>
