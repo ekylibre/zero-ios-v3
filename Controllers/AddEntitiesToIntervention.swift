@@ -14,7 +14,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
   func showDoersNumber() {
     if doers.count > 0 && doersHeightConstraint.constant == 50 {
       addEntitiesButton.isHidden = true
-      doersNumber.text = (doers.count == 1 ? "1 outil" : "\(doers.count) outils")
+      doersNumber.text = (doers.count == 1 ? "1 personne" : "\(doers.count) personnes")
       doersNumber.isHidden = false
     } else {
       doersNumber.isHidden = true
@@ -117,7 +117,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     entityRole.text = nil
     entityDarkLayer.isHidden = true
     createEntitiesView.isHidden = true
-    entitiesTableView.reloadData()
+    fetchEntities()
   }
 
   @IBAction func createNewEntity(_ sender: Any) {

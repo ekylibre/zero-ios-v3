@@ -251,7 +251,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntitiesTableViewCell", for: indexPath) as! EntitiesTableViewCell
 
       entity = searchedEntities[indexPath.row]
-      //entity = entities[indexPath.row]
       cell.firstName.text = entity?.value(forKey: "firstName") as? String
       cell.lastName.text = entity?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
