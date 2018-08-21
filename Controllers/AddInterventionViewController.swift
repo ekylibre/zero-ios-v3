@@ -260,11 +260,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoersTableViewCell", for: indexPath) as! DoersTableViewCell
 
       doer = doers[indexPath.row]
-      cell.driver.isOn = false
       cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
       cell.cellDelegate = self
       cell.indexPath = indexPath.row
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      cell.driver.isOn = false
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
@@ -380,6 +380,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     workingPeriod.setValue(Date(), forKey: "executionDate")
     createTargets(intervention: newIntervention)
     createTools(intervention: newIntervention)
+    createDoers(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -431,11 +432,32 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       tools.setValue(name, forKey: "name")
       tools.setValue(type, forKey: "type")
       tools.setValue(equipment, forKey: "equipment")
-      do {
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
+    }
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createDoers(intervention: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
+
+    for _ in doers {
+      let doersArray = NSManagedObject(entity: doersEntity, insertInto: managedContext)
+
+      doersArray.setValue(intervention, forKey: "interventions")
+      doersArray.setValue(UUID(), forKey: "uuid")
+    }
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
