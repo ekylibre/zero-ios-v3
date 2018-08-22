@@ -26,9 +26,9 @@ class FertilizersTableViewCell: UITableViewCell {
     contentView.addSubview(natureLabel)
 
     let viewsDict = [
-      "name" : nameLabel,
-      "nature" : natureLabel,
-      ] as [String : Any]
+      "name": nameLabel,
+      "nature": natureLabel,
+      ] as [String: Any]
 
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[nature]", options: [], metrics: nil, views: viewsDict))

@@ -46,13 +46,13 @@ class PhytosTableViewCell: UITableViewCell {
     contentView.addSubview(reentryLabel)
 
     let viewsDict = [
-      "name" : nameLabel,
-      "firmName" : firmNameLabel,
-      "maa" : maaLabel,
-      "maaID" : maaIDLabel,
-      "reentry" : reentryLabel,
-      "inFieldReentryDelay" : inFieldReentryDelayLabel,
-      ] as [String : Any]
+      "name": nameLabel,
+      "firmName": firmNameLabel,
+      "maa": maaLabel,
+      "maaID": maaIDLabel,
+      "reentry": reentryLabel,
+      "inFieldReentryDelay": inFieldReentryDelayLabel,
+      ] as [String: Any]
 
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[firmName]", options: [], metrics: nil, views: viewsDict))

@@ -56,7 +56,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var doersNumber: UILabel!
   @IBOutlet weak var addEntitiesButton: UIButton!
   @IBOutlet weak var searchEntity: UISearchBar!
-  @IBOutlet weak var inputSelectionView: UIView!
+  @IBOutlet weak var inputsSelectionView: UIView!
 
   //MARK: - Properties
 
@@ -164,8 +164,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     fetchEntities()
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
+    let inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height - 70))
 
-    inputSelectionView = InputsSelection(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    inputsSelectionView.addSubview(inputsSelection)
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     self.view.addSubview(inputsView)
     segmentedControl = inputsView.subviews.first as! UISegmentedControl
