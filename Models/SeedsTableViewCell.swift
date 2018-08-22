@@ -26,9 +26,9 @@ class SeedsTableViewCell: UITableViewCell {
     contentView.addSubview(specieLabel)
 
     let viewsDict = [
-      "variety" : varietyLabel,
-      "specie" : specieLabel,
-    ] as [String : Any]
+      "variety": varietyLabel,
+      "specie": specieLabel,
+    ] as [String: Any]
 
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[variety]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[specie]", options: [], metrics: nil, views: viewsDict))

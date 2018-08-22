@@ -10,6 +10,7 @@ import UIKit
 
 class InputsSelection: UIView {
   var tableView: UITableView!
+  var test: UILabel!
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -17,15 +18,20 @@ class InputsSelection: UIView {
     tableView.separatorInset = UIEdgeInsets.zero
     let frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1 / UIScreen.main.scale)
     let line = UIView(frame: frame)
+
     line.backgroundColor = tableView.separatorColor
     tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
+    tableView.backgroundColor = .red
     self.addSubview(tableView)
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-    NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-    NSLayoutConstraint(item: tableView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 20).isActive = true
-    NSLayoutConstraint(item: tableView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 20).isActive = true
+    let viewsDict = [
+      "tableView": tableView
+      ] as [String: Any]
+
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[tableView]-20-|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tableView]-20-|", options: [], metrics: nil, views: viewsDict))
+    self.backgroundColor = .green
   }
 
   @objc func reloadTable() {
