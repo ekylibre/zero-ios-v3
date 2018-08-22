@@ -10,7 +10,6 @@ import UIKit
 
 class InputsSelection: UIView {
   var tableView: UITableView!
-  var test: UILabel!
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -22,16 +21,16 @@ class InputsSelection: UIView {
     line.backgroundColor = tableView.separatorColor
     tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
-    tableView.backgroundColor = .red
-    self.addSubview(tableView)
+    tableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     tableView.translatesAutoresizingMaskIntoConstraints = false
+
+    self.addSubview(tableView)
     let viewsDict = [
       "tableView": tableView
       ] as [String: Any]
 
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[tableView]-20-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tableView]-20-|", options: [], metrics: nil, views: viewsDict))
-    self.backgroundColor = .green
   }
 
   @objc func reloadTable() {

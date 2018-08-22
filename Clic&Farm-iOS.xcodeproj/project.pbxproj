@@ -145,10 +145,10 @@
 		047BF0B12105D1F9009F3945 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				04162E61212C518800EF4318 /* InputsSelection.swift */,
-				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BB22545211849C20036E167 /* LaunchScreen.storyboard */,
 				6BB22546211849C20036E167 /* Main.storyboard */,
+				04162E61212C518800EF4318 /* InputsSelection.swift */,
+				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
@@ -168,8 +168,8 @@
 				6BEA65E12105CD8A0072840F /* KeychainService.swift */,
 				04162E59212C432200EF4318 /* PhytosTableViewCell.swift */,
 				04162E5B212C432B00EF4318 /* SeedsTableViewCell.swift */,
-				6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */,
 				0414257D212D5D8600FBBD0D /* SelectedInputsTableViewCell.swift */,
+				6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -177,10 +177,10 @@
 		047BF0BF2105F44F009F3945 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */,
 				047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */,
 				047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */,
 				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
+				6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -215,8 +215,8 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 				6BEA658A2105C5EF0072840F /* Info.plist */,
+				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 			);
 			path = "Clic&Farm-iOSTests";
 			sourceTree = "<group>";
