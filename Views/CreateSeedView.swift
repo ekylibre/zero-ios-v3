@@ -1,5 +1,5 @@
 //
-//  createSeedView.swift
+//  CreateSeedView.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 21/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class createSeedView: UIView {
+class CreateSeedView: UIView {
   var titleLabel: UILabel!
   var specieLabel: UILabel!
   var varietyTextField: UITextField!
@@ -33,6 +33,14 @@ class createSeedView: UIView {
 
     varietyTextField = UITextField(frame: CGRect.zero)
     varietyTextField.placeholder = "Variété"
+    varietyTextField.autocorrectionType = .no
+    varietyTextField.borderStyle = .none
+    varietyTextField.layer.backgroundColor = UIColor.white.cgColor
+    varietyTextField.layer.masksToBounds = false
+    varietyTextField.layer.shadowColor = UIColor.darkGray.cgColor
+    varietyTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    varietyTextField.layer.shadowOpacity = 1
+    varietyTextField.layer.shadowRadius = 0
     self.addSubview(varietyTextField)
     varietyTextField.translatesAutoresizingMaskIntoConstraints = false
 
@@ -40,6 +48,7 @@ class createSeedView: UIView {
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     self.addSubview(cancelButton)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
 
@@ -47,28 +56,35 @@ class createSeedView: UIView {
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     self.addSubview(createButton)
     createButton.translatesAutoresizingMaskIntoConstraints = false
 
     let viewsDict = [
       "title" : titleLabel,
       "specie" : specieLabel,
-      "textfield" : varietyTextField,
+      "variety" : varietyTextField,
       "cancel" : cancelButton,
       "create" : createButton,
       ] as [String : Any]
 
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[specie]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[textfield]-15-|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[variety]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-15-[create]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[specie]-15-[textfield]", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[specie]-15-[variety]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
 
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
+    self.isHidden = true
+  }
+
+  @objc func closeView() {
+    varietyTextField.resignFirstResponder()
+    varietyTextField.text = ""
     self.isHidden = true
   }
 
