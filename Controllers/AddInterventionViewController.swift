@@ -120,7 +120,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.delegate = self
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
-    cropsTableView.alwaysBounceVertical = false
     interventionToolsTableView.dataSource = self
     interventionToolsTableView.delegate = self
     selectedToolsTableView.dataSource = self
@@ -134,26 +133,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
 
-    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     self.view.addSubview(inputsView)
     segmentedControl = inputsView.subviews.first as! UISegmentedControl
-    specificInputsTableView = inputsView.subviews.last as! UITableView
-    specificInputsTableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
-    specificInputsTableView.register(PhytosTableViewCell.self, forCellReuseIdentifier: "PhytosCell")
-    specificInputsTableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
-    specificInputsTableView.delegate = self
-    specificInputsTableView.dataSource = self
+    specificInputsTableView = inputsView.subviews[3] as! UITableView
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    // Inputs
+    // Changes inputsView frame and position
     let guide = self.view.safeAreaLayoutGuide
     let height = guide.layoutFrame.size.height
     inputsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
     inputsView.center.x = self.view.center.x
     inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
+    specificInputsTableView.delegate = self
+    specificInputsTableView.dataSource = self
   }
 
   override func viewWillAppear(_ animated: Bool) {
