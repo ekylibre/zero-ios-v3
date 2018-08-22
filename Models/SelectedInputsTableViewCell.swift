@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectedInputsTableViewCell: UITableViewCell {
+class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
   let inputImage = UIImageView()
   let inputName = UILabel()
   let inputType = UILabel()
@@ -34,17 +34,33 @@ class SelectedInputsTableViewCell: UITableViewCell {
     warningImage.translatesAutoresizingMaskIntoConstraints = false
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    inputName.font = UIFont.systemFont(ofSize: 15)
-    inputType.font = UIFont.boldSystemFont(ofSize: 15)
-    quantity.font = UIFont.systemFont(ofSize: 14)
-    surfaceQuantity.font = UIFont.systemFont(ofSize: 14)
-    warningLabel.font = UIFont.systemFont(ofSize: 14)
+    inputName.font = UIFont.systemFont(ofSize: 14)
+    inputType.font = UIFont.boldSystemFont(ofSize: 14)
+    quantity.font = UIFont.systemFont(ofSize: 13)
+    surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
+    warningLabel.font = UIFont.systemFont(ofSize: 13)
     quantity.textColor = AppColor.TextColors.DarkGray
-    removeCell.imageView?.image = #imageLiteral(resourceName: "delete")
+    inputQuantity.backgroundColor = AppColor.CellColors.white
+    inputQuantity.layer.borderColor = UIColor.lightGray.cgColor
+    inputQuantity.layer.borderWidth = 1
+    inputQuantity.layer.cornerRadius = 5
+    quantityMeasure.backgroundColor = AppColor.CellColors.white
+    quantityMeasure.layer.borderColor = UIColor.lightGray.cgColor
+    quantityMeasure.layer.borderWidth = 1
+    quantityMeasure.layer.cornerRadius = 5
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
     warningLabel.textColor = AppColor.TextColors.Red
+    warningLabel.text = "dose invalide"
+    quantity.text = "Quantité"
+    surfaceQuantity.text = "Soit 0,0 A"
+    warningImage.image = #imageLiteral(resourceName: "filled-circle")
+    inputImage.image = #imageLiteral(resourceName: "seed")
+    removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
     warningLabel.isHidden = true
     warningImage.isHidden = true
+    inputQuantity.delegate = self
+    inputQuantity.keyboardType = .numberPad
+
     contentView.addSubview(inputImage)
     contentView.addSubview(inputName)
     contentView.addSubview(inputType)
@@ -69,21 +85,38 @@ class SelectedInputsTableViewCell: UITableViewCell {
       "warningLabel": warningLabel
     ] as [String: Any]
 
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[inputImage]-[inputName]-[inputType]-[removeCell]-|", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[quantity]-[inputQuantity]-[quantityMeasure]-|", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[inputImage(==30)]-[inputName]-[inputType]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[removeCell(==15)]-10-|", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[quantity]-10-[inputQuantity(==100)][quantityMeasure(==60)]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[inputImage(==30)]-10-[quantity]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[inputName]-15-[inputQuantity(==25)]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[inputType]-15-[quantityMeasure(==25)]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[removeCell(==15)]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[warningImage(==10)]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[warningImage(==10)]", options: [], metrics: nil, views: viewsDict))
     NSLayoutConstraint(item: surfaceQuantity, attribute: .leading, relatedBy: .equal, toItem: inputQuantity, attribute: .leading, multiplier: 1, constant: 0).isActive = true
     NSLayoutConstraint(item: warningImage, attribute: .leading, relatedBy: .equal, toItem: inputQuantity, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: warningLabel, attribute: .leading, relatedBy: .equal, toItem: warningImage, attribute: .trailing, multiplier: 1, constant: 1).isActive = true
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[inputImage]-10-[quantity]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[inputName]-5-[inputQuantity]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[inputType]-5-[quantityMeasure]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[removeCell]", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint(item: warningLabel, attribute: .leading, relatedBy: .equal, toItem: warningImage, attribute: .trailing, multiplier: 1, constant: 3).isActive = true
     if warningImage.isHidden {
       NSLayoutConstraint(item: surfaceQuantity, attribute: .top, relatedBy: .equal, toItem: inputQuantity , attribute: .bottom, multiplier: 1, constant: 1).isActive = true
     } else {
       NSLayoutConstraint(item: warningImage, attribute: .top, relatedBy: .equal, toItem: inputQuantity, attribute: .bottom, multiplier: 1, constant: 5).isActive = true
+      NSLayoutConstraint(item: warningLabel, attribute: .top, relatedBy: .equal, toItem: inputQuantity, attribute: .bottom, multiplier: 1, constant: 2).isActive = true
       NSLayoutConstraint(item: surfaceQuantity, attribute: .top, relatedBy: .equal, toItem: warningImage, attribute: .bottom, multiplier: 1, constant: 1).isActive = true
     }
+  }
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    let invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+  }
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+  }
+
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
   }
 
   required init?(coder aDecoder: NSCoder) {

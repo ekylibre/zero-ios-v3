@@ -84,6 +84,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
+  var selectedInputsTableView: UITableView!
+  var selectedInputs = [["Aubergine", "De Barbentane"], ["ADELIA EC", "Saga"], ["Boues activées liquides", "IAA (C/N = 4,4)"]]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -164,9 +166,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     fetchEntities()
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
-    let inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height - 70))
 
-    inputsSelectionView.addSubview(inputsSelection)
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     self.view.addSubview(inputsView)
     segmentedControl = inputsView.subviews.first as! UISegmentedControl
@@ -176,6 +176,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     specificInputsTableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
     specificInputsTableView.delegate = self
     specificInputsTableView.dataSource = self
+
+    let inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height - 70))
+
+    inputsSelectionView.addSubview(inputsSelection)
+    selectedInputsTableView = inputsSelection.subviews.last as! UITableView
+    selectedInputsTableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsCell")
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
   }
 
   override func viewDidLayoutSubviews() {
@@ -224,6 +232,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return searchedEntities.count
     case doersTableView:
       return doers.count
+    case selectedInputsTableView:
+      return selectedInputs.count
     default:
       return 1
     }
@@ -299,7 +309,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
-    case specificInputsTableView :
+    case specificInputsTableView:
       if segmentedControl.selectedSegmentIndex == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
 
@@ -321,6 +331,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
         return cell
       }
+    case selectedInputsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
+
+      cell.inputName.text = selectedInputs[indexPath.row][0]
+      cell.inputType.text = selectedInputs[indexPath.row][1]
+      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
 
@@ -440,6 +457,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       } else {
         return 60
       }
+    case selectedInputsTableView:
+      return 100
     default:
       return 60
     }
