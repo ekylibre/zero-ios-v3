@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateSeedView: UIView {
+class CreateSeedView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var specieLabel: UILabel!
   var varietyTextField: UITextField!
@@ -34,6 +34,7 @@ class CreateSeedView: UIView {
     varietyTextField = UITextField(frame: CGRect.zero)
     varietyTextField.placeholder = "Variété"
     varietyTextField.autocorrectionType = .no
+    varietyTextField.delegate = self
     varietyTextField.borderStyle = .none
     varietyTextField.layer.backgroundColor = UIColor.white.cgColor
     varietyTextField.layer.masksToBounds = false
@@ -80,6 +81,11 @@ class CreateSeedView: UIView {
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
     self.isHidden = true
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return false
   }
 
   @objc func closeView() {

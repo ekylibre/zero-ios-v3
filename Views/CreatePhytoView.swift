@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreatePhytoView: UIView {
+class CreatePhytoView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var nameTextField: UITextField!
   var firmNameTextField: UITextField!
@@ -30,6 +30,8 @@ class CreatePhytoView: UIView {
     nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "Nom"
     nameTextField.autocorrectionType = .no
+    nameTextField.delegate = self
+    nameTextField.tag = 10
     nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
     nameTextField.layer.masksToBounds = false
@@ -43,6 +45,8 @@ class CreatePhytoView: UIView {
     firmNameTextField = UITextField(frame: CGRect.zero)
     firmNameTextField.placeholder = "Marque"
     firmNameTextField.autocorrectionType = .no
+    firmNameTextField.delegate = self
+    firmNameTextField.tag = 11
     firmNameTextField.borderStyle = .none
     firmNameTextField.layer.backgroundColor = UIColor.white.cgColor
     firmNameTextField.layer.masksToBounds = false
@@ -54,8 +58,11 @@ class CreatePhytoView: UIView {
     firmNameTextField.translatesAutoresizingMaskIntoConstraints = false
 
     maaTextField = UITextField(frame: CGRect.zero)
+    maaTextField.keyboardType = .numberPad
     maaTextField.placeholder = "N° AMM"
     maaTextField.autocorrectionType = .no
+    maaTextField.delegate = self
+    maaTextField.tag = 12
     maaTextField.borderStyle = .none
     maaTextField.layer.backgroundColor = UIColor.white.cgColor
     maaTextField.layer.masksToBounds = false
@@ -67,8 +74,11 @@ class CreatePhytoView: UIView {
     maaTextField.translatesAutoresizingMaskIntoConstraints = false
 
     reentryDelayTextField = UITextField(frame: CGRect.zero)
+    reentryDelayTextField.keyboardType = .numberPad
     reentryDelayTextField.placeholder = "Délai de ré-entrée"
     reentryDelayTextField.autocorrectionType = .no
+    reentryDelayTextField.delegate = self
+    reentryDelayTextField.tag = 13
     reentryDelayTextField.borderStyle = .none
     reentryDelayTextField.layer.backgroundColor = UIColor.white.cgColor
     reentryDelayTextField.layer.masksToBounds = false
@@ -128,6 +138,18 @@ class CreatePhytoView: UIView {
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
     self.isHidden = true
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    let nextTag = textField.tag + 1
+
+    if let nextResponder = textField.superview?.viewWithTag(nextTag) as? UITextField {
+      nextResponder.becomeFirstResponder()
+    } else {
+      textField.resignFirstResponder()
+    }
+
+    return false
   }
 
   @objc func closeView() {

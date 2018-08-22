@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateFertilizerView: UIView {
+class CreateFertilizerView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var nameTextField: UITextField!
   var natureLabel: UILabel!
@@ -27,6 +27,7 @@ class CreateFertilizerView: UIView {
     nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "Nom"
     nameTextField.autocorrectionType = .no
+    nameTextField.delegate = self
     nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
     nameTextField.layer.masksToBounds = false
@@ -80,6 +81,11 @@ class CreateFertilizerView: UIView {
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
     self.isHidden = true
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return false
   }
 
   @objc func closeView() {
