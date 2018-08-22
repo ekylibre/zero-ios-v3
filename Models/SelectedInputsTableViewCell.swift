@@ -8,17 +8,20 @@
 
 import UIKit
 
-class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
+class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
   let inputImage = UIImageView()
   let inputName = UILabel()
   let inputType = UILabel()
   let inputQuantity = UITextField()
   let quantity = UILabel()
   let quantityMeasure = UIView()
+  //let quantityMeasure = MeasureTableView(frame: CGRect(x: 0, y: 0, width: 60, height: 25))
   let removeCell = UIButton()
   let surfaceQuantity = UILabel()
   let warningImage = UIImageView()
   let warningLabel = UILabel()
+  let measureType = [["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"], ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3", "m3/ha", "m3/m2"]]
+  var measureTableView: UITableView!
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -104,6 +107,24 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
       NSLayoutConstraint(item: warningLabel, attribute: .top, relatedBy: .equal, toItem: inputQuantity, attribute: .bottom, multiplier: 1, constant: 2).isActive = true
       NSLayoutConstraint(item: surfaceQuantity, attribute: .top, relatedBy: .equal, toItem: warningImage, attribute: .bottom, multiplier: 1, constant: 1).isActive = true
     }
+    let measureTypeSelection = MeasureTableView(frame: quantityMeasure.frame)
+
+    quantityMeasure.addSubview(measureTypeSelection)
+    measureTableView = measureTypeSelection.subviews.last as! UITableView
+    measureTableView.register(MeasureTableViewCell.self, forCellReuseIdentifier: "MeasureTableViewCell")
+    measureTableView.delegate = self
+    measureTableView.dataSource = self
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return measureType[1].count
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = measureTableView.dequeueReusableCell(withIdentifier: "MeasureTableViewCell", for: indexPath) as! MeasureTableViewCell
+
+    cell.measureType.text = measureType[indexPath.row][1]
+    return cell
   }
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -117,6 +138,64 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
 
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
+
+class MeasureTableView: UIView {
+  var tableView: UITableView!
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    tableView = UITableView(frame: CGRect.zero)
+    tableView.separatorInset = UIEdgeInsets.zero
+    let frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1 / UIScreen.main.scale)
+    let line = UIView(frame: frame)
+
+    line.backgroundColor = tableView.separatorColor
+    tableView.tableHeaderView = line
+    tableView.tableFooterView = UIView()
+    tableView.backgroundColor = AppColor.CellColors.white
+    tableView.layer.shadowColor = UIColor.black.cgColor
+    tableView.layer.shadowOffset = .zero
+    tableView.layer.shadowOpacity = 10
+    tableView.layer.shadowRadius = 5
+    tableView.layer.cornerRadius = 5
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+
+    self.addSubview(tableView)
+    let viewDict = ["tableView": tableView] as [String: Any]
+
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tableView]|", options: [], metrics: nil, views: viewDict))
+  }
+
+  @objc func reloadTable() {
+    tableView.reloadData()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
+
+class MeasureTableViewCell: UITableViewCell {
+  let measureType = UILabel()
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+    measureType.translatesAutoresizingMaskIntoConstraints = false
+    measureType.font = UIFont.boldSystemFont(ofSize: 14)
+    contentView.addSubview(measureType)
+
+    let viewDict = ["measureType": measureType] as [String: Any]
+
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(<=1)-[measureType]", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: viewDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(<=1)-[measureType]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: viewDict))
   }
 
   required init?(coder aDecoder: NSCoder) {
