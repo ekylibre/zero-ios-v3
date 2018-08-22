@@ -10,14 +10,21 @@ import UIKit
 
 class InputsView: UIView {
   var segmentedControl: UISegmentedControl!
-  var searchTextField: UITextField!
+  var searchBar: UISearchBar!
   var createButton: UIButton!
   var tableView: UITableView!
   var dimView: UIView!
-  var seedView: createSeedView!
+  var seedView: CreateSeedView!
+  var phytoView: CreatePhytoView!
+  var fertilizerView: CreateFertilizerView!
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+
+    self.isHidden = true
+    self.backgroundColor = UIColor.white
+    self.layer.cornerRadius = 5
+    self.clipsToBounds = true
 
     segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
     segmentedControl.selectedSegmentIndex = 0
@@ -27,13 +34,10 @@ class InputsView: UIView {
     self.addSubview(segmentedControl)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 
-    searchTextField = UITextField(frame: CGRect.zero)
-    searchTextField.layer.cornerRadius = 13
-    searchTextField.layer.borderWidth = 0.5
-    searchTextField.layer.borderColor = UIColor.lightGray.cgColor
-    searchTextField.clearButtonMode = .whileEditing
-    self.addSubview(searchTextField)
-    searchTextField.translatesAutoresizingMaskIntoConstraints = false
+    searchBar = UISearchBar(frame: CGRect.zero)
+    searchBar.searchBarStyle = .minimal
+    self.addSubview(searchBar)
+    searchBar.translatesAutoresizingMaskIntoConstraints = false
 
     createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("+ CRÉER UNE NOUVELLE SEMENCE", for: .normal)
@@ -59,16 +63,16 @@ class InputsView: UIView {
 
     let viewsDict = [
       "segmented" : segmentedControl,
-      "textfield" : searchTextField,
+      "searchbar" : searchBar,
       "button" : createButton,
       "table" : tableView,
       ] as [String : Any]
 
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[segmented]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[textfield]-20-|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[searchbar]-20-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[segmented]-15-[textfield(40)]-15-[button]-15-[table]|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[segmented]-15-[searchbar]-15-[button]-15-[table]|", options: [], metrics: nil, views: viewsDict))
 
     dimView = UIView(frame: CGRect.zero)
     dimView.backgroundColor = UIColor.black
@@ -79,19 +83,36 @@ class InputsView: UIView {
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
 
-    seedView = createSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    seedView = CreateSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    seedView.createButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     self.addSubview(seedView)
-    seedView.isHidden = true
     seedView.translatesAutoresizingMaskIntoConstraints = false
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[seedview]|", options: [], metrics: nil, views: ["seedview" : seedView]))
     NSLayoutConstraint(item: seedView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
     NSLayoutConstraint(item: seedView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
+    phytoView = CreatePhytoView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    phytoView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    phytoView.createButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    self.addSubview(phytoView)
+    phytoView.translatesAutoresizingMaskIntoConstraints = false
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[phytoview]|", options: [], metrics: nil, views: ["phytoview" : phytoView]))
+    NSLayoutConstraint(item: phytoView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 340).isActive = true
+    NSLayoutConstraint(item: phytoView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
+    fertilizerView = CreateFertilizerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    fertilizerView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    fertilizerView.createButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    self.addSubview(fertilizerView)
+    fertilizerView.translatesAutoresizingMaskIntoConstraints = false
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[fertilizerview]|", options: [], metrics: nil, views: ["fertilizerview" : fertilizerView]))
+    NSLayoutConstraint(item: fertilizerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+    NSLayoutConstraint(item: fertilizerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+  }
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.endEditing(true)
   }
 
   @objc func changeSegment() {
@@ -110,10 +131,14 @@ class InputsView: UIView {
     if segmentedControl.selectedSegmentIndex == 0 {
       seedView.isHidden = false
     } else if segmentedControl.selectedSegmentIndex == 1 {
-      return
+      phytoView.isHidden = false
     } else {
-      return
+      fertilizerView.isHidden = false
     }
+  }
+
+  @objc func hideDimView() {
+    dimView.isHidden = true
   }
 
   required init?(coder aDecoder: NSCoder) {

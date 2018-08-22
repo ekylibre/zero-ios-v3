@@ -20,9 +20,11 @@
 		6B30EC69212AB9A30071E375 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B30EC68212AB9A30071E375 /* InputsView.swift */; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
 		6B76BA41212B047300152953 /* SeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BA40212B047300152953 /* SeedsTableViewCell.swift */; };
+		6B8294AE212D904700C240F7 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8294AD212D904700C240F7 /* CreatePhytoView.swift */; };
+		6B8294B0212D9A5B00C240F7 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */; };
 		6B9C8CA7212C09C900CC54EB /* PhytosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9C8CA6212C09C900CC54EB /* PhytosTableViewCell.swift */; };
 		6B9C8CA9212C0B6100CC54EB /* FertilizersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9C8CA8212C0B6100CC54EB /* FertilizersTableViewCell.swift */; };
-		6B9C8CAB212C594F00CC54EB /* createSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9C8CAA212C594F00CC54EB /* createSeedView.swift */; };
+		6B9C8CAB212C594F00CC54EB /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */; };
 		6BB225402118490A0036E167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2253A211849090036E167 /* Assets.xcassets */; };
 		6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
@@ -64,9 +66,11 @@
 		6B30EC68212AB9A30071E375 /* InputsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		6B76BA40212B047300152953 /* SeedsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedsTableViewCell.swift; sourceTree = "<group>"; };
+		6B8294AD212D904700C240F7 /* CreatePhytoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
+		6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
 		6B9C8CA6212C09C900CC54EB /* PhytosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhytosTableViewCell.swift; sourceTree = "<group>"; };
 		6B9C8CA8212C0B6100CC54EB /* FertilizersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FertilizersTableViewCell.swift; sourceTree = "<group>"; };
-		6B9C8CAA212C594F00CC54EB /* createSeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSeedView.swift; sourceTree = "<group>"; };
+		6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		6BB2253A211849090036E167 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
 		6BB2253D211849090036E167 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -144,7 +148,9 @@
 				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
 				6BE206FC2125B15D00EBE2DF /* SelectDateView.swift */,
 				6B30EC68212AB9A30071E375 /* InputsView.swift */,
-				6B9C8CAA212C594F00CC54EB /* createSeedView.swift */,
+				6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */,
+				6B8294AD212D904700C240F7 /* CreatePhytoView.swift */,
+				6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,6 +345,7 @@
 				047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */,
 				0413DE84211B3E2800AE8337 /* UseToolsIntervention.swift in Sources */,
 				6B9C8CA7212C09C900CC54EB /* PhytosTableViewCell.swift in Sources */,
+				6B8294AE212D904700C240F7 /* CreatePhytoView.swift in Sources */,
 				6B76BA41212B047300152953 /* SeedsTableViewCell.swift in Sources */,
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				6B30EC69212AB9A30071E375 /* InputsView.swift in Sources */,
@@ -356,7 +363,8 @@
 				6BE206FD2125B15D00EBE2DF /* SelectDateView.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
-				6B9C8CAB212C594F00CC54EB /* createSeedView.swift in Sources */,
+				6B9C8CAB212C594F00CC54EB /* CreateSeedView.swift in Sources */,
+				6B8294B0212D9A5B00C240F7 /* CreateFertilizerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
