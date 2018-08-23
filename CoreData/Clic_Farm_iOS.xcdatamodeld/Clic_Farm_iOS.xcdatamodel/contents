@@ -9,16 +9,22 @@
     </entity>
     <entity name="Doers" representedClassName="Doers" syncable="YES" codeGenerationType="class">
         <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="entities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entities" inverseName="doers" inverseEntity="Entities" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="doers" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="Entities" representedClassName="Entities" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="entities" inverseEntity="Doers" syncable="YES"/>
     </entity>
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tools" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tools" inverseName="equipments" inverseEntity="Tools" syncable="YES"/>
     </entity>
     <entity name="Interventions" representedClassName="Interventions" syncable="YES" codeGenerationType="class">
@@ -47,8 +53,8 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="targets" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="Tools" representedClassName="Tools" syncable="YES" codeGenerationType="class">
+        <attribute name="equipment" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="equipments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipments" inverseName="tools" inverseEntity="Equipments" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="tools" inverseEntity="Interventions" syncable="YES"/>
@@ -63,14 +69,14 @@
     </entity>
     <elements>
         <element name="Crops" positionX="502" positionY="-234" width="128" height="118"/>
-        <element name="Equipments" positionX="-198" positionY="-252" width="128" height="58"/>
+        <element name="Doers" positionX="-54" positionY="-405" width="128" height="105"/>
+        <element name="Entities" positionX="-270" positionY="-463" width="128" height="120"/>
+        <element name="Equipments" positionX="-270" positionY="-144" width="128" height="120"/>
         <element name="Interventions" positionX="160" positionY="-252" width="128" height="163"/>
         <element name="Plots" positionX="331" positionY="-409" width="128" height="133"/>
         <element name="Targets" positionX="333" positionY="-207" width="128" height="118"/>
-        <element name="Tools" positionX="-9" positionY="-252" width="128" height="73"/>
-        <element name="Users" positionX="-54" positionY="-9" width="128" height="60"/>
-        <element name="WorkingPeriods" positionX="-9" positionY="-133" width="128" height="88"/>
-        <element name="Doers" positionX="9" positionY="-405" width="128" height="88"/>
-        <element name="Entities" positionX="-173" positionY="-477" width="128" height="103"/>
+        <element name="Tools" positionX="-54" positionY="-117" width="128" height="118"/>
+        <element name="Users" positionX="-270" positionY="75" width="128" height="60"/>
+        <element name="WorkingPeriods" positionX="162" positionY="18" width="128" height="88"/>
     </elements>
 </model>
