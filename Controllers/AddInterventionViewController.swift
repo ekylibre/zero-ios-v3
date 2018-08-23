@@ -50,8 +50,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
   var selectDateView: UIView!
-  var inputsView: UIView!
-  var segmentedControl: UISegmentedControl!
+  var inputsView: InputsView!
   var specificInputsTableView: UITableView!
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
@@ -135,8 +134,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     self.view.addSubview(inputsView)
-    segmentedControl = inputsView.subviews.first as! UISegmentedControl
-    specificInputsTableView = inputsView.subviews[3] as! UITableView
+    specificInputsTableView = inputsView.tableView
+    inputsView.seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    inputsView.phytoView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    inputsView.fertilizerView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
   }
 
   override func viewDidLayoutSubviews() {
@@ -190,7 +191,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func getNumberOfInputs() -> Int {
 
-    switch segmentedControl.selectedSegmentIndex {
+    switch inputsView.segmentedControl.selectedSegmentIndex {
     case 0:
       return sampleSeeds.count
     case 1:
@@ -256,14 +257,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
-    case specificInputsTableView :
-      if segmentedControl.selectedSegmentIndex == 0 {
+    case specificInputsTableView:
+      if inputsView.segmentedControl.selectedSegmentIndex == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
 
         cell.varietyLabel.text = sampleSeeds[indexPath.row][0]
         cell.specieLabel.text = sampleSeeds[indexPath.row][1]
         return cell
-      } else if segmentedControl.selectedSegmentIndex == 1 {
+      } else if inputsView.segmentedControl.selectedSegmentIndex == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
 
         cell.nameLabel.text = samplePhytos[indexPath.row][0]
@@ -363,7 +364,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         return 60
       }
     case specificInputsTableView:
-      if segmentedControl.selectedSegmentIndex == 1 {
+      if inputsView.segmentedControl.selectedSegmentIndex == 1 {
         return 100
       } else {
         return 60
@@ -787,6 +788,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func selectInput(_ sender: Any) {
     dimView.isHidden = false
     inputsView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  @objc func createInput() {
+    switch inputsView.segmentedControl.selectedSegmentIndex {
+    case 0:
+      sampleSeeds.append([inputsView.seedView.varietyTextField.text!, "Espèce"])
+      inputsView.seedView.varietyTextField.text = ""
+      inputsView.tableView.reloadData()
+    case 1:
+      samplePhytos.append([inputsView.phytoView.nameTextField.text!, inputsView.phytoView.firmNameTextField.text!, inputsView.phytoView.maaTextField.text!, inputsView.phytoView.reentryDelayTextField.text!])
+      for subview in inputsView.phytoView.subviews {
+        if subview is UITextField {
+          let textField = subview as! UITextField
+          textField.text = ""
+        }
+      }
+      inputsView.tableView.reloadData()
+    case 2:
+      sampleFertilizers.append([inputsView.fertilizerView.nameTextField.text ?? "Empty", "Nature"])
+      inputsView.fertilizerView.nameTextField.text = ""
+      inputsView.tableView.reloadData()
+    default:
+      return
+    }
   }
 
   @IBAction func cancelAdding(_ sender: Any) {

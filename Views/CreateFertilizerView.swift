@@ -88,9 +88,11 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     return false
   }
 
-  @objc func closeView() {
+  @objc func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
-    nameTextField.text = ""
+    if sender == cancelButton {
+      nameTextField.text = ""
+    }
     self.isHidden = true
   }
 

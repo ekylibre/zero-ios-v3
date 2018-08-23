@@ -88,9 +88,11 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     return false
   }
 
-  @objc func closeView() {
+  @objc func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
-    varietyTextField.text = ""
+    if sender == cancelButton {
+      varietyTextField.text = ""
+    }
     self.isHidden = true
   }
 
