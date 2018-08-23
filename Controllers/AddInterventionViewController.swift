@@ -18,12 +18,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectCropsView: UIView!
   @IBOutlet weak var cropsTableView: UITableView!
   @IBOutlet weak var selectedPlotsLabel: UILabel!
+  @IBOutlet weak var equipmentsTableView: UITableView!
   @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
-  @IBOutlet weak var interventionToolsTableView: UITableView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
@@ -31,7 +31,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var selectToolsView: UIView!
   @IBOutlet weak var createToolsView: UIView!
-  @IBOutlet weak var darkLayerView: UIView!
+  @IBOutlet weak var toolsDarkLayer: UIView!
   @IBOutlet weak var toolName: UITextField!
   @IBOutlet weak var toolNumber: UITextField!
   @IBOutlet weak var toolType: UILabel!
@@ -41,6 +41,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var searchTool: UISearchBar!
   @IBOutlet weak var toolTypeTableView: UITableView!
   @IBOutlet weak var toolTypeButton: UIButton!
+  @IBOutlet weak var entityFirstName: UITextField!
+  @IBOutlet weak var entityLastName: UITextField!
+  @IBOutlet weak var selectEntitiesView: UIView!
+  @IBOutlet weak var createEntitiesView: UIView!
+  @IBOutlet weak var entitiesTableView: UITableView!
+  @IBOutlet weak var entityRole: UITextField!
+  @IBOutlet weak var entityDarkLayer: UIView!
+  @IBOutlet weak var doersTableView: UITableView!
+  @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var doersTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var doersCollapsedButton: UIButton!
+  @IBOutlet weak var doersNumber: UILabel!
+  @IBOutlet weak var addEntitiesButton: UIButton!
+  @IBOutlet weak var searchEntity: UISearchBar!
 
   //MARK: - Properties
 
@@ -49,6 +63,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedPlots = [NSManagedObject]()
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
+  var equipments = [NSManagedObject]()
   var selectDateView: UIView!
   var inputsView: InputsView!
   var specificInputsTableView: UITableView!
@@ -59,6 +74,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropPlots = [[NSManagedObject]]()
   var toolTypes: [String]!
   var selectedToolType: String!
+  var entities = [NSManagedObject]()
+  var searchedEntities = [NSManagedObject]()
+  var doers = [NSManagedObject]()
   var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
@@ -112,23 +130,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedToolsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     selectedToolsTableView.layer.cornerRadius = 4
-
     saveInterventionButton.layer.cornerRadius = 3
-
     cropsTableView.dataSource = self
     cropsTableView.delegate = self
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
-    interventionToolsTableView.dataSource = self
-    interventionToolsTableView.delegate = self
+    equipmentsTableView.dataSource = self
+    equipmentsTableView.delegate = self
     selectedToolsTableView.dataSource = self
     selectedToolsTableView.delegate = self
     searchTool.delegate = self
     searchTool.autocapitalizationType = .none
+    searchEntity.delegate = self
+    searchEntity.autocapitalizationType = .none
     toolTypeTableView.dataSource = self
     toolTypeTableView.delegate = self
+    entitiesTableView.dataSource = self
+    entitiesTableView.delegate = self
+    doersTableView.dataSource = self
+    doersTableView.delegate = self
+    doersHeightConstraint.constant = 70
+    doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
+    doersTableView.layer.borderWidth  = 0.5
+    doersTableView.layer.borderColor = UIColor.lightGray.cgColor
+    doersTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    doersTableView.layer.cornerRadius = 4
     defineToolTypes()
     fetchTools()
+    fetchEntities()
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
 
@@ -178,12 +207,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return crops.count
     case specificInputsTableView:
       return getNumberOfInputs()
-    case interventionToolsTableView:
+    case equipmentsTableView:
       return searchedTools.count
     case selectedToolsTableView:
       return selectedTools.count
     case toolTypeTableView:
       return toolTypes.count
+    case entitiesTableView:
+      return searchedEntities.count
+    case doersTableView:
+      return doers.count
     default:
       return 1
     }
@@ -208,6 +241,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var tool: NSManagedObject?
     var selectedTool: NSManagedObject?
     var toolType: String?
+    var entity: NSManagedObject?
+    var doer: NSManagedObject?
 
     switch tableView {
     case cropsTableView:
@@ -279,8 +314,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
         return cell
       }
-    case interventionToolsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionToolsTableViewCell", for: indexPath) as! InterventionToolsTableViewCell
+    case equipmentsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
 
       tool = searchedTools[indexPath.row]
       cell.nameLabel.text = tool?.value(forKey: "name") as? String
@@ -303,6 +338,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       toolType = toolTypes[indexPath.row]
       cell.nameLabel.text = toolType
+      return cell
+    case entitiesTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EntitiesTableViewCell", for: indexPath) as! EntitiesTableViewCell
+
+      entity = searchedEntities[indexPath.row]
+      cell.firstName.text = entity?.value(forKey: "firstName") as? String
+      cell.lastName.text = entity?.value(forKey: "lastName") as? String
+      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
+      return cell
+    case doersTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "DoersTableViewCell", for: indexPath) as! DoersTableViewCell
+
+      doer = doers[indexPath.row]
+      cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+      cell.cellDelegate = self
+      cell.indexPath = indexPath.row
+      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
+      cell.firstName.text = doer?.value(forKey: "firstName") as? String
+      cell.lastName.text = doer?.value(forKey: "lastName") as? String
+      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
       return cell
     default:
       fatalError("Switch error")
@@ -337,21 +393,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       cropsTableView.beginUpdates()
       cropsTableView.endUpdates()
-    case interventionToolsTableView:
-      selectedTools.append(interventionTools[indexPath.row])
+    case equipmentsTableView:
+      selectedTools.append(equipments[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-      selectedToolType = toolTypes[indexPath.row]
-      toolTypeTableView.reloadData()
-      toolTypeButton.setTitle(selectedToolType, for: .normal)
-      toolTypeTableView.isHidden = true
+        selectedToolType = toolTypes[indexPath.row]
+        toolTypeTableView.reloadData()
+        toolTypeButton.setTitle(selectedToolType, for: .normal)
+        toolTypeTableView.isHidden = true
+    case entitiesTableView:
+      doersTableView.isHidden = false
+      doers.append(entities[indexPath.row])
+      doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
+      doersHeightConstraint.constant = doersTableViewHeightConstraint.constant + 70
+      doersTableView.reloadData()
+      closeSelectEntitiesView()
     default:
       print("Nothing to do")
     }
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
     switch tableView {
     case cropsTableView:
       if indexPaths.contains(indexPath) {
@@ -363,6 +425,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       } else {
         return 60
       }
+    case doersTableView:
+      return 75
     case specificInputsTableView:
       if inputsView.segmentedControl.selectedSegmentIndex == 1 {
         return 100
@@ -412,6 +476,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let hourDuration = Int(durationTextField.text!)
     workingPeriod.setValue(hourDuration, forKey: "hourDuration")
     createTargets(intervention: newIntervention)
+    createTools(intervention: newIntervention)
+    createDoers(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -437,6 +503,56 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       target.setValue(surfaceArea, forKey: "surfaceArea")
     }
 
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createTools(intervention: NSManagedObject) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
+
+    for selectedTool in selectedTools {
+      let tool = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
+      let name = selectedTool.value(forKeyPath: "name") as! String
+      let type = selectedTool.value(forKey: "type") as! String
+      let equipment = selectedTool.value(forKey: "uuid") as! UUID
+
+      tool.setValue(intervention, forKey: "interventions")
+      tool.setValue(name, forKey: "name")
+      tool.setValue(type, forKey: "type")
+      tool.setValue(equipment, forKey: "equipment")
+    }
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createDoers(intervention: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
+
+    for entity in doers {
+      let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
+      let isDriver = entity.value(forKey: "isDriver")
+
+      doer.setValue(intervention, forKey: "interventions")
+      doer.setValue(UUID(), forKey: "uuid")
+      doer.setValue(isDriver, forKey: "isDriver")
+    }
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -682,7 +798,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return
     }
 
-    let shouldCollapse = firstView.frame.height != 50
+    let shouldCollapse = firstView.frame.height != 70
 
     animateView(isCollapse: shouldCollapse, angle: shouldCollapse ? CGFloat.pi : CGFloat.pi - 3.14159)
   }
@@ -691,7 +807,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     animationRunning = true
 
-    heightConstraint.constant = isCollapse ? 50 : 300
+    heightConstraint.constant = isCollapse ? 70 : 300
 
     UIView.animate(withDuration: 0.5, animations: {
       self.collapseButton.isHidden = false
