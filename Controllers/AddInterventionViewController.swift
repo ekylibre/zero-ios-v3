@@ -523,16 +523,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
 
-    for selectedTools in selectedTools {
-      let tools = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
-      let name = selectedTools.value(forKeyPath: "name") as! String
-      let type = selectedTools.value(forKey: "type") as! String
-      let equipment = selectedTools.value(forKey: "uuid") as! UUID
+    for selectedTool in selectedTools {
+      let tool = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
+      let name = selectedTool.value(forKeyPath: "name") as! String
+      let type = selectedTool.value(forKey: "type") as! String
+      let equipment = selectedTool.value(forKey: "uuid") as! UUID
 
-      tools.setValue(intervention, forKey: "interventions")
-      tools.setValue(name, forKey: "name")
-      tools.setValue(type, forKey: "type")
-      tools.setValue(equipment, forKey: "equipment")
+      tool.setValue(intervention, forKey: "interventions")
+      tool.setValue(name, forKey: "name")
+      tool.setValue(type, forKey: "type")
+      tool.setValue(equipment, forKey: "equipment")
     }
     do {
       try managedContext.save()
@@ -549,12 +549,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
 
-    for doers in doers {
-      let doersArray = NSManagedObject(entity: doersEntity, insertInto: managedContext)
+    for entity in doers {
+      let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
+      let isDriver = entity.value(forKey: "isDriver")
 
-      doersArray.setValue(intervention, forKey: "interventions")
-      doersArray.setValue(UUID(), forKey: "uuid")
-      doersArray.setValue(doers.value(forKey: "isDriver"), forKey: "isDriver")
+      doer.setValue(intervention, forKey: "interventions")
+      doer.setValue(UUID(), forKey: "uuid")
+      doer.setValue(isDriver, forKey: "isDriver")
     }
     do {
       try managedContext.save()
