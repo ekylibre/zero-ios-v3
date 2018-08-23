@@ -58,9 +58,9 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     quantityMeasureButton.layer.borderWidth = 1
     quantityMeasureButton.layer.cornerRadius = 5
 
-    warningLabel.text = "dose invalide"
     quantity.text = "Quantité"
     surfaceQuantity.text = "Soit 0,0 A"
+    warningLabel.text = "dose invalide"
 
     warningImage.image = #imageLiteral(resourceName: "filled-circle")
     removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)

@@ -55,6 +55,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
   func closeSelectEntitiesView() {
     dimView.isHidden = true
     selectEntitiesView.isHidden = true
+
     if doers.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
