@@ -8,14 +8,14 @@
 
 import UIKit
 
-class InterventionToolsTableViewCell: UITableViewCell {
+class EquipmentsTableViewCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!
 }
 
 protocol SelectedToolsTableViewCellDelegate: class {
-  func removeCellButton(_ indexPath: Int)
+  func removeToolsCell(_ indexPath: Int)
 }
 
 class SelectedToolsTableViewCell: UITableViewCell {
@@ -28,7 +28,7 @@ class SelectedToolsTableViewCell: UITableViewCell {
   var indexPath: Int!
 
   @IBAction func buttonPressed(_ sender: UIButton) {
-    cellDelegate?.removeCellButton(self.indexPath)
+    cellDelegate?.removeToolsCell(self.indexPath)
   }
 }
 
