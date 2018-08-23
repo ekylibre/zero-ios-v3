@@ -797,7 +797,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @objc func createInput() {
     switch inputsView.segmentedControl.selectedSegmentIndex {
     case 0:
-      sampleSeeds.append([inputsView.seedView.varietyTextField.text!, "Espèce"])
+      sampleSeeds.append([inputsView.seedView.varietyTextField.text!, inputsView.seedView.specieButton.titleLabel!.text!])
+      inputsView.seedView.specieButton.setTitle("Avoine", for: .normal)
       inputsView.seedView.varietyTextField.text = ""
       inputsView.tableView.reloadData()
     case 1:
@@ -810,8 +811,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       inputsView.tableView.reloadData()
     case 2:
-      sampleFertilizers.append([inputsView.fertilizerView.nameTextField.text ?? "Empty", "Nature"])
+      sampleFertilizers.append([inputsView.fertilizerView.nameTextField.text!, inputsView.fertilizerView.natureButton.titleLabel!.text!])
       inputsView.fertilizerView.nameTextField.text = ""
+      inputsView.fertilizerView.natureButton.setTitle("Organique", for: .normal)
       inputsView.tableView.reloadData()
     default:
       return
