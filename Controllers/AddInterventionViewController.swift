@@ -85,7 +85,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
   var selectedInputsTableView: UITableView!
-  var selectedInputs = [["Aubergine", "De Barbentane"], ["ADELIA EC", "Saga"], ["Boues activées liquides", "IAA (C/N = 4,4)"]]
+  var selectedInputs = [["Aubergine", "De Barbentane", 0], ["ADELIA EC", "Saga", 1], ["Boues activées liquides", "IAA (C/N = 4,4)", 2], ["PRORI GOLD", "Syngenta France S.A.S", 1]]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -334,8 +334,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
 
-      cell.inputName.text = selectedInputs[indexPath.row][0]
-      cell.inputType.text = selectedInputs[indexPath.row][1]
+      cell.inputName.text = selectedInputs[indexPath.row][0] as? String
+      cell.inputType.text = selectedInputs[indexPath.row][1] as? String
+      cell.defineInputType(type: selectedInputs[indexPath.row][2] as! Int)
+      cell.reloadDropDown()
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       return cell
     case equipmentsTableView:
