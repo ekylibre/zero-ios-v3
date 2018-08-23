@@ -152,9 +152,9 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     return false
   }
 
-  @objc func closeView() {
+  @objc func closeView(sender: UIButton) {
     for subview in self.subviews {
-      if subview is UITextField {
+      if sender == cancelButton && subview is UITextField {
         let textField = subview as! UITextField
         textField.resignFirstResponder()
         textField.text = ""
