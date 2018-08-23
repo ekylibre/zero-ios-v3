@@ -9,16 +9,22 @@
     </entity>
     <entity name="Doers" representedClassName="Doers" syncable="YES" codeGenerationType="class">
         <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="entities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entities" inverseName="doers" inverseEntity="Entities" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="doers" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="Entities" representedClassName="Entities" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="entities" inverseEntity="Doers" syncable="YES"/>
     </entity>
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tools" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tools" inverseName="equipments" inverseEntity="Tools" syncable="YES"/>
     </entity>
     <entity name="Inputs" representedClassName="Inputs" syncable="YES" codeGenerationType="class">
@@ -51,8 +57,8 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="targets" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="Tools" representedClassName="Tools" syncable="YES" codeGenerationType="class">
+        <attribute name="equipment" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="equipments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipments" inverseName="tools" inverseEntity="Equipments" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="tools" inverseEntity="Interventions" syncable="YES"/>

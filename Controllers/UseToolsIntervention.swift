@@ -10,19 +10,18 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
-  func removeCellButton(_ indexPath: Int) {
+  func removeToolsCell(_ indexPath: Int) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'outil ?", preferredStyle: .alert)
-
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       self.selectedTools.remove(at: indexPath)
       self.selectedToolsTableView.reloadData()
-      if self.selectedTools.count == 0 && self.firstView.frame.height != 50 {
+      if self.selectedTools.count == 0 && self.firstView.frame.height != 70 {
         self.collapseExpand(self)
         self.collapseButton.isHidden = true
       }
     }))
-    present(alert, animated: true)
+    self.present(alert, animated: true)
   }
 
   func defineToolTypes() {
@@ -37,7 +36,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   func showToolsNumber() {
-    if selectedTools.count > 0 && firstView.frame.height == 50 {
+    if selectedTools.count > 0 && firstView.frame.height == 70 {
       addToolButton.isHidden = true
       toolNumberLabel.isHidden = false
       toolNumberLabel.text = (selectedTools.count == 1 ? "1 outil" : "\(selectedTools.count) outils")
@@ -61,14 +60,15 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
-    if selectedTools.count > 0 && firstView.frame.height == 50 {
+    if selectedTools.count > 0 && firstView.frame.height == 70 {
       collapseExpand(self)
     }
+    searchedTools = equipments
     selectedToolsTableView.reloadData()
   }
 
   @IBAction func openCreateToolsView(_ sender: Any) {
-    darkLayerView.isHidden = false
+    toolsDarkLayer.isHidden = false
     createToolsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
@@ -76,11 +76,16 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    searchedTools = searchText.isEmpty ? interventionTools : interventionTools.filter({(filterTool: NSManagedObject) -> Bool in
+    searchedEntities = searchText.isEmpty ? entities : entities.filter({(filterEntity: NSManagedObject) -> Bool in
+      let entityName: String = filterEntity.value(forKey: "firstName") as! String
+      return entityName.range(of: searchText) != nil
+    })
+    searchedTools = searchText.isEmpty ? equipments : equipments.filter({(filterTool: NSManagedObject) -> Bool in
       let toolName: String = filterTool.value(forKey: "name") as! String
       return toolName.range(of: searchText) != nil
     })
-    interventionToolsTableView.reloadData()
+    entitiesTableView.reloadData()
+    equipmentsTableView.reloadData()
   }
 
   func fetchTools() {
@@ -88,42 +93,40 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
       return
     }
     let managedContext = appDelegate.persistentContainer.viewContext
-    let toolsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Tools")
+    let toolsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
 
     do {
-      interventionTools = try managedContext.fetch(toolsFetchRequest)
+      equipments = try managedContext.fetch(toolsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    searchedTools = interventionTools
-    interventionToolsTableView.reloadData()
+    searchedTools = equipments
+    equipmentsTableView.reloadData()
   }
 
   @IBAction func closeToolsCreationView(_ sender: Any) {
     toolName.text = nil
     toolNumber.text = nil
-    darkLayerView.isHidden = true
+    toolsDarkLayer.isHidden = true
     createToolsView.isHidden = true
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
     fetchTools()
   }
 
-  @IBAction func createNewTool(_ sender: Any) {
+  @IBAction func createNewEquipement(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
     let managedContext = appDelegate.persistentContainer.viewContext
-    let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
-    let tools = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
+    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
+    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
 
-    tools.setValue(toolName.text, forKeyPath: "name")
-    tools.setValue(toolNumber.text, forKeyPath: "number")
-    tools.setValue(selectedToolType, forKeyPath: "type")
+    equipment.setValue(toolName.text, forKeyPath: "name")
+    equipment.setValue(toolNumber.text, forKeyPath: "number")
+    equipment.setValue(selectedToolType, forKeyPath: "type")
+    equipment.setValue(UUID(), forKey: "uuid")
     do {
       try managedContext.save()
-      interventionTools.append(tools)
+      equipments.append(equipment)
       closeToolsCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
