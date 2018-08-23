@@ -16,6 +16,7 @@
 		04162E5C212C432B00EF4318 /* SeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5B212C432B00EF4318 /* SeedsTableViewCell.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
+		0418C745212EB07C0078B6D6 /* DropDown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0418C744212EB07C0078B6D6 /* DropDown.framework */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 		042A44362121B45B00CE6B24 /* CropTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44352121B45B00CE6B24 /* CropTableViewCell.swift */; };
 		042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F654B2118590500EC9E27 /* oauthInfo.plist */; };
@@ -61,6 +62,7 @@
 		04162E5B212C432B00EF4318 /* SeedsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedsTableViewCell.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		0418C744212EB07C0078B6D6 /* DropDown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropDown.framework; path = Carthage/Build/iOS/DropDown.framework; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		042A44352121B45B00CE6B24 /* CropTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropTableViewCell.swift; sourceTree = "<group>"; };
 		042F654B2118590500EC9E27 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0418C745212EB07C0078B6D6 /* DropDown.framework in Frameworks */,
 				0411295A2110937300AE884D /* OAuth2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +123,7 @@
 		047B57CB2108605400C48F68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0418C744212EB07C0078B6D6 /* DropDown.framework */,
 				041129592110937300AE884D /* OAuth2.framework */,
 			);
 			name = Frameworks;
@@ -321,6 +325,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/DropDown.framework",
 			);
 			outputPaths = (
 			);
