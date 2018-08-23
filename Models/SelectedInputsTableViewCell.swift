@@ -21,8 +21,6 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
   let warningImage = UIImageView()
   let warningLabel = UILabel()
   let quantityMeasureDropDown = DropDown()
-  let measureType = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3", "m3/ha", "m3/m2"]
-  //var measureTableView: UITableView!
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -60,7 +58,6 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     quantity.text = "Quantité"
     surfaceQuantity.text = "Soit 0,0 A"
     warningImage.image = #imageLiteral(resourceName: "filled-circle")
-    inputImage.image = #imageLiteral(resourceName: "seed")
     removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
     warningLabel.isHidden = true
     warningImage.isHidden = true
@@ -69,7 +66,6 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     quantityMeasureButton.addTarget(self, action: #selector(self.showQuantityMeasure(sender:)), for: .touchUpInside)
     customizeDropDown(sender: self)
-    setupQuantityMeasureDropDown()
 
     contentView.addSubview(inputImage)
     contentView.addSubview(inputName)
@@ -135,7 +131,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     appearence.textFont = UIFont.boldSystemFont(ofSize: 12)
   }
 
-  func setupQuantityMeasureDropDown() {
+  func setupSolideQuantityMeasureDropDown() {
     quantityMeasureDropDown.anchorView = quantityMeasureButton
     quantityMeasureDropDown.bottomOffset = CGPoint(x: 0, y: quantityMeasureButton.bounds.height)
     quantityMeasureDropDown.direction = .bottom
@@ -159,17 +155,51 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
   }
 
+  func setupLiquidQuantityMeasureDropDown() {
+    quantityMeasureDropDown.anchorView = quantityMeasureButton
+    quantityMeasureDropDown.bottomOffset = CGPoint(x: 0, y: quantityMeasureButton.bounds.height)
+    quantityMeasureDropDown.direction = .bottom
+    quantityMeasureDropDown.dismissMode = .automatic
+    quantityMeasureDropDown.dataSource = [
+      "l",
+      "l/ha",
+      "l/m2",
+      "hl",
+      "hl/ha",
+      "hl/m2",
+      "m3",
+      "m3/ha",
+      "m3/m2"
+    ]
+    quantityMeasureDropDown.selectionAction = { [weak self] (index, item) in
+      self?.quantityMeasureButton.setTitle(item, for: .normal)
+    }
+  }
+
+  func defineInputType(type: Int) {
+    switch type {
+    case 0:
+      inputImage.image = #imageLiteral(resourceName: "seed")
+      setupSolideQuantityMeasureDropDown()
+    case 1:
+      inputImage.image = #imageLiteral(resourceName: "phytosanitary")
+      setupLiquidQuantityMeasureDropDown()
+    case 2:
+      inputImage.image = #imageLiteral(resourceName: "fertilizer")
+      setupSolideQuantityMeasureDropDown()
+    default:
+      inputImage.image = #imageLiteral(resourceName: "seed")
+      setupSolideQuantityMeasureDropDown()
+    }
+  }
+
+  func reloadDropDown() {
+    quantityMeasureDropDown.reloadAllComponents()
+  }
+
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     let invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
     return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
-  }
-
-  override func awakeFromNib() {
-    super.awakeFromNib()
-  }
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
   }
 
   required init?(coder aDecoder: NSCoder) {
