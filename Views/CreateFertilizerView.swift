@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import DropDown
 
 class CreateFertilizerView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var nameTextField: UITextField!
   var natureLabel: UILabel!
+  var natureButton: UIButton!
+  var natureDropDown: DropDown!
   var cancelButton: UIButton!
   var createButton: UIButton!
 
@@ -45,6 +48,23 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     self.addSubview(natureLabel)
     natureLabel.translatesAutoresizingMaskIntoConstraints = false
 
+    natureButton = UIButton(frame: CGRect.zero)
+    natureButton.setTitle("Organique", for: .normal)
+    natureButton.setTitleColor(UIColor.black, for: .normal)
+    natureButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    natureButton.contentHorizontalAlignment = .leading
+    natureButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
+    natureButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
+    self.addSubview(natureButton)
+    natureButton.translatesAutoresizingMaskIntoConstraints = false
+
+    natureDropDown = DropDown(anchorView: natureButton)
+    natureDropDown.dataSource = ["Organique", "Minéral"]
+    natureDropDown.direction = .bottom
+    natureDropDown.selectionAction = { [weak self] (index, item) in
+      self?.natureButton.setTitle(item, for: .normal)
+    }
+
     cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
@@ -65,6 +85,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
       "title" : titleLabel,
       "name" : nameTextField,
       "nature" : natureLabel,
+      "button" : natureButton,
       "cancel" : cancelButton,
       "create" : createButton,
       ] as [String : Any]
@@ -72,8 +93,9 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[name]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[nature]", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]-60-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-15-[create]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[name]-15-[nature]", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-35-[name]-25-[nature][button]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
 
@@ -88,11 +110,18 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     return false
   }
 
+  @objc func showDropDown() {
+    natureDropDown.show()
+  }
+
   @objc func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
       nameTextField.text = ""
+      natureButton.setTitle("Organique", for: .normal)
     }
+    let index = natureDropDown.indexForSelectedRow
+    natureDropDown.deselectRow(at: index)
     self.isHidden = true
   }
 

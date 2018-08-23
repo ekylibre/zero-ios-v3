@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import DropDown
 
 class CreateSeedView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var specieLabel: UILabel!
+  var specieButton: UIButton!
+  var specieDropDown: DropDown!
   var varietyTextField: UITextField!
   var cancelButton: UIButton!
   var createButton: UIButton!
@@ -26,10 +29,27 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
     specieLabel = UILabel(frame: CGRect.zero)
     specieLabel.text = "Espèce"
-    specieLabel.font = UIFont.systemFont(ofSize: 14)
+    specieLabel.font = UIFont.systemFont(ofSize: 15)
     specieLabel.textColor = AppColor.TextColors.DarkGray
     self.addSubview(specieLabel)
     specieLabel.translatesAutoresizingMaskIntoConstraints = false
+
+    specieButton = UIButton(frame: CGRect.zero)
+    specieButton.setTitle("Avoine", for: .normal)
+    specieButton.setTitleColor(UIColor.black, for: .normal)
+    specieButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    specieButton.contentHorizontalAlignment = .leading
+    specieButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
+    specieButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
+    self.addSubview(specieButton)
+    specieButton.translatesAutoresizingMaskIntoConstraints = false
+
+    specieDropDown = DropDown(anchorView: specieButton)
+    specieDropDown.dataSource = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
+    specieDropDown.direction = .bottom
+    specieDropDown.selectionAction = { [weak self] (index, item) in
+      self?.specieButton.setTitle(item, for: .normal)
+    }
 
     varietyTextField = UITextField(frame: CGRect.zero)
     varietyTextField.placeholder = "Variété"
@@ -64,6 +84,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     let viewsDict = [
       "title" : titleLabel,
       "specie" : specieLabel,
+      "button" : specieButton,
       "variety" : varietyTextField,
       "cancel" : cancelButton,
       "create" : createButton,
@@ -71,9 +92,10 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[specie]", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]-60-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[variety]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-15-[create]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[specie]-15-[variety]", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[specie][button]-50-[variety]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
 
@@ -88,11 +110,18 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     return false
   }
 
+  @objc func showDropDown() {
+    specieDropDown.show()
+  }
+
   @objc func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
     if sender == cancelButton {
+      specieButton.setTitle("Avoine", for: .normal)
       varietyTextField.text = ""
     }
+    let index = specieDropDown.indexForSelectedRow
+    specieDropDown.deselectRow(at: index)
     self.isHidden = true
   }
 
