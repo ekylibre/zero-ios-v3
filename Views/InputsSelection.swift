@@ -22,15 +22,34 @@ class InputsSelection: UIView {
     tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
     tableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    tableView.layer.cornerRadius = 5
+    tableView.layer.borderWidth  = 0.5
+    tableView.layer.borderColor = UIColor.lightGray.cgColor
     tableView.translatesAutoresizingMaskIntoConstraints = false
 
     self.addSubview(tableView)
+
     let viewsDict = [
       "tableView": tableView
       ] as [String: Any]
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[tableView]-20-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tableView]-20-|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|-20-[tableView]-20-|",
+        options: [],
+        metrics: nil,
+        views: viewsDict
+      )
+    )
+
+    self.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[tableView]-20-|",
+        options: [],
+        metrics: nil,
+        views: viewsDict
+      )
+    )
   }
 
   @objc func reloadTable() {

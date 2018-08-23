@@ -57,6 +57,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var addEntitiesButton: UIButton!
   @IBOutlet weak var searchEntity: UISearchBar!
   @IBOutlet weak var inputsSelectionView: UIView!
+  @IBOutlet weak var inputsCollapseButton: UIButton!
+  @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var addInputsButton: UIButton!
+  @IBOutlet weak var inputsNumber: UILabel!
 
   //MARK: - Properties
 
@@ -85,7 +89,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
   var selectedInputsTableView: UITableView!
-  var selectedInputs = [["Aubergine", "De Barbentane", 0], ["ADELIA EC", "Saga", 1], ["Boues activées liquides", "IAA (C/N = 4,4)", 2], ["PRORI GOLD", "Syngenta France S.A.S", 1]]
+  var tmpSelectedInputs = [["Aubergine", "De Barbentane", 0], ["ADELIA EC", "Saga", 1], ["Boues activées liquides", "IAA (C/N = 4,4)", 2], ["PRORI GOLD", "Syngenta France S.A.S", 1]]
+  //var selectedInputs = [NSManagedObject]()
+  var selectedInputs = [[String]]()
+  var inputsSelection = InputsSelection()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -177,10 +184,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     specificInputsTableView.delegate = self
     specificInputsTableView.dataSource = self
 
-    let inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height - 70))
-
+    inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height))
     inputsSelectionView.addSubview(inputsSelection)
-    selectedInputsTableView = inputsSelection.subviews.last as! UITableView
+    selectedInputsTableView = inputsSelection.tableView
     selectedInputsTableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsCell")
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
@@ -334,11 +340,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
 
-      cell.inputName.text = selectedInputs[indexPath.row][0] as? String
-      cell.inputType.text = selectedInputs[indexPath.row][1] as? String
-      cell.defineInputType(type: selectedInputs[indexPath.row][2] as! Int)
+      cell.inputName.text = selectedInputs[indexPath.row][0]
+      cell.inputType.text = selectedInputs[indexPath.row][1]
+      cell.defineInputType(type: 0)
       cell.reloadDropDown()
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
@@ -428,12 +435,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         toolTypeButton.setTitle(selectedToolType, for: .normal)
         toolTypeTableView.isHidden = true
     case entitiesTableView:
-      doersTableView.isHidden = false
       doers.append(entities[indexPath.row])
-      doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
-      doersHeightConstraint.constant = doersTableViewHeightConstraint.constant + 70
       doersTableView.reloadData()
       closeSelectEntitiesView()
+    case specificInputsTableView:
+      switch segmentedControl.selectedSegmentIndex {
+      case 0:
+        selectedInputs.append(sampleSeeds[indexPath.row])
+      case 1:
+        selectedInputs.append(samplePhytos[indexPath.row])
+      case 2:
+        selectedInputs.append(sampleFertilizers[indexPath.row])
+      default:
+        print("Error")
+      }
+      inputsSelection.tableView.reloadData()
+      closeSelectInputsView()
     default:
       print("Nothing to do")
     }
