@@ -16,6 +16,7 @@ protocol SelectedInputsTableViewCellDelegate: class {
 class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
   weak var cellDelegate: SelectedInputsTableViewCellDelegate?
   var indexPath: Int!
+  var type = -1
 
   let inputImage = UIImageView()
   let inputName = UILabel()
