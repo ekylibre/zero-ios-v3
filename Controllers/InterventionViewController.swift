@@ -101,7 +101,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     self.tableView.delegate = self
 
     tableView.bounces = false
-    tableView.alwaysBounceVertical = false
   }
 
   func initialiseInterventionButtons() {

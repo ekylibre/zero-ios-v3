@@ -16,13 +16,13 @@ class FertilizersTableViewCell: UITableViewCell {
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    natureLabel.translatesAutoresizingMaskIntoConstraints = false
-
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(nameLabel)
+
     natureLabel.font = UIFont.systemFont(ofSize: 14)
     natureLabel.textColor = AppColor.TextColors.DarkGray
-    contentView.addSubview(nameLabel)
+    natureLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(natureLabel)
 
     let viewsDict = [

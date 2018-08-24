@@ -20,30 +20,34 @@ class PhytosTableViewCell: UITableViewCell {
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    firmNameLabel.translatesAutoresizingMaskIntoConstraints = false
-    maaLabel.translatesAutoresizingMaskIntoConstraints = false
-    maaIDLabel.translatesAutoresizingMaskIntoConstraints = false
-    reentryLabel.translatesAutoresizingMaskIntoConstraints = false
-    inFieldReentryDelayLabel.translatesAutoresizingMaskIntoConstraints = false
-
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(nameLabel)
+
     firmNameLabel.font = UIFont.systemFont(ofSize: 14)
     firmNameLabel.textColor = AppColor.TextColors.Green
+    firmNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(firmNameLabel)
+
     maaLabel.text = "N° AMM"
     maaLabel.font = UIFont.italicSystemFont(ofSize: 14)
     maaLabel.textColor = AppColor.TextColors.DarkGray
+    maaLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(maaLabel)
+
     maaIDLabel.font = UIFont.systemFont(ofSize: 14)
+    maaIDLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(maaIDLabel)
+
     reentryLabel.text = "Délai de réentrée"
     reentryLabel.font = UIFont.italicSystemFont(ofSize: 14)
     reentryLabel.textColor = AppColor.TextColors.DarkGray
-    inFieldReentryDelayLabel.font = UIFont.systemFont(ofSize: 14)
-    contentView.addSubview(nameLabel)
-    contentView.addSubview(firmNameLabel)
-    contentView.addSubview(maaLabel)
-    contentView.addSubview(maaIDLabel)
-    contentView.addSubview(inFieldReentryDelayLabel)
+    reentryLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(reentryLabel)
+
+    inFieldReentryDelayLabel.font = UIFont.systemFont(ofSize: 14)
+    inFieldReentryDelayLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(inFieldReentryDelayLabel)
 
     let viewsDict = [
       "name" : nameLabel,
