@@ -25,17 +25,17 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
   }
 
   func changeInputsViewAndTableViewSize() {
-    inputsHeightConstraint.constant = self.inputsSelection.tableView.contentSize.height + 100
+    inputsHeightConstraint.constant = inputsSelection.tableView.contentSize.height + 100
 
     NSLayoutConstraint(
       item: inputsSelection.tableView,
       attribute: .bottom,
       relatedBy: .equal,
       toItem: inputsSelectionView,
-      attribute: .bottom,
+      attribute: .bottomMargin,
       multiplier: 1,
       constant: -30
-      ).isActive = true
+    ).isActive = true
   }
 
   func closeSelectInputsView() {

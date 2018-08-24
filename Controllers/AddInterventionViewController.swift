@@ -172,7 +172,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    self.view.addSubview(inputsView)
+    view.addSubview(inputsView)
     segmentedControl = inputsView.subviews.first as! UISegmentedControl
     specificInputsTableView = inputsView.subviews.last as! UITableView
     specificInputsTableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
