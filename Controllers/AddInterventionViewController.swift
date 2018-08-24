@@ -88,9 +88,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
-  var selectedInputsTableView: UITableView!
   var tmpSelectedInputs = [["Aubergine", "De Barbentane", 0], ["ADELIA EC", "Saga", 1], ["Boues activées liquides", "IAA (C/N = 4,4)", 2], ["PRORI GOLD", "Syngenta France S.A.S", 1]]
-  //var selectedInputs = [NSManagedObject]()
   var selectedInputs = [[String]]()
   var inputsSelection = InputsSelection()
 
@@ -186,10 +184,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height))
     inputsSelectionView.addSubview(inputsSelection)
-    selectedInputsTableView = inputsSelection.tableView
-    selectedInputsTableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsCell")
-    selectedInputsTableView.delegate = self
-    selectedInputsTableView.dataSource = self
+    inputsSelection.tableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsCell")
+    inputsSelection.tableView.delegate = self
+    inputsSelection.tableView.dataSource = self
   }
 
   override func viewDidLayoutSubviews() {
@@ -238,7 +235,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return searchedEntities.count
     case doersTableView:
       return doers.count
-    case selectedInputsTableView:
+    case inputsSelection.tableView:
       return selectedInputs.count
     default:
       return 1
@@ -337,9 +334,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
         return cell
       }
-    case selectedInputsTableView:
+    case inputsSelection.tableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
 
+      cell.cellDelegate = self
+      cell.indexPath = indexPath.row
       cell.inputName.text = selectedInputs[indexPath.row][0]
       cell.inputType.text = selectedInputs[indexPath.row][1]
       cell.defineInputType(type: 0)
@@ -476,7 +475,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       } else {
         return 60
       }
-    case selectedInputsTableView:
+    case inputsSelection.tableView:
       return 100
     default:
       return 60

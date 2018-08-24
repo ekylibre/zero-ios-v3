@@ -27,6 +27,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
 
   func removeDoersCell(_ indexPath: Int) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
+
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       self.doers.remove(at: indexPath)
