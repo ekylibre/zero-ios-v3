@@ -88,7 +88,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
-  var tmpSelectedInputs = [["Aubergine", "De Barbentane", 0], ["ADELIA EC", "Saga", 1], ["Boues activées liquides", "IAA (C/N = 4,4)", 2], ["PRORI GOLD", "Syngenta France S.A.S", 1]]
   var selectedInputs = [[String]]()
   var inputsSelection = InputsSelection()
 
@@ -337,14 +336,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case inputsSelection.tableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
 
+      if cell.type == -1 {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+          cell.defineInputType(type: 0)
+          cell.type = 0
+        case 1:
+          cell.defineInputType(type: 1)
+          cell.type = 1
+        case 2:
+          cell.defineInputType(type: 2)
+          cell.type = 2
+        default:
+          cell.defineInputType(type: -1)
+          cell.type = -1
+        }
+      }
       cell.cellDelegate = self
       cell.indexPath = indexPath.row
       cell.inputName.text = selectedInputs[indexPath.row][0]
       cell.inputType.text = selectedInputs[indexPath.row][1]
-      cell.defineInputType(type: 0)
       cell.reloadDropDown()
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell

@@ -27,12 +27,16 @@
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tools" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tools" inverseName="equipments" inverseEntity="Tools" syncable="YES"/>
     </entity>
+    <entity name="Inputs" representedClassName="Inputs" syncable="YES" codeGenerationType="class">
+        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="inputs" inverseEntity="Interventions" syncable="YES"/>
+    </entity>
     <entity name="Interventions" representedClassName="Interventions" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="infos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="interventions" inverseEntity="Doers" syncable="YES"/>
+        <relationship name="inputs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Inputs" inverseName="interventions" inverseEntity="Inputs" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="interventions" inverseEntity="Targets" syncable="YES"/>
         <relationship name="tools" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tools" inverseName="interventions" inverseEntity="Tools" syncable="YES"/>
         <relationship name="workingPeriods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingPeriods" inverseName="interventions" inverseEntity="WorkingPeriods" syncable="YES"/>
@@ -72,11 +76,12 @@
         <element name="Doers" positionX="-54" positionY="-405" width="128" height="105"/>
         <element name="Entities" positionX="-270" positionY="-463" width="128" height="120"/>
         <element name="Equipments" positionX="-270" positionY="-144" width="128" height="120"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="163"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="180"/>
         <element name="Plots" positionX="331" positionY="-409" width="128" height="133"/>
         <element name="Targets" positionX="333" positionY="-207" width="128" height="118"/>
         <element name="Tools" positionX="-54" positionY="-117" width="128" height="118"/>
         <element name="Users" positionX="-270" positionY="75" width="128" height="60"/>
         <element name="WorkingPeriods" positionX="162" positionY="18" width="128" height="88"/>
+        <element name="Inputs" positionX="-63" positionY="-315" width="128" height="60"/>
     </elements>
 </model>
