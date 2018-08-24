@@ -24,8 +24,8 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'un produit phyto"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-    self.addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(titleLabel)
 
     nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "Nom"
@@ -39,8 +39,8 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
     nameTextField.layer.shadowRadius = 0
-    self.addSubview(nameTextField)
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(nameTextField)
 
     firmNameTextField = UITextField(frame: CGRect.zero)
     firmNameTextField.placeholder = "Marque"
@@ -54,8 +54,8 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     firmNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     firmNameTextField.layer.shadowOpacity = 1
     firmNameTextField.layer.shadowRadius = 0
-    self.addSubview(firmNameTextField)
     firmNameTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(firmNameTextField)
 
     maaTextField = UITextField(frame: CGRect.zero)
     maaTextField.keyboardType = .numberPad
@@ -70,8 +70,8 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     maaTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     maaTextField.layer.shadowOpacity = 1
     maaTextField.layer.shadowRadius = 0
-    self.addSubview(maaTextField)
     maaTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(maaTextField)
 
     reentryDelayTextField = UITextField(frame: CGRect.zero)
     reentryDelayTextField.keyboardType = .numberPad
@@ -86,31 +86,31 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     reentryDelayTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     reentryDelayTextField.layer.shadowOpacity = 1
     reentryDelayTextField.layer.shadowRadius = 0
-    self.addSubview(reentryDelayTextField)
     reentryDelayTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(reentryDelayTextField)
 
     unitLabel = UILabel(frame: CGRect.zero)
     unitLabel.text = "en heures"
     unitLabel.font = UIFont.systemFont(ofSize: 14)
     unitLabel.textColor = UIColor.lightGray
-    self.addSubview(unitLabel)
     unitLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(unitLabel)
 
     cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    self.addSubview(cancelButton)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(cancelButton)
 
     createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    self.addSubview(createButton)
     createButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(createButton)
 
     let viewsDict = [
       "title" : titleLabel,

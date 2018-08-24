@@ -170,12 +170,12 @@
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
 				042A44352121B45B00CE6B24 /* CropTableViewCell.swift */,
 				0412B78C2126BB3A00976DB6 /* EntitiesTableViewCell.swift */,
-				04162E57212C431700EF4318 /* FertilizersTableViewCell.swift */,
 				6BEA65E22105CD8A0072840F /* Intervention.swift */,
 				6BEA65E32105CD8A0072840F /* InterventionTableViewCell.swift */,
 				6BEA65E12105CD8A0072840F /* KeychainService.swift */,
-				04162E59212C432200EF4318 /* PhytosTableViewCell.swift */,
 				04162E5B212C432B00EF4318 /* SeedsTableViewCell.swift */,
+				04162E59212C432200EF4318 /* PhytosTableViewCell.swift */,
+				04162E57212C431700EF4318 /* FertilizersTableViewCell.swift */,
 				6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */,
 			);
 			path = Models;
@@ -199,14 +199,14 @@
 				042F654B2118590500EC9E27 /* oauthInfo.plist */,
 				6BB2253E211849090036E167 /* AppDelegate.swift */,
 				6BB2253A211849090036E167 /* Assets.xcassets */,
-				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
 				042A44322121B38600CE6B24 /* Constants */,
 				047BF0B02105D1D2009F3945 /* Controllers */,
 				047BF0BF2105F44F009F3945 /* CoreData */,
-				047B57CB2108605400C48F68 /* Frameworks */,
-				047BF0B22105D20B009F3945 /* Models */,
-				6BEA656E2105C5EE0072840F /* Products */,
 				047BF0B12105D1F9009F3945 /* Views */,
+				047BF0B22105D20B009F3945 /* Models */,
+				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
+				047B57CB2108605400C48F68 /* Frameworks */,
+				6BEA656E2105C5EE0072840F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
