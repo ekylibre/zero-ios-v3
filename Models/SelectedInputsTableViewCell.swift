@@ -9,7 +9,14 @@
 import UIKit
 import DropDown
 
+protocol SelectedInputsTableViewCellDelegate: class {
+  func removeInputsCell(_ indexPath: Int)
+}
+
 class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
+  weak var cellDelegate: SelectedInputsTableViewCellDelegate?
+  var indexPath: Int!
+
   let inputImage = UIImageView()
   let inputName = UILabel()
   let inputType = UILabel()
@@ -26,63 +33,65 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     inputImage.translatesAutoresizingMaskIntoConstraints = false
-    inputName.translatesAutoresizingMaskIntoConstraints = false
-    inputType.translatesAutoresizingMaskIntoConstraints = false
-    inputQuantity.translatesAutoresizingMaskIntoConstraints = false
-    quantity.translatesAutoresizingMaskIntoConstraints = false
-    quantityMeasureButton.translatesAutoresizingMaskIntoConstraints = false
-    removeCell.translatesAutoresizingMaskIntoConstraints = false
-    surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
-    warningImage.translatesAutoresizingMaskIntoConstraints = false
-    warningLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(inputImage)
 
     inputName.font = UIFont.systemFont(ofSize: 14)
-    inputType.font = UIFont.boldSystemFont(ofSize: 14)
-    quantity.font = UIFont.systemFont(ofSize: 13)
-    quantityMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-    surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
-    warningLabel.font = UIFont.systemFont(ofSize: 13)
+    inputName.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(inputName)
 
-    quantity.textColor = AppColor.TextColors.DarkGray
-    quantityMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
-    surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    warningLabel.textColor = AppColor.TextColors.Red
+    inputType.font = UIFont.boldSystemFont(ofSize: 14)
+    inputType.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(inputType)
 
     inputQuantity.backgroundColor = AppColor.CellColors.white
     inputQuantity.layer.borderColor = UIColor.lightGray.cgColor
     inputQuantity.layer.borderWidth = 1
     inputQuantity.layer.cornerRadius = 5
+    inputQuantity.delegate = self
+    inputQuantity.keyboardType = .numberPad
+    inputQuantity.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(inputQuantity)
 
+    quantity.text = "Quantité"
+    quantity.textColor = AppColor.TextColors.DarkGray
+    quantity.font = UIFont.systemFont(ofSize: 13)
+    quantity.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(quantity)
+
+    quantityMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
     quantityMeasureButton.backgroundColor = AppColor.CellColors.white
     quantityMeasureButton.layer.borderColor = UIColor.lightGray.cgColor
     quantityMeasureButton.layer.borderWidth = 1
     quantityMeasureButton.layer.cornerRadius = 5
+    quantityMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    quantityMeasureButton.addTarget(self, action: #selector(self.showQuantityMeasure(sender:)), for: .touchUpInside)
+    quantityMeasureButton.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(quantityMeasureButton)
 
-    quantity.text = "Quantité"
-    surfaceQuantity.text = "Soit 0,0 A"
-    warningLabel.text = "dose invalide"
-
-    warningImage.image = #imageLiteral(resourceName: "filled-circle")
     removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
+    removeCell.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
+    removeCell.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(removeCell)
+
+    surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
+    surfaceQuantity.textColor = AppColor.TextColors.DarkGray
+    surfaceQuantity.text = "Soit 0,0 A"
+    surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(surfaceQuantity)
+
+    warningImage.isHidden = true
+    warningImage.image = #imageLiteral(resourceName: "filled-circle")
+    warningImage.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(warningImage)
 
     warningLabel.isHidden = true
-    warningImage.isHidden = true
-    inputQuantity.delegate = self
-    inputQuantity.keyboardType = .numberPad
-
-    quantityMeasureButton.addTarget(self, action: #selector(self.showQuantityMeasure(sender:)), for: .touchUpInside)
-    customizeDropDown(sender: self)
-
-    contentView.addSubview(inputImage)
-    contentView.addSubview(inputName)
-    contentView.addSubview(inputType)
-    contentView.addSubview(inputQuantity)
-    contentView.addSubview(quantity)
-    contentView.addSubview(quantityMeasureButton)
-    contentView.addSubview(removeCell)
-    contentView.addSubview(surfaceQuantity)
-    contentView.addSubview(warningImage)
+    warningLabel.font = UIFont.systemFont(ofSize: 13)
+    warningLabel.textColor = AppColor.TextColors.Red
+    warningLabel.text = "dose invalide"
+    warningLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(warningLabel)
+
+    customizeDropDown(sender: self)
 
     let viewsDict = [
       "inputImage": inputImage,
@@ -250,10 +259,6 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
   }
 
-  @objc func showQuantityMeasure(sender: UIButton) {
-    quantityMeasureDropDown.show()
-  }
-
   func customizeDropDown(sender: AnyObject) {
     let appearence = DropDown.appearance()
 
@@ -339,6 +344,14 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     let invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
 
     return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+  }
+
+  @objc func showQuantityMeasure(sender: UIButton) {
+    quantityMeasureDropDown.show()
+  }
+
+  @objc func removeCell(sender: UIButton) {
+    cellDelegate?.removeInputsCell(indexPath)
   }
 
   required init?(coder aDecoder: NSCoder) {

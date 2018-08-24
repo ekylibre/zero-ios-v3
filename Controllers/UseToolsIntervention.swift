@@ -12,6 +12,7 @@ import CoreData
 extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   func removeToolsCell(_ indexPath: Int) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'outil ?", preferredStyle: .alert)
+
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       self.selectedTools.remove(at: indexPath)

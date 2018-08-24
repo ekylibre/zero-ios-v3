@@ -13,8 +13,10 @@ class InputsSelection: UIView {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+
     tableView = UITableView(frame: CGRect.zero)
     tableView.separatorInset = UIEdgeInsets.zero
+
     let frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1 / UIScreen.main.scale)
     let line = UIView(frame: frame)
 
@@ -26,7 +28,6 @@ class InputsSelection: UIView {
     tableView.layer.borderWidth  = 0.5
     tableView.layer.borderColor = UIColor.lightGray.cgColor
     tableView.translatesAutoresizingMaskIntoConstraints = false
-
     self.addSubview(tableView)
 
     let viewsDict = [
@@ -50,10 +51,6 @@ class InputsSelection: UIView {
         views: viewsDict
       )
     )
-  }
-
-  @objc func reloadTable() {
-    tableView.reloadData()
   }
 
   required init?(coder aDecoder: NSCoder) {
