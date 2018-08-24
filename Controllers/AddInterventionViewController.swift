@@ -24,7 +24,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
-  @IBOutlet weak var interventionToolsTableView: UITableView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
@@ -66,8 +65,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var viewsArray = [[UIView]]()
   var equipments = [NSManagedObject]()
   var selectDateView: UIView!
-  var inputsView: UIView!
-  var segmentedControl: UISegmentedControl!
+  var inputsView: InputsView!
   var specificInputsTableView: UITableView!
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
@@ -137,7 +135,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.delegate = self
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
-    cropsTableView.alwaysBounceVertical = false
     equipmentsTableView.dataSource = self
     equipmentsTableView.delegate = self
     selectedToolsTableView.dataSource = self
@@ -164,26 +161,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedToolType = toolTypes[0]
     toolTypeButton.setTitle(toolTypes[0], for: .normal)
 
-    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     self.view.addSubview(inputsView)
-    segmentedControl = inputsView.subviews.first as! UISegmentedControl
-    specificInputsTableView = inputsView.subviews.last as! UITableView
-    specificInputsTableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
-    specificInputsTableView.register(PhytosTableViewCell.self, forCellReuseIdentifier: "PhytosCell")
-    specificInputsTableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
-    specificInputsTableView.delegate = self
-    specificInputsTableView.dataSource = self
+    specificInputsTableView = inputsView.tableView
+    inputsView.seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    inputsView.phytoView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    inputsView.fertilizerView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    // Inputs
+    // Changes inputsView frame and position
     let guide = self.view.safeAreaLayoutGuide
     let height = guide.layoutFrame.size.height
     inputsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
     inputsView.center.x = self.view.center.x
     inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
+    specificInputsTableView.delegate = self
+    specificInputsTableView.dataSource = self
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -228,7 +224,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func getNumberOfInputs() -> Int {
 
-    switch segmentedControl.selectedSegmentIndex {
+    switch inputsView.segmentedControl.selectedSegmentIndex {
     case 0:
       return sampleSeeds.count
     case 1:
@@ -296,14 +292,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
-    case specificInputsTableView :
-      if segmentedControl.selectedSegmentIndex == 0 {
+    case specificInputsTableView:
+      if inputsView.segmentedControl.selectedSegmentIndex == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
 
         cell.varietyLabel.text = sampleSeeds[indexPath.row][0]
         cell.specieLabel.text = sampleSeeds[indexPath.row][1]
         return cell
-      } else if segmentedControl.selectedSegmentIndex == 1 {
+      } else if inputsView.segmentedControl.selectedSegmentIndex == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
 
         cell.nameLabel.text = samplePhytos[indexPath.row][0]
@@ -432,7 +428,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case doersTableView:
       return 75
     case specificInputsTableView:
-      if segmentedControl.selectedSegmentIndex == 1 {
+      if inputsView.segmentedControl.selectedSegmentIndex == 1 {
         return 100
       } else {
         return 60
@@ -908,6 +904,36 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func selectInput(_ sender: Any) {
     dimView.isHidden = false
     inputsView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  @objc func createInput() {
+    switch inputsView.segmentedControl.selectedSegmentIndex {
+    case 0:
+      sampleSeeds.append([inputsView.seedView.varietyTextField.text!, inputsView.seedView.specieButton.titleLabel!.text!])
+      inputsView.seedView.specieButton.setTitle("Avoine", for: .normal)
+      inputsView.seedView.varietyTextField.text = ""
+      inputsView.tableView.reloadData()
+    case 1:
+      samplePhytos.append([inputsView.phytoView.nameTextField.text!, inputsView.phytoView.firmNameTextField.text!, inputsView.phytoView.maaTextField.text!, inputsView.phytoView.reentryDelayTextField.text!])
+      for subview in inputsView.phytoView.subviews {
+        if subview is UITextField {
+          let textField = subview as! UITextField
+          textField.text = ""
+        }
+      }
+      inputsView.tableView.reloadData()
+    case 2:
+      sampleFertilizers.append([inputsView.fertilizerView.nameTextField.text!, inputsView.fertilizerView.natureButton.titleLabel!.text!])
+      inputsView.fertilizerView.nameTextField.text = ""
+      inputsView.fertilizerView.natureButton.setTitle("Organique", for: .normal)
+      inputsView.tableView.reloadData()
+    default:
+      return
+    }
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
