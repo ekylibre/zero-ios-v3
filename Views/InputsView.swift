@@ -31,21 +31,21 @@ class InputsView: UIView {
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
     segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControlEvents.valueChanged)
-    self.addSubview(segmentedControl)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(segmentedControl)
 
     searchBar = UISearchBar(frame: CGRect.zero)
     searchBar.searchBarStyle = .minimal
-    self.addSubview(searchBar)
     searchBar.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(searchBar)
 
     createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("+ CRÉER UNE NOUVELLE SEMENCE", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
-    self.addSubview(createButton)
     createButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(createButton)
 
     tableView = UITableView(frame: CGRect.zero)
     tableView.separatorInset = UIEdgeInsets.zero
@@ -58,8 +58,8 @@ class InputsView: UIView {
     tableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
     tableView.register(PhytosTableViewCell.self, forCellReuseIdentifier: "PhytosCell")
     tableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
-    self.addSubview(tableView)
     tableView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(tableView)
 
     let viewsDict = [
       "segmented" : segmentedControl,
@@ -78,16 +78,16 @@ class InputsView: UIView {
     dimView.backgroundColor = UIColor.black
     dimView.alpha = 0.6
     dimView.isHidden = true
-    self.addSubview(dimView)
     dimView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(dimView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
 
     seedView = CreateSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     seedView.createButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
-    self.addSubview(seedView)
     seedView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(seedView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[seedview]|", options: [], metrics: nil, views: ["seedview" : seedView]))
     NSLayoutConstraint(item: seedView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250).isActive = true
     NSLayoutConstraint(item: seedView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
@@ -95,8 +95,8 @@ class InputsView: UIView {
     phytoView = CreatePhytoView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     phytoView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     phytoView.createButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
-    self.addSubview(phytoView)
     phytoView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(phytoView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[phytoview]|", options: [], metrics: nil, views: ["phytoview" : phytoView]))
     NSLayoutConstraint(item: phytoView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 340).isActive = true
     NSLayoutConstraint(item: phytoView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
@@ -104,8 +104,8 @@ class InputsView: UIView {
     fertilizerView = CreateFertilizerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fertilizerView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     fertilizerView.createButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
-    self.addSubview(fertilizerView)
     fertilizerView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(fertilizerView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[fertilizerview]|", options: [], metrics: nil, views: ["fertilizerview" : fertilizerView]))
     NSLayoutConstraint(item: fertilizerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 230).isActive = true
     NSLayoutConstraint(item: fertilizerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true

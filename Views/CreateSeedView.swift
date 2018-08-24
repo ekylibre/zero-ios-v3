@@ -24,15 +24,15 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'une semence"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-    self.addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(titleLabel)
 
     specieLabel = UILabel(frame: CGRect.zero)
     specieLabel.text = "Espèce"
     specieLabel.font = UIFont.systemFont(ofSize: 15)
     specieLabel.textColor = AppColor.TextColors.DarkGray
-    self.addSubview(specieLabel)
     specieLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(specieLabel)
 
     specieButton = UIButton(frame: CGRect.zero)
     specieButton.setTitle("Avoine", for: .normal)
@@ -41,8 +41,8 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     specieButton.contentHorizontalAlignment = .leading
     specieButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
     specieButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
-    self.addSubview(specieButton)
     specieButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(specieButton)
 
     specieDropDown = DropDown(anchorView: specieButton)
     specieDropDown.dataSource = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
@@ -62,24 +62,24 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     varietyTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     varietyTextField.layer.shadowOpacity = 1
     varietyTextField.layer.shadowRadius = 0
-    self.addSubview(varietyTextField)
     varietyTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(varietyTextField)
 
     cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    self.addSubview(cancelButton)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(cancelButton)
 
     createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    self.addSubview(createButton)
     createButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(createButton)
 
     let viewsDict = [
       "title" : titleLabel,

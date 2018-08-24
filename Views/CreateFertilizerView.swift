@@ -24,8 +24,8 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'un fertilisant"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-    self.addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(titleLabel)
 
     nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "Nom"
@@ -38,15 +38,15 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
     nameTextField.layer.shadowRadius = 0
-    self.addSubview(nameTextField)
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(nameTextField)
 
     natureLabel = UILabel(frame: CGRect.zero)
     natureLabel.text = "Nature"
     natureLabel.font = UIFont.systemFont(ofSize: 14)
     natureLabel.textColor = AppColor.TextColors.DarkGray
-    self.addSubview(natureLabel)
     natureLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(natureLabel)
 
     natureButton = UIButton(frame: CGRect.zero)
     natureButton.setTitle("Organique", for: .normal)
@@ -55,8 +55,8 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     natureButton.contentHorizontalAlignment = .leading
     natureButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
     natureButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
-    self.addSubview(natureButton)
     natureButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(natureButton)
 
     natureDropDown = DropDown(anchorView: natureButton)
     natureDropDown.dataSource = ["Organique", "Minéral"]
@@ -70,16 +70,16 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    self.addSubview(cancelButton)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(cancelButton)
 
     createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    self.addSubview(createButton)
     createButton.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(createButton)
 
     let viewsDict = [
       "title" : titleLabel,
