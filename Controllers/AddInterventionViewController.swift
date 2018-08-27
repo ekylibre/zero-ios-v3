@@ -90,6 +90,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
   var selectedInputs = [[String]]()
   var inputsSelection = InputsSelection()
+  var unitMeasurePicker = UIPickerView()
+  var pickerType = 0
+  var pickerValue: String?
+  var cellIndexPath: IndexPath!
+  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
+  let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -186,6 +192,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsSelection.tableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsCell")
     inputsSelection.tableView.delegate = self
     inputsSelection.tableView.dataSource = self
+
+    initUnitMeasurePickerView()
   }
 
   override func viewDidLayoutSubviews() {
@@ -336,6 +344,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case inputsSelection.tableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
 
+      cell.addInterventionViewController = self
       if cell.type == -1 {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -353,10 +362,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         }
       }
       cell.cellDelegate = self
-      cell.indexPath = indexPath.row
+      cell.indexPath = indexPath
       cell.inputName.text = selectedInputs[indexPath.row][0]
       cell.inputType.text = selectedInputs[indexPath.row][1]
-      cell.reloadDropDown()
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       return cell
     case equipmentsTableView:
