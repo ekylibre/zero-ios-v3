@@ -17,13 +17,13 @@ class SeedsTableViewCell: UITableViewCell {
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    varietyLabel.translatesAutoresizingMaskIntoConstraints = false
-    specieLabel.translatesAutoresizingMaskIntoConstraints = false
-
     varietyLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    varietyLabel.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(varietyLabel)
+
     specieLabel.font = UIFont.systemFont(ofSize: 14)
     specieLabel.textColor = AppColor.TextColors.DarkGray
-    contentView.addSubview(varietyLabel)
+    specieLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(specieLabel)
 
     let viewsDict = [
