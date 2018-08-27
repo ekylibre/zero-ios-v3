@@ -439,16 +439,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cropsTableView.beginUpdates()
       cropsTableView.endUpdates()
     case equipmentsTableView:
-      selectedTools.append(equipments[indexPath.row])
+      let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentsTableViewCell
+
+      if !cell.isAlreadySelected {
+        selectedTools.append(equipments[indexPath.row])
+        cell.isAlreadySelected = true
+        cell.backgroundColor = AppColor.CellColors.lightGray
+      }
       closeSelectToolsView()
     case toolTypeTableView:
-        selectedToolType = toolTypes[indexPath.row]
-        toolTypeTableView.reloadData()
-        toolTypeButton.setTitle(selectedToolType, for: .normal)
-        toolTypeTableView.isHidden = true
+      selectedToolType = toolTypes[indexPath.row]
+      toolTypeTableView.reloadData()
+      toolTypeButton.setTitle(selectedToolType, for: .normal)
+      toolTypeTableView.isHidden = true
     case entitiesTableView:
-      doers.append(entities[indexPath.row])
-      doersTableView.reloadData()
+      let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntitiesTableViewCell
+
+      if !cell.isAlreadySelected {
+        doers.append(entities[indexPath.row])
+        doersTableView.reloadData()
+        cell.isAlreadySelected = true
+        cell.backgroundColor = AppColor.CellColors.lightGray
+      }
       closeSelectEntitiesView()
     case specificInputsTableView:
       switch segmentedControl.selectedSegmentIndex {
