@@ -34,6 +34,9 @@
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BB22547211849DD0036E167 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22546211849C20036E167 /* Main.storyboard */; };
 		6BB22548211849E00036E167 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22545211849C20036E167 /* LaunchScreen.storyboard */; };
+		6BD5AC282133F54800C6D605 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC272133F54800C6D605 /* ListTableViewController.swift */; };
+		6BD5AC2A2133FB6B00C6D605 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC292133FB6B00C6D605 /* ListTableViewCell.swift */; };
+		6BD5AC2C2134229C00C6D605 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC2B2134229C00C6D605 /* ListProtocol.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 		6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */; };
 		6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DA2105CD820072840F /* LoginScreen.swift */; };
@@ -84,6 +87,9 @@
 		6BB2253E211849090036E167 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BB22545211849C20036E167 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6BB22546211849C20036E167 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		6BD5AC272133F54800C6D605 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		6BD5AC292133FB6B00C6D605 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		6BD5AC2B2134229C00C6D605 /* ListProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
 		6BEA656D2105C5EE0072840F /* Clic&Farm-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clic&Farm-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
@@ -144,6 +150,8 @@
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				6BEA65DA2105CD820072840F /* LoginScreen.swift */,
 				0413DE83211B3E2800AE8337 /* UseToolsIntervention.swift */,
+				6BD5AC272133F54800C6D605 /* ListTableViewController.swift */,
+				6BD5AC2B2134229C00C6D605 /* ListProtocol.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -177,6 +185,7 @@
 				04162E59212C432200EF4318 /* PhytosTableViewCell.swift */,
 				04162E57212C431700EF4318 /* FertilizersTableViewCell.swift */,
 				6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */,
+				6BD5AC292133FB6B00C6D605 /* ListTableViewCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -352,6 +361,8 @@
 				6B1267CB212EF86E00C8308F /* PhytosTableViewCell.swift in Sources */,
 				047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */,
 				6B16F9342110A4E900D63316 /* ToolsTableViewCell.swift in Sources */,
+				6BD5AC282133F54800C6D605 /* ListTableViewController.swift in Sources */,
+				6BD5AC2A2133FB6B00C6D605 /* ListTableViewCell.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
@@ -374,6 +385,7 @@
 				6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
 				04162E58212C431700EF4318 /* FertilizersTableViewCell.swift in Sources */,
+				6BD5AC2C2134229C00C6D605 /* ListProtocol.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
 				6B9C8CAB212C594F00CC54EB /* CreateSeedView.swift in Sources */,
