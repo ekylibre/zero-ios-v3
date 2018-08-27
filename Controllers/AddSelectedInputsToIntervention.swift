@@ -9,12 +9,16 @@
 import UIKit
 
 extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
-  func removeInputsCell(_ indexPath: Int) {
+  func changeUnitMeasure(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+  }
+  
+  func removeInputsCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'intrant ?", preferredStyle: .alert)
-
+    
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-      self.selectedInputs.remove(at: indexPath)
+      self.selectedInputs.remove(at: indexPath.row)
       self.inputsSelection.tableView.reloadData()
       if self.selectedInputs.count == 0 && self.inputsSelectionView.frame.height != 70 {
         self.inputsHeightConstraint.constant = 70
@@ -23,10 +27,10 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
     }))
     self.present(alert, animated: true)
   }
-
+  
   func changeInputsViewAndTableViewSize() {
     inputsHeightConstraint.constant = inputsSelection.tableView.contentSize.height + 100
-
+    
     NSLayoutConstraint(
       item: inputsSelection.tableView,
       attribute: .bottom,
@@ -35,13 +39,13 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
       attribute: .bottomMargin,
       multiplier: 1,
       constant: -30
-    ).isActive = true
+      ).isActive = true
   }
-
+  
   func closeSelectInputsView() {
     dimView.isHidden = true
     inputsView.isHidden = true
-
+    
     if selectedInputs.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -54,7 +58,7 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
     }
     inputsSelection.tableView.reloadData()
   }
-
+  
   func showInputsNumber() {
     if selectedInputs.count > 0 && inputsHeightConstraint.constant == 70 {
       addInputsButton.isHidden = true
@@ -65,7 +69,7 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
       addInputsButton.isHidden = false
     }
   }
-
+  
   @IBAction func collapseInputsView(_ sender: Any) {
     if inputsHeightConstraint.constant != 70 {
       UIView.animate(withDuration: 0.5, animations: {
