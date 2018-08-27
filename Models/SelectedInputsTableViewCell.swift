@@ -53,7 +53,9 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     inputQuantity.layer.borderWidth = 1
     inputQuantity.layer.cornerRadius = 5
     inputQuantity.delegate = self
-    inputQuantity.keyboardType = .numberPad
+    inputQuantity.keyboardType = .decimalPad
+    inputQuantity.text = "0.0"
+    inputQuantity.textAlignment = .center
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(inputQuantity)
     
@@ -88,6 +90,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     unitMeasureButton.layer.borderWidth = 1
     unitMeasureButton.layer.cornerRadius = 5
     unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    unitMeasureButton.titleLabel?.textAlignment = .center
     unitMeasureButton.addTarget(self, action: #selector(self.showUnitMeasure(sender:)), for: .touchUpInside)
     unitMeasureButton.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(unitMeasureButton)
@@ -303,17 +306,20 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     switch type {
     case 0:
       inputImage.image = #imageLiteral(resourceName: "seed")
+      unitMeasureButton.setTitle("kg/ha", for: .normal)
     case 1:
       inputImage.image = #imageLiteral(resourceName: "phytosanitary")
+      unitMeasureButton.setTitle("l/ha", for: .normal)
     case 2:
       inputImage.image = #imageLiteral(resourceName: "fertilizer")
+      unitMeasureButton.setTitle("kg/ha", for: .normal)
     default:
       inputImage.image = #imageLiteral(resourceName: "seed")
     }
   }
   
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    let invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    let invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
     
     return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
   }
