@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import DropDown
 
 class CreateFertilizerView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var nameTextField: UITextField!
   var natureLabel: UILabel!
   var natureButton: UIButton!
-  var natureDropDown: DropDown!
+  var natureAlertController: UIAlertController!
   var cancelButton: UIButton!
   var createButton: UIButton!
 
@@ -54,16 +53,18 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     natureButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     natureButton.contentHorizontalAlignment = .leading
     natureButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
-    natureButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
+    //natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
     natureButton.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(natureButton)
 
-    natureDropDown = DropDown(anchorView: natureButton)
-    natureDropDown.dataSource = ["Organique", "Minéral"]
-    natureDropDown.direction = .bottom
-    natureDropDown.selectionAction = { [weak self] (index, item) in
-      self?.natureButton.setTitle(item, for: .normal)
-    }
+    natureAlertController = UIAlertController(title: "Choisissez une nature", message: nil, preferredStyle: .actionSheet)
+    natureAlertController.addAction(UIAlertAction(title: "Organique", style: .default, handler: { action in
+      self.natureButton.setTitle("Organique", for: .normal)
+      }))
+    natureAlertController.addAction(UIAlertAction(title: "Minéral", style: .default, handler: { action in
+      self.natureButton.setTitle("Minéral", for: .normal)
+    }))
+    natureAlertController.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
 
     cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
@@ -110,18 +111,12 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     return false
   }
 
-  @objc func showDropDown() {
-    natureDropDown.show()
-  }
-
   @objc func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
       nameTextField.text = ""
       natureButton.setTitle("Organique", for: .normal)
     }
-    let index = natureDropDown.indexForSelectedRow
-    natureDropDown.deselectRow(at: index)
     self.isHidden = true
   }
 

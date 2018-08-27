@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import DropDown
 
 class CreateSeedView: UIView, UITextFieldDelegate {
   var titleLabel: UILabel!
   var specieLabel: UILabel!
   var specieButton: UIButton!
-  var specieDropDown: DropDown!
   var varietyTextField: UITextField!
   var cancelButton: UIButton!
   var createButton: UIButton!
@@ -40,16 +38,8 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     specieButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     specieButton.contentHorizontalAlignment = .leading
     specieButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
-    specieButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
     specieButton.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(specieButton)
-
-    specieDropDown = DropDown(anchorView: specieButton)
-    specieDropDown.dataSource = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
-    specieDropDown.direction = .bottom
-    specieDropDown.selectionAction = { [weak self] (index, item) in
-      self?.specieButton.setTitle(item, for: .normal)
-    }
 
     varietyTextField = UITextField(frame: CGRect.zero)
     varietyTextField.placeholder = "Variété"
@@ -110,18 +100,12 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     return false
   }
 
-  @objc func showDropDown() {
-    specieDropDown.show()
-  }
-
   @objc func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
     if sender == cancelButton {
       specieButton.setTitle("Avoine", for: .normal)
       varietyTextField.text = ""
     }
-    let index = specieDropDown.indexForSelectedRow
-    specieDropDown.deselectRow(at: index)
     self.isHidden = true
   }
 
