@@ -12,6 +12,7 @@ class FertilizersTableViewCell: UITableViewCell {
   
   let nameLabel = UILabel()
   let natureLabel = UILabel()
+  var isAlreadySelected = false
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

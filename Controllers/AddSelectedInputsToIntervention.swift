@@ -12,51 +12,43 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
   func changeUnitMeasure(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
-  
+
   func removeInputsCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'intrant ?", preferredStyle: .alert)
-    
+
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
       self.selectedInputs.remove(at: indexPath.row)
-      self.inputsSelection.tableView.reloadData()
+      self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 && self.inputsSelectionView.frame.height != 70 {
         self.inputsHeightConstraint.constant = 70
         self.inputsCollapseButton.isHidden = true
       }
     }))
     self.present(alert, animated: true)
+    changeInputsViewAndTableViewSize()
   }
-  
+
   func changeInputsViewAndTableViewSize() {
-    inputsHeightConstraint.constant = inputsSelection.tableView.contentSize.height + 100
-    
-    NSLayoutConstraint(
-      item: inputsSelection.tableView,
-      attribute: .bottom,
-      relatedBy: .equal,
-      toItem: inputsSelectionView,
-      attribute: .bottomMargin,
-      multiplier: 1,
-      constant: -30
-      ).isActive = true
-  }
-  
+    selectedInputsTableViewHeightConstraint.constant = selectedInputsTableView.contentSize.height
+    inputsHeightConstraint.constant = selectedInputsTableViewHeightConstraint.constant + 100
+   }
+
   func closeSelectInputsView() {
     dimView.isHidden = true
     inputsView.isHidden = true
-    
+
     if selectedInputs.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.view.layoutIfNeeded()
         self.inputsCollapseButton.isHidden = false
-        self.inputsSelection.tableView.isHidden = false
+        self.selectedInputsTableView.isHidden = false
         self.changeInputsViewAndTableViewSize()
         self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
-    inputsSelection.tableView.reloadData()
+    selectedInputsTableView.reloadData()
   }
   
   func showInputsNumber() {
@@ -69,18 +61,18 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
       addInputsButton.isHidden = false
     }
   }
-  
+
   @IBAction func collapseInputsView(_ sender: Any) {
     if inputsHeightConstraint.constant != 70 {
       UIView.animate(withDuration: 0.5, animations: {
-        self.inputsSelection.tableView.isHidden = true
+        self.selectedInputsTableView.isHidden = true
         self.inputsHeightConstraint.constant = 70
         self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         self.view.layoutIfNeeded()
       })
     } else {
       UIView.animate(withDuration: 0.5, animations: {
-        self.inputsSelection.tableView.isHidden = false
+        self.selectedInputsTableView.isHidden = false
         self.changeInputsViewAndTableViewSize()
         self.inputsCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()

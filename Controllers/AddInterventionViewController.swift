@@ -24,7 +24,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
-  @IBOutlet weak var interventionToolsTableView: UITableView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
@@ -61,6 +60,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var addInputsButton: UIButton!
   @IBOutlet weak var inputsNumber: UILabel!
+  @IBOutlet weak var selectedInputsTableView: UITableView!
+  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
 
   //MARK: - Properties
 
@@ -89,7 +90,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
   var selectedInputs = [[String]]()
-  var inputsSelection = InputsSelection()
   var unitMeasurePicker = UIPickerView()
   var pickerType = 0
   var pickerValue: String?
@@ -187,11 +187,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     specificInputsTableView.delegate = self
     specificInputsTableView.dataSource = self
 
-    inputsSelection = InputsSelection(frame: CGRect(x: inputsSelectionView.frame.minX, y: inputsSelectionView.frame.minY - 70, width: inputsSelectionView.frame.width, height: inputsSelectionView.frame.height))
-    inputsSelectionView.addSubview(inputsSelection)
-    inputsSelection.tableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsCell")
-    inputsSelection.tableView.delegate = self
-    inputsSelection.tableView.dataSource = self
+    selectedInputsTableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsTableViewCell")
+    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    selectedInputsTableView.layer.cornerRadius = 5
+    selectedInputsTableView.layer.borderWidth  = 0.5
+    selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
 
     initUnitMeasurePickerView()
   }
@@ -242,7 +244,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return searchedEntities.count
     case doersTableView:
       return doers.count
-    case inputsSelection.tableView:
+    case selectedInputsTableView:
       return selectedInputs.count
     default:
       return 1
@@ -341,8 +343,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
         return cell
       }
-    case inputsSelection.tableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsCell", for: indexPath) as! SelectedInputsTableViewCell
+    case selectedInputsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsTableViewCell", for: indexPath) as! SelectedInputsTableViewCell
 
       cell.addInterventionViewController = self
       if cell.type == -1 {
@@ -473,15 +475,33 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case specificInputsTableView:
       switch segmentedControl.selectedSegmentIndex {
       case 0:
-        selectedInputs.append(sampleSeeds[indexPath.row])
+        let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! SeedsTableViewCell
+
+        if !cell.isAlreadySelected {
+          selectedInputs.append(sampleSeeds[indexPath.row])
+          cell.isAlreadySelected = true
+          cell.backgroundColor = AppColor.CellColors.lightGray
+        }
       case 1:
-        selectedInputs.append(samplePhytos[indexPath.row])
+        let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! PhytosTableViewCell
+
+        if !cell.isAlreadySelected {
+          selectedInputs.append(samplePhytos[indexPath.row])
+          cell.isAlreadySelected = true
+          cell.backgroundColor = AppColor.CellColors.lightGray
+        }
       case 2:
-        selectedInputs.append(sampleFertilizers[indexPath.row])
+        let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! FertilizersTableViewCell
+
+        if !cell.isAlreadySelected {
+          selectedInputs.append(sampleFertilizers[indexPath.row])
+          cell.isAlreadySelected = true
+          cell.backgroundColor = AppColor.CellColors.lightGray
+        }
       default:
         print("Error")
       }
-      inputsSelection.tableView.reloadData()
+      selectedInputsTableView.reloadData()
       closeSelectInputsView()
     default:
       print("Nothing to do")
@@ -508,7 +528,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       } else {
         return 60
       }
-    case inputsSelection.tableView:
+    case selectedInputsTableView:
       return 100
     default:
       return 60

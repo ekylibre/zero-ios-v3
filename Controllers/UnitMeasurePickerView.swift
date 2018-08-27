@@ -42,11 +42,11 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
     unitMeasurePicker.isHidden = true
     dimView.isHidden = true
     if pickerType == 1 {
-      let cell = inputsSelection.tableView.cellForRow(at: cellIndexPath) as! SelectedInputsTableViewCell
+      let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputsTableViewCell
 
       cell.unitMeasureButton.setTitle(liquidUnitMeasure[row], for: .normal)
     } else {
-      let cell = inputsSelection.tableView.cellForRow(at: cellIndexPath) as! SelectedInputsTableViewCell
+      let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputsTableViewCell
 
       cell.unitMeasureButton.setTitle(solidUnitMeasure[row], for: .normal)
     }
