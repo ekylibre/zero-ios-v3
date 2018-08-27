@@ -12,6 +12,8 @@ class EntitiesTableViewCell: UITableViewCell {
   @IBOutlet weak var lastName: UILabel!
   @IBOutlet weak var firstName: UILabel!
   @IBOutlet weak var logo: UIImageView!
+
+  var isAlreadySelected = false
 }
 
 protocol DoersTableViewCellDelegate: class {
