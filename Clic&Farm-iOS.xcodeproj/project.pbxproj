@@ -22,6 +22,10 @@
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 		042A44362121B45B00CE6B24 /* CropTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44352121B45B00CE6B24 /* CropTableViewCell.swift */; };
 		042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F654B2118590500EC9E27 /* oauthInfo.plist */; };
+		0478F233213447D9001EAE6E /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
+		0478F235213447DD001EAE6E /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
+		0478F237213447E1001EAE6E /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
+		0478F239213448D2001EAE6E /* DropDown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0478F238213448D2001EAE6E /* DropDown.framework */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
 		047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */; };
@@ -70,6 +74,10 @@
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		042A44352121B45B00CE6B24 /* CropTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropTableViewCell.swift; sourceTree = "<group>"; };
 		042F654B2118590500EC9E27 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
+		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
+		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
+		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
+		0478F238213448D2001EAE6E /* DropDown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropDown.framework; path = Carthage/Build/iOS/DropDown.framework; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
 		047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -102,6 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0411295A2110937300AE884D /* OAuth2.framework in Frameworks */,
+				0478F239213448D2001EAE6E /* DropDown.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +135,7 @@
 		047B57CB2108605400C48F68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0478F238213448D2001EAE6E /* DropDown.framework */,
 				041129592110937300AE884D /* OAuth2.framework */,
 			);
 			name = Frameworks;
@@ -140,8 +150,8 @@
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				6BEA65DA2105CD820072840F /* LoginScreen.swift */,
-				0413DE83211B3E2800AE8337 /* UseToolsIntervention.swift */,
 				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
+				0413DE83211B3E2800AE8337 /* UseToolsIntervention.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -149,9 +159,12 @@
 		047BF0B12105D1F9009F3945 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0478F232213447D9001EAE6E /* CreateFertilizerView.swift */,
+				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
+				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
+				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BB22545211849C20036E167 /* LaunchScreen.storyboard */,
 				6BB22546211849C20036E167 /* Main.storyboard */,
-				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
@@ -180,10 +193,10 @@
 		047BF0BF2105F44F009F3945 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */,
 				047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */,
 				047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */,
 				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
-				6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -218,8 +231,8 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				6BEA658A2105C5EF0072840F /* Info.plist */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
+				6BEA658A2105C5EF0072840F /* Info.plist */,
 			);
 			path = "Clic&Farm-iOSTests";
 			sourceTree = "<group>";
@@ -330,6 +343,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
+				"$(SRCROOT)/Carthage/Build/iOs/DropDown.framework",
 			);
 			outputPaths = (
 			);
@@ -349,6 +363,7 @@
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */,
 				6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */,
+				0478F235213447DD001EAE6E /* CreatePhytoView.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
 				047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */,
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
@@ -370,9 +385,11 @@
 				6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */,
 				041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
+				0478F233213447D9001EAE6E /* CreateFertilizerView.swift in Sources */,
 				04162E58212C431700EF4318 /* FertilizersTableViewCell.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
+				0478F237213447E1001EAE6E /* CreateSeedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
