@@ -12,6 +12,7 @@ class SeedsTableViewCell: UITableViewCell {
 
   let varietyLabel = UILabel()
   let specieLabel = UILabel()
+  var isAlreadySelected = false
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

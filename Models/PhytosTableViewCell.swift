@@ -16,6 +16,7 @@ class PhytosTableViewCell: UITableViewCell {
   let maaIDLabel = UILabel()
   let reentryLabel = UILabel()
   let inFieldReentryDelayLabel = UILabel()
+  var isAlreadySelected = false
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
