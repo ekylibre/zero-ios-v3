@@ -24,6 +24,7 @@
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="row" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tools" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tools" inverseName="equipments" inverseEntity="Tools" syncable="YES"/>
@@ -82,7 +83,7 @@
         <element name="Crops" positionX="502" positionY="-234" width="128" height="118"/>
         <element name="Doers" positionX="-54" positionY="-405" width="128" height="105"/>
         <element name="Entities" positionX="-270" positionY="-463" width="128" height="135"/>
-        <element name="Equipments" positionX="-270" positionY="-144" width="128" height="120"/>
+        <element name="Equipments" positionX="-270" positionY="-144" width="128" height="135"/>
         <element name="Inputs" positionX="153" positionY="-411" width="128" height="150"/>
         <element name="Interventions" positionX="160" positionY="-252" width="128" height="180"/>
         <element name="Plots" positionX="331" positionY="-409" width="128" height="133"/>

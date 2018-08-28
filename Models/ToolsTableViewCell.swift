@@ -17,7 +17,7 @@ class EquipmentsTableViewCell: UITableViewCell {
 }
 
 protocol SelectedToolsTableViewCellDelegate: class {
-  func removeToolsCell(_ indexPath: Int)
+  func removeToolsCell(_ indexPath: IndexPath)
 }
 
 class SelectedToolsTableViewCell: UITableViewCell {
@@ -27,7 +27,7 @@ class SelectedToolsTableViewCell: UITableViewCell {
   @IBOutlet weak var deleteButton: UIButton!
 
   weak var cellDelegate: SelectedToolsTableViewCellDelegate?
-  var indexPath: Int!
+  var indexPath: IndexPath!
 
   @IBAction func buttonPressed(_ sender: UIButton) {
     cellDelegate?.removeToolsCell(self.indexPath)
