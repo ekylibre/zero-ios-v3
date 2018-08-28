@@ -10,6 +10,12 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
+
+  func changeEquipmentViewAndTableViewSize() {
+    equipmentTableViewHeightConstraint.constant = selectedToolsTableView.contentSize.height
+    equipmentHeightConstraint.constant = equipmentTableViewHeightConstraint.constant + 100
+  }
+
   func removeToolsCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'outil ?", preferredStyle: .alert)
 
@@ -23,11 +29,16 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
       cell.backgroundColor = AppColor.CellColors.white
 
       self.selectedTools.remove(at: indexPath.row)
-      self.selectedToolsTableView.reloadData()
-      if self.selectedTools.count == 0 && self.firstView.frame.height != 70 {
-        self.collapseExpand(self)
+
+      if self.selectedTools.count == 0 {
+        self.selectedToolsTableView.isHidden = true
+        self.equipmentHeightConstraint.constant = 70
         self.collapseButton.isHidden = true
+      } else {
+        self.changeEquipmentViewAndTableViewSize()
+        self.showEquipmentsNumber()
       }
+      self.selectedToolsTableView.reloadData()
     }))
     self.present(alert, animated: true)
   }
@@ -43,7 +54,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
                  "Vibroculteur", "Désherbeur", "Enrubanneuse"]
   }
 
-  func showToolsNumber() {
+  func showEquipmentsNumber() {
     if selectedTools.count > 0 && firstView.frame.height == 70 {
       addToolButton.isHidden = true
       toolNumberLabel.isHidden = false
@@ -65,14 +76,38 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
   func closeSelectToolsView() {
     dimView.isHidden = true
     selectToolsView.isHidden = true
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-    if selectedTools.count > 0 && firstView.frame.height == 70 {
-      collapseExpand(self)
+
+    if selectedTools.count > 0 {
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+        self.view.layoutIfNeeded()
+        self.collapseButton.isHidden = false
+        self.selectedToolsTableView.isHidden = false
+        self.changeEquipmentViewAndTableViewSize()
+        self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+      })
     }
     searchedTools = equipments
     selectedToolsTableView.reloadData()
+  }
+
+  @IBAction func collapseEquipmentView(_ send: Any) {
+    if equipmentHeightConstraint.constant != 70 {
+      UIView.animate(withDuration: 0.5, animations: {
+        self.selectedToolsTableView.isHidden = true
+        self.equipmentHeightConstraint.constant = 70
+        self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        self.view.layoutIfNeeded()
+      })
+    } else {
+      UIView.animate(withDuration: 0.5, animations: {
+        self.selectedToolsTableView.isHidden = false
+        self.changeEquipmentViewAndTableViewSize()
+        self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        self.view.layoutIfNeeded()
+      })
+    }
+    showEquipmentsNumber()
   }
 
   @IBAction func openCreateToolsView(_ sender: Any) {

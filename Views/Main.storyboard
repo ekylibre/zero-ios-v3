@@ -53,7 +53,7 @@
                                 <rect key="frame" x="0.0" y="93" width="375" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionTableViewCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionTableViewCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IvT-FB-GAn" id="bnZ-Ve-doS">
@@ -470,8 +470,11 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S1G-aq-VJB">
-                                                        <rect key="frame" x="20" y="70" width="335" height="0.0"/>
+                                                        <rect key="frame" x="20" y="65" width="335" height="0.0"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" id="fXC-sa-Rfz"/>
+                                                        </constraints>
                                                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <prototypes>
@@ -552,7 +555,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Collapse" image="expandCollapse"/>
                                                         <connections>
-                                                            <action selector="collapseExpand:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="43C-qX-z0R"/>
+                                                            <action selector="collapseEquipmentView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Tx7-Ec-9xi"/>
                                                         </connections>
                                                     </button>
                                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Equipments Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB9-6U-iCz">
@@ -572,8 +575,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="S1G-aq-VJB" secondAttribute="trailing" priority="999" constant="20" id="9nu-Qs-Mgc"/>
                                                     <constraint firstAttribute="height" constant="70" id="HUo-Z0-DIF"/>
                                                     <constraint firstItem="lB9-6U-iCz" firstAttribute="top" secondItem="Ta7-qs-cOy" secondAttribute="top" constant="25" id="Ior-Uv-2H1"/>
-                                                    <constraint firstItem="S1G-aq-VJB" firstAttribute="top" secondItem="Ta7-qs-cOy" secondAttribute="top" constant="70" id="PSr-Bi-wnV"/>
-                                                    <constraint firstAttribute="bottom" secondItem="S1G-aq-VJB" secondAttribute="bottom" priority="999" constant="25" id="ZAD-dn-U3q"/>
+                                                    <constraint firstItem="S1G-aq-VJB" firstAttribute="top" secondItem="5AO-Jj-0ZP" secondAttribute="bottom" constant="15" id="PSr-Bi-wnV"/>
                                                     <constraint firstItem="5AO-Jj-0ZP" firstAttribute="leading" secondItem="v4G-sV-gkh" secondAttribute="trailing" constant="15" id="d6a-Nv-q8W"/>
                                                     <constraint firstItem="fJR-CJ-tlU" firstAttribute="top" secondItem="Ta7-qs-cOy" secondAttribute="top" constant="25" id="e7N-n7-Aay"/>
                                                     <constraint firstItem="v4G-sV-gkh" firstAttribute="leading" secondItem="Ta7-qs-cOy" secondAttribute="leading" constant="20" id="ePt-hK-GZp"/>
@@ -1602,9 +1604,10 @@
                         <outlet property="entityFirstName" destination="rRC-EH-Dse" id="B6f-aq-1ZD"/>
                         <outlet property="entityLastName" destination="Gfz-0d-yzp" id="2Ou-6G-XYZ"/>
                         <outlet property="entityRole" destination="lXs-eO-iv8" id="VEf-rl-dKV"/>
+                        <outlet property="equipmentHeightConstraint" destination="HUo-Z0-DIF" id="BlQ-fC-dWi"/>
+                        <outlet property="equipmentTableViewHeightConstraint" destination="fXC-sa-Rfz" id="ReC-cv-NBL"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
-                        <outlet property="heightConstraint" destination="HUo-Z0-DIF" id="bAD-ec-B5t"/>
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
                         <outlet property="inputsHeightConstraint" destination="0oM-1M-kPB" id="GpI-j6-Loh"/>
                         <outlet property="inputsNumber" destination="Rof-yp-WzL" id="2T8-pe-K1y"/>

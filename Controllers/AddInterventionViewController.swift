@@ -25,7 +25,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
   @IBOutlet weak var navigationBar: UINavigationBar!
-  @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
@@ -62,6 +61,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsNumber: UILabel!
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
 
   //MARK: - Properties
 
@@ -453,6 +454,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       if !cell.isAlreadySelected {
         selectedTools.append(equipments[indexPath.row])
         selectedTools[selectedTools.count - 1].setValue(indexPath.row, forKey: "row")
+        selectedToolsTableView.reloadData()
         cell.isAlreadySelected = true
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
@@ -908,8 +910,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     animationRunning = true
 
-    heightConstraint.constant = isCollapse ? 70 : 300
-
+    
     UIView.animate(withDuration: 0.5, animations: {
       self.collapseButton.isHidden = false
       self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: angle)
@@ -917,7 +918,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }, completion: { _ in
       self.animationRunning = false
     })
-    showToolsNumber()
   }
 
   @IBAction func selectPlots(_ sender: Any) {
