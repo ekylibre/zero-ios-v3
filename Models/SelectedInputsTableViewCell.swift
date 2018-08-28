@@ -49,8 +49,8 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     inputQuantity.layer.borderWidth = 1
     inputQuantity.layer.cornerRadius = 5
     inputQuantity.delegate = self
+    inputQuantity.text = ""
     inputQuantity.keyboardType = .decimalPad
-    inputQuantity.text = "0.0"
     inputQuantity.textAlignment = .center
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(inputQuantity)
@@ -79,6 +79,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     unitMeasureButton.layer.cornerRadius = 5
     unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     unitMeasureButton.titleLabel?.textAlignment = .center
+    unitMeasureButton.setTitle(nil, for: .normal)
     unitMeasureButton.addTarget(self, action: #selector(self.showUnitMeasure(sender:)), for: .touchUpInside)
     unitMeasureButton.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(unitMeasureButton)

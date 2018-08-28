@@ -357,6 +357,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.inputName.text = input?.value(forKey: "name") as? String
         cell.inputSpec.text = input?.value(forKey: "specName") as? String
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+        cell.inputQuantity.text = (cell.inputQuantity.text == "" ? input?.value(forKey: "quantity") as? String : "")
+        if cell.unitMeasureButton.titleLabel!.text == nil {
+          cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
+        }
         switch cell.type {
         case "Seed":
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
