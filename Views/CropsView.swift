@@ -12,62 +12,60 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   //MARK: - Properties
 
-  var headerView: UIView {
-    let headerView = UIView(frame: CGRect.zero)
-    headerView.translatesAutoresizingMaskIntoConstraints = false
-    headerView.backgroundColor = AppColor.BarColors.Green
-    self.addSubview(headerView)
-    return headerView
-  }
+  public var titleLabel: UILabel = {
+    let label = UILabel(frame: CGRect.zero)
+    label.text = "Sélectionnez des cultures"
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
 
-  var titleLabel: UILabel {
-    let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    titleLabel.text = "Sélectionnez des cultures"
-    headerView.addSubview(titleLabel)
-    return titleLabel
-  }
+  lazy var headerView: UIView = {
+    let view = UIView(frame: CGRect.zero)
+    view.backgroundColor = AppColor.BarColors.Green
+    view.addSubview(titleLabel)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
 
-  var tableView: UITableView {
+  lazy var tableView: UITableView = {
     let tableView = UITableView(frame: CGRect.zero)
-    tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
     tableView.bounces = false
-    tableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "CropsCell")
+    tableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "CropCell")
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(tableView)
     return tableView
-  }
+  }()
 
-  var bottomView: UIView {
-    let bottomView = UIView(frame: CGRect.zero)
-    bottomView.translatesAutoresizingMaskIntoConstraints = false
-    bottomView.backgroundColor = AppColor.BarColors.Green
-    self.addSubview(bottomView)
-    return bottomView
-  }
+  public var selectedCropsLabel: UILabel = {
+    let label = UILabel(frame: CGRect.zero)
+    label.text = "Aucune sélection"
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
 
-  var selectedCropsLabel: UILabel {
-    let selectedCropsLabel = UILabel(frame: CGRect.zero)
-    selectedCropsLabel.text = "Aucune sélection"
-    selectedCropsLabel.translatesAutoresizingMaskIntoConstraints = false
-    bottomView.addSubview(selectedCropsLabel)
-    return selectedCropsLabel
-  }
+  public var validateButton: UIButton = {
+    let button = UIButton(frame: CGRect.zero)
+    button.setTitle("VALIDER", for: .normal)
+    button.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    button.backgroundColor = UIColor.black
+    button.layer.cornerRadius = 5
+    button.clipsToBounds = true
+    button.translatesAutoresizingMaskIntoConstraints = false
+    return button
+  }()
 
-  var validateButton: UIButton {
-    let validateButton = UIButton(frame: CGRect.zero)
-    validateButton.setTitle("VALIDER", for: .normal)
-    validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
-    validateButton.backgroundColor = UIColor.black
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    validateButton.translatesAutoresizingMaskIntoConstraints = false
-    bottomView.addSubview(validateButton)
-    return validateButton
-  }
+  lazy var bottomView: UIView = {
+    let view = UIView(frame: CGRect.zero)
+    view.backgroundColor = AppColor.BarColors.Green
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(selectedCropsLabel)
+    view.addSubview(validateButton)
+    return view
+  }()
 
   //MARK: - Initialization
 
@@ -82,6 +80,34 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
+    self.addSubview(headerView)
+    self.addSubview(bottomView)
+    setupLayout()
+  }
+
+  private func setupLayout() {
+    let viewsDict = [
+      "header" : headerView,
+      "title" : titleLabel,
+      "table" : tableView,
+      "bottom" : bottomView,
+      "selected" : selectedCropsLabel,
+      "validate" : validateButton,
+      ] as [String : Any]
+
+
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[selected]", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint(item: selectedCropsLabel, attribute: .centerY, relatedBy: .equal, toItem: bottomView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[validate(>=90)]-13-|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-13-[validate]-13-|", options: [], metrics: nil, views: viewsDict))
+
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[header]|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bottom]|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[header(60)][table][bottom(60)]|", options: [], metrics: nil, views: viewsDict))
   }
 
   required init?(coder aDecoder: NSCoder) {

@@ -63,6 +63,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedPlots = [NSManagedObject]()
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
+  var cropsView: CropsView!
   var equipments = [NSManagedObject]()
   var selectDateView: UIView!
   var inputsView: InputsView!
@@ -159,6 +160,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     self.view.addSubview(inputsView)
+
+    cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    self.view.addSubview(cropsView)
+    cropsView.isHidden = false
+    self.view.bringSubview(toFront: cropsView)
   }
 
   override func viewDidLayoutSubviews() {
@@ -172,6 +178,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
     inputsView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     inputsView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+
+    cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
+    cropsView.center.x = self.view.center.x
+    cropsView.frame.origin.y = navigationBar.frame.origin.y + 15  
   }
 
   @objc func showList() {
