@@ -9,39 +9,39 @@
 import UIKit
 
 class CreateSeedView: UIView, UITextFieldDelegate {
-  var titleLabel: UILabel!
-  var specieLabel: UILabel!
-  var specieButton: UIButton!
-  var varietyTextField: UITextField!
-  var cancelButton: UIButton!
-  var createButton: UIButton!
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    titleLabel = UILabel(frame: CGRect.zero)
+  //MARK: - Properties
+  
+  lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'une semence"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(titleLabel)
+    return titleLabel
+  }()
 
-    specieLabel = UILabel(frame: CGRect.zero)
+  lazy var specieLabel: UILabel = {
+    let specieLabel = UILabel(frame: CGRect.zero)
     specieLabel.text = "Espèce"
     specieLabel.font = UIFont.systemFont(ofSize: 15)
     specieLabel.textColor = AppColor.TextColors.DarkGray
     specieLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(specieLabel)
+    return specieLabel
+  }()
 
-    specieButton = UIButton(frame: CGRect.zero)
+  lazy var specieButton: UIButton = {
+    let specieButton = UIButton(frame: CGRect.zero)
     specieButton.setTitle("Avoine", for: .normal)
     specieButton.setTitleColor(UIColor.black, for: .normal)
     specieButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     specieButton.contentHorizontalAlignment = .leading
     specieButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
     specieButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(specieButton)
+    return specieButton
+  }()
 
-    varietyTextField = UITextField(frame: CGRect.zero)
+  lazy var varietyTextField: UITextField = {
+    let varietyTextField = UITextField(frame: CGRect.zero)
     varietyTextField.placeholder = "Variété"
     varietyTextField.autocorrectionType = .no
     varietyTextField.delegate = self
@@ -53,24 +53,50 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     varietyTextField.layer.shadowOpacity = 1
     varietyTextField.layer.shadowRadius = 0
     varietyTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(varietyTextField)
+    return varietyTextField
+  }()
 
-    cancelButton = UIButton(frame: CGRect.zero)
+  lazy var cancelButton: UIButton = {
+    let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(cancelButton)
+    return cancelButton
+  }()
 
-    createButton = UIButton(frame: CGRect.zero)
+  lazy var createButton: UIButton = {
+    let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     createButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(createButton)
+    return createButton
+  }()
 
+  //MARK: - Initialization
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setupView()
+  }
+
+  private func setupView() {
+    self.backgroundColor = UIColor.white
+    self.layer.cornerRadius = 5
+    self.clipsToBounds = true
+    self.isHidden = true
+    self.addSubview(titleLabel)
+    self.addSubview(specieLabel)
+    self.addSubview(specieButton)
+    self.addSubview(varietyTextField)
+    self.addSubview(cancelButton)
+    self.addSubview(createButton)
+    setupLayout()
+    setupActions()
+  }
+
+  private func setupLayout() {
     let viewsDict = [
       "title" : titleLabel,
       "specie" : specieLabel,
@@ -88,17 +114,25 @@ class CreateSeedView: UIView, UITextFieldDelegate {
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[specie][button]-50-[variety]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
-
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
   }
 
+  private func setupActions() {
+    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("NSCoder has not been implemented.")
+  }
+
+  //MARK: - Text field
+  
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
+
+  //MARK: - Actions
 
   @objc func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
@@ -107,9 +141,5 @@ class CreateSeedView: UIView, UITextFieldDelegate {
       varietyTextField.text = ""
     }
     self.isHidden = true
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("NSCoder has not been implemented.")
   }
 }
