@@ -89,6 +89,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
   var selectedInputs = [[String]]()
+  var selectedInputsManagedObject = [NSManagedObject]()
   var unitMeasurePicker = UIPickerView()
   var pickerType = 0
   var pickerValue: String?
@@ -242,7 +243,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case doersTableView:
       return doers.count
     case selectedInputsTableView:
-      return selectedInputs.count
+      return selectedInputsManagedObject.count
     default:
       return 1
     }
@@ -269,6 +270,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var toolType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
+    var input: NSManagedObject?
 
     switch tableView {
     case cropsTableView:
@@ -344,28 +346,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsTableViewCell", for: indexPath) as! SelectedInputsTableViewCell
 
-      cell.addInterventionViewController = self
-      if cell.type == -1 {
-        switch inputsView.segmentedControl.selectedSegmentIndex {
-        case 0:
-          cell.defineInputType(type: 0)
-          cell.type = 0
-        case 1:
-          cell.defineInputType(type: 1)
-          cell.type = 1
-        case 2:
-          cell.defineInputType(type: 2)
-          cell.type = 2
+      if selectedInputsManagedObject.count > indexPath.row {
+        input = selectedInputsManagedObject[indexPath.row]
+
+        cell.cellDelegate = self
+        cell.addInterventionViewController = self
+        cell.indexPath = indexPath
+        cell.type = input?.value(forKey: "type") as! String
+        cell.inputName.text = input?.value(forKey: "name") as? String
+        cell.inputSpec.text = input?.value(forKey: "specName") as? String
+        cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+        switch cell.type {
+        case "Seed":
+          cell.inputImage.image = #imageLiteral(resourceName: "seed")
+        case "Phyto":
+          cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
+        case "Fertilizer":
+          cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
-          cell.defineInputType(type: -1)
-          cell.type = -1
+          cell.inputImage.image = #imageLiteral(resourceName: "seed")
         }
       }
-      cell.cellDelegate = self
-      cell.indexPath = indexPath
-      cell.inputName.text = selectedInputs[indexPath.row][0]
-      cell.inputType.text = selectedInputs[indexPath.row][1]
-      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
@@ -406,7 +407,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doer = doers[indexPath.row]
       cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
       cell.cellDelegate = self
-      cell.indexPath = indexPath.row
+      cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
@@ -465,6 +466,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if !cell.isAlreadySelected {
         doers.append(entities[indexPath.row])
+        doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
         cell.isAlreadySelected = true
         cell.backgroundColor = AppColor.CellColors.lightGray
@@ -479,6 +481,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           selectedInputs.append(sampleSeeds[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
+          storeSelectedInput(indexPath: selectedIndexPath!, inputType: "Seed")
         }
       case 1:
         let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! PhytosTableViewCell
@@ -487,6 +490,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           selectedInputs.append(samplePhytos[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
+          storeSelectedInput(indexPath: selectedIndexPath!, inputType: "Phyto")
         }
       case 2:
         let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! FertilizersTableViewCell
@@ -495,6 +499,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           selectedInputs.append(sampleFertilizers[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
+          storeSelectedInput(indexPath: selectedIndexPath!, inputType: "Fertilizer")
         }
       default:
         print("Error")
