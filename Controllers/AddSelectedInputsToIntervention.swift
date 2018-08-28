@@ -47,7 +47,6 @@ extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
           return
         }
       }
-      //self.selectedInputsTableView.reloadData()
       if self.selectedInputsManagedObject.count == 0 && self.inputsSelectionView.frame.height != 70 {
         self.inputsHeightConstraint.constant = 70
         self.inputsCollapseButton.isHidden = true

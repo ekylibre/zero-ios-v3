@@ -381,7 +381,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       selectedTool = selectedTools[indexPath.row]
       cell.cellDelegate = self
-      cell.indexPath = indexPath.row
+      cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
@@ -452,6 +452,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if !cell.isAlreadySelected {
         selectedTools.append(equipments[indexPath.row])
+        selectedTools[selectedTools.count - 1].setValue(indexPath.row, forKey: "row")
         cell.isAlreadySelected = true
         cell.backgroundColor = AppColor.CellColors.lightGray
       }

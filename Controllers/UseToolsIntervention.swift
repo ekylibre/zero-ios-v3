@@ -10,12 +10,19 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
-  func removeToolsCell(_ indexPath: Int) {
+  func removeToolsCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'outil ?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
-      self.selectedTools.remove(at: indexPath)
+      let row = self.selectedTools[indexPath.row].value(forKey: "row") as! Int
+      let indexTab = NSIndexPath(row: row, section: 0)
+      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentsTableViewCell
+
+      cell.isAlreadySelected = false
+      cell.backgroundColor = AppColor.CellColors.white
+
+      self.selectedTools.remove(at: indexPath.row)
       self.selectedToolsTableView.reloadData()
       if self.selectedTools.count == 0 && self.firstView.frame.height != 70 {
         self.collapseExpand(self)
@@ -125,6 +132,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     equipment.setValue(toolNumber.text, forKeyPath: "number")
     equipment.setValue(selectedToolType, forKeyPath: "type")
     equipment.setValue(UUID(), forKey: "uuid")
+    equipment.setValue(0, forKey: "row")
     do {
       try managedContext.save()
       equipments.append(equipment)

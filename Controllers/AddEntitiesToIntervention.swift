@@ -27,15 +27,18 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
 
   func removeDoersCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
-    let row = doers[indexPath.row].value(forKey: "row") as! Int
-    let indexTab = NSIndexPath(row: row, section: 0)
-    let cell = entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntitiesTableViewCell
 
-    cell.isAlreadySelected = false
-    cell.backgroundColor = AppColor.CellColors.white
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+      let row = self.doers[indexPath.row].value(forKey: "row") as! Int
+      let indexTab = NSIndexPath(row: row, section: 0)
+      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntitiesTableViewCell
+
+      cell.isAlreadySelected = false
+      cell.backgroundColor = AppColor.CellColors.white
+
       self.doers.remove(at: indexPath.row)
+
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
         self.doersHeightConstraint.constant = 70
