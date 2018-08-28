@@ -171,7 +171,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   }
 
   required init?(coder aDecoder: NSCoder) {
-    fatalError("NSCoder has not been implemented.")
+    fatalError("init(coder:) has not been implemented")
   }
 
   //MARK: - Text field

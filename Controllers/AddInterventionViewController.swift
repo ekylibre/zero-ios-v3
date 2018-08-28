@@ -163,7 +163,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
-    cropsView.isHidden = false
+    cropsView.isHidden = true
     self.view.bringSubview(toFront: cropsView)
   }
 
@@ -181,7 +181,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
     cropsView.center.x = self.view.center.x
-    cropsView.frame.origin.y = navigationBar.frame.origin.y + 15  
+    cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
   }
 
   @objc func showList() {
