@@ -13,25 +13,22 @@ protocol SelectedInputsTableViewCellDelegate: class {
   func changeUnitMeasure(_ indexPath: IndexPath)
 }
 
-class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
   weak var cellDelegate: SelectedInputsTableViewCellDelegate?
   var indexPath: IndexPath!
-  var type = -1
+  var type = ""
 
   var addInterventionViewController: AddInterventionViewController?
   let inputImage = UIImageView()
   let inputName = UILabel()
-  let inputType = UILabel()
+  let inputSpec = UILabel()
   let inputQuantity = UITextField()
   let quantity = UILabel()
   let removeCell = UIButton()
   let surfaceQuantity = UILabel()
-  let unitMeasure = UIPickerView()
   let unitMeasureButton = UIButton()
   let warningImage = UIImageView()
   let warningLabel = UILabel()
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
-  let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,9 +40,9 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     inputName.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(inputName)
 
-    inputType.font = UIFont.boldSystemFont(ofSize: 14)
-    inputType.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputType)
+    inputSpec.font = UIFont.boldSystemFont(ofSize: 14)
+    inputSpec.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(inputSpec)
 
     inputQuantity.backgroundColor = AppColor.CellColors.white
     inputQuantity.layer.borderColor = UIColor.lightGray.cgColor
@@ -75,14 +72,6 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(surfaceQuantity)
 
-    unitMeasure.backgroundColor = AppColor.CellColors.white
-    unitMeasure.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-    unitMeasure.delegate = self
-    unitMeasure.dataSource = self
-    unitMeasure.isHidden = true
-    unitMeasure.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(unitMeasure)
-
     unitMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
     unitMeasureButton.backgroundColor = AppColor.CellColors.white
     unitMeasureButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -109,7 +98,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     let viewsDict = [
       "inputImage": inputImage,
       "inputName": inputName,
-      "inputType": inputType,
+      "inputSpec": inputSpec,
       "inputQuantity": inputQuantity,
       "quantity": quantity,
       "removeCell": removeCell,
@@ -121,7 +110,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
 
     contentView.addConstraints(
       NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-10-[inputImage(==30)]-[inputName]-[inputType]",
+        withVisualFormat: "H:|-10-[inputImage(==30)]-[inputName]-[inputSpec]",
         options: [],
         metrics: nil,
         views: viewsDict
@@ -166,7 +155,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
 
     contentView.addConstraints(
       NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[inputType]-12.5-[unitMeasureButton(==30)]",
+        withVisualFormat: "V:|-10-[inputSpec]-12.5-[unitMeasureButton(==30)]",
         options: [],
         metrics: nil,
         views: viewsDict
@@ -273,27 +262,15 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate, UIPicke
     }
   }
 
-  func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    return 1
-  }
-
-  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    if type == 1 {
-      return liquidUnitMeasure.count
-    } else {
-      return solidUnitMeasure.count
-    }
-  }
-
-  func defineInputType(type: Int) {
+  func defineInputType(type: String) {
     switch type {
-    case 0:
+    case "Seed":
       inputImage.image = #imageLiteral(resourceName: "seed")
       unitMeasureButton.setTitle("kg/ha", for: .normal)
-    case 1:
+    case "Phyto":
       inputImage.image = #imageLiteral(resourceName: "phytosanitary")
       unitMeasureButton.setTitle("l/ha", for: .normal)
-    case 2:
+    case "Fertilizer":
       inputImage.image = #imageLiteral(resourceName: "fertilizer")
       unitMeasureButton.setTitle("kg/ha", for: .normal)
     default:

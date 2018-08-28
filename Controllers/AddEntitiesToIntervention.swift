@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: DoersTableViewCellDelegate {
-  func updateDriverCell(_ indexPath: Int, driver: UISwitch) {
-    doers[indexPath].setValue(driver.isOn, forKey: "isDriver")
+  func updateDriverCell(_ indexPath: IndexPath, driver: UISwitch) {
+    doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
   }
 
   func showDoersNumber() {
@@ -25,12 +25,17 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     }
   }
 
-  func removeDoersCell(_ indexPath: Int) {
+  func removeDoersCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
+    let row = doers[indexPath.row].value(forKey: "row") as! Int
+    let indexTab = NSIndexPath(row: row, section: 0)
+    let cell = entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntitiesTableViewCell
 
+    cell.isAlreadySelected = false
+    cell.backgroundColor = AppColor.CellColors.white
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
-      self.doers.remove(at: indexPath)
+      self.doers.remove(at: indexPath.row)
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
         self.doersHeightConstraint.constant = 70
@@ -129,6 +134,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
+
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
     let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
@@ -137,6 +143,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     entity.setValue(entityFirstName.text, forKeyPath: "firstName")
     entity.setValue(entityLastName.text, forKeyPath: "lastName")
     entity.setValue(entityRole.text, forKeyPath: "role")
+    entity.setValue(0, forKey: "row")
     do {
       try managedContext.save()
       entities.append(entity)
