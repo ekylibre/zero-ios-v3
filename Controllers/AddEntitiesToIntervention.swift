@@ -48,7 +48,7 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
         self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
         self.showDoersNumber()
       }
-      self.doersTableView.reloadData() 
+      self.doersTableView.reloadData()
     }))
     self.present(alert, animated: true)
   }

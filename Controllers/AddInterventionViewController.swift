@@ -91,8 +91,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
   var selectedInputs = [[String]]()
   var selectedInputsManagedObject = [NSManagedObject]()
-  var unitMeasurePicker = UIPickerView()
-  var pickerType = 0
+  var solidUnitPicker = UIPickerView()
+  var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
@@ -892,33 +892,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   //MARK: - Actions
-
-  var animationRunning: Bool = false
-
-  @IBAction func collapseExpand(_ sender: Any) {
-
-    if animationRunning {
-      return
-    }
-
-    let shouldCollapse = firstView.frame.height != 70
-
-    animateView(isCollapse: shouldCollapse, angle: shouldCollapse ? CGFloat.pi : CGFloat.pi - 3.14159)
-  }
-
-  func animateView(isCollapse: Bool, angle: CGFloat) {
-
-    animationRunning = true
-
-    
-    UIView.animate(withDuration: 0.5, animations: {
-      self.collapseButton.isHidden = false
-      self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: angle)
-      self.view.layoutIfNeeded()
-    }, completion: { _ in
-      self.animationRunning = false
-    })
-  }
 
   @IBAction func selectPlots(_ sender: Any) {
 
