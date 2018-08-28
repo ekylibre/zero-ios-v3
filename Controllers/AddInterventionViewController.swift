@@ -230,7 +230,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tableView {
     case cropsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "cropTableViewCell", for: indexPath) as! CropTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "CropCell", for: indexPath) as! CropTableViewCell
 
       crop = crops[indexPath.row]
       cell.nameLabel.text = crop?.value(forKey: "name") as? String
