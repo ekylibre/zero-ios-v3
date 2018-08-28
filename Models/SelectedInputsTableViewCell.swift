@@ -262,22 +262,6 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
   }
 
-  func defineInputType(type: String) {
-    switch type {
-    case "Seed":
-      inputImage.image = #imageLiteral(resourceName: "seed")
-      unitMeasureButton.setTitle("kg/ha", for: .normal)
-    case "Phyto":
-      inputImage.image = #imageLiteral(resourceName: "phytosanitary")
-      unitMeasureButton.setTitle("l/ha", for: .normal)
-    case "Fertilizer":
-      inputImage.image = #imageLiteral(resourceName: "fertilizer")
-      unitMeasureButton.setTitle("kg/ha", for: .normal)
-    default:
-      inputImage.image = #imageLiteral(resourceName: "seed")
-    }
-  }
-
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     let invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
 
@@ -286,7 +270,11 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
 
   @objc func showUnitMeasure(sender: UIButton) {
     addInterventionViewController?.dimView.isHidden = false
-    addInterventionViewController?.unitMeasurePicker.isHidden = false
+    if type == "Phyto" {
+      addInterventionViewController?.liquidUnitPicker.isHidden = false
+    } else {
+      addInterventionViewController?.solidUnitPicker.isHidden = false
+    }
     cellDelegate?.changeUnitMeasure(indexPath)
   }
 
