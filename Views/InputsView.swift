@@ -157,7 +157,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   required init?(coder aDecoder: NSCoder) {
-    fatalError("NSCoder has not been implemented.")
+    fatalError("init(coder:) has not been implemented")
   }
 
   //MARK: - Table view
