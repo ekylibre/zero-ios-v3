@@ -12,55 +12,37 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   //MARK: - Properties
 
-  var segmentedControl: UISegmentedControl!
-  var searchBar: UISearchBar!
-  var isSearching: Bool = false
-  var createButton: UIButton!
-  var tableView: UITableView!
-  var dimView: UIView!
-  var seedView: CreateSeedView!
-  var phytoView: CreatePhytoView!
-  var fertilizerView: CreateFertilizerView!
-
-  var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
-  var samplePhytos = [["Nom 1", "Marque 1", "1000", "1 heures"], ["Nom 2", "Marque 2", "2000", "2 heures"], ["Nom 3", "Marque 3", "3000", "3 heures"]]
-  var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
-  var filteredInputs: [[String]]!
-
-  //MARK: - Initialization
-
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-
-    segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
+  lazy var segmentedControl: UISegmentedControl = {
+    let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
     segmentedControl.selectedSegmentIndex = 0
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
-    segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControlEvents.valueChanged)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(segmentedControl)
+    return segmentedControl
+  }()
 
-    searchBar = UISearchBar(frame: CGRect.zero)
+  var isSearching: Bool = false
+
+  lazy var searchBar: UISearchBar = {
+    let searchBar = UISearchBar(frame: CGRect.zero)
     searchBar.searchBarStyle = .minimal
     searchBar.autocapitalizationType = .none
     searchBar.delegate = self
     searchBar.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(searchBar)
+    return searchBar
+  }()
 
-    createButton = UIButton(frame: CGRect.zero)
+  lazy var createButton: UIButton = {
+    let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("+ CRÉER UNE NOUVELLE SEMENCE", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
     createButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(createButton)
+    return createButton
+  }()
 
-    tableView = UITableView(frame: CGRect.zero)
+  lazy var tableView: UITableView = {
+    let tableView = UITableView(frame: CGRect.zero)
     tableView.separatorInset = UIEdgeInsets.zero
     let frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1 / UIScreen.main.scale)
     let line = UIView(frame: frame)
@@ -74,8 +56,66 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(tableView)
+    return tableView
+  }()
 
+  lazy var dimView: UIView = {
+    let dimView = UIView(frame: CGRect.zero)
+    dimView.backgroundColor = UIColor.black
+    dimView.alpha = 0.6
+    dimView.isHidden = true
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    return dimView
+  }()
+
+  lazy var seedView: CreateSeedView = {
+    let seedView = CreateSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    seedView.translatesAutoresizingMaskIntoConstraints = false
+    return seedView
+  }()
+
+  lazy var phytoView: CreatePhytoView = {
+    let phytoView = CreatePhytoView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    phytoView.translatesAutoresizingMaskIntoConstraints = false
+    return phytoView
+  }()
+
+  lazy var fertilizerView: CreateFertilizerView = {
+    let fertilizerView = CreateFertilizerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    fertilizerView.translatesAutoresizingMaskIntoConstraints = false
+    return fertilizerView
+  }()
+
+  var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
+  var samplePhytos = [["Nom 1", "Marque 1", "1000", "1 heures"], ["Nom 2", "Marque 2", "2000", "2 heures"], ["Nom 3", "Marque 3", "3000", "3 heures"]]
+  var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
+  var filteredInputs: [[String]]!
+
+  //MARK: - Initialization
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setupView()
+  }
+
+  private func setupView() {
+    self.isHidden = true
+    self.backgroundColor = UIColor.white
+    self.layer.cornerRadius = 5
+    self.clipsToBounds = true
+    self.addSubview(segmentedControl)
+    self.addSubview(searchBar)
+    self.addSubview(createButton)
+    self.addSubview(tableView)
+    self.addSubview(dimView)
+    self.addSubview(seedView)
+    self.addSubview(phytoView)
+    self.addSubview(fertilizerView)
+    setupLayout()
+    setupActions()
+  }
+
+  private func setupLayout() {
     let viewsDict = [
       "segmented" : segmentedControl,
       "searchbar" : searchBar,
@@ -89,41 +129,31 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[segmented]-15-[searchbar]-15-[button]-15-[table]|", options: [], metrics: nil, views: viewsDict))
 
-    dimView = UIView(frame: CGRect.zero)
-    dimView.backgroundColor = UIColor.black
-    dimView.alpha = 0.6
-    dimView.isHidden = true
-    dimView.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(dimView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
 
-    seedView = CreateSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
-    seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
-    seedView.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(seedView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[seedview]|", options: [], metrics: nil, views: ["seedview" : seedView]))
     NSLayoutConstraint(item: seedView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250).isActive = true
     NSLayoutConstraint(item: seedView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
-    phytoView = CreatePhytoView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    phytoView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
-    phytoView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
-    phytoView.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(phytoView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[phytoview]|", options: [], metrics: nil, views: ["phytoview" : phytoView]))
     NSLayoutConstraint(item: phytoView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 340).isActive = true
     NSLayoutConstraint(item: phytoView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
-    fertilizerView = CreateFertilizerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    fertilizerView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
-    fertilizerView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
-    fertilizerView.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(fertilizerView)
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[fertilizerview]|", options: [], metrics: nil, views: ["fertilizerview" : fertilizerView]))
     NSLayoutConstraint(item: fertilizerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 230).isActive = true
     NSLayoutConstraint(item: fertilizerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+  }
+
+  private func setupActions() {
+    segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControlEvents.valueChanged)
+    createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
+    seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    phytoView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    phytoView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    fertilizerView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
+    fertilizerView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -230,6 +260,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       })
     }
     isSearching = (searchText.isEmpty ? false : true)
+    createButton.isHidden = isSearching
     tableView.reloadData()
   }
 
