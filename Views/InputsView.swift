@@ -169,67 +169,48 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if isSearching {
       return filteredInputs.count
-    } else {
-      switch segmentedControl.selectedSegmentIndex {
-      case 0:
-        return sampleSeeds.count
-      case 1:
-        return samplePhytos.count
-      case 2:
-        return sampleFertilizers.count
-      default:
-        return 0
-      }
     }
+
+    var countToUse = [0: sampleSeeds.count, 1: samplePhytos.count, 2: sampleFertilizers.count]
+    return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if segmentedControl.selectedSegmentIndex == 0 {
+    switch segmentedControl.selectedSegmentIndex {
+    case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
+      let fromSeeds = isSearching ? filteredInputs! : sampleSeeds
 
-      if !isSearching {
-        cell.varietyLabel.text = sampleSeeds[indexPath.row][0]
-        cell.specieLabel.text = sampleSeeds[indexPath.row][1]
-      } else {
-        cell.varietyLabel.text = filteredInputs[indexPath.row][0]
-        cell.specieLabel.text = filteredInputs[indexPath.row][1]
-      }
+      cell.varietyLabel.text = fromSeeds[indexPath.row][0]
+      cell.specieLabel.text = fromSeeds[indexPath.row][1]
       return cell
-    } else if segmentedControl.selectedSegmentIndex == 1 {
+    case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
+      let fromPhytos = isSearching ? filteredInputs! : samplePhytos
 
-      if !isSearching {
-        cell.nameLabel.text = samplePhytos[indexPath.row][0]
-        cell.firmNameLabel.text = samplePhytos[indexPath.row][1]
-        cell.maaIDLabel.text = samplePhytos[indexPath.row][2]
-        cell.inFieldReentryDelayLabel.text = samplePhytos[indexPath.row][3]
-      } else {
-        cell.nameLabel.text = filteredInputs[indexPath.row][0]
-        cell.firmNameLabel.text = filteredInputs[indexPath.row][1]
-        cell.maaIDLabel.text = filteredInputs[indexPath.row][2]
-        cell.inFieldReentryDelayLabel.text = filteredInputs[indexPath.row][3]
-      }
+      cell.nameLabel.text = fromPhytos[indexPath.row][0]
+      cell.firmNameLabel.text = fromPhytos[indexPath.row][1]
+      cell.maaIDLabel.text = fromPhytos[indexPath.row][2]
+      cell.inFieldReentryDelayLabel.text = fromPhytos[indexPath.row][3]
       return cell
-    } else {
+    case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizersCell", for: indexPath) as! FertilizersTableViewCell
+      let fromFertilizers = isSearching ? filteredInputs! : sampleFertilizers
 
-      if !isSearching {
-        cell.nameLabel.text = sampleFertilizers[indexPath.row][0]
-        cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
-      } else {
-        cell.nameLabel.text = filteredInputs[indexPath.row][0]
-        cell.natureLabel.text = filteredInputs[indexPath.row][1]
-      }
+      cell.nameLabel.text = fromFertilizers[indexPath.row][0]
+      cell.natureLabel.text = fromFertilizers[indexPath.row][1]
       return cell
+    default:
+      fatalError("Switch error")
     }
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if segmentedControl.selectedSegmentIndex == 1 {
       return 100
-    } else {
-      return 60
     }
+
+    return 60
   }
 
   //MARK: - Search bar
@@ -243,22 +224,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    if segmentedControl.selectedSegmentIndex == 0 {
-      filteredInputs = searchText.isEmpty ? sampleSeeds : sampleSeeds.filter({(sampleSeeds: [String]) -> Bool in
-        let variety: String = sampleSeeds[0]
-        return variety.range(of: searchText, options: .caseInsensitive) != nil
-      })
-    } else if segmentedControl.selectedSegmentIndex == 1 {
-      filteredInputs = searchText.isEmpty ? samplePhytos : samplePhytos.filter({(samplePhytos: [String]) -> Bool in
-        let name: String = samplePhytos[0]
-        return name.range(of: searchText, options: .caseInsensitive) != nil
-      })
-    } else {
-      filteredInputs = searchText.isEmpty ? sampleFertilizers : sampleFertilizers.filter({(sampleFertilizers: [String]) -> Bool in
-        let name: String = sampleFertilizers[0]
-        return name.range(of: searchText, options: .caseInsensitive) != nil
-      })
-    }
+    let inputs = [0: sampleSeeds, 1: samplePhytos, 2: sampleFertilizers]
+    let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
+    filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: [String]) -> Bool in
+      let name: String = input[0]
+      return name.range(of: searchText, options: .caseInsensitive) != nil
+    })
     isSearching = (searchText.isEmpty ? false : true)
     createButton.isHidden = isSearching
     tableView.reloadData()
@@ -269,32 +240,20 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func changeSegment() {
     let searchText = searchBar.text!
 
-    if segmentedControl.selectedSegmentIndex == 0 {
-      createButton.setTitle("+ CRÉER UNE NOUVELLE SEMENCE", for: .normal)
-      filteredInputs = searchText.isEmpty ? sampleSeeds : sampleSeeds.filter({(sampleSeeds: [String]) -> Bool in
-        let variety: String = sampleSeeds[0]
-        return variety.range(of: searchText, options: .caseInsensitive) != nil
-      })
-    } else if segmentedControl.selectedSegmentIndex == 1 {
-      createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-      filteredInputs = searchText.isEmpty ? samplePhytos : samplePhytos.filter({(samplePhytos: [String]) -> Bool in
-        let name: String = samplePhytos[0]
-        return name.range(of: searchText, options: .caseInsensitive) != nil
-      })
-    } else {
-      createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-      filteredInputs = searchText.isEmpty ? sampleFertilizers : sampleFertilizers.filter({(sampleFertilizers: [String]) -> Bool in
-        let name: String = sampleFertilizers[0]
-        return name.range(of: searchText, options: .caseInsensitive) != nil
-      })
-    }
+    let createButtonTitles = [0: "+ CRÉER UNE NOUVELLE SEMENCE", 1: "+ CRÉER UN NOUVEAU PHYTO", 2: "+ CRÉER UN NOUVEAU FERTILISANT"]
+    createButton.setTitle(createButtonTitles[segmentedControl.selectedSegmentIndex], for: .normal)
+    let inputs = [0: sampleSeeds, 1: samplePhytos, 2: sampleFertilizers]
+    let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
+    filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: [String]) -> Bool in
+      let name: String = input[0]
+      return name.range(of: searchText, options: .caseInsensitive) != nil
+    })
     tableView.reloadData()
   }
 
   @objc func tapCreateButton() {
     dimView.isHidden = false
     if segmentedControl.selectedSegmentIndex == 0 {
-      
       seedView.isHidden = false
     } else if segmentedControl.selectedSegmentIndex == 1 {
       phytoView.isHidden = false
