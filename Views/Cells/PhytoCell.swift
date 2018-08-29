@@ -1,5 +1,5 @@
 //
-//  PhytosTableViewCell.swift
+//  PhytoCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 21/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhytosTableViewCell: UITableViewCell {
+class PhytoCell: UITableViewCell {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)

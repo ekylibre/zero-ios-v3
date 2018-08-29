@@ -161,8 +161,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionTableViewCell", for: indexPath) as? InterventionTableViewCell else {
-      fatalError("The dequeued cell is not an instance of InterventionTableViewCell")
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
+      fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
     if indexPath.row % 2 == 0 {

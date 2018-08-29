@@ -1,5 +1,5 @@
 //
-//  FertilizersTableViewCell.swift
+//  FertilizerCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 21/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FertilizersTableViewCell: UITableViewCell {
+class FertilizerCell: UITableViewCell {
   
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)

@@ -1,5 +1,5 @@
 //
-//  AddInterventionTableViewCell.swift
+//  CropCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 31/07/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CropTableViewCell: UITableViewCell {
+class CropCell: UITableViewCell {
 
   @IBOutlet weak var checkboxButton: UIButton!
   @IBOutlet weak var nameLabel: UILabel!
