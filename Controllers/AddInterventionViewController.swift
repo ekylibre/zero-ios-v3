@@ -163,8 +163,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
-    cropsView.isHidden = true
-    self.view.bringSubview(toFront: cropsView)
+    //cropsView.isHidden = false
   }
 
   override func viewDidLayoutSubviews() {
