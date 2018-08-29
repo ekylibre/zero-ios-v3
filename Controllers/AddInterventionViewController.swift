@@ -380,7 +380,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       return cell
     case equipmentsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
 
       tool = searchedTools[indexPath.row]
       cell.nameLabel.text = tool?.value(forKey: "name") as? String
@@ -399,7 +399,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
       return cell
     case toolTypeTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "ToolsTypeTableViewCell", for: indexPath) as! ToolsTypeTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
 
       toolType = toolTypes[indexPath.row]
       cell.nameLabel.text = toolType
@@ -459,7 +459,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cropsTableView.beginUpdates()
       cropsTableView.endUpdates()
     case equipmentsTableView:
-      let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentsTableViewCell
+      let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
       if !cell.isAlreadySelected {
         selectedTools.append(equipments[indexPath.row])

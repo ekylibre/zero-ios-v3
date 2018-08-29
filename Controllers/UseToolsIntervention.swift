@@ -23,7 +23,7 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       let row = self.selectedTools[indexPath.row].value(forKey: "row") as! Int
       let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentsTableViewCell
+      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
 
       cell.isAlreadySelected = false
       cell.backgroundColor = AppColor.CellColors.white
