@@ -18,10 +18,11 @@ class FertilizersTableViewCell: UITableViewCell {
   }()
 
   lazy var natureLabel: UILabel = {
-    let nameLabel = UILabel(frame: CGRect.zero)
-    nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    return nameLabel
+    let natureLabel = UILabel(frame: CGRect.zero)
+    natureLabel.font = UIFont.systemFont(ofSize: 14)
+    natureLabel.textColor = AppColor.TextColors.DarkGray
+    natureLabel.translatesAutoresizingMaskIntoConstraints = false
+    return natureLabel
   }()
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
