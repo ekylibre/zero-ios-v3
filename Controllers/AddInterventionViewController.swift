@@ -153,18 +153,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.bounces = false
     equipmentsTableView.dataSource = self
     equipmentsTableView.delegate = self
+    equipmentsTableView.bounces = false
     selectedToolsTableView.dataSource = self
     selectedToolsTableView.delegate = self
+    selectedToolsTableView.bounces = false
     searchTool.delegate = self
     searchTool.autocapitalizationType = .none
     searchEntity.delegate = self
     searchEntity.autocapitalizationType = .none
     toolTypeTableView.dataSource = self
     toolTypeTableView.delegate = self
+    toolTypeTableView.bounces = false
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
+    entitiesTableView.bounces = false
     doersTableView.dataSource = self
     doersTableView.delegate = self
+    doersTableView.bounces = false
     doersHeightConstraint.constant = 70
     doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
     doersTableView.layer.borderWidth  = 0.5
@@ -191,6 +196,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
+    selectedInputsTableView.bounces = false
 
     initUnitMeasurePickerView()
   }
@@ -353,13 +359,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.type = input?.value(forKey: "type") as! String
-        cell.inputName.text = input?.value(forKey: "name") as? String
-        cell.inputSpec.text = input?.value(forKey: "specName") as? String
+        //cell.type = input?.value(forKey: "type") as! String
+        cell.inputName.text = input?.value(forKey: "specie") as? String
+        cell.inputSpec.text = input?.value(forKey: "variety") as? String
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-        cell.inputQuantity.text = (cell.inputQuantity.text == "" ? input?.value(forKey: "quantity") as? String : "")
+        //cell.inputQuantity.text = (cell.inputQuantity.text == "" ? input?.value(forKey: "quantity") as? String : "")
         if cell.unitMeasureButton.titleLabel!.text == nil {
-          cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
+          //cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
         }
         switch cell.type {
         case "Seed":
@@ -488,7 +494,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           selectedInputs.append(sampleSeeds[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
-          storeSelectedInput(indexPath: selectedIndexPath!, inputType: "Seed")
         }
       case 1:
         let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! PhytosTableViewCell
@@ -497,7 +502,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           selectedInputs.append(samplePhytos[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
-          storeSelectedInput(indexPath: selectedIndexPath!, inputType: "Phyto")
         }
       case 2:
         let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! FertilizersTableViewCell
@@ -506,11 +510,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           selectedInputs.append(sampleFertilizers[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
-          storeSelectedInput(indexPath: selectedIndexPath!, inputType: "Fertilizer")
         }
       default:
         print("Error")
       }
+      storeSampleSeed(indexPath: selectedIndexPath!)
       selectedInputsTableView.reloadData()
       closeSelectInputsView()
     default:
