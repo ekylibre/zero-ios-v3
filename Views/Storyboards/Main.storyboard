@@ -52,7 +52,7 @@
                                 <rect key="frame" x="0.0" y="93" width="375" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionTableViewCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IvT-FB-GAn" id="bnZ-Ve-doS">
@@ -909,7 +909,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CropCell" rowHeight="60" id="2zH-bI-0Is" customClass="CropTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CropCell" rowHeight="60" id="2zH-bI-0Is" customClass="CropCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="335" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2zH-bI-0Is" id="d97-gh-n6f">
@@ -1878,6 +1878,6 @@
         <image name="uncheckedCheckbox" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="a8t-Pd-Dxa"/>
+        <segue reference="Vxv-f7-ZrT"/>
     </inferredMetricsTieBreakers>
 </document>

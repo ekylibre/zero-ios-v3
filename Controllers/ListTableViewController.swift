@@ -21,12 +21,9 @@ class ListTableViewController: UITableViewController {
     tableView.bounces = false
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
-
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
   }
 
-  //MARK: - Table view data source
+  //MARK: - Table view
 
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -37,26 +34,15 @@ class ListTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath) as! ListTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
 
     cell.label.text = cellsStrings[indexPath.row]
     return cell
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let cell = tableView.cellForRow(at: indexPath) as! ListTableViewCell
+    let cell = tableView.cellForRow(at: indexPath) as! ListCell
     delegate?.writeValueBack(value: cell.label.text!)
     self.dismiss(animated: true, completion: nil)
   }
-  
-  /*
-   //MARK: - Navigation
-
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destinationViewController.
-   // Pass the selected object to the new view controller.
-   }
-   */
-
 }

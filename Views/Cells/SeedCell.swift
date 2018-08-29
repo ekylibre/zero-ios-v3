@@ -1,5 +1,5 @@
 //
-//  SeedsTableViewCell.swift
+//  SeedCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 20/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SeedsTableViewCell: UITableViewCell {
+class SeedCell: UITableViewCell {
 
   lazy var varietyLabel: UILabel = {
     let varietyLabel = UILabel(frame: CGRect.zero)

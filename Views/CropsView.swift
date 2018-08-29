@@ -37,7 +37,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
     tableView.bounces = false
-    tableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedCell")
+    tableView.register(SeedCell.self, forCellReuseIdentifier: "SeedCell")
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -134,7 +134,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedsTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
 
     return cell
   }
@@ -142,7 +142,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     selectedIndexPath = indexPath
 
-    let cell = tableView.cellForRow(at: selectedIndexPath!) as! CropTableViewCell
+    let cell = tableView.cellForRow(at: selectedIndexPath!) as! CropCell
     if !indexPaths.contains(selectedIndexPath!) {
       indexPaths += [selectedIndexPath!]
       cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)

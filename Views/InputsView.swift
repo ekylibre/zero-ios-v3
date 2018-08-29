@@ -50,9 +50,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
     tableView.bounces = false
-    tableView.register(SeedsTableViewCell.self, forCellReuseIdentifier: "SeedsCell")
-    tableView.register(PhytosTableViewCell.self, forCellReuseIdentifier: "PhytosCell")
-    tableView.register(FertilizersTableViewCell.self, forCellReuseIdentifier: "FertilizersCell")
+    tableView.register(SeedCell.self, forCellReuseIdentifier: "SeedCell")
+    tableView.register(PhytoCell.self, forCellReuseIdentifier: "PhytoCell")
+    tableView.register(FertilizerCell.self, forCellReuseIdentifier: "FertilizerCell")
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -178,14 +178,14 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs! : sampleSeeds
 
       cell.varietyLabel.text = fromSeeds[indexPath.row][0]
       cell.specieLabel.text = fromSeeds[indexPath.row][1]
       return cell
     case 1:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs! : samplePhytos
 
       cell.nameLabel.text = fromPhytos[indexPath.row][0]
@@ -194,7 +194,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       cell.inFieldReentryDelayLabel.text = fromPhytos[indexPath.row][3]
       return cell
     case 2:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizersCell", for: indexPath) as! FertilizersTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs! : sampleFertilizers
 
       cell.nameLabel.text = fromFertilizers[indexPath.row][0]

@@ -239,7 +239,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tableView {
     case cropsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "CropCell", for: indexPath) as! CropTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "CropCell", for: indexPath) as! CropCell
 
       crop = crops[indexPath.row]
       cell.nameLabel.text = crop?.value(forKey: "name") as? String
@@ -353,7 +353,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tableView {
     case cropsTableView:
-      let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropTableViewCell
+      let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropCell
       if !indexPaths.contains(selectedIndexPath!) {
         indexPaths += [selectedIndexPath!]
         cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
@@ -643,7 +643,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func tapCheckbox(_ sender: UIButton) {
 
-    guard let cell = sender.superview?.superview as? CropTableViewCell else {
+    guard let cell = sender.superview?.superview as? CropCell else {
       return
     }
 
@@ -688,7 +688,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func tapPlotView(sender: UIGestureRecognizer) {
-    let cell = sender.view?.superview as! CropTableViewCell
+    let cell = sender.view?.superview as! CropCell
     let view = sender.view!
 
     var crop: NSManagedObject!
