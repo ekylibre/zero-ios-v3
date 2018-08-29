@@ -10,21 +10,32 @@ import UIKit
 
 class FertilizersTableViewCell: UITableViewCell {
   
-  let nameLabel = UILabel()
-  let natureLabel = UILabel()
+  lazy var nameLabel: UILabel = {
+    let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    return nameLabel
+  }()
+
+  lazy var natureLabel: UILabel = {
+    let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    return nameLabel
+  }()
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupCell()
+  }
 
-    nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+  private func setupCell() {
     contentView.addSubview(nameLabel)
-
-    natureLabel.font = UIFont.systemFont(ofSize: 14)
-    natureLabel.textColor = AppColor.TextColors.DarkGray
-    natureLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(natureLabel)
+    setupLayout()
+  }
 
+  private func setupLayout() {
     let viewsDict = [
       "name" : nameLabel,
       "nature" : natureLabel,
@@ -33,14 +44,6 @@ class FertilizersTableViewCell: UITableViewCell {
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[nature]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[name][nature]-10-|", options: [], metrics: nil, views: viewsDict))
-  }
-
-  override func awakeFromNib() {
-    super.awakeFromNib()
-  }
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
   }
 
   required init?(coder aDecoder: NSCoder) {
