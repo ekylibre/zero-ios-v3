@@ -104,7 +104,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       "validate" : validateButton,
       ] as [String : Any]
 
-
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
     NSLayoutConstraint(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
