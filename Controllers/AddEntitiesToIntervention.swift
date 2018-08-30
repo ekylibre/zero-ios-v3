@@ -151,6 +151,7 @@ extension AddInterventionViewController: DoerCellDelegate {
     entity.setValue(entityLastName.text, forKeyPath: "lastName")
     entity.setValue(entityRole.text, forKeyPath: "role")
     entity.setValue(0, forKey: "row")
+
     do {
       try managedContext.save()
       entities.append(entity)
