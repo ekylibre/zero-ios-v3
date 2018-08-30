@@ -294,6 +294,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.setValue(registered, forKeyPath: "registered")
     seed.setValue(variety, forKeyPath: "variety")
     seed.setValue(specie, forKeyPath: "specie")
+    seeds.append(seed)
 
     do {
       try managedContext.save()
@@ -316,6 +317,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.setValue(firmName, forKeyPath: "firmName")
     phyto.setValue(maaID, forKeyPath: "maaID")
     phyto.setValue(reentryDelay, forKeyPath: "reentryDelay")
+    phytos.append(phyto)
 
     do {
       try managedContext.save()
@@ -336,6 +338,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.setValue(registered, forKeyPath: "registered")
     fertilizer.setValue(name, forKeyPath: "name")
     fertilizer.setValue(nature, forKeyPath: "nature")
+    fertilizers.append(fertilizer)
 
     do {
       try managedContext.save()
