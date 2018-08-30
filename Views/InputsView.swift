@@ -185,18 +185,18 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
 
-      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKeyPath: "variety") as? String
-      cell.specieLabel.text = fromSeeds[indexPath.row].value(forKeyPath: "specie") as? String
+      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
+      cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs : phytos
 
-      cell.nameLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "name") as? String
-      cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "firmName") as? String
-      let maaID = fromPhytos[indexPath.row].value(forKeyPath: "maaID") as! Int
+      cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
+      cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
+      let maaID = fromPhytos[indexPath.row].value(forKey: "maaID") as! Int
       cell.maaIDLabel.text = String(maaID)
-      let reentryDelay = fromPhytos[indexPath.row].value(forKeyPath: "reentryDelay") as! Int
+      let reentryDelay = fromPhytos[indexPath.row].value(forKey: "reentryDelay") as! Int
       let unit: String = reentryDelay > 1 ? "heures" : "heure"
       cell.inFieldReentryDelayLabel.text = "\(reentryDelay) " + unit
       return cell
@@ -204,8 +204,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
 
-      cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKeyPath: "name") as? String
-      cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKeyPath: "nature") as? String
+      cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
+      cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
       return cell
     default:
       fatalError("Switch error")
@@ -234,8 +234,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
     filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: NSManagedObject) -> Bool in
-      let keyPath: String = segmentedControl.selectedSegmentIndex == 0 ? "variety" : "name"
-      let name: String = input.value(forKeyPath: keyPath) as! String
+      let key: String = segmentedControl.selectedSegmentIndex == 0 ? "variety" : "name"
+      let name: String = input.value(forKey: key) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     isSearching = (searchText.isEmpty ? false : true)
@@ -295,9 +295,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seedsEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
     let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
-    seed.setValue(registered, forKeyPath: "registered")
-    seed.setValue(variety, forKeyPath: "variety")
-    seed.setValue(specie, forKeyPath: "specie")
+    seed.setValue(registered, forKey: "registered")
+    seed.setValue(variety, forKey: "variety")
+    seed.setValue(specie, forKey: "specie")
     seeds.append(seed)
 
     do {
@@ -316,11 +316,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let phytosEntity = NSEntityDescription.entity(forEntityName: "Phytos", in: managedContext)!
     let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
 
-    phyto.setValue(registered, forKeyPath: "registered")
-    phyto.setValue(name, forKeyPath: "name")
-    phyto.setValue(firmName, forKeyPath: "firmName")
-    phyto.setValue(maaID, forKeyPath: "maaID")
-    phyto.setValue(reentryDelay, forKeyPath: "reentryDelay")
+    phyto.setValue(registered, forKey: "registered")
+    phyto.setValue(name, forKey: "name")
+    phyto.setValue(firmName, forKey: "firmName")
+    phyto.setValue(maaID, forKey: "maaID")
+    phyto.setValue(reentryDelay, forKey: "reentryDelay")
     phytos.append(phyto)
 
     do {
@@ -339,9 +339,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
     let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
-    fertilizer.setValue(registered, forKeyPath: "registered")
-    fertilizer.setValue(name, forKeyPath: "name")
-    fertilizer.setValue(nature, forKeyPath: "nature")
+    fertilizer.setValue(registered, forKey: "registered")
+    fertilizer.setValue(name, forKey: "name")
+    fertilizer.setValue(nature, forKey: "nature")
     fertilizers.append(fertilizer)
 
     do {
@@ -361,8 +361,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
     filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: NSManagedObject) -> Bool in
-      let keyPath: String = segmentedControl.selectedSegmentIndex == 0 ? "variety" : "name"
-      let name: String = input.value(forKeyPath: keyPath) as! String
+      let key: String = segmentedControl.selectedSegmentIndex == 0 ? "variety" : "name"
+      let name: String = input.value(forKey: key) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     tableView.reloadData()
