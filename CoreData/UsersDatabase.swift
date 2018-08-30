@@ -1,5 +1,5 @@
 //
-//  AuthentificationDatabase.swift
+//  UsersDatabase.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 23/07/2018.

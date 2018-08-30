@@ -1,5 +1,5 @@
 //
-//  SelectedInputsTableViewCell.swift
+//  SelectedInputCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 22/08/2018.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol SelectedInputsTableViewCellDelegate: class {
-  func removeInputsCell(_ indexPath: IndexPath)
+protocol SelectedInputCellDelegate: class {
+  func removeInputCell(_ indexPath: IndexPath)
   func changeUnitMeasure(_ indexPath: IndexPath)
 }
 
-class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
-  weak var cellDelegate: SelectedInputsTableViewCellDelegate?
+class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
+  weak var cellDelegate: SelectedInputCellDelegate?
   var indexPath: IndexPath!
   var type = ""
 
@@ -280,7 +280,7 @@ class SelectedInputsTableViewCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @objc func removeCell(sender: UIButton) {
-    cellDelegate?.removeInputsCell(indexPath)
+    cellDelegate?.removeInputCell(indexPath)
   }
 
   required init?(coder aDecoder: NSCoder) {

@@ -478,7 +478,7 @@
                                                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="SelectedToolsTableViewCell" rowHeight="70" id="iLS-rZ-s4M" customClass="SelectedToolsTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="SelectedEquipmentCell" rowHeight="70" id="iLS-rZ-s4M" customClass="SelectedEquipmentCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iLS-rZ-s4M" id="sE8-VA-Faw">
@@ -630,7 +630,7 @@
                                                             <constraint firstAttribute="height" id="mfR-vs-HG6"/>
                                                         </constraints>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DoersTableViewCell" id="nC4-ff-Ntp" customClass="DoersTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DoerCell" id="nC4-ff-Ntp" customClass="DoerCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nC4-ff-Ntp" id="x2d-by-4Qd">
@@ -1346,7 +1346,7 @@
                                         <rect key="frame" x="0.0" y="153" width="335" height="416"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EntitiesTableViewCell" rowHeight="70" id="7wY-Ei-9fD" customClass="EntitiesTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EntityCell" rowHeight="70" id="7wY-Ei-9fD" customClass="EntityCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7wY-Ei-9fD" id="C67-8t-w0k">
@@ -1620,10 +1620,10 @@
                         <outlet property="selectDateButton" destination="MxI-Pz-rtl" id="Ae2-lV-8uB"/>
                         <outlet property="selectEntitiesView" destination="vkl-cP-TQz" id="NQL-lo-hgJ"/>
                         <outlet property="selectToolsView" destination="k1P-VF-83v" id="mew-3I-SmN"/>
+                        <outlet property="selectedEquipmentsTableView" destination="S1G-aq-VJB" id="qgP-EQ-F0g"/>
                         <outlet property="selectedInputsTableView" destination="6C4-57-Ghw" id="xOS-xe-Tgz"/>
                         <outlet property="selectedInputsTableViewHeightConstraint" destination="Bbt-1y-Pg7" id="HoL-WX-Zuz"/>
                         <outlet property="selectedPlotsLabel" destination="Qfg-EU-vH1" id="m78-n3-4Ej"/>
-                        <outlet property="selectedToolsTableView" destination="S1G-aq-VJB" id="jYJ-yR-ZMC"/>
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
                         <outlet property="toolName" destination="BuY-c0-rnF" id="Mvb-IX-fPE"/>
                         <outlet property="toolNumber" destination="3ay-Ie-glI" id="XTu-9z-L0H"/>

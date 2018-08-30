@@ -9,8 +9,8 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: DoersTableViewCellDelegate {
-  func updateDriverCell(_ indexPath: IndexPath, driver: UISwitch) {
+extension AddInterventionViewController: DoerCellDelegate {
+  func updateDriverStatus(_ indexPath: IndexPath, driver: UISwitch) {
     doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
   }
 
@@ -25,14 +25,14 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     }
   }
 
-  func removeDoersCell(_ indexPath: IndexPath) {
+  func removeDoerCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
       let row = self.doers[indexPath.row].value(forKey: "row") as! Int
       let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntitiesTableViewCell
+      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
 
       cell.isAlreadySelected = false
       cell.backgroundColor = AppColor.CellColors.white
