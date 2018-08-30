@@ -28,18 +28,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
-  @IBOutlet weak var selectToolsView: UIView!
-  @IBOutlet weak var createToolsView: UIView!
-  @IBOutlet weak var toolsDarkLayer: UIView!
-  @IBOutlet weak var toolName: UITextField!
-  @IBOutlet weak var toolNumber: UITextField!
-  @IBOutlet weak var toolType: UILabel!
+  @IBOutlet weak var selectEquipmentsView: UIView!
+  @IBOutlet weak var createEquipmentsView: UIView!
+  @IBOutlet weak var equipmentDarkLayer: UIView!
+  @IBOutlet weak var equipmentName: UITextField!
+  @IBOutlet weak var equipmentNumber: UITextField!
+  @IBOutlet weak var equipmentType: UILabel!
   @IBOutlet weak var selectedEquipmentsTableView: UITableView!
-  @IBOutlet weak var addToolButton: UIButton!
-  @IBOutlet weak var toolNumberLabel: UILabel!
-  @IBOutlet weak var searchTool: UISearchBar!
-  @IBOutlet weak var toolTypeTableView: UITableView!
-  @IBOutlet weak var toolTypeButton: UIButton!
+  @IBOutlet weak var addEquipmentButton: UIButton!
+  @IBOutlet weak var equipmentNumberLabel: UILabel!
+  @IBOutlet weak var searchEquipment: UISearchBar!
+  @IBOutlet weak var equipmentTypeTableView: UITableView!
+  @IBOutlet weak var equipmentTypeButton: UIButton!
   @IBOutlet weak var entityFirstName: UITextField!
   @IBOutlet weak var entityLastName: UITextField!
   @IBOutlet weak var selectEntitiesView: UIView!
@@ -75,17 +75,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectDateView: UIView!
   var inputsView: InputsView!
   var specificInputsTableView: UITableView!
-  var interventionTools = [NSManagedObject]()
-  var selectedTools = [NSManagedObject]()
-  var searchedTools = [NSManagedObject]()
+  var interventionEquipments = [NSManagedObject]()
+  var selectedEquipments = [NSManagedObject]()
+  var searchedEquipments = [NSManagedObject]()
   var plots = [NSManagedObject]()
   var cropPlots = [[NSManagedObject]]()
-  var toolTypes: [String]!
-  var selectedToolType: String!
+  var equipmentTypes: [String]!
+  var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
-  var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
+  var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
@@ -163,15 +163,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentsTableView.delegate = self
     equipmentsTableView.bounces = false
 
-    searchTool.delegate = self
-    searchTool.autocapitalizationType = .none
+    searchEquipment.delegate = self
+    searchEquipment.autocapitalizationType = .none
 
     searchEntity.delegate = self
     searchEntity.autocapitalizationType = .none
 
-    toolTypeTableView.dataSource = self
-    toolTypeTableView.delegate = self
-    toolTypeTableView.bounces = false
+    equipmentTypeTableView.dataSource = self
+    equipmentTypeTableView.delegate = self
+    equipmentTypeTableView.bounces = false
 
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
@@ -204,11 +204,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedInputsTableView.dataSource = self
     selectedInputsTableView.bounces = false
 
-    defineToolTypes()
-    fetchTools()
+    defineEquipmentTypes()
+    fetchEquipments()
     fetchEntities()
-    selectedToolType = toolTypes[0]
-    toolTypeButton.setTitle(toolTypes[0], for: .normal)
+    selectedEquipmentType = equipmentTypes[0]
+    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
     initUnitMeasurePickerView()
   }
 
@@ -251,11 +251,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case specificInputsTableView:
       return getNumberOfInputs()
     case equipmentsTableView:
-      return searchedTools.count
+      return searchedEquipments.count
     case selectedEquipmentsTableView:
-      return selectedTools.count
-    case toolTypeTableView:
-      return toolTypes.count
+      return selectedEquipments.count
+    case equipmentTypeTableView:
+      return equipmentTypes.count
     case entitiesTableView:
       return searchedEntities.count
     case doersTableView:
@@ -283,9 +283,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var crop: NSManagedObject?
-    var tool: NSManagedObject?
-    var selectedTool: NSManagedObject?
-    var toolType: String?
+    var equipment: NSManagedObject?
+    var selectedEquipment: NSManagedObject?
+    var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
     var input: NSManagedObject?
@@ -393,27 +393,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
 
-      tool = searchedTools[indexPath.row]
-      cell.nameLabel.text = tool?.value(forKey: "name") as? String
-      cell.typeLabel.text = tool?.value(forKey: "type") as? String
-      cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
+      equipment = searchedEquipments[indexPath.row]
+      cell.nameLabel.text = equipment?.value(forKey: "name") as? String
+      cell.typeLabel.text = equipment?.value(forKey: "type") as? String
+      cell.typeImageView.image = equipmentImage[defineEquipmentImage(equipmentName: cell.typeLabel.text!)]
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
 
-      selectedTool = selectedTools[indexPath.row]
+      selectedEquipment = selectedEquipments[indexPath.row]
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.nameLabel.text = selectedTool?.value(forKey: "name") as? String
-      cell.typeLabel.text = selectedTool?.value(forKey: "type") as? String
-      cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
+      cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
+      cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
+      cell.typeImageView.image = equipmentImage[defineEquipmentImage(equipmentName: cell.typeLabel.text!)]
       return cell
-    case toolTypeTableView:
+    case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
 
-      toolType = toolTypes[indexPath.row]
-      cell.nameLabel.text = toolType
+      equipmentType = equipmentTypes[indexPath.row]
+      cell.nameLabel.text = equipmentType
       return cell
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
@@ -441,12 +441,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  @IBAction func toolTypeSelection(_ sender: UIButton) {
-    toolTypeTableView.isHidden = false
-    toolTypeTableView.layer.shadowColor = UIColor.black.cgColor
-    toolTypeTableView.layer.shadowOpacity = 1
-    toolTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
-    toolTypeTableView.layer.shadowRadius = 10
+  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
+    equipmentTypeTableView.isHidden = false
+    equipmentTypeTableView.layer.shadowColor = UIColor.black.cgColor
+    equipmentTypeTableView.layer.shadowOpacity = 1
+    equipmentTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
+    equipmentTypeTableView.layer.shadowRadius = 10
   }
 
   // Expand/collapse cell when tapped
@@ -473,18 +473,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
       if !cell.isAlreadySelected {
-        selectedTools.append(equipments[indexPath.row])
-        selectedTools[selectedTools.count - 1].setValue(indexPath.row, forKey: "row")
+        selectedEquipments.append(equipments[indexPath.row])
+        selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAlreadySelected = true
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
-      closeSelectToolsView()
-    case toolTypeTableView:
-      selectedToolType = toolTypes[indexPath.row]
-      toolTypeTableView.reloadData()
-      toolTypeButton.setTitle(selectedToolType, for: .normal)
-      toolTypeTableView.isHidden = true
+      closeSelectEquipmentsView()
+    case equipmentTypeTableView:
+      selectedEquipmentType = equipmentTypes[indexPath.row]
+      equipmentTypeTableView.reloadData()
+      equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+      equipmentTypeTableView.isHidden = true
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
@@ -598,7 +598,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let hourDuration = Int(durationTextField.text!)
     workingPeriod.setValue(hourDuration, forKey: "hourDuration")
     createTargets(intervention: newIntervention)
-    createTools(intervention: newIntervention)
+    createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
 
     do {
@@ -632,25 +632,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createTools(intervention: NSManagedObject) {
+  func createEquipments(intervention: NSManagedObject) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let toolsEntity = NSEntityDescription.entity(forEntityName: "Tools", in: managedContext)!
+    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "InterventionEquipments", in: managedContext)!
 
-    for selectedTool in selectedTools {
-      let tool = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
-      let name = selectedTool.value(forKeyPath: "name") as! String
-      let type = selectedTool.value(forKey: "type") as! String
-      let equipment = selectedTool.value(forKey: "uuid") as! UUID
+    for selectedEquipment in selectedEquipments {
+      let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+      let name = selectedEquipment.value(forKeyPath: "name") as! String
+      let type = selectedEquipment.value(forKey: "type") as! String
+      let equipmentUuid = selectedEquipment.value(forKey: "uuid") as! UUID
 
-      tool.setValue(intervention, forKey: "interventions")
-      tool.setValue(name, forKey: "name")
-      tool.setValue(type, forKey: "type")
-      tool.setValue(equipment, forKey: "equipment")
+      equipment.setValue(intervention, forKey: "interventions")
+      equipment.setValue(name, forKey: "name")
+      equipment.setValue(type, forKey: "type")
+      equipment.setValue(equipmentUuid, forKey: "equipment")
     }
     do {
       try managedContext.save()

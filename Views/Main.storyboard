@@ -544,7 +544,7 @@
                                                             <color key="titleColor" red="0.54117647058823526" green="0.75686274509803919" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="openSelectToolsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="1CM-Z6-E9L"/>
+                                                            <action selector="openSelectEquipmentsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="0sF-uW-GA5"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJR-CJ-tlU">
@@ -985,7 +985,7 @@
                                     <constraint firstAttribute="trailing" secondItem="q58-SX-oqs" secondAttribute="trailing" id="zDY-MY-7PL"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1P-VF-83v" userLabel="Select Tools View">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1P-VF-83v">
                                 <rect key="frame" x="20" y="40" width="335" height="569"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSb-Nn-Xag" userLabel="Top Bar View">
@@ -1010,7 +1010,7 @@
                                         <color key="barTintColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01a-h3-lM4" userLabel="Create Tools Button">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01a-h3-lM4" userLabel="Create Equipments Button">
                                         <rect key="frame" x="0.0" y="112" width="335" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJS-aN-eaO">
@@ -1019,7 +1019,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="openCreateToolsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="gr1-AW-G7C"/>
+                                                    <action selector="openCreateEquipmentsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="3Cn-XT-HAE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1104,11 +1104,11 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7u-Pw-d2r" userLabel="Tool Dark Layer">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7u-Pw-d2r">
                                         <rect key="frame" x="-20" y="-51" width="375" height="679"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50476241438356162" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHt-fp-S63" userLabel="Create Tools View">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHt-fp-S63">
                                         <rect key="frame" x="0.0" y="188" width="335" height="201"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Création d'un équipement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiR-Np-yVB">
@@ -1133,7 +1133,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="gHD-Yw-vrz"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Numéro" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ay-Ie-glI" userLabel="Equipment Number">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Numéro" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ay-Ie-glI">
                                                 <rect key="frame" x="15" y="127.5" width="305" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="n4X-pa-tsb"/>
@@ -1170,7 +1170,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="closeToolsCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="A3C-Fk-JBE"/>
+                                                    <action selector="closeEquipmentsCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="e03-8Y-l7p"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A58-eW-7tB">
@@ -1184,7 +1184,7 @@
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="toolTypeSelection:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Y5j-Xv-hK8"/>
+                                                    <action selector="equipmentTypeSelection:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="nda-aa-aD3"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1585,12 +1585,12 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addEntitiesButton" destination="yGb-zU-Lzj" id="4LP-bc-YKZ"/>
+                        <outlet property="addEquipmentButton" destination="5AO-Jj-0ZP" id="lX4-Wo-L1c"/>
                         <outlet property="addInputsButton" destination="xR1-hG-glp" id="pRW-RT-UWb"/>
-                        <outlet property="addToolButton" destination="5AO-Jj-0ZP" id="6Co-jX-Se3"/>
                         <outlet property="collapseButton" destination="fJR-CJ-tlU" id="eiF-In-vl8"/>
                         <outlet property="collapseWorkingPeriodImage" destination="4VE-aQ-Xe3" id="mTX-34-7jk"/>
                         <outlet property="createEntitiesView" destination="KmC-aZ-h9V" id="k4F-wF-5ZR"/>
-                        <outlet property="createToolsView" destination="kHt-fp-S63" id="feJ-zZ-e2k"/>
+                        <outlet property="createEquipmentsView" destination="kHt-fp-S63" id="i7q-7t-w5C"/>
                         <outlet property="cropsTableView" destination="SkX-IZ-Esi" id="F5a-UL-nmR"/>
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
                         <outlet property="doersCollapsedButton" destination="PvZ-9o-YeQ" id="TIs-VC-yVB"/>
@@ -1604,8 +1604,15 @@
                         <outlet property="entityFirstName" destination="rRC-EH-Dse" id="B6f-aq-1ZD"/>
                         <outlet property="entityLastName" destination="Gfz-0d-yzp" id="2Ou-6G-XYZ"/>
                         <outlet property="entityRole" destination="lXs-eO-iv8" id="VEf-rl-dKV"/>
+                        <outlet property="equipmentDarkLayer" destination="M7u-Pw-d2r" id="g3A-c5-M8N"/>
                         <outlet property="equipmentHeightConstraint" destination="HUo-Z0-DIF" id="BlQ-fC-dWi"/>
+                        <outlet property="equipmentName" destination="BuY-c0-rnF" id="rG1-iz-HXh"/>
+                        <outlet property="equipmentNumber" destination="3ay-Ie-glI" id="RFv-p9-JhT"/>
+                        <outlet property="equipmentNumberLabel" destination="lB9-6U-iCz" id="zzA-cf-hte"/>
                         <outlet property="equipmentTableViewHeightConstraint" destination="fXC-sa-Rfz" id="ReC-cv-NBL"/>
+                        <outlet property="equipmentType" destination="Tur-MK-R4c" id="0en-nU-XoV"/>
+                        <outlet property="equipmentTypeButton" destination="A58-eW-7tB" id="teL-bG-Ea9"/>
+                        <outlet property="equipmentTypeTableView" destination="lyS-jh-cAc" id="4kk-dU-5PT"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
@@ -1615,23 +1622,16 @@
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="searchEntity" destination="DKn-en-9g6" id="CHn-ZG-lJK"/>
-                        <outlet property="searchTool" destination="3af-DS-yQg" id="xNz-Nm-piP"/>
+                        <outlet property="searchEquipment" destination="3af-DS-yQg" id="e3s-Wj-rgP"/>
                         <outlet property="selectCropsView" destination="O2V-tV-StC" id="ONM-wc-KyU"/>
                         <outlet property="selectDateButton" destination="MxI-Pz-rtl" id="Ae2-lV-8uB"/>
                         <outlet property="selectEntitiesView" destination="vkl-cP-TQz" id="NQL-lo-hgJ"/>
-                        <outlet property="selectToolsView" destination="k1P-VF-83v" id="mew-3I-SmN"/>
+                        <outlet property="selectEquipmentsView" destination="k1P-VF-83v" id="ONY-MO-9BM"/>
                         <outlet property="selectedEquipmentsTableView" destination="S1G-aq-VJB" id="qgP-EQ-F0g"/>
                         <outlet property="selectedInputsTableView" destination="6C4-57-Ghw" id="xOS-xe-Tgz"/>
                         <outlet property="selectedInputsTableViewHeightConstraint" destination="Bbt-1y-Pg7" id="HoL-WX-Zuz"/>
                         <outlet property="selectedPlotsLabel" destination="Qfg-EU-vH1" id="m78-n3-4Ej"/>
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
-                        <outlet property="toolName" destination="BuY-c0-rnF" id="Mvb-IX-fPE"/>
-                        <outlet property="toolNumber" destination="3ay-Ie-glI" id="XTu-9z-L0H"/>
-                        <outlet property="toolNumberLabel" destination="lB9-6U-iCz" id="Pwj-Go-lxO"/>
-                        <outlet property="toolType" destination="Tur-MK-R4c" id="OmJ-cc-mUm"/>
-                        <outlet property="toolTypeButton" destination="A58-eW-7tB" id="kxS-dn-2cF"/>
-                        <outlet property="toolTypeTableView" destination="lyS-jh-cAc" id="0WN-xh-DkS"/>
-                        <outlet property="toolsDarkLayer" destination="M7u-Pw-d2r" id="fiV-Pc-88j"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
                     </connections>
