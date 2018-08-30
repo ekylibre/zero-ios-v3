@@ -231,7 +231,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
     filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: NSManagedObject) -> Bool in
-      let name: String = input.value(forKeyPath: "variety") as! String
+      let keyPath: String = segmentedControl.selectedSegmentIndex == 0 ? "variety" : "name"
+      let name: String = input.value(forKeyPath: keyPath) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     isSearching = (searchText.isEmpty ? false : true)
@@ -357,7 +358,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
     filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: NSManagedObject) -> Bool in
-      let name: String = input.value(forKeyPath: "variety") as! String
+      let keyPath: String = segmentedControl.selectedSegmentIndex == 0 ? "variety" : "name"
+      let name: String = input.value(forKeyPath: keyPath) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     tableView.reloadData()
