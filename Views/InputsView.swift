@@ -194,8 +194,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "firmName") as? String
-      cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "maaID") as? String
-      cell.inFieldReentryDelayLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "reentryDelay") as? String
+      let maaID = fromPhytos[indexPath.row].value(forKeyPath: "maaID") as! Int
+      cell.maaIDLabel.text = String(maaID)
+      let reentryDelay = fromPhytos[indexPath.row].value(forKeyPath: "reentryDelay") as! Int
+      let unit: String = reentryDelay > 1 ? "heures" : "heure"
+      cell.inFieldReentryDelayLabel.text = "\(reentryDelay) " + unit
       return cell
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
@@ -383,7 +386,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       seedView.specieButton.setTitle("Avoine", for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
-      createPhyto(registered: false, name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: Int(phytoView.maaTextField.text!)!, reentryDelay: Int(phytoView.reentryDelayTextField.text!)!)
+      let maaID = phytoView.maaTextField.text!.isEmpty ? 0 : Int(phytoView.maaTextField.text!)
+      let reentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : Int(phytoView.reentryDelayTextField.text!)
+      createPhyto(registered: false, name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: maaID!, reentryDelay: reentryDelay!)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
