@@ -136,6 +136,8 @@ class InputsView: UIView {
     } else {
       fertilizerView.isHidden = false
     }
+
+    print("\ntoto")
   }
 
   @objc func hideDimView() {

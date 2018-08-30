@@ -15,7 +15,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func removeInputCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'intrant ?", preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: "",
+      message: "Êtes-vous sûr de vouloir supprimer l'intrant ?",
+      preferredStyle: .alert
+    )
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
@@ -122,33 +126,66 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     seed.setValue("Aubergine", forKey: "specie")
     seed.setValue("Marfa", forKey: "variety")
     seed.setValue("kg/ha", forKey: "unit")
-    seed.setValue(true, forKey: "used")
+    seed.setValue(false, forKey: "used")
+    seed.setValue(false, forKey: "registered")
 
     do {
       try managedContext.save()
-      selectedInputsManagedObject.append(seed)
+      createdSeed.append(seed)
     } catch {
       print("Unable to save managed context object.")
     }
   }
 
-  func initSelectedSeed(indexPath: IndexPath, seed: NSManagedObject) {
+  func saveSelectedSeed(indexPath: IndexPath, seed: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedSeeds = NSEntityDescription.entity(forEntityName: "InterventionSeeds", in: managedContext)!
+    let selectedSeed = NSManagedObject(entity: selectedSeeds, insertInto: managedContext)
+
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
+    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let unit = cell.unitMeasureButton.titleLabel?.text
+
+    selectedSeed.setValue(quantity, forKey: "quantity")
+    selectedSeed.setValue(unit, forKey: "unit")
 
     do {
-      let predicate = NSPredicate(format: "species == %@", seed)
-      let fetchedSeed = NSFetchRequest<NSFetchRequestResult>(entityName: "Seeds")
+      try managedContext.save()
+      //let predicate = NSPredicate(format: "species == %@", seed)
+      //let fetchedSeed = NSFetchRequest<NSFetchRequestResult>(entityName: "Seeds")
 
-      fetchedSeed.predicate = predicate
-      let seedResults = try managedContext.execute(fetchedSeed)
+      //fetchedSeed.predicate = predicate
+      //let seedResults = try managedContext.execute(fetchedSeed)
+      //print(seedResults)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
 
-      print(seedResults)
-    } catch {
-      print("Error")
+  func saveSelectedPhyto(indexPath: IndexPath, phyto: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedPhytos = NSEntityDescription.entity(forEntityName: "InterventionPhytosanitary", in: managedContext)!
+    let selectedPhyto = NSManagedObject(entity: selectedPhytos, insertInto: managedContext)
+
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
+    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let unit = cell.unitMeasureButton.titleLabel?.text
+
+    selectedPhyto.setValue(quantity, forKey: "quantity")
+    selectedPhyto.setValue(unit, forKey: "unit")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 

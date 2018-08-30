@@ -26,7 +26,11 @@ extension AddInterventionViewController: DoerCellDelegate {
   }
 
   func removeDoerCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: "",
+      message: "Êtes-vous sûr de vouloir supprimer la personne ?",
+      preferredStyle: .alert
+    )
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in

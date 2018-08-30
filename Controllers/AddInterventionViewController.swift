@@ -86,6 +86,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
   var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
+  var createdSeed = [NSManagedObject]()
   var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
   var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
   var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
@@ -502,9 +503,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! SeedsTableViewCell
 
         if !cell.isAlreadySelected {
+          storeSampleSeed(indexPath: selectedIndexPath!)
           selectedInputs.append(sampleSeeds[indexPath.row])
           cell.isAlreadySelected = true
           cell.backgroundColor = AppColor.CellColors.lightGray
+          selectedInputsManagedObject.append(createdSeed[0])
         }
       case 1:
         let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! PhytosTableViewCell
@@ -525,7 +528,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       default:
         print("Error")
       }
-      storeSampleSeed(indexPath: selectedIndexPath!)
       selectedInputsTableView.reloadData()
       closeSelectInputsView()
     default:
