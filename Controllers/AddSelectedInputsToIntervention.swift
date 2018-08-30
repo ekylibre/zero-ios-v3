@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: SelectedInputsTableViewCellDelegate {
+extension AddInterventionViewController: SelectedInputCellDelegate {
   func changeUnitMeasure(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
 
-  func removeInputsCell(_ indexPath: IndexPath) {
+  func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'intrant ?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))

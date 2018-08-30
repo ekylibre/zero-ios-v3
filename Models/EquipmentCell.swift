@@ -16,21 +16,21 @@ class EquipmentCell: UITableViewCell {
   var isAlreadySelected = false
 }
 
-protocol SelectedToolsTableViewCellDelegate: class {
-  func removeToolsCell(_ indexPath: IndexPath)
+protocol SelectedEquipmentCellDelegate: class {
+  func removeEquipmentCell(_ indexPath: IndexPath)
 }
 
-class SelectedToolsTableViewCell: UITableViewCell {
+class SelectedEquipmentCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!
   @IBOutlet weak var deleteButton: UIButton!
 
-  weak var cellDelegate: SelectedToolsTableViewCellDelegate?
+  weak var cellDelegate: SelectedEquipmentCellDelegate?
   var indexPath: IndexPath!
 
   @IBAction func buttonPressed(_ sender: UIButton) {
-    cellDelegate?.removeToolsCell(self.indexPath)
+    cellDelegate?.removeEquipmentCell(self.indexPath)
   }
 }
 

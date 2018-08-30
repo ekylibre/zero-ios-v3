@@ -1,5 +1,5 @@
 //
-//  UseToolsInIntervention.swift
+//  AddEquipmentIntervention.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 08/08/2018.
@@ -9,14 +9,14 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
+extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
   func changeEquipmentViewAndTableViewSize() {
-    equipmentTableViewHeightConstraint.constant = selectedToolsTableView.contentSize.height
+    equipmentTableViewHeightConstraint.constant = selectedEquipmentsTableView.contentSize.height
     equipmentHeightConstraint.constant = equipmentTableViewHeightConstraint.constant + 100
   }
 
-  func removeToolsCell(_ indexPath: IndexPath) {
+  func removeEquipmentCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer l'outil ?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
@@ -31,27 +31,59 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
       self.selectedTools.remove(at: indexPath.row)
 
       if self.selectedTools.count == 0 {
-        self.selectedToolsTableView.isHidden = true
+        self.selectedEquipmentsTableView.isHidden = true
         self.equipmentHeightConstraint.constant = 70
         self.collapseButton.isHidden = true
       } else {
         self.changeEquipmentViewAndTableViewSize()
         self.showEquipmentsNumber()
       }
-      self.selectedToolsTableView.reloadData()
+      self.selectedEquipmentsTableView.reloadData()
     }))
     self.present(alert, animated: true)
   }
 
   func defineToolTypes() {
-    toolTypes = ["Semoir monograines", "Presse enrubanneuse", "Castreuse", "Presse balle cubique",
-                 "Déchaumeur à disques", "Plateau", "Ensileuse", "Broyeur", "Herse", "Arracheuse",
-                 "Andaineur", "Butteuse", "Bineuse", "Désherbineuse", "Planteuse", "Tonne à lisier",
-                 "Faucheuse", "Faucheuse conditioneuse", "Charrue", "Moissonneuse-batteuse", "Rouleau",
-                 "Houe rotative", "Presse balle ronde", "Outil de préparation du lit de semences",
-                 "Décompacteur", "Semoir", "Pulvérisateur", "Épandeur à engrais", "Épandeur à fumier",
-                 "Sous soleuse", "Déchaumeur", "Faneuse", "Effaneuse", "Tracteur", "Remorque", "Écimeuse",
-                 "Vibroculteur", "Désherbeur", "Enrubanneuse"]
+    toolTypes = [
+      "Semoir monograines",
+      "Presse enrubanneuse",
+      "Castreuse",
+      "Presse balle cubique",
+      "Déchaumeur à disques",
+      "Plateau",
+      "Ensileuse",
+      "Broyeur",
+      "Herse",
+      "Arracheuse",
+      "Andaineur",
+      "Butteuse",
+      "Bineuse",
+      "Désherbineuse",
+      "Planteuse",
+      "Tonne à lisier",
+      "Faucheuse",
+      "Faucheuse conditioneuse",
+      "Charrue",
+      "Moissonneuse-batteuse",
+      "Rouleau",
+      "Houe rotative",
+      "Presse balle ronde",
+      "Outil de préparation du lit de semences",
+      "Décompacteur",
+      "Semoir",
+      "Pulvérisateur",
+      "Épandeur à engrais",
+      "Épandeur à fumier",
+      "Sous soleuse",
+      "Déchaumeur",
+      "Faneuse",
+      "Effaneuse",
+      "Tracteur",
+      "Remorque",
+      "Écimeuse",
+      "Vibroculteur",
+      "Désherbeur",
+      "Enrubanneuse"]
   }
 
   func showEquipmentsNumber() {
@@ -82,26 +114,26 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.view.layoutIfNeeded()
         self.collapseButton.isHidden = false
-        self.selectedToolsTableView.isHidden = false
+        self.selectedEquipmentsTableView.isHidden = false
         self.changeEquipmentViewAndTableViewSize()
         self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
     searchedTools = equipments
-    selectedToolsTableView.reloadData()
+    selectedEquipmentsTableView.reloadData()
   }
 
   @IBAction func collapseEquipmentView(_ send: Any) {
     if equipmentHeightConstraint.constant != 70 {
       UIView.animate(withDuration: 0.5, animations: {
-        self.selectedToolsTableView.isHidden = true
+        self.selectedEquipmentsTableView.isHidden = true
         self.equipmentHeightConstraint.constant = 70
         self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         self.view.layoutIfNeeded()
       })
     } else {
       UIView.animate(withDuration: 0.5, animations: {
-        self.selectedToolsTableView.isHidden = false
+        self.selectedEquipmentsTableView.isHidden = false
         self.changeEquipmentViewAndTableViewSize()
         self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()

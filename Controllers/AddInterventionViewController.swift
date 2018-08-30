@@ -34,7 +34,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var toolName: UITextField!
   @IBOutlet weak var toolNumber: UITextField!
   @IBOutlet weak var toolType: UILabel!
-  @IBOutlet weak var selectedToolsTableView: UITableView!
+  @IBOutlet weak var selectedEquipmentsTableView: UITableView!
   @IBOutlet weak var addToolButton: UIButton!
   @IBOutlet weak var toolNumberLabel: UILabel!
   @IBOutlet weak var searchTool: UISearchBar!
@@ -140,56 +140,62 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
+
     selectCropsView.clipsToBounds = true
     selectCropsView.layer.cornerRadius = 3
-    selectedToolsTableView.layer.borderWidth  = 0.5
-    selectedToolsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedToolsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedToolsTableView.layer.cornerRadius = 4
+
+    selectedEquipmentsTableView.layer.borderWidth  = 0.5
+    selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedEquipmentsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    selectedEquipmentsTableView.layer.cornerRadius = 4
+    selectedEquipmentsTableView.dataSource = self
+    selectedEquipmentsTableView.delegate = self
+    selectedEquipmentsTableView.bounces = false
+
     saveInterventionButton.layer.cornerRadius = 3
+
     cropsTableView.dataSource = self
     cropsTableView.delegate = self
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
+
     equipmentsTableView.dataSource = self
     equipmentsTableView.delegate = self
     equipmentsTableView.bounces = false
-    selectedToolsTableView.dataSource = self
-    selectedToolsTableView.delegate = self
-    selectedToolsTableView.bounces = false
+
     searchTool.delegate = self
     searchTool.autocapitalizationType = .none
+
     searchEntity.delegate = self
     searchEntity.autocapitalizationType = .none
+
     toolTypeTableView.dataSource = self
     toolTypeTableView.delegate = self
     toolTypeTableView.bounces = false
+
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
     entitiesTableView.bounces = false
+
     doersTableView.dataSource = self
     doersTableView.delegate = self
     doersTableView.bounces = false
-    doersHeightConstraint.constant = 70
-    doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
     doersTableView.layer.borderWidth  = 0.5
     doersTableView.layer.borderColor = UIColor.lightGray.cgColor
     doersTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     doersTableView.layer.cornerRadius = 4
-    defineToolTypes()
-    fetchTools()
-    fetchEntities()
-    selectedToolType = toolTypes[0]
-    toolTypeButton.setTitle(toolTypes[0], for: .normal)
+
+    doersHeightConstraint.constant = 70
+    doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    self.view.addSubview(inputsView)
-    specificInputsTableView = inputsView.tableView
     inputsView.seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
     inputsView.phytoView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
     inputsView.fertilizerView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+    self.view.addSubview(inputsView)
+    specificInputsTableView = inputsView.tableView
 
-    selectedInputsTableView.register(SelectedInputsTableViewCell.self, forCellReuseIdentifier: "SelectedInputsTableViewCell")
+    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
     selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     selectedInputsTableView.layer.cornerRadius = 5
     selectedInputsTableView.layer.borderWidth  = 0.5
@@ -198,6 +204,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedInputsTableView.dataSource = self
     selectedInputsTableView.bounces = false
 
+    defineToolTypes()
+    fetchTools()
+    fetchEntities()
+    selectedToolType = toolTypes[0]
+    toolTypeButton.setTitle(toolTypes[0], for: .normal)
     initUnitMeasurePickerView()
   }
 
@@ -241,7 +252,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return getNumberOfInputs()
     case equipmentsTableView:
       return searchedTools.count
-    case selectedToolsTableView:
+    case selectedEquipmentsTableView:
       return selectedTools.count
     case toolTypeTableView:
       return toolTypes.count
@@ -351,7 +362,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         return cell
       }
     case selectedInputsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputsTableViewCell", for: indexPath) as! SelectedInputsTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
       if selectedInputsManagedObject.count > indexPath.row {
         input = selectedInputsManagedObject[indexPath.row]
@@ -387,8 +398,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.typeLabel.text = tool?.value(forKey: "type") as? String
       cell.typeImageView.image = toolImage[defineToolImage(toolName: cell.typeLabel.text!)]
       return cell
-    case selectedToolsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedToolsTableViewCell", for: indexPath) as! SelectedToolsTableViewCell
+    case selectedEquipmentsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
 
       selectedTool = selectedTools[indexPath.row]
       cell.cellDelegate = self
@@ -405,7 +416,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.nameLabel.text = toolType
       return cell
     case entitiesTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "EntitiesTableViewCell", for: indexPath) as! EntitiesTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
 
       entity = searchedEntities[indexPath.row]
       cell.firstName.text = entity?.value(forKey: "firstName") as? String
@@ -413,7 +424,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.logo.image = #imageLiteral(resourceName: "entityLogo")
       return cell
     case doersTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "DoersTableViewCell", for: indexPath) as! DoersTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
 
       doer = doers[indexPath.row]
       cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
@@ -464,7 +475,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       if !cell.isAlreadySelected {
         selectedTools.append(equipments[indexPath.row])
         selectedTools[selectedTools.count - 1].setValue(indexPath.row, forKey: "row")
-        selectedToolsTableView.reloadData()
+        selectedEquipmentsTableView.reloadData()
         cell.isAlreadySelected = true
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
@@ -475,7 +486,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       toolTypeButton.setTitle(selectedToolType, for: .normal)
       toolTypeTableView.isHidden = true
     case entitiesTableView:
-      let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntitiesTableViewCell
+      let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
       if !cell.isAlreadySelected {
         doers.append(entities[indexPath.row])

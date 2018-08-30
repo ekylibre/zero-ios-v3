@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  UnitMeasurePickerView.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 27/08/2018.
@@ -37,7 +37,6 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
   }
 
-
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     if pickerView == liquidUnitPicker {
       return liquidUnitMeasure[row]
@@ -49,7 +48,7 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     dimView.isHidden = true
 
-    let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputsTableViewCell
+    let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputCell
 
     if pickerView == liquidUnitPicker {
       liquidUnitPicker.isHidden = true
