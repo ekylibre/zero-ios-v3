@@ -88,7 +88,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    fetchPlots()
+    if !fetchPlots() {
+      loadSamplePlots()
+    }
     setupView()
   }
 
@@ -217,7 +219,21 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  //MARK: - Core data
+  //MARK: - Core Data
+
+  private func loadSamplePlots() {
+    createPlot(name: "Crop 1", surfaceArea: 7.5)
+    createCrop(plotName: "Crop 1", name: "Blé tendre", surfaceArea: 3, startDate: Date())
+    createCrop(plotName: "Crop 1", name: "Maïs", surfaceArea: 4.5, startDate: Date())
+
+    createPlot(name: "Epoisses", surfaceArea: 0.651)
+    createCrop(plotName: "Epoisses", name: "Artichaut", surfaceArea: 0.651, startDate: Date())
+
+    createPlot(name: "Cabécou", surfaceArea: 12.06)
+    createCrop(plotName: "Cabécou", name: "Avoine", surfaceArea: 6.3, startDate: Date())
+    createCrop(plotName: "Cabécou", name: "Ciboulette", surfaceArea: 0.92, startDate: Date())
+    createCrop(plotName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date())
+  }
 
   func createPlot(name: String, surfaceArea: Double) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -261,9 +277,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  func fetchPlots() {
+  func fetchPlots() -> Bool {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+      return false
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -274,6 +290,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+
+    if plots.count < 1 {
+      return false
+    }
+    return true
   }
 
   func fetchPlot(withName plotName: String) -> NSManagedObject {
