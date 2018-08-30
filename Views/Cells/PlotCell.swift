@@ -1,5 +1,5 @@
 //
-//  CropCell.swift
+//  PlotCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 31/07/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CropCell: UITableViewCell {
+class PlotCell: UITableViewCell {
 
   @IBOutlet weak var checkboxButton: UIButton!
   @IBOutlet weak var nameLabel: UILabel!
