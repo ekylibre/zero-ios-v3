@@ -197,12 +197,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let managedContext = appDelegate.persistentContainer.viewContext
     let inputsTable = NSEntityDescription.entity(forEntityName: "Inputs", in: managedContext)!
     let input = NSManagedObject(entity: inputsTable, insertInto: managedContext)
-    var amm = ""
-    var name = ""
-    var specName = ""
-    var time = ""
+    let amm = ""
+    let name = ""
+    let specName = ""
+    let time = ""
 
-    switch inputType {
+    /*switch inputType {
     case "Seed":
       let cell = specificInputsTableView.cellForRow(at: indexPath) as! SeedsTableViewCell
 
@@ -225,7 +225,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       input.setValue("kg/ha", forKey: "unit")
     default:
       return
-    }
+    }*/
 
     input.setValue(amm, forKey: "amm")
     input.setValue(indexPath.row, forKey: "row")

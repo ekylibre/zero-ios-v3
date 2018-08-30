@@ -57,7 +57,7 @@ class UsersDatabase: UIViewController {
     do {
       let result = try context.fetch(request)
       for data in result as! [NSManagedObject] {
-        print(data.value(forKeyPath: dataToFetch) as! String)
+        print(data.value(forKey: dataToFetch) as! String)
       }
       appDelegate.saveContext()
     } catch {
