@@ -21,16 +21,16 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
-      let row = self.selectedTools[indexPath.row].value(forKey: "row") as! Int
+      let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
       let indexTab = NSIndexPath(row: row, section: 0)
       let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
 
       cell.isAlreadySelected = false
       cell.backgroundColor = AppColor.CellColors.white
 
-      self.selectedTools.remove(at: indexPath.row)
+      self.selectedEquipments.remove(at: indexPath.row)
 
-      if self.selectedTools.count == 0 {
+      if self.selectedEquipments.count == 0 {
         self.selectedEquipmentsTableView.isHidden = true
         self.equipmentHeightConstraint.constant = 70
         self.collapseButton.isHidden = true
@@ -43,8 +43,8 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     self.present(alert, animated: true)
   }
 
-  func defineToolTypes() {
-    toolTypes = [
+  func defineEquipmentTypes() {
+    equipmentTypes = [
       "Semoir monograines",
       "Presse enrubanneuse",
       "Castreuse",
@@ -87,29 +87,29 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   }
 
   func showEquipmentsNumber() {
-    if selectedTools.count > 0 && firstView.frame.height == 70 {
-      addToolButton.isHidden = true
-      toolNumberLabel.isHidden = false
-      toolNumberLabel.text = (selectedTools.count == 1 ? "1 outil" : "\(selectedTools.count) outils")
+    if selectedEquipments.count > 0 && firstView.frame.height == 70 {
+      addEquipmentButton.isHidden = true
+      equipmentNumberLabel.isHidden = false
+      equipmentNumberLabel.text = (selectedEquipments.count == 1 ? "1 outil" : "\(selectedEquipments.count) outils")
     } else {
-      addToolButton.isHidden = false
-      toolNumberLabel.isHidden = true
+      addEquipmentButton.isHidden = false
+      equipmentNumberLabel.isHidden = true
     }
   }
 
-  @IBAction func openSelectToolsView(_ sender: Any) {
+  @IBAction func openSelectEquipmentsView(_ sender: Any) {
     dimView.isHidden = false
-    selectToolsView.isHidden = false
+    selectEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
   }
 
-  func closeSelectToolsView() {
+  func closeSelectEquipmentsView() {
     dimView.isHidden = true
-    selectToolsView.isHidden = true
+    selectEquipmentsView.isHidden = true
 
-    if selectedTools.count > 0 {
+    if selectedEquipments.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.view.layoutIfNeeded()
@@ -119,7 +119,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
-    searchedTools = equipments
+    searchedEquipments = equipments
     selectedEquipmentsTableView.reloadData()
   }
 
@@ -142,9 +142,9 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     showEquipmentsNumber()
   }
 
-  @IBAction func openCreateToolsView(_ sender: Any) {
-    toolsDarkLayer.isHidden = false
-    createToolsView.isHidden = false
+  @IBAction func openCreateEquipmentsView(_ sender: Any) {
+    equipmentDarkLayer.isHidden = false
+    createEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
@@ -155,36 +155,36 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       let entityName: String = filterEntity.value(forKey: "firstName") as! String
       return entityName.range(of: searchText) != nil
     })
-    searchedTools = searchText.isEmpty ? equipments : equipments.filter({(filterTool: NSManagedObject) -> Bool in
-      let toolName: String = filterTool.value(forKey: "name") as! String
-      return toolName.range(of: searchText) != nil
+    searchedEquipments = searchText.isEmpty ? equipments : equipments.filter({(filterEquipment: NSManagedObject) -> Bool in
+      let equipmentName: String = filterEquipment.value(forKey: "name") as! String
+      return equipmentName.range(of: searchText) != nil
     })
     entitiesTableView.reloadData()
     equipmentsTableView.reloadData()
   }
 
-  func fetchTools() {
+  func fetchEquipments() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
     let managedContext = appDelegate.persistentContainer.viewContext
-    let toolsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
+    let equipmentsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
 
     do {
-      equipments = try managedContext.fetch(toolsFetchRequest)
+      equipments = try managedContext.fetch(equipmentsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    searchedTools = equipments
+    searchedEquipments = equipments
     equipmentsTableView.reloadData()
   }
 
-  @IBAction func closeToolsCreationView(_ sender: Any) {
-    toolName.text = nil
-    toolNumber.text = nil
-    toolsDarkLayer.isHidden = true
-    createToolsView.isHidden = true
-    fetchTools()
+  @IBAction func closeEquipmentsCreationView(_ sender: Any) {
+    equipmentName.text = nil
+    equipmentNumber.text = nil
+    equipmentDarkLayer.isHidden = true
+    createEquipmentsView.isHidden = true
+    fetchEquipments()
   }
 
   @IBAction func createNewEquipement(_ sender: Any) {
@@ -195,15 +195,15 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
     let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
 
-    equipment.setValue(toolName.text, forKeyPath: "name")
-    equipment.setValue(toolNumber.text, forKeyPath: "number")
-    equipment.setValue(selectedToolType, forKeyPath: "type")
+    equipment.setValue(equipmentName.text, forKeyPath: "name")
+    equipment.setValue(equipmentNumber.text, forKeyPath: "number")
+    equipment.setValue(selectedEquipmentType, forKeyPath: "type")
     equipment.setValue(UUID(), forKey: "uuid")
     equipment.setValue(0, forKey: "row")
     do {
       try managedContext.save()
       equipments.append(equipment)
-      closeToolsCreationView(self)
+      closeEquipmentsCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -211,8 +211,8 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 }
 
 extension AddInterventionViewController{
-  func defineToolImage(toolName: String) -> Int {
-    switch toolName {
+  func defineEquipmentImage(equipmentName: String) -> Int {
+    switch equipmentName {
     case "Semoir monograines":
       return 0
     case "Presse enrubanneuse":
