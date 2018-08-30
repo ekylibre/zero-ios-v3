@@ -38,7 +38,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
     tableView.bounces = false
-    tableView.register(SeedCell.self, forCellReuseIdentifier: "SeedCell")
+    tableView.register(PlotCell.self, forCellReuseIdentifier: "PlotCell")
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +81,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   var viewsArray = [[UIView]]()
   var cropPlots = [[NSManagedObject]]()
   var selectedCrops = [NSManagedObject]()
+  var cropsCount = 0
+  var totalSurfaceArea: Double = 0
 
   //MARK: - Initialization
 
@@ -318,4 +320,103 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   //MARK: - Actions
+
+  @objc func tapCheckbox(_ sender: UIButton) {
+    guard let cell = sender.superview?.superview as? PlotCell else {
+      return
+    }
+
+    let indexPath = tableView.indexPath(for: cell)!
+    let plot = plots[indexPath.row]
+    let plotSurfaceArea = plot.value(forKey: "surfaceArea") as! Double
+    let crops = fetchCrops(fromPlot: plot)
+
+    if !sender.isSelected {
+      sender.isSelected = true
+      cropsCount += crops.count
+      totalSurfaceArea += plotSurfaceArea
+      for view in cell.subviews[2...crops.count + 1] {
+        let checkboxImage = view.subviews[1] as! UIImageView
+        checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
+      }
+      for crop in crops {
+        selectedCrops.append(crop)
+      }
+    } else {
+      sender.isSelected = false
+      for (index, view) in cell.subviews[2...crops.count + 1].enumerated() {
+        let checkboxImage = view.subviews[1] as! UIImageView
+        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+          checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+          cropsCount -= 1
+          totalSurfaceArea -= crops[index].value(forKey: "surfaceArea") as! Double
+          if let index = selectedCrops.index(of: crops[index]) {
+            selectedCrops.remove(at: index)
+          }
+        }
+      }
+    }
+
+    if cropsCount == 0 {
+      selectedCropsLabel.text = "Aucune sélection"
+    } else if cropsCount == 1 {
+      selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
+    } else {
+      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", cropsCount, totalSurfaceArea)
+    }
+  }
+
+  @objc func tapCropView(sender: UIGestureRecognizer) {
+    let cell = sender.view?.superview as! PlotCell
+    let view = sender.view!
+
+    var plot: NSManagedObject!
+    var crops: [NSManagedObject]!
+    var crop: NSManagedObject!
+
+    for views in viewsArray {
+      if let indexView = views.index(of: view) {
+        plot = plots[viewsArray.index(of: views)!]
+        crops = fetchCrops(fromPlot: plot)
+        crop = crops[indexView]
+        break
+      }
+    }
+
+    let checkboxImage = view.subviews[1] as! UIImageView
+
+    if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
+      checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
+      cropsCount += 1
+      totalSurfaceArea += crop.value(forKey: "surfaceArea") as! Double
+      if !cell.checkboxButton.isSelected {
+        cell.checkboxButton.isSelected = true
+      }
+      selectedCrops.append(crop)
+    } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+      checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+      cropsCount -= 1
+      totalSurfaceArea -= crop.value(forKey: "surfaceArea") as! Double
+      for (index, view) in cell.subviews[2...crops.count + 1].enumerated() {
+        let checkboxImage = view.subviews[1] as! UIImageView
+        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+          break
+        } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == crops.count - 1 {
+          cell.checkboxButton.isSelected = false
+        }
+
+        if let index = selectedCrops.index(of: crop) {
+          selectedCrops.remove(at: index)
+        }
+      }
+    }
+
+    if cropsCount == 0 {
+      selectedCropsLabel.text = "Aucune sélection"
+    } else if cropsCount == 1 {
+      selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
+    } else {
+      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", cropsCount, totalSurfaceArea)
+    }
+  }
 }
