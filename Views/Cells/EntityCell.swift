@@ -13,7 +13,7 @@ class EntityCell: UITableViewCell {
   @IBOutlet weak var firstName: UILabel!
   @IBOutlet weak var logo: UIImageView!
 
-  var isAlreadySelected = false
+  var isAvaible = true
 }
 
 protocol DoerCellDelegate: class {

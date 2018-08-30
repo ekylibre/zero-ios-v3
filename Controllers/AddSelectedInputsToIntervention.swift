@@ -23,37 +23,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-      self.selectedInputsManagedObject.remove(at: indexPath.row)
+      self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
-
-      /*if self.selectedInputsManagedObject.count > indexPath.row {
-       let row = self.selectedInputsManagedObject[indexPath.row].value(forKey: "row") as! Int
-       let indexTab = NSIndexPath(row: row, section: 0)
-       let inputType = self.selectedInputsManagedObject[indexPath.row].value(forKey: "type") as! String
-       switch inputType {
-       case "Seed":
-       print("\nSeed indexTab: \(indexTab)")
-       let cell = self.specificInputsTableView.cellForRow(at: indexTab as IndexPath) as! SeedsTableViewCell
-
-       cell.isAlreadySelected = false
-       cell.backgroundColor = AppColor.CellColors.white
-       case "Phyto":
-       print("\nPhyto indexTab: \(indexTab)")
-       let cell = self.specificInputsTableView.cellForRow(at: indexTab as IndexPath) as! PhytosTableViewCell
-
-       cell.isAlreadySelected = false
-       cell.backgroundColor = AppColor.CellColors.white
-       case "Fertilizer":
-       print("\nFertilizer indexTab: \(indexTab)")
-       let cell = self.specificInputsTableView.cellForRow(at: indexTab as IndexPath) as! FertilizersTableViewCell
-
-       cell.isAlreadySelected = false
-       cell.backgroundColor = AppColor.CellColors.white
-       default:
-       return
-       }
-       }*/
-      if self.selectedInputsManagedObject.count == 0 && self.inputsSelectionView.frame.height != 70 {
+      if self.selectedInputs.count == 0 && self.inputsSelectionView.frame.height != 70 {
         self.inputsHeightConstraint.constant = 70
         self.inputsCollapseButton.isHidden = true
       }
@@ -71,7 +43,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     dimView.isHidden = true
     inputsView.isHidden = true
 
-    if selectedInputsManagedObject.count > 0 {
+    if selectedInputs.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.view.layoutIfNeeded()
@@ -85,9 +57,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func showInputsNumber() {
-    if selectedInputsManagedObject.count > 0 && inputsHeightConstraint.constant == 70 {
+    if selectedInputs.count > 0 && inputsHeightConstraint.constant == 70 {
       addInputsButton.isHidden = true
-      inputsNumber.text = (selectedInputsManagedObject.count == 1 ? "1 intrant" : "\(selectedInputsManagedObject.count) intrants")
+      inputsNumber.text = (selectedInputs.count == 1 ? "1 intrant" : "\(selectedInputs.count) intrants")
       inputsNumber.isHidden = false
     } else {
       inputsNumber.isHidden = true
@@ -155,12 +127,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     do {
       try managedContext.save()
-      //let predicate = NSPredicate(format: "species == %@", seed)
-      //let fetchedSeed = NSFetchRequest<NSFetchRequestResult>(entityName: "Seeds")
-
-      //fetchedSeed.predicate = predicate
-      //let seedResults = try managedContext.execute(fetchedSeed)
-      //print(seedResults)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -187,53 +153,5 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  func storeSelectedInput(indexPath: IndexPath, inputType: String) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let inputsTable = NSEntityDescription.entity(forEntityName: "Inputs", in: managedContext)!
-    let input = NSManagedObject(entity: inputsTable, insertInto: managedContext)
-    let amm = ""
-    let name = ""
-    let specName = ""
-    let time = ""
-
-    /*switch inputType {
-    case "Seed":
-      let cell = specificInputsTableView.cellForRow(at: indexPath) as! SeedsTableViewCell
-
-      name = cell.varietyLabel.text!
-      specName = cell.specieLabel.text!
-      input.setValue("kg/ha", forKey: "unit")
-    case "Phyto":
-      let cell = specificInputsTableView.cellForRow(at: indexPath) as! PhytosTableViewCell
-
-      amm = cell.maaIDLabel.text!
-      name = cell.nameLabel.text!
-      specName = cell.firmNameLabel.text!
-      time = cell.reentryLabel.text!
-      input.setValue("l/ha", forKey: "unit")
-    case "Fertilizer":
-      let cell = specificInputsTableView.cellForRow(at: indexPath) as! FertilizersTableViewCell
-
-      name = cell.nameLabel.text!
-      specName = cell.natureLabel.text!
-      input.setValue("kg/ha", forKey: "unit")
-    default:
-      return
-    }*/
-
-    input.setValue(amm, forKey: "amm")
-    input.setValue(indexPath.row, forKey: "row")
-    input.setValue(name, forKey: "name")
-    input.setValue(specName, forKey: "specName")
-    input.setValue(time, forKey: "time")
-    input.setValue(inputType, forKey: "type")
-    input.setValue("0.0", forKey: "quantity")
-    selectedInputsManagedObject.append(input)
   }
 }

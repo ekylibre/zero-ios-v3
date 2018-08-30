@@ -38,7 +38,7 @@ extension AddInterventionViewController: DoerCellDelegate {
       let indexTab = NSIndexPath(row: row, section: 0)
       let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
 
-      cell.isAlreadySelected = false
+      cell.isAvaible = true
       cell.backgroundColor = AppColor.CellColors.white
 
       self.doers.remove(at: indexPath.row)

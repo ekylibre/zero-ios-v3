@@ -29,7 +29,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       let indexTab = NSIndexPath(row: row, section: 0)
       let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
 
-      cell.isAlreadySelected = false
+      cell.isAvaible = true
       cell.backgroundColor = AppColor.CellColors.white
 
       self.selectedEquipments.remove(at: indexPath.row)
