@@ -9,25 +9,19 @@
 import UIKit
 
 class CreatePhytoView: UIView, UITextFieldDelegate {
-  var titleLabel: UILabel!
-  var nameTextField: UITextField!
-  var firmNameTextField: UITextField!
-  var maaTextField: UITextField!
-  var reentryDelayTextField: UITextField!
-  var unitLabel: UILabel!
-  var cancelButton: UIButton!
-  var createButton: UIButton!
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  //MARK: - Properties
 
-    titleLabel = UILabel(frame: CGRect.zero)
+  lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'un produit phyto"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(titleLabel)
+    return titleLabel
+  }()
 
-    nameTextField = UITextField(frame: CGRect.zero)
+  lazy var nameTextField: UITextField = {
+    let nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "Nom"
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
@@ -40,9 +34,11 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     nameTextField.layer.shadowOpacity = 1
     nameTextField.layer.shadowRadius = 0
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(nameTextField)
+    return nameTextField
+  }()
 
-    firmNameTextField = UITextField(frame: CGRect.zero)
+  lazy var firmNameTextField: UITextField = {
+    let firmNameTextField = UITextField(frame: CGRect.zero)
     firmNameTextField.placeholder = "Marque"
     firmNameTextField.autocorrectionType = .no
     firmNameTextField.delegate = self
@@ -55,9 +51,11 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     firmNameTextField.layer.shadowOpacity = 1
     firmNameTextField.layer.shadowRadius = 0
     firmNameTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(firmNameTextField)
+    return firmNameTextField
+  }()
 
-    maaTextField = UITextField(frame: CGRect.zero)
+  lazy var maaTextField: UITextField = {
+    let maaTextField = UITextField(frame: CGRect.zero)
     maaTextField.keyboardType = .numberPad
     maaTextField.placeholder = "N° AMM"
     maaTextField.autocorrectionType = .no
@@ -71,9 +69,11 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     maaTextField.layer.shadowOpacity = 1
     maaTextField.layer.shadowRadius = 0
     maaTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(maaTextField)
+    return maaTextField
+  }()
 
-    reentryDelayTextField = UITextField(frame: CGRect.zero)
+  lazy var reentryDelayTextField: UITextField = {
+    let reentryDelayTextField = UITextField(frame: CGRect.zero)
     reentryDelayTextField.keyboardType = .numberPad
     reentryDelayTextField.placeholder = "Délai de ré-entrée"
     reentryDelayTextField.autocorrectionType = .no
@@ -87,31 +87,61 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     reentryDelayTextField.layer.shadowOpacity = 1
     reentryDelayTextField.layer.shadowRadius = 0
     reentryDelayTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(reentryDelayTextField)
+    return reentryDelayTextField
+  }()
 
-    unitLabel = UILabel(frame: CGRect.zero)
+  lazy var unitLabel: UILabel = {
+    let unitLabel = UILabel(frame: CGRect.zero)
     unitLabel.text = "en heures"
     unitLabel.font = UIFont.systemFont(ofSize: 14)
     unitLabel.textColor = UIColor.lightGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(unitLabel)
+    return unitLabel
+  }()
 
-    cancelButton = UIButton(frame: CGRect.zero)
+  lazy var cancelButton: UIButton = {
+    let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(cancelButton)
+    return cancelButton
+  }()
 
-    createButton = UIButton(frame: CGRect.zero)
+  lazy var createButton: UIButton = {
+    let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     createButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(createButton)
+    return createButton
+  }()
 
+  //MARK: - Initialization
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setupView()
+  }
+
+  private func setupView() {
+    self.backgroundColor = UIColor.white
+    self.layer.cornerRadius = 5
+    self.clipsToBounds = true
+    self.isHidden = true
+    self.addSubview(titleLabel)
+    self.addSubview(nameTextField)
+    self.addSubview(firmNameTextField)
+    self.addSubview(maaTextField)
+    self.addSubview(reentryDelayTextField)
+    self.addSubview(unitLabel)
+    self.addSubview(cancelButton)
+    self.addSubview(createButton)
+    setupLayout()
+    setupActions()
+  }
+
+  private func setupLayout() {
     let viewsDict = [
       "title" : titleLabel,
       "name" : nameTextField,
@@ -133,12 +163,18 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-30-[name]-35-[firm]-35-[maa]-35-[reentry]-5-[unit]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
-
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
   }
+
+  private func setupActions() {
+    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  //MARK: - Text field
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let nextTag = textField.tag + 1
@@ -152,6 +188,8 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     return false
   }
 
+  //MARK: - Actions
+
   @objc func closeView(sender: UIButton) {
     for subview in self.subviews {
       if sender == cancelButton && subview is UITextField {
@@ -161,9 +199,5 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
       }
     }
     self.isHidden = true
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("NSCoder has not been implemented.")
   }
 }

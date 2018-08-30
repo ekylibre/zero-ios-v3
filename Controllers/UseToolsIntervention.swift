@@ -120,9 +120,9 @@ extension AddInterventionViewController: SelectedToolsTableViewCellDelegate {
     let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
     let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
 
-    equipment.setValue(toolName.text, forKeyPath: "name")
-    equipment.setValue(toolNumber.text, forKeyPath: "number")
-    equipment.setValue(selectedToolType, forKeyPath: "type")
+    equipment.setValue(toolName.text, forKey: "name")
+    equipment.setValue(toolNumber.text, forKey: "number")
+    equipment.setValue(selectedToolType, forKey: "type")
     equipment.setValue(UUID(), forKey: "uuid")
     do {
       try managedContext.save()

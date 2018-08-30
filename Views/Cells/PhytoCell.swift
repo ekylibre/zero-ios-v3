@@ -1,5 +1,5 @@
 //
-//  PhytosTableViewCell.swift
+//  PhytoCell.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 21/08/2018.
@@ -8,47 +8,71 @@
 
 import UIKit
 
-class PhytosTableViewCell: UITableViewCell {
+class PhytoCell: UITableViewCell {
 
-  let nameLabel = UILabel()
-  let firmNameLabel = UILabel()
-  let maaLabel = UILabel()
-  let maaIDLabel = UILabel()
-  let reentryLabel = UILabel()
-  let inFieldReentryDelayLabel = UILabel()
-
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+  lazy var nameLabel: UILabel = {
+    let nameLabel = UILabel(frame: CGRect.zero)
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(nameLabel)
+    return nameLabel
+  }()
 
+  lazy var firmNameLabel: UILabel = {
+    let firmNameLabel = UILabel(frame: CGRect.zero)
     firmNameLabel.font = UIFont.systemFont(ofSize: 14)
     firmNameLabel.textColor = AppColor.TextColors.Green
     firmNameLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(firmNameLabel)
+    return firmNameLabel
+  }()
 
+  lazy var maaLabel: UILabel = {
+    let maaLabel = UILabel(frame: CGRect.zero)
     maaLabel.text = "N° AMM"
     maaLabel.font = UIFont.italicSystemFont(ofSize: 14)
     maaLabel.textColor = AppColor.TextColors.DarkGray
     maaLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(maaLabel)
+    return maaLabel
+  }()
 
+  lazy var maaIDLabel: UILabel = {
+    let maaIDLabel = UILabel(frame: CGRect.zero)
     maaIDLabel.font = UIFont.systemFont(ofSize: 14)
     maaIDLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(maaIDLabel)
+    return maaIDLabel
+  }()
 
+  lazy var reentryLabel: UILabel = {
+    let reentryLabel = UILabel(frame: CGRect.zero)
     reentryLabel.text = "Délai de réentrée"
     reentryLabel.font = UIFont.italicSystemFont(ofSize: 14)
     reentryLabel.textColor = AppColor.TextColors.DarkGray
     reentryLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(reentryLabel)
+    return reentryLabel
+  }()
 
+  lazy var inFieldReentryDelayLabel: UILabel = {
+    let inFieldReentryDelayLabel = UILabel(frame: CGRect.zero)
     inFieldReentryDelayLabel.font = UIFont.systemFont(ofSize: 14)
     inFieldReentryDelayLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inFieldReentryDelayLabel)
+    return inFieldReentryDelayLabel
+  }()
 
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupCell()
+  }
+
+  private func setupCell() {
+    contentView.addSubview(nameLabel)
+    contentView.addSubview(firmNameLabel)
+    contentView.addSubview(maaLabel)
+    contentView.addSubview(maaIDLabel)
+    contentView.addSubview(reentryLabel)
+    contentView.addSubview(inFieldReentryDelayLabel)
+    setupLayout()
+  }
+
+  private func setupLayout() {
     let viewsDict = [
       "name" : nameLabel,
       "firmName" : firmNameLabel,
@@ -64,14 +88,6 @@ class PhytosTableViewCell: UITableViewCell {
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[reentry]-[inFieldReentryDelay]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[name][firmName]-[maa][reentry]-|", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[firmName]-[maaID][inFieldReentryDelay]", options: [], metrics: nil, views: viewsDict))
-  }
-
-  override func awakeFromNib() {
-    super.awakeFromNib()
-  }
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
   }
 
   required init?(coder aDecoder: NSCoder) {

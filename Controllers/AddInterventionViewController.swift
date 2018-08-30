@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate {
 
   //MARK: - Outlets
 
@@ -63,10 +63,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedPlots = [NSManagedObject]()
   var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
+  var cropsView: CropsView!
   var equipments = [NSManagedObject]()
   var selectDateView: UIView!
   var inputsView: InputsView!
-  var specificInputsTableView: UITableView!
   var interventionTools = [NSManagedObject]()
   var selectedTools = [NSManagedObject]()
   var searchedTools = [NSManagedObject]()
@@ -78,9 +78,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
   var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
-  var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
-  var samplePhytos = [["Nom 1", "Marque 1", "1000", "1h"], ["Nom 2", "Marque 2", "2000", "2h"], ["Nom 3", "Marque 3", "3000", "3h"]]
-  var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -163,10 +160,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     self.view.addSubview(inputsView)
-    specificInputsTableView = inputsView.tableView
-    inputsView.seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
-    inputsView.phytoView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
-    inputsView.fertilizerView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
+
+    cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    self.view.addSubview(cropsView)
+    //cropsView.isHidden = false
   }
 
   override func viewDidLayoutSubviews() {
@@ -178,8 +175,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
     inputsView.center.x = self.view.center.x
     inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
-    specificInputsTableView.delegate = self
-    specificInputsTableView.dataSource = self
+    inputsView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
+    inputsView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+
+    cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
+    cropsView.center.x = self.view.center.x
+    cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
+  }
+
+  @objc func showList() {
+    self.performSegue(withIdentifier: "showSpecieList", sender: self)
+  }
+
+  @objc func showAlert() {
+    self.present(inputsView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -205,8 +214,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     switch tableView {
     case cropsTableView:
       return crops.count
-    case specificInputsTableView:
-      return getNumberOfInputs()
     case equipmentsTableView:
       return searchedTools.count
     case selectedToolsTableView:
@@ -222,20 +229,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func getNumberOfInputs() -> Int {
-
-    switch inputsView.segmentedControl.selectedSegmentIndex {
-    case 0:
-      return sampleSeeds.count
-    case 1:
-      return samplePhytos.count
-    case 2:
-      return sampleFertilizers.count
-    default:
-      return 0
-    }
-  }
-
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var crop: NSManagedObject?
     var tool: NSManagedObject?
@@ -246,7 +239,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tableView {
     case cropsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "cropTableViewCell", for: indexPath) as! CropTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "CropCell", for: indexPath) as! CropCell
 
       crop = crops[indexPath.row]
       cell.nameLabel.text = crop?.value(forKey: "name") as? String
@@ -271,16 +264,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         view.addSubview(checkboxImage)
         let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
         nameLabel.textColor = UIColor.black
-        let name = plot.value(forKeyPath: "name") as! String
+        let name = plot.value(forKey: "name") as! String
         let calendar = Calendar.current
-        let date = plot.value(forKeyPath: "startDate") as! Date
+        let date = plot.value(forKey: "startDate") as! Date
         let year = calendar.component(.year, from: date)
         nameLabel.text = name + " | \(year)"
         nameLabel.font = UIFont.systemFont(ofSize: 13.0)
         view.addSubview(nameLabel)
         let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
         surfaceAreaLabel.textColor = UIColor.darkGray
-        let surfaceArea = plot.value(forKeyPath: "surfaceArea") as! Double
+        let surfaceArea = plot.value(forKey: "surfaceArea") as! Double
         surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
         surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
         view.addSubview(surfaceAreaLabel)
@@ -292,28 +285,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
-    case specificInputsTableView:
-      if inputsView.segmentedControl.selectedSegmentIndex == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SeedsCell", for: indexPath) as! SeedsTableViewCell
-
-        cell.varietyLabel.text = sampleSeeds[indexPath.row][0]
-        cell.specieLabel.text = sampleSeeds[indexPath.row][1]
-        return cell
-      } else if inputsView.segmentedControl.selectedSegmentIndex == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PhytosCell", for: indexPath) as! PhytosTableViewCell
-
-        cell.nameLabel.text = samplePhytos[indexPath.row][0]
-        cell.firmNameLabel.text = samplePhytos[indexPath.row][1]
-        cell.maaIDLabel.text = samplePhytos[indexPath.row][2]
-        cell.inFieldReentryDelayLabel.text = samplePhytos[indexPath.row][3]
-        return cell
-      } else {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizersCell", for: indexPath) as! FertilizersTableViewCell
-
-        cell.nameLabel.text = sampleFertilizers[indexPath.row][0]
-        cell.natureLabel.text = sampleFertilizers[indexPath.row][1]
-        return cell
-      }
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentsTableViewCell", for: indexPath) as! EquipmentsTableViewCell
 
@@ -382,7 +353,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tableView {
     case cropsTableView:
-      let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropTableViewCell
+      let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropCell
       if !indexPaths.contains(selectedIndexPath!) {
         indexPaths += [selectedIndexPath!]
         cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
@@ -397,10 +368,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedTools.append(equipments[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-        selectedToolType = toolTypes[indexPath.row]
-        toolTypeTableView.reloadData()
-        toolTypeButton.setTitle(selectedToolType, for: .normal)
-        toolTypeTableView.isHidden = true
+      selectedToolType = toolTypes[indexPath.row]
+      toolTypeTableView.reloadData()
+      toolTypeButton.setTitle(selectedToolType, for: .normal)
+      toolTypeTableView.isHidden = true
     case entitiesTableView:
       doersTableView.isHidden = false
       doers.append(entities[indexPath.row])
@@ -427,12 +398,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
     case doersTableView:
       return 75
-    case specificInputsTableView:
-      if inputsView.segmentedControl.selectedSegmentIndex == 1 {
-        return 100
-      } else {
-        return 60
-      }
     default:
       return 60
     }
@@ -497,7 +462,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedPlot in selectedPlots {
       let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
-      let surfaceArea = selectedPlot.value(forKeyPath: "surfaceArea") as! Double
+      let surfaceArea = selectedPlot.value(forKey: "surfaceArea") as! Double
 
       target.setValue(intervention, forKey: "interventions")
       target.setValue(surfaceArea, forKey: "surfaceArea")
@@ -521,7 +486,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedTool in selectedTools {
       let tool = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
-      let name = selectedTool.value(forKeyPath: "name") as! String
+      let name = selectedTool.value(forKey: "name") as! String
       let type = selectedTool.value(forKey: "type") as! String
       let equipment = selectedTool.value(forKey: "uuid") as! UUID
 
@@ -570,9 +535,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
     let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
 
-    crop.setValue(name, forKeyPath: "name")
-    crop.setValue(surfaceArea, forKeyPath: "surfaceArea")
-    crop.setValue(uuid, forKeyPath: "uuid")
+    crop.setValue(name, forKey: "name")
+    crop.setValue(surfaceArea, forKey: "surfaceArea")
+    crop.setValue(uuid, forKey: "uuid")
 
     do {
       try managedContext.save()
@@ -594,11 +559,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let crop = fetchCrop(withName: cropName)
 
-    plot.setValue(crop, forKeyPath: "crops")
-    plot.setValue(name, forKeyPath: "name")
-    plot.setValue(surfaceArea, forKeyPath: "surfaceArea")
+    plot.setValue(crop, forKey: "crops")
+    plot.setValue(name, forKey: "name")
+    plot.setValue(surfaceArea, forKey: "surfaceArea")
     plot.setValue(startDate, forKey: "startDate")
-    plot.setValue(uuid, forKeyPath: "uuid")
+    plot.setValue(uuid, forKey: "uuid")
 
     do {
       try managedContext.save()
@@ -678,13 +643,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func tapCheckbox(_ sender: UIButton) {
 
-    guard let cell = sender.superview?.superview as? CropTableViewCell else {
+    guard let cell = sender.superview?.superview as? CropCell else {
       return
     }
 
     let indexPath = cropsTableView.indexPath(for: cell)!
     let crop = crops[indexPath.row]
-    let cropSurfaceArea = crop.value(forKeyPath: "surfaceArea") as! Double
+    let cropSurfaceArea = crop.value(forKey: "surfaceArea") as! Double
     let plots = fetchPlots(fromCrop: crop)
 
     if !sender.isSelected {
@@ -705,7 +670,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
           plotsCount -= 1
-          totalSurfaceArea -= plots[index].value(forKeyPath: "surfaceArea") as! Double
+          totalSurfaceArea -= plots[index].value(forKey: "surfaceArea") as! Double
           if let index = selectedPlots.index(of: plots[index]) {
             selectedPlots.remove(at: index)
           }
@@ -723,7 +688,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func tapPlotView(sender: UIGestureRecognizer) {
-    let cell = sender.view?.superview as! CropTableViewCell
+    let cell = sender.view?.superview as! CropCell
     let view = sender.view!
 
     var crop: NSManagedObject!
@@ -744,7 +709,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       plotsCount += 1
-      totalSurfaceArea += plot.value(forKeyPath: "surfaceArea") as! Double
+      totalSurfaceArea += plot.value(forKey: "surfaceArea") as! Double
       if !cell.checkboxButton.isSelected {
         cell.checkboxButton.isSelected = true
       }
@@ -752,7 +717,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
       plotsCount -= 1
-      totalSurfaceArea -= plot.value(forKeyPath: "surfaceArea") as! Double
+      totalSurfaceArea -= plot.value(forKey: "surfaceArea") as! Double
       for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
@@ -779,13 +744,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   //MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    super.prepare(for: segue, sender: sender)
+    //super.prepare(for: segue, sender: sender)
+    switch segue.identifier {
+    case "showSpecieList":
+      let destVC = segue.destination as! ListTableViewController
+      destVC.delegate = self
+      destVC.cellsStrings = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
+    default:
+      guard let button = sender as? UIButton, button === saveInterventionButton else {
+        return
+      }
 
-    guard let button = sender as? UIButton, button === saveInterventionButton else {
-      return
+      createIntervention()
     }
+  }
 
-    createIntervention()
+  func writeValueBack(value: String) {
+    inputsView.seedView.specieButton.setTitle(value, for: .normal)
   }
 
   //MARK: - Actions
@@ -908,32 +883,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
-  }
-
-  @objc func createInput() {
-    switch inputsView.segmentedControl.selectedSegmentIndex {
-    case 0:
-      sampleSeeds.append([inputsView.seedView.varietyTextField.text!, inputsView.seedView.specieButton.titleLabel!.text!])
-      inputsView.seedView.specieButton.setTitle("Avoine", for: .normal)
-      inputsView.seedView.varietyTextField.text = ""
-      inputsView.tableView.reloadData()
-    case 1:
-      samplePhytos.append([inputsView.phytoView.nameTextField.text!, inputsView.phytoView.firmNameTextField.text!, inputsView.phytoView.maaTextField.text!, inputsView.phytoView.reentryDelayTextField.text!])
-      for subview in inputsView.phytoView.subviews {
-        if subview is UITextField {
-          let textField = subview as! UITextField
-          textField.text = ""
-        }
-      }
-      inputsView.tableView.reloadData()
-    case 2:
-      sampleFertilizers.append([inputsView.fertilizerView.nameTextField.text!, inputsView.fertilizerView.natureButton.titleLabel!.text!])
-      inputsView.fertilizerView.nameTextField.text = ""
-      inputsView.fertilizerView.natureButton.setTitle("Organique", for: .normal)
-      inputsView.tableView.reloadData()
-    default:
-      return
-    }
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
