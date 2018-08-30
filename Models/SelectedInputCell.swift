@@ -263,10 +263,15 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     }
   }
 
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
     let invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
 
-    return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+    return string.rangeOfCharacter(
+      from: invalidCharacters,
+      options: [],
+      range: string.startIndex ..< string.endIndex
+      ) == nil
   }
 
   @objc func showUnitMeasure(sender: UIButton) {
