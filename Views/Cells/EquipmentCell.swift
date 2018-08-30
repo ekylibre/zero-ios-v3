@@ -13,7 +13,7 @@ class EquipmentCell: UITableViewCell {
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!
 
-  var isAlreadySelected = false
+  var isAvaible = true
 }
 
 protocol SelectedEquipmentCellDelegate: class {

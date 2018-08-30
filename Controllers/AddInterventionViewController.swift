@@ -87,15 +87,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var doers = [NSManagedObject]()
   var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var createdSeed = [NSManagedObject]()
-  var selectedInputs = [[String]]()
-  var selectedInputsManagedObject = [NSManagedObject]()
+  var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
-  var toolImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -104,17 +102,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     // Working period
     selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
-    self.view.addSubview(selectDateView)
     selectDateView.center.x = self.view.center.x
     selectDateView.center.y = self.view.center.y
+    self.view.addSubview(selectDateView)
+
     let dateFormatter = DateFormatter()
+
     dateFormatter.locale = Locale(identifier: "fr_FR")
     dateFormatter.dateFormat = "d MMMM"
     let currentDateString = dateFormatter.string(from: Date())
-    selectDateButton.setTitle(currentDateString, for: .normal)
     let validateButton = selectDateView.subviews.last as! UIButton
+
     validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
 
+    selectDateButton.setTitle(currentDateString, for: .normal)
     selectDateButton.layer.cornerRadius = 5
     selectDateButton.layer.borderWidth = 0.5
     selectDateButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -158,6 +159,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
 
+    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
+    selectedInputsTableView.bounces = false
+
     equipmentsTableView.dataSource = self
     equipmentsTableView.delegate = self
     equipmentsTableView.bounces = false
@@ -188,6 +194,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    inputsView.addInterventionViewController = self
     self.view.addSubview(inputsView)
 
     defineEquipmentTypes()
@@ -260,7 +267,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case doersTableView:
       return doers.count
     case selectedInputsTableView:
-      return selectedInputsManagedObject.count
+      return selectedInputs.count
     default:
       return 1
     }
@@ -323,33 +330,33 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       viewsArray.append(views)
       return cell
-
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
-      if selectedInputsManagedObject.count > indexPath.row {
-        input = selectedInputsManagedObject[indexPath.row]
-
+      if selectedInputs.count > indexPath.row {
+        input = selectedInputs[indexPath.row]
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        //cell.type = input?.value(forKey: "type") as! String
-        cell.inputName.text = input?.value(forKey: "specie") as? String
-        cell.inputSpec.text = input?.value(forKey: "variety") as? String
+        cell.type = input?.value(forKey: "type") as! String
+        cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-        //cell.inputQuantity.text = (cell.inputQuantity.text == "" ? input?.value(forKey: "quantity") as? String : "")
-        if cell.unitMeasureButton.titleLabel!.text == nil {
-          //cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
-        }
+
         switch cell.type {
         case "Seed":
-          cell.inputImage.image = #imageLiteral(resourceName: "seed")
+          cell.inputName.text = input?.value(forKey: "specie") as? String
+          cell.inputSpec.text = input?.value(forKey: "variety") as? String
+          cell.imageView?.image = #imageLiteral(resourceName: "seed")
         case "Phyto":
-          cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
+          cell.inputName.text = input?.value(forKey: "name") as? String
+          cell.inputSpec.text = input?.value(forKey: "firmName") as? String
+          cell.imageView?.image = #imageLiteral(resourceName: "phytosanitary")
         case "Fertilizer":
-          cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
+          cell.inputName.text = input?.value(forKey: "name") as? String
+          cell.inputSpec.text = input?.value(forKey: "nature") as? String
+          cell.imageView?.image = #imageLiteral(resourceName: "fertilizer")
         default:
-          cell.inputImage.image = #imageLiteral(resourceName: "seed")
+          print("No type")
         }
       }
       return cell
@@ -404,14 +411,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
-    equipmentTypeTableView.isHidden = false
-    equipmentTypeTableView.layer.shadowColor = UIColor.black.cgColor
-    equipmentTypeTableView.layer.shadowOpacity = 1
-    equipmentTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
-    equipmentTypeTableView.layer.shadowRadius = 10
-  }
-
   // Expand/collapse cell when tapped
   var selectedIndexPath: IndexPath?
   var indexPaths: [IndexPath] = []
@@ -435,11 +434,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case equipmentsTableView:
       let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
-      if !cell.isAlreadySelected {
+      if cell.isAvaible {
         selectedEquipments.append(equipments[indexPath.row])
         selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
-        cell.isAlreadySelected = true
+        cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
       closeSelectEquipmentsView()
@@ -451,47 +450,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
-      if !cell.isAlreadySelected {
+      if !cell.isAvaible {
         doers.append(entities[indexPath.row])
         doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
-        cell.isAlreadySelected = true
+        cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
       closeSelectEntitiesView()
-      /*case specificInputsTableView:
-       switch inputsView.segmentedControl.selectedSegmentIndex {
-       case 0:
-       let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! SeedsTableViewCell
-
-       if !cell.isAlreadySelected {
-       storeSampleSeed(indexPath: selectedIndexPath!)
-       selectedInputs.append(sampleSeeds[indexPath.row])
-       cell.isAlreadySelected = true
-       cell.backgroundColor = AppColor.CellColors.lightGray
-       selectedInputsManagedObject.append(createdSeed[0])
-       }
-       case 1:
-       let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! PhytosTableViewCell
-
-       if !cell.isAlreadySelected {
-       selectedInputs.append(samplePhytos[indexPath.row])
-       cell.isAlreadySelected = true
-       cell.backgroundColor = AppColor.CellColors.lightGray
-       }
-       case 2:
-       let cell = specificInputsTableView.cellForRow(at: selectedIndexPath!) as! FertilizersTableViewCell
-
-       if !cell.isAlreadySelected {
-       selectedInputs.append(sampleFertilizers[indexPath.row])
-       cell.isAlreadySelected = true
-       cell.backgroundColor = AppColor.CellColors.lightGray
-       }
-       default:
-       print("Error")
-       }
-       selectedInputsTableView.reloadData()
-       closeSelectInputsView()*/
     default:
       print("Nothing to do")
     }
@@ -516,6 +482,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return 60
     }
+  }
+
+  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
+    equipmentTypeTableView.isHidden = false
+    equipmentTypeTableView.layer.shadowColor = UIColor.black.cgColor
+    equipmentTypeTableView.layer.shadowOpacity = 1
+    equipmentTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
+    equipmentTypeTableView.layer.shadowRadius = 10
   }
 
   //MARK: - Core Data
