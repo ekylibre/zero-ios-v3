@@ -88,11 +88,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    fetchPlots()
     setupView()
   }
 
   private func setupView() {
-    //self.translatesAutoresizingMaskIntoConstraints = false
     self.isHidden = true
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 5
@@ -195,11 +195,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cell = tableView.cellForRow(at: selectedIndexPath!) as! PlotCell
     if !indexPaths.contains(selectedIndexPath!) {
       indexPaths += [selectedIndexPath!]
-      cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+      cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi)
     } else {
       let index = indexPaths.index(of: selectedIndexPath!)
       indexPaths.remove(at: index!)
-      cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+      cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi - 3.14159)
     }
     tableView.beginUpdates()
     tableView.endUpdates()
