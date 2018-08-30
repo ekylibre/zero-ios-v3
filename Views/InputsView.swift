@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
@@ -86,16 +87,19 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return fertilizerView
   }()
 
-  var sampleSeeds = [["Variété 1", "Espèce 1"], ["Variété 2", "Espèce 2"]]
-  var samplePhytos = [["Nom 1", "Marque 1", "1000", "1 heures"], ["Nom 2", "Marque 2", "2000", "2 heures"], ["Nom 3", "Marque 3", "3000", "3 heures"]]
-  var sampleFertilizers = [["Nom 1", "Nature 1"], ["Nom 2", "Nature 2"], ["Nom 3", "Nature 3"], ["Nom 4", "Nature 4"]]
-  var filteredInputs: [[String]]!
+  var seeds = [NSManagedObject]()
+  var phytos = [NSManagedObject]()
+  var fertilizers = [NSManagedObject]()
+  var filteredInputs = [NSManagedObject]()
 
   //MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
+    if !fetchInputs() {
+      loadSampleInputs()
+    }
   }
 
   private func setupView() {
@@ -171,7 +175,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return filteredInputs.count
     }
 
-    var countToUse = [0: sampleSeeds.count, 1: samplePhytos.count, 2: sampleFertilizers.count]
+    var countToUse = [0: seeds.count, 1: phytos.count, 2: fertilizers.count]
     return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
   }
 
@@ -179,26 +183,26 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
-      let fromSeeds = isSearching ? filteredInputs! : sampleSeeds
+      let fromSeeds = isSearching ? filteredInputs : seeds
 
-      cell.varietyLabel.text = fromSeeds[indexPath.row][0]
-      cell.specieLabel.text = fromSeeds[indexPath.row][1]
+      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKeyPath: "variety") as? String
+      cell.specieLabel.text = fromSeeds[indexPath.row].value(forKeyPath: "specie") as? String
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
-      let fromPhytos = isSearching ? filteredInputs! : samplePhytos
+      let fromPhytos = isSearching ? filteredInputs : phytos
 
-      cell.nameLabel.text = fromPhytos[indexPath.row][0]
-      cell.firmNameLabel.text = fromPhytos[indexPath.row][1]
-      cell.maaIDLabel.text = fromPhytos[indexPath.row][2]
-      cell.inFieldReentryDelayLabel.text = fromPhytos[indexPath.row][3]
+      cell.nameLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "name") as? String
+      cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "firmName") as? String
+      cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "maaID") as? String
+      cell.inFieldReentryDelayLabel.text = fromPhytos[indexPath.row].value(forKeyPath: "reentryDelay") as? String
       return cell
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
-      let fromFertilizers = isSearching ? filteredInputs! : sampleFertilizers
+      let fromFertilizers = isSearching ? filteredInputs : fertilizers
 
-      cell.nameLabel.text = fromFertilizers[indexPath.row][0]
-      cell.natureLabel.text = fromFertilizers[indexPath.row][1]
+      cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKeyPath: "name") as? String
+      cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKeyPath: "nature") as? String
       return cell
     default:
       fatalError("Switch error")
@@ -224,15 +228,120 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    let inputs = [0: sampleSeeds, 1: samplePhytos, 2: sampleFertilizers]
+    let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
-    filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: [String]) -> Bool in
-      let name: String = input[0]
+    filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: NSManagedObject) -> Bool in
+      let name: String = input.value(forKeyPath: "variety") as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     isSearching = (searchText.isEmpty ? false : true)
     createButton.isHidden = isSearching
     tableView.reloadData()
+  }
+
+  //MARK: - Core Data
+
+  private func fetchInputs() -> Bool {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return false
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let seedsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Seeds")
+    let phytosFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Phytos")
+    let fertilizersFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Fertilizers")
+
+    do {
+      seeds = try managedContext.fetch(seedsFetchRequest)
+      phytos = try managedContext.fetch(phytosFetchRequest)
+      fertilizers = try managedContext.fetch(fertilizersFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if seeds.count < 1 || phytos.count < 1 || fertilizers.count < 1 {
+      return false
+    }
+    return true
+  }
+
+  private func loadSampleInputs() {
+    createSeed(registered: true, variety: "Variété 1", specie: "Espèce 1")
+    createSeed(registered: true, variety: "Variété 2", specie: "Espèce 2")
+
+    createPhyto(registered: true, name: "Nom 1", firmName: "Marque 1", maaID: 1000, reentryDelay: 1)
+    createPhyto(registered: true, name: "Nom 2", firmName: "Marque 2", maaID: 2000, reentryDelay: 2)
+    createPhyto(registered: true, name: "Nom 3", firmName: "Marque 3", maaID: 3000, reentryDelay: 3)
+
+    createFertilizer(registered: true, name: "Nom 1", nature: "Nature 1")
+    createFertilizer(registered: true, name: "Nom 2", nature: "Nature 2")
+    createFertilizer(registered: true, name: "Nom 3", nature: "Nature 3")
+    createFertilizer(registered: true, name: "Nom 4", nature: "Nature 4")
+
+    tableView.reloadData()
+  }
+
+  private func createSeed(registered: Bool, variety: String, specie: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let seedsEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
+    let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
+
+    seed.setValue(registered, forKeyPath: "registered")
+    seed.setValue(variety, forKeyPath: "variety")
+    seed.setValue(specie, forKeyPath: "specie")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func createPhyto(registered: Bool, name: String, firmName: String, maaID: Int, reentryDelay: Int) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let phytosEntity = NSEntityDescription.entity(forEntityName: "Phytos", in: managedContext)!
+    let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
+
+    phyto.setValue(registered, forKeyPath: "registered")
+    phyto.setValue(name, forKeyPath: "name")
+    phyto.setValue(firmName, forKeyPath: "firmName")
+    phyto.setValue(maaID, forKeyPath: "maaID")
+    phyto.setValue(reentryDelay, forKeyPath: "reentryDelay")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func createFertilizer(registered: Bool, name: String, nature: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
+    let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
+
+    fertilizer.setValue(registered, forKeyPath: "registered")
+    fertilizer.setValue(name, forKeyPath: "name")
+    fertilizer.setValue(nature, forKeyPath: "nature")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   //MARK: - Actions
@@ -242,10 +351,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     let createButtonTitles = [0: "+ CRÉER UNE NOUVELLE SEMENCE", 1: "+ CRÉER UN NOUVEAU PHYTO", 2: "+ CRÉER UN NOUVEAU FERTILISANT"]
     createButton.setTitle(createButtonTitles[segmentedControl.selectedSegmentIndex], for: .normal)
-    let inputs = [0: sampleSeeds, 1: samplePhytos, 2: sampleFertilizers]
+    let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
-    filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: [String]) -> Bool in
-      let name: String = input[0]
+    filteredInputs = searchText.isEmpty ? inputsToUse : inputsToUse.filter({(input: NSManagedObject) -> Bool in
+      let name: String = input.value(forKeyPath: "variety") as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     tableView.reloadData()
@@ -265,27 +374,25 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      sampleSeeds.append([seedView.varietyTextField.text!, seedView.specieButton.titleLabel!.text!])
+      createSeed(registered: false, variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
       seedView.specieButton.setTitle("Avoine", for: .normal)
       seedView.varietyTextField.text = ""
-      tableView.reloadData()
     case 1:
-      samplePhytos.append([phytoView.nameTextField.text!, phytoView.firmNameTextField.text!, phytoView.maaTextField.text!, phytoView.reentryDelayTextField.text! + " heures"])
+      createPhyto(registered: false, name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: Int(phytoView.maaTextField.text!)!, reentryDelay: Int(phytoView.reentryDelayTextField.text!)!)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
           textField.text = ""
         }
       }
-      tableView.reloadData()
     case 2:
-      sampleFertilizers.append([fertilizerView.nameTextField.text!, fertilizerView.natureButton.titleLabel!.text!])
+      createFertilizer(registered: false, name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
       fertilizerView.nameTextField.text = ""
       fertilizerView.natureButton.setTitle("Organique", for: .normal)
-      tableView.reloadData()
     default:
       return
     }
+    tableView.reloadData()
     dimView.isHidden = true
   }
 
