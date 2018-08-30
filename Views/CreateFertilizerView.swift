@@ -7,27 +7,21 @@
 //
 
 import UIKit
-import DropDown
 
 class CreateFertilizerView: UIView, UITextFieldDelegate {
-  var titleLabel: UILabel!
-  var nameTextField: UITextField!
-  var natureLabel: UILabel!
-  var natureButton: UIButton!
-  var natureDropDown: DropDown!
-  var cancelButton: UIButton!
-  var createButton: UIButton!
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  //MARK: - Properties
 
-    titleLabel = UILabel(frame: CGRect.zero)
+  lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'un fertilisant"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(titleLabel)
+    return titleLabel
+  }()
 
-    nameTextField = UITextField(frame: CGRect.zero)
+  lazy var nameTextField: UITextField = {
+    let nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "Nom"
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
@@ -39,48 +33,75 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     nameTextField.layer.shadowOpacity = 1
     nameTextField.layer.shadowRadius = 0
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(nameTextField)
+    return nameTextField
+  }()
 
-    natureLabel = UILabel(frame: CGRect.zero)
+  lazy var natureLabel: UILabel = {
+    let natureLabel = UILabel(frame: CGRect.zero)
     natureLabel.text = "Nature"
     natureLabel.font = UIFont.systemFont(ofSize: 14)
     natureLabel.textColor = AppColor.TextColors.DarkGray
     natureLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(natureLabel)
+    return natureLabel
+  }()
 
-    natureButton = UIButton(frame: CGRect.zero)
+  lazy var natureButton: UIButton = {
+    let natureButton = UIButton(frame: CGRect.zero)
     natureButton.setTitle("Organique", for: .normal)
     natureButton.setTitleColor(UIColor.black, for: .normal)
     natureButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     natureButton.contentHorizontalAlignment = .leading
     natureButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
-    natureButton.addTarget(self, action: #selector(showDropDown), for: .touchUpInside)
     natureButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(natureButton)
+    return natureButton
+  }()
 
-    natureDropDown = DropDown(anchorView: natureButton)
-    natureDropDown.dataSource = ["Organique", "Minéral"]
-    natureDropDown.direction = .bottom
-    natureDropDown.selectionAction = { [weak self] (index, item) in
-      self?.natureButton.setTitle(item, for: .normal)
-    }
+  lazy var natureAlertController: UIAlertController = {
+    let natureAlertController = UIAlertController(title: "Choisissez une nature", message: nil, preferredStyle: .actionSheet)
+    return natureAlertController
+  }()
 
-    cancelButton = UIButton(frame: CGRect.zero)
+  lazy var cancelButton: UIButton = {
+    let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("ANNULER", for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(cancelButton)
+    return cancelButton
+  }()
 
-    createButton = UIButton(frame: CGRect.zero)
+  lazy var createButton: UIButton = {
+    let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("CRÉER", for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     createButton.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(createButton)
+    return createButton
+  }()
 
+  //MARK: - Initialization
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setupView()
+  }
+
+  private func setupView() {
+    self.backgroundColor = UIColor.white
+    self.layer.cornerRadius = 5
+    self.clipsToBounds = true
+    self.isHidden = true
+    self.addSubview(titleLabel)
+    self.addSubview(nameTextField)
+    self.addSubview(natureLabel)
+    self.addSubview(natureButton)
+    self.addSubview(cancelButton)
+    self.addSubview(createButton)
+    setupLayout()
+    setupActions()
+  }
+
+  private func setupLayout() {
     let viewsDict = [
       "title" : titleLabel,
       "name" : nameTextField,
@@ -98,21 +119,32 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-35-[name]-25-[nature][button]", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
-
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
   }
+
+  private func setupActions() {
+    natureAlertController.addAction(UIAlertAction(title: "Organique", style: .default, handler: { action in
+      self.natureButton.setTitle("Organique", for: .normal)
+    }))
+    natureAlertController.addAction(UIAlertAction(title: "Minéral", style: .default, handler: { action in
+      self.natureButton.setTitle("Minéral", for: .normal)
+    }))
+    natureAlertController.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
+    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  //MARK: - Text field
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
 
-  @objc func showDropDown() {
-    natureDropDown.show()
-  }
+  //MARK: - Actions
 
   @objc func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
@@ -120,12 +152,6 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
       nameTextField.text = ""
       natureButton.setTitle("Organique", for: .normal)
     }
-    let index = natureDropDown.indexForSelectedRow
-    natureDropDown.deselectRow(at: index)
     self.isHidden = true
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("NSCoder has not been implemented.")
   }
 }

@@ -132,9 +132,9 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
 
     entity.setValue(false, forKey: "isDriver")
-    entity.setValue(entityFirstName.text, forKeyPath: "firstName")
-    entity.setValue(entityLastName.text, forKeyPath: "lastName")
-    entity.setValue(entityRole.text, forKeyPath: "role")
+    entity.setValue(entityFirstName.text, forKey: "firstName")
+    entity.setValue(entityLastName.text, forKey: "lastName")
+    entity.setValue(entityRole.text, forKey: "role")
     do {
       try managedContext.save()
       entities.append(entity)

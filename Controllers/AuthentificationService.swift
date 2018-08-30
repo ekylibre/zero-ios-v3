@@ -59,7 +59,7 @@ open class AuthentificationService {
     let newUser = NSEntityDescription.entity(forEntityName: "Users", in: managedContext)!
     let name = NSManagedObject(entity: newUser, insertInto: managedContext)
 
-    name.setValue(userName, forKeyPath: "userName")
+    name.setValue(userName, forKey: "userName")
     do {
       try managedContext.save()
     } catch {
@@ -70,7 +70,7 @@ open class AuthentificationService {
   public func authorize(presenting view: UIViewController) {
     oauth2.authorizeEmbedded(from: view) { (authParameters, error) in
       if let _ = authParameters {
-        print("Authrorization succed")
+        print("Authorization succeded")
       }
       else {
         print("Authorization was canceled or went wrong: \(String(describing: error?.description))")
