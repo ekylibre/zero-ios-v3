@@ -264,16 +264,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         view.addSubview(checkboxImage)
         let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
         nameLabel.textColor = UIColor.black
-        let name = plot.value(forKeyPath: "name") as! String
+        let name = plot.value(forKey: "name") as! String
         let calendar = Calendar.current
-        let date = plot.value(forKeyPath: "startDate") as! Date
+        let date = plot.value(forKey: "startDate") as! Date
         let year = calendar.component(.year, from: date)
         nameLabel.text = name + " | \(year)"
         nameLabel.font = UIFont.systemFont(ofSize: 13.0)
         view.addSubview(nameLabel)
         let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
         surfaceAreaLabel.textColor = UIColor.darkGray
-        let surfaceArea = plot.value(forKeyPath: "surfaceArea") as! Double
+        let surfaceArea = plot.value(forKey: "surfaceArea") as! Double
         surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
         surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
         view.addSubview(surfaceAreaLabel)
@@ -462,7 +462,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedPlot in selectedPlots {
       let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
-      let surfaceArea = selectedPlot.value(forKeyPath: "surfaceArea") as! Double
+      let surfaceArea = selectedPlot.value(forKey: "surfaceArea") as! Double
 
       target.setValue(intervention, forKey: "interventions")
       target.setValue(surfaceArea, forKey: "surfaceArea")
@@ -486,7 +486,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedTool in selectedTools {
       let tool = NSManagedObject(entity: toolsEntity, insertInto: managedContext)
-      let name = selectedTool.value(forKeyPath: "name") as! String
+      let name = selectedTool.value(forKey: "name") as! String
       let type = selectedTool.value(forKey: "type") as! String
       let equipment = selectedTool.value(forKey: "uuid") as! UUID
 
@@ -535,9 +535,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
     let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
 
-    crop.setValue(name, forKeyPath: "name")
-    crop.setValue(surfaceArea, forKeyPath: "surfaceArea")
-    crop.setValue(uuid, forKeyPath: "uuid")
+    crop.setValue(name, forKey: "name")
+    crop.setValue(surfaceArea, forKey: "surfaceArea")
+    crop.setValue(uuid, forKey: "uuid")
 
     do {
       try managedContext.save()
@@ -559,11 +559,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let crop = fetchCrop(withName: cropName)
 
-    plot.setValue(crop, forKeyPath: "crops")
-    plot.setValue(name, forKeyPath: "name")
-    plot.setValue(surfaceArea, forKeyPath: "surfaceArea")
+    plot.setValue(crop, forKey: "crops")
+    plot.setValue(name, forKey: "name")
+    plot.setValue(surfaceArea, forKey: "surfaceArea")
     plot.setValue(startDate, forKey: "startDate")
-    plot.setValue(uuid, forKeyPath: "uuid")
+    plot.setValue(uuid, forKey: "uuid")
 
     do {
       try managedContext.save()
@@ -649,7 +649,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let indexPath = cropsTableView.indexPath(for: cell)!
     let crop = crops[indexPath.row]
-    let cropSurfaceArea = crop.value(forKeyPath: "surfaceArea") as! Double
+    let cropSurfaceArea = crop.value(forKey: "surfaceArea") as! Double
     let plots = fetchPlots(fromCrop: crop)
 
     if !sender.isSelected {
@@ -670,7 +670,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
           plotsCount -= 1
-          totalSurfaceArea -= plots[index].value(forKeyPath: "surfaceArea") as! Double
+          totalSurfaceArea -= plots[index].value(forKey: "surfaceArea") as! Double
           if let index = selectedPlots.index(of: plots[index]) {
             selectedPlots.remove(at: index)
           }
@@ -709,7 +709,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       plotsCount += 1
-      totalSurfaceArea += plot.value(forKeyPath: "surfaceArea") as! Double
+      totalSurfaceArea += plot.value(forKey: "surfaceArea") as! Double
       if !cell.checkboxButton.isSelected {
         cell.checkboxButton.isSelected = true
       }
@@ -717,7 +717,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
       checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
       plotsCount -= 1
-      totalSurfaceArea -= plot.value(forKeyPath: "surfaceArea") as! Double
+      totalSurfaceArea -= plot.value(forKey: "surfaceArea") as! Double
       for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {

@@ -175,8 +175,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let targets = fetchTargets(of: intervention)
     let workingPeriod = fetchWorkingPeriod(of: intervention)
 
-    cell.typeLabel.text = intervention.value(forKeyPath: "type") as? String
-    switch intervention.value(forKeyPath: "type") as! String {
+    cell.typeLabel.text = intervention.value(forKey: "type") as? String
+    switch intervention.value(forKey: "type") as! String {
     case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
     case Intervention.InterventionType.CropProtection.rawValue:
@@ -195,7 +195,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.typeLabel.text = "Erreur"
     }
 
-    switch intervention.value(forKeyPath: "status") as! Int16 {
+    switch intervention.value(forKey: "status") as! Int16 {
     case Intervention.Status.OutOfSync.rawValue:
       cell.syncImage.backgroundColor = UIColor.orange
     case Intervention.Status.Synchronised.rawValue:
@@ -207,8 +207,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     cell.cropsLabel.text = updateCropsLabel(targets)
-    cell.infosLabel.text = intervention.value(forKeyPath: "infos") as? String
-    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKeyPath: "executionDate") as! Date)
+    cell.infosLabel.text = intervention.value(forKey: "infos") as? String
+    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKey: "executionDate") as! Date)
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
@@ -267,7 +267,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     var totalSurfaceArea: Double = 0
 
     for target in targets {
-      let surfaceArea = target.value(forKeyPath: "surfaceArea") as! Double
+      let surfaceArea = target.value(forKey: "surfaceArea") as! Double
       totalSurfaceArea += surfaceArea
     }
 
@@ -311,11 +311,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
     let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
 
-    intervention.setValue(type, forKeyPath: "type")
-    intervention.setValue(infos, forKeyPath: "infos")
-    intervention.setValue(status, forKeyPath: "status")
+    intervention.setValue(type, forKey: "type")
+    intervention.setValue(infos, forKey: "infos")
+    intervention.setValue(status, forKey: "status")
     workingPeriod.setValue(intervention, forKey: "interventions")
-    workingPeriod.setValue(executionDate, forKeyPath: "executionDate")
+    workingPeriod.setValue(executionDate, forKey: "executionDate")
 
     do {
       try managedContext.save()
@@ -389,7 +389,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for intervention in interventions {
-      if intervention.value(forKeyPath: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
+      if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
         intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
       }
     }
