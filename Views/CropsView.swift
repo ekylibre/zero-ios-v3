@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
@@ -75,6 +76,12 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return view
   }()
 
+  var plots = [NSManagedObject]()
+  var crops = [NSManagedObject]()
+  var viewsArray = [[UIView]]()
+  var cropPlots = [[NSManagedObject]]()
+  var selectedCrops = [NSManagedObject]()
+
   //MARK: - Initialization
 
   override init(frame: CGRect) {
@@ -129,19 +136,61 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+    return plots.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "PlotCell", for: indexPath) as! PlotCell
+    let plot = plots[indexPath.row]
+    let crops = fetchCrops(fromPlot: plot)
 
+    cell.nameLabel.text = plot.value(forKey: "name") as? String
+    cell.nameLabel.sizeToFit()
+    cell.surfaceAreaLabel.text = String(format: "%.1f ha", plot.value(forKey: "surfaceArea") as! Double)
+    cell.surfaceAreaLabel.sizeToFit()
+
+    var views = [UIView]()
+
+    for (index, crop) in crops.enumerated() {
+      let view = UIView(frame: CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60))
+      view.backgroundColor = UIColor.white
+      view.layer.borderColor = UIColor.lightGray.cgColor
+      view.layer.borderWidth = 0.5
+      let cropImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+      cropImageView.backgroundColor = UIColor.lightGray
+      view.addSubview(cropImageView)
+      let checkboxImage = UIImageView(frame: CGRect(x: 7, y: 7, width: 16, height: 16))
+      checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+      view.addSubview(checkboxImage)
+      let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
+      nameLabel.textColor = UIColor.black
+      let name = crop.value(forKey: "name") as! String
+      let calendar = Calendar.current
+      let date = crop.value(forKey: "startDate") as! Date
+      let year = calendar.component(.year, from: date)
+      nameLabel.text = name + " | \(year)"
+      nameLabel.font = UIFont.systemFont(ofSize: 13.0)
+      view.addSubview(nameLabel)
+      let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
+      surfaceAreaLabel.textColor = UIColor.darkGray
+      let surfaceArea = crop.value(forKey: "surfaceArea") as! Double
+      surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
+      surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
+      view.addSubview(surfaceAreaLabel)
+      let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapCropView))
+      gesture.numberOfTapsRequired = 1
+      view.addGestureRecognizer(gesture)
+      cell.addSubview(view)
+      views.append(view)
+    }
+    viewsArray.append(views)
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     selectedIndexPath = indexPath
 
-    let cell = tableView.cellForRow(at: selectedIndexPath!) as! CropCell
+    let cell = tableView.cellForRow(at: selectedIndexPath!) as! PlotCell
     if !indexPaths.contains(selectedIndexPath!) {
       indexPaths += [selectedIndexPath!]
       cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
@@ -164,6 +213,108 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     } else {
       return 60
     }
+  }
+
+  //MARK: - Core data
+
+  func createPlot(name: String, surfaceArea: Double) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let plotsEntity = NSEntityDescription.entity(forEntityName: "Plots", in: managedContext)!
+    let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
+
+    plot.setValue(name, forKey: "name")
+    plot.setValue(surfaceArea, forKey: "surfaceArea")
+
+    do {
+      try managedContext.save()
+      plots.append(plot)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createCrop(plotName: String, name: String, surfaceArea: Double, startDate: Date) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
+    let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
+    let plot = fetchPlot(withName: plotName)
+
+    crop.setValue(plot, forKey: "plots")
+    crop.setValue(name, forKey: "name")
+    crop.setValue(surfaceArea, forKey: "surfaceArea")
+    crop.setValue(startDate, forKey: "startDate")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func fetchPlots() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
+
+    do {
+      plots = try managedContext.fetch(plotsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func fetchPlot(withName plotName: String) -> NSManagedObject {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return NSManagedObject()
+    }
+
+    var plots: [NSManagedObject]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
+    let predicate = NSPredicate(format: "name == %@", plotName)
+    plotsFetchRequest.predicate = predicate
+
+    do {
+      plots = try managedContext.fetch(plotsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if plots.count == 1 {
+      return plots.first!
+    }
+    return NSManagedObject()
+  }
+
+  func fetchCrops(fromPlot plot: NSManagedObject) -> [NSManagedObject] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [NSManagedObject]()
+    }
+
+    var crops: [NSManagedObject]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
+    let predicate = NSPredicate(format: "plots == %@", plot)
+    cropsFetchRequest.predicate = predicate
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return crops
   }
 
   //MARK: - Actions
