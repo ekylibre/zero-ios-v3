@@ -368,10 +368,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedTools.append(equipments[indexPath.row])
       closeSelectToolsView()
     case toolTypeTableView:
-        selectedToolType = toolTypes[indexPath.row]
-        toolTypeTableView.reloadData()
-        toolTypeButton.setTitle(selectedToolType, for: .normal)
-        toolTypeTableView.isHidden = true
+      selectedToolType = toolTypes[indexPath.row]
+      toolTypeTableView.reloadData()
+      toolTypeButton.setTitle(selectedToolType, for: .normal)
+      toolTypeTableView.isHidden = true
     case entitiesTableView:
       doersTableView.isHidden = false
       doers.append(entities[indexPath.row])
@@ -752,7 +752,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.cellsStrings = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
     default:
       guard let button = sender as? UIButton, button === saveInterventionButton else {
-      return
+        return
       }
 
       createIntervention()

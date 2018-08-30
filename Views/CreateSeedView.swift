@@ -11,7 +11,7 @@ import UIKit
 class CreateSeedView: UIView, UITextFieldDelegate {
 
   //MARK: - Properties
-  
+
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Création d'une semence"
