@@ -149,8 +149,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
-    dimView.isHidden = false
-    cropsView.isHidden = false
+    cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
   }
 
   override func viewDidLayoutSubviews() {
@@ -477,7 +476,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func validateCrops(_ sender: Any) {
-
     if cropsView.selectedCropsLabel.text == "Aucune sélection" {
       totalLabel.text = "+ SÉLECTIONNER"
       totalLabel.textColor = AppColor.TextColors.Green
@@ -487,8 +485,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
     totalLabel.sizeToFit()
 
-    dimView.isHidden = true
     cropsView.isHidden = true
+    dimView.isHidden = true
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
