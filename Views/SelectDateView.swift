@@ -47,14 +47,14 @@ class SelectDateView: UIView {
   }
 
   private func setupLayout() {
-    NSLayoutConstraint(item: datePicker, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 5).isActive = true
-    NSLayoutConstraint(item: datePicker, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-    //NSLayoutConstraint(item: datePicker, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 175).isActive = true
-
-    NSLayoutConstraint(item: validateButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -10).isActive = true
-    NSLayoutConstraint(item: validateButton, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: -10).isActive = true
-    NSLayoutConstraint(item: validateButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
-    NSLayoutConstraint(item: validateButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100).isActive = true
+    NSLayoutConstraint.activate([
+      datePicker.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+      datePicker.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      validateButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      validateButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
+      validateButton.heightAnchor.constraint(equalToConstant: 30),
+      validateButton.widthAnchor.constraint(equalToConstant: 100)
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {
