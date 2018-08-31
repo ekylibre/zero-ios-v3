@@ -13,12 +13,15 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   //MARK: - Properties
 
+  var addInterventionViewController: AddInterventionViewController?
+
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
     segmentedControl.selectedSegmentIndex = 0
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+
     return segmentedControl
   }()
 
@@ -220,6 +223,42 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return 60
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    switch segmentedControl.selectedSegmentIndex {
+    case 0:
+      let cell = tableView.cellForRow(at: indexPath) as! SeedCell
+
+      if cell.isAvaible {
+        cell.isAvaible = false
+        cell.backgroundColor = AppColor.CellColors.lightGray
+        addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      }
+    case 1:
+      let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
+
+      if cell.isAvaible {
+        cell.isAvaible = false
+        cell.backgroundColor = AppColor.CellColors.lightGray
+        addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      }
+    case 2:
+      let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
+
+      if cell.isAvaible {
+        cell.isAvaible = false
+        cell.backgroundColor = AppColor.CellColors.lightGray
+        addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      }
+    default:
+      print("Error")
+    }
+    addInterventionViewController?.selectedInputsTableView.reloadData()
+    addInterventionViewController?.closeSelectInputsView()
+  }
+
   //MARK: - Search bar
 
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -295,9 +334,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seedsEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
     let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
+    seed.setValue("Seed", forKey: "type")
     seed.setValue(registered, forKey: "registered")
     seed.setValue(variety, forKey: "variety")
     seed.setValue(specie, forKey: "specie")
+    seed.setValue("kg/ha", forKey: "unit")
+    seed.setValue(0.0, forKey: "quantity")
+    seed.setValue(0, forKey: "row")
     seeds.append(seed)
 
     do {
@@ -320,7 +363,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.setValue(name, forKey: "name")
     phyto.setValue(firmName, forKey: "firmName")
     phyto.setValue(maaID, forKey: "maaID")
+    phyto.setValue("Phyto", forKey: "type")
     phyto.setValue(reentryDelay, forKey: "reentryDelay")
+    phyto.setValue("l/ha", forKey: "unit")
+    phyto.setValue(0.0, forKey: "quantity")
+    phyto.setValue(0, forKey: "row")
     phytos.append(phyto)
 
     do {
@@ -339,9 +386,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
     let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
+    fertilizer.setValue("Fertilizer", forKey: "type")
     fertilizer.setValue(registered, forKey: "registered")
     fertilizer.setValue(name, forKey: "name")
     fertilizer.setValue(nature, forKey: "nature")
+    fertilizer.setValue("kg/ha", forKey: "unit")
+    fertilizer.setValue(0.0, forKey: "quantity")
+    fertilizer.setValue(0, forKey: "row")
     fertilizers.append(fertilizer)
 
     do {
