@@ -64,23 +64,14 @@
 /* Begin PBXFileReference section */
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
-		0412B78C2126BB3A00976DB6 /* EntityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCell.swift; sourceTree = "<group>"; };
 		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
-		0414257D212D5D8600FBBD0D /* SelectedInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
 		041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
-		042A44352121B45B00CE6B24 /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		044B4D46213816C0001A5D3D /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
-		044B4D4A21381709001A5D3D /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
-		044B4D4B21381709001A5D3D /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		044B4D4C21381709001A5D3D /* SeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCell.swift; sourceTree = "<group>"; };
-		044B4D4F21381709001A5D3D /* FertilizerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCell.swift; sourceTree = "<group>"; };
-		044B4D5B21381719001A5D3D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		044B4D5C21381719001A5D3D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
 		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
 		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
@@ -100,7 +91,6 @@
 		6B11EED92139635400E2DEC4 /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B11EEE72139636200E2DEC4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		6B16F9332110A4E900D63316 /* EquipmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentCell.swift; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
@@ -175,6 +165,8 @@
 		047BF0B12105D1F9009F3945 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6B11EECE2139635400E2DEC4 /* Cells */,
+				6B11EEE52139636200E2DEC4 /* Storyboards */,
 				0478F232213447D9001EAE6E /* CreateFertilizerView.swift */,
 				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
 				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
@@ -183,8 +175,6 @@
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
-				6B11EEE52139636200E2DEC4 /* Storyboards */,
-				6B11EECE2139635400E2DEC4 /* Cells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,17 +201,17 @@
 		6B11EECE2139635400E2DEC4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6B11EECF2139635400E2DEC4 /* ToolsTableViewCell.swift */,
-				6B11EED02139635400E2DEC4 /* PhytoCell.swift */,
-				6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */,
-				6B11EED22139635400E2DEC4 /* ListCell.swift */,
-				6B11EED32139635400E2DEC4 /* SeedCell.swift */,
-				6B11EED42139635400E2DEC4 /* InterventionCell.swift */,
-				6B11EED52139635400E2DEC4 /* FertilizerCell.swift */,
-				6B11EED62139635400E2DEC4 /* EquipmentCell.swift */,
-				6B11EED72139635400E2DEC4 /* EntityCell.swift */,
 				6B11EED82139635400E2DEC4 /* EntitiesTableViewCell.swift */,
+				6B11EED72139635400E2DEC4 /* EntityCell.swift */,
+				6B11EED62139635400E2DEC4 /* EquipmentCell.swift */,
+				6B11EED52139635400E2DEC4 /* FertilizerCell.swift */,
+				6B11EED42139635400E2DEC4 /* InterventionCell.swift */,
+				6B11EED22139635400E2DEC4 /* ListCell.swift */,
+				6B11EED02139635400E2DEC4 /* PhytoCell.swift */,
 				6B11EED92139635400E2DEC4 /* PlotCell.swift */,
+				6B11EED32139635400E2DEC4 /* SeedCell.swift */,
+				6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */,
+				6B11EECF2139635400E2DEC4 /* ToolsTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -235,29 +225,12 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		6BA371382139629B0086DF9B /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				6B16F9332110A4E900D63316 /* EquipmentCell.swift */,
-				044B4D4B21381709001A5D3D /* ListCell.swift */,
-				044B4D4C21381709001A5D3D /* SeedCell.swift */,
-				0412B78C2126BB3A00976DB6 /* EntityCell.swift */,
-				042A44352121B45B00CE6B24 /* PlotCell.swift */,
-				044B4D4A21381709001A5D3D /* PhytoCell.swift */,
-				0414257D212D5D8600FBBD0D /* SelectedInputCell.swift */,
-				044B4D4F21381709001A5D3D /* FertilizerCell.swift */,
-				044B4D5C21381719001A5D3D /* Main.storyboard */,
-				044B4D5B21381719001A5D3D /* LaunchScreen.storyboard */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		6BA3713D213963230086DF9B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				6BA3713E213963230086DF9B /* Assets.xcassets */,
-				6BA3713F213963230086DF9B /* oauthInfo.plist */,
 				6BA37140213963230086DF9B /* Info.plist */,
+				6BA3713F213963230086DF9B /* oauthInfo.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -266,16 +239,15 @@
 			isa = PBXGroup;
 			children = (
 				6BB2253E211849090036E167 /* AppDelegate.swift */,
-				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
-				042A44322121B38600CE6B24 /* Constants */,
 				047BF0B02105D1D2009F3945 /* Controllers */,
-				047BF0BF2105F44F009F3945 /* CoreData */,
-				047B57CB2108605400C48F68 /* Frameworks */,
 				047BF0B22105D20B009F3945 /* Models */,
-				6BA3713D213963230086DF9B /* Resources */,
-				6BEA656E2105C5EE0072840F /* Products */,
 				047BF0B12105D1F9009F3945 /* Views */,
-				6BA371382139629B0086DF9B /* Recovered References */,
+				047BF0BF2105F44F009F3945 /* CoreData */,
+				042A44322121B38600CE6B24 /* Constants */,
+				6BA3713D213963230086DF9B /* Resources */,
+				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
+				6BEA656E2105C5EE0072840F /* Products */,
+				047B57CB2108605400C48F68 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
