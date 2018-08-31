@@ -15,9 +15,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
-  @IBOutlet weak var selectCropsView: UIView!
-  @IBOutlet weak var cropsTableView: UITableView!
-  @IBOutlet weak var selectedPlotsLabel: UILabel!
   @IBOutlet weak var equipmentsTableView: UITableView!
   @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
@@ -68,18 +65,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   var newIntervention: NSManagedObject!
   var interventionType: String!
-  var selectedPlots = [NSManagedObject]()
-  var crops = [NSManagedObject]()
-  var viewsArray = [[UIView]]()
-  var cropsView: CropsView!
   var equipments = [NSManagedObject]()
   var selectDateView: UIView!
+  var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
   var selectedEquipments = [NSManagedObject]()
   var searchedEquipments = [NSManagedObject]()
-  var plots = [NSManagedObject]()
-  var cropPlots = [[NSManagedObject]]()
   var equipmentTypes: [String]!
   var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
@@ -141,9 +133,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
-    selectCropsView.clipsToBounds = true
-    selectCropsView.layer.cornerRadius = 3
-
     selectedEquipmentsTableView.layer.borderWidth  = 0.5
     selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedEquipmentsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
@@ -153,11 +142,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedEquipmentsTableView.bounces = false
 
     saveInterventionButton.layer.cornerRadius = 3
-
-    cropsTableView.dataSource = self
-    cropsTableView.delegate = self
-    cropsTableView.tableFooterView = UIView()
-    cropsTableView.bounces = false
 
     selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
     selectedInputsTableView.delegate = self
@@ -210,6 +194,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
+    cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
   }
 
   override func viewDidLayoutSubviews() {
@@ -237,18 +222,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.present(inputsView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    fetchCrops()
-
-    if crops.count == 0 {
-      loadSampleCrops()
-    }
-
-    cropsTableView.reloadData()
-  }
-
   //MARK: - Table view data source
 
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -258,8 +231,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
     switch tableView {
-    case cropsTableView:
-      return crops.count
     case equipmentsTableView:
       return searchedEquipments.count
     case selectedEquipmentsTableView:
@@ -278,7 +249,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var crop: NSManagedObject?
     var equipment: NSManagedObject?
     var selectedEquipment: NSManagedObject?
     var equipmentType: String?
@@ -287,53 +257,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var input: NSManagedObject?
 
     switch tableView {
-    case cropsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "CropCell", for: indexPath) as! CropCell
-
-      crop = crops[indexPath.row]
-      cell.nameLabel.text = crop?.value(forKey: "name") as? String
-      cell.nameLabel.sizeToFit()
-      cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop?.value(forKey: "surfaceArea") as! Double)
-      cell.surfaceAreaLabel.sizeToFit()
-
-      let plots = fetchPlots(fromCrop: crop!)
-
-      var views = [UIView]()
-
-      for (index, plot) in plots.enumerated() {
-        let view = UIView(frame: CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60))
-        view.backgroundColor = UIColor.white
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 0.5
-        let plotImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        plotImageView.backgroundColor = UIColor.lightGray
-        view.addSubview(plotImageView)
-        let checkboxImage = UIImageView(frame: CGRect(x: 7, y: 7, width: 16, height: 16))
-        checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
-        view.addSubview(checkboxImage)
-        let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
-        nameLabel.textColor = UIColor.black
-        let name = plot.value(forKey: "name") as! String
-        let calendar = Calendar.current
-        let date = plot.value(forKey: "startDate") as! Date
-        let year = calendar.component(.year, from: date)
-        nameLabel.text = name + " | \(year)"
-        nameLabel.font = UIFont.systemFont(ofSize: 13.0)
-        view.addSubview(nameLabel)
-        let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
-        surfaceAreaLabel.textColor = UIColor.darkGray
-        let surfaceArea = plot.value(forKey: "surfaceArea") as! Double
-        surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
-        surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
-        view.addSubview(surfaceAreaLabel)
-        let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapPlotView))
-        gesture.numberOfTapsRequired = 1
-        view.addGestureRecognizer(gesture)
-        cell.addSubview(view)
-        views.append(view)
-      }
-      viewsArray.append(views)
-      return cell
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
@@ -425,18 +348,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedIndexPath = indexPath
 
     switch tableView {
-    case cropsTableView:
-      let cell = cropsTableView.cellForRow(at: selectedIndexPath!) as! CropCell
-      if !indexPaths.contains(selectedIndexPath!) {
-        indexPaths += [selectedIndexPath!]
-        cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-      } else {
-        let index = indexPaths.index(of: selectedIndexPath!)
-        indexPaths.remove(at: index!)
-        cell.expandCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-      }
-      cropsTableView.beginUpdates()
-      cropsTableView.endUpdates()
     case equipmentsTableView:
       let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
@@ -471,16 +382,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
-    case cropsTableView:
-      if indexPaths.contains(indexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else {
-          return 0
-        }
-        let count = cell.subviews.count - 2
-        return CGFloat(count * 60 + 15)
-      } else {
-        return 60
-      }
     case doersTableView:
       return 75
     case selectedInputsTableView:
@@ -506,23 +407,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   //MARK: - Core Data
 
-  private func loadSampleCrops() {
-
-    createCrop(name: "Crop 1", surfaceArea: 7.5, uuid: UUID())
-    createPlot(cropName: "Crop 1", name: "Blé tendre", surfaceArea: 3, startDate: Date(), uuid: UUID())
-    createPlot(cropName: "Crop 1", name: "Maïs", surfaceArea: 4.5, startDate: Date(), uuid: UUID())
-
-    createCrop(name: "Epoisses", surfaceArea: 0.651, uuid: UUID())
-    createPlot(cropName: "Epoisses", name: "Artichaut", surfaceArea: 0.651, startDate: Date(), uuid: UUID())
-
-    createCrop(name: "Cabécou", surfaceArea: 12.06, uuid: UUID())
-    createPlot(cropName: "Cabécou", name: "Avoine", surfaceArea: 6.3, startDate: Date(), uuid: UUID())
-    createPlot(cropName: "Cabécou", name: "Ciboulette", surfaceArea: 0.92, startDate: Date(), uuid: UUID())
-    createPlot(cropName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date(), uuid: UUID())
-  }
-
   func createIntervention() {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -553,7 +438,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createTargets(intervention: NSManagedObject) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -561,12 +445,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let targetsEntity = NSEntityDescription.entity(forEntityName: "Targets", in: managedContext)!
 
-    for selectedPlot in selectedPlots {
+    for selectedCrop in cropsView.selectedCrops {
       let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
-      let surfaceArea = selectedPlot.value(forKey: "surfaceArea") as! Double
 
       target.setValue(intervention, forKey: "interventions")
-      target.setValue(surfaceArea, forKey: "surfaceArea")
+      target.setValue(selectedCrop, forKey: "crops")
+      target.setValue(100, forKey: "workAreaPercentage")
     }
 
     do {
@@ -627,222 +511,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createCrop(name: String, surfaceArea: Double, uuid: UUID) {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
-    let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
-
-    crop.setValue(name, forKey: "name")
-    crop.setValue(surfaceArea, forKey: "surfaceArea")
-    crop.setValue(uuid, forKey: "uuid")
-
-    do {
-      try managedContext.save()
-      crops.append(crop)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  func createPlot(cropName: String, name: String, surfaceArea: Double, startDate: Date, uuid: UUID) {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsEntity = NSEntityDescription.entity(forEntityName: "Plots", in: managedContext)!
-    let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
-
-    let crop = fetchCrop(withName: cropName)
-
-    plot.setValue(crop, forKey: "crops")
-    plot.setValue(name, forKey: "name")
-    plot.setValue(surfaceArea, forKey: "surfaceArea")
-    plot.setValue(startDate, forKey: "startDate")
-    plot.setValue(uuid, forKey: "uuid")
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  func fetchCrops() {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
-
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-  }
-
-  func fetchCrop(withName cropName: String) -> NSManagedObject {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return NSManagedObject()
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
-    let predicate = NSPredicate(format: "name == %@", cropName)
-    cropsFetchRequest.predicate = predicate
-
-    var crops: [NSManagedObject]!
-
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    if crops.count == 1 {
-      return crops.first!
-    } else {
-      return NSManagedObject()
-    }
-  }
-
-  func fetchPlots(fromCrop crop: NSManagedObject) -> [NSManagedObject] {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [NSManagedObject]()
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
-    let predicate = NSPredicate(format: "crops == %@", crop)
-    plotsFetchRequest.predicate = predicate
-
-    var plots: [NSManagedObject]!
-
-    do {
-      plots = try managedContext.fetch(plotsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    return plots
-  }
-
-  //MARK: - Plots selecting
-
-  var plotsCount = 0
-  var totalSurfaceArea: Double = 0
-
-  @IBAction func tapCheckbox(_ sender: UIButton) {
-
-    guard let cell = sender.superview?.superview as? CropCell else {
-      return
-    }
-
-    let indexPath = cropsTableView.indexPath(for: cell)!
-    let crop = crops[indexPath.row]
-    let cropSurfaceArea = crop.value(forKey: "surfaceArea") as! Double
-    let plots = fetchPlots(fromCrop: crop)
-
-    if !sender.isSelected {
-      sender.isSelected = true
-      plotsCount += plots.count
-      totalSurfaceArea += cropSurfaceArea
-      for view in cell.subviews[2...plots.count + 1] {
-        let checkboxImage = view.subviews[1] as! UIImageView
-        checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
-      }
-      for plot in plots {
-        selectedPlots.append(plot)
-      }
-    } else {
-      sender.isSelected = false
-      for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
-        let checkboxImage = view.subviews[1] as! UIImageView
-        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
-          checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
-          plotsCount -= 1
-          totalSurfaceArea -= plots[index].value(forKey: "surfaceArea") as! Double
-          if let index = selectedPlots.index(of: plots[index]) {
-            selectedPlots.remove(at: index)
-          }
-        }
-      }
-    }
-
-    if plotsCount == 0 {
-      selectedPlotsLabel.text = "Aucune sélection"
-    } else if plotsCount == 1 {
-      selectedPlotsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
-    } else {
-      selectedPlotsLabel.text = String(format: "%d cultures • %.1f ha", plotsCount, totalSurfaceArea)
-    }
-  }
-
-  @objc func tapPlotView(sender: UIGestureRecognizer) {
-    let cell = sender.view?.superview as! CropCell
-    let view = sender.view!
-
-    var crop: NSManagedObject!
-    var plots: [NSManagedObject]!
-    var plot: NSManagedObject!
-
-    for views in viewsArray {
-      if let indexView = views.index(of: view) {
-        crop = crops[viewsArray.index(of: views)!]
-        plots = fetchPlots(fromCrop: crop)
-        plot = plots[indexView]
-        break
-      }
-    }
-
-    let checkboxImage = view.subviews[1] as! UIImageView
-
-    if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
-      checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
-      plotsCount += 1
-      totalSurfaceArea += plot.value(forKey: "surfaceArea") as! Double
-      if !cell.checkboxButton.isSelected {
-        cell.checkboxButton.isSelected = true
-      }
-      selectedPlots.append(plot)
-    } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
-      checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
-      plotsCount -= 1
-      totalSurfaceArea -= plot.value(forKey: "surfaceArea") as! Double
-      for (index, view) in cell.subviews[2...plots.count + 1].enumerated() {
-        let checkboxImage = view.subviews[1] as! UIImageView
-        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
-          break
-        } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == plots.count - 1 {
-          cell.checkboxButton.isSelected = false
-        }
-
-        if let index = selectedPlots.index(of: plot) {
-          selectedPlots.remove(at: index)
-        }
-      }
-    }
-
-    if plotsCount == 0 {
-      selectedPlotsLabel.text = "Aucune sélection"
-    } else if plotsCount == 1 {
-      selectedPlotsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
-    } else {
-      selectedPlotsLabel.text = String(format: "%d cultures • %.1f ha", plotsCount, totalSurfaceArea)
-    }
-  }
-
   //MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -867,13 +535,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   //MARK: - Actions
 
-  @IBAction func selectPlots(_ sender: Any) {
-
+  @IBAction func selectCrops(_ sender: Any) {
     dimView.isHidden = false
-    selectCropsView.isHidden = false
+    cropsView.isHidden = false
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  @objc func validateCrops(_ sender: Any) {
+    if cropsView.selectedCropsLabel.text == "Aucune sélection" {
+      totalLabel.text = "+ SÉLECTIONNER"
+      totalLabel.textColor = AppColor.TextColors.Green
+    } else {
+      totalLabel.text = cropsView.selectedCropsLabel.text
+      totalLabel.textColor = AppColor.TextColors.DarkGray
+    }
+    totalLabel.sizeToFit()
+
+    cropsView.isHidden = true
+    dimView.isHidden = true
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
   }
 
@@ -912,26 +597,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     return dateString + " • " + hoursNumber
   }
-
-  @IBAction func validatePlots(_ sender: Any) {
-
-    if selectedPlotsLabel.text == "Aucune sélection" {
-      totalLabel.text = "+ SÉLECTIONNER"
-      totalLabel.textColor = AppColor.TextColors.Green
-    } else {
-      totalLabel.text = selectedPlotsLabel.text
-      totalLabel.textColor = AppColor.TextColors.DarkGray
-    }
-    totalLabel.sizeToFit()
-
-    dimView.isHidden = true
-    selectCropsView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-  }
-
+  
   @IBAction func selectDate(_ sender: Any) {
     dimView.isHidden = false
     selectDateView.isHidden = false

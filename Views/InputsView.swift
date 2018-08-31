@@ -21,7 +21,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-
     return segmentedControl
   }()
 
