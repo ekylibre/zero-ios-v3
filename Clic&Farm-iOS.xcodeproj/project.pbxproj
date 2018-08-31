@@ -29,7 +29,7 @@
 		044B4D5D21381719001A5D3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D5B21381719001A5D3D /* LaunchScreen.storyboard */; };
 		044B4D5E21381719001A5D3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D5C21381719001A5D3D /* Main.storyboard */; };
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
-		044B4D6621381F34001A5D3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D622138174E001A5D3D /* Assets.xcassets */; };
+		04644BBF21394B1200F2540D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D622138174E001A5D3D /* Assets.xcassets */; };
 		0478F233213447D9001EAE6E /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
 		0478F235213447DD001EAE6E /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
 		0478F237213447E1001EAE6E /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
@@ -345,7 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				044B4D6621381F34001A5D3D /* Assets.xcassets in Resources */,
+				04644BBF21394B1200F2540D /* Assets.xcassets in Resources */,
 				042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */,
 				044B4D5E21381719001A5D3D /* Main.storyboard in Resources */,
 				044B4D5D21381719001A5D3D /* LaunchScreen.storyboard in Resources */,
@@ -557,7 +557,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -579,7 +578,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
