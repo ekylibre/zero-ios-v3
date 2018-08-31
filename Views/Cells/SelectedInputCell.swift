@@ -274,6 +274,12 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       ) == nil
   }
 
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    if textField == inputQuantity {
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue((textField.text! as NSString).doubleValue, forKey: "quantity")
+    }
+  }
+
   @objc func showUnitMeasure(sender: UIButton) {
     addInterventionViewController?.dimView.isHidden = false
     if type == "Phyto" {

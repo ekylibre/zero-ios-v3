@@ -339,10 +339,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if selectedInputs.count > indexPath.row {
         input = selectedInputs[indexPath.row]
+        let quantity = String(input?.value(forKey: "quantity") as! Double)
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
         cell.type = input?.value(forKey: "type") as! String
+        cell.inputQuantity.text = quantity
         cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
