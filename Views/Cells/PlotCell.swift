@@ -20,14 +20,14 @@ class PlotCell: UITableViewCell {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
-    nameLabel.font = UIFont.systemFont(ofSize: 14)
+    nameLabel.font = UIFont.systemFont(ofSize: 15)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
   }()
 
   lazy var surfaceAreaLabel: UILabel = {
     let surfaceAreaLabel = UILabel(frame: CGRect.zero)
-    surfaceAreaLabel.font = UIFont.systemFont(ofSize: 14)
+    surfaceAreaLabel.font = UIFont.systemFont(ofSize: 15)
     surfaceAreaLabel.translatesAutoresizingMaskIntoConstraints = false
     return surfaceAreaLabel
   }()
