@@ -1,5 +1,5 @@
 //
-//  Authentification.swift
+//  AuthentificationService.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 25/07/2018.
