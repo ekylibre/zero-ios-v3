@@ -227,28 +227,25 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       let cell = tableView.cellForRow(at: indexPath) as! SeedCell
-      let used = seeds[indexPath.row].value(forKey: "used") as! Bool
 
-      if !used {
-        seeds[indexPath.row].setValue(true, forKey: "used")
+      if cell.isAvaible {
+        cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
       }
     case 1:
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
-      let used = phytos[indexPath.row].value(forKey: "used") as! Bool
 
-      if !used {
-        phytos[indexPath.row].setValue(true, forKey: "used")
+      if cell.isAvaible {
+        cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
       }
     case 2:
       let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
-      let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
 
-      if !used {
-        fertilizers[indexPath.row].setValue(true, forKey: "used")
+      if cell.isAvaible {
+        cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
       }
