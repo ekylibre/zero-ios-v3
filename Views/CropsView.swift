@@ -14,20 +14,20 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   //MARK: - Properties
 
   public var titleLabel: UILabel = {
-    let label = UILabel(frame: CGRect.zero)
-    label.text = "Sélectionnez des cultures"
-    label.font = UIFont.boldSystemFont(ofSize: 19)
-    label.textColor = AppColor.TextColors.White
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
+    let titleLabel = UILabel(frame: CGRect.zero)
+    titleLabel.text = "Sélectionnez des cultures"
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
+    titleLabel.textColor = AppColor.TextColors.White
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    return titleLabel
   }()
 
   lazy var headerView: UIView = {
-    let view = UIView(frame: CGRect.zero)
-    view.backgroundColor = AppColor.BarColors.Green
-    view.addSubview(titleLabel)
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
+    let headerView = UIView(frame: CGRect.zero)
+    headerView.backgroundColor = AppColor.BarColors.Green
+    headerView.addSubview(titleLabel)
+    headerView.translatesAutoresizingMaskIntoConstraints = false
+    return headerView
   }()
 
   var selectedIndexPath: IndexPath?
@@ -46,33 +46,33 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }()
 
   public var selectedCropsLabel: UILabel = {
-    let label = UILabel(frame: CGRect.zero)
-    label.text = "Aucune sélection"
-    label.font = UIFont.boldSystemFont(ofSize: 17)
-    label.textColor = AppColor.TextColors.White
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
+    let selectedCropsLabel = UILabel(frame: CGRect.zero)
+    selectedCropsLabel.text = "Aucune sélection"
+    selectedCropsLabel.font = UIFont.boldSystemFont(ofSize: 17)
+    selectedCropsLabel.textColor = AppColor.TextColors.White
+    selectedCropsLabel.translatesAutoresizingMaskIntoConstraints = false
+    return selectedCropsLabel
   }()
 
   public var validateButton: UIButton = {
-    let button = UIButton(frame: CGRect.zero)
-    button.setTitle("VALIDER", for: .normal)
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    button.setTitleColor(AppColor.TextColors.Black, for: .normal)
-    button.backgroundColor = UIColor.white
-    button.layer.cornerRadius = 3
-    button.clipsToBounds = true
-    button.translatesAutoresizingMaskIntoConstraints = false
-    return button
+    let validateButton = UIButton(frame: CGRect.zero)
+    validateButton.setTitle("VALIDER", for: .normal)
+    validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    validateButton.backgroundColor = UIColor.white
+    validateButton.layer.cornerRadius = 3
+    validateButton.clipsToBounds = true
+    validateButton.translatesAutoresizingMaskIntoConstraints = false
+    return validateButton
   }()
 
   lazy var bottomView: UIView = {
-    let view = UIView(frame: CGRect.zero)
-    view.backgroundColor = AppColor.BarColors.Green
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(selectedCropsLabel)
-    view.addSubview(validateButton)
-    return view
+    let bottomView = UIView(frame: CGRect.zero)
+    bottomView.backgroundColor = AppColor.BarColors.Green
+    bottomView.translatesAutoresizingMaskIntoConstraints = false
+    bottomView.addSubview(selectedCropsLabel)
+    bottomView.addSubview(validateButton)
+    return bottomView
   }()
 
   var plots = [NSManagedObject]()
