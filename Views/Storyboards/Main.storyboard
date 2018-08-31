@@ -914,45 +914,28 @@
                                                             <rect key="frame" x="15" y="15" width="40" height="40"/>
                                                             <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="1VO-ok-SgA"/>
-                                                                <constraint firstAttribute="width" constant="40" id="6Mc-cl-JTC"/>
-                                                                <constraint firstAttribute="width" constant="40" id="MMw-aY-Ihj"/>
                                                                 <constraint firstAttribute="width" constant="40" id="XaH-KV-576"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-Pa-mmw" userLabel="Type Label">
-                                                            <rect key="frame" x="70" y="37" width="31" height="14"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSv-ix-pwS" userLabel="Name Label">
                                                             <rect key="frame" x="70" y="15" width="36" height="16"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-Pa-mmw" userLabel="Type Label">
+                                                            <rect key="frame" x="70" y="37" width="31" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="00M-Pf-tkw"/>
-                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="2xU-w5-GyM"/>
-                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="9jJ-wc-132"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="top" id="9mi-eX-xXO"/>
                                                         <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="6" id="FRf-Mg-izI"/>
-                                                        <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="top" id="GDy-xz-jsb"/>
-                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="6" id="Lu0-rl-NDV"/>
-                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="oDC-Pa-mmw" secondAttribute="leading" id="Snu-qm-2Vo"/>
-                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="oDC-Pa-mmw" secondAttribute="leading" id="TUb-dw-wpd"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="topMargin" constant="4" id="UK7-jV-uYt"/>
-                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="6" id="XKp-6A-wNi"/>
-                                                        <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="zbU-5b-dYp" secondAttribute="top" constant="15" id="YxI-kN-eRA"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="leading" secondItem="zbU-5b-dYp" secondAttribute="leading" constant="15" id="chJ-WA-q1u"/>
-                                                        <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="d9F-oq-9yQ"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="oDC-Pa-mmw" secondAttribute="leading" id="ddJ-lg-EYL"/>
-                                                        <constraint firstItem="oDC-Pa-mmw" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="bottom" constant="6" id="gDo-oj-bVj"/>
-                                                        <constraint firstItem="OkW-E4-67T" firstAttribute="top" secondItem="SSv-ix-pwS" secondAttribute="top" id="gJN-GM-rHa"/>
-                                                        <constraint firstAttribute="bottom" secondItem="OkW-E4-67T" secondAttribute="bottom" constant="15" id="i86-qL-0PP"/>
-                                                        <constraint firstItem="OkW-E4-67T" firstAttribute="centerY" secondItem="zbU-5b-dYp" secondAttribute="centerY" id="sGX-7g-8jA"/>
                                                         <constraint firstItem="SSv-ix-pwS" firstAttribute="leading" secondItem="OkW-E4-67T" secondAttribute="trailing" constant="15" id="sKi-8x-VWd"/>
                                                         <constraint firstItem="OkW-E4-67T" firstAttribute="centerY" secondItem="zbU-5b-dYp" secondAttribute="centerY" id="yJL-id-PqR"/>
                                                     </constraints>
@@ -1130,7 +1113,6 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="uUk-5i-pGA" firstAttribute="leading" secondItem="5v3-oG-qco" secondAttribute="leadingMargin" constant="6" id="M5h-DS-y11"/>
                                                 <constraint firstItem="uUk-5i-pGA" firstAttribute="top" secondItem="5v3-oG-qco" secondAttribute="top" constant="8" id="NGE-gP-XTi"/>
                                                 <constraint firstItem="uUk-5i-pGA" firstAttribute="leading" secondItem="5v3-oG-qco" secondAttribute="leadingMargin" constant="6" id="frf-L0-p5k"/>
                                                 <constraint firstAttribute="bottom" secondItem="uUk-5i-pGA" secondAttribute="bottom" constant="8" id="qLx-Ot-xEJ"/>
@@ -1218,9 +1200,6 @@
                                                             <rect key="frame" x="15" y="15" width="40" height="40"/>
                                                             <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="IF1-GQ-qxK"/>
-                                                                <constraint firstAttribute="width" constant="40" id="h7z-6A-G1t"/>
-                                                                <constraint firstAttribute="width" constant="40" id="iCt-5Z-eeP"/>
                                                                 <constraint firstAttribute="width" constant="40" id="s0Z-jk-cwi"/>
                                                             </constraints>
                                                         </imageView>
@@ -1237,27 +1216,13 @@
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="10g-cZ-ZYp" secondAttribute="leading" id="03y-09-yxs"/>
+                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="top" secondItem="C67-8t-w0k" secondAttribute="topMargin" constant="4" id="4lJ-ec-m7T"/>
                                                         <constraint firstItem="10g-cZ-ZYp" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="bottom" constant="6" id="699-Vd-ebA"/>
-                                                        <constraint firstItem="10g-cZ-ZYp" firstAttribute="leading" secondItem="cXR-oW-rIT" secondAttribute="trailing" constant="15" id="96S-Ra-zBV"/>
-                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="10g-cZ-ZYp" secondAttribute="leading" id="EFQ-Tg-PU9"/>
-                                                        <constraint firstItem="cXR-oW-rIT" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="top" id="Erg-Cg-KuU"/>
-                                                        <constraint firstItem="10g-cZ-ZYp" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="bottom" constant="6" id="QD6-VW-x3w"/>
-                                                        <constraint firstItem="cXR-oW-rIT" firstAttribute="centerY" secondItem="C67-8t-w0k" secondAttribute="centerY" id="V2F-i5-fr6"/>
-                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="cXR-oW-rIT" secondAttribute="trailing" constant="15" id="a0R-kb-8tS"/>
+                                                        <constraint firstItem="cXR-oW-rIT" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="top" id="JNe-Z6-ikr"/>
                                                         <constraint firstItem="cXR-oW-rIT" firstAttribute="centerY" secondItem="C67-8t-w0k" secondAttribute="centerY" id="bKe-3R-YS6"/>
-                                                        <constraint firstAttribute="bottom" secondItem="cXR-oW-rIT" secondAttribute="bottom" constant="15" id="fUS-ak-QRy"/>
-                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="cXR-oW-rIT" secondAttribute="trailing" constant="15" id="ffs-px-jhE"/>
-                                                        <constraint firstItem="10g-cZ-ZYp" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="bottom" constant="6" id="hlE-1j-igz"/>
-                                                        <constraint firstItem="10g-cZ-ZYp" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="bottom" constant="6" id="hp6-Jt-Ros"/>
-                                                        <constraint firstItem="cXR-oW-rIT" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="top" id="mxz-nf-iy1"/>
                                                         <constraint firstItem="cXR-oW-rIT" firstAttribute="leading" secondItem="C67-8t-w0k" secondAttribute="leading" constant="15" id="nKc-cP-b8C"/>
                                                         <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="10g-cZ-ZYp" secondAttribute="leading" id="neF-2y-Eju"/>
-                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="cXR-oW-rIT" secondAttribute="trailing" constant="15" id="oul-3O-bj1"/>
                                                         <constraint firstItem="UKP-Fr-E6R" firstAttribute="leading" secondItem="cXR-oW-rIT" secondAttribute="trailing" constant="15" id="psh-a1-hiY"/>
-                                                        <constraint firstItem="cXR-oW-rIT" firstAttribute="top" secondItem="C67-8t-w0k" secondAttribute="top" constant="15" id="rcP-XY-liO"/>
-                                                        <constraint firstItem="UKP-Fr-E6R" firstAttribute="top" secondItem="C67-8t-w0k" secondAttribute="topMargin" constant="4" id="smn-dI-FBf"/>
-                                                        <constraint firstItem="cXR-oW-rIT" firstAttribute="top" secondItem="UKP-Fr-E6R" secondAttribute="top" id="zKX-G6-CWh"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
