@@ -25,39 +25,41 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
       /*let type = self.selectedInputs[indexPath.row].value(forKey: "type") as! String
-      let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
-      let cellIndexPath = NSIndexPath(row: row, section: 0)
+       let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
+       let cellIndexPath = NSIndexPath(row: row, section: 0)
 
-      switch type {
-      case "Seed":
-        let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
+       switch type {
+       case "Seed":
+       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
 
-        cell.isAvaible = true
-        cell.backgroundColor = AppColor.CellColors.white
-      case "Phyto":
-        let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
+       cell.isAvaible = true
+       cell.backgroundColor = AppColor.CellColors.white
+       case "Phyto":
+       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
 
-        cell.isAvaible = true
-        cell.backgroundColor = AppColor.CellColors.white
-      case "Fertilizer":
-        let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
+       cell.isAvaible = true
+       cell.backgroundColor = AppColor.CellColors.white
+       case "Fertilizer":
+       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
 
-        cell.isAvaible = true
-        cell.backgroundColor = AppColor.CellColors.white
-      default:
-        print("No type")
-      }*/
+       cell.isAvaible = true
+       cell.backgroundColor = AppColor.CellColors.white
+       default:
+       print("No type")
+       }*/
 
       self.selectedInputs.remove(at: indexPath.row)
       if self.selectedInputs.count == 0 {
         self.inputsHeightConstraint.constant = 70
         self.inputsCollapseButton.isHidden = true
+      } else {
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.inputsHeightConstraint,
+          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+          tableView: self.selectedInputsTableView
+        )
       }
-      self.resizeViewAndTableView(
-        viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-        tableView: self.selectedInputsTableView
-      )
+      self.showInputsNumber()
       self.selectedInputsTableView.reloadData()
     }))
     self.present(alert, animated: true)
