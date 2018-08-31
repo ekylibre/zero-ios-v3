@@ -232,6 +232,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 1:
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
@@ -240,6 +241,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 2:
       let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
@@ -248,6 +250,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     default:
       print("Error")
@@ -336,7 +339,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.setValue(variety, forKey: "variety")
     seed.setValue(specie, forKey: "specie")
     seed.setValue("kg/ha", forKey: "unit")
-    seed.setValue(false, forKey: "used")
+    seed.setValue(0, forKey: "row")
     seeds.append(seed)
 
     do {
@@ -362,7 +365,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.setValue("Phyto", forKey: "type")
     phyto.setValue(reentryDelay, forKey: "reentryDelay")
     phyto.setValue("l/ha", forKey: "unit")
-    phyto.setValue(false, forKey: "used")
+    phyto.setValue(0, forKey: "row")
     phytos.append(phyto)
 
     do {
@@ -386,7 +389,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.setValue(name, forKey: "name")
     fertilizer.setValue(nature, forKey: "nature")
     fertilizer.setValue("kg/ha", forKey: "unit")
-    fertilizer.setValue(false, forKey: "used")
+    fertilizer.setValue(0, forKey: "row")
     fertilizers.append(fertilizer)
 
     do {
