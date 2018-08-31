@@ -42,8 +42,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 44
     return tableView
   }()
 
@@ -148,6 +146,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let plot = plots[indexPath.row]
     let crops = fetchCrops(fromPlot: plot)
 
+    cell.checkboxButton.addTarget(self, action: #selector(tapCheckbox), for: .touchUpInside)
     cell.nameLabel.text = plot.value(forKey: "name") as? String
     cell.nameLabel.sizeToFit()
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", plot.value(forKey: "surfaceArea") as! Double)
@@ -184,6 +183,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapCropView))
       gesture.numberOfTapsRequired = 1
       view.addGestureRecognizer(gesture)
+      view.isHidden = true
       cell.addSubview(view)
       views.append(view)
     }
@@ -201,7 +201,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     } else {
       let index = indexPaths.index(of: selectedIndexPath!)
       indexPaths.remove(at: index!)
-      cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi - 3.14159)
+      cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi)
     }
     tableView.beginUpdates()
     tableView.endUpdates()
@@ -212,11 +212,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       guard let cell = tableView.cellForRow(at: indexPath) else {
         return 0
       }
-      let count = cell.subviews.count - 2
+      let count = cell.subviews.count - 1
       return CGFloat(count * 60 + 15)
-    } else {
-      return 60
     }
+    return 60
   }
 
   //MARK: - Core Data
@@ -352,11 +351,12 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let plotSurfaceArea = plot.value(forKey: "surfaceArea") as! Double
     let crops = fetchCrops(fromPlot: plot)
 
+    print(cell.subviews)
     if !sender.isSelected {
       sender.isSelected = true
       cropsCount += crops.count
       totalSurfaceArea += plotSurfaceArea
-      for view in cell.subviews[2...crops.count + 1] {
+      for view in cell.subviews[1...crops.count] {
         let checkboxImage = view.subviews[1] as! UIImageView
         checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
       }
@@ -365,7 +365,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       }
     } else {
       sender.isSelected = false
-      for (index, view) in cell.subviews[2...crops.count + 1].enumerated() {
+      for (index, view) in cell.subviews[1...crops.count].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
