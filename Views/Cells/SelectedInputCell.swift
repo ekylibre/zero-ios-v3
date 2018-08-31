@@ -274,10 +274,12 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       ) == nil
   }
 
-  func textFieldDidEndEditing(_ textField: UITextField) {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
     if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue((textField.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
     }
+    return false
   }
 
   @objc func showUnitMeasure(sender: UIButton) {
