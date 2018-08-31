@@ -16,7 +16,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   public var titleLabel: UILabel = {
     let label = UILabel(frame: CGRect.zero)
     label.text = "Sélectionnez des cultures"
-    label.font = UIFont.systemFont(ofSize: 19)
+    label.font = UIFont.boldSystemFont(ofSize: 19)
     label.textColor = AppColor.TextColors.White
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -48,7 +48,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   public var selectedCropsLabel: UILabel = {
     let label = UILabel(frame: CGRect.zero)
     label.text = "Aucune sélection"
-    label.font = UIFont.systemFont(ofSize: 17)
+    label.font = UIFont.boldSystemFont(ofSize: 17)
     label.textColor = AppColor.TextColors.White
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -57,6 +57,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   public var validateButton: UIButton = {
     let button = UIButton(frame: CGRect.zero)
     button.setTitle("VALIDER", for: .normal)
+    button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     button.setTitleColor(AppColor.TextColors.Black, for: .normal)
     button.backgroundColor = UIColor.white
     button.layer.cornerRadius = 3
@@ -111,12 +112,12 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       "validate" : validateButton,
       ] as [String : Any]
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[title]", options: [], metrics: nil, views: viewsDict))
     NSLayoutConstraint(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[selected]", options: [], metrics: nil, views: viewsDict))
     NSLayoutConstraint(item: selectedCropsLabel, attribute: .centerY, relatedBy: .equal, toItem: bottomView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[validate(>=90)]-13-|", options: [], metrics: nil, views: viewsDict))
+    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[validate(>=100)]-13-|", options: [], metrics: nil, views: viewsDict))
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-13-[validate]-13-|", options: [], metrics: nil, views: viewsDict))
 
     self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[header]|", options: [], metrics: nil, views: viewsDict))
@@ -158,6 +159,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       view.layer.borderColor = UIColor.lightGray.cgColor
       view.layer.borderWidth = 0.5
       let cropImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+      let cropImage = #imageLiteral(resourceName: "crop")
+      let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
+      cropImageView.image = tintedImage
+      cropImageView.tintColor = UIColor.darkGray
       cropImageView.backgroundColor = UIColor.lightGray
       view.addSubview(cropImageView)
       let checkboxImage = UIImageView(frame: CGRect(x: 7, y: 7, width: 16, height: 16))
