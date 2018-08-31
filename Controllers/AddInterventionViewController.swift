@@ -346,15 +346,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         case "Seed":
           cell.inputName.text = input?.value(forKey: "specie") as? String
           cell.inputSpec.text = input?.value(forKey: "variety") as? String
-          cell.imageView?.image = #imageLiteral(resourceName: "seed")
+          cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case "Phyto":
           cell.inputName.text = input?.value(forKey: "name") as? String
           cell.inputSpec.text = input?.value(forKey: "firmName") as? String
-          cell.imageView?.image = #imageLiteral(resourceName: "phytosanitary")
+          cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
         case "Fertilizer":
           cell.inputName.text = input?.value(forKey: "name") as? String
           cell.inputSpec.text = input?.value(forKey: "nature") as? String
-          cell.imageView?.image = #imageLiteral(resourceName: "fertilizer")
+          cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
           print("No type")
         }
