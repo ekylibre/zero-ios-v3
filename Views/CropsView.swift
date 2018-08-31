@@ -59,7 +59,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     button.setTitle("VALIDER", for: .normal)
     button.setTitleColor(AppColor.TextColors.Black, for: .normal)
     button.backgroundColor = UIColor.white
-    button.layer.cornerRadius = 5
+    button.layer.cornerRadius = 3
     button.clipsToBounds = true
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
@@ -75,9 +75,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }()
 
   var plots = [NSManagedObject]()
-  var crops = [NSManagedObject]()
   var viewsArray = [[UIView]]()
-  var cropPlots = [[NSManagedObject]]()
   var selectedCrops = [NSManagedObject]()
   var cropsCount = 0
   var totalSurfaceArea: Double = 0
@@ -95,7 +93,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   private func setupView() {
     self.isHidden = true
     self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
+    self.layer.cornerRadius = 3
     self.clipsToBounds = true
     self.addSubview(headerView)
     self.addSubview(tableView)
@@ -183,7 +181,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapCropView))
       gesture.numberOfTapsRequired = 1
       view.addGestureRecognizer(gesture)
-      view.isHidden = true
       cell.addSubview(view)
       views.append(view)
     }
@@ -193,16 +190,15 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     selectedIndexPath = indexPath
-
     let cell = tableView.cellForRow(at: selectedIndexPath!) as! PlotCell
+
     if !indexPaths.contains(selectedIndexPath!) {
       indexPaths += [selectedIndexPath!]
-      cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi)
     } else {
       let index = indexPaths.index(of: selectedIndexPath!)
       indexPaths.remove(at: index!)
-      cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi)
     }
+    cell.expandCollapseImageView.transform = cell.expandCollapseImageView.transform.rotated(by: CGFloat.pi)
     tableView.beginUpdates()
     tableView.endUpdates()
   }
@@ -219,62 +215,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   //MARK: - Core Data
-
-  private func loadSamplePlots() {
-    createPlot(name: "Crop 1", surfaceArea: 7.5)
-    createCrop(plotName: "Crop 1", name: "Blé tendre", surfaceArea: 3, startDate: Date())
-    createCrop(plotName: "Crop 1", name: "Maïs", surfaceArea: 4.5, startDate: Date())
-
-    createPlot(name: "Epoisses", surfaceArea: 0.651)
-    createCrop(plotName: "Epoisses", name: "Artichaut", surfaceArea: 0.651, startDate: Date())
-
-    createPlot(name: "Cabécou", surfaceArea: 12.06)
-    createCrop(plotName: "Cabécou", name: "Avoine", surfaceArea: 6.3, startDate: Date())
-    createCrop(plotName: "Cabécou", name: "Ciboulette", surfaceArea: 0.92, startDate: Date())
-    createCrop(plotName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date())
-  }
-
-  func createPlot(name: String, surfaceArea: Double) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsEntity = NSEntityDescription.entity(forEntityName: "Plots", in: managedContext)!
-    let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
-
-    plot.setValue(name, forKey: "name")
-    plot.setValue(surfaceArea, forKey: "surfaceArea")
-
-    do {
-      try managedContext.save()
-      plots.append(plot)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  func createCrop(plotName: String, name: String, surfaceArea: Double, startDate: Date) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
-    let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
-    let plot = fetchPlot(withName: plotName)
-
-    crop.setValue(plot, forKey: "plots")
-    crop.setValue(name, forKey: "name")
-    crop.setValue(surfaceArea, forKey: "surfaceArea")
-    crop.setValue(startDate, forKey: "startDate")
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
 
   func fetchPlots() -> Bool {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -339,6 +279,62 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return crops
   }
 
+  private func loadSamplePlots() {
+    createPlot(name: "Plot 1", surfaceArea: 7.5)
+    createCrop(plotName: "Plot 1", name: "Blé tendre", surfaceArea: 3, startDate: Date())
+    createCrop(plotName: "Plot 1", name: "Maïs", surfaceArea: 4.5, startDate: Date())
+
+    createPlot(name: "Epoisses", surfaceArea: 0.651)
+    createCrop(plotName: "Epoisses", name: "Artichaut", surfaceArea: 0.651, startDate: Date())
+
+    createPlot(name: "Cabécou", surfaceArea: 12.06)
+    createCrop(plotName: "Cabécou", name: "Avoine", surfaceArea: 6.3, startDate: Date())
+    createCrop(plotName: "Cabécou", name: "Ciboulette", surfaceArea: 0.92, startDate: Date())
+    createCrop(plotName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date())
+  }
+
+  func createPlot(name: String, surfaceArea: Double) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let plotsEntity = NSEntityDescription.entity(forEntityName: "Plots", in: managedContext)!
+    let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
+
+    plot.setValue(name, forKey: "name")
+    plot.setValue(surfaceArea, forKey: "surfaceArea")
+
+    do {
+      try managedContext.save()
+      plots.append(plot)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createCrop(plotName: String, name: String, surfaceArea: Double, startDate: Date) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
+    let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
+    let plot = fetchPlot(withName: plotName)
+
+    crop.setValue(plot, forKey: "plots")
+    crop.setValue(name, forKey: "name")
+    crop.setValue(surfaceArea, forKey: "surfaceArea")
+    crop.setValue(startDate, forKey: "startDate")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   //MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
@@ -351,7 +347,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let plotSurfaceArea = plot.value(forKey: "surfaceArea") as! Double
     let crops = fetchCrops(fromPlot: plot)
 
-    print(cell.subviews)
     if !sender.isSelected {
       sender.isSelected = true
       cropsCount += crops.count
@@ -418,7 +413,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
       cropsCount -= 1
       totalSurfaceArea -= crop.value(forKey: "surfaceArea") as! Double
-      for (index, view) in cell.subviews[2...crops.count + 1].enumerated() {
+      for (index, view) in cell.subviews[1...crops.count].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
           break
