@@ -267,8 +267,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     var totalSurfaceArea: Double = 0
 
     for target in targets {
-      let surfaceArea = target.value(forKey: "surfaceArea") as! Double
-      totalSurfaceArea += surfaceArea
+      let crop = target.value(forKey: "crops") as! NSManagedObject
+      let surfaceArea = crop.value(forKey: "surfaceArea") as! Double
+      totalSurfaceArea += surfaceArea 
     }
 
     if targets.count > 1 {

@@ -308,7 +308,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   //MARK: - Core Data
 
   func createIntervention() {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -339,7 +338,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createTargets(intervention: NSManagedObject) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -347,12 +345,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let targetsEntity = NSEntityDescription.entity(forEntityName: "Targets", in: managedContext)!
 
-    for selectedPlot in cropsView.selectedCrops {
+    for selectedCrop in cropsView.selectedCrops {
       let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
-      let surfaceArea = selectedPlot.value(forKey: "surfaceArea") as! Double
 
       target.setValue(intervention, forKey: "interventions")
-      target.setValue(surfaceArea, forKey: "surfaceArea")
+      target.setValue(selectedCrop, forKey: "crops")
+      target.setValue(100, forKey: "workAreaPercentage")
     }
 
     do {
@@ -363,7 +361,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createTools(intervention: NSManagedObject) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
