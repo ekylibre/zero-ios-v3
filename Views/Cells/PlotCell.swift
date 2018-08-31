@@ -45,6 +45,7 @@ class PlotCell: UITableViewCell {
   }
 
   private func setupCell() {
+    self.clipsToBounds = true
     contentView.addSubview(checkboxButton)
     contentView.addSubview(nameLabel)
     contentView.addSubview(surfaceAreaLabel)
