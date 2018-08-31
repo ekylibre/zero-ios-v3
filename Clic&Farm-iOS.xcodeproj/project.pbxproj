@@ -7,37 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */; };
-		0412B78D2126BB3A00976DB6 /* EntitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B78C2126BB3A00976DB6 /* EntitiesTableViewCell.swift */; };
-		0413DE84211B3E2800AE8337 /* UseToolsIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* UseToolsIntervention.swift */; };
-		04162E58212C431700EF4318 /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E57212C431700EF4318 /* FertilizerCell.swift */; };
-		04162E5C212C432B00EF4318 /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5B212C432B00EF4318 /* SeedCell.swift */; };
+		0412B78D2126BB3A00976DB6 /* EntityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B78C2126BB3A00976DB6 /* EntityCell.swift */; };
+		0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */; };
+		0414257E212D5D8600FBBD0D /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0414257D212D5D8600FBBD0D /* SelectedInputCell.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
+		0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */; };
+		041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
-		042A44362121B45B00CE6B24 /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44352121B45B00CE6B24 /* CropCell.swift */; };
 		042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F654B2118590500EC9E27 /* oauthInfo.plist */; };
+		044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D44213816B9001A5D3D /* ListTableViewController.swift */; };
+		044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D46213816C0001A5D3D /* ListProtocol.swift */; };
+		044B4D5221381709001A5D3D /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D4A21381709001A5D3D /* PhytoCell.swift */; };
+		044B4D5321381709001A5D3D /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D4B21381709001A5D3D /* ListCell.swift */; };
+		044B4D5421381709001A5D3D /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D4C21381709001A5D3D /* SeedCell.swift */; };
+		044B4D5521381709001A5D3D /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D4D21381709001A5D3D /* InterventionCell.swift */; };
+		044B4D5621381709001A5D3D /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D4E21381709001A5D3D /* CropCell.swift */; };
+		044B4D5721381709001A5D3D /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D4F21381709001A5D3D /* FertilizerCell.swift */; };
+		044B4D5D21381719001A5D3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D5B21381719001A5D3D /* LaunchScreen.storyboard */; };
+		044B4D5E21381719001A5D3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D5C21381719001A5D3D /* Main.storyboard */; };
+		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
+		04644BBF21394B1200F2540D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 044B4D622138174E001A5D3D /* Assets.xcassets */; };
+		0478F233213447D9001EAE6E /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
+		0478F235213447DD001EAE6E /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
+		0478F237213447E1001EAE6E /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
-		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
-		047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
-		6B1267CB212EF86E00C8308F /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E59212C432200EF4318 /* PhytoCell.swift */; };
-		6B16F9342110A4E900D63316 /* ToolsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */; };
-		6B1E826E2136E0AB00699B9E /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
-		6B1E826F2136E0AB00699B9E /* OAuth2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6B16F9342110A4E900D63316 /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B16F9332110A4E900D63316 /* EquipmentCell.swift */; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
-		6B8294AE212D904700C240F7 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8294AD212D904700C240F7 /* CreatePhytoView.swift */; };
-		6B8294B0212D9A5B00C240F7 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */; };
-		6B9C8CAB212C594F00CC54EB /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */; };
-		6BB225402118490A0036E167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2253A211849090036E167 /* Assets.xcassets */; };
 		6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
-		6BB22547211849DD0036E167 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22546211849C20036E167 /* Main.storyboard */; };
-		6BB22548211849E00036E167 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22545211849C20036E167 /* LaunchScreen.storyboard */; };
-		6BD5AC282133F54800C6D605 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC272133F54800C6D605 /* ListTableViewController.swift */; };
-		6BD5AC2A2133FB6B00C6D605 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC292133FB6B00C6D605 /* ListCell.swift */; };
-		6BD5AC2C2134229C00C6D605 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC2B2134229C00C6D605 /* ListProtocol.swift */; };
-		6BD5AC2E213431CD00C6D605 /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5AC2D213431CD00C6D605 /* CropsView.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 		6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */; };
 		6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DA2105CD820072840F /* LoginScreen.swift */; };
@@ -45,7 +46,6 @@
 		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E12105CD8A0072840F /* KeychainService.swift */; };
 		6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E22105CD8A0072840F /* Intervention.swift */; };
-		6BEA65E82105CD8B0072840F /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E32105CD8A0072840F /* InterventionCell.swift */; };
 		6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65EA2105CD900072840F /* RoundedButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,52 +59,40 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		6B1E82702136E0AB00699B9E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6B1E826F2136E0AB00699B9E /* OAuth2.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
-		0412B78C2126BB3A00976DB6 /* EntitiesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesTableViewCell.swift; sourceTree = "<group>"; };
-		0413DE83211B3E2800AE8337 /* UseToolsIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseToolsIntervention.swift; sourceTree = "<group>"; };
-		04162E57212C431700EF4318 /* FertilizerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCell.swift; sourceTree = "<group>"; };
-		04162E59212C432200EF4318 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
-		04162E5B212C432B00EF4318 /* SeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCell.swift; sourceTree = "<group>"; };
+		0412B78C2126BB3A00976DB6 /* EntityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCell.swift; sourceTree = "<group>"; };
+		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
+		0414257D212D5D8600FBBD0D /* SelectedInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
+		041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
-		042A44352121B45B00CE6B24 /* CropCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropCell.swift; sourceTree = "<group>"; };
 		042F654B2118590500EC9E27 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
+		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		044B4D46213816C0001A5D3D /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
+		044B4D4A21381709001A5D3D /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
+		044B4D4B21381709001A5D3D /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		044B4D4C21381709001A5D3D /* SeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCell.swift; sourceTree = "<group>"; };
+		044B4D4D21381709001A5D3D /* InterventionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionCell.swift; sourceTree = "<group>"; };
+		044B4D4E21381709001A5D3D /* CropCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropCell.swift; sourceTree = "<group>"; };
+		044B4D4F21381709001A5D3D /* FertilizerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCell.swift; sourceTree = "<group>"; };
+		044B4D5B21381719001A5D3D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		044B4D5C21381719001A5D3D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
+		044B4D622138174E001A5D3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		044B4D632138174E001A5D3D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
+		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
+		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
-		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
-		047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
-		6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsTableViewCell.swift; sourceTree = "<group>"; };
+		6B16F9332110A4E900D63316 /* EquipmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentCell.swift; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
-		6B8294AD212D904700C240F7 /* CreatePhytoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
-		6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
-		6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
-		6BB2253A211849090036E167 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
-		6BB2253D211849090036E167 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BB2253E211849090036E167 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6BB22545211849C20036E167 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		6BB22546211849C20036E167 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		6BD5AC272133F54800C6D605 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
-		6BD5AC292133FB6B00C6D605 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		6BD5AC2B2134229C00C6D605 /* ListProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
-		6BD5AC2D213431CD00C6D605 /* CropsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
 		6BEA656D2105C5EE0072840F /* Clic&Farm-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clic&Farm-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
@@ -115,7 +103,6 @@
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		6BEA65E12105CD8A0072840F /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		6BEA65E22105CD8A0072840F /* Intervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intervention.swift; sourceTree = "<group>"; };
-		6BEA65E32105CD8A0072840F /* InterventionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionCell.swift; sourceTree = "<group>"; };
 		6BEA65EA2105CD900072840F /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,7 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B1E826E2136E0AB00699B9E /* OAuth2.framework in Frameworks */,
+				0411295A2110937300AE884D /* OAuth2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +133,40 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		044B4D4821381709001A5D3D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				044B4D4E21381709001A5D3D /* CropCell.swift */,
+				0412B78C2126BB3A00976DB6 /* EntityCell.swift */,
+				6B16F9332110A4E900D63316 /* EquipmentCell.swift */,
+				044B4D4F21381709001A5D3D /* FertilizerCell.swift */,
+				044B4D4D21381709001A5D3D /* InterventionCell.swift */,
+				044B4D4B21381709001A5D3D /* ListCell.swift */,
+				044B4D4A21381709001A5D3D /* PhytoCell.swift */,
+				044B4D4C21381709001A5D3D /* SeedCell.swift */,
+				0414257D212D5D8600FBBD0D /* SelectedInputCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		044B4D5A21381719001A5D3D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				044B4D5B21381719001A5D3D /* LaunchScreen.storyboard */,
+				044B4D5C21381719001A5D3D /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		044B4D612138174E001A5D3D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				044B4D622138174E001A5D3D /* Assets.xcassets */,
+				044B4D632138174E001A5D3D /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		047B57CB2108605400C48F68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,13 +179,15 @@
 			isa = PBXGroup;
 			children = (
 				0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */,
+				0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */,
 				6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */,
+				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
+				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
+				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
 				6BEA65DA2105CD820072840F /* LoginScreen.swift */,
-				0413DE83211B3E2800AE8337 /* UseToolsIntervention.swift */,
-				6BD5AC272133F54800C6D605 /* ListTableViewController.swift */,
-				6BD5AC2B2134229C00C6D605 /* ListProtocol.swift */,
+				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -172,16 +195,16 @@
 		047BF0B12105D1F9009F3945 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0478F232213447D9001EAE6E /* CreateFertilizerView.swift */,
+				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
+				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
+				044B4D5F2138173E001A5D3D /* CropsView.swift */,
+				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
-				6BD5AC2D213431CD00C6D605 /* CropsView.swift */,
-				04162E5D212C434100EF4318 /* InputsView.swift */,
-				6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */,
-				6B8294AD212D904700C240F7 /* CreatePhytoView.swift */,
-				6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */,
-				6B226E192136DDEE000F6EAD /* Storyboards */,
-				6BBC94692136DCCF00640935 /* Cells */,
+				044B4D4821381709001A5D3D /* Cells */,
+				044B4D5A21381719001A5D3D /* Storyboards */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -200,60 +223,25 @@
 			isa = PBXGroup;
 			children = (
 				6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */,
-				047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */,
-				047BF0BC2105D405009F3945 /* Users+CoreDataProperties.swift */,
 				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		6B226E192136DDEE000F6EAD /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				6BB22546211849C20036E167 /* Main.storyboard */,
-				6BB22545211849C20036E167 /* LaunchScreen.storyboard */,
-			);
-			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		6B226E1A2136DE0D000F6EAD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				6BB2253A211849090036E167 /* Assets.xcassets */,
-				6BB2253D211849090036E167 /* Info.plist */,
-				042F654B2118590500EC9E27 /* oauthInfo.plist */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		6BBC94692136DCCF00640935 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				6BEA65E32105CD8A0072840F /* InterventionCell.swift */,
-				042A44352121B45B00CE6B24 /* CropCell.swift */,
-				04162E5B212C432B00EF4318 /* SeedCell.swift */,
-				04162E59212C432200EF4318 /* PhytoCell.swift */,
-				04162E57212C431700EF4318 /* FertilizerCell.swift */,
-				6B16F9332110A4E900D63316 /* ToolsTableViewCell.swift */,
-				0412B78C2126BB3A00976DB6 /* EntitiesTableViewCell.swift */,
-				6BD5AC292133FB6B00C6D605 /* ListCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		6BEA65642105C5EE0072840F = {
 			isa = PBXGroup;
 			children = (
+				042F654B2118590500EC9E27 /* oauthInfo.plist */,
 				6BB2253E211849090036E167 /* AppDelegate.swift */,
-				6B226E1A2136DE0D000F6EAD /* Resources */,
+				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
 				042A44322121B38600CE6B24 /* Constants */,
 				047BF0B02105D1D2009F3945 /* Controllers */,
 				047BF0BF2105F44F009F3945 /* CoreData */,
-				047BF0B12105D1F9009F3945 /* Views */,
-				047BF0B22105D20B009F3945 /* Models */,
-				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
 				047B57CB2108605400C48F68 /* Frameworks */,
+				047BF0B22105D20B009F3945 /* Models */,
 				6BEA656E2105C5EE0072840F /* Products */,
+				044B4D612138174E001A5D3D /* Resources */,
+				047BF0B12105D1F9009F3945 /* Views */,
 			);
 			sourceTree = "<group>";
 		};
@@ -286,7 +274,6 @@
 				6BEA656A2105C5EE0072840F /* Frameworks */,
 				6BEA656B2105C5EE0072840F /* Resources */,
 				0411295B2110939D00AE884D /* ShellScript */,
-				6B1E82702136E0AB00699B9E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -358,10 +345,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BB22547211849DD0036E167 /* Main.storyboard in Resources */,
-				6BB22548211849E00036E167 /* LaunchScreen.storyboard in Resources */,
+				04644BBF21394B1200F2540D /* Assets.xcassets in Resources */,
 				042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */,
-				6BB225402118490A0036E167 /* Assets.xcassets in Resources */,
+				044B4D5E21381719001A5D3D /* Main.storyboard in Resources */,
+				044B4D5D21381719001A5D3D /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +364,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		0411295B2110939D00AE884D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
@@ -385,7 +372,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
@@ -396,39 +383,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B1267CB212EF86E00C8308F /* PhytoCell.swift in Sources */,
-				047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */,
-				6B16F9342110A4E900D63316 /* ToolsTableViewCell.swift in Sources */,
-				6BD5AC282133F54800C6D605 /* ListTableViewController.swift in Sources */,
-				6BD5AC2A2133FB6B00C6D605 /* ListCell.swift in Sources */,
+				6B16F9342110A4E900D63316 /* EquipmentCell.swift in Sources */,
+				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
-				6BD5AC2E213431CD00C6D605 /* CropsView.swift in Sources */,
+				044B4D5321381709001A5D3D /* ListCell.swift in Sources */,
+				0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */,
 				6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */,
+				0478F235213447DD001EAE6E /* CreatePhytoView.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
-				047BF0BE2105D405009F3945 /* Users+CoreDataProperties.swift in Sources */,
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
-				0413DE84211B3E2800AE8337 /* UseToolsIntervention.swift in Sources */,
-				6B8294AE212D904700C240F7 /* CreatePhytoView.swift in Sources */,
+				0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */,
+				044B4D5421381709001A5D3D /* SeedCell.swift in Sources */,
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
-				0412B78D2126BB3A00976DB6 /* EntitiesTableViewCell.swift in Sources */,
+				0412B78D2126BB3A00976DB6 /* EntityCell.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
-				6BEA65E82105CD8B0072840F /* InterventionCell.swift in Sources */,
-				042A44362121B45B00CE6B24 /* CropCell.swift in Sources */,
+				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
+				044B4D5221381709001A5D3D /* PhytoCell.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */,
+				0414257E212D5D8600FBBD0D /* SelectedInputCell.swift in Sources */,
+				044B4D5521381709001A5D3D /* InterventionCell.swift in Sources */,
 				6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */,
 				6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */,
-				04162E5C212C432B00EF4318 /* SeedCell.swift in Sources */,
+				044B4D5621381709001A5D3D /* CropCell.swift in Sources */,
 				6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */,
+				041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
-				04162E58212C431700EF4318 /* FertilizerCell.swift in Sources */,
-				6BD5AC2C2134229C00C6D605 /* ListProtocol.swift in Sources */,
+				0478F233213447D9001EAE6E /* CreateFertilizerView.swift in Sources */,
+				044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
-				6B9C8CAB212C594F00CC54EB /* CreateSeedView.swift in Sources */,
-				6B8294B0212D9A5B00C240F7 /* CreateFertilizerView.swift in Sources */,
+				044B4D5721381709001A5D3D /* FertilizerCell.swift in Sources */,
+				0478F237213447E1001EAE6E /* CreateSeedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
