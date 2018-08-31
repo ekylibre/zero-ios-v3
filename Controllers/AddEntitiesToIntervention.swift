@@ -48,8 +48,10 @@ extension AddInterventionViewController: DoerCellDelegate {
         self.doersHeightConstraint.constant = 70
         self.doersCollapsedButton.isHidden = true
       } else {
-        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
         self.showDoersNumber()
       }
       self.doersTableView.reloadData()
@@ -75,8 +77,10 @@ extension AddInterventionViewController: DoerCellDelegate {
         self.view.layoutIfNeeded()
         self.doersCollapsedButton.isHidden = false
         self.doersTableView.isHidden = false
-        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
@@ -95,8 +99,10 @@ extension AddInterventionViewController: DoerCellDelegate {
     } else {
       UIView.animate(withDuration: 0.5, animations: {
         self.doersTableView.isHidden = false
-        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })
