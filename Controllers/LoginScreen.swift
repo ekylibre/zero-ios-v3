@@ -47,7 +47,11 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       if !Connectivity.isConnectedToInternet() {
         performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
       } else {
-        let alert = UIAlertController(title: "Veuillez réessayer", message: "Identifiant inconnu ou mot de passe incorrect.", preferredStyle: .alert)
+        let alert = UIAlertController(
+          title: "Veuillez réessayer",
+          message: "Identifiant inconnu ou mot de passe incorrect.",
+          preferredStyle: .alert
+        )
 
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true)

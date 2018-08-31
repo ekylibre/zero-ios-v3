@@ -9,7 +9,9 @@
 import UIKit
 
 class FertilizerCell: UITableViewCell {
-  
+
+  var isAvaible = true
+
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -38,9 +40,9 @@ class FertilizerCell: UITableViewCell {
 
   private func setupLayout() {
     let viewsDict = [
-      "name" : nameLabel,
-      "nature" : natureLabel,
-      ] as [String : Any]
+      "name": nameLabel,
+      "nature": natureLabel,
+      ] as [String: Any]
 
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[nature]", options: [], metrics: nil, views: viewsDict))
