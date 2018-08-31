@@ -36,6 +36,7 @@
         <attribute name="nitrogenConcentration" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phosphorusConcentration" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="potassiumConcentration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="registered" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="row" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sulfurTrioxydeConcentration" optional="YES" attributeType="String" syncable="YES"/>
@@ -103,6 +104,7 @@
         <attribute name="maaID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nature" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="reentryDelay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="registered" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="row" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
@@ -119,6 +121,7 @@
         <relationship name="crops" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crops" inverseName="plots" inverseEntity="Crops" syncable="YES"/>
     </entity>
     <entity name="Seeds" representedClassName="Seeds" syncable="YES" codeGenerationType="class">
+        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="registered" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="row" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="specie" optional="YES" attributeType="String" syncable="YES"/>
@@ -153,7 +156,7 @@
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
         <element name="Entities" positionX="-351" positionY="-459" width="128" height="135"/>
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
-        <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="255"/>
+        <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="270"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="118"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="118"/>
@@ -161,9 +164,9 @@
         <element name="Interventions" positionX="160" positionY="-252" width="128" height="238"/>
         <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="103"/>
         <element name="Materials" positionX="990" positionY="-139" width="128" height="103"/>
-        <element name="Phytos" positionX="-594" positionY="-34" width="128" height="195"/>
+        <element name="Phytos" positionX="-594" positionY="-34" width="128" height="210"/>
         <element name="Plots" positionX="754" positionY="389" width="128" height="133"/>
-        <element name="Seeds" positionX="153" positionY="-739" width="128" height="150"/>
+        <element name="Seeds" positionX="153" positionY="-739" width="128" height="165"/>
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
         <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>

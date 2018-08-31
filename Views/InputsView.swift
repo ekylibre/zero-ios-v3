@@ -339,6 +339,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.setValue(variety, forKey: "variety")
     seed.setValue(specie, forKey: "specie")
     seed.setValue("kg/ha", forKey: "unit")
+    seed.setValue(0.0, forKey: "quantity")
     seed.setValue(0, forKey: "row")
     seeds.append(seed)
 
@@ -365,6 +366,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.setValue("Phyto", forKey: "type")
     phyto.setValue(reentryDelay, forKey: "reentryDelay")
     phyto.setValue("l/ha", forKey: "unit")
+    phyto.setValue(0.0, forKey: "quantity")
     phyto.setValue(0, forKey: "row")
     phytos.append(phyto)
 
@@ -389,6 +391,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.setValue(name, forKey: "name")
     fertilizer.setValue(nature, forKey: "nature")
     fertilizer.setValue("kg/ha", forKey: "unit")
+    fertilizer.setValue(0.0, forKey: "quantity")
     fertilizer.setValue(0, forKey: "row")
     fertilizers.append(fertilizer)
 

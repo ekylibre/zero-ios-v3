@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: SelectedInputCellDelegate {
+
   func changeUnitMeasure(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
@@ -47,18 +48,16 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         print("No type")
       }*/
 
-      self.selectedInputsTableView.reloadData()
       self.selectedInputs.remove(at: indexPath.row)
       if self.selectedInputs.count == 0 {
         self.inputsHeightConstraint.constant = 70
         self.inputsCollapseButton.isHidden = true
-      } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.inputsHeightConstraint,
-          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-          tableView: self.selectedInputsTableView
-        )
       }
+      self.resizeViewAndTableView(
+        viewHeightConstraint: self.inputsHeightConstraint,
+        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+        tableView: self.selectedInputsTableView
+      )
       self.selectedInputsTableView.reloadData()
     }))
     self.present(alert, animated: true)
