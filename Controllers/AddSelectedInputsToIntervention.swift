@@ -31,12 +31,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       }
     }))
     self.present(alert, animated: true)
-    changeInputsViewAndTableViewSize()
-  }
-
-  func changeInputsViewAndTableViewSize() {
-    selectedInputsTableViewHeightConstraint.constant = selectedInputsTableView.contentSize.height
-    inputsHeightConstraint.constant = selectedInputsTableViewHeightConstraint.constant + 100
+    resizeViewAndTableView(
+      viewHeightConstraint: inputsHeightConstraint,
+      tableViewHeightConstraint: selectedInputsTableViewHeightConstraint,
+      tableView: selectedInputsTableView
+    )
   }
 
   func closeSelectInputsView() {
@@ -49,7 +48,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         self.view.layoutIfNeeded()
         self.inputsCollapseButton.isHidden = false
         self.selectedInputsTableView.isHidden = false
-        self.changeInputsViewAndTableViewSize()
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.inputsHeightConstraint,
+          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+          tableView: self.selectedInputsTableView)
         self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
@@ -78,7 +80,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     } else {
       UIView.animate(withDuration: 0.5, animations: {
         self.selectedInputsTableView.isHidden = false
-        self.changeInputsViewAndTableViewSize()
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.inputsHeightConstraint,
+          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+          tableView: self.selectedInputsTableView)
         self.inputsCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })

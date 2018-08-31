@@ -163,6 +163,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
     selectedInputsTableView.bounces = false
+    selectedInputsTableView.layer.borderWidth  = 0.5
+    selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    selectedInputsTableView.layer.cornerRadius = 4
 
     equipmentsTableView.dataSource = self
     equipmentsTableView.delegate = self
@@ -450,7 +454,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
-      if !cell.isAvaible {
+      if cell.isAvaible {
         doers.append(entities[indexPath.row])
         doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
@@ -482,6 +486,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return 60
     }
+  }
+
+  func resizeViewAndTableView(viewHeightConstraint: NSLayoutConstraint, tableViewHeightConstraint: NSLayoutConstraint,
+                              tableView: UITableView) {
+    tableViewHeightConstraint.constant = tableView.contentSize.height
+    viewHeightConstraint.constant = tableViewHeightConstraint.constant + 100
   }
 
   @IBAction func equipmentTypeSelection(_ sender: UIButton) {

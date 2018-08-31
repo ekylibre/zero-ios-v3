@@ -11,11 +11,6 @@ import CoreData
 
 extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
-  func changeEquipmentViewAndTableViewSize() {
-    equipmentTableViewHeightConstraint.constant = selectedEquipmentsTableView.contentSize.height
-    equipmentHeightConstraint.constant = equipmentTableViewHeightConstraint.constant + 100
-  }
-
   func removeEquipmentCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
@@ -39,7 +34,10 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         self.equipmentHeightConstraint.constant = 70
         self.collapseButton.isHidden = true
       } else {
-        self.changeEquipmentViewAndTableViewSize()
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.equipmentHeightConstraint,
+          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
+          tableView: self.selectedEquipmentsTableView)
         self.showEquipmentsNumber()
       }
       self.selectedEquipmentsTableView.reloadData()
@@ -119,7 +117,10 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         self.view.layoutIfNeeded()
         self.collapseButton.isHidden = false
         self.selectedEquipmentsTableView.isHidden = false
-        self.changeEquipmentViewAndTableViewSize()
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.equipmentHeightConstraint,
+          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
+          tableView: self.selectedEquipmentsTableView)
         self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
@@ -138,7 +139,10 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     } else {
       UIView.animate(withDuration: 0.5, animations: {
         self.selectedEquipmentsTableView.isHidden = false
-        self.changeEquipmentViewAndTableViewSize()
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.equipmentHeightConstraint,
+          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
+          tableView: self.selectedEquipmentsTableView)
         self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })
