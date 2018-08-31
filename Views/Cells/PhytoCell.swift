@@ -10,6 +10,8 @@ import UIKit
 
 class PhytoCell: UITableViewCell {
 
+  var isAvaible = true
+
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -74,13 +76,13 @@ class PhytoCell: UITableViewCell {
 
   private func setupLayout() {
     let viewsDict = [
-      "name" : nameLabel,
-      "firmName" : firmNameLabel,
-      "maa" : maaLabel,
-      "maaID" : maaIDLabel,
-      "reentry" : reentryLabel,
-      "inFieldReentryDelay" : inFieldReentryDelayLabel,
-      ] as [String : Any]
+      "name": nameLabel,
+      "firmName": firmNameLabel,
+      "maa": maaLabel,
+      "maaID": maaIDLabel,
+      "reentry": reentryLabel,
+      "inFieldReentryDelay": inFieldReentryDelayLabel,
+      ] as [String: Any]
 
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
     contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[firmName]", options: [], metrics: nil, views: viewsDict))
