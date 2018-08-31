@@ -20,14 +20,14 @@ class PlotCell: UITableViewCell {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
-    nameLabel.font = UIFont.systemFont(ofSize: 13)
+    nameLabel.font = UIFont.systemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
   }()
 
   lazy var surfaceAreaLabel: UILabel = {
     let surfaceAreaLabel = UILabel(frame: CGRect.zero)
-    surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13)
+    surfaceAreaLabel.font = UIFont.systemFont(ofSize: 14)
     surfaceAreaLabel.translatesAutoresizingMaskIntoConstraints = false
     return surfaceAreaLabel
   }()
@@ -60,12 +60,12 @@ class PlotCell: UITableViewCell {
       "expand" : expandCollapseImageView,
       ] as [String : Any]
 
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[checkbox(16)]-15-[name]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[surface]-30-[expand(16)]-15-|", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-11-[checkbox(16)]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-11-[name]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-11-[surface]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-11-[expand(16)]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[checkbox(20)]-15-[name]", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[surface]-25-[expand(16)]-20-|", options: [], metrics: nil, views: viewsDict))
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[checkbox(20)]", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint(item: nameLabel, attribute: .centerY, relatedBy: .equal, toItem: checkboxButton, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+    NSLayoutConstraint(item: surfaceAreaLabel, attribute: .centerY, relatedBy: .equal, toItem: checkboxButton, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-22-[expand(16)]", options: [], metrics: nil, views: viewsDict))
   }
 
   required init?(coder aDecoder: NSCoder) {
