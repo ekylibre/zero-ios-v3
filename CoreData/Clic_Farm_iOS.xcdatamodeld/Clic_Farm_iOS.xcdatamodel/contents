@@ -2,9 +2,10 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="plots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plots" inverseName="crops" inverseEntity="Plots" syncable="YES"/>
+        <relationship name="plots" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plots" inverseName="crops" inverseEntity="Plots" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="crops" inverseEntity="Targets" syncable="YES"/>
     </entity>
     <entity name="Doers" representedClassName="Doers" syncable="YES" codeGenerationType="class">
@@ -117,8 +118,7 @@
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="crops" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crops" inverseName="plots" inverseEntity="Crops" syncable="YES"/>
+        <relationship name="crops" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Crops" inverseName="plots" inverseEntity="Crops" syncable="YES"/>
     </entity>
     <entity name="Seeds" representedClassName="Seeds" syncable="YES" codeGenerationType="class">
         <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -131,9 +131,7 @@
         <relationship name="interventionSeeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionSeeds" inverseName="seeds" inverseEntity="InterventionSeeds" syncable="YES"/>
     </entity>
     <entity name="Targets" representedClassName="Targets" syncable="YES" codeGenerationType="class">
-        <attribute name="crop" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="workingPercentage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="workAreaPercentage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="crops" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crops" inverseName="targets" inverseEntity="Crops" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="targets" inverseEntity="Interventions" syncable="YES"/>
     </entity>
