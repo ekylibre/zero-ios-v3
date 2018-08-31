@@ -52,9 +52,11 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
 
     if pickerView == liquidUnitPicker {
       liquidUnitPicker.isHidden = true
+      selectedInputs[cellIndexPath.row].setValue(liquidUnitMeasure[row], forKey: "unit")
       cell.unitMeasureButton.setTitle(liquidUnitMeasure[row], for: .normal)
     } else {
       solidUnitPicker.isHidden = true
+      selectedInputs[cellIndexPath.row].setValue(solidUnitMeasure[row], forKey: "unit")
       cell.unitMeasureButton.setTitle(solidUnitMeasure[row], for: .normal)
     }
   }
