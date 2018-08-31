@@ -15,7 +15,7 @@
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
-		042A44362121B45B00CE6B24 /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44352121B45B00CE6B24 /* CropCell.swift */; };
+		042A44362121B45B00CE6B24 /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44352121B45B00CE6B24 /* PlotCell.swift */; };
 		042F654C2118590500EC9E27 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F654B2118590500EC9E27 /* oauthInfo.plist */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0BD2105D405009F3945 /* Users+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */; };
@@ -29,8 +29,8 @@
 		6B8294AE212D904700C240F7 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8294AD212D904700C240F7 /* CreatePhytoView.swift */; };
 		6B8294B0212D9A5B00C240F7 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8294AF212D9A5B00C240F7 /* CreateFertilizerView.swift */; };
 		6B9C8CAB212C594F00CC54EB /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9C8CAA212C594F00CC54EB /* CreateSeedView.swift */; };
+		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225402118490A0036E167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BB2253A211849090036E167 /* Assets.xcassets */; };
-		6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BB22547211849DD0036E167 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22546211849C20036E167 /* Main.storyboard */; };
 		6BB22548211849E00036E167 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BB22545211849C20036E167 /* LaunchScreen.storyboard */; };
@@ -84,7 +84,7 @@
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
-		042A44352121B45B00CE6B24 /* CropCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropCell.swift; sourceTree = "<group>"; };
+		042A44352121B45B00CE6B24 /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		042F654B2118590500EC9E27 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0BB2105D405009F3945 /* Users+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -230,7 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				6BEA65E32105CD8A0072840F /* InterventionCell.swift */,
-				042A44352121B45B00CE6B24 /* CropCell.swift */,
+				042A44352121B45B00CE6B24 /* PlotCell.swift */,
 				04162E5B212C432B00EF4318 /* SeedCell.swift */,
 				04162E59212C432200EF4318 /* PhytoCell.swift */,
 				04162E57212C431700EF4318 /* FertilizerCell.swift */,
@@ -409,16 +409,16 @@
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
 				0413DE84211B3E2800AE8337 /* UseToolsIntervention.swift in Sources */,
 				6B8294AE212D904700C240F7 /* CreatePhytoView.swift in Sources */,
+				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				0412B78D2126BB3A00976DB6 /* EntitiesTableViewCell.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				6BEA65E82105CD8B0072840F /* InterventionCell.swift in Sources */,
-				042A44362121B45B00CE6B24 /* CropCell.swift in Sources */,
+				042A44362121B45B00CE6B24 /* PlotCell.swift in Sources */,
 				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */,
 				6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */,
-				6BB225412118490A0036E167 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */,
 				04162E5C212C432B00EF4318 /* SeedCell.swift in Sources */,
 				6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */,
