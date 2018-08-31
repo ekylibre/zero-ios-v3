@@ -9,9 +9,9 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: DoersTableViewCellDelegate {
-  func updateDriverCell(_ indexPath: Int, driver: UISwitch) {
-    doers[indexPath].setValue(driver.isOn, forKey: "isDriver")
+extension AddInterventionViewController: DoerCellDelegate {
+  func updateDriverStatus(_ indexPath: IndexPath, driver: UISwitch) {
+    doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
   }
 
   func showDoersNumber() {
@@ -25,18 +25,33 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     }
   }
 
-  func removeDoersCell(_ indexPath: Int) {
-    let alert = UIAlertController(title: "", message: "Êtes-vous sûr de vouloir supprimer la personne ?", preferredStyle: .alert)
+  func removeDoerCell(_ indexPath: IndexPath) {
+    let alert = UIAlertController(
+      title: "",
+      message: "Êtes-vous sûr de vouloir supprimer la personne ?",
+      preferredStyle: .alert
+    )
+
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
-      self.doers.remove(at: indexPath)
+      let row = self.doers[indexPath.row].value(forKey: "row") as! Int
+      let indexTab = NSIndexPath(row: row, section: 0)
+      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
+
+      cell.isAvaible = true
+      cell.backgroundColor = AppColor.CellColors.white
+
+      self.doers.remove(at: indexPath.row)
+
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
         self.doersHeightConstraint.constant = 70
         self.doersCollapsedButton.isHidden = true
       } else {
-        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
         self.showDoersNumber()
       }
       self.doersTableView.reloadData()
@@ -55,14 +70,17 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
   func closeSelectEntitiesView() {
     dimView.isHidden = true
     selectEntitiesView.isHidden = true
+
     if doers.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.view.layoutIfNeeded()
         self.doersCollapsedButton.isHidden = false
         self.doersTableView.isHidden = false
-        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
       })
     }
@@ -81,8 +99,10 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     } else {
       UIView.animate(withDuration: 0.5, animations: {
         self.doersTableView.isHidden = false
-        self.doersTableViewHeightConstraint.constant = self.doersTableView.contentSize.height
-        self.doersHeightConstraint.constant = self.doersTableViewHeightConstraint.constant + 100
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
         self.view.layoutIfNeeded()
       })
@@ -127,14 +147,17 @@ extension AddInterventionViewController: DoersTableViewCellDelegate {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
+
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
     let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
 
     entity.setValue(false, forKey: "isDriver")
-    entity.setValue(entityFirstName.text, forKey: "firstName")
-    entity.setValue(entityLastName.text, forKey: "lastName")
-    entity.setValue(entityRole.text, forKey: "role")
+    entity.setValue(entityFirstName.text, forKeyPath: "firstName")
+    entity.setValue(entityLastName.text, forKeyPath: "lastName")
+    entity.setValue(entityRole.text, forKeyPath: "role")
+    entity.setValue(0, forKey: "row")
+
     do {
       try managedContext.save()
       entities.append(entity)
