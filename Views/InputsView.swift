@@ -101,6 +101,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     setupView()
     if !fetchInputs() {
       loadSampleInputs()
+      loadPhytos()
     }
   }
 
@@ -196,8 +197,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
-      let maaID = fromPhytos[indexPath.row].value(forKey: "maaID") as! Int
-      cell.maaIDLabel.text = String(maaID)
+      cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
       let reentryDelay = fromPhytos[indexPath.row].value(forKey: "reentryDelay") as! Int
       let unit: String = reentryDelay > 1 ? "heures" : "heure"
       cell.inFieldReentryDelayLabel.text = "\(reentryDelay) " + unit
@@ -308,13 +308,106 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
+  private func loadPhytos() {
+    if let asset = NSDataAsset(name: "phytosanitary-products") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredPhytos = jsonResult as? [[String: Any]]
+        savePhytos(registeredPhytos!)
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("phytosanitary_products.json not found")
+    }
+  }
+
+  private func savePhytos(_ registeredPhytos: [[String: Any]]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let phytosEntity = NSEntityDescription.entity(forEntityName: "Phytos", in: managedContext)!
+
+    for registeredPhyto in registeredPhytos {
+      let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
+
+      phyto.setValue(true, forKey: "registered")
+      phyto.setValue(registeredPhyto["id"], forKey: "phytoIDEky")
+      phyto.setValue(registeredPhyto["name"], forKey: "name")
+      phyto.setValue(registeredPhyto["nature"], forKey: "nature")
+      phyto.setValue(registeredPhyto["maaid"], forKey: "maaID")
+      phyto.setValue(registeredPhyto["mix_category_code"], forKey: "mixCategoryCode")
+      phyto.setValue(registeredPhyto["in_field_reentry_delay"], forKey: "reentryDelay")
+      phyto.setValue(registeredPhyto["firm_name"], forKey: "firmName")
+
+      phyto.setValue("Phyto", forKey: "type")
+      phyto.setValue("l/ha", forKey: "unit")
+      phyto.setValue(0.0, forKey: "quantity")
+      phyto.setValue(0, forKey: "row")
+      phytos.append(phyto)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func loadFertilizers() {
+    if let path = Bundle.main.path(forResource: "fertilizers", ofType: "json") {
+      do {
+        let asset = NSDataAsset(name: "Lexicon", bundle: Bundle.main)
+        let jsonResult = try JSONSerialization.jsonObject(with: asset!.data, options: .mutableLeaves)
+        let registeredFertilizers = jsonResult as? [[String: Any]]
+        saveFertilizers(registeredFertilizers!)
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("fertilizers.json not found")
+    }
+  }
+
+  private func saveFertilizers(_ registeredFertilizers: [[String: Any]]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
+
+    for registeredFertilizer in registeredFertilizers {
+      let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
+
+      fertilizer.setValue(true, forKey: "registered")
+      fertilizer.setValue(registeredFertilizer["id"], forKey: "id")
+      fertilizer.setValue(registeredFertilizer["name"], forKey: "name")
+      fertilizer.setValue(registeredFertilizer["nature"], forKey: "nature")
+      fertilizer.setValue(registeredFertilizer["maaid"], forKey: "maaID")
+      fertilizer.setValue(registeredFertilizer["mix_category_code"], forKey: "mixCategoryCode")
+      fertilizer.setValue(registeredFertilizer["in_field_reentry_delay"], forKey: "reentryDelay")
+      fertilizer.setValue(registeredFertilizer["firm_name"], forKey: "firmName")
+
+      fertilizer.setValue("Fertilizer", forKey: "type")
+      fertilizer.setValue("l/ha", forKey: "unit")
+      fertilizer.setValue(0.0, forKey: "quantity")
+      fertilizer.setValue(0, forKey: "row")
+      fertilizers.append(fertilizer)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   private func loadSampleInputs() {
     createSeed(registered: true, variety: "Variété 1", specie: "Espèce 1")
     createSeed(registered: true, variety: "Variété 2", specie: "Espèce 2")
-
-    createPhyto(registered: true, name: "Nom 1", firmName: "Marque 1", maaID: 1000, reentryDelay: 1)
-    createPhyto(registered: true, name: "Nom 2", firmName: "Marque 2", maaID: 2000, reentryDelay: 2)
-    createPhyto(registered: true, name: "Nom 3", firmName: "Marque 3", maaID: 3000, reentryDelay: 3)
 
     createFertilizer(registered: true, name: "Nom 1", nature: "Nature 1")
     createFertilizer(registered: true, name: "Nom 2", nature: "Nature 2")
