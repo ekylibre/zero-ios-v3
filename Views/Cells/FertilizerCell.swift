@@ -10,8 +10,6 @@ import UIKit
 
 class FertilizerCell: UITableViewCell {
 
-  var isAvaible = true
-
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)

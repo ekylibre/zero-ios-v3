@@ -77,7 +77,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var entities = [NSManagedObject]()
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
-  var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
+  var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler-wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic-baler"), #imageLiteral(resourceName: "disc-harrow"), #imageLiteral(resourceName: "forage-platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay-rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation-pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower-conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary-hoe"), #imageLiteral(resourceName: "round-baler"), #imageLiteral(resourceName: "seedbed-preparator"), #imageLiteral(resourceName: "soil-loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid-manure-spreader"), #imageLiteral(resourceName: "subsoil-plow"),#imageLiteral(resourceName: "superficial-plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
@@ -320,7 +320,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       entity = searchedEntities[indexPath.row]
       cell.firstName.text = entity?.value(forKey: "firstName") as? String
       cell.lastName.text = entity?.value(forKey: "lastName") as? String
-      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
+      cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
     case doersTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
@@ -333,7 +333,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
-      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
+      cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
     default:
       fatalError("Switch error")

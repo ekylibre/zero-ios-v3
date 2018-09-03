@@ -106,7 +106,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func initialiseInterventionButtons() {
 
     let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
-    let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "groundWork"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "cropProtection")]
+    let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
 
     for buttonCount in 0...6 {
 
@@ -180,11 +180,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
     case Intervention.InterventionType.CropProtection.rawValue:
-      cell.typeImageView.image = UIImage(named: "cropProtection")!
+      cell.typeImageView.image = UIImage(named: "crop-protection")!
     case Intervention.InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
     case Intervention.InterventionType.GroundWork.rawValue:
-      cell.typeImageView.image = UIImage(named: "groundWork")!
+      cell.typeImageView.image = UIImage(named: "ground-work")!
     case Intervention.InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
     case Intervention.InterventionType.Implantation.rawValue:

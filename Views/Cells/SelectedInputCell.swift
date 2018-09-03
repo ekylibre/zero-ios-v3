@@ -148,7 +148,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     )
 
     if warningImage.isHidden {
-
       NSLayoutConstraint.activate([
         surfaceQuantity.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 1)
         ]

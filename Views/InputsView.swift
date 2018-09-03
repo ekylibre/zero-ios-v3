@@ -94,7 +94,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var fertilizers = [NSManagedObject]()
   var filteredInputs = [NSManagedObject]()
 
-  //MARK: - Initializationsp
+  //MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -188,8 +188,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
 
-      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
-      cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      if fromSeeds.count > indexPath.row {
+        cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
+        cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      }
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
@@ -226,28 +228,40 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
+      //let used = seeds[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
+      //if cell.isAvaible {
+        cell.backgroundColor = AppColor.CellColors.white
       if cell.isAvaible {
-        cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.isAvaible = false
         addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
+
+      /*if !used {
+        seeds[indexPath.row].setValue(true, forKey: "used")
+        cell.backgroundColor = AppColor.CellColors.lightGray
+        addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
+        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      }*/
     case 1:
+      let used = phytos[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
 
-      if cell.isAvaible {
-        cell.isAvaible = false
+      if !used {
+        phytos[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 2:
+      let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
 
-      if cell.isAvaible {
-        cell.isAvaible = false
+      if !used {
+        fertilizers[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
@@ -310,10 +324,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func loadSeeds() {
-    if let path = Bundle.main.path(forResource: "seeds", ofType: "json") {
+    if let asset = NSDataAsset(name: "seeds") {
       do {
-        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-        let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data, options: .mutableLeaves)
         let seeds = jsonResult as? [[String: Any]]
 
         saveSeeds(registeredSeeds: seeds!)
@@ -337,7 +350,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = NSManagedObject(entity: seedEntity, insertInto: managedContext)
 
       seed.setValue(true, forKey: "registered")
-      seed.setValue(registeredSeed["id"], forKey: "id")
+      seed.setValue(registeredSeed["id"], forKey: "seedIDEky")
       seed.setValue(registeredSeed["specie"], forKey: "specie")
       seed.setValue(registeredSeed["variety"], forKey: "variety")
 
@@ -345,6 +358,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       seed.setValue("kg/ha", forKey: "unit")
       seed.setValue(0.0, forKey: "quantity")
       seed.setValue(0, forKey: "row")
+      seed.setValue(false, forKey: "used")
       seeds.append(seed)
     }
   }
@@ -381,6 +395,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.setValue("kg/ha", forKey: "unit")
     seed.setValue(0.0, forKey: "quantity")
     seed.setValue(0, forKey: "row")
+    seed.setValue(false, forKey: "used")
     seeds.append(seed)
 
     do {
@@ -408,6 +423,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.setValue("l/ha", forKey: "unit")
     phyto.setValue(0.0, forKey: "quantity")
     phyto.setValue(0, forKey: "row")
+    phyto.setValue(false, forKey: "used")
     phytos.append(phyto)
 
     do {
@@ -433,6 +449,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.setValue("kg/ha", forKey: "unit")
     fertilizer.setValue(0.0, forKey: "quantity")
     fertilizer.setValue(0, forKey: "row")
+    fertilizer.setValue(false, forKey: "used")
     fertilizers.append(fertilizer)
 
     do {

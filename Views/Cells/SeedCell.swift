@@ -33,6 +33,10 @@ class SeedCell: UITableViewCell {
   }
 
   private func setupCell() {
+    let selectedColor = UIView()
+
+    selectedColor.backgroundColor = AppColor.CellColors.lightGray
+    self.selectedBackgroundView = selectedColor
     contentView.addSubview(varietyLabel)
     contentView.addSubview(specieLabel)
     setupLayout()
