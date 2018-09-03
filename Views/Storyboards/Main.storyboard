@@ -294,7 +294,7 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expandCollapse" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-aQ-Xe3">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-collapse" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-aQ-Xe3">
                                                         <rect key="frame" x="339" y="27" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="QL9-Hx-ikl"/>
@@ -423,7 +423,7 @@
                                                             <constraint firstAttribute="height" constant="16" id="bo7-rs-IL4"/>
                                                             <constraint firstAttribute="width" constant="16" id="tcw-Fw-RVG"/>
                                                         </constraints>
-                                                        <state key="normal" title="Collapse" image="expandCollapse"/>
+                                                        <state key="normal" title="Collapse" image="expand-collapse"/>
                                                         <connections>
                                                             <action selector="collapseInputsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="i9N-5t-Mat"/>
                                                         </connections>
@@ -553,7 +553,7 @@
                                                             <constraint firstAttribute="height" constant="16" id="EKZ-Yo-I3K"/>
                                                             <constraint firstAttribute="width" constant="16" id="nfy-DG-WQf"/>
                                                         </constraints>
-                                                        <state key="normal" title="Collapse" image="expandCollapse"/>
+                                                        <state key="normal" title="Collapse" image="expand-collapse"/>
                                                         <connections>
                                                             <action selector="collapseEquipmentView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Tx7-Ec-9xi"/>
                                                         </connections>
@@ -618,7 +618,7 @@
                                                             <constraint firstAttribute="width" constant="16" id="hLE-EX-3Pg"/>
                                                             <constraint firstAttribute="height" constant="16" id="xIe-zP-1Aa"/>
                                                         </constraints>
-                                                        <state key="normal" title="Collapse Button" image="expandCollapse"/>
+                                                        <state key="normal" title="Collapse Button" image="expand-collapse"/>
                                                         <connections>
                                                             <action selector="collapseDoersView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="17z-rV-kzo"/>
                                                         </connections>
@@ -1703,7 +1703,7 @@
     <resources>
         <image name="clic&amp;farm-logo" width="90" height="90"/>
         <image name="delete" width="50" height="50"/>
-        <image name="expandCollapse" width="128" height="128"/>
+        <image name="expand-collapse" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vxv-f7-ZrT"/>
