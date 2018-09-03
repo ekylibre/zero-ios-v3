@@ -40,3 +40,5 @@ Carthage/Build
 # .plist files
 oauthInfo.plist
 
+# Lexicon
+lexicon/*
