@@ -101,7 +101,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     setupView()
     if !fetchInputs() {
       loadSampleInputs()
-      loadPhytos()
+      registerPhytos()
+      registerFertilizers()
+      tableView.reloadData()
     }
   }
 
@@ -308,7 +310,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  private func loadPhytos() {
+  private func registerPhytos() {
     if let asset = NSDataAsset(name: "phytosanitary-products") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
@@ -356,11 +358,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func loadFertilizers() {
-    if let path = Bundle.main.path(forResource: "fertilizers", ofType: "json") {
+  private func registerFertilizers() {
+    if let asset = NSDataAsset(name: "fertilizers") {
       do {
-        let asset = NSDataAsset(name: "Lexicon", bundle: Bundle.main)
-        let jsonResult = try JSONSerialization.jsonObject(with: asset!.data, options: .mutableLeaves)
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
         let registeredFertilizers = jsonResult as? [[String: Any]]
         saveFertilizers(registeredFertilizers!)
       } catch {
@@ -383,13 +384,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
       fertilizer.setValue(true, forKey: "registered")
-      fertilizer.setValue(registeredFertilizer["id"], forKey: "id")
+      fertilizer.setValue(registeredFertilizer["id"], forKey: "fertilizerIDEky")
       fertilizer.setValue(registeredFertilizer["name"], forKey: "name")
       fertilizer.setValue(registeredFertilizer["nature"], forKey: "nature")
-      fertilizer.setValue(registeredFertilizer["maaid"], forKey: "maaID")
-      fertilizer.setValue(registeredFertilizer["mix_category_code"], forKey: "mixCategoryCode")
-      fertilizer.setValue(registeredFertilizer["in_field_reentry_delay"], forKey: "reentryDelay")
-      fertilizer.setValue(registeredFertilizer["firm_name"], forKey: "firmName")
 
       fertilizer.setValue("Fertilizer", forKey: "type")
       fertilizer.setValue("l/ha", forKey: "unit")
@@ -408,13 +405,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   private func loadSampleInputs() {
     createSeed(registered: true, variety: "Variété 1", specie: "Espèce 1")
     createSeed(registered: true, variety: "Variété 2", specie: "Espèce 2")
-
-    createFertilizer(registered: true, name: "Nom 1", nature: "Nature 1")
-    createFertilizer(registered: true, name: "Nom 2", nature: "Nature 2")
-    createFertilizer(registered: true, name: "Nom 3", nature: "Nature 3")
-    createFertilizer(registered: true, name: "Nom 4", nature: "Nature 4")
-
-    tableView.reloadData()
   }
 
   private func createSeed(registered: Bool, variety: String, specie: String) {
