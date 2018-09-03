@@ -18,6 +18,15 @@
 		044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D44213816B9001A5D3D /* ListTableViewController.swift */; };
 		044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D46213816C0001A5D3D /* ListProtocol.swift */; };
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
+		046519B7213D5C8800D66577 /* parcelles.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 046519AE213D5C8800D66577 /* parcelles.geojson */; };
+		046519B8213D5C8800D66577 /* species.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519AF213D5C8800D66577 /* species.json */; };
+		046519B9213D5C8800D66577 /* phytosanitary_products.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519B0213D5C8800D66577 /* phytosanitary_products.json */; };
+		046519BA213D5C8800D66577 /* production_natures.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519B1213D5C8800D66577 /* production_natures.json */; };
+		046519BB213D5C8800D66577 /* fertilizers.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519B2213D5C8800D66577 /* fertilizers.json */; };
+		046519BC213D5C8800D66577 /* phytosanitary_doses.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519B3213D5C8800D66577 /* phytosanitary_doses.json */; };
+		046519BD213D5C8800D66577 /* equipment_types.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519B4213D5C8800D66577 /* equipment_types.json */; };
+		046519BE213D5C8800D66577 /* pg_export.sh in Resources */ = {isa = PBXBuildFile; fileRef = 046519B5213D5C8800D66577 /* pg_export.sh */; };
+		046519BF213D5C8800D66577 /* seeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 046519B6213D5C8800D66577 /* seeds.json */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
 		6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
@@ -71,6 +80,15 @@
 		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		044B4D46213816C0001A5D3D /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
 		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
+		046519AE213D5C8800D66577 /* parcelles.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = parcelles.geojson; sourceTree = "<group>"; };
+		046519AF213D5C8800D66577 /* species.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = species.json; sourceTree = "<group>"; };
+		046519B0213D5C8800D66577 /* phytosanitary_products.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = phytosanitary_products.json; sourceTree = "<group>"; };
+		046519B1213D5C8800D66577 /* production_natures.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = production_natures.json; sourceTree = "<group>"; };
+		046519B2213D5C8800D66577 /* fertilizers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fertilizers.json; sourceTree = "<group>"; };
+		046519B3213D5C8800D66577 /* phytosanitary_doses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = phytosanitary_doses.json; sourceTree = "<group>"; };
+		046519B4213D5C8800D66577 /* equipment_types.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = equipment_types.json; sourceTree = "<group>"; };
+		046519B5213D5C8800D66577 /* pg_export.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = pg_export.sh; sourceTree = "<group>"; };
+		046519B6213D5C8800D66577 /* seeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seeds.json; sourceTree = "<group>"; };
 		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
 		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
@@ -131,6 +149,22 @@
 				042A44332121B38600CE6B24 /* ColorConstants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		046519AD213D5C8800D66577 /* lexicon */ = {
+			isa = PBXGroup;
+			children = (
+				046519AE213D5C8800D66577 /* parcelles.geojson */,
+				046519AF213D5C8800D66577 /* species.json */,
+				046519B0213D5C8800D66577 /* phytosanitary_products.json */,
+				046519B1213D5C8800D66577 /* production_natures.json */,
+				046519B2213D5C8800D66577 /* fertilizers.json */,
+				046519B3213D5C8800D66577 /* phytosanitary_doses.json */,
+				046519B4213D5C8800D66577 /* equipment_types.json */,
+				046519B5213D5C8800D66577 /* pg_export.sh */,
+				046519B6213D5C8800D66577 /* seeds.json */,
+			);
+			path = lexicon;
 			sourceTree = "<group>";
 		};
 		047B57CB2108605400C48F68 /* Frameworks */ = {
@@ -240,6 +274,7 @@
 				042A44322121B38600CE6B24 /* Constants */,
 				6BA3713D213963230086DF9B /* Resources */,
 				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
+				046519AD213D5C8800D66577 /* lexicon */,
 				6BEA656E2105C5EE0072840F /* Products */,
 				047B57CB2108605400C48F68 /* Frameworks */,
 			);
@@ -345,10 +380,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046519B8213D5C8800D66577 /* species.json in Resources */,
 				6B11EEE92139636300E2DEC4 /* Main.storyboard in Resources */,
+				046519B9213D5C8800D66577 /* phytosanitary_products.json in Resources */,
+				046519B7213D5C8800D66577 /* parcelles.geojson in Resources */,
 				6BA37141213963230086DF9B /* Assets.xcassets in Resources */,
+				046519BB213D5C8800D66577 /* fertilizers.json in Resources */,
 				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
+				046519BD213D5C8800D66577 /* equipment_types.json in Resources */,
 				6BA37142213963230086DF9B /* oauthInfo.plist in Resources */,
+				046519BE213D5C8800D66577 /* pg_export.sh in Resources */,
+				046519BF213D5C8800D66577 /* seeds.json in Resources */,
+				046519BC213D5C8800D66577 /* phytosanitary_doses.json in Resources */,
+				046519BA213D5C8800D66577 /* production_natures.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

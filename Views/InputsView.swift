@@ -94,13 +94,14 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var fertilizers = [NSManagedObject]()
   var filteredInputs = [NSManagedObject]()
 
-  //MARK: - Initialization
+  //MARK: - Initializationsp
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
     if !fetchInputs() {
       loadSampleInputs()
+      loadSeeds()
     }
   }
 
@@ -306,6 +307,46 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return false
     }
     return true
+  }
+
+  func loadSeeds() {
+    if let path = Bundle.main.path(forResource: "seeds", ofType: "json") {
+      do {
+        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+        let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+        let seeds = jsonResult as? [[String: Any]]
+
+        saveSeeds(registeredSeeds: seeds!)
+      } catch let error as NSError {
+        print("Could not parse file. \(error), \(error.userInfo)")
+      }
+    } else {
+      print("seeds.json not found")
+    }
+  }
+
+  func saveSeeds(registeredSeeds: [[String: Any]]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let seedEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
+
+    for registeredSeed in registeredSeeds {
+      let seed = NSManagedObject(entity: seedEntity, insertInto: managedContext)
+
+      seed.setValue(true, forKey: "registered")
+      seed.setValue(registeredSeed["id"], forKey: "id")
+      seed.setValue(registeredSeed["specie"], forKey: "specie")
+      seed.setValue(registeredSeed["variety"], forKey: "variety")
+
+      seed.setValue("Seed", forKey: "type")
+      seed.setValue("kg/ha", forKey: "unit")
+      seed.setValue(0.0, forKey: "quantity")
+      seed.setValue(0, forKey: "row")
+      seeds.append(seed)
+    }
   }
 
   private func loadSampleInputs() {
