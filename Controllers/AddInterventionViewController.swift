@@ -385,7 +385,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case doersTableView:
       return 75
     case selectedInputsTableView:
-      return 100
+      return 110
     default:
       return 60
     }

@@ -96,170 +96,70 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(warningLabel)
 
-    let viewsDict = [
-      "inputImage": inputImage,
-      "inputName": inputName,
-      "inputSpec": inputSpec,
-      "inputQuantity": inputQuantity,
-      "quantity": quantity,
-      "removeCell": removeCell,
-      "surfaceQuantity": surfaceQuantity,
-      "unitMeasureButton": unitMeasureButton,
-      "warningImage": warningImage,
-      "warningLabel": warningLabel
-      ] as [String: Any]
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-10-[inputImage(==30)]-[inputName]-[inputSpec]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+    NSLayoutConstraint.activate([
+      inputImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+      inputImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      inputImage.heightAnchor.constraint(equalToConstant: 30),
+      inputImage.widthAnchor.constraint(equalToConstant: 30),
+      inputName.leftAnchor.constraint(equalTo: inputImage.rightAnchor, constant: 10),
+      inputSpec.leftAnchor.constraint(equalTo: inputName.rightAnchor, constant: 5),
+      quantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 20),
+      quantity.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
+      ]
     )
 
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:[removeCell(==15)]-10-|",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+    NSLayoutConstraint.activate([
+      removeCell.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      removeCell.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
+      removeCell.heightAnchor.constraint(equalToConstant: 15),
+      removeCell.widthAnchor.constraint(equalToConstant: 15)
+      ]
     )
 
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-[quantity]-10-[inputQuantity(==100)][unitMeasureButton(==60)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+    NSLayoutConstraint.activate([
+      inputName.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      inputQuantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 12.5),
+      inputQuantity.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: 10),
+      inputQuantity.heightAnchor.constraint(equalToConstant: 30),
+      inputQuantity.widthAnchor.constraint(equalToConstant: 100)
+      ]
     )
 
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-5-[inputImage(==30)]-10-[quantity]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+    NSLayoutConstraint.activate([
+      inputSpec.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      unitMeasureButton.topAnchor.constraint(equalTo: inputSpec.bottomAnchor, constant: 12.5),
+      unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
+      unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
+      unitMeasureButton.widthAnchor.constraint(equalToConstant: 60)
+      ]
     )
 
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[inputName]-12.5-[inputQuantity(==30)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+    NSLayoutConstraint.activate([
+      warningImage.heightAnchor.constraint(equalToConstant: 10),
+      warningImage.widthAnchor.constraint(equalToConstant: 10)
+      ]
     )
 
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[inputSpec]-12.5-[unitMeasureButton(==30)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+    NSLayoutConstraint.activate([
+      surfaceQuantity.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
+      warningImage.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
+      warningLabel.leadingAnchor.constraint(equalTo: warningImage.trailingAnchor, constant: 3)
+      ]
     )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[removeCell(==15)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:[warningImage(==10)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:[warningImage(==10)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    NSLayoutConstraint(
-      item: surfaceQuantity,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: inputQuantity,
-      attribute: .leading,
-      multiplier: 1,
-      constant: 0
-      ).isActive = true
-
-    NSLayoutConstraint(
-      item: warningImage,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: inputQuantity,
-      attribute: .leading,
-      multiplier: 1,
-      constant: 0
-      ).isActive = true
-
-    NSLayoutConstraint(
-      item: warningLabel,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: warningImage,
-      attribute: .trailing,
-      multiplier: 1,
-      constant: 3
-      ).isActive = true
 
     if warningImage.isHidden {
-      NSLayoutConstraint(
-        item: surfaceQuantity,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: inputQuantity,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 1
-        ).isActive = true
+
+      NSLayoutConstraint.activate([
+        surfaceQuantity.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 1)
+        ]
+      )
     } else {
-      NSLayoutConstraint(
-        item: warningImage,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: inputQuantity,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 5
-        ).isActive = true
-
-      NSLayoutConstraint(
-        item: warningLabel,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: inputQuantity,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 2
-        ).isActive = true
-
-      NSLayoutConstraint(
-        item: surfaceQuantity,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: warningImage,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 1
-        ).isActive = true
+      NSLayoutConstraint.activate([
+        warningImage.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 5),
+        warningLabel.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 2),
+        surfaceQuantity.topAnchor.constraint(equalTo: warningImage.bottomAnchor, constant: 1)
+        ]
+      )
     }
   }
 
@@ -277,7 +177,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
+        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
     }
     return false
   }
