@@ -32,6 +32,7 @@
     </entity>
     <entity name="Fertilizers" representedClassName="Fertilizers" syncable="YES" codeGenerationType="class">
         <attribute name="derivativeOf" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fertilizerIDEky" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nature" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nitrogenConcentration" optional="YES" attributeType="String" syncable="YES"/>
@@ -156,7 +157,7 @@
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
         <element name="Entities" positionX="-351" positionY="-459" width="128" height="135"/>
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
-        <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="270"/>
+        <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="283"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="118"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="118"/>
