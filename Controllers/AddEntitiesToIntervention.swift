@@ -14,17 +14,6 @@ extension AddInterventionViewController: DoerCellDelegate {
     doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
   }
 
-  func showDoersNumber() {
-    if doers.count > 0 && doersHeightConstraint.constant == 70 {
-      addEntitiesButton.isHidden = true
-      doersNumber.text = (doers.count == 1 ? "1 personne" : "\(doers.count) personnes")
-      doersNumber.isHidden = false
-    } else {
-      doersNumber.isHidden = true
-      addEntitiesButton.isHidden = false
-    }
-  }
-
   func removeDoerCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
@@ -52,7 +41,11 @@ extension AddInterventionViewController: DoerCellDelegate {
           viewHeightConstraint: self.doersHeightConstraint,
           tableViewHeightConstraint: self.doersTableViewHeightConstraint,
           tableView: self.doersTableView)
-        self.showDoersNumber()
+        self.showEntitiesNumber(
+          entities: self.doers,
+          constraint: self.doersHeightConstraint,
+          numberLabel: self.doersNumber,
+          addEntityButton: self.addEntitiesButton)
       }
       self.doersTableView.reloadData()
     }))
@@ -107,23 +100,11 @@ extension AddInterventionViewController: DoerCellDelegate {
         self.view.layoutIfNeeded()
       })
     }
-    showDoersNumber()
-  }
-
-  func fetchEntities() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Entities")
-
-    do {
-      entities = try managedContext.fetch(entitiesFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    searchedEntities = entities
-    entitiesTableView.reloadData()
+    showEntitiesNumber(
+      entities: doers,
+      constraint: doersHeightConstraint,
+      numberLabel: doersNumber,
+      addEntityButton: addEntitiesButton)
   }
 
   @IBAction func openCreateEntitiesView(_ sender: Any) {
@@ -140,7 +121,8 @@ extension AddInterventionViewController: DoerCellDelegate {
     entityRole.text = nil
     entityDarkLayer.isHidden = true
     createEntitiesView.isHidden = true
-    fetchEntities()
+    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    entitiesTableView.reloadData()
   }
 
   @IBAction func createNewEntity(_ sender: Any) {
