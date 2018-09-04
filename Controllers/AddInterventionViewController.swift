@@ -22,7 +22,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
   @IBOutlet weak var navigationBar: UINavigationBar!
-  @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var selectEquipmentsView: UIView!
@@ -186,8 +185,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.view.addSubview(inputsView)
 
     defineEquipmentTypes()
-    fetchEquipments()
-    fetchEntities()
+    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
     selectedEquipmentType = equipmentTypes[0]
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
     initUnitMeasurePickerView()
@@ -511,6 +510,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+
+    do {
+      entity = try managedContext.fetch(entitiesFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    searchedEntity = entity
+  }
+
   //MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -626,5 +642,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func cancelAdding(_ sender: Any) {
     dismiss(animated: true, completion: nil)
+  }
+
+  func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
+                          numberLabel: UILabel, addEntityButton: UIButton) {
+
+    if entities.count > 0 && constraint.constant == 70 {
+      addEntityButton.isHidden = true
+      numberLabel.isHidden = false
+      switch entities {
+      case selectedEquipments:
+        numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
+      case doers:
+        numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+      default:
+        return
+      }
+    } else {
+      numberLabel.isHidden = true
+      addEntityButton.isHidden = false
+    }
   }
 }

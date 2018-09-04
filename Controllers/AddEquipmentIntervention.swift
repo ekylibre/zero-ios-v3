@@ -38,7 +38,11 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
           viewHeightConstraint: self.equipmentHeightConstraint,
           tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
           tableView: self.selectedEquipmentsTableView)
-        self.showEquipmentsNumber()
+        self.showEntitiesNumber(
+          entities: self.selectedEquipments,
+          constraint: self.equipmentHeightConstraint,
+          numberLabel: self.equipmentNumberLabel,
+          addEntityButton: self.addEquipmentButton)
       }
       self.selectedEquipmentsTableView.reloadData()
     }))
@@ -86,17 +90,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       "Vibroculteur",
       "Désherbeur",
       "Enrubanneuse"]
-  }
-
-  func showEquipmentsNumber() {
-    if selectedEquipments.count > 0 && firstView.frame.height == 70 {
-      addEquipmentButton.isHidden = true
-      equipmentNumberLabel.isHidden = false
-      equipmentNumberLabel.text = (selectedEquipments.count == 1 ? "1 outil" : "\(selectedEquipments.count) outils")
-    } else {
-      addEquipmentButton.isHidden = false
-      equipmentNumberLabel.isHidden = true
-    }
   }
 
   @IBAction func openSelectEquipmentsView(_ sender: Any) {
@@ -147,7 +140,11 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         self.view.layoutIfNeeded()
       })
     }
-    showEquipmentsNumber()
+    showEntitiesNumber(
+      entities: selectedEquipments,
+      constraint: equipmentHeightConstraint,
+      numberLabel: equipmentNumberLabel,
+      addEntityButton: addEquipmentButton)
   }
 
   @IBAction func openCreateEquipmentsView(_ sender: Any) {
@@ -171,28 +168,13 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipmentsTableView.reloadData()
   }
 
-  func fetchEquipments() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
-
-    do {
-      equipments = try managedContext.fetch(equipmentsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    searchedEquipments = equipments
-    equipmentsTableView.reloadData()
-  }
-
   @IBAction func closeEquipmentsCreationView(_ sender: Any) {
     equipmentName.text = nil
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
     createEquipmentsView.isHidden = true
-    fetchEquipments()
+    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    equipmentsTableView.reloadData()
   }
 
   @IBAction func createNewEquipement(_ sender: Any) {
