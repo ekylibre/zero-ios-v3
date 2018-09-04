@@ -111,7 +111,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
       cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
       ])
   }
 

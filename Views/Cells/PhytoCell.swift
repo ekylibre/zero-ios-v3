@@ -87,7 +87,7 @@ class PhytoCell: UITableViewCell {
       reentryLabel.topAnchor.constraint(equalTo: maaLabel.bottomAnchor),
       reentryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       inFieldReentryDelayLabel.topAnchor.constraint(equalTo: maaIDLabel.bottomAnchor),
-      inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15),
+      inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15)
       ])
   }
 

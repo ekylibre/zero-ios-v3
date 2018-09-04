@@ -134,7 +134,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       tableView.topAnchor.constraint(equalTo: createButton.bottomAnchor, constant: 15),
       tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
       tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
-      tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
