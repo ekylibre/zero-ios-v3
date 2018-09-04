@@ -519,7 +519,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showSpecieList":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.cellsStrings = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
+      destVC.cellsStrings = loadSpecies()
     default:
       guard let button = sender as? UIButton, button === saveInterventionButton else {
         return
@@ -527,6 +527,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       createIntervention()
     }
+  }
+
+  private func loadSpecies() -> [String] {
+    var species = [String]()
+
+    if let asset = NSDataAsset(name: "species") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredSpecies = jsonResult as? [[String: Any]]
+
+        for registeredSpecie in registeredSpecies! {
+          species.append(registeredSpecie["fra"] as! String)
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("species.json not found")
+    }
+
+    return species
   }
 
   func writeValueBack(value: String) {

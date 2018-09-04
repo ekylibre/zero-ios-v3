@@ -516,7 +516,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       createSeed(registered: false, variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
-      seedView.specieButton.setTitle("Avoine", for: .normal)
+      seedView.specieButton.setTitle("Abricotier", for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
       let maaID = phytoView.maaTextField.text!.isEmpty ? 0 : Int(phytoView.maaTextField.text!)
