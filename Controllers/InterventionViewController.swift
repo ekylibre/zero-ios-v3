@@ -12,7 +12,7 @@ import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-  //MARK: - Outlets
+  // MARK: - Outlets
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
@@ -24,7 +24,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
   @IBOutlet weak var addInterventionLabel: UILabel!
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var interventions = [NSManagedObject]() {
     didSet {
@@ -149,7 +149,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Dispose of any resources that can be recreated.
   }
 
-  //MARK: - Table view data source
+  // MARK: - Table view data source
   
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -369,7 +369,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
 

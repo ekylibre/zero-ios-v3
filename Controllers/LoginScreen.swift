@@ -12,7 +12,7 @@ import CoreData
 
 class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   @IBOutlet weak var tfUsername: UITextField!
   @IBOutlet weak var tfPassword: UITextField!
@@ -20,7 +20,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   var authentificationService: AuthentificationService?
   var buttonIsPressed: Bool = false
 
-  // MARK: Initialization
+  // MARK: - Initialization
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -40,7 +40,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
-  // MARK: Actions
+  // MARK: - Navigation
 
   func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
@@ -60,6 +60,8 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
     }
   }
+
+  // MARK: - Actions
 
   func authentifyUser() {
     if !entityIsEmpty(entity: "Users") {

@@ -11,9 +11,10 @@ import CoreData
 
 class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var addInterventionViewController: AddInterventionViewController?
+  var isSearching: Bool = false
 
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
@@ -23,8 +24,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
     return segmentedControl
   }()
-
-  var isSearching: Bool = false
 
   lazy var searchBar: UISearchBar = {
     let searchBar = UISearchBar(frame: CGRect.zero)
@@ -94,7 +93,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var fertilizers = [NSManagedObject]()
   var filteredInputs = [NSManagedObject]()
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -167,7 +166,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fatalError("init(coder:) has not been implemented")
   }
 
-  //MARK: - Table view
+  // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -228,24 +227,15 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      //let used = seeds[indexPath.row].value(forKey: "used") as! Bool
+      let used = seeds[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
-      //if cell.isAvaible {
-        cell.backgroundColor = AppColor.CellColors.white
-      if cell.isAvaible {
-        cell.backgroundColor = AppColor.CellColors.lightGray
-        cell.isAvaible = false
-        addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
-        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
-      }
-
-      /*if !used {
+      if !used {
         seeds[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.lightGray
         addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
-      }*/
+      }
     case 1:
       let used = phytos[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
@@ -273,7 +263,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     addInterventionViewController?.closeSelectInputsView()
   }
 
-  //MARK: - Search bar
+  // MARK: - Search bar
 
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     isSearching = true
@@ -296,7 +286,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.reloadData()
   }
 
-  //MARK: - Core Data
+  // MARK: - Core Data
 
   private func fetchInputs() -> Bool {
 
@@ -459,7 +449,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @objc func changeSegment() {
     let searchText = searchBar.text!

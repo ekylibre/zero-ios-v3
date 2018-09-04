@@ -544,7 +544,7 @@
                                                             <color key="titleColor" red="0.54117647058823526" green="0.75686274509803919" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="openSelectEquipmentsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="0sF-uW-GA5"/>
+                                                            <action selector="openEquipmentsSelectionView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="5tq-Gj-u6V"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJR-CJ-tlU">
@@ -603,7 +603,7 @@
                                                             <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="openSelectEntitiesView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="OUv-lZ-xPL"/>
+                                                            <action selector="openEntitiesSelectionView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="enz-20-oho"/>
                                                         </connections>
                                                     </button>
                                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orv-Jv-Mfq">
@@ -880,7 +880,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="openCreateEquipmentsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="3Cn-XT-HAE"/>
+                                                    <action selector="openEquipmentsCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="7dK-t8-XDE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1166,7 +1166,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="openCreateEntitiesView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Uuo-Md-MGV"/>
+                                                    <action selector="openEntitiesCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="FgJ-79-L6p"/>
                                                 </connections>
                                             </button>
                                         </subviews>

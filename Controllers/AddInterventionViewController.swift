@@ -11,7 +11,7 @@ import CoreData
 
 class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate {
 
-  //MARK: - Outlets
+  // MARK: - Outlets
 
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
@@ -60,7 +60,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var newIntervention: NSManagedObject!
   var interventionType: String!
@@ -221,7 +221,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.present(inputsView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
-  //MARK: - Table view data source
+  // MARK: - Table view data source
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -357,7 +357,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
-      closeSelectEquipmentsView()
+      closeEquipmentsSelectionView()
     case equipmentTypeTableView:
       selectedEquipmentType = equipmentTypes[indexPath.row]
       equipmentTypeTableView.reloadData()
@@ -373,7 +373,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.lightGray
       }
-      closeSelectEntitiesView()
+      closeEntitiesSelectionView()
     default:
       print("Nothing to do")
     }
@@ -404,7 +404,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentTypeTableView.layer.shadowRadius = 10
   }
 
-  //MARK: - Core Data
+  // MARK: - Core Data
 
   func createIntervention() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -527,7 +527,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchedEntity = entity
   }
 
-  //MARK: - Navigation
+  // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
@@ -549,7 +549,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.seedView.specieButton.setTitle(value, for: .normal)
   }
 
-  //MARK: - Actions
+  // MARK: - Search Bar Delegate
+
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    searchedEntities = searchText.isEmpty ? entities : entities.filter({(filterEntity: NSManagedObject) -> Bool in
+      let entityName: String = filterEntity.value(forKey: "firstName") as! String
+      return entityName.range(of: searchText) != nil
+    })
+    searchedEquipments = searchText.isEmpty ? equipments : equipments.filter({(filterEquipment: NSManagedObject) -> Bool in
+      let equipmentName: String = filterEquipment.value(forKey: "name") as! String
+      return equipmentName.range(of: searchText) != nil
+    })
+    entitiesTableView.reloadData()
+    equipmentsTableView.reloadData()
+  }
+
+  // MARK: - Actions
 
   @IBAction func selectCrops(_ sender: Any) {
     dimView.isHidden = false

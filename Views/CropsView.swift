@@ -11,7 +11,7 @@ import CoreData
 
 class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   public var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
@@ -81,7 +81,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   var cropsCount = 0
   var totalSurfaceArea: Double = 0
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -130,7 +130,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
-  //MARK: - Table view
+  // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -219,7 +219,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return 60
   }
 
-  //MARK: - Core Data
+  // MARK: - Core Data
 
   func fetchPlots() -> Bool {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -340,7 +340,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
     guard let cell = sender.superview?.superview as? PlotCell else {
