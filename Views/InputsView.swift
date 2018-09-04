@@ -260,7 +260,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       print("Error")
     }
     addInterventionViewController?.selectedInputsTableView.reloadData()
-    addInterventionViewController?.closeSelectInputsView()
+    addInterventionViewController?.closeInputsSelectionView()
   }
 
   // MARK: - Search bar
