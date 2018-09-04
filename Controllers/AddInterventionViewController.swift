@@ -76,7 +76,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var entities = [NSManagedObject]()
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
-  var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler-wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic-baler"), #imageLiteral(resourceName: "disc-harrow"), #imageLiteral(resourceName: "forage-platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay-rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation-pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower-conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary-hoe"), #imageLiteral(resourceName: "round-baler"), #imageLiteral(resourceName: "seedbed-preparator"), #imageLiteral(resourceName: "soil-loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid-manure-spreader"), #imageLiteral(resourceName: "subsoil-plow"),#imageLiteral(resourceName: "superficial-plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
@@ -294,7 +293,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       equipment = searchedEquipments[indexPath.row]
       cell.nameLabel.text = equipment?.value(forKey: "name") as? String
       cell.typeLabel.text = equipment?.value(forKey: "type") as? String
-      cell.typeImageView.image = equipmentImage[defineEquipmentImage(equipmentName: cell.typeLabel.text!)]
+      cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -305,7 +304,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
-      cell.typeImageView.image = equipmentImage[defineEquipmentImage(equipmentName: cell.typeLabel.text!)]
+      cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
     case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell

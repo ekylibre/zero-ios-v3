@@ -196,88 +196,88 @@ extension AddInterventionViewController {
 
   // MARK: - Initialization
 
-  func defineEquipmentImage(equipmentName: String) -> Int {
+  func defineEquipmentImage(equipmentName: String) -> UIImage? {
     switch equipmentName {
     case "Semoir monograines":
-      return 0
+      return #imageLiteral(resourceName: "airplanter")
     case "Presse enrubanneuse":
-      return 1
+      return #imageLiteral(resourceName: "baler-wrapper")
     case "Castreuse":
-      return 2
+      return #imageLiteral(resourceName: "corn-topper")
     case "Presse balle cubique":
-      return 3
+      return #imageLiteral(resourceName: "cubic-baler")
     case "Déchaumeur à disques":
-      return 4
+      return #imageLiteral(resourceName: "disc-harrow")
     case "Plateau":
-      return 5
+      return #imageLiteral(resourceName: "forage-platform")
     case "Ensileuse":
-      return 6
+      return #imageLiteral(resourceName: "forager")
     case "Broyeur":
-      return 7
+      return #imageLiteral(resourceName: "grinder")
     case "Herse":
-      return 8
+      return #imageLiteral(resourceName: "harrow")
     case "Arracheuse":
-      return 9
+      return #imageLiteral(resourceName: "harvester")
     case "Andaineur":
-      return 10
+      return #imageLiteral(resourceName: "hay-rake")
     case "Butteuse":
-      return 11
+      return #imageLiteral(resourceName: "hiller")
     case "Bineuse":
-      return 12
+      return #imageLiteral(resourceName: "hoe")
     case "Désherbineuse":
-      return 13
+      return #imageLiteral(resourceName: "hoe_weeder")
     case "Planteuse":
-      return 14
+      return #imageLiteral(resourceName: "implanter")
     case "Tonne à lisier":
-      return 15
+      return #imageLiteral(resourceName: "irrigation-pivot")
     case "Faucheuse":
-      return 16
+      return #imageLiteral(resourceName: "mower")
     case "Faucheuse conditioneuse":
-      return 17
+      return #imageLiteral(resourceName: "mower-conditioner")
     case "Charrue":
-      return 18
+      return #imageLiteral(resourceName: "plow")
     case "Moissonneuse-batteuse":
-      return 19
+      return #imageLiteral(resourceName: "reaper")
     case "Rouleau":
-      return 20
+      return #imageLiteral(resourceName: "roll")
     case "Houe rotative":
-      return 21
+      return #imageLiteral(resourceName: "rotary-hoe")
     case "Presse balle ronde":
-      return 22
-    case "Outil de préparation du lit de semances":
-      return 23
+      return #imageLiteral(resourceName: "round-baler")
+    case "Outil de préparation du lit de semences":
+      return #imageLiteral(resourceName: "seedbed-preparator")
     case "Décompacteur":
-      return 24
+      return #imageLiteral(resourceName: "soil-loosener")
     case "Semoir":
-      return 25
+      return #imageLiteral(resourceName: "sower")
     case "Pulvérisateur":
-      return 26
+      return #imageLiteral(resourceName: "sprayer")
     case "Épandeur à engrais":
-      return 27
+      return #imageLiteral(resourceName: "spreader")
     case "Épandeur à fumier":
-      return 28
+      return #imageLiteral(resourceName: "liquid-manure-spreader")
     case "Sous soleuse":
-      return 29
+      return #imageLiteral(resourceName: "subsoil-plow")
     case "Déchaumeur":
-      return 30
+      return #imageLiteral(resourceName: "superficial-plow")
     case "Faneuse":
-      return 31
+      return #imageLiteral(resourceName: "tedder")
     case "Effaneuse":
-      return 32
+      return #imageLiteral(resourceName: "topper")
     case "Tracteur":
-      return 33
+      return #imageLiteral(resourceName: "tractor")
     case "Remorque":
-      return 34
+      return #imageLiteral(resourceName: "trailer")
     case "Écimeuse":
-      return 35
+      return #imageLiteral(resourceName: "trimmer")
     case "Vibroculteur":
-      return 36
+      return #imageLiteral(resourceName: "vibrocultivator")
     case "Désherbeur":
-      return 37
+      return #imageLiteral(resourceName: "weeder")
     case "Enrubanneuse":
-      return 38
+      return #imageLiteral(resourceName: "wrapper")
     default:
-      return 0
+      return nil
     }
   }
 }
