@@ -14,37 +14,41 @@ protocol SelectedInputCellDelegate: class {
 }
 
 class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
+
+  // MARK: - Properties
+
   weak var cellDelegate: SelectedInputCellDelegate?
+  var addInterventionViewController: AddInterventionViewController?
   var indexPath: IndexPath!
   var type = ""
 
-  var addInterventionViewController: AddInterventionViewController?
-  let inputImage = UIImageView()
-  let inputName = UILabel()
-  let inputSpec = UILabel()
-  let inputQuantity = UITextField()
-  let quantity = UILabel()
-  let removeCell = UIButton()
-  let surfaceQuantity = UILabel()
-  let unitMeasureButton = UIButton()
-  let warningImage = UIImageView()
-  let warningLabel = UILabel()
-
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  lazy var inputImage: UIImageView = {
+    let inputImage = UIImageView(frame: CGRect.zero)
 
     inputImage.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputImage)
+    return inputImage
+  }()
+
+  lazy var inputLabel: UILabel = {
+    let inputLabel = UILabel(frame: CGRect.zero)
+
+    inputLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    inputLabel.translatesAutoresizingMaskIntoConstraints = false
+    return inputLabel
+  }()
+
+  lazy var inputName: UILabel = {
+    let inputName = UILabel(frame: CGRect.zero)
 
     inputName.font = UIFont.systemFont(ofSize: 14)
     inputName.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputName)
+    return inputName
+  }()
 
-    inputSpec.font = UIFont.boldSystemFont(ofSize: 14)
-    inputSpec.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputSpec)
+  lazy var inputQuantity: UITextField = {
+    let inputQuantity = UITextField(frame: CGRect.zero)
 
-    inputQuantity.backgroundColor = AppColor.CellColors.white
+    inputQuantity.backgroundColor = AppColor.ThemeColors.white
     inputQuantity.layer.borderColor = UIColor.lightGray.cgColor
     inputQuantity.layer.borderWidth = 1
     inputQuantity.layer.cornerRadius = 5
@@ -53,61 +57,107 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     inputQuantity.keyboardType = .decimalPad
     inputQuantity.textAlignment = .center
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputQuantity)
+    return inputQuantity
+  }()
+
+  lazy var quantity: UILabel = {
+    let quantity = UILabel(frame: CGRect.zero)
 
     quantity.text = "Quantité"
     quantity.textColor = AppColor.TextColors.DarkGray
     quantity.font = UIFont.systemFont(ofSize: 13)
     quantity.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(quantity)
+    return quantity
+  }()
+
+  lazy var removeCell: UIButton = {
+    let removeCell = UIButton(frame: CGRect.zero)
 
     removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
     removeCell.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
     removeCell.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(removeCell)
+    return removeCell
+  }()
+
+  lazy var surfaceQuantity: UILabel = {
+    let surfaceQuantity = UILabel(frame: CGRect.zero)
 
     surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = "Soit 0,0 A"
+    surfaceQuantity.text = "Soit 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(surfaceQuantity)
+    return surfaceQuantity
+  }()
+
+  lazy var unitMeasureButton: UIButton = {
+    let unitMeasureButton = UIButton(frame: CGRect.zero)
 
     unitMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-    unitMeasureButton.backgroundColor = AppColor.CellColors.white
+    unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    unitMeasureButton.backgroundColor = AppColor.ThemeColors.white
     unitMeasureButton.layer.borderColor = UIColor.lightGray.cgColor
     unitMeasureButton.layer.borderWidth = 1
     unitMeasureButton.layer.cornerRadius = 5
-    unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     unitMeasureButton.titleLabel?.textAlignment = .center
     unitMeasureButton.setTitle(nil, for: .normal)
     unitMeasureButton.addTarget(self, action: #selector(self.showUnitMeasure(sender:)), for: .touchUpInside)
     unitMeasureButton.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(unitMeasureButton)
+    return unitMeasureButton
+  }()
+
+  lazy var warningImage: UIImageView = {
+    let warningImage = UIImageView(frame: CGRect.zero)
 
     warningImage.isHidden = true
     warningImage.image = #imageLiteral(resourceName: "filled-circle")
     warningImage.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(warningImage)
+    return warningImage
+  }()
+
+  lazy var warningLabel: UILabel = {
+    let warningLabel = UILabel(frame: CGRect.zero)
 
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
     warningLabel.text = "dose invalide"
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(warningLabel)
+    return warningLabel
+  }()
 
+  // MARK: Initialization
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupCell()
+  }
+
+  private func setupCell() {
+    contentView.addSubview(inputImage)
+    contentView.addSubview(inputLabel)
+    contentView.addSubview(inputName)
+    contentView.addSubview(inputQuantity)
+    contentView.addSubview(quantity)
+    contentView.addSubview(removeCell)
+    contentView.addSubview(surfaceQuantity)
+    contentView.addSubview(unitMeasureButton)
+    contentView.addSubview(warningImage)
+    contentView.addSubview(warningLabel)
+    setupLayout()
+  }
+
+  private func setupLayout() {
     NSLayoutConstraint.activate([
       inputImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
       inputImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       inputImage.heightAnchor.constraint(equalToConstant: 30),
       inputImage.widthAnchor.constraint(equalToConstant: 30),
       inputName.leftAnchor.constraint(equalTo: inputImage.rightAnchor, constant: 10),
-      inputSpec.leftAnchor.constraint(equalTo: inputName.rightAnchor, constant: 5),
+      inputLabel.leftAnchor.constraint(equalTo: inputName.rightAnchor, constant: 5),
       quantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 20),
       quantity.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
       ]
     )
-
     NSLayoutConstraint.activate([
       removeCell.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       removeCell.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
@@ -115,7 +165,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       removeCell.widthAnchor.constraint(equalToConstant: 15)
       ]
     )
-
     NSLayoutConstraint.activate([
       inputName.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       inputQuantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 12.5),
@@ -124,22 +173,19 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       inputQuantity.widthAnchor.constraint(equalToConstant: 100)
       ]
     )
-
     NSLayoutConstraint.activate([
-      inputSpec.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      unitMeasureButton.topAnchor.constraint(equalTo: inputSpec.bottomAnchor, constant: 12.5),
+      inputLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      unitMeasureButton.topAnchor.constraint(equalTo: inputLabel.bottomAnchor, constant: 12.5),
       unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
       unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
       unitMeasureButton.widthAnchor.constraint(equalToConstant: 60)
       ]
     )
-
     NSLayoutConstraint.activate([
       warningImage.heightAnchor.constraint(equalToConstant: 10),
       warningImage.widthAnchor.constraint(equalToConstant: 10)
       ]
     )
-
     NSLayoutConstraint.activate([
       surfaceQuantity.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
       warningImage.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
@@ -161,6 +207,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       )
     }
   }
+
+  // MARK: Actions
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
