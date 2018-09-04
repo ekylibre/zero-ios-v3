@@ -66,7 +66,7 @@ class PlotCell: UITableViewCell {
       expandCollapseImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 22),
       expandCollapseImageView.heightAnchor.constraint(equalToConstant: 16),
       expandCollapseImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 16),
+      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 16)
       ])
   }
 

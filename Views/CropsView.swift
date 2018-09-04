@@ -123,7 +123,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       bottomView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
       bottomView.heightAnchor.constraint(equalToConstant: 60),
       bottomView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      bottomView.widthAnchor.constraint(equalTo: self.widthAnchor),
+      bottomView.widthAnchor.constraint(equalTo: self.widthAnchor)
       ])
   }
 
