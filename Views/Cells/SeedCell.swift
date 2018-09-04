@@ -44,7 +44,7 @@ class SeedCell: UITableViewCell {
       varietyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       specieLabel.topAnchor.constraint(equalTo: varietyLabel.bottomAnchor),
       specieLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15)
       ])
   }
 

@@ -44,7 +44,7 @@ class FertilizerCell: UITableViewCell {
       nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       natureLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
       natureLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15)
       ])
   }
 
