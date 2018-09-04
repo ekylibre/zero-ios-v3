@@ -62,6 +62,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return tableView
   }()
 
+  var tableViewTopAnchor: NSLayoutConstraint!
+
   lazy var dimView: UIView = {
     let dimView = UIView(frame: CGRect.zero)
     dimView.backgroundColor = UIColor.black
@@ -122,6 +124,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupLayout() {
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
+
     NSLayoutConstraint.activate([
       segmentedControl.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       segmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
@@ -131,7 +135,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
       createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
       createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      tableView.topAnchor.constraint(equalTo: createButton.bottomAnchor, constant: 15),
+      tableViewTopAnchor,
       tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
       tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
       tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
@@ -286,6 +290,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     })
     isSearching = (searchText.isEmpty ? false : true)
     createButton.isHidden = isSearching
+    tableViewTopAnchor.constant = isSearching ? 15 : 60
     tableView.reloadData()
   }
 
