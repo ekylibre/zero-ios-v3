@@ -65,7 +65,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var newIntervention: NSManagedObject!
   var interventionType: String!
   var equipments = [NSManagedObject]()
-  var selectDateView: UIView!
+  var selectDateView: SelectDateView!
   var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
@@ -631,18 +631,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func selectDate(_ sender: Any) {
     dimView.isHidden = false
     selectDateView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
   }
 
   @objc func validateDate() {
-    let datePicker = selectDateView.subviews.first as! UIDatePicker
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "fr_FR")
     dateFormatter.dateFormat = "d MMMM"
-    let selectedDate = dateFormatter.string(from: datePicker.date)
+    let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
     selectDateButton.setTitle(selectedDate, for: .normal)
 
-    dimView.isHidden = true
     selectDateView.isHidden = true
+    dimView.isHidden = true
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
   }
 
   @IBAction func selectInput(_ sender: Any) {
