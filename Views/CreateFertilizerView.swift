@@ -102,23 +102,22 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "title" : titleLabel,
-      "name" : nameTextField,
-      "nature" : natureLabel,
-      "button" : natureButton,
-      "cancel" : cancelButton,
-      "create" : createButton,
-      ] as [String : Any]
-
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[name]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[nature]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]-60-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-15-[create]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-35-[name]-25-[nature][button]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
+      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      natureLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
+      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      natureButton.topAnchor.constraint(equalTo: natureLabel.bottomAnchor),
+      natureButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      natureButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -60),
+      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
+      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
+      ])
   }
 
   private func setupActions() {

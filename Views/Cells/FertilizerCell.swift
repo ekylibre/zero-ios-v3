@@ -39,14 +39,13 @@ class FertilizerCell: UITableViewCell {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "name": nameLabel,
-      "nature": natureLabel,
-      ] as [String: Any]
-
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[nature]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[name][nature]-10-|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      natureLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+      natureLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {
