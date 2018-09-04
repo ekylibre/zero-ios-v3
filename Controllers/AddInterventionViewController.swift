@@ -36,6 +36,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var searchEquipment: UISearchBar!
   @IBOutlet weak var equipmentTypeTableView: UITableView!
   @IBOutlet weak var equipmentTypeButton: UIButton!
+  @IBOutlet weak var createEquipment: UIView!
+  @IBOutlet weak var createEntity: UIView!
   @IBOutlet weak var entityFirstName: UITextField!
   @IBOutlet weak var entityLastName: UITextField!
   @IBOutlet weak var selectEntitiesView: UIView!
@@ -69,11 +71,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
+  var equipmentsTableViewTopAnchor: NSLayoutConstraint!
   var selectedEquipments = [NSManagedObject]()
   var searchedEquipments = [NSManagedObject]()
   var equipmentTypes: [String]!
   var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
+  var entitiesTableViewTopAnchor: NSLayoutConstraint!
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
   var createdSeed = [NSManagedObject]()
@@ -164,9 +168,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentTypeTableView.delegate = self
     equipmentTypeTableView.bounces = false
 
+    equipmentsTableViewTopAnchor = equipmentsTableView.topAnchor.constraint(equalTo: searchEquipment.bottomAnchor, constant: 40.5)
+    NSLayoutConstraint.activate([equipmentsTableViewTopAnchor])
+
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
     entitiesTableView.bounces = false
+
+    entitiesTableViewTopAnchor = entitiesTableView.topAnchor.constraint(equalTo: searchEntity.bottomAnchor, constant: 40.5)
+    NSLayoutConstraint.activate([entitiesTableViewTopAnchor])
 
     doersTableView.dataSource = self
     doersTableView.delegate = self
@@ -561,6 +571,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
     entitiesTableView.reloadData()
     equipmentsTableView.reloadData()
+  }
+
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    switch searchBar {
+    case searchEntity:
+      entitiesTableViewTopAnchor.constant = 15
+      createEntity.isHidden = true
+    case searchEquipment:
+      equipmentsTableViewTopAnchor.constant = 15
+      createEquipment.isHidden = true
+    default:
+      return
+    }
+  }
+
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    switch searchBar {
+    case searchEntity:
+      searchBar.endEditing(true)
+      entitiesTableViewTopAnchor.constant = 40.5
+      createEntity.isHidden = false
+    case searchEquipment:
+      searchBar.endEditing(true)
+      equipmentsTableViewTopAnchor.constant = 40.5
+      createEquipment.isHidden = false
+    default:
+      return
+    }
   }
 
   // MARK: - Actions
