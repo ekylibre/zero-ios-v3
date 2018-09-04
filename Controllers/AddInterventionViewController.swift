@@ -714,6 +714,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
       case doers:
         numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+      case selectedInputs:
+        numberLabel.text = (entities.count == 1 ? "1 intrant": "\(entities.count) intrants")
       default:
         return
       }

@@ -11,7 +11,7 @@ import CoreData
 
 extension AddInterventionViewController: DoerCellDelegate {
 
-  // MARK: Action
+  // MARK: Actions
 
   func updateDriverStatus(_ indexPath: IndexPath, driver: UISwitch) {
     doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")

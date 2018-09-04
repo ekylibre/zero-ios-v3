@@ -11,89 +11,10 @@ import CoreData
 
 extension AddInterventionViewController: SelectedInputCellDelegate {
 
+  // MARK: - Actions
+
   func changeUnitMeasure(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
-  }
-
-  func removeInputCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(
-      title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'intrant ?",
-      preferredStyle: .alert
-    )
-
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-      /*let type = self.selectedInputs[indexPath.row].value(forKey: "type") as! String
-       let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
-       let cellIndexPath = NSIndexPath(row: row, section: 0)
-
-       switch type {
-       case "Seed":
-       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
-
-       cell.isAvaible = true
-       cell.backgroundColor = AppColor.CellColors.white
-       case "Phyto":
-       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
-
-       cell.isAvaible = true
-       cell.backgroundColor = AppColor.CellColors.white
-       case "Fertilizer":
-       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
-
-       cell.isAvaible = true
-       cell.backgroundColor = AppColor.CellColors.white
-       default:
-       print("No type")
-       }*/
-
-      self.selectedInputs.remove(at: indexPath.row)
-      if self.selectedInputs.count == 0 {
-        self.inputsHeightConstraint.constant = 70
-        self.inputsCollapseButton.isHidden = true
-      } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.inputsHeightConstraint,
-          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-          tableView: self.selectedInputsTableView
-        )
-      }
-      self.showInputsNumber()
-      self.selectedInputsTableView.reloadData()
-    }))
-    self.present(alert, animated: true)
-  }
-
-  func closeSelectInputsView() {
-    dimView.isHidden = true
-    inputsView.isHidden = true
-
-    if selectedInputs.count > 0 {
-      UIView.animate(withDuration: 0.5, animations: {
-        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
-        self.inputsCollapseButton.isHidden = false
-        self.selectedInputsTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.inputsHeightConstraint,
-          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-          tableView: self.selectedInputsTableView)
-        self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-      })
-    }
-    selectedInputsTableView.reloadData()
-  }
-
-  func showInputsNumber() {
-    if selectedInputs.count > 0 && inputsHeightConstraint.constant == 70 {
-      addInputsButton.isHidden = true
-      inputsNumber.text = (selectedInputs.count == 1 ? "1 intrant" : "\(selectedInputs.count) intrants")
-      inputsNumber.isHidden = false
-    } else {
-      inputsNumber.isHidden = true
-      addInputsButton.isHidden = false
-    }
   }
 
   @IBAction func collapseInputsView(_ sender: Any) {
@@ -115,7 +36,31 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         self.view.layoutIfNeeded()
       })
     }
-    showInputsNumber()
+    showEntitiesNumber(
+      entities: selectedInputs,
+      constraint: inputsHeightConstraint,
+      numberLabel: inputsNumber,
+      addEntityButton: addInputsButton)
+  }
+
+  func closeInputsSelectionView() {
+    dimView.isHidden = true
+    inputsView.isHidden = true
+
+    if selectedInputs.count > 0 {
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+        self.view.layoutIfNeeded()
+        self.inputsCollapseButton.isHidden = false
+        self.selectedInputsTableView.isHidden = false
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.inputsHeightConstraint,
+          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+          tableView: self.selectedInputsTableView)
+        self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+      })
+    }
+    selectedInputsTableView.reloadData()
   }
 
   func storeSampleSeed(indexPath: IndexPath) {
@@ -186,4 +131,59 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
+
+  func removeInputCell(_ indexPath: IndexPath) {
+    let alert = UIAlertController(
+      title: "",
+      message: "Êtes-vous sûr de vouloir supprimer l'intrant ?",
+      preferredStyle: .alert
+    )
+
+    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+      /*let type = self.selectedInputs[indexPath.row].value(forKey: "type") as! String
+       let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
+       let cellIndexPath = NSIndexPath(row: row, section: 0)
+
+       switch type {
+       case "Seed":
+       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
+
+       cell.isAvaible = true
+       cell.backgroundColor = AppColor.CellColors.white
+       case "Phyto":
+       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
+
+       cell.isAvaible = true
+       cell.backgroundColor = AppColor.CellColors.white
+       case "Fertilizer":
+       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
+
+       cell.isAvaible = true
+       cell.backgroundColor = AppColor.CellColors.white
+       default:
+       print("No type")
+       }*/
+
+      self.selectedInputs.remove(at: indexPath.row)
+      if self.selectedInputs.count == 0 {
+        self.inputsHeightConstraint.constant = 70
+        self.inputsCollapseButton.isHidden = true
+      } else {
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.inputsHeightConstraint,
+          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+          tableView: self.selectedInputsTableView
+        )
+      }
+      self.showEntitiesNumber(
+        entities: self.selectedInputs,
+        constraint: self.inputsHeightConstraint,
+        numberLabel: self.inputsNumber,
+        addEntityButton: self.addInputsButton)
+      self.selectedInputsTableView.reloadData()
+    }))
+    self.present(alert, animated: true)
+  }
+
 }

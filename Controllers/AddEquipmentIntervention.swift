@@ -57,7 +57,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     ]
   }
 
-  // MARK: - Action
+  // MARK: - Actions
 
   @IBAction func collapseEquipmentView(_ send: Any) {
     if equipmentHeightConstraint.constant != 70 {
