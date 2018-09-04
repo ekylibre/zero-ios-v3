@@ -10,8 +10,6 @@ import UIKit
 
 class SeedCell: UITableViewCell {
 
-  var isAvaible = true
-
   lazy var varietyLabel: UILabel = {
     let varietyLabel = UILabel(frame: CGRect.zero)
     varietyLabel.font = UIFont.boldSystemFont(ofSize: 14)

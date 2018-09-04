@@ -11,11 +11,11 @@ import CoreData
 
 class UsersDatabase: UIViewController {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  // MARK: Actions
+  // MARK: - Actions
 
   func emptyEntity(entity: String) {
     let context = appDelegate.persistentContainer.viewContext

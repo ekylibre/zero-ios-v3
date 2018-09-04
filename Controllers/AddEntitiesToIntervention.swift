@@ -10,75 +10,11 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: DoerCellDelegate {
+
+  // MARK: Action
+
   func updateDriverStatus(_ indexPath: IndexPath, driver: UISwitch) {
     doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
-  }
-
-  func removeDoerCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(
-      title: "",
-      message: "Êtes-vous sûr de vouloir supprimer la personne ?",
-      preferredStyle: .alert
-    )
-
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
-      let row = self.doers[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.white
-
-      self.doers.remove(at: indexPath.row)
-
-      if self.doers.count == 0 {
-        self.doersTableView.isHidden = true
-        self.doersHeightConstraint.constant = 70
-        self.doersCollapsedButton.isHidden = true
-      } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.doersHeightConstraint,
-          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
-          tableView: self.doersTableView)
-        self.showEntitiesNumber(
-          entities: self.doers,
-          constraint: self.doersHeightConstraint,
-          numberLabel: self.doersNumber,
-          addEntityButton: self.addEntitiesButton)
-      }
-      self.doersTableView.reloadData()
-    }))
-    self.present(alert, animated: true)
-  }
-
-  @IBAction func openSelectEntitiesView(_ sender: Any) {
-    dimView.isHidden = false
-    selectEntitiesView.isHidden = false
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
-  }
-
-  func closeSelectEntitiesView() {
-    dimView.isHidden = true
-    selectEntitiesView.isHidden = true
-
-    if doers.count > 0 {
-      UIView.animate(withDuration: 0.5, animations: {
-        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
-        self.doersCollapsedButton.isHidden = false
-        self.doersTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.doersHeightConstraint,
-          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
-          tableView: self.doersTableView)
-        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-      })
-    }
-    searchedEntities = entities
-    doersTableView.reloadData()
   }
 
   @IBAction func collapseDoersView(_ sender: Any) {
@@ -107,7 +43,36 @@ extension AddInterventionViewController: DoerCellDelegate {
       addEntityButton: addEntitiesButton)
   }
 
-  @IBAction func openCreateEntitiesView(_ sender: Any) {
+  @IBAction func openEntitiesSelectionView(_ sender: Any) {
+    dimView.isHidden = false
+    selectEntitiesView.isHidden = false
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  func closeEntitiesSelectionView() {
+    dimView.isHidden = true
+    selectEntitiesView.isHidden = true
+
+    if doers.count > 0 {
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+        self.view.layoutIfNeeded()
+        self.doersCollapsedButton.isHidden = false
+        self.doersTableView.isHidden = false
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
+        self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+      })
+    }
+    searchedEntities = entities
+    doersTableView.reloadData()
+  }
+
+  @IBAction func openEntitiesCreationView(_ sender: Any) {
     entityDarkLayer.isHidden = false
     createEntitiesView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
@@ -147,5 +112,43 @@ extension AddInterventionViewController: DoerCellDelegate {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  func removeDoerCell(_ indexPath: IndexPath) {
+    let alert = UIAlertController(
+      title: "",
+      message: "Êtes-vous sûr de vouloir supprimer la personne ?",
+      preferredStyle: .alert
+    )
+
+    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+      let row = self.doers[indexPath.row].value(forKey: "row") as! Int
+      let indexTab = NSIndexPath(row: row, section: 0)
+      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
+
+      cell.isAvaible = true
+      cell.backgroundColor = AppColor.CellColors.white
+
+      self.doers.remove(at: indexPath.row)
+
+      if self.doers.count == 0 {
+        self.doersTableView.isHidden = true
+        self.doersHeightConstraint.constant = 70
+        self.doersCollapsedButton.isHidden = true
+      } else {
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.doersHeightConstraint,
+          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+          tableView: self.doersTableView)
+        self.showEntitiesNumber(
+          entities: self.doers,
+          constraint: self.doersHeightConstraint,
+          numberLabel: self.doersNumber,
+          addEntityButton: self.addEntitiesButton)
+      }
+      self.doersTableView.reloadData()
+    }))
+    self.present(alert, animated: true)
   }
 }

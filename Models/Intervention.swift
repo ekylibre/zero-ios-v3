@@ -11,7 +11,7 @@ import os.log
 
 class Intervention {
 
-  //MARK: Properties
+  // MARK: - Properties
 
   enum InterventionType: String {
     case Care = "Entretien"
@@ -35,7 +35,7 @@ class Intervention {
   var date: Date
   var status: Status
 
-  //MARK: Initialization
+  // MARK: - Initialization
 
   init(type: InterventionType, crops: String, infos: String, date: Date, status: Status) {
     self.type = type
