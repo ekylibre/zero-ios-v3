@@ -31,7 +31,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var specieButton: UIButton = {
     let specieButton = UIButton(frame: CGRect.zero)
-    specieButton.setTitle("Avoine", for: .normal)
+    specieButton.setTitle("Abricotier", for: .normal)
     specieButton.setTitleColor(UIColor.black, for: .normal)
     specieButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     specieButton.contentHorizontalAlignment = .leading
@@ -137,7 +137,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
   @objc func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
     if sender == cancelButton {
-      specieButton.setTitle("Avoine", for: .normal)
+      specieButton.setTitle("Abricotier", for: .normal)
       varietyTextField.text = ""
     }
     self.isHidden = true
