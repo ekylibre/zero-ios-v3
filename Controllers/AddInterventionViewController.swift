@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate, XMLParserDelegate {
 
   // MARK: - Outlets
 
@@ -566,7 +566,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.seedView.specieButton.setTitle(value, for: .normal)
   }
 
-  private func loadEquipments() -> [String] {
+  private func loadEquipmentTypes() -> [String] {
     var equipmentType = [String]()
 
     if let asset = NSDataAsset(name: "equipment_types") {

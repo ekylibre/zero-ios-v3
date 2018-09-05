@@ -12,3 +12,22 @@
 "please_retry" = "Please try again";
 "unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
 
+// Equipment types
+
+"air_planter" = "Air planter";
+"baler_wrapper" = "Baler wrapper";
+"corn_topper" = "Corn topper";
+"cubic_baler" = "Cubic baler";
+"disc_harrow" = "Disc arrow";
+"forager" = "Forager";
+"forage_platform" = "Forage platform";
+"grinder" = "Grinder";
+"harrow" = "Harrow";
+"harvester" = "Harvester";
+"hay_rake" = "Hay rake";
+"hiller" = "Hiller";
+"hoe" = "Hoe";
+"hoe_weeder" = "Hoe weeder";
+"irrigation_pivot" = "Irrigation pivot";
+"tractor" = "Tractor";
+
