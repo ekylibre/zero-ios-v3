@@ -227,33 +227,36 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      let used = seeds[indexPath.row].value(forKey: "used") as! Bool
+      let fromSeeds = isSearching ? filteredInputs : seeds
+      let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
       if !used {
-        seeds[indexPath.row].setValue(true, forKey: "used")
+        fromSeeds[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.lightGray
-        addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
+        addInterventionViewController?.selectedInputs.append(fromSeeds[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 1:
+      let fromPhytos = isSearching ? filteredInputs : phytos
       let used = phytos[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
 
       if !used {
-        phytos[indexPath.row].setValue(true, forKey: "used")
+        fromPhytos[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.lightGray
-        addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
+        addInterventionViewController?.selectedInputs.append(fromPhytos[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 2:
+      let fromFertilizers = isSearching ? filteredInputs : fertilizers
       let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
 
       if !used {
-        fertilizers[indexPath.row].setValue(true, forKey: "used")
+        fromFertilizers[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.lightGray
-        addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
+        addInterventionViewController?.selectedInputs.append(fromFertilizers[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     default:
