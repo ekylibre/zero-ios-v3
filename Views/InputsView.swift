@@ -99,8 +99,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     super.init(frame: frame)
     setupView()
     if !fetchInputs() {
-      loadSampleInputs()
-      loadSeeds()
+      loadRegisteredInputs()
+      tableView.reloadData()
     }
   }
 
@@ -316,22 +316,43 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  func loadSeeds() {
-    if let asset = NSDataAsset(name: "seeds") {
-      do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data, options: .mutableLeaves)
-        let seeds = jsonResult as? [[String: Any]]
+  private func loadRegisteredInputs() {
+    createPhyto(registered: false, name: "Nom 1", firmName: "Marque 1", maaID: 1000, reentryDelay: 1)
+    createPhyto(registered: false, name: "Nom 2", firmName: "Marque 2", maaID: 2000, reentryDelay: 2)
+    createPhyto(registered: false, name: "Nom 3", firmName: "Marque 3", maaID: 3000, reentryDelay: 3)
 
-        saveSeeds(registeredSeeds: seeds!)
-      } catch let error as NSError {
-        print("Could not parse file. \(error), \(error.userInfo)")
-      }
-    } else {
-      print("seeds.json not found")
+    createFertilizer(registered: false, name: "Nom 1", nature: "Nature 1")
+    createFertilizer(registered: false, name: "Nom 2", nature: "Nature 2")
+    createFertilizer(registered: false, name: "Nom 3", nature: "Nature 3")
+    createFertilizer(registered: false, name: "Nom 4", nature: "Nature 4")
+
+    let assets = openAssets()
+    let decoder = JSONDecoder()
+
+    do {
+      let registeredSeeds = try decoder.decode([RegisteredSeed].self, from: assets[0].data)
+
+      saveSeeds(registeredSeeds: registeredSeeds)
+    } catch let jsonError {
+      print(jsonError)
     }
   }
 
-  func saveSeeds(registeredSeeds: [[String: Any]]) {
+  func openAssets() -> [NSDataAsset] {
+    var assets = [NSDataAsset]()
+    let assetNames = ["seeds", "phytosanitary_products", "fertilizers"]
+
+    for assetName in assetNames {
+      if let asset = NSDataAsset(name: assetName) {
+        assets.append(asset)
+      } else {
+        fatalError(assetName + " not found")
+      }
+    }
+    return assets
+  }
+
+  func saveSeeds(registeredSeeds: [RegisteredSeed]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -343,9 +364,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = NSManagedObject(entity: seedEntity, insertInto: managedContext)
 
       seed.setValue(true, forKey: "registered")
-      seed.setValue(registeredSeed["id"], forKey: "seedIDEky")
-      seed.setValue(registeredSeed["specie"], forKey: "specie")
-      seed.setValue(registeredSeed["variety"], forKey: "variety")
+      seed.setValue(registeredSeed.id, forKey: "seedIDEky")
+      seed.setValue(registeredSeed.specie, forKey: "specie")
+      seed.setValue(registeredSeed.variety, forKey: "variety")
 
       seed.setValue("Seed", forKey: "type")
       seed.setValue("kg/ha", forKey: "unit")
@@ -354,19 +375,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       seed.setValue(false, forKey: "used")
       seeds.append(seed)
     }
-  }
-
-  private func loadSampleInputs() {
-    createPhyto(registered: false, name: "Nom 1", firmName: "Marque 1", maaID: 1000, reentryDelay: 1)
-    createPhyto(registered: false, name: "Nom 2", firmName: "Marque 2", maaID: 2000, reentryDelay: 2)
-    createPhyto(registered: false, name: "Nom 3", firmName: "Marque 3", maaID: 3000, reentryDelay: 3)
-
-    createFertilizer(registered: false, name: "Nom 1", nature: "Nature 1")
-    createFertilizer(registered: false, name: "Nom 2", nature: "Nature 2")
-    createFertilizer(registered: false, name: "Nom 3", nature: "Nature 3")
-    createFertilizer(registered: false, name: "Nom 4", nature: "Nature 4")
-
-    tableView.reloadData()
   }
 
   private func createSeed(variety: String, specie: String) {

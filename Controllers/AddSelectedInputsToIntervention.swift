@@ -50,7 +50,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if selectedInputs.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
         self.inputsCollapseButton.isHidden = false
         self.selectedInputsTableView.isHidden = false
         self.resizeViewAndTableView(
@@ -58,6 +57,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
           tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
           tableView: self.selectedInputsTableView)
         self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        self.view.layoutIfNeeded()
       })
     }
     selectedInputsTableView.reloadData()

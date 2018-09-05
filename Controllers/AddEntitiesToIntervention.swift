@@ -48,6 +48,7 @@ extension AddInterventionViewController: DoerCellDelegate {
     selectEntitiesView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+      self.view.layoutIfNeeded()
     })
   }
 
@@ -77,6 +78,7 @@ extension AddInterventionViewController: DoerCellDelegate {
     createEntitiesView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+      self.view.layoutIfNeeded()
     })
   }
 
