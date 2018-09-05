@@ -408,11 +408,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func loadSampleInputs() {
-    createSeed(registered: true, variety: "Variété 1", specie: "Espèce 1")
-    createSeed(registered: true, variety: "Variété 2", specie: "Espèce 2")
+    createSeed(variety: "Variété 1", specie: "Espèce 1")
+    createSeed(variety: "Variété 2", specie: "Espèce 2")
   }
 
-  private func createSeed(registered: Bool, variety: String, specie: String) {
+  private func createSeed(variety: String, specie: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -422,7 +422,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
     seed.setValue("Seed", forKey: "type")
-    seed.setValue(registered, forKey: "registered")
+    seed.setValue(false, forKey: "registered")
     seed.setValue(variety, forKey: "variety")
     seed.setValue(specie, forKey: "specie")
     seed.setValue("kg/ha", forKey: "unit")
@@ -437,7 +437,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createPhyto(registered: Bool, name: String, firmName: String, maaID: Int, reentryDelay: Int) {
+  private func createPhyto(name: String, firmName: String, maaID: Int, reentryDelay: Int) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -446,7 +446,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let phytosEntity = NSEntityDescription.entity(forEntityName: "Phytos", in: managedContext)!
     let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
 
-    phyto.setValue(registered, forKey: "registered")
+    phyto.setValue(false, forKey: "registered")
     phyto.setValue(name, forKey: "name")
     phyto.setValue(firmName, forKey: "firmName")
     phyto.setValue(maaID, forKey: "maaID")
@@ -464,7 +464,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createFertilizer(registered: Bool, name: String, nature: String) {
+  private func createFertilizer(name: String, nature: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -474,7 +474,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
     fertilizer.setValue("Fertilizer", forKey: "type")
-    fertilizer.setValue(registered, forKey: "registered")
+    fertilizer.setValue(false, forKey: "registered")
     fertilizer.setValue(name, forKey: "name")
     fertilizer.setValue(nature, forKey: "nature")
     fertilizer.setValue("kg/ha", forKey: "unit")
@@ -520,13 +520,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      createSeed(registered: false, variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
+      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
       seedView.specieButton.setTitle("Abricotier", for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
       let maaID = phytoView.maaTextField.text!.isEmpty ? 0 : Int(phytoView.maaTextField.text!)
       let reentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : Int(phytoView.reentryDelayTextField.text!)
-      createPhyto(registered: false, name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: maaID!, reentryDelay: reentryDelay!)
+      createPhyto(name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: maaID!, reentryDelay: reentryDelay!)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
@@ -534,7 +534,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         }
       }
     case 2:
-      createFertilizer(registered: false, name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
+      createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
       fertilizerView.nameTextField.text = ""
       fertilizerView.natureButton.setTitle("Organique", for: .normal)
     default:
