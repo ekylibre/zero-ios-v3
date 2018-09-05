@@ -141,49 +141,49 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-      /*let type = self.selectedInputs[indexPath.row].value(forKey: "type") as! String
-       let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
-       let cellIndexPath = NSIndexPath(row: row, section: 0)
-
-       switch type {
-       case "Seed":
-       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
-
-       cell.isAvaible = true
-       cell.backgroundColor = AppColor.CellColors.white
-       case "Phyto":
-       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
-
-       cell.isAvaible = true
-       cell.backgroundColor = AppColor.CellColors.white
-       case "Fertilizer":
-       let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
-
-       cell.isAvaible = true
-       cell.backgroundColor = AppColor.CellColors.white
-       default:
-       print("No type")
-       }*/
-
       self.selectedInputs.remove(at: indexPath.row)
-      if self.selectedInputs.count == 0 {
-        self.inputsHeightConstraint.constant = 70
-        self.inputsCollapseButton.isHidden = true
-      } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.inputsHeightConstraint,
-          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-          tableView: self.selectedInputsTableView
-        )
-      }
-      self.showEntitiesNumber(
-        entities: self.selectedInputs,
-        constraint: self.inputsHeightConstraint,
-        numberLabel: self.inputsNumber,
-        addEntityButton: self.addInputsButton)
       self.selectedInputsTableView.reloadData()
+      if self.selectedInputs.count == 0 {
+        self.selectedInputsTableView.isHidden = true
+        self.inputsCollapseButton.isHidden = true
+        self.inputsHeightConstraint.constant = 70
+      } else {
+        UIView.animate(withDuration: 0.5, animations: {
+          self.resizeViewAndTableView(
+            viewHeightConstraint: self.inputsHeightConstraint,
+            tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+            tableView: self.selectedInputsTableView
+          )
+          self.view.layoutIfNeeded()
+        })
+      }
     }))
     self.present(alert, animated: true)
   }
-
 }
+
+// Begin unselection of cells in inputs table view (not working for now)
+
+/*let type = self.selectedInputs[indexPath.row].value(forKey: "type") as! String
+ let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
+ let cellIndexPath = NSIndexPath(row: row, section: 0)
+
+ switch type {
+ case "Seed":
+ let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
+
+ cell.isAvaible = true
+ cell.backgroundColor = AppColor.CellColors.white
+ case "Phyto":
+ let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
+
+ cell.isAvaible = true
+ cell.backgroundColor = AppColor.CellColors.white
+ case "Fertilizer":
+ let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
+
+ cell.isAvaible = true
+ cell.backgroundColor = AppColor.CellColors.white
+ default:
+ print("No type")
+ }*/

@@ -169,25 +169,22 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
       cell.isAvaible = true
       cell.backgroundColor = AppColor.CellColors.white
-
       self.selectedEquipments.remove(at: indexPath.row)
+      self.selectedEquipmentsTableView.reloadData()
 
       if self.selectedEquipments.count == 0 {
         self.selectedEquipmentsTableView.isHidden = true
-        self.equipmentHeightConstraint.constant = 70
         self.collapseButton.isHidden = true
+        self.equipmentHeightConstraint.constant = 70
       } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.equipmentHeightConstraint,
-          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
-          tableView: self.selectedEquipmentsTableView)
-        self.showEntitiesNumber(
-          entities: self.selectedEquipments,
-          constraint: self.equipmentHeightConstraint,
-          numberLabel: self.equipmentNumberLabel,
-          addEntityButton: self.addEquipmentButton)
+        UIView.animate(withDuration: 0.5, animations: {
+          self.resizeViewAndTableView(
+            viewHeightConstraint: self.equipmentHeightConstraint,
+            tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
+            tableView: self.selectedEquipmentsTableView)
+          self.view.layoutIfNeeded()
+        })
       }
-      self.selectedEquipmentsTableView.reloadData()
     }))
     self.present(alert, animated: true)
   }
