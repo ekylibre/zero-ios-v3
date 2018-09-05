@@ -129,25 +129,22 @@ extension AddInterventionViewController: DoerCellDelegate {
 
       cell.isAvaible = true
       cell.backgroundColor = AppColor.CellColors.white
-
       self.doers.remove(at: indexPath.row)
+      self.doersTableView.reloadData()
 
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
-        self.doersHeightConstraint.constant = 70
         self.doersCollapsedButton.isHidden = true
+        self.doersHeightConstraint.constant = 70
       } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.doersHeightConstraint,
-          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
-          tableView: self.doersTableView)
-        self.showEntitiesNumber(
-          entities: self.doers,
-          constraint: self.doersHeightConstraint,
-          numberLabel: self.doersNumber,
-          addEntityButton: self.addEntitiesButton)
+        UIView.animate(withDuration: 0.5, animations: {
+          self.resizeViewAndTableView(
+            viewHeightConstraint: self.doersHeightConstraint,
+            tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+            tableView: self.doersTableView)
+          self.view.layoutIfNeeded()
+        })
       }
-      self.doersTableView.reloadData()
     }))
     self.present(alert, animated: true)
   }

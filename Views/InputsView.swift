@@ -357,9 +357,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func loadSampleInputs() {
-    createSeed(registered: false, variety: "Variété 1", specie: "Espèce 1")
-    createSeed(registered: false, variety: "Variété 2", specie: "Espèce 2")
-
     createPhyto(registered: false, name: "Nom 1", firmName: "Marque 1", maaID: 1000, reentryDelay: 1)
     createPhyto(registered: false, name: "Nom 2", firmName: "Marque 2", maaID: 2000, reentryDelay: 2)
     createPhyto(registered: false, name: "Nom 3", firmName: "Marque 3", maaID: 3000, reentryDelay: 3)
@@ -372,7 +369,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.reloadData()
   }
 
-  private func createSeed(registered: Bool, variety: String, specie: String) {
+  private func createSeed(variety: String, specie: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -382,7 +379,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
     seed.setValue("Seed", forKey: "type")
-    seed.setValue(registered, forKey: "registered")
+    seed.setValue(false, forKey: "registered")
     seed.setValue(variety, forKey: "variety")
     seed.setValue(specie, forKey: "specie")
     seed.setValue("kg/ha", forKey: "unit")
@@ -483,7 +480,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      createSeed(registered: false, variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
+      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
       seedView.specieButton.setTitle("Avoine", for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
