@@ -100,9 +100,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     super.init(frame: frame)
     setupView()
     if !fetchInputs() {
-      loadSampleInputs()
-      registerPhytos()
-      registerFertilizers()
+      loadRegisteredInputs()
       tableView.reloadData()
     }
   }
@@ -312,17 +310,36 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  private func registerPhytos() {
-    if let asset = NSDataAsset(name: "phytosanitary-products") {
-      do {
-        let jsonResult = try JSONDecoder().decode([RegisteredPhyto].self, from: asset.data)
-        savePhytos(jsonResult)
-      } catch {
-        print("Lexicon error")
-      }
-    } else {
-      print("phytosanitary_products.json not found")
+  private func loadRegisteredInputs() {
+    createSeed(variety: "Variété 1", specie: "Espèce 1")
+    createSeed(variety: "Variété 2", specie: "Espèce 2")
+
+    let assets = openAssets()
+
+    do {
+      //let registeredSeeds = try JSONDecoder().decode([RegisteredSeed].self, from: assets[0].data)
+      let registeredPhytos = try JSONDecoder().decode([RegisteredPhyto].self, from: assets[1].data)
+      let registeredFertilizers = try JSONDecoder().decode([RegisteredFertilizer].self, from: assets[2].data)
+      //saveSeeds(registeredSeeds)
+      savePhytos(registeredPhytos)
+      saveFertilizers(registeredFertilizers)
+    } catch let jsonError {
+      print(jsonError)
     }
+  }
+
+  private func openAssets() -> [NSDataAsset] {
+    var assets = [NSDataAsset]()
+    let assetNames = ["seeds", "phytosanitary-products", "fertilizers"]
+
+    for assetName in assetNames {
+      if let asset = NSDataAsset(name: assetName) {
+        assets.append(asset)
+      } else {
+        fatalError(assetName + " not found")
+      }
+    }
+    return assets
   }
 
   private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {
@@ -356,19 +373,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  private func registerFertilizers() {
-    if let asset = NSDataAsset(name: "fertilizers") {
-      do {
-        let jsonResult = try JSONDecoder().decode([RegisteredFertilizer].self, from: asset.data)
-        saveFertilizers(jsonResult)
-      } catch let jsonError {
-        print(jsonError)
-      }
-    } else {
-      print("fertilizers.json not found")
     }
   }
 
@@ -407,11 +411,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  private func loadSampleInputs() {
-    createSeed(variety: "Variété 1", specie: "Espèce 1")
-    createSeed(variety: "Variété 2", specie: "Espèce 2")
   }
 
   private func createSeed(variety: String, specie: String) {
