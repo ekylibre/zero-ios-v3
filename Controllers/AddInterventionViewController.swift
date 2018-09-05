@@ -521,7 +521,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.delegate = self
       destVC.cellsStrings = loadSpecies()
     default:
-      guard let button = sender as? UIButton, button === saveInterventionButton else {
+      guard let button = sender as? UIButton, button == saveInterventionButton else {
         return
       }
 
