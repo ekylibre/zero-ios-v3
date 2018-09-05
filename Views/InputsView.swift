@@ -328,11 +328,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     createSeed(variety: "Variété 2", specie: "Espèce 2")
 
     let assets = openAssets()
+    let decoder = JSONDecoder()
 
     do {
-      //let registeredSeeds = try JSONDecoder().decode([RegisteredSeed].self, from: assets[0].data)
-      let registeredPhytos = try JSONDecoder().decode([RegisteredPhyto].self, from: assets[1].data)
-      let registeredFertilizers = try JSONDecoder().decode([RegisteredFertilizer].self, from: assets[2].data)
+      //let registeredSeeds = try decoder.decode([RegisteredSeed].self, from: assets[0].data)
+      let registeredPhytos = try decoder.decode([RegisteredPhyto].self, from: assets[1].data)
+      let registeredFertilizers = try decoder.decode([RegisteredFertilizer].self, from: assets[2].data)
       //saveSeeds(registeredSeeds)
       savePhytos(registeredPhytos)
       saveFertilizers(registeredFertilizers)
