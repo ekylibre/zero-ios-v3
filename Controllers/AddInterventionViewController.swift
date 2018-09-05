@@ -566,6 +566,26 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.seedView.specieButton.setTitle(value, for: .normal)
   }
 
+  private func loadEquipments() -> [String] {
+    var equipmentType = [String]()
+
+    if let asset = NSDataAsset(name: "equipment_types") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredEquipments = jsonResult as? [[String: Any]]
+
+        for registeredEquipment in registeredEquipments! {
+          equipmentType.append(registeredEquipment["nature"] as! String)
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("equipment_types.json not found")
+    }
+    return equipmentType
+  }
+
   // MARK: - Search Bar Delegate
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

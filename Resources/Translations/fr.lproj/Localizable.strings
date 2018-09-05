@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Clic&Farm-iOS
+
+  Created by Jonathan DE HAAY on 05/09/2018.
+  Copyright © 2018 Ekylibre. All rights reserved.
+*/
+
+"no" = "Non";
+"yes" = "Oui";
+"are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %{element_to_delete} ?";
+"please_retry" = "Veuillez réessayer";
+"unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
