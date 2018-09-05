@@ -288,7 +288,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let name: String = input.value(forKey: key) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
-    isSearching = (searchText.isEmpty ? false : true)
+    isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
     tableViewTopAnchor.constant = isSearching ? 15 : 60
     tableView.reloadData()
