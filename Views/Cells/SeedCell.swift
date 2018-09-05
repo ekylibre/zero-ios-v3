@@ -39,14 +39,13 @@ class SeedCell: UITableViewCell {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "variety" : varietyLabel,
-      "specie" : specieLabel,
-      ] as [String : Any]
-
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[variety]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[specie]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[variety][specie]-10-|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      varietyLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      varietyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      specieLabel.topAnchor.constraint(equalTo: varietyLabel.bottomAnchor),
+      specieLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15)
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {
