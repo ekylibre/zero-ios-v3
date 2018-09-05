@@ -91,6 +91,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     selectEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+      self.view.layoutIfNeeded()
     })
   }
 
@@ -101,7 +102,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     if selectedEquipments.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
         self.collapseButton.isHidden = false
         self.selectedEquipmentsTableView.isHidden = false
         self.resizeViewAndTableView(
@@ -109,6 +109,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
           tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
           tableView: self.selectedEquipmentsTableView)
         self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        self.view.layoutIfNeeded()
       })
     }
     searchedEquipments = equipments
@@ -120,6 +121,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     createEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+      self.view.layoutIfNeeded()
     })
   }
 
