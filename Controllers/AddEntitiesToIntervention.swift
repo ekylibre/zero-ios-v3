@@ -58,7 +58,6 @@ extension AddInterventionViewController: DoerCellDelegate {
     if doers.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
         self.doersCollapsedButton.isHidden = false
         self.doersTableView.isHidden = false
         self.resizeViewAndTableView(
@@ -66,6 +65,7 @@ extension AddInterventionViewController: DoerCellDelegate {
           tableViewHeightConstraint: self.doersTableViewHeightConstraint,
           tableView: self.doersTableView)
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        self.view.layoutIfNeeded()
       })
     }
     searchedEntities = entities
