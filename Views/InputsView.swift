@@ -281,6 +281,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     isSearching = (searchText.isEmpty ? false : true)
     createButton.isHidden = isSearching
     tableView.reloadData()
+    tableView.layoutIfNeeded()
+    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
   }
 
   //MARK: - Core Data
