@@ -62,6 +62,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return tableView
   }()
 
+  var tableViewTopAnchor: NSLayoutConstraint!
+
   lazy var dimView: UIView = {
     let dimView = UIView(frame: CGRect.zero)
     dimView.backgroundColor = UIColor.black
@@ -122,33 +124,43 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "segmented" : segmentedControl,
-      "searchbar" : searchBar,
-      "button" : createButton,
-      "table" : tableView,
-      ] as [String : Any]
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[segmented]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[searchbar]-20-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[segmented]-15-[searchbar]-15-[button]-15-[table]|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      segmentedControl.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      segmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      segmentedControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
+      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
+      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      tableViewTopAnchor,
+      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
+      tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+      ])
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
+    bindFrameToSuperViewBounds(dimView, height: 0)
+    bindFrameToSuperViewBounds(seedView, height: 250)
+    bindFrameToSuperViewBounds(phytoView, height: 340)
+    bindFrameToSuperViewBounds(fertilizerView, height: 230)
+  }
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[seedview]|", options: [], metrics: nil, views: ["seedview" : seedView]))
-    NSLayoutConstraint(item: seedView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250).isActive = true
-    NSLayoutConstraint(item: seedView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+  private func bindFrameToSuperViewBounds(_ view: UIView, height: CGFloat) {
+    let customHeightAnchor: NSLayoutConstraint
+    if height > 0 {
+      customHeightAnchor = view.heightAnchor.constraint(equalToConstant: height)
+    } else {
+      customHeightAnchor = view.heightAnchor.constraint(equalTo: view.superview!.heightAnchor)
+    }
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[phytoview]|", options: [], metrics: nil, views: ["phytoview" : phytoView]))
-    NSLayoutConstraint(item: phytoView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 340).isActive = true
-    NSLayoutConstraint(item: phytoView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[fertilizerview]|", options: [], metrics: nil, views: ["fertilizerview" : fertilizerView]))
-    NSLayoutConstraint(item: fertilizerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 230).isActive = true
-    NSLayoutConstraint(item: fertilizerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+    NSLayoutConstraint.activate([
+      customHeightAnchor,
+      view.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      view.widthAnchor.constraint(equalTo: self.widthAnchor),
+      view.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      ])
   }
 
   private func setupActions() {
@@ -276,8 +288,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let name: String = input.value(forKey: key) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
-    isSearching = (searchText.isEmpty ? false : true)
+    isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
+    tableViewTopAnchor.constant = isSearching ? 15 : 60
     tableView.reloadData()
   }
 
