@@ -313,9 +313,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   private func registerPhytos() {
     if let asset = NSDataAsset(name: "phytosanitary-products") {
       do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredPhytos = jsonResult as? [[String: Any]]
-        savePhytos(registeredPhytos!)
+        let jsonResult = try JSONDecoder().decode([RegisteredPhyto].self, from: asset.data)
+        savePhytos(jsonResult)
       } catch {
         print("Lexicon error")
       }
@@ -324,7 +323,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func savePhytos(_ registeredPhytos: [[String: Any]]) {
+  private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -336,13 +335,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
 
       phyto.setValue(true, forKey: "registered")
-      phyto.setValue(registeredPhyto["id"], forKey: "phytoIDEky")
-      phyto.setValue(registeredPhyto["name"], forKey: "name")
-      phyto.setValue(registeredPhyto["nature"], forKey: "nature")
-      phyto.setValue(registeredPhyto["maaid"], forKey: "maaID")
-      phyto.setValue(registeredPhyto["mix_category_code"], forKey: "mixCategoryCode")
-      phyto.setValue(registeredPhyto["in_field_reentry_delay"], forKey: "reentryDelay")
-      phyto.setValue(registeredPhyto["firm_name"], forKey: "firmName")
+      phyto.setValue(registeredPhyto.id, forKey: "phytoIDEky")
+      phyto.setValue(registeredPhyto.name, forKey: "name")
+      phyto.setValue(registeredPhyto.nature, forKey: "nature")
+      phyto.setValue(registeredPhyto.maaid, forKey: "maaID")
+      phyto.setValue(registeredPhyto.mixCategoryCode, forKey: "mixCategoryCode")
+      phyto.setValue(registeredPhyto.inFieldReentryDelay, forKey: "reentryDelay")
+      phyto.setValue(registeredPhyto.firmName, forKey: "firmName")
 
       phyto.setValue("Phyto", forKey: "type")
       phyto.setValue("l/ha", forKey: "unit")
@@ -361,18 +360,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   private func registerFertilizers() {
     if let asset = NSDataAsset(name: "fertilizers") {
       do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredFertilizers = jsonResult as? [[String: Any]]
-        saveFertilizers(registeredFertilizers!)
-      } catch {
-        print("Lexicon error")
+        let jsonResult = try JSONDecoder().decode([RegisteredFertilizer].self, from: asset.data)
+        saveFertilizers(jsonResult)
+      } catch let jsonError {
+        print(jsonError)
       }
     } else {
       print("fertilizers.json not found")
     }
   }
 
-  private func saveFertilizers(_ registeredFertilizers: [[String: Any]]) {
+  private func saveFertilizers(_ registeredFertilizers: [RegisteredFertilizer]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -384,9 +382,16 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
       fertilizer.setValue(true, forKey: "registered")
-      fertilizer.setValue(registeredFertilizer["id"], forKey: "fertilizerIDEky")
-      fertilizer.setValue(registeredFertilizer["name"], forKey: "name")
-      fertilizer.setValue(registeredFertilizer["nature"], forKey: "nature")
+      fertilizer.setValue(registeredFertilizer.id, forKey: "fertilizerIDEky")
+      fertilizer.setValue(registeredFertilizer.name, forKey: "name")
+      fertilizer.setValue(registeredFertilizer.variant, forKey: "variant")
+      fertilizer.setValue(registeredFertilizer.variety, forKey: "variety")
+      fertilizer.setValue(registeredFertilizer.derivativeOf, forKey: "derivativeOf")
+      fertilizer.setValue(registeredFertilizer.nature, forKey: "nature")
+      fertilizer.setValue(registeredFertilizer.nitrogenConcentration, forKey: "nitrogenConcentration")
+      fertilizer.setValue(registeredFertilizer.phosphorusConcentration, forKey: "phosphorusConcentration")
+      fertilizer.setValue(registeredFertilizer.potassiumConcentration, forKey: "potassiumConcentration")
+      fertilizer.setValue(registeredFertilizer.sulfurTrioxydeConcentration, forKey: "sulfurTrioxydeConcentration")
 
       fertilizer.setValue("Fertilizer", forKey: "type")
       fertilizer.setValue("l/ha", forKey: "unit")
