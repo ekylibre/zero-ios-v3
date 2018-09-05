@@ -212,8 +212,14 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    let containsADot = textField.text?.contains(".")
+    var invalidCharacters: CharacterSet!
 
+    if containsADot! {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    } else {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    }
     return string.rangeOfCharacter(
       from: invalidCharacters,
       options: [],
