@@ -75,21 +75,20 @@ class PhytoCell: UITableViewCell {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "name": nameLabel,
-      "firmName": firmNameLabel,
-      "maa": maaLabel,
-      "maaID": maaIDLabel,
-      "reentry": reentryLabel,
-      "inFieldReentryDelay": inFieldReentryDelayLabel,
-      ] as [String: Any]
-
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[firmName]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[maa]-[maaID]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[reentry]-[inFieldReentryDelay]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[name][firmName]-[maa][reentry]-|", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[firmName]-[maaID][inFieldReentryDelay]", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firmNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+      firmNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      maaLabel.topAnchor.constraint(equalTo: firmNameLabel.bottomAnchor, constant: 15),
+      maaLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      maaIDLabel.topAnchor.constraint(equalTo: firmNameLabel.bottomAnchor, constant: 15),
+      maaIDLabel.leadingAnchor.constraint(equalTo: maaLabel.trailingAnchor, constant: 15),
+      reentryLabel.topAnchor.constraint(equalTo: maaLabel.bottomAnchor),
+      reentryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      inFieldReentryDelayLabel.topAnchor.constraint(equalTo: maaIDLabel.bottomAnchor),
+      inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15)
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {

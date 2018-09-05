@@ -97,23 +97,22 @@ class CreateSeedView: UIView, UITextFieldDelegate {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "title" : titleLabel,
-      "specie" : specieLabel,
-      "button" : specieButton,
-      "variety" : varietyTextField,
-      "cancel" : cancelButton,
-      "create" : createButton,
-      ] as [String : Any]
-
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[specie]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]-60-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[variety]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-15-[create]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-15-[specie][button]-50-[variety]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      specieLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      specieButton.topAnchor.constraint(equalTo: specieLabel.bottomAnchor),
+      specieButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      specieButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 60),
+      varietyTextField.topAnchor.constraint(equalTo: specieButton.bottomAnchor, constant: 50),
+      varietyTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      varietyTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
+      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      ])
   }
 
   private func setupActions() {
