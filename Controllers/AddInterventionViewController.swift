@@ -21,6 +21,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
+  @IBOutlet weak var irrigationLabel: UILabel!
+  @IBOutlet weak var irrigationValueTextField: UITextField!
+  @IBOutlet weak var irrigationUnitButton: UIButton!
+  @IBOutlet weak var irrigationInfoLabel: UILabel!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
