@@ -65,3 +65,9 @@
 "water_spreader" = "Water spreader";
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
+
+// Weather
+
+"weater" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";

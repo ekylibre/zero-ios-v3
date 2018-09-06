@@ -12,6 +12,7 @@
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		04139CB021411D6F0067DEA9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04139CAF21411D6F0067DEA9 /* StringExtension.swift */; };
+		04139CB2214154B80067DEA9 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04139CB1214154B80067DEA9 /* WeatherView.swift */; };
 		0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
@@ -69,6 +70,7 @@
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04139CAF21411D6F0067DEA9 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		04139CB1214154B80067DEA9 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
+				04139CB1214154B80067DEA9 /* WeatherView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */,
 				6B11EEDE2139635400E2DEC4 /* SeedCell.swift in Sources */,
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
+				04139CB2214154B80067DEA9 /* WeatherView.swift in Sources */,
 				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */,
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,

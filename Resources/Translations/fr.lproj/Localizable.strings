@@ -65,3 +65,9 @@
 "water_spreader" = "Enrouleur";
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
+
+// Weather
+
+"weater" = "Météo";
+"temperature" = "Température";
+"wind_speed" = "Vitesse du vent";
