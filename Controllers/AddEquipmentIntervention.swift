@@ -13,47 +13,53 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
   // MARK: - Initialization
 
+  func localizedString(string: String) -> String {
+    return NSLocalizedString(string, comment: "")
+  }
+
   func defineEquipmentTypes() {
     equipmentTypes = [
-      "Andaineur",
-      "Arracheuse",
-      "Bineuse",
-      "Broyeur",
-      "Butteuse",
-      "Castreuse",
-      "Charrue",
-      "Déchaumeur",
-      "Déchaumeur à disques",
-      "Décompacteur",
-      "Désherbeur",
-      "Désherbineuse",
-      "Écimeuse",
-      "Effaneuse",
-      "Enrubanneuse",
-      "Ensileuse",
-      "Épandeur à engrais",
-      "Épandeur à fumier",
-      "Faneuse",
-      "Faucheuse",
-      "Faucheuse conditioneuse",
-      "Herse",
-      "Houe rotative",
-      "Moissonneuse-batteuse",
-      "Outil de préparation du lit de semences",
-      "Planteuse",
-      "Plateau",
-      "Presse balle cubique",
-      "Presse balle ronde",
-      "Presse enrubanneuse",
-      "Pulvérisateur",
-      "Remorque",
-      "Rouleau",
-      "Semoir",
-      "Semoir monograines",
-      "Sous soleuse",
-      "Tonne à lisier",
-      "Tracteur",
-      "Vibroculteur"
+      String().localized(string: "air_planter"),
+      String().localized(string: "baler_wrapper"),
+      String().localized(string: "corn_topper"),
+      String().localized(string: "cubic_baler"),
+      String().localized(string: "disc_harrow"),
+      String().localized(string: "forager"),
+      String().localized(string: "forage_platform"),
+      String().localized(string: "grinder"),
+      String().localized(string: "harrow"),
+      String().localized(string: "harvester"),
+      String().localized(string: "hay_rake"),
+      String().localized(string: "hiller"),
+      String().localized(string: "hoe"),
+      String().localized(string: "hoe_weeder"),
+      String().localized(string: "implanter"),
+      String().localized(string: "irrigation_pivot"),
+      String().localized(string: "liquid_manure_spreader"),
+      String().localized(string: "mower"),
+      String().localized(string: "mower_conditioner"),
+      String().localized(string: "plow"),
+      String().localized(string: "reaper"),
+      String().localized(string: "roll"),
+      String().localized(string: "rotary_hoe"),
+      String().localized(string: "round_baler"),
+      String().localized(string: "seedbed_preparator"),
+      String().localized(string: "soil_loosener"),
+      String().localized(string: "sower"),
+      String().localized(string: "sprayer"),
+      String().localized(string: "spreader"),
+      String().localized(string: "spreader_trailer"),
+      String().localized(string: "subsoil_plow"),
+      String().localized(string: "superficial_plow"),
+      String().localized(string: "tedder"),
+      String().localized(string: "topper"),
+      String().localized(string: "tractor"),
+      String().localized(string: "trailer"),
+      String().localized(string: "trimmer"),
+      String().localized(string: "vibrocultivator"),
+      String().localized(string: "water_spreader"),
+      String().localized(string: "weeder"),
+      String().localized(string: "wrapper")
     ]
   }
 
@@ -198,84 +204,88 @@ extension AddInterventionViewController {
 
   func defineEquipmentImage(equipmentName: String) -> UIImage? {
     switch equipmentName {
-    case "Andaineur":
-      return #imageLiteral(resourceName: "hay-rake")
-    case "Arracheuse":
-      return #imageLiteral(resourceName: "harvester")
-    case "Bineuse":
-      return #imageLiteral(resourceName: "hoe")
-    case "Broyeur":
-      return #imageLiteral(resourceName: "grinder")
-    case "Butteuse":
-      return #imageLiteral(resourceName: "hiller")
-    case "Castreuse":
-      return #imageLiteral(resourceName: "corn-topper")
-    case "Charrue":
-      return #imageLiteral(resourceName: "plow")
-    case "Déchaumeur":
-      return #imageLiteral(resourceName: "superficial-plow")
-    case "Déchaumeur à disques":
-      return #imageLiteral(resourceName: "disc-harrow")
-    case "Décompacteur":
-      return #imageLiteral(resourceName: "soil-loosener")
-    case "Désherbeur":
-      return #imageLiteral(resourceName: "weeder")
-    case "Désherbineuse":
-      return #imageLiteral(resourceName: "hoe_weeder")
-    case "Écimeuse":
-      return #imageLiteral(resourceName: "trimmer")
-    case "Effaneuse":
-      return #imageLiteral(resourceName: "topper")
-    case "Enrubanneuse":
-      return #imageLiteral(resourceName: "wrapper")
-    case "Ensileuse":
-      return #imageLiteral(resourceName: "forager")
-    case "Épandeur à engrais":
-      return #imageLiteral(resourceName: "spreader")
-    case "Épandeur à fumier":
-      return #imageLiteral(resourceName: "liquid-manure-spreader")
-    case "Faneuse":
-      return #imageLiteral(resourceName: "tedder")
-    case "Faucheuse":
-      return #imageLiteral(resourceName: "mower")
-    case "Faucheuse conditioneuse":
-      return #imageLiteral(resourceName: "mower-conditioner")
-    case "Herse":
-      return #imageLiteral(resourceName: "harrow")
-    case "Houe rotative":
-      return #imageLiteral(resourceName: "rotary-hoe")
-    case "Moissonneuse-batteuse":
-      return #imageLiteral(resourceName: "reaper")
-    case "Outil de préparation du lit de semences":
-      return #imageLiteral(resourceName: "seedbed-preparator")
-    case "Planteuse":
-      return #imageLiteral(resourceName: "implanter")
-    case "Plateau":
-      return #imageLiteral(resourceName: "forage-platform")
-    case "Presse balle cubique":
-      return #imageLiteral(resourceName: "cubic-baler")
-    case "Presse balle ronde":
-      return #imageLiteral(resourceName: "round-baler")
-    case "Presse enrubanneuse":
-      return #imageLiteral(resourceName: "baler-wrapper")
-    case "Pulvérisateur":
-      return #imageLiteral(resourceName: "sprayer")
-    case "Remorque":
-      return #imageLiteral(resourceName: "trailer")
-    case "Rouleau":
-      return #imageLiteral(resourceName: "roll")
-    case "Semoir":
-      return #imageLiteral(resourceName: "sower")
-    case "Semoir monograines":
+    case equipmentTypes[0]:
       return #imageLiteral(resourceName: "airplanter")
-    case "Sous soleuse":
-      return #imageLiteral(resourceName: "subsoil-plow")
-    case "Tonne à lisier":
+    case equipmentTypes[1]:
+      return #imageLiteral(resourceName: "baler-wrapper")
+    case equipmentTypes[2]:
+      return #imageLiteral(resourceName: "corn-topper")
+    case equipmentTypes[3]:
+      return #imageLiteral(resourceName: "cubic-baler")
+    case equipmentTypes[4]:
+      return #imageLiteral(resourceName: "disc-harrow")
+    case equipmentTypes[5]:
+      return #imageLiteral(resourceName: "forager")
+    case equipmentTypes[6]:
+      return #imageLiteral(resourceName: "forage-platform")
+    case equipmentTypes[7]:
+      return #imageLiteral(resourceName: "grinder")
+    case equipmentTypes[8]:
+      return #imageLiteral(resourceName: "harrow")
+    case equipmentTypes[9]:
+      return #imageLiteral(resourceName: "harvester")
+    case equipmentTypes[10]:
+      return #imageLiteral(resourceName: "hay-rake")
+    case equipmentTypes[11]:
+      return #imageLiteral(resourceName: "hiller")
+    case equipmentTypes[12]:
+      return #imageLiteral(resourceName: "hoe")
+    case equipmentTypes[13]:
+      return #imageLiteral(resourceName: "hoe_weeder")
+    case equipmentTypes[14]:
+      return #imageLiteral(resourceName: "implanter")
+    case equipmentTypes[15]:
       return #imageLiteral(resourceName: "irrigation-pivot")
-    case "Tracteur":
+    case equipmentTypes[16]:
+      return #imageLiteral(resourceName: "liquid-manure-spreader")
+    case equipmentTypes[17]:
+      return #imageLiteral(resourceName: "mower")
+    case equipmentTypes[18]:
+      return #imageLiteral(resourceName: "mower-conditioner")
+    case equipmentTypes[19]:
+      return #imageLiteral(resourceName: "plow")
+    case equipmentTypes[20]:
+      return #imageLiteral(resourceName: "reaper")
+    case equipmentTypes[21]:
+      return #imageLiteral(resourceName: "roll")
+    case equipmentTypes[22]:
+      return #imageLiteral(resourceName: "rotary-hoe")
+    case equipmentTypes[23]:
+      return #imageLiteral(resourceName: "round-baler")
+    case equipmentTypes[24]:
+      return #imageLiteral(resourceName: "seedbed-preparator")
+    case equipmentTypes[25]:
+      return #imageLiteral(resourceName: "soil-loosener")
+    case equipmentTypes[26]:
+      return #imageLiteral(resourceName: "sower")
+    case equipmentTypes[27]:
+      return #imageLiteral(resourceName: "sprayer")
+    case equipmentTypes[28]:
+      return #imageLiteral(resourceName: "spreader")
+    case equipmentTypes[29]:
+      return #imageLiteral(resourceName: "spreader-trailer")
+    case equipmentTypes[30]:
+      return #imageLiteral(resourceName: "subsoil-plow")
+    case equipmentTypes[31]:
+      return #imageLiteral(resourceName: "superficial-plow")
+    case equipmentTypes[32]:
+      return #imageLiteral(resourceName: "tedder")
+    case equipmentTypes[33]:
+      return #imageLiteral(resourceName: "topper")
+    case equipmentTypes[34]:
       return #imageLiteral(resourceName: "tractor")
-    case "Vibroculteur":
+    case equipmentTypes[35]:
+      return #imageLiteral(resourceName: "trailer")
+    case equipmentTypes[36]:
+      return #imageLiteral(resourceName: "trimmer")
+    case equipmentTypes[37]:
       return #imageLiteral(resourceName: "vibrocultivator")
+    case equipmentTypes[38]:
+      return #imageLiteral(resourceName: "water-spreader")
+    case equipmentTypes[39]:
+      return #imageLiteral(resourceName: "weeder")
+    case equipmentTypes[40]:
+      return #imageLiteral(resourceName: "wrapper")
     default:
       return nil
     }

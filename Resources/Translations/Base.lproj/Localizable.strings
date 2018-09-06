@@ -46,14 +46,14 @@
 "plow" = "Plow";
 "reaper" = "Reaper";
 "roll" = "Roll";
-"round_baler" = "Round baler";
 "rotary_hoe" = "Rotary hoe";
+"round_baler" = "Round baler";
 "seedbed_preparator" = "Seedbed preparator";
 "soil_loosener" = "Soil loosener";
 "sower" = "Sower";
+"sprayer" = "Sprayer";
 "spreader" = "Spreader";
 "spreader_trailer" = "Spreader trailer";
-"sprayer" = "Sprayer";
 "subsoil_plow" = "Subsoil plow";
 "superficial_plow" = "Superficial plow";
 "tedder" = "Tedder";
