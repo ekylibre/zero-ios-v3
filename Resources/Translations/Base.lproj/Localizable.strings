@@ -12,6 +12,16 @@
 "please_retry" = "Please try again";
 "unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
 
+// Procedures
+
+"irrigation" = "Irrigation";
+"ground_work" = "Ground work";
+"implantation" = "Implantation";
+"fertilization" = "Fertilization";
+"harvest" = "Harvest";
+"care" = "Care";
+"crop_protection" = "Crop protection";
+
 // Equipment types
 
 "air_planter" = "Air planter";
@@ -28,6 +38,30 @@
 "hiller" = "Hiller";
 "hoe" = "Hoe";
 "hoe_weeder" = "Hoe weeder";
+"implanter" = "Implanter";
 "irrigation_pivot" = "Irrigation pivot";
+"liquid_manure_spreader" = "Liquid manure spreader";
+"mower" = "Mower";
+"mower_conditioner" = "Mower conditioner";
+"plow" = "Plow";
+"reaper" = "Reaper";
+"roll" = "Roll";
+"round_baler" = "Round baler";
+"rotary_hoe" = "Rotary hoe";
+"seedbed_preparator" = "Seedbed preparator";
+"soil_loosener" = "Soil loosener";
+"sower" = "Sower";
+"spreader" = "Spreader";
+"spreader_trailer" = "Spreader trailer";
+"sprayer" = "Sprayer";
+"subsoil_plow" = "Subsoil plow";
+"superficial_plow" = "Superficial plow";
+"tedder" = "Tedder";
+"topper" = "Topper";
 "tractor" = "Tractor";
-
+"trailer" = "Trailer";
+"trimmer" = "Trimmer";
+"vibrocultivator" = "Vibrocultivator";
+"water_spreader" = "Water spreader";
+"weeder" = "Weeder";
+"wrapper" = "Wrapper";

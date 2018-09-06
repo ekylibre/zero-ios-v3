@@ -11,3 +11,57 @@
 "are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %{element_to_delete} ?";
 "please_retry" = "Veuillez réessayer";
 "unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+
+// Procedures
+
+"irrigation" = "Irrigation";
+"ground_work" = "Travail du sol";
+"implantation" = "Semis";
+"fertilization" = "Fertilisation";
+"harvest" = "Récolte";
+"care" = "Entretien";
+"crop_protection" = "Pulvérisation";
+
+// Equipment types
+
+"air_planter" = "Semoir monograines";
+"baler_wrapper" = "Presse enrubanneuse";
+"corn_topper" = "Castreuse";
+"cubic_baler" = "Presse balle cubic";
+"disc_harrow" = "Déchaumeur à disque";
+"forager" = "Ensileuse";
+"forage_platform" = "Plateau";
+"grinder" = "Broyeur";
+"harrow" = "Herse";
+"harvester" = "Arracheuse";
+"hay_rake" = "Andaineur";
+"hiller" = "Butteuse";
+"hoe" = "Bineuse";
+"hoe_weeder" = "Désherbineuse";
+"implanter" = "Planteuse";
+"irrigation_pivot" = "Pivot";
+"liquid_manure_spreader" = "Tonne à lisier";
+"mower" = "Faucheuse";
+"mower_conditioner" = "Faucheuse conditionneuse";
+"plow" = "Charrue";
+"reaper" = "Moissonneuse-batteuse";
+"roll" = "Rouleau";
+"round_baler" = "Presse balle ronde";
+"rotary_hoe" = "Houe rotative";
+"seedbed_preparator" = "Outil de préparation du lit de semences";
+"soil_loosener" = "Décompacteur";
+"sower" = "Semoir";
+"spreader" = "Épandeur à engrais";
+"spreader_trailer" = "Épandeur à fumier";
+"sprayer" = "Pulvérisateur";
+"subsoil_plow" = "Sous soleuse";
+"superficial_plow" = "Déchaumeur";
+"tedder" = "Faneuse";
+"topper" = "Effaneuse";
+"tractor" = "Tracteur";
+"trailer" = "Remorque";
+"trimmer" = "Écimeuse";
+"vibrocultivator" = "Vibrocultivator";
+"water_spreader" = "Enrouleur";
+"weeder" = "Désherbeur";
+"wrapper" = "Enrubanneuse";
