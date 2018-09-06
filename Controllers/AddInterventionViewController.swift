@@ -59,6 +59,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsNumber: UILabel!
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
 
@@ -204,6 +205,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+
+    setupViewsAccordingInterventionType()
+  }
+
+  private func setupViewsAccordingInterventionType() {
+    switch  interventionType {
+    case Intervention.InterventionType.CropProtection.rawValue:
+      inputsView.segmentedControl.selectedSegmentIndex = 1
+      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
+    case Intervention.InterventionType.Fertilization.rawValue:
+      inputsView.segmentedControl.selectedSegmentIndex = 2
+      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
+    case Intervention.InterventionType.GroundWork.rawValue:
+      inputsSelectionView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case Intervention.InterventionType.Harvest.rawValue:
+      inputsSelectionView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    default:
+      return
+    }
   }
 
   override func viewDidLayoutSubviews() {
