@@ -61,6 +61,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var weatherSection: UIView!
+  @IBOutlet weak var weatherSectionHeightConstraint: NSLayoutConstraint!
 
   // MARK: - Properties
 
@@ -87,6 +89,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
+  var weatherView: WeatherView!
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -204,6 +207,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+
+    weatherView = WeatherView(frame: weatherSection.frame)
+    weatherView.addInterventionViewController = self
+    weatherSection.addSubview(weatherView)
   }
 
   override func viewDidLayoutSubviews() {

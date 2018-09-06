@@ -241,7 +241,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="499"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="573"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="903"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-fY-myQ" userLabel="Plots View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
@@ -732,7 +732,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-HU-750" userLabel="Weather View">
-                                                <rect key="frame" x="0.0" y="352.5" width="375" height="70"/>
+                                                <rect key="frame" x="0.0" y="352.5" width="375" height="400"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Météo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJi-KE-5Mc">
                                                         <rect key="frame" x="20" y="25" width="52" height="20.5"/>
@@ -749,7 +749,7 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="70" id="0Lj-Kl-0gA"/>
+                                                    <constraint firstAttribute="height" constant="400" id="0Lj-Kl-0gA"/>
                                                     <constraint firstItem="wJi-KE-5Mc" firstAttribute="leading" secondItem="3GM-HU-750" secondAttribute="leading" constant="20" id="UEY-bN-Qlw"/>
                                                     <constraint firstItem="UXL-bz-O2x" firstAttribute="leading" secondItem="wJi-KE-5Mc" secondAttribute="trailing" constant="15" id="Wbu-Vf-K2v"/>
                                                     <constraint firstItem="UXL-bz-O2x" firstAttribute="top" secondItem="3GM-HU-750" secondAttribute="top" constant="25" id="nBA-di-JqI"/>
@@ -757,14 +757,14 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4uv-L3-5Pb" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="422.5" width="375" height="0.5"/>
+                                                <rect key="frame" x="0.0" y="752.5" width="375" height="0.5"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="mlL-LO-VxU"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prM-9G-bHc" userLabel="Notes View">
-                                                <rect key="frame" x="0.0" y="423" width="375" height="150"/>
+                                                <rect key="frame" x="0.0" y="753" width="375" height="150"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Notes" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uGn-VV-4Ti">
                                                         <rect key="frame" x="20" y="30" width="335" height="18"/>
@@ -1450,6 +1450,8 @@
                         <outlet property="selectedInputsTableViewHeightConstraint" destination="Bbt-1y-Pg7" id="HoL-WX-Zuz"/>
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
+                        <outlet property="weatherSection" destination="3GM-HU-750" id="Hfp-lR-vcH"/>
+                        <outlet property="weatherSectionHeightConstraint" destination="0Lj-Kl-0gA" id="Zos-Xd-kEb"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecieList" id="uas-Qa-jvK"/>
                     </connections>
