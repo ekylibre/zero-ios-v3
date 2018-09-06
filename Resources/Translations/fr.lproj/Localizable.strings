@@ -29,8 +29,8 @@
 "corn-topper" = "Castreuse";
 "cubic_baler" = "Presse balle cubique";
 "disc_harrow" = "Déchaumeur à disque";
-"forager" = "Ensileuse";
 "forage_platform" = "Plateau";
+"forager" = "Ensileuse";
 "grinder" = "Broyeur";
 "harrow" = "Herse";
 "harvester" = "Arracheuse";
