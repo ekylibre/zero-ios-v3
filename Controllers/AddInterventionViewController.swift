@@ -21,6 +21,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
   @IBOutlet weak var irrigationLabel: UILabel!
   @IBOutlet weak var irrigationValueTextField: UITextField!
@@ -703,12 +704,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
     }
     collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
-    /*dimView.isHidden = false
-     workingPeriodView.isHidden = false
-
-     UIView.animate(withDuration: 0.5, animations: {
-     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-     })*/
   }
 
   func getSelectedWorkingPeriod() -> String {
