@@ -1529,8 +1529,10 @@
                         <outlet property="irrigationHeightConstraint" destination="HQz-9h-D9H" id="8BB-hv-NcG"/>
                         <outlet property="irrigationInfoLabel" destination="gTq-na-vs2" id="RZG-49-hJU"/>
                         <outlet property="irrigationLabel" destination="sKN-nM-sDX" id="HVG-sh-vQj"/>
+                        <outlet property="irrigationSeparatorView" destination="4v2-z4-ZDK" id="KFC-Cy-BS7"/>
                         <outlet property="irrigationUnitButton" destination="28Q-Cd-Lyq" id="ePr-r8-wKk"/>
                         <outlet property="irrigationValueTextField" destination="YLy-wG-9j5" id="YB0-c0-RSM"/>
+                        <outlet property="irrigationView" destination="dFL-Ez-GIj" id="ZYv-Z5-sbA"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="searchEntity" destination="DKn-en-9g6" id="CHn-ZG-lJK"/>

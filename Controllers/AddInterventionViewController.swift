@@ -21,12 +21,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
   @IBOutlet weak var irrigationLabel: UILabel!
   @IBOutlet weak var irrigationValueTextField: UITextField!
   @IBOutlet weak var irrigationUnitButton: UIButton!
   @IBOutlet weak var irrigationInfoLabel: UILabel!
+  @IBOutlet weak var irrigationSeparatorView: UIView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
@@ -217,20 +219,38 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupViewsAccordingInterventionType()
   }
 
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+
   private func setupViewsAccordingInterventionType() {
     switch  interventionType {
+    case Intervention.InterventionType.Care.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
     case Intervention.InterventionType.CropProtection.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
     case Intervention.InterventionType.Fertilization.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
     case Intervention.InterventionType.GroundWork.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
     case Intervention.InterventionType.Harvest.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
+    case Intervention.InterventionType.Implantation.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
     default:
       return
     }
