@@ -24,10 +24,10 @@
 
 // Equipment types
 
-"air_planter" = "Semoir monograines";
+"airplanter" = "Semoir monograines";
 "baler_wrapper" = "Presse enrubanneuse";
-"corn_topper" = "Castreuse";
-"cubic_baler" = "Presse balle cubic";
+"corn-topper" = "Castreuse";
+"cubic_baler" = "Presse balle cubique";
 "disc_harrow" = "Déchaumeur à disque";
 "forager" = "Ensileuse";
 "forage_platform" = "Plateau";
@@ -57,7 +57,7 @@
 "subsoil_plow" = "Sous soleuse";
 "superficial_plow" = "Déchaumeur";
 "tedder" = "Faneuse";
-"topper" = "Effaneuse";
+"topper" = "Effaneuse";
 "tractor" = "Tracteur";
 "trailer" = "Remorque";
 "trimmer" = "Écimeuse";

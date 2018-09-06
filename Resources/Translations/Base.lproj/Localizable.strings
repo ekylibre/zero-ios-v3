@@ -24,13 +24,13 @@
 
 // Equipment types
 
-"air_planter" = "Air planter";
+"airplanter" = "Air planter";
 "baler_wrapper" = "Baler wrapper";
-"corn_topper" = "Corn topper";
+"corn-topper" = "Corn topper";
 "cubic_baler" = "Cubic baler";
 "disc_harrow" = "Disc arrow";
-"forager" = "Forager";
 "forage_platform" = "Forage platform";
+"forager" = "Forager";
 "grinder" = "Grinder";
 "harrow" = "Harrow";
 "harvester" = "Harvester";
