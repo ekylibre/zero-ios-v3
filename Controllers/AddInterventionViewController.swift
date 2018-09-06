@@ -75,6 +75,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedEquipments = [NSManagedObject]()
   var searchedEquipments = [NSManagedObject]()
   var equipmentTypes: [String]!
+  var sortedEquipmentTypes: [String]!
   var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
   var entitiesTableViewTopAnchor: NSLayoutConstraint!
@@ -135,11 +136,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
-    defineEquipmentTypes()
+    equipmentTypes = defineEquipmentTypes()
+    sortedEquipmentTypes = equipmentTypes.sorted()
+    selectedEquipmentType = sortedEquipmentTypes[0]
+    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+
     fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
     fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
-    selectedEquipmentType = equipmentTypes[0]
-    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+
     initUnitMeasurePickerView()
 
     selectedEquipmentsTableView.layer.borderWidth  = 0.5
@@ -316,7 +320,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
 
-      equipmentType = equipmentTypes[indexPath.row]
+      equipmentType = sortedEquipmentTypes[indexPath.row]
       cell.nameLabel.text = equipmentType
       return cell
     case entitiesTableView:
@@ -365,7 +369,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       closeEquipmentsSelectionView()
     case equipmentTypeTableView:
-      selectedEquipmentType = equipmentTypes[indexPath.row]
+      selectedEquipmentType = sortedEquipmentTypes[indexPath.row]
       equipmentTypeTableView.reloadData()
       equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
       equipmentTypeTableView.isHidden = true

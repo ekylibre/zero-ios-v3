@@ -11,58 +11,6 @@ import CoreData
 
 extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
-  // MARK: - Initialization
-
-  func localizedString(string: String) -> String {
-    return NSLocalizedString(string, comment: "")
-  }
-
-  func defineEquipmentTypes() {
-    equipmentTypes = [
-      String().localized(string: "air_planter"),
-      String().localized(string: "baler_wrapper"),
-      String().localized(string: "corn_topper"),
-      String().localized(string: "cubic_baler"),
-      String().localized(string: "disc_harrow"),
-      String().localized(string: "forager"),
-      String().localized(string: "forage_platform"),
-      String().localized(string: "grinder"),
-      String().localized(string: "harrow"),
-      String().localized(string: "harvester"),
-      String().localized(string: "hay_rake"),
-      String().localized(string: "hiller"),
-      String().localized(string: "hoe"),
-      String().localized(string: "hoe_weeder"),
-      String().localized(string: "implanter"),
-      String().localized(string: "irrigation_pivot"),
-      String().localized(string: "liquid_manure_spreader"),
-      String().localized(string: "mower"),
-      String().localized(string: "mower_conditioner"),
-      String().localized(string: "plow"),
-      String().localized(string: "reaper"),
-      String().localized(string: "roll"),
-      String().localized(string: "rotary_hoe"),
-      String().localized(string: "round_baler"),
-      String().localized(string: "seedbed_preparator"),
-      String().localized(string: "soil_loosener"),
-      String().localized(string: "sower"),
-      String().localized(string: "sprayer"),
-      String().localized(string: "spreader"),
-      String().localized(string: "spreader_trailer"),
-      String().localized(string: "subsoil_plow"),
-      String().localized(string: "superficial_plow"),
-      String().localized(string: "tedder"),
-      String().localized(string: "topper"),
-      String().localized(string: "tractor"),
-      String().localized(string: "trailer"),
-      String().localized(string: "trimmer"),
-      String().localized(string: "vibrocultivator"),
-      String().localized(string: "water_spreader"),
-      String().localized(string: "weeder"),
-      String().localized(string: "wrapper")
-    ]
-  }
-
   // MARK: - Actions
 
   @IBAction func collapseEquipmentView(_ send: Any) {
@@ -196,11 +144,58 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     }))
     self.present(alert, animated: true)
   }
-}
-
-extension AddInterventionViewController {
 
   // MARK: - Initialization
+
+  func defineEquipmentTypes() -> [String] {
+    var types = [String]()
+
+    types = [
+      String().localized(string: "air_planter"),
+      String().localized(string: "baler_wrapper"),
+      String().localized(string: "corn_topper"),
+      String().localized(string: "cubic_baler"),
+      String().localized(string: "disc_harrow"),
+      String().localized(string: "forager"),
+      String().localized(string: "forage_platform"),
+      String().localized(string: "grinder"),
+      String().localized(string: "harrow"),
+      String().localized(string: "harvester"),
+      String().localized(string: "hay_rake"),
+      String().localized(string: "hiller"),
+      String().localized(string: "hoe"),
+      String().localized(string: "hoe_weeder"),
+      String().localized(string: "implanter"),
+      String().localized(string: "irrigation_pivot"),
+      String().localized(string: "liquid_manure_spreader"),
+      String().localized(string: "mower"),
+      String().localized(string: "mower_conditioner"),
+      String().localized(string: "plow"),
+      String().localized(string: "reaper"),
+      String().localized(string: "roll"),
+      String().localized(string: "rotary_hoe"),
+      String().localized(string: "round_baler"),
+      String().localized(string: "seedbed_preparator"),
+      String().localized(string: "soil_loosener"),
+      String().localized(string: "sower"),
+      String().localized(string: "sprayer"),
+      String().localized(string: "spreader"),
+      String().localized(string: "spreader_trailer"),
+      String().localized(string: "subsoil_plow"),
+      String().localized(string: "superficial_plow"),
+      String().localized(string: "tedder"),
+      String().localized(string: "topper"),
+      String().localized(string: "tractor"),
+      String().localized(string: "trailer"),
+      String().localized(string: "trimmer"),
+      String().localized(string: "vibrocultivator"),
+      String().localized(string: "water_spreader"),
+      String().localized(string: "weeder"),
+      String().localized(string: "wrapper")
+    ]
+
+    return types
+  }
 
   func defineEquipmentImage(equipmentName: String) -> UIImage? {
     switch equipmentName {
