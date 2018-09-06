@@ -212,6 +212,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
+    irrigationValueTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+
     setupViewsAccordingInterventionType()
   }
 

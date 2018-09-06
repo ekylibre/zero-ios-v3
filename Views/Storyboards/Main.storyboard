@@ -423,9 +423,8 @@
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Le volume ne peut être nul" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTq-na-vs2">
-                                                        <rect key="frame" x="79" y="102" width="182" height="18"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Le volume ne peut être nul" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTq-na-vs2">
+                                                        <rect key="frame" x="79" y="102" width="276" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -435,11 +434,14 @@
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstItem="YLy-wG-9j5" firstAttribute="centerY" secondItem="VEZ-KQ-zI8" secondAttribute="centerY" id="4Il-13-eY6"/>
+                                                    <constraint firstAttribute="trailing" secondItem="gTq-na-vs2" secondAttribute="trailing" constant="20" id="6OH-fR-M3a"/>
                                                     <constraint firstItem="sKN-nM-sDX" firstAttribute="top" secondItem="dFL-Ez-GIj" secondAttribute="top" constant="26.5" id="H71-ij-0HM"/>
                                                     <constraint firstAttribute="height" constant="140" id="HQz-9h-D9H"/>
                                                     <constraint firstItem="C4J-0E-41M" firstAttribute="top" secondItem="dFL-Ez-GIj" secondAttribute="top" constant="25" id="PfF-0A-vKq"/>
                                                     <constraint firstItem="VEZ-KQ-zI8" firstAttribute="leading" secondItem="dFL-Ez-GIj" secondAttribute="leading" constant="20" id="TNh-P1-ON6"/>
+                                                    <constraint firstItem="gTq-na-vs2" firstAttribute="top" secondItem="dFL-Ez-GIj" secondAttribute="top" constant="102" id="Y5A-Zy-gjk"/>
                                                     <constraint firstItem="28Q-Cd-Lyq" firstAttribute="leading" secondItem="YLy-wG-9j5" secondAttribute="trailing" id="aBx-e5-4a2"/>
+                                                    <constraint firstItem="gTq-na-vs2" firstAttribute="leading" secondItem="dFL-Ez-GIj" secondAttribute="leading" constant="79" id="bp0-Vh-14s"/>
                                                     <constraint firstItem="VEZ-KQ-zI8" firstAttribute="top" secondItem="C4J-0E-41M" secondAttribute="bottom" constant="25" id="e5j-fg-jSg"/>
                                                     <constraint firstItem="sKN-nM-sDX" firstAttribute="leading" secondItem="C4J-0E-41M" secondAttribute="trailing" constant="15" id="eF3-Qs-j5O"/>
                                                     <constraint firstItem="lZ2-DO-10N" firstAttribute="top" secondItem="dFL-Ez-GIj" secondAttribute="top" constant="27" id="fMY-44-NVj"/>
