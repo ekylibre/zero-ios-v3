@@ -471,7 +471,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     workingPeriod.setValue(newIntervention, forKey: "interventions")
     let datePicker = selectDateView.subviews.first as! UIDatePicker
     workingPeriod.setValue(datePicker.date, forKey: "executionDate")
-    let hourDuration = Int(durationTextField.text!)
+    let hourDuration = Float(durationTextField.text!)
     workingPeriod.setValue(hourDuration, forKey: "hourDuration")
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
