@@ -142,27 +142,28 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "title" : titleLabel,
-      "name" : nameTextField,
-      "firm" : firmNameTextField,
-      "maa" : maaTextField,
-      "reentry" : reentryDelayTextField,
-      "unit" : unitLabel,
-      "cancel" : cancelButton,
-      "create" : createButton,
-      ] as [String : Any]
-
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[title]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[name]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[firm]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[maa]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[reentry]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[unit]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-15-[create]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[title]-30-[name]-35-[firm]-35-[maa]-35-[reentry]-5-[unit]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancel]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[create]-15-|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firmNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
+      firmNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firmNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      maaTextField.topAnchor.constraint(equalTo: firmNameTextField.bottomAnchor, constant: 35),
+      maaTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      maaTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      reentryDelayTextField.topAnchor.constraint(equalTo: maaTextField.bottomAnchor, constant: 35),
+      reentryDelayTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      reentryDelayTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      unitLabel.topAnchor.constraint(equalTo: reentryDelayTextField.bottomAnchor, constant: 5),
+      unitLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
+      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      ])
   }
 
   private func setupActions() {

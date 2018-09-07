@@ -40,5 +40,6 @@ Carthage/Build
 # .plist files
 oauthInfo.plist
 
-# Lexicon
-Resources/Assets.xcassets/lexicon/*
+# Assets
+Resources/Assets.xcassets/lexicon/
+
