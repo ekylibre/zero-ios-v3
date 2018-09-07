@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  Clic&Farm-iOS
+
+  Created by Jonathan DE HAAY on 05/09/2018.
+  Copyright © 2018 Ekylibre. All rights reserved.
+*/
+
+"no" = "No";
+"yes" = "Yes";
+"are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %{element_to_delete} ?";
+"please_retry" = "Please try again";
+"unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
+
+// Procedures
+
+"irrigation" = "Irrigation";
+"ground_work" = "Ground work";
+"implantation" = "Implantation";
+"fertilization" = "Fertilization";
+"harvest" = "Harvest";
+"care" = "Care";
+"crop_protection" = "Crop protection";
+
+// Equipment types
+
+"airplanter" = "Air planter";
+"baler_wrapper" = "Baler wrapper";
+"corn-topper" = "Corn topper";
+"cubic_baler" = "Cubic baler";
+"disc_harrow" = "Disc arrow";
+"forage_platform" = "Forage platform";
+"forager" = "Forager";
+"grinder" = "Grinder";
+"harrow" = "Harrow";
+"harvester" = "Harvester";
+"hay_rake" = "Hay rake";
+"hiller" = "Hiller";
+"hoe" = "Hoe";
+"hoe_weeder" = "Hoe weeder";
+"implanter" = "Implanter";
+"irrigation_pivot" = "Irrigation pivot";
+"liquid_manure_spreader" = "Liquid manure spreader";
+"mower" = "Mower";
+"mower_conditioner" = "Mower conditioner";
+"plow" = "Plow";
+"reaper" = "Reaper";
+"roll" = "Roll";
+"rotary_hoe" = "Rotary hoe";
+"round_baler" = "Round baler";
+"seedbed_preparator" = "Seedbed preparator";
+"soil_loosener" = "Soil loosener";
+"sower" = "Sower";
+"sprayer" = "Sprayer";
+"spreader" = "Spreader";
+"spreader_trailer" = "Spreader trailer";
+"subsoil_plow" = "Subsoil plow";
+"superficial_plow" = "Superficial plow";
+"tedder" = "Tedder";
+"topper" = "Topper";
+"tractor" = "Tractor";
+"trailer" = "Trailer";
+"trimmer" = "Trimmer";
+"vibrocultivator" = "Vibrocultivator";
+"water_spreader" = "Water spreader";
+"weeder" = "Weeder";
+"wrapper" = "Wrapper";

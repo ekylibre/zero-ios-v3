@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate, XMLParserDelegate {
 
   // MARK: - Outlets
 
@@ -36,6 +36,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var searchEquipment: UISearchBar!
   @IBOutlet weak var equipmentTypeTableView: UITableView!
   @IBOutlet weak var equipmentTypeButton: UIButton!
+  @IBOutlet weak var createEquipment: UIView!
+  @IBOutlet weak var createEntity: UIView!
   @IBOutlet weak var entityFirstName: UITextField!
   @IBOutlet weak var entityLastName: UITextField!
   @IBOutlet weak var selectEntitiesView: UIView!
@@ -69,11 +71,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
+  var equipmentsTableViewTopAnchor: NSLayoutConstraint!
   var selectedEquipments = [NSManagedObject]()
   var searchedEquipments = [NSManagedObject]()
   var equipmentTypes: [String]!
+  var sortedEquipmentTypes: [String]!
   var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
+  var entitiesTableViewTopAnchor: NSLayoutConstraint!
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
   var createdSeed = [NSManagedObject]()
@@ -131,6 +136,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
+    equipmentTypes = defineEquipmentTypes()
+    sortedEquipmentTypes = equipmentTypes.sorted()
+    selectedEquipmentType = sortedEquipmentTypes[0]
+    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+
+    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+
+    initUnitMeasurePickerView()
+
     selectedEquipmentsTableView.layer.borderWidth  = 0.5
     selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedEquipmentsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
@@ -164,9 +179,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentTypeTableView.delegate = self
     equipmentTypeTableView.bounces = false
 
+    equipmentsTableViewTopAnchor = equipmentsTableView.topAnchor.constraint(equalTo: searchEquipment.bottomAnchor, constant: 40.5)
+    NSLayoutConstraint.activate([equipmentsTableViewTopAnchor])
+
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
     entitiesTableView.bounces = false
+
+    entitiesTableViewTopAnchor = entitiesTableView.topAnchor.constraint(equalTo: searchEntity.bottomAnchor, constant: 40.5)
+    NSLayoutConstraint.activate([entitiesTableViewTopAnchor])
 
     doersTableView.dataSource = self
     doersTableView.delegate = self
@@ -176,19 +197,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     doersTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     doersTableView.layer.cornerRadius = 4
 
-    doersHeightConstraint.constant = 70
-    doersTableViewHeightConstraint.constant = doersTableView.contentSize.height
-
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     inputsView.addInterventionViewController = self
     self.view.addSubview(inputsView)
-
-    defineEquipmentTypes()
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
-    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
-    selectedEquipmentType = equipmentTypes[0]
-    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
-    initUnitMeasurePickerView()
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
@@ -309,7 +320,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
 
-      equipmentType = equipmentTypes[indexPath.row]
+      equipmentType = sortedEquipmentTypes[indexPath.row]
       cell.nameLabel.text = equipmentType
       return cell
     case entitiesTableView:
@@ -350,7 +361,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
       if cell.isAvaible {
-        selectedEquipments.append(equipments[indexPath.row])
+        selectedEquipments.append(searchedEquipments[indexPath.row])
         selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
@@ -358,7 +369,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       closeEquipmentsSelectionView()
     case equipmentTypeTableView:
-      selectedEquipmentType = equipmentTypes[indexPath.row]
+      selectedEquipmentType = sortedEquipmentTypes[indexPath.row]
       equipmentTypeTableView.reloadData()
       equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
       equipmentTypeTableView.isHidden = true
@@ -379,6 +390,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch tableView {
+    case doersTableView:
+      return 75
+    case selectedInputsTableView:
+      return 110
+    default:
+      return 60
+    }
+  }
+
+  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
     case doersTableView:
       return 75
@@ -584,6 +606,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentsTableView.reloadData()
   }
 
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    switch searchBar {
+    case searchEntity:
+      entitiesTableViewTopAnchor.constant = 15
+      createEntity.isHidden = true
+    case searchEquipment:
+      equipmentsTableViewTopAnchor.constant = 15
+      createEquipment.isHidden = true
+    default:
+      return
+    }
+  }
+
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    switch searchBar {
+    case searchEntity:
+      searchBar.endEditing(true)
+      entitiesTableViewTopAnchor.constant = 40.5
+      createEntity.isHidden = false
+    case searchEquipment:
+      searchBar.endEditing(true)
+      equipmentsTableViewTopAnchor.constant = 40.5
+      createEquipment.isHidden = false
+    default:
+      return
+    }
+  }
+
   // MARK: - Actions
 
   @IBAction func selectCrops(_ sender: Any) {
@@ -697,6 +747,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
       case doers:
         numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+      case selectedInputs:
+        numberLabel.text = (entities.count == 1 ? "1 intrant": "\(entities.count) intrants")
       default:
         return
       }

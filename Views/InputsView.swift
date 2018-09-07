@@ -238,40 +238,43 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      let used = seeds[indexPath.row].value(forKey: "used") as! Bool
+      let fromSeeds = isSearching ? filteredInputs : seeds
+      let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
       if !used {
-        seeds[indexPath.row].setValue(true, forKey: "used")
+        fromSeeds[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.LightGray
-        addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
+        addInterventionViewController?.selectedInputs.append(fromSeeds[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 1:
+      let fromPhytos = isSearching ? filteredInputs : phytos
       let used = phytos[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
 
       if !used {
-        phytos[indexPath.row].setValue(true, forKey: "used")
+        fromPhytos[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.LightGray
-        addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
+        addInterventionViewController?.selectedInputs.append(fromPhytos[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 2:
+      let fromFertilizers = isSearching ? filteredInputs : fertilizers
       let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
 
       if !used {
-        fertilizers[indexPath.row].setValue(true, forKey: "used")
+        fromFertilizers[indexPath.row].setValue(true, forKey: "used")
         cell.backgroundColor = AppColor.CellColors.LightGray
-        addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
+        addInterventionViewController?.selectedInputs.append(fromFertilizers[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     default:
       print("Error")
     }
     addInterventionViewController?.selectedInputsTableView.reloadData()
-    addInterventionViewController?.closeSelectInputsView()
+    addInterventionViewController?.closeInputsSelectionView()
   }
 
   // MARK: - Search bar
@@ -332,8 +335,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let decoder = JSONDecoder()
 
     do {
+      let registeredSeeds = try decoder.decode([RegisteredSeed].self, from: assets[0].data)
       let registeredPhytos = try decoder.decode([RegisteredPhyto].self, from: assets[1].data)
       let registeredFertilizers = try decoder.decode([RegisteredFertilizer].self, from: assets[2].data)
+
+      saveSeeds(registeredSeeds)
       savePhytos(registeredPhytos)
       saveFertilizers(registeredFertilizers)
     } catch let jsonError {
@@ -353,6 +359,37 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       }
     }
     return assets
+  }
+
+  func saveSeeds(_ registeredSeeds: [RegisteredSeed]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let seedsEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
+
+    for registeredSeed in registeredSeeds {
+      let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
+
+      seed.setValue(true, forKey: "registered")
+      seed.setValue(registeredSeed.id, forKey: "seedIDEky")
+      seed.setValue(registeredSeed.specie, forKey: "specie")
+      seed.setValue(registeredSeed.variety, forKey: "variety")
+
+      seed.setValue("Seed", forKey: "type")
+      seed.setValue("kg/ha", forKey: "unit")
+      seed.setValue(0.0, forKey: "quantity")
+      seed.setValue(0, forKey: "row")
+      seed.setValue(false, forKey: "used")
+      seeds.append(seed)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {

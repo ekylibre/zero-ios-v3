@@ -48,6 +48,7 @@ extension AddInterventionViewController: DoerCellDelegate {
     selectEntitiesView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+      self.view.layoutIfNeeded()
     })
   }
 
@@ -58,7 +59,6 @@ extension AddInterventionViewController: DoerCellDelegate {
     if doers.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
         self.doersCollapsedButton.isHidden = false
         self.doersTableView.isHidden = false
         self.resizeViewAndTableView(
@@ -66,6 +66,7 @@ extension AddInterventionViewController: DoerCellDelegate {
           tableViewHeightConstraint: self.doersTableViewHeightConstraint,
           tableView: self.doersTableView)
         self.doersCollapsedButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+        self.view.layoutIfNeeded()
       })
     }
     searchedEntities = entities
@@ -77,6 +78,7 @@ extension AddInterventionViewController: DoerCellDelegate {
     createEntitiesView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+      self.view.layoutIfNeeded()
     })
   }
 
@@ -129,25 +131,22 @@ extension AddInterventionViewController: DoerCellDelegate {
 
       cell.isAvaible = true
       cell.backgroundColor = AppColor.CellColors.white
-
       self.doers.remove(at: indexPath.row)
+      self.doersTableView.reloadData()
 
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
-        self.doersHeightConstraint.constant = 70
         self.doersCollapsedButton.isHidden = true
+        self.doersHeightConstraint.constant = 70
       } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.doersHeightConstraint,
-          tableViewHeightConstraint: self.doersTableViewHeightConstraint,
-          tableView: self.doersTableView)
-        self.showEntitiesNumber(
-          entities: self.doers,
-          constraint: self.doersHeightConstraint,
-          numberLabel: self.doersNumber,
-          addEntityButton: self.addEntitiesButton)
+        UIView.animate(withDuration: 0.5, animations: {
+          self.resizeViewAndTableView(
+            viewHeightConstraint: self.doersHeightConstraint,
+            tableViewHeightConstraint: self.doersTableViewHeightConstraint,
+            tableView: self.doersTableView)
+          self.view.layoutIfNeeded()
+        })
       }
-      self.doersTableView.reloadData()
     }))
     self.present(alert, animated: true)
   }
