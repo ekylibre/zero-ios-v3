@@ -746,14 +746,80 @@
                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzQ-CL-iF5">
+                                                        <rect key="frame" x="339" y="25" width="16" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="16" id="A3s-vR-vJw"/>
+                                                            <constraint firstAttribute="width" constant="16" id="sE6-4R-dP0"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Collapse Button" image="expand-collapse"/>
+                                                    </button>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Et-nE-Npz">
+                                                        <rect key="frame" x="20" y="68" width="84.5" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pOP-WE-pVI" userLabel="Temperature Text Field">
+                                                        <rect key="frame" x="134.5" y="68" width="100" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="Cuf-YJ-l1Z"/>
+                                                            <constraint firstAttribute="height" constant="30" id="vcM-zb-GX5"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="as1-Zg-NLq">
+                                                        <rect key="frame" x="244.5" y="68" width="17.5" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wind_speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK3-QQ-YBa">
+                                                        <rect key="frame" x="20" y="106" width="81" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="km/h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1a-qv-ooU">
+                                                        <rect key="frame" x="244.5" y="106" width="34.5" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzs-kF-ytJ" userLabel="Wind speed Text Field">
+                                                        <rect key="frame" x="134.5" y="108" width="100" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="34S-Dt-aNo"/>
+                                                            <constraint firstAttribute="height" constant="30" id="Zqq-Fp-Rh0"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="0Lj-Kl-0gA"/>
+                                                    <constraint firstItem="W1a-qv-ooU" firstAttribute="top" secondItem="BK3-QQ-YBa" secondAttribute="top" id="18f-Zn-D5j"/>
+                                                    <constraint firstItem="wzQ-CL-iF5" firstAttribute="top" secondItem="3GM-HU-750" secondAttribute="top" constant="25" id="3NJ-3U-gn7"/>
+                                                    <constraint firstItem="Bzs-kF-ytJ" firstAttribute="leading" secondItem="pOP-WE-pVI" secondAttribute="leading" id="3to-c3-waY"/>
+                                                    <constraint firstItem="BK3-QQ-YBa" firstAttribute="top" secondItem="2Et-nE-Npz" secondAttribute="bottom" constant="20" id="6S9-LS-in1"/>
+                                                    <constraint firstItem="W1a-qv-ooU" firstAttribute="leading" secondItem="as1-Zg-NLq" secondAttribute="leading" id="HKw-AY-Zjq"/>
+                                                    <constraint firstItem="pOP-WE-pVI" firstAttribute="leading" secondItem="2Et-nE-Npz" secondAttribute="trailing" constant="30" id="IZF-QG-lhe"/>
+                                                    <constraint firstItem="as1-Zg-NLq" firstAttribute="top" secondItem="2Et-nE-Npz" secondAttribute="top" id="N8a-sX-iGy"/>
+                                                    <constraint firstItem="2Et-nE-Npz" firstAttribute="leading" secondItem="3GM-HU-750" secondAttribute="leading" constant="20" id="Nda-y5-2Ym"/>
+                                                    <constraint firstItem="as1-Zg-NLq" firstAttribute="leading" secondItem="pOP-WE-pVI" secondAttribute="trailing" constant="10" id="Sfm-Ky-stX"/>
                                                     <constraint firstItem="wJi-KE-5Mc" firstAttribute="leading" secondItem="3GM-HU-750" secondAttribute="leading" constant="20" id="UEY-bN-Qlw"/>
+                                                    <constraint firstItem="pOP-WE-pVI" firstAttribute="top" secondItem="UXL-bz-O2x" secondAttribute="bottom" constant="25" id="VM2-fi-PT3"/>
                                                     <constraint firstItem="UXL-bz-O2x" firstAttribute="leading" secondItem="wJi-KE-5Mc" secondAttribute="trailing" constant="15" id="Wbu-Vf-K2v"/>
+                                                    <constraint firstItem="Bzs-kF-ytJ" firstAttribute="top" secondItem="pOP-WE-pVI" secondAttribute="bottom" constant="10" id="ehE-0B-HaW"/>
+                                                    <constraint firstItem="BK3-QQ-YBa" firstAttribute="leading" secondItem="3GM-HU-750" secondAttribute="leading" constant="20" id="gkc-mU-SGT"/>
                                                     <constraint firstItem="UXL-bz-O2x" firstAttribute="top" secondItem="3GM-HU-750" secondAttribute="top" constant="25" id="nBA-di-JqI"/>
                                                     <constraint firstItem="wJi-KE-5Mc" firstAttribute="top" secondItem="3GM-HU-750" secondAttribute="top" constant="25" id="ppQ-wk-RFN"/>
+                                                    <constraint firstAttribute="trailing" secondItem="wzQ-CL-iF5" secondAttribute="trailing" constant="20" id="xAU-yF-tmp"/>
+                                                    <constraint firstItem="2Et-nE-Npz" firstAttribute="top" secondItem="UXL-bz-O2x" secondAttribute="bottom" constant="25" id="xAj-cb-IQy"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4uv-L3-5Pb" userLabel="Separator">
