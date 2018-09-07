@@ -300,7 +300,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableViewTopAnchor.constant = isSearching ? 15 : 60
     tableView.reloadData()
     tableView.layoutIfNeeded()
-    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
+    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
   }
 
   // MARK: - Core Data
@@ -451,7 +451,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizer.setValue(registeredFertilizer.sulfurTrioxydeConcentration, forKey: "sulfurTrioxydeConcentration")
 
       fertilizer.setValue("Fertilizer", forKey: "type")
-      fertilizer.setValue("l/ha", forKey: "unit")
+      fertilizer.setValue("kg/ha", forKey: "unit")
       fertilizer.setValue(0.0, forKey: "quantity")
       fertilizer.setValue(0, forKey: "row")
       fertilizer.setValue(false, forKey: "used")
@@ -560,6 +560,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     tableView.reloadData()
+    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
   }
 
   @objc func tapCreateButton() {
