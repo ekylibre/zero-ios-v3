@@ -10,8 +10,6 @@ import UIKit
 
 class SeedCell: UITableViewCell {
 
-  var isAvaible = true
-
   lazy var varietyLabel: UILabel = {
     let varietyLabel = UILabel(frame: CGRect.zero)
     varietyLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -33,6 +31,10 @@ class SeedCell: UITableViewCell {
   }
 
   private func setupCell() {
+    let selectedColor = UIView()
+
+    selectedColor.backgroundColor = AppColor.CellColors.LightGray
+    self.selectedBackgroundView = selectedColor
     contentView.addSubview(varietyLabel)
     contentView.addSubview(specieLabel)
     setupLayout()

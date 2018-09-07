@@ -11,39 +11,7 @@ import CoreData
 
 extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
-  func removeEquipmentCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(
-      title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'outil ?",
-      preferredStyle: .alert
-    )
-
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
-      let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.white
-
-      self.selectedEquipments.remove(at: indexPath.row)
-
-      if self.selectedEquipments.count == 0 {
-        self.selectedEquipmentsTableView.isHidden = true
-        self.equipmentHeightConstraint.constant = 70
-        self.collapseButton.isHidden = true
-      } else {
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.equipmentHeightConstraint,
-          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
-          tableView: self.selectedEquipmentsTableView)
-        self.showEquipmentsNumber()
-      }
-      self.selectedEquipmentsTableView.reloadData()
-    }))
-    self.present(alert, animated: true)
-  }
+  // MARK: - Initialization
 
   func defineEquipmentTypes() {
     equipmentTypes = [
@@ -88,45 +56,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       "Enrubanneuse"]
   }
 
-  func showEquipmentsNumber() {
-    if selectedEquipments.count > 0 && firstView.frame.height == 70 {
-      addEquipmentButton.isHidden = true
-      equipmentNumberLabel.isHidden = false
-      equipmentNumberLabel.text = (selectedEquipments.count == 1 ? "1 outil" : "\(selectedEquipments.count) outils")
-    } else {
-      addEquipmentButton.isHidden = false
-      equipmentNumberLabel.isHidden = true
-    }
-  }
-
-  @IBAction func openSelectEquipmentsView(_ sender: Any) {
-    dimView.isHidden = false
-    selectEquipmentsView.isHidden = false
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
-  }
-
-  func closeSelectEquipmentsView() {
-    dimView.isHidden = true
-    selectEquipmentsView.isHidden = true
-
-    if selectedEquipments.count > 0 {
-      UIView.animate(withDuration: 0.5, animations: {
-        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.view.layoutIfNeeded()
-        self.collapseButton.isHidden = false
-        self.selectedEquipmentsTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.equipmentHeightConstraint,
-          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
-          tableView: self.selectedEquipmentsTableView)
-        self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-      })
-    }
-    searchedEquipments = equipments
-    selectedEquipmentsTableView.reloadData()
-  }
+  // MARK: - Actions
 
   @IBAction func collapseEquipmentView(_ send: Any) {
     if equipmentHeightConstraint.constant != 70 {
@@ -147,10 +77,44 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         self.view.layoutIfNeeded()
       })
     }
-    showEquipmentsNumber()
+    showEntitiesNumber(
+      entities: selectedEquipments,
+      constraint: equipmentHeightConstraint,
+      numberLabel: equipmentNumberLabel,
+      addEntityButton: addEquipmentButton)
   }
 
-  @IBAction func openCreateEquipmentsView(_ sender: Any) {
+
+  @IBAction func openEquipmentsSelectionView(_ sender: Any) {
+    dimView.isHidden = false
+    selectEquipmentsView.isHidden = false
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  func closeEquipmentsSelectionView() {
+    dimView.isHidden = true
+    selectEquipmentsView.isHidden = true
+
+    if selectedEquipments.count > 0 {
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+        self.view.layoutIfNeeded()
+        self.collapseButton.isHidden = false
+        self.selectedEquipmentsTableView.isHidden = false
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.equipmentHeightConstraint,
+          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
+          tableView: self.selectedEquipmentsTableView)
+        self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
+      })
+    }
+    searchedEquipments = equipments
+    selectedEquipmentsTableView.reloadData()
+  }
+
+  @IBAction func openEquipmentsCreationView(_ sender: Any) {
     equipmentDarkLayer.isHidden = false
     createEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
@@ -158,41 +122,13 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     })
   }
 
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    searchedEntities = searchText.isEmpty ? entities : entities.filter({(filterEntity: NSManagedObject) -> Bool in
-      let entityName: String = filterEntity.value(forKey: "firstName") as! String
-      return entityName.range(of: searchText) != nil
-    })
-    searchedEquipments = searchText.isEmpty ? equipments : equipments.filter({(filterEquipment: NSManagedObject) -> Bool in
-      let equipmentName: String = filterEquipment.value(forKey: "name") as! String
-      return equipmentName.range(of: searchText) != nil
-    })
-    entitiesTableView.reloadData()
-    equipmentsTableView.reloadData()
-  }
-
-  func fetchEquipments() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
-
-    do {
-      equipments = try managedContext.fetch(equipmentsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    searchedEquipments = equipments
-    equipmentsTableView.reloadData()
-  }
-
   @IBAction func closeEquipmentsCreationView(_ sender: Any) {
     equipmentName.text = nil
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
     createEquipmentsView.isHidden = true
-    fetchEquipments()
+    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    equipmentsTableView.reloadData()
   }
 
   @IBAction func createNewEquipement(_ sender: Any) {
@@ -216,91 +152,132 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
+
+  func removeEquipmentCell(_ indexPath: IndexPath) {
+    let alert = UIAlertController(
+      title: "",
+      message: "Êtes-vous sûr de vouloir supprimer l'outil ?",
+      preferredStyle: .alert
+    )
+
+    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+      let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
+      let indexTab = NSIndexPath(row: row, section: 0)
+      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
+
+      cell.isAvaible = true
+      cell.backgroundColor = AppColor.CellColors.white
+
+      self.selectedEquipments.remove(at: indexPath.row)
+
+      if self.selectedEquipments.count == 0 {
+        self.selectedEquipmentsTableView.isHidden = true
+        self.equipmentHeightConstraint.constant = 70
+        self.collapseButton.isHidden = true
+      } else {
+        self.resizeViewAndTableView(
+          viewHeightConstraint: self.equipmentHeightConstraint,
+          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
+          tableView: self.selectedEquipmentsTableView)
+        self.showEntitiesNumber(
+          entities: self.selectedEquipments,
+          constraint: self.equipmentHeightConstraint,
+          numberLabel: self.equipmentNumberLabel,
+          addEntityButton: self.addEquipmentButton)
+      }
+      self.selectedEquipmentsTableView.reloadData()
+    }))
+    self.present(alert, animated: true)
+  }
 }
 
-extension AddInterventionViewController{
-  func defineEquipmentImage(equipmentName: String) -> Int {
+extension AddInterventionViewController {
+
+  // MARK: - Initialization
+
+  func defineEquipmentImage(equipmentName: String) -> UIImage? {
     switch equipmentName {
     case "Semoir monograines":
-      return 0
+      return #imageLiteral(resourceName: "airplanter")
     case "Presse enrubanneuse":
-      return 1
+      return #imageLiteral(resourceName: "baler-wrapper")
     case "Castreuse":
-      return 2
+      return #imageLiteral(resourceName: "corn-topper")
     case "Presse balle cubique":
-      return 3
+      return #imageLiteral(resourceName: "cubic-baler")
     case "Déchaumeur à disques":
-      return 4
+      return #imageLiteral(resourceName: "disc-harrow")
     case "Plateau":
-      return 5
+      return #imageLiteral(resourceName: "forage-platform")
     case "Ensileuse":
-      return 6
+      return #imageLiteral(resourceName: "forager")
     case "Broyeur":
-      return 7
+      return #imageLiteral(resourceName: "grinder")
     case "Herse":
-      return 8
+      return #imageLiteral(resourceName: "harrow")
     case "Arracheuse":
-      return 9
+      return #imageLiteral(resourceName: "harvester")
     case "Andaineur":
-      return 10
+      return #imageLiteral(resourceName: "hay-rake")
     case "Butteuse":
-      return 11
+      return #imageLiteral(resourceName: "hiller")
     case "Bineuse":
-      return 12
+      return #imageLiteral(resourceName: "hoe")
     case "Désherbineuse":
-      return 13
+      return #imageLiteral(resourceName: "hoe_weeder")
     case "Planteuse":
-      return 14
+      return #imageLiteral(resourceName: "implanter")
     case "Tonne à lisier":
-      return 15
+      return #imageLiteral(resourceName: "irrigation-pivot")
     case "Faucheuse":
-      return 16
+      return #imageLiteral(resourceName: "mower")
     case "Faucheuse conditioneuse":
-      return 17
+      return #imageLiteral(resourceName: "mower-conditioner")
     case "Charrue":
-      return 18
+      return #imageLiteral(resourceName: "plow")
     case "Moissonneuse-batteuse":
-      return 19
+      return #imageLiteral(resourceName: "reaper")
     case "Rouleau":
-      return 20
+      return #imageLiteral(resourceName: "roll")
     case "Houe rotative":
-      return 21
+      return #imageLiteral(resourceName: "rotary-hoe")
     case "Presse balle ronde":
-      return 22
-    case "Outil de préparation du lit de semances":
-      return 23
+      return #imageLiteral(resourceName: "round-baler")
+    case "Outil de préparation du lit de semences":
+      return #imageLiteral(resourceName: "seedbed-preparator")
     case "Décompacteur":
-      return 24
+      return #imageLiteral(resourceName: "soil-loosener")
     case "Semoir":
-      return 25
+      return #imageLiteral(resourceName: "sower")
     case "Pulvérisateur":
-      return 26
+      return #imageLiteral(resourceName: "sprayer")
     case "Épandeur à engrais":
-      return 27
+      return #imageLiteral(resourceName: "spreader")
     case "Épandeur à fumier":
-      return 28
+      return #imageLiteral(resourceName: "liquid-manure-spreader")
     case "Sous soleuse":
-      return 29
+      return #imageLiteral(resourceName: "subsoil-plow")
     case "Déchaumeur":
-      return 30
+      return #imageLiteral(resourceName: "superficial-plow")
     case "Faneuse":
-      return 31
+      return #imageLiteral(resourceName: "tedder")
     case "Effaneuse":
-      return 32
+      return #imageLiteral(resourceName: "topper")
     case "Tracteur":
-      return 33
+      return #imageLiteral(resourceName: "tractor")
     case "Remorque":
-      return 34
+      return #imageLiteral(resourceName: "trailer")
     case "Écimeuse":
-      return 35
+      return #imageLiteral(resourceName: "trimmer")
     case "Vibroculteur":
-      return 36
+      return #imageLiteral(resourceName: "vibrocultivator")
     case "Désherbeur":
-      return 37
+      return #imageLiteral(resourceName: "weeder")
     case "Enrubanneuse":
-      return 38
+      return #imageLiteral(resourceName: "wrapper")
     default:
-      return 0
+      return nil
     }
   }
 }

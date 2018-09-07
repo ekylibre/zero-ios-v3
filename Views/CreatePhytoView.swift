@@ -10,7 +10,7 @@ import UIKit
 
 class CreatePhytoView: UIView, UITextFieldDelegate {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
@@ -117,7 +117,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -175,7 +175,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
-  //MARK: - Text field
+  // MARK: - Text field
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let nextTag = textField.tag + 1
@@ -189,7 +189,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
     return false
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @objc func closeView(sender: UIButton) {
     for subview in self.subviews {

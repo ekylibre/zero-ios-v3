@@ -9,6 +9,9 @@
 import UIKit
 
 extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+  // MARK: - Initialization
+
   func initUnitMeasurePickerView() {
     liquidUnitPicker.backgroundColor = AppColor.CellColors .white
     liquidUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
@@ -24,6 +27,8 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
     solidUnitPicker.isHidden = true
     view.addSubview(solidUnitPicker)
   }
+
+  // MARK: Picker View Data Source
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1

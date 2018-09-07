@@ -294,7 +294,7 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expandCollapse" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-aQ-Xe3">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-collapse" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-aQ-Xe3">
                                                         <rect key="frame" x="339" y="27" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="QL9-Hx-ikl"/>
@@ -423,7 +423,7 @@
                                                             <constraint firstAttribute="height" constant="16" id="bo7-rs-IL4"/>
                                                             <constraint firstAttribute="width" constant="16" id="tcw-Fw-RVG"/>
                                                         </constraints>
-                                                        <state key="normal" title="Collapse" image="expandCollapse"/>
+                                                        <state key="normal" title="Collapse" image="expand-collapse"/>
                                                         <connections>
                                                             <action selector="collapseInputsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="i9N-5t-Mat"/>
                                                         </connections>
@@ -544,7 +544,7 @@
                                                             <color key="titleColor" red="0.54117647058823526" green="0.75686274509803919" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="openSelectEquipmentsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="0sF-uW-GA5"/>
+                                                            <action selector="openEquipmentsSelectionView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="5tq-Gj-u6V"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJR-CJ-tlU">
@@ -553,7 +553,7 @@
                                                             <constraint firstAttribute="height" constant="16" id="EKZ-Yo-I3K"/>
                                                             <constraint firstAttribute="width" constant="16" id="nfy-DG-WQf"/>
                                                         </constraints>
-                                                        <state key="normal" title="Collapse" image="expandCollapse"/>
+                                                        <state key="normal" title="Collapse" image="expand-collapse"/>
                                                         <connections>
                                                             <action selector="collapseEquipmentView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Tx7-Ec-9xi"/>
                                                         </connections>
@@ -603,7 +603,7 @@
                                                             <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="openSelectEntitiesView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="OUv-lZ-xPL"/>
+                                                            <action selector="openEntitiesSelectionView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="enz-20-oho"/>
                                                         </connections>
                                                     </button>
                                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orv-Jv-Mfq">
@@ -618,7 +618,7 @@
                                                             <constraint firstAttribute="width" constant="16" id="hLE-EX-3Pg"/>
                                                             <constraint firstAttribute="height" constant="16" id="xIe-zP-1Aa"/>
                                                         </constraints>
-                                                        <state key="normal" title="Collapse Button" image="expandCollapse"/>
+                                                        <state key="normal" title="Collapse Button" image="expand-collapse"/>
                                                         <connections>
                                                             <action selector="collapseDoersView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="17z-rV-kzo"/>
                                                         </connections>
@@ -880,7 +880,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="openCreateEquipmentsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="3Cn-XT-HAE"/>
+                                                    <action selector="openEquipmentsCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="7dK-t8-XDE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1166,7 +1166,7 @@
                                                     <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="openCreateEntitiesView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Uuo-Md-MGV"/>
+                                                    <action selector="openEntitiesCreationView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="FgJ-79-L6p"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1435,7 +1435,6 @@
                         <outlet property="equipmentTypeButton" destination="A58-eW-7tB" id="teL-bG-Ea9"/>
                         <outlet property="equipmentTypeTableView" destination="lyS-jh-cAc" id="4kk-dU-5PT"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
-                        <outlet property="firstView" destination="Ta7-qs-cOy" id="8g7-9C-qWb"/>
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
                         <outlet property="inputsHeightConstraint" destination="0oM-1M-kPB" id="GpI-j6-Loh"/>
                         <outlet property="inputsNumber" destination="Rof-yp-WzL" id="2T8-pe-K1y"/>
@@ -1703,7 +1702,7 @@
     <resources>
         <image name="clic&amp;farm-logo" width="90" height="90"/>
         <image name="delete" width="50" height="50"/>
-        <image name="expandCollapse" width="128" height="128"/>
+        <image name="expand-collapse" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vxv-f7-ZrT"/>

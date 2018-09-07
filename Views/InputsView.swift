@@ -11,9 +11,10 @@ import CoreData
 
 class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var addInterventionViewController: AddInterventionViewController?
+  var isSearching: Bool = false
 
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
@@ -23,8 +24,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
     return segmentedControl
   }()
-
-  var isSearching: Bool = false
 
   lazy var searchBar: UISearchBar = {
     let searchBar = UISearchBar(frame: CGRect.zero)
@@ -96,7 +95,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var fertilizers = [NSManagedObject]()
   var filteredInputs = [NSManagedObject]()
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -179,7 +178,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fatalError("init(coder:) has not been implemented")
   }
 
-  //MARK: - Table view
+  // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -200,8 +199,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
 
-      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
-      cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      if fromSeeds.count > indexPath.row {
+        cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
+        cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      }
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
@@ -237,29 +238,32 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
+      let used = seeds[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
-      if cell.isAvaible {
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+      if !used {
+        seeds[indexPath.row].setValue(true, forKey: "used")
+        cell.backgroundColor = AppColor.CellColors.LightGray
         addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 1:
+      let used = phytos[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
 
-      if cell.isAvaible {
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+      if !used {
+        phytos[indexPath.row].setValue(true, forKey: "used")
+        cell.backgroundColor = AppColor.CellColors.LightGray
         addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
     case 2:
+      let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
       let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
 
-      if cell.isAvaible {
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+      if !used {
+        fertilizers[indexPath.row].setValue(true, forKey: "used")
+        cell.backgroundColor = AppColor.CellColors.LightGray
         addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
@@ -270,7 +274,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     addInterventionViewController?.closeSelectInputsView()
   }
 
-  //MARK: - Search bar
+  // MARK: - Search bar
 
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     isSearching = true
@@ -296,7 +300,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
   }
 
-  //MARK: - Core Data
+  // MARK: - Core Data
 
   private func fetchInputs() -> Bool {
 
@@ -375,6 +379,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       phyto.setValue("l/ha", forKey: "unit")
       phyto.setValue(0.0, forKey: "quantity")
       phyto.setValue(0, forKey: "row")
+      phyto.setValue(false, forKey: "used")
       phytos.append(phyto)
     }
 
@@ -412,6 +417,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizer.setValue("l/ha", forKey: "unit")
       fertilizer.setValue(0.0, forKey: "quantity")
       fertilizer.setValue(0, forKey: "row")
+      fertilizer.setValue(false, forKey: "used")
       fertilizers.append(fertilizer)
     }
 
@@ -438,6 +444,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.setValue("kg/ha", forKey: "unit")
     seed.setValue(0.0, forKey: "quantity")
     seed.setValue(0, forKey: "row")
+    seed.setValue(false, forKey: "used")
     seeds.append(seed)
 
     do {
@@ -465,6 +472,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.setValue("l/ha", forKey: "unit")
     phyto.setValue(0.0, forKey: "quantity")
     phyto.setValue(0, forKey: "row")
+    phyto.setValue(false, forKey: "used")
     phytos.append(phyto)
 
     do {
@@ -490,6 +498,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.setValue("kg/ha", forKey: "unit")
     fertilizer.setValue(0.0, forKey: "quantity")
     fertilizer.setValue(0, forKey: "row")
+    fertilizer.setValue(false, forKey: "used")
     fertilizers.append(fertilizer)
 
     do {
@@ -499,7 +508,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @objc func changeSegment() {
     let searchText = searchBar.text!
