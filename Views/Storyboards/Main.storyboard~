@@ -704,7 +704,11 @@
                                                             <constraint firstAttribute="width" constant="24" id="hLE-EX-3Pg"/>
                                                             <constraint firstAttribute="height" constant="24" id="xIe-zP-1Aa"/>
                                                         </constraints>
+<<<<<<< HEAD
+                                                        <state key="normal" title="Collapse Button" image="expand-collapse"/>
+=======
                                                         <state key="normal" title="Collapse Button" image="expand-more"/>
+>>>>>>> Changed expand icon assets
                                                         <connections>
                                                             <action selector="collapseDoersView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="17z-rV-kzo"/>
                                                         </connections>
@@ -1801,8 +1805,12 @@
     <resources>
         <image name="clic&amp;farm-logo" width="90" height="90"/>
         <image name="delete" width="50" height="50"/>
+<<<<<<< HEAD
+        <image name="expand-collapse" width="128" height="128"/>
+=======
         <image name="expand-less" width="24" height="24"/>
         <image name="expand-more" width="24" height="24"/>
+>>>>>>> Changed expand icon assets
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vxv-f7-ZrT"/>

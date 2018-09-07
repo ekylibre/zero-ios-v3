@@ -34,7 +34,11 @@ class PlotCell: UITableViewCell {
 
   lazy var expandCollapseImageView: UIImageView = {
     let expandCollapseImageView = UIImageView(frame: CGRect.zero)
+<<<<<<< HEAD
+    expandCollapseImageView.image = #imageLiteral(resourceName: "expand-collapse")
+=======
     expandCollapseImageView.image = #imageLiteral(resourceName: "expand-more")
+>>>>>>> Changed expand icon assets
     expandCollapseImageView.translatesAutoresizingMaskIntoConstraints = false
     return expandCollapseImageView
   }()
