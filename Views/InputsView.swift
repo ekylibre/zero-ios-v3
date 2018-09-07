@@ -339,7 +339,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let registeredPhytos = try decoder.decode([RegisteredPhyto].self, from: assets[1].data)
       let registeredFertilizers = try decoder.decode([RegisteredFertilizer].self, from: assets[2].data)
 
-      saveSeeds(registeredSeeds: registeredSeeds)
+      saveSeeds(registeredSeeds)
       savePhytos(registeredPhytos)
       saveFertilizers(registeredFertilizers)
     } catch let jsonError {
@@ -361,17 +361,16 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return assets
   }
 
-  func saveSeeds(registeredSeeds: [RegisteredSeed]) {
-
+  func saveSeeds(_ registeredSeeds: [RegisteredSeed]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let seedEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
+    let seedsEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
 
     for registeredSeed in registeredSeeds {
-      let seed = NSManagedObject(entity: seedEntity, insertInto: managedContext)
+      let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
       seed.setValue(true, forKey: "registered")
       seed.setValue(registeredSeed.id, forKey: "seedIDEky")
@@ -394,7 +393,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
