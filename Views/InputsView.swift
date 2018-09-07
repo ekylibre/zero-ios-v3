@@ -61,6 +61,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return tableView
   }()
 
+  var tableViewTopAnchor: NSLayoutConstraint!
+
   lazy var dimView: UIView = {
     let dimView = UIView(frame: CGRect.zero)
     dimView.backgroundColor = UIColor.black
@@ -99,8 +101,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     super.init(frame: frame)
     setupView()
     if !fetchInputs() {
-      loadSampleInputs()
-      loadSeeds()
+      loadRegisteredInputs()
+      tableView.reloadData()
     }
   }
 
@@ -122,33 +124,43 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "segmented" : segmentedControl,
-      "searchbar" : searchBar,
-      "button" : createButton,
-      "table" : tableView,
-      ] as [String : Any]
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[segmented]-15-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[searchbar]-20-|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[button]", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: viewsDict))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-15-[segmented]-15-[searchbar]-15-[button]-15-[table]|", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      segmentedControl.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      segmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      segmentedControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
+      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
+      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      tableViewTopAnchor,
+      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
+      tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+      ])
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dimview]|", options: [], metrics: nil, views: ["dimview" : dimView]))
+    bindFrameToSuperViewBounds(dimView, height: 0)
+    bindFrameToSuperViewBounds(seedView, height: 250)
+    bindFrameToSuperViewBounds(phytoView, height: 340)
+    bindFrameToSuperViewBounds(fertilizerView, height: 230)
+  }
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[seedview]|", options: [], metrics: nil, views: ["seedview" : seedView]))
-    NSLayoutConstraint(item: seedView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250).isActive = true
-    NSLayoutConstraint(item: seedView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+  private func bindFrameToSuperViewBounds(_ view: UIView, height: CGFloat) {
+    let customHeightAnchor: NSLayoutConstraint
+    if height > 0 {
+      customHeightAnchor = view.heightAnchor.constraint(equalToConstant: height)
+    } else {
+      customHeightAnchor = view.heightAnchor.constraint(equalTo: view.superview!.heightAnchor)
+    }
 
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[phytoview]|", options: [], metrics: nil, views: ["phytoview" : phytoView]))
-    NSLayoutConstraint(item: phytoView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 340).isActive = true
-    NSLayoutConstraint(item: phytoView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-
-    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[fertilizerview]|", options: [], metrics: nil, views: ["fertilizerview" : fertilizerView]))
-    NSLayoutConstraint(item: fertilizerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 230).isActive = true
-    NSLayoutConstraint(item: fertilizerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+    NSLayoutConstraint.activate([
+      customHeightAnchor,
+      view.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      view.widthAnchor.constraint(equalTo: self.widthAnchor),
+      view.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      ])
   }
 
   private func setupActions() {
@@ -198,8 +210,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
-      let maaID = fromPhytos[indexPath.row].value(forKey: "maaID") as! Int
-      cell.maaIDLabel.text = String(maaID)
+      cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
       let reentryDelay = fromPhytos[indexPath.row].value(forKey: "reentryDelay") as! Int
       let unit: String = reentryDelay > 1 ? "heures" : "heure"
       cell.inFieldReentryDelayLabel.text = "\(reentryDelay) " + unit
@@ -281,9 +292,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let name: String = input.value(forKey: key) as! String
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
-    isSearching = (searchText.isEmpty ? false : true)
+    isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
+    tableViewTopAnchor.constant = isSearching ? 15 : 60
     tableView.reloadData()
+    tableView.layoutIfNeeded()
+    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
   }
 
   // MARK: - Core Data
@@ -313,63 +327,108 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  func loadSeeds() {
-    if let asset = NSDataAsset(name: "seeds") {
-      do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data, options: .mutableLeaves)
-        let seeds = jsonResult as? [[String: Any]]
+  private func loadRegisteredInputs() {
+    let assets = openAssets()
+    let decoder = JSONDecoder()
 
-        saveSeeds(registeredSeeds: seeds!)
-      } catch let error as NSError {
-        print("Could not parse file. \(error), \(error.userInfo)")
-      }
-    } else {
-      print("seeds.json not found")
+    do {
+      let registeredPhytos = try decoder.decode([RegisteredPhyto].self, from: assets[1].data)
+      let registeredFertilizers = try decoder.decode([RegisteredFertilizer].self, from: assets[2].data)
+      savePhytos(registeredPhytos)
+      saveFertilizers(registeredFertilizers)
+    } catch let jsonError {
+      print(jsonError)
     }
   }
 
-  func saveSeeds(registeredSeeds: [[String: Any]]) {
+  private func openAssets() -> [NSDataAsset] {
+    var assets = [NSDataAsset]()
+    let assetNames = ["seeds", "phytosanitary-products", "fertilizers"]
+
+    for assetName in assetNames {
+      if let asset = NSDataAsset(name: assetName) {
+        assets.append(asset)
+      } else {
+        fatalError(assetName + " not found")
+      }
+    }
+    return assets
+  }
+
+  private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let seedEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
+    let phytosEntity = NSEntityDescription.entity(forEntityName: "Phytos", in: managedContext)!
 
-    for registeredSeed in registeredSeeds {
-      let seed = NSManagedObject(entity: seedEntity, insertInto: managedContext)
+    for registeredPhyto in registeredPhytos {
+      let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
 
-      seed.setValue(true, forKey: "registered")
-      seed.setValue(registeredSeed["id"], forKey: "seedIDEky")
-      seed.setValue(registeredSeed["specie"], forKey: "specie")
-      seed.setValue(registeredSeed["variety"], forKey: "variety")
+      phyto.setValue(true, forKey: "registered")
+      phyto.setValue(registeredPhyto.id, forKey: "phytoIDEky")
+      phyto.setValue(registeredPhyto.name, forKey: "name")
+      phyto.setValue(registeredPhyto.nature, forKey: "nature")
+      phyto.setValue(registeredPhyto.maaid, forKey: "maaID")
+      phyto.setValue(registeredPhyto.mixCategoryCode, forKey: "mixCategoryCode")
+      phyto.setValue(registeredPhyto.inFieldReentryDelay, forKey: "reentryDelay")
+      phyto.setValue(registeredPhyto.firmName, forKey: "firmName")
 
-      seed.setValue("Seed", forKey: "type")
-      seed.setValue("kg/ha", forKey: "unit")
-      seed.setValue(0.0, forKey: "quantity")
-      seed.setValue(0, forKey: "row")
-      seed.setValue(false, forKey: "used")
-      seeds.append(seed)
+      phyto.setValue("Phyto", forKey: "type")
+      phyto.setValue("l/ha", forKey: "unit")
+      phyto.setValue(0.0, forKey: "quantity")
+      phyto.setValue(0, forKey: "row")
+      phyto.setValue(false, forKey: "used")
+      phytos.append(phyto)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
-  private func loadSampleInputs() {
-    createSeed(registered: false, variety: "Variété 1", specie: "Espèce 1")
-    createSeed(registered: false, variety: "Variété 2", specie: "Espèce 2")
+  private func saveFertilizers(_ registeredFertilizers: [RegisteredFertilizer]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
 
-    createPhyto(registered: false, name: "Nom 1", firmName: "Marque 1", maaID: 1000, reentryDelay: 1)
-    createPhyto(registered: false, name: "Nom 2", firmName: "Marque 2", maaID: 2000, reentryDelay: 2)
-    createPhyto(registered: false, name: "Nom 3", firmName: "Marque 3", maaID: 3000, reentryDelay: 3)
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
 
-    createFertilizer(registered: false, name: "Nom 1", nature: "Nature 1")
-    createFertilizer(registered: false, name: "Nom 2", nature: "Nature 2")
-    createFertilizer(registered: false, name: "Nom 3", nature: "Nature 3")
-    createFertilizer(registered: false, name: "Nom 4", nature: "Nature 4")
+    for registeredFertilizer in registeredFertilizers {
+      let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
-    tableView.reloadData()
+      fertilizer.setValue(true, forKey: "registered")
+      fertilizer.setValue(registeredFertilizer.id, forKey: "fertilizerIDEky")
+      fertilizer.setValue(registeredFertilizer.name, forKey: "name")
+      fertilizer.setValue(registeredFertilizer.variant, forKey: "variant")
+      fertilizer.setValue(registeredFertilizer.variety, forKey: "variety")
+      fertilizer.setValue(registeredFertilizer.derivativeOf, forKey: "derivativeOf")
+      fertilizer.setValue(registeredFertilizer.nature, forKey: "nature")
+      fertilizer.setValue(registeredFertilizer.nitrogenConcentration, forKey: "nitrogenConcentration")
+      fertilizer.setValue(registeredFertilizer.phosphorusConcentration, forKey: "phosphorusConcentration")
+      fertilizer.setValue(registeredFertilizer.potassiumConcentration, forKey: "potassiumConcentration")
+      fertilizer.setValue(registeredFertilizer.sulfurTrioxydeConcentration, forKey: "sulfurTrioxydeConcentration")
+
+      fertilizer.setValue("Fertilizer", forKey: "type")
+      fertilizer.setValue("l/ha", forKey: "unit")
+      fertilizer.setValue(0.0, forKey: "quantity")
+      fertilizer.setValue(0, forKey: "row")
+      fertilizer.setValue(false, forKey: "used")
+      fertilizers.append(fertilizer)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
-  private func createSeed(registered: Bool, variety: String, specie: String) {
+  private func createSeed(variety: String, specie: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -379,7 +438,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
     seed.setValue("Seed", forKey: "type")
-    seed.setValue(registered, forKey: "registered")
+    seed.setValue(false, forKey: "registered")
     seed.setValue(variety, forKey: "variety")
     seed.setValue(specie, forKey: "specie")
     seed.setValue("kg/ha", forKey: "unit")
@@ -395,7 +454,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createPhyto(registered: Bool, name: String, firmName: String, maaID: Int, reentryDelay: Int) {
+  private func createPhyto(name: String, firmName: String, maaID: Int, reentryDelay: Int) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -404,7 +463,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let phytosEntity = NSEntityDescription.entity(forEntityName: "Phytos", in: managedContext)!
     let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
 
-    phyto.setValue(registered, forKey: "registered")
+    phyto.setValue(false, forKey: "registered")
     phyto.setValue(name, forKey: "name")
     phyto.setValue(firmName, forKey: "firmName")
     phyto.setValue(maaID, forKey: "maaID")
@@ -423,7 +482,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createFertilizer(registered: Bool, name: String, nature: String) {
+  private func createFertilizer(name: String, nature: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -433,7 +492,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
     fertilizer.setValue("Fertilizer", forKey: "type")
-    fertilizer.setValue(registered, forKey: "registered")
+    fertilizer.setValue(false, forKey: "registered")
     fertilizer.setValue(name, forKey: "name")
     fertilizer.setValue(nature, forKey: "nature")
     fertilizer.setValue("kg/ha", forKey: "unit")
@@ -480,13 +539,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      createSeed(registered: false, variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
-      seedView.specieButton.setTitle("Avoine", for: .normal)
+      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
+      seedView.specieButton.setTitle("Abricotier", for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
       let maaID = phytoView.maaTextField.text!.isEmpty ? 0 : Int(phytoView.maaTextField.text!)
       let reentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : Int(phytoView.reentryDelayTextField.text!)
-      createPhyto(registered: false, name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: maaID!, reentryDelay: reentryDelay!)
+      createPhyto(name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID: maaID!, reentryDelay: reentryDelay!)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
@@ -494,7 +553,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         }
       }
     case 2:
-      createFertilizer(registered: false, name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
+      createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
       fertilizerView.nameTextField.text = ""
       fertilizerView.natureButton.setTitle("Organique", for: .normal)
     default:
