@@ -214,7 +214,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    irrigationValueTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
 
     setupViewsAccordingInterventionType()
   }
@@ -704,6 +704,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
     totalLabel.sizeToFit()
+    updateIrrigation(self)
 
     cropsView.isHidden = true
     dimView.isHidden = true

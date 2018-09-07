@@ -23,16 +23,16 @@ extension AddInterventionViewController: UITextFieldDelegate {
     irrigationExpandCollapseImage.transform = irrigationExpandCollapseImage.transform.rotated(by: CGFloat.pi)
   }
 
-  @objc public func textFieldDidChange(_ sender: Any) {
+  @objc public func updateIrrigation(_ sender: Any) {
     let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
     let volume = Float(volumeString) ?? 0
     let unit = irrigationUnitButton.titleLabel!.text!
 
     irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
-    changeInfoLabel(Double(volume), unit)
+    updateInfoLabel(Double(volume), unit)
   }
 
-  private func changeInfoLabel(_ volume: Double, _ unit: String) {
+  private func updateInfoLabel(_ volume: Double, _ unit: String) {
     if volume == 0 {
       irrigationInfoLabel.text = "Le volume ne peut être nul"
       irrigationInfoLabel.textColor = AppColor.TextColors.Red
