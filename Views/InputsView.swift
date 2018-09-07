@@ -243,7 +243,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       if !used {
         seeds[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
         addInterventionViewController?.selectedInputs.append(seeds[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
@@ -253,7 +253,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       if !used {
         phytos[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
         addInterventionViewController?.selectedInputs.append(phytos[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }
@@ -263,7 +263,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       if !used {
         fertilizers[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
         addInterventionViewController?.selectedInputs.append(fertilizers[indexPath.row])
         addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
       }

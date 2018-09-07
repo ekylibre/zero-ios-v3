@@ -168,7 +168,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if indexPath.row % 2 == 0 {
       cell.backgroundColor = AppColor.CellColors.white
     } else {
-      cell.backgroundColor = AppColor.CellColors.lightGray
+      cell.backgroundColor = AppColor.CellColors.LightGray
     }
 
     let intervention = interventions[indexPath.row]

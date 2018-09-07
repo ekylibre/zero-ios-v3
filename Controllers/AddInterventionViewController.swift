@@ -354,7 +354,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
       }
       closeEquipmentsSelectionView()
     case equipmentTypeTableView:
@@ -370,7 +370,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
         cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
       }
       closeEntitiesSelectionView()
     default:
