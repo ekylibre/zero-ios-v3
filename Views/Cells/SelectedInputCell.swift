@@ -48,7 +48,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var inputQuantity: UITextField = {
     let inputQuantity = UITextField(frame: CGRect.zero)
 
-    inputQuantity.backgroundColor = AppColor.ThemeColors.white
+    inputQuantity.backgroundColor = AppColor.ThemeColors.White
     inputQuantity.layer.borderColor = UIColor.lightGray.cgColor
     inputQuantity.layer.borderWidth = 1
     inputQuantity.layer.cornerRadius = 5
@@ -94,7 +94,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
     unitMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
     unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
-    unitMeasureButton.backgroundColor = AppColor.ThemeColors.white
+    unitMeasureButton.backgroundColor = AppColor.ThemeColors.White
     unitMeasureButton.layer.borderColor = UIColor.lightGray.cgColor
     unitMeasureButton.layer.borderWidth = 1
     unitMeasureButton.layer.cornerRadius = 5
@@ -125,7 +125,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return warningLabel
   }()
 
-  // MARK: Initialization
+  // MARK: - Initialization
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -154,42 +154,32 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       inputImage.widthAnchor.constraint(equalToConstant: 30),
       inputName.leftAnchor.constraint(equalTo: inputImage.rightAnchor, constant: 10),
       inputLabel.leftAnchor.constraint(equalTo: inputName.rightAnchor, constant: 5),
+
       quantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 20),
-      quantity.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
-      ]
-    )
-    NSLayoutConstraint.activate([
+      quantity.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+
       removeCell.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       removeCell.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
       removeCell.heightAnchor.constraint(equalToConstant: 15),
-      removeCell.widthAnchor.constraint(equalToConstant: 15)
-      ]
-    )
-    NSLayoutConstraint.activate([
+      removeCell.widthAnchor.constraint(equalToConstant: 15),
+
       inputName.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       inputQuantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 12.5),
       inputQuantity.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: 10),
       inputQuantity.heightAnchor.constraint(equalToConstant: 30),
-      inputQuantity.widthAnchor.constraint(equalToConstant: 100)
-      ]
-    )
-    NSLayoutConstraint.activate([
+      inputQuantity.widthAnchor.constraint(equalToConstant: 100),
+
       inputLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       unitMeasureButton.topAnchor.constraint(equalTo: inputLabel.bottomAnchor, constant: 12.5),
       unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
       unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
-      unitMeasureButton.widthAnchor.constraint(equalToConstant: 60)
-      ]
-    )
-    NSLayoutConstraint.activate([
+      unitMeasureButton.widthAnchor.constraint(equalToConstant: 60),
+
       warningImage.heightAnchor.constraint(equalToConstant: 10),
-      warningImage.widthAnchor.constraint(equalToConstant: 10)
-      ]
-    )
-    NSLayoutConstraint.activate([
-      surfaceQuantity.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
+      warningImage.widthAnchor.constraint(equalToConstant: 10),
       warningImage.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
-      warningLabel.leadingAnchor.constraint(equalTo: warningImage.trailingAnchor, constant: 3)
+      warningLabel.leadingAnchor.constraint(equalTo: warningImage.trailingAnchor, constant: 3),
+      surfaceQuantity.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
       ]
     )
 
@@ -208,7 +198,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     }
   }
 
-  // MARK: Actions
+  // MARK: - Actions
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
