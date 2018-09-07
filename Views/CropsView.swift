@@ -11,7 +11,7 @@ import CoreData
 
 class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   public var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
@@ -81,7 +81,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   var cropsCount = 0
   var totalSurfaceArea: Double = 0
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -130,7 +130,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
-  //MARK: - Table view
+  // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -166,7 +166,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       cropImageView.backgroundColor = UIColor.lightGray
       view.addSubview(cropImageView)
       let checkboxImage = UIImageView(frame: CGRect(x: 7, y: 7, width: 16, height: 16))
-      checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+      checkboxImage.image = #imageLiteral(resourceName: "unchecked-checkbox")
       view.addSubview(checkboxImage)
       let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
       nameLabel.textColor = UIColor.black
@@ -219,7 +219,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return 60
   }
 
-  //MARK: - Core Data
+  // MARK: - Core Data
 
   func fetchPlots() -> Bool {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -340,7 +340,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
     guard let cell = sender.superview?.superview as? PlotCell else {
@@ -358,7 +358,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       totalSurfaceArea += plotSurfaceArea
       for view in cell.subviews[1...crops.count] {
         let checkboxImage = view.subviews[1] as! UIImageView
-        checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
+        checkboxImage.image = #imageLiteral(resourceName: "checked-checkbox")
       }
       for crop in crops {
         selectedCrops.append(crop)
@@ -367,8 +367,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       sender.isSelected = false
       for (index, view) in cell.subviews[1...crops.count].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
-        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
-          checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+        if checkboxImage.image == #imageLiteral(resourceName: "checked-checkbox") {
+          checkboxImage.image = #imageLiteral(resourceName: "unchecked-checkbox")
           cropsCount -= 1
           totalSurfaceArea -= crops[index].value(forKey: "surfaceArea") as! Double
           if let index = selectedCrops.index(of: crops[index]) {
@@ -406,23 +406,23 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     let checkboxImage = view.subviews[1] as! UIImageView
 
-    if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") {
-      checkboxImage.image = #imageLiteral(resourceName: "checkedCheckbox")
+    if checkboxImage.image == #imageLiteral(resourceName: "unchecked-checkbox") {
+      checkboxImage.image = #imageLiteral(resourceName: "checked-checkbox")
       cropsCount += 1
       totalSurfaceArea += crop.value(forKey: "surfaceArea") as! Double
       if !cell.checkboxButton.isSelected {
         cell.checkboxButton.isSelected = true
       }
       selectedCrops.append(crop)
-    } else if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
-      checkboxImage.image = #imageLiteral(resourceName: "uncheckedCheckbox")
+    } else if checkboxImage.image == #imageLiteral(resourceName: "checked-checkbox") {
+      checkboxImage.image = #imageLiteral(resourceName: "unchecked-checkbox")
       cropsCount -= 1
       totalSurfaceArea -= crop.value(forKey: "surfaceArea") as! Double
       for (index, view) in cell.subviews[1...crops.count].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
-        if checkboxImage.image == #imageLiteral(resourceName: "checkedCheckbox") {
+        if checkboxImage.image == #imageLiteral(resourceName: "checked-checkbox") {
           break
-        } else if checkboxImage.image == #imageLiteral(resourceName: "uncheckedCheckbox") && index == crops.count - 1 {
+        } else if checkboxImage.image == #imageLiteral(resourceName: "unchecked-checkbox") && index == crops.count - 1 {
           cell.checkboxButton.isSelected = false
         }
 

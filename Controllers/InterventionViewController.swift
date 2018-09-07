@@ -12,7 +12,7 @@ import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-  //MARK: - Outlets
+  // MARK: - Outlets
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
@@ -24,7 +24,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
   @IBOutlet weak var addInterventionLabel: UILabel!
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var interventions = [NSManagedObject]() {
     didSet {
@@ -106,7 +106,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func initialiseInterventionButtons() {
 
     let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
-    let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "groundWork"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "cropProtection")]
+    let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
 
     for buttonCount in 0...6 {
 
@@ -149,7 +149,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Dispose of any resources that can be recreated.
   }
 
-  //MARK: - Table view data source
+  // MARK: - Table view data source
   
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -168,7 +168,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if indexPath.row % 2 == 0 {
       cell.backgroundColor = AppColor.CellColors.white
     } else {
-      cell.backgroundColor = AppColor.CellColors.lightGray
+      cell.backgroundColor = AppColor.CellColors.LightGray
     }
 
     let intervention = interventions[indexPath.row]
@@ -180,11 +180,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
     case Intervention.InterventionType.CropProtection.rawValue:
-      cell.typeImageView.image = UIImage(named: "cropProtection")!
+      cell.typeImageView.image = UIImage(named: "crop-protection")!
     case Intervention.InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
     case Intervention.InterventionType.GroundWork.rawValue:
-      cell.typeImageView.image = UIImage(named: "groundWork")!
+      cell.typeImageView.image = UIImage(named: "ground-work")!
     case Intervention.InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
     case Intervention.InterventionType.Implantation.rawValue:
@@ -369,7 +369,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
 

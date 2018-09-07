@@ -11,7 +11,7 @@ import CoreData
 
 class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate {
 
-  //MARK: - Outlets
+  // MARK: - Outlets
 
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
@@ -22,7 +22,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
   @IBOutlet weak var navigationBar: UINavigationBar!
-  @IBOutlet weak var firstView: UIView!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var selectEquipmentsView: UIView!
@@ -61,7 +60,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var newIntervention: NSManagedObject!
   var interventionType: String!
@@ -77,7 +76,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var entities = [NSManagedObject]()
   var searchedEntities = [NSManagedObject]()
   var doers = [NSManagedObject]()
-  var equipmentImage: [UIImage] = [#imageLiteral(resourceName: "airplanter"), #imageLiteral(resourceName: "baler_wrapper"), #imageLiteral(resourceName: "corn-topper"), #imageLiteral(resourceName: "cubic_baler"), #imageLiteral(resourceName: "disc_harrow"), #imageLiteral(resourceName: "forage_platform"), #imageLiteral(resourceName: "forager"), #imageLiteral(resourceName: "grinder"), #imageLiteral(resourceName: "harrow"), #imageLiteral(resourceName: "harvester"), #imageLiteral(resourceName: "hay_rake"), #imageLiteral(resourceName: "hiller"), #imageLiteral(resourceName: "hoe"), #imageLiteral(resourceName: "hoe_weeder"), #imageLiteral(resourceName: "implanter"), #imageLiteral(resourceName: "irrigation_pivot"), #imageLiteral(resourceName: "mower"), #imageLiteral(resourceName: "mower_conditioner"), #imageLiteral(resourceName: "plow"), #imageLiteral(resourceName: "reaper"), #imageLiteral(resourceName: "roll"), #imageLiteral(resourceName: "rotary_hoe"), #imageLiteral(resourceName: "round_baler"), #imageLiteral(resourceName: "seedbed_preparator"), #imageLiteral(resourceName: "soil_loosener"), #imageLiteral(resourceName: "sower"), #imageLiteral(resourceName: "sprayer"), #imageLiteral(resourceName: "spreader"), #imageLiteral(resourceName: "liquid_manure_spreader"), #imageLiteral(resourceName: "subsoil_plow"), #imageLiteral(resourceName: "superficial_plow"), #imageLiteral(resourceName: "tedder"), #imageLiteral(resourceName: "topper"), #imageLiteral(resourceName: "tractor"), #imageLiteral(resourceName: "trailer"), #imageLiteral(resourceName: "trimmer"), #imageLiteral(resourceName: "vibrocultivator"), #imageLiteral(resourceName: "weeder"), #imageLiteral(resourceName: "wrapper")]
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
@@ -186,8 +184,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.view.addSubview(inputsView)
 
     defineEquipmentTypes()
-    fetchEquipments()
-    fetchEntities()
+    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
     selectedEquipmentType = equipmentTypes[0]
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
     initUnitMeasurePickerView()
@@ -222,7 +220,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.present(inputsView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
-  //MARK: - Table view data source
+  // MARK: - Table view data source
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -274,15 +272,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         switch cell.type {
         case "Seed":
           cell.inputName.text = input?.value(forKey: "specie") as? String
-          cell.inputSpec.text = input?.value(forKey: "variety") as? String
+          cell.inputLabel.text = input?.value(forKey: "variety") as? String
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case "Phyto":
           cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputSpec.text = input?.value(forKey: "firmName") as? String
+          cell.inputLabel.text = input?.value(forKey: "firmName") as? String
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
         case "Fertilizer":
           cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputSpec.text = input?.value(forKey: "nature") as? String
+          cell.inputLabel.text = input?.value(forKey: "nature") as? String
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
           print("No type")
@@ -295,7 +293,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       equipment = searchedEquipments[indexPath.row]
       cell.nameLabel.text = equipment?.value(forKey: "name") as? String
       cell.typeLabel.text = equipment?.value(forKey: "type") as? String
-      cell.typeImageView.image = equipmentImage[defineEquipmentImage(equipmentName: cell.typeLabel.text!)]
+      cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -306,7 +304,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
-      cell.typeImageView.image = equipmentImage[defineEquipmentImage(equipmentName: cell.typeLabel.text!)]
+      cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
     case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
@@ -320,7 +318,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       entity = searchedEntities[indexPath.row]
       cell.firstName.text = entity?.value(forKey: "firstName") as? String
       cell.lastName.text = entity?.value(forKey: "lastName") as? String
-      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
+      cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
     case doersTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
@@ -333,7 +331,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
-      cell.logo.image = #imageLiteral(resourceName: "entityLogo")
+      cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
     default:
       fatalError("Switch error")
@@ -356,9 +354,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
       }
-      closeSelectEquipmentsView()
+      closeEquipmentsSelectionView()
     case equipmentTypeTableView:
       selectedEquipmentType = equipmentTypes[indexPath.row]
       equipmentTypeTableView.reloadData()
@@ -372,9 +370,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
         cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
       }
-      closeSelectEntitiesView()
+      closeEntitiesSelectionView()
     default:
       print("Nothing to do")
     }
@@ -385,7 +383,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case doersTableView:
       return 75
     case selectedInputsTableView:
-      return 100
+      return 110
     default:
       return 60
     }
@@ -405,7 +403,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentTypeTableView.layer.shadowRadius = 10
   }
 
-  //MARK: - Core Data
+  // MARK: - Core Data
 
   func createIntervention() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -511,7 +509,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  //MARK: - Navigation
+  func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
+
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+
+    do {
+      entity = try managedContext.fetch(entitiesFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    searchedEntity = entity
+  }
+
+  // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
@@ -554,7 +569,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.seedView.specieButton.setTitle(value, for: .normal)
   }
 
-  //MARK: - Actions
+  // MARK: - Search Bar Delegate
+
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    searchedEntities = searchText.isEmpty ? entities : entities.filter({(filterEntity: NSManagedObject) -> Bool in
+      let entityName: String = filterEntity.value(forKey: "firstName") as! String
+      return entityName.range(of: searchText) != nil
+    })
+    searchedEquipments = searchText.isEmpty ? equipments : equipments.filter({(filterEquipment: NSManagedObject) -> Bool in
+      let equipmentName: String = filterEquipment.value(forKey: "name") as! String
+      return equipmentName.range(of: searchText) != nil
+    })
+    entitiesTableView.reloadData()
+    equipmentsTableView.reloadData()
+  }
+
+  // MARK: - Actions
 
   @IBAction func selectCrops(_ sender: Any) {
     dimView.isHidden = false
@@ -654,5 +684,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func cancelAdding(_ sender: Any) {
     dismiss(animated: true, completion: nil)
+  }
+
+  func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
+                          numberLabel: UILabel, addEntityButton: UIButton) {
+
+    if entities.count > 0 && constraint.constant == 70 {
+      addEntityButton.isHidden = true
+      numberLabel.isHidden = false
+      switch entities {
+      case selectedEquipments:
+        numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
+      case doers:
+        numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+      default:
+        return
+      }
+    } else {
+      numberLabel.isHidden = true
+      addEntityButton.isHidden = false
+    }
   }
 }

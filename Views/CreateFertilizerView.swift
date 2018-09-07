@@ -10,7 +10,7 @@ import UIKit
 
 class CreateFertilizerView: UIView, UITextFieldDelegate {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
@@ -79,7 +79,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -136,14 +136,14 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
-  //MARK: - Text field
+  // MARK: - Text field
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
   }
 
-  //MARK: - Actions
+  // MARK: - Actions
 
   @objc func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()

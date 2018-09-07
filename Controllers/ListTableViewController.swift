@@ -10,7 +10,7 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   var delegate: WriteValueBackDelegate?
   var cellsStrings: [String]!
@@ -23,7 +23,7 @@ class ListTableViewController: UITableViewController {
     tableView.tableFooterView = UIView()
   }
 
-  //MARK: - Table view
+  // MARK: - Table view
 
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
