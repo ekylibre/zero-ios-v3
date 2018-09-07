@@ -16,7 +16,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   private func loadEquipmentTypes() -> [String] {
     var equipmentType = [String]()
 
-    if let asset = NSDataAsset(name: "equipment_types") {
+    if let asset = NSDataAsset(name: "equipment-types") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
         let registeredEquipments = jsonResult as? [[String: Any]]

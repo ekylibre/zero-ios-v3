@@ -365,7 +365,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
       }
       closeEquipmentsSelectionView()
     case equipmentTypeTableView:
@@ -381,7 +381,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
         cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.lightGray
+        cell.backgroundColor = AppColor.CellColors.LightGray
       }
       closeEntitiesSelectionView()
     default:
@@ -556,14 +556,35 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showSpecieList":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.cellsStrings = ["Avoine", "Blé dur", "Blé tendre", "Maïs", "Riz", "Triticale", "Soja", "Tournesol annuel", "Fève ou féverole", "Luzerne", "Pois commun", "Sainfoin", "Chanvre"]
+      destVC.cellsStrings = loadSpecies()
     default:
-      guard let button = sender as? UIButton, button === saveInterventionButton else {
+      guard let button = sender as? UIButton, button == saveInterventionButton else {
         return
       }
 
       createIntervention()
     }
+  }
+
+  private func loadSpecies() -> [String] {
+    var species = [String]()
+
+    if let asset = NSDataAsset(name: "species") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredSpecies = jsonResult as? [[String: Any]]
+
+        for registeredSpecie in registeredSpecies! {
+          species.append(registeredSpecie["fra"] as! String)
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("species.json not found")
+    }
+
+    return species
   }
 
   func writeValueBack(value: String) {
