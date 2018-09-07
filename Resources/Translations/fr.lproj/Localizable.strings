@@ -68,6 +68,6 @@
 
 // Weather
 
-"weater" = "Météo";
+"weather" = "Météo";
 "temperature" = "Température";
 "wind_speed" = "Vitesse du vent";

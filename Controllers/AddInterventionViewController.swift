@@ -63,6 +63,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var weatherSection: UIView!
   @IBOutlet weak var weatherSectionHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var interventionStackView: UIStackView!
 
   // MARK: - Properties
 
@@ -102,7 +103,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
     selectDateView.center.x = self.view.center.x
     selectDateView.center.y = self.view.center.y
-    self.view.addSubview(selectDateView)
+    view.addSubview(selectDateView)
 
     let dateFormatter = DateFormatter()
 
@@ -202,15 +203,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     inputsView.addInterventionViewController = self
-    self.view.addSubview(inputsView)
+    view.addSubview(inputsView)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
-    self.view.addSubview(cropsView)
+    view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    weatherView = WeatherView(frame: weatherSection.frame)
+    weatherView = WeatherView(frame: CGRect.zero)
     weatherView.addInterventionViewController = self
-    weatherSection.addSubview(weatherView)
+    interventionStackView.addArrangedSubview(weatherView)
+    //view.addSubview(weatherView)
+    //weatherSection.addSubview(weatherView)
   }
 
   override func viewDidLayoutSubviews() {
