@@ -61,8 +61,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var weatherSection: UIView!
-  @IBOutlet weak var weatherSectionHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var currentWeatherLabel: UILabel!
+  @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var temperatureTextField: UITextField!
+  @IBOutlet weak var windSpeedTextField: UITextField!
+  @IBOutlet weak var cloudyButton: UIButton!
+  @IBOutlet weak var sunnyButton: UIButton!
+  @IBOutlet weak var cloudyPassageButton: UIButton!
+  @IBOutlet weak var rainFallButton: UIButton!
+  @IBOutlet weak var fogyButton: UIButton!
+  @IBOutlet weak var rainButton: UIButton!
+  @IBOutlet weak var snowButton: UIButton!
+  @IBOutlet weak var stormButton: UIButton!
 
   // MARK: - Properties
 
@@ -206,6 +217,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+
+    initializeWeatherView()
   }
 
   override func viewDidLayoutSubviews() {
