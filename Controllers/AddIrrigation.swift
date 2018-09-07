@@ -29,7 +29,6 @@ extension AddInterventionViewController: UITextFieldDelegate {
     let unit = irrigationUnitButton.titleLabel!.text!
 
     irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
-    irrigationLabel.isHidden = false
     changeInfoLabel(Double(volume), unit)
   }
 
