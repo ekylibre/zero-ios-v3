@@ -63,7 +63,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var quantity: UILabel = {
     let quantity = UILabel(frame: CGRect.zero)
 
-    quantity.text = "Quantité"
+    quantity.text = "quantity".localized
     quantity.textColor = AppColor.TextColors.DarkGray
     quantity.font = UIFont.systemFont(ofSize: 13)
     quantity.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +84,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
     surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = "Soit 0,0"
+    surfaceQuantity.text = "or".localized + " 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
     return surfaceQuantity
   }()
@@ -120,7 +120,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "dose invalide"
+    warningLabel.text = "invalid_dose".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
   }()

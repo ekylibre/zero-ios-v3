@@ -175,3 +175,6 @@
 "seeds" = "Seeds";
 "phyto" = "Phyto.";
 "fertilizers" = "Fertilizers";
+"quantity" = "Quantity";
+"or" = "Or";
+"invalid_dose" = "Invalid dose";
