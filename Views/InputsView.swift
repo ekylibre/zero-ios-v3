@@ -201,7 +201,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       if fromSeeds.count > indexPath.row {
         cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
-        cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+        let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+        cell.specieLabel.text = specie?.localized
       }
       return cell
     case 1:

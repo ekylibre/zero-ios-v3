@@ -625,7 +625,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let registeredSpecies = jsonResult as? [[String: Any]]
 
         for registeredSpecie in registeredSpecies! {
-          species.append(registeredSpecie["fra"] as! String)
+          let specie = registeredSpecie["name"] as! String
+          species.append(specie.localized)
         }
       } catch {
         print("Lexicon error")
@@ -634,7 +635,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       print("species.json not found")
     }
 
-    return species
+    return species.sorted()
   }
 
   func writeValueBack(value: String) {
