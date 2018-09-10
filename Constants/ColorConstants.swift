@@ -40,4 +40,9 @@ struct AppColor {
     static let Blue = UIColor(red: 23/255, green: 107/255, blue: 204/255, alpha: 1)
     static let White = UIColor.white
   }
+
+  struct cgColor {
+    static let Green = UIColor(red: 128/255, green: 187/255, blue: 65/255, alpha: 1).cgColor
+    static let LightGray = UIColor.lightGray.cgColor
+  }
 }

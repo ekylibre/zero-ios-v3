@@ -100,6 +100,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
+  var weatherIsSelected: Bool = false
+  var weathers = [UIButton]()
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -219,6 +221,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
     initializeWeatherView()
+    weathers = defineWeathers()
   }
 
   override func viewDidLayoutSubviews() {
@@ -713,7 +716,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     return dateString + " • " + hoursNumber
   }
-  
+
   @IBAction func selectDate(_ sender: Any) {
     dimView.isHidden = false
     selectDateView.isHidden = false
@@ -773,3 +776,4 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
+
