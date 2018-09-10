@@ -220,7 +220,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
 
       cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
-      cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      cell.natureLabel.text = nature?.localized
       return cell
     default:
       fatalError("Switch error")
