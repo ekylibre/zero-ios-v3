@@ -155,3 +155,15 @@
 "water_spreader" = "Enrouleur";
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
+
+// Weather
+
+"weather" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"not_filled_in" = "Not filled in";
+
+// Inputs View
+
+"create_new_%@" = "+ CRÉER UN%@";
+"new_seed" = "E NOUVELLE SEMENCE";
