@@ -1491,14 +1491,6 @@
                             <constraint firstItem="fGp-gL-8mm" firstAttribute="trailing" secondItem="q3s-Gt-LrC" secondAttribute="trailing" id="ye5-oW-ObI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TZH-N4-7jc"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="mbF-nF-QUt"/>
-                                <exclude reference="k1P-VF-83v"/>
-                                <exclude reference="lyS-jh-cAc"/>
-                                <exclude reference="vkl-cP-TQz"/>
-                            </mask>
-                        </variation>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
