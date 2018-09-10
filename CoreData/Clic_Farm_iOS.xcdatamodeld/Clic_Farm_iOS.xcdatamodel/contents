@@ -173,7 +173,7 @@
         <element name="Plots" positionX="754" positionY="389" width="128" height="133"/>
         <element name="Seeds" positionX="153" positionY="-859" width="128" height="193"/>
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
-        <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
+        <element name="Users" positionX="-441" positionY="401" width="128" height="60"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
         <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="88"/>
     </elements>

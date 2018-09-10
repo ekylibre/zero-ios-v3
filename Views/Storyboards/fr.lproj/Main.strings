@@ -1,0 +1,261 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "10g-cZ-ZYp"; */
+"10g-cZ-ZYp.text" = "Label";
+
+/* Class = "UILabel"; text = "temperature"; ObjectID = "2Et-nE-Npz"; */
+"2Et-nE-Npz.text" = "temperature";
+
+/* Class = "UILabel"; text = "Infos Label"; ObjectID = "342-8b-SlZ"; */
+"342-8b-SlZ.text" = "Infos Label";
+
+/* Class = "UITextField"; text = "7"; ObjectID = "3Fz-6d-VQ1"; */
+"3Fz-6d-VQ1.text" = "7";
+
+/* Class = "UITextField"; placeholder = "Numéro"; ObjectID = "3ay-Ie-glI"; */
+"3ay-Ie-glI.placeholder" = "Numéro";
+
+/* Class = "UILabel"; text = "heures"; ObjectID = "3cP-JT-NmL"; */
+"3cP-JT-NmL.text" = "heures";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "48D-BM-Mwp"; */
+"48D-BM-Mwp.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "cloudyPassage"; ObjectID = "4EX-oh-FEb"; */
+"4EX-oh-FEb.normalTitle" = "cloudyPassage";
+
+/* Class = "UIButton"; normalTitle = "+ AJOUTER"; ObjectID = "5AO-Jj-0ZP"; */
+"5AO-Jj-0ZP.normalTitle" = "+ AJOUTER";
+
+/* Class = "UIButton"; normalTitle = "CRÉER"; ObjectID = "7oC-Bf-KLg"; */
+"7oC-Bf-KLg.normalTitle" = "CRÉER";
+
+/* Class = "UIButton"; normalTitle = "fogy"; ObjectID = "8Tz-Cl-TTF"; */
+"8Tz-Cl-TTF.normalTitle" = "fogy";
+
+/* Class = "UIButton"; normalTitle = "sunny"; ObjectID = "8jz-fe-slq"; */
+"8jz-fe-slq.normalTitle" = "sunny";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "9XQ-uB-zG5"; */
+"9XQ-uB-zG5.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "A58-eW-7tB"; */
+"A58-eW-7tB.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "wind_speed"; ObjectID = "BK3-QQ-YBa"; */
+"BK3-QQ-YBa.text" = "wind_speed";
+
+/* Class = "UILabel"; text = "Création d'un équipement"; ObjectID = "BiR-Np-yVB"; */
+"BiR-Np-yVB.text" = "Création d'un équipement";
+
+/* Class = "UITextField"; placeholder = "Nom"; ObjectID = "BuY-c0-rnF"; */
+"BuY-c0-rnF.placeholder" = "Nom";
+
+/* Class = "UIButton"; normalTitle = "+ CRÉER UN NOUVEL EQUIPEMENT"; ObjectID = "DJS-aN-eaO"; */
+"DJS-aN-eaO.normalTitle" = "+ CRÉER UN NOUVEL EQUIPEMENT";
+
+/* Class = "UILabel"; text = "Crops Label"; ObjectID = "EgV-or-pGj"; */
+"EgV-or-pGj.text" = "Crops Label";
+
+/* Class = "UIButton"; normalTitle = "ANNULER"; ObjectID = "Fu9-pv-EZJ"; */
+"Fu9-pv-EZJ.normalTitle" = "ANNULER";
+
+/* Class = "UITextField"; placeholder = "Nom"; ObjectID = "Gfz-0d-yzp"; */
+"Gfz-0d-yzp.placeholder" = "Nom";
+
+/* Class = "UILabel"; text = "Type Label"; ObjectID = "HRC-pY-jcH"; */
+"HRC-pY-jcH.text" = "Type Label";
+
+/* Class = "UILabel"; text = "Personnes"; ObjectID = "IAh-c6-yzZ"; */
+"IAh-c6-yzZ.text" = "Personnes";
+
+/* Class = "UILabel"; text = "Date Label"; ObjectID = "Ii2-La-EhX"; */
+"Ii2-La-EhX.text" = "Date Label";
+
+/* Class = "UIButton"; normalTitle = "snow"; ObjectID = "Io4-JY-DOw"; */
+"Io4-JY-DOw.normalTitle" = "snow";
+
+/* Class = "UILabel"; text = "Débuté le"; ObjectID = "K0b-DY-NwG"; */
+"K0b-DY-NwG.text" = "Débuté le";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "LQe-5q-XRp"; */
+"LQe-5q-XRp.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "date"; ObjectID = "MxI-Pz-rtl"; */
+"MxI-Pz-rtl.normalTitle" = "date";
+
+/* Class = "UILabel"; text = "+ SÉLECTIONNER"; ObjectID = "N64-8y-rWg"; */
+"N64-8y-rWg.text" = "+ SÉLECTIONNER";
+
+/* Class = "UILabel"; text = "ENREGISTRER UNE INTERVENTION"; ObjectID = "NNw-dJ-5Yi"; */
+"NNw-dJ-5Yi.text" = "ENREGISTRER UNE INTERVENTION";
+
+/* Class = "UIButton"; normalTitle = "Collapse Button"; ObjectID = "PvZ-9o-YeQ"; */
+"PvZ-9o-YeQ.normalTitle" = "Collapse Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Rof-yp-WzL"; */
+"Rof-yp-WzL.text" = "Label";
+
+/* Class = "UILabel"; text = "Création d'un outil"; ObjectID = "Rzr-1A-DPD"; */
+"Rzr-1A-DPD.text" = "Création d'un outil";
+
+/* Class = "UILabel"; text = "Cultures"; ObjectID = "SLR-hS-kBq"; */
+"SLR-hS-kBq.text" = "Cultures";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "SSv-ix-pwS"; */
+"SSv-ix-pwS.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Mot de passe"; ObjectID = "ScR-OF-ai0"; */
+"ScR-OF-ai0.placeholder" = "Mot de passe";
+
+/* Class = "UILabel"; text = "Sélectionnez une personne"; ObjectID = "SrW-ud-Ehh"; */
+"SrW-ud-Ehh.text" = "Sélectionnez une personne";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "Tur-MK-R4c"; */
+"Tur-MK-R4c.text" = "Type";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "UKP-Fr-E6R"; */
+"UKP-Fr-E6R.text" = "Label";
+
+/* Class = "UILabel"; text = "Non renseignée"; ObjectID = "UXL-bz-O2x"; */
+"UXL-bz-O2x.text" = "Non renseignée";
+
+/* Class = "UILabel"; text = "Inputs Number"; ObjectID = "UpY-ou-8K6"; */
+"UpY-ou-8K6.text" = "Inputs Number";
+
+/* Class = "UILabel"; text = "Name Label"; ObjectID = "Uvf-Sv-2Q5"; */
+"Uvf-Sv-2Q5.text" = "Name Label";
+
+/* Class = "UILabel"; text = "km/h"; ObjectID = "W1a-qv-ooU"; */
+"W1a-qv-ooU.text" = "km/h";
+
+/* Class = "UIButton"; normalTitle = "DÉJÀ RÉALISÉE"; ObjectID = "XRU-Wr-aoY"; */
+"XRU-Wr-aoY.normalTitle" = "DÉJÀ RÉALISÉE";
+
+/* Class = "UIButton"; normalTitle = "CONNEXION"; ObjectID = "aQf-3V-e73"; */
+"aQf-3V-e73.normalTitle" = "CONNEXION";
+
+/* Class = "UILabel"; text = "Intrants"; ObjectID = "aUf-in-lcY"; */
+"aUf-in-lcY.text" = "Intrants";
+
+/* Class = "UILabel"; text = "°C"; ObjectID = "as1-Zg-NLq"; */
+"as1-Zg-NLq.text" = "°C";
+
+/* Class = "UIButton"; normalTitle = "+ CRÉER UNE PERSONNE"; ObjectID = "beT-1i-CuG"; */
+"beT-1i-CuG.normalTitle" = "+ CRÉER UNE PERSONNE";
+
+/* Class = "UIButton"; normalTitle = "cloudy"; ObjectID = "ca3-oq-1ls"; */
+"ca3-oq-1ls.normalTitle" = "cloudy";
+
+/* Class = "UIButton"; normalTitle = "Collapse"; ObjectID = "fJR-CJ-tlU"; */
+"fJR-CJ-tlU.normalTitle" = "Collapse";
+
+/* Class = "UILabel"; text = "Durée"; ObjectID = "ha2-4s-ot1"; */
+"ha2-4s-ot1.text" = "Durée";
+
+/* Class = "UIButton"; normalTitle = "QUI COMMENCE"; ObjectID = "jHP-kl-RhJ"; */
+"jHP-kl-RhJ.normalTitle" = "QUI COMMENCE";
+
+/* Class = "UILabel"; text = "Equipments Number"; ObjectID = "lB9-6U-iCz"; */
+"lB9-6U-iCz.text" = "Equipments Number";
+
+/* Class = "UITextField"; placeholder = "Titre"; ObjectID = "lXs-eO-iv8"; */
+"lXs-eO-iv8.placeholder" = "Titre";
+
+/* Class = "UIButton"; normalTitle = "rainFall"; ObjectID = "lr9-gj-MXe"; */
+"lr9-gj-MXe.normalTitle" = "rainFall";
+
+/* Class = "UIButton"; normalTitle = "ENREGISTRER"; ObjectID = "mBB-VD-0Gd"; */
+"mBB-VD-0Gd.normalTitle" = "ENREGISTRER";
+
+/* Class = "UILabel"; text = "Connexion impossible"; ObjectID = "nRw-M6-Pts"; */
+"nRw-M6-Pts.text" = "Connexion impossible";
+
+/* Class = "UIButton"; normalTitle = "Log-Out Tmp"; ObjectID = "ngb-a1-y0g"; */
+"ngb-a1-y0g.normalTitle" = "Log-Out Tmp";
+
+/* Class = "UILabel"; text = "0.1"; ObjectID = "noK-9p-40a"; */
+"noK-9p-40a.text" = "0.1";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "oDC-Pa-mmw"; */
+"oDC-Pa-mmw.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Collapse"; ObjectID = "ogm-Z1-SSR"; */
+"ogm-Z1-SSR.normalTitle" = "Collapse";
+
+/* Class = "UILabel"; text = "Doers Number"; ObjectID = "orv-Jv-Mfq"; */
+"orv-Jv-Mfq.text" = "Doers Number";
+
+/* Class = "UIButton"; normalTitle = "ANNULER"; ObjectID = "qD8-2V-ooz"; */
+"qD8-2V-ooz.normalTitle" = "ANNULER";
+
+/* Class = "UILabel"; text = "Synchro Label"; ObjectID = "qI5-Ep-5Qd"; */
+"qI5-Ep-5Qd.text" = "Synchro Label";
+
+/* Class = "UILabel"; text = "Type Label"; ObjectID = "qg1-zw-twO"; */
+"qg1-zw-twO.text" = "Type Label";
+
+/* Class = "UIButton"; normalTitle = "rain"; ObjectID = "rEb-3z-Qyi"; */
+"rEb-3z-Qyi.normalTitle" = "rain";
+
+/* Class = "UIButton"; normalTitle = "Delete Button"; ObjectID = "rPO-yh-bmG"; */
+"rPO-yh-bmG.normalTitle" = "Delete Button";
+
+/* Class = "UITextField"; placeholder = "Prénom"; ObjectID = "rRC-EH-Dse"; */
+"rRC-EH-Dse.placeholder" = "Prénom";
+
+/* Class = "UILabel"; text = "Clic&Farm"; ObjectID = "rcy-Q6-0lU"; */
+"rcy-Q6-0lU.text" = "Clic&Farm";
+
+/* Class = "UILabel"; text = "Sélectionnez un équipement"; ObjectID = "sPo-hC-Lsa"; */
+"sPo-hC-Lsa.text" = "Sélectionnez un équipement";
+
+/* Class = "UIButton"; normalTitle = "CRÉER"; ObjectID = "sYv-EJ-5M5"; */
+"sYv-EJ-5M5.normalTitle" = "CRÉER";
+
+/* Class = "UIButton"; normalTitle = "ANNULER"; ObjectID = "tLB-CA-7x6"; */
+"tLB-CA-7x6.normalTitle" = "ANNULER";
+
+/* Class = "UILabel"; text = "Temps de travail"; ObjectID = "tS7-0f-DOT"; */
+"tS7-0f-DOT.text" = "Temps de travail";
+
+/* Class = "UITextView"; text = "Vous devez être connecté à Internet pour pouvoir vous identifier la première fois."; ObjectID = "tUn-Ea-mE2"; */
+"tUn-Ea-mE2.text" = "Vous devez être connecté à Internet pour pouvoir vous identifier la première fois.";
+
+/* Class = "UITextView"; text = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre..."; ObjectID = "tcH-Tp-UHn"; */
+"tcH-Tp-UHn.text" = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre...";
+
+/* Class = "UITextField"; placeholder = "Notes"; ObjectID = "uGn-VV-4Ti"; */
+"uGn-VV-4Ti.placeholder" = "Notes";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "uUk-5i-pGA"; */
+"uUk-5i-pGA.text" = "Label";
+
+/* Class = "UILabel"; text = "Equipements"; ObjectID = "v4G-sV-gkh"; */
+"v4G-sV-gkh.text" = "Equipements";
+
+/* Class = "UIButton"; normalTitle = "storm"; ObjectID = "vcc-mx-nY4"; */
+"vcc-mx-nY4.normalTitle" = "storm";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "vfb-X0-1tk"; */
+"vfb-X0-1tk.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "aujourd'hui • 7h"; ObjectID = "wAO-eJ-lrk"; */
+"wAO-eJ-lrk.text" = "aujourd'hui • 7h";
+
+/* Class = "UILabel"; text = "Météo"; ObjectID = "wJi-KE-5Mc"; */
+"wJi-KE-5Mc.text" = "Météo";
+
+/* Class = "UIButton"; normalTitle = "Collapse Button"; ObjectID = "wzQ-CL-iF5"; */
+"wzQ-CL-iF5.normalTitle" = "Collapse Button";
+
+/* Class = "UILabel"; text = "Conducteur"; ObjectID = "x4p-m0-YZ1"; */
+"x4p-m0-YZ1.text" = "Conducteur";
+
+/* Class = "UIButton"; normalTitle = "+ AJOUTER"; ObjectID = "xR1-hG-glp"; */
+"xR1-hG-glp.normalTitle" = "+ AJOUTER";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "xl6-Bg-SP8"; */
+"xl6-Bg-SP8.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "+ AJOUTER"; ObjectID = "yGb-zU-Lzj"; */
+"yGb-zU-Lzj.normalTitle" = "+ AJOUTER";

@@ -155,3 +155,10 @@
 "water_spreader" = "Water spreader";
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
+
+// Weather
+
+"weather" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"not_filled_in" = "Not filled in";

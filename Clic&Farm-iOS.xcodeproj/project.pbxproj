@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040AA0ED21469B4200D75A2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040AA0EF21469B4200D75A2D /* Main.storyboard */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
@@ -15,6 +16,7 @@
 		0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
+		041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041855772142A20F0077A715 /* AddWeatherToIntervention.swift */; };
 		0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */; };
 		041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
@@ -33,7 +35,6 @@
 		6B11EEE22139635400E2DEC4 /* EntityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED72139635400E2DEC4 /* EntityCell.swift */; };
 		6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED92139635400E2DEC4 /* PlotCell.swift */; };
 		6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */; };
-		6B11EEE92139636300E2DEC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B11EEE72139636200E2DEC4 /* Main.storyboard */; };
 		6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
 		6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
 		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
@@ -63,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040AA0F021469B5100D75A2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		040AA0F121469B7C00D75A2D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
 		04131399213FFC3E005437F0 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		041855772142A20F0077A715 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
 		0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
 		041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
@@ -93,7 +97,6 @@
 		6B11EED72139635400E2DEC4 /* EntityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityCell.swift; sourceTree = "<group>"; };
 		6B11EED92139635400E2DEC4 /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		6B11EEE72139636200E2DEC4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
@@ -163,6 +166,7 @@
 				0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */,
 				6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */,
 				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
+				041855772142A20F0077A715 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
@@ -231,7 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */,
-				6B11EEE72139636200E2DEC4 /* Main.storyboard */,
+				040AA0EF21469B4200D75A2D /* Main.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -364,7 +368,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B11EEE92139636300E2DEC4 /* Main.storyboard in Resources */,
+				040AA0ED21469B4200D75A2D /* Main.storyboard in Resources */,
 				041313B321401483005437F0 /* Localizable.strings in Resources */,
 				6BA37141213963230086DF9B /* Assets.xcassets in Resources */,
 				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
@@ -426,6 +430,7 @@
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
+				041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */,
 				0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */,
 				6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */,
 				047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */,
@@ -461,6 +466,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		040AA0EF21469B4200D75A2D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				040AA0F021469B5100D75A2D /* Base */,
+				040AA0F121469B7C00D75A2D /* fr */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		041313AE21401483005437F0 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
