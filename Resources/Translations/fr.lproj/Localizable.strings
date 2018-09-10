@@ -22,6 +22,96 @@
 "care" = "Entretien";
 "crop_protection" = "Pulvérisation";
 
+// Vegetal species
+
+"allium_ascalonicum" = "Échalotte";
+"allium_cepa" = "Oignon";
+"allium_porrum" = "Poireau";
+"allium_sativum" = "Ail cultivé";
+"allium_schoenoprasum" = "Ciboulette";
+"anthriscus_cerefolium" = "Cerfeuil";
+"apium_graveolens" = "Céleri";
+"avena_sativa" = "Avoine cultivée";
+"beta_vulgaris" = "Betterave commune";
+"brassica_napus" = "Colza";
+"brassica_oleracea" = "Chou";
+"brassica_rapa" = "Brassica rapa";
+"cannabis_sativa" = "Chanvre";
+"capsicum_annuum" = "Poivron";
+"cicer_arietinum" = "Pois chiche";
+"cichorium_endivia" = "Chicorée endive";
+"cichorium_intybus" = "Chicorée sauvage";
+"citrullus_lanatus" = "Pastèque commune";
+"citrus_medica" = "Cédratier";
+"citrus_reticulata" = "Mandarinier";
+"citrus_sinensis" = "Orange";
+"corylus_avellana" = "Noisetier commun";
+"cucumis_melo" = "Melon";
+"cucumis_sativus" = "Concombre";
+"cucurbita_maxima" = "Potiron";
+"cucurbita_pepo" = "Citrouille";
+"cydonia_oblonga" = "Cognassier";
+"cynara_scolymus" = "Artichaut";
+"daucus_carota" = "Carotte commune";
+"foeniculum_vulgare" = "Fenouil doux";
+"fortunella_margarita" = "Kumquat ovale";
+"glycine_max" = "Soja";
+"helianthus_annuus" = "Tournesol annuel";
+"hordeum_vulgare" = "Orge commune";
+"juglans_regia" = "Noyer commun";
+"lactuca_sativa" = "Laitue cultivée";
+"lens_culinaris" = "Lentille cultivée";
+"linum_usitatissimum" = "Linum cultivé";
+"lolium_multiflorum" = "Ray grass Italien";
+"lolium_perenne" = "Ray grass Anglais";
+"lotus_corniculatus" = "Lotier corniculé";
+"malus_pumila" = "Pommier commun";
+"medicago_sativa" = "Luzerne cultivée";
+"olea_europaea" = "Olivier";
+"onobrychis_viciifolia" = "Sainfoin commun";
+"oryza_sativa" = "Riz cultivé";
+"petroselinum_crispum" = "Persil commun";
+"phaseolus_vulgaris" = "Haricot commun";
+"pisum_sativum" = "Pois commun";
+"poa_trivialis" = "Pâturin commun";
+"prunus_armeniaca" = "Abricotier";
+"prunus_avium" = "Merisier";
+"prunus_cerasifera" = "Prunier-cerise (Myrobolan)";
+"prunus_cerasus" = "Prunus cerasus";
+"prunus_domestica" = "Prunier domestique";
+"prunus_mahaleb" = "Merisier Ste Lucie";
+"prunus_persica" = "Pêcher";
+"prunus_salicina" = "Prunier du Japon";
+"pyrus_communis" = "Poirier commun";
+"raphanus_sativus" = "Radis";
+"ribes_nigrum" = "Cassissier";
+"ribes_rubrum" = "Groseiller à grappes";
+"rubus_idaeus" = "Framboisier";
+"solanum_lycopersicum" = "Tomate";
+"solanum_melongena" = "Aubergine";
+"solanum_torvum" = "Aubergine pois";
+"solanum_tuberosum" = "Pomme de terre";
+"spinacia_oleracea" = "Épinard";
+"trifolium_alexandrinum" = "Trèfle d’Alexandrie";
+"trifolium_incarnatum" = "Trèfle incarnat";
+"trifolium_pratense" = "Trèfle violet";
+"trifolium_repens" = "Trèfle blanc";
+"triticosecale" = "Triticale";
+"triticum_aestivum" = "Blé tendre";
+"triticum_durum" = "Blé dur";
+"valerianella_locusta" = "Mâche";
+"vicia_faba" = "Fève ou féverole";
+"vicia_sativa" = "Vesce cultivée";
+"vicia_villosa" = "Vesce villosa";
+"vitis" = "Vigne";
+"vitis_vinifera" = "Cépage Vitis vinifera";
+"zea_mays" = "Maïs";
+
+// Nature
+
+"organic" = "Organique";
+"mineral" = "Minéral";
+
 // Equipment types
 
 "airplanter" = "Semoir monograines";

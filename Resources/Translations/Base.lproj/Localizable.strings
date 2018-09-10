@@ -22,6 +22,96 @@
 "care" = "Care";
 "crop_protection" = "Crop protection";
 
+// Vegetal species
+
+"allium_ascalonicum" = "Shallot";
+"allium_cepa" = "Onion";
+"allium_porrum" = "Allium porrum";
+"allium_sativum" = "Cultivated garlic";
+"allium_schoenoprasum" = "Chives";
+"anthriscus_cerefolium" = "Garden Chervil";
+"apium_graveolens" = "Wild Celery";
+"avena_sativa" = "Oat";
+"beta_vulgaris" = "Beet";
+"brassica_napus" = "Rapeseed";
+"brassica_oleracea" = "Cabbage";
+"brassica_rapa" = "Brassica rapa";
+"cannabis_sativa" = "Hemp";
+"capsicum_annuum" = "Bell Pepper";
+"cicer_arietinum" = "Chickpea";
+"cichorium_endivia" = "Endive chicory";
+"cichorium_intybus" = "Chicory Intybus";
+"citrullus_lanatus" = "Watermelon Common";
+"citrus_medica" = "Citron";
+"citrus_reticulata" = "Tangerine";
+"citrus_sinensis" = "Orange";
+"corylus_avellana" = "Common hazel";
+"cucumis_melo" = "Cantaloup";
+"cucumis_sativus" = "Cucumber";
+"cucurbita_maxima" = "Winter squash";
+"cucurbita_pepo" = "Field Pumpkin";
+"cydonia_oblonga" = "Quince";
+"cynara_scolymus" = "Globe artichoke";
+"daucus_carota" = "Carrot";
+"foeniculum_vulgare" = "Sweet Fennel";
+"fortunella_margarita" = "Oval kumquat";
+"glycine_max" = "Soy bean";
+"helianthus_annuus" = "Annual sunflower";
+"hordeum_vulgare" = "Common Barley";
+"juglans_regia" = "Common walnut";
+"lactuca_sativa" = "Lettuce";
+"lens_culinaris" = "Lens culinaris";
+"linum_usitatissimum" = "Linum usitatissimum";
+"lolium_multiflorum" = "Ryegrass multiflorum";
+"lolium_perenne" = "Ryegrass perenne";
+"lotus_corniculatus" = "Lotus corniculatus";
+"malus_pumila" = "Apple-tree";
+"medicago_sativa" = "Lucerne";
+"olea_europaea" = "Olive tree";
+"onobrychis_viciifolia" = "Common sainfoin";
+"oryza_sativa" = "Cultivated rice";
+"petroselinum_crispum" = "Common Parsley";
+"phaseolus_vulgaris" = "Bean";
+"pisum_sativum" = "Pea";
+"poa_trivialis" = "Rough bluegrass";
+"prunus_armeniaca" = "Apricot tree";
+"prunus_avium" = "Wild cherry tree";
+"prunus_cerasifera" = "Cherry plum tree";
+"prunus_cerasus" = "Sour cherry tree";
+"prunus_domestica" = "Plum tree";
+"prunus_mahaleb" = "Prunus mahaleb";
+"prunus_persica" = "Peach tree";
+"prunus_salicina" = "Prunus salicina";
+"pyrus_communis" = "Pear tree";
+"raphanus_sativus" = "Radish";
+"ribes_nigrum" = "Blackcurrant";
+"ribes_rubrum" = "Redcurrant";
+"rubus_idaeus" = "Red raspberry";
+"solanum_lycopersicum" = "Tomato";
+"solanum_melongena" = "Eggplant";
+"solanum_torvum" = "Devil’s Fig";
+"solanum_tuberosum" = "Potato";
+"spinacia_oleracea" = "Spinach";
+"trifolium_alexandrinum" = "Trifolium alexandrinum";
+"trifolium_incarnatum" = "Trifolium incarnatum";
+"trifolium_pratense" = "Trifolium pratense";
+"trifolium_repens" = "Trifolium repens";
+"triticosecale" = "Triticale";
+"triticum_aestivum" = "Common wheat";
+"triticum_durum" = "Durum wheat";
+"valerianella_locusta" = "Corn salad";
+"vicia_faba" = "Horsebean";
+"vicia_sativa" = "Vicia sativa";
+"vicia_villosa" = "Vicia villosa";
+"vitis" = "Vitis";
+"vitis_vinifera" = "Common grape vine";
+"zea_mays" = "Corn";
+
+// Nature
+
+"organic" = "Organic";
+"mineral" = "Mineral";
+
 // Equipment types
 
 "airplanter" = "Air planter";
