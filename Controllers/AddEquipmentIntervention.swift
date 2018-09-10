@@ -28,7 +28,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         print("Lexicon error")
       }
     } else {
-      print("equipment_types.json not found")
+      print("equipment-types.json not found")
     }
     return equipmentType
   }
@@ -246,7 +246,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
 
       cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.white
+      cell.backgroundColor = AppColor.CellColors.White
       self.selectedEquipments.remove(at: indexPath.row)
       self.selectedEquipmentsTableView.reloadData()
 
