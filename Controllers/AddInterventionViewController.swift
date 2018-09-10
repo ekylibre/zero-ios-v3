@@ -102,6 +102,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
   var weathers = [UIButton]()
+  var weather = [NSManagedObject]()
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -222,6 +223,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     initializeWeatherView()
     weathers = defineWeathers()
+    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
+
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
   }
 
   override func viewDidLayoutSubviews() {

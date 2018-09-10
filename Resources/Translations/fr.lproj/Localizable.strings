@@ -71,3 +71,4 @@
 "weather" = "Météo";
 "temperature" = "Température";
 "wind_speed" = "Vitesse du vent";
+"not_filled_in" = "Non renseignée";
