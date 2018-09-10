@@ -17,7 +17,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var isSearching: Bool = false
 
   lazy var segmentedControl: UISegmentedControl = {
-    let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
+    let segmentedControl = UISegmentedControl(items: ["seeds".localized, "phyto".localized, "fertilizers".localized])
     segmentedControl.selectedSegmentIndex = 0
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
@@ -212,7 +212,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
       let reentryDelay = fromPhytos[indexPath.row].value(forKey: "reentryDelay") as! Int
-      let unit: String = reentryDelay > 1 ? "heures" : "heure"
+      let unit: String = reentryDelay > 1 ? "hours".localized : "hour".localized
       cell.inFieldReentryDelayLabel.text = "\(reentryDelay) " + unit
       return cell
     case 2:
@@ -551,7 +551,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func changeSegment() {
     let searchText = searchBar.text!
 
-    let createButtonTitles = [0: "+ CRÉER UNE NOUVELLE SEMENCE", 1: "+ CRÉER UN NOUVEAU PHYTO", 2: "+ CRÉER UN NOUVEAU FERTILISANT"]
+    //let createButtonTitles = [0: "+ CRÉER UNE NOUVELLE SEMENCE", 1: "+ CRÉER UN NOUVEAU PHYTO", 2: "+ CRÉER UN NOUVEAU FERTILISANT"]
+    let createButtonTitles = [
+      0: String(format: "create_new_%@".localized, "new_seed".localized),
+      1: String(format: "create_new_%@".localized, "new_phyto".localized),
+      2: String(format: "create_new_%@".localized, "new_fertilizer".localized)
+    ]
     createButton.setTitle(createButtonTitles[segmentedControl.selectedSegmentIndex], for: .normal)
     let inputs = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
@@ -593,7 +598,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 2:
       createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
       fertilizerView.nameTextField.text = ""
-      fertilizerView.natureButton.setTitle("Organique", for: .normal)
+      fertilizerView.natureButton.setTitle("organic".localized, for: .normal)
     default:
       return
     }

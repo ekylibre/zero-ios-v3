@@ -11,6 +11,8 @@
 "are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %{element_to_delete} ?";
 "please_retry" = "Please try again";
 "unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
+"hour" = "hour";
+"hours" = "hours";
 
 // Procedures
 
@@ -166,5 +168,10 @@
 
 // Inputs View
 
-"new_seed" = "NEW SEED";
 "create_new_%@" = "+ CREATE A %@";
+"new_seed" = "NEW SEED";
+"new_phyto" = "NEW PHYTO";
+"new_fertilizer" = "NEW FERTILIZER";
+"seeds" = "Seeds";
+"phyto" = "Phyto.";
+"fertilizers" = "Fertilizers";

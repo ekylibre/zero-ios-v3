@@ -11,6 +11,8 @@
 "are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %{element_to_delete} ?";
 "please_retry" = "Veuillez réessayer";
 "unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+"hour" = "heure";
+"hours" = "heures";
 
 // Procedures
 
@@ -167,3 +169,8 @@
 
 "create_new_%@" = "+ CRÉER UN%@";
 "new_seed" = "E NOUVELLE SEMENCE";
+"new_phyto" = "NOUVEAU PHYTO";
+"new_fertilizer" = "NOUVEAU FERTILISANT";
+"seeds" = "Semences";
+"phyto" = "Phyto.";
+"fertilizers" = "Fertilisants";
