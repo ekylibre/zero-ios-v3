@@ -40,15 +40,6 @@ extension UIButton: XIBLocalizable {
   }
 }
 
-extension UITextView: XIBLocalizable {
-  @IBInspectable var xibLocKey: String? {
-    get { return nil }
-    set(key) {
-      text = key?.localized
-    }
-  }
-}
-
 extension UIButton {
   func underline() {
     guard let text = self.titleLabel?.text else { return }

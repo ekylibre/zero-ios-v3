@@ -433,7 +433,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     if cropsCount == 0 {
-      selectedCropsLabel.text = "no_selection"
+      selectedCropsLabel.text = "no_selection".localized
     } else if cropsCount == 1 {
       selectedCropsLabel.text = String(format: "crop_size".localized, totalSurfaceArea)
     } else {

@@ -135,12 +135,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'intrant ?",
+      message: String(format: "are_you_sure_you_want_to_delete".localized, "input".localized),
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
       self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {

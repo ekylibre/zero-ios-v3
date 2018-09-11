@@ -9,9 +9,16 @@
 "no" = "Non";
 "yes" = "Oui";
 "error" = "Erreur";
-"are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %{element_to_delete} ?";
-"please_retry" = "Veuillez réessayer";
-"unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+"are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %@ ?";
+"person" = "la personne";
+"equipment" = "équipement";
+"input" = "intrant";
+
+// Login screen
+
+"please_try_again" = "Veuillez réessayer";
+"unknow_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+"forgotten_password" = "Mot de passe oublié ?";
 
 // Intervention
 
@@ -264,7 +271,6 @@
 // Storyboard
 
 "appli_description" = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre...";
-"forgotten_password" = "Mot de passe oublié ?";
 
 // Language
 

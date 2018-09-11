@@ -9,9 +9,16 @@
 "no" = "No";
 "yes" = "Yes";
 "error" = "Error";
-"are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %{element_to_delete} ?";
-"please_retry" = "Please try again";
-"unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
+"are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %@?";
+"person" = "person";
+"equipment" = "equipment";
+"input" = "input";
+
+// Login screen
+
+"please_try_again" = "Please try again";
+"unknow_username_or_incorrect_password" = "Unknown username or incorrect password.";
+"forgotten_password" = "Forgotten password?";
 
 // Intervention
 
@@ -264,7 +271,6 @@
 // Storyboard
 
 "appli_description" = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account...";
-"forgotten_password" = "Forgotten password?";
 
 // Language
 

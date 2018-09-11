@@ -14,9 +14,9 @@ struct InterventionType {
   static var cropProtection = "crop_protection".localized
   static var fertilization = "fertilization".localized
   static var groundWork = "ground_work".localized
-  static var harvest = "Harvest".localized
-  static var implantation = "Implantation".localized
-  static var irrigation = "Irrigation".localized
+  static var harvest = "harvest".localized
+  static var implantation = "implantation".localized
+  static var irrigation = "irrigation".localized
 }
 
 class Intervention {
