@@ -177,3 +177,11 @@
 "quantity" = "Quantité";
 "or" = "Soit";
 "invalid_dose" = "Dose invalide";
+
+// Storyboard
+
+/* Class = "UITextView"; text = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account..."; ObjectID = "tcH-Tp-UHn"; */
+"appli_description" = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre...";
+
+/* Class = "UIButton"; normalTitle = "Forgotten password"; Object = "SeF-AM-WHz"; */
+"forgotten_password" = "Mot de passe oublié ?";

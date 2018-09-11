@@ -165,7 +165,6 @@
 "wind_speed" = "Vitesse du vent";
 "not_filled_in" = "Non renseignée";
 
-
 // Inputs View
 
 "create_new_%@" = "+ CREATE A %@";
@@ -178,3 +177,11 @@
 "quantity" = "Quantity";
 "or" = "Or";
 "invalid_dose" = "Invalid dose";
+
+// Storyboard
+
+/* Class = "UITextView"; text = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account..."; ObjectID = "tcH-Tp-UHn"; */
+"appli_description" = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account...";
+
+/* Class = "UIButton"; normalTitle = "Forgotten password"; Object = "SeF-AM-WHz"; */
+"forgotten_password" = "Forgotten password?";

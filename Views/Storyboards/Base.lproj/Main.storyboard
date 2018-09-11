@@ -1745,77 +1745,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clic&amp;Farm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcy-Q6-0lU">
-                                <rect key="frame" x="140.5" y="218" width="94" height="23"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Welcome to the Clic&amp;Farm mobile application! To start, log in with your Ekylibre account...." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcH-Tp-UHn">
-                                <rect key="frame" x="30" y="271" width="315" height="92"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clic&amp;farm-logo" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Rz-CQ-sdc">
+                                <rect key="frame" x="100" y="70" width="175" height="155"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="155" id="CRq-Yx-l9i"/>
+                                    <constraint firstAttribute="width" constant="175" id="dE3-zN-Dda"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Welcome to the Clic&amp;Farm mobile application! To start, log in with your Ekylibre account..." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcH-Tp-UHn">
+                                <rect key="frame" x="30" y="275" width="315" height="92"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="92" id="TYe-cr-0hG"/>
+                                    <constraint firstAttribute="height" constant="92" id="hdN-5q-ttA"/>
                                 </constraints>
                                 <color key="textColor" red="0.34509803919999998" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vfb-X0-1tk">
-                                <rect key="frame" x="30" y="393" width="315" height="20"/>
+                                <rect key="frame" x="30" y="397" width="315" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="jmu-2z-wuk"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFh-3n-2i7">
+                                <rect key="frame" x="30" y="427" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Mkc-7E-HAF"/>
+                                </constraints>
+                            </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ScR-OF-ai0">
-                                <rect key="frame" x="30" y="445" width="315" height="20"/>
+                                <rect key="frame" x="30" y="458" width="315" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QxQ-tc-mcd"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCi-n7-zd2">
-                                <rect key="frame" x="30" y="466" width="315" height="1"/>
+                                <rect key="frame" x="30" y="488" width="315" height="1"/>
                                 <color key="backgroundColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="MKh-DJ-KHW"/>
-                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFh-3n-2i7">
-                                <rect key="frame" x="30" y="414" width="315" height="1"/>
-                                <color key="backgroundColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="8St-Js-kLp"/>
-                                    <constraint firstAttribute="height" constant="1" id="Mkc-7E-HAF"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeF-AM-WHz">
-                                <rect key="frame" x="30" y="466" width="123" height="27"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="Forgotten password?">
-                                            <attributes>
-                                                <font key="NSFont" size="13" name="Helvetica"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                <integer key="NSUnderline" value="1"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </state>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeF-AM-WHz">
+                                <rect key="frame" x="30" y="493" width="113" height="26"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                <state key="normal" title="Forgotten password?"/>
                                 <connections>
                                     <action selector="openForgottenPasswordLinkWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="1rn-ME-Wsc"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clic&amp;farm-logo" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Rz-CQ-sdc">
-                                <rect key="frame" x="142.5" y="120" width="90" height="90"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                 <rect key="frame" x="163" y="576" width="50" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="fhd-uX-xGj"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" red="0.34509803919999998" green="0.34901960780000002" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1827,36 +1815,37 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="rcy-Q6-0lU" firstAttribute="top" secondItem="1Rz-CQ-sdc" secondAttribute="bottom" constant="8" id="0NM-rn-TDq"/>
-                            <constraint firstItem="oFh-3n-2i7" firstAttribute="centerX" secondItem="ybY-bV-jLm" secondAttribute="centerX" id="2DX-fW-2sF"/>
-                            <constraint firstItem="1Rz-CQ-sdc" firstAttribute="top" secondItem="7h2-1R-U3P" secondAttribute="top" constant="100" id="3Bz-T1-GrI"/>
+                            <constraint firstItem="1Rz-CQ-sdc" firstAttribute="top" secondItem="7h2-1R-U3P" secondAttribute="top" constant="50" id="3Bz-T1-GrI"/>
+                            <constraint firstItem="vfb-X0-1tk" firstAttribute="leading" secondItem="7h2-1R-U3P" secondAttribute="leading" constant="30" id="3qA-1D-eAT"/>
                             <constraint firstItem="7h2-1R-U3P" firstAttribute="bottom" secondItem="aQf-3V-e73" secondAttribute="bottom" constant="55" id="4Iy-Wf-d3S"/>
-                            <constraint firstItem="7h2-1R-U3P" firstAttribute="trailing" secondItem="vfb-X0-1tk" secondAttribute="trailing" constant="30" id="5t1-Ss-cfp"/>
-                            <constraint firstItem="pCi-n7-zd2" firstAttribute="trailing" secondItem="ScR-OF-ai0" secondAttribute="trailing" id="7Jw-38-dPE"/>
+                            <constraint firstItem="pCi-n7-zd2" firstAttribute="top" secondItem="ScR-OF-ai0" secondAttribute="bottom" id="BaN-Dk-XpM"/>
                             <constraint firstItem="7h2-1R-U3P" firstAttribute="trailing" secondItem="ScR-OF-ai0" secondAttribute="trailing" constant="30" id="CEd-bV-dOv"/>
-                            <constraint firstItem="tcH-Tp-UHn" firstAttribute="leading" secondItem="vfb-X0-1tk" secondAttribute="leading" id="F8X-mN-G07"/>
+                            <constraint firstItem="oFh-3n-2i7" firstAttribute="top" secondItem="vfb-X0-1tk" secondAttribute="bottom" id="Em0-LT-gCY"/>
+                            <constraint firstItem="pCi-n7-zd2" firstAttribute="trailing" secondItem="ScR-OF-ai0" secondAttribute="trailing" id="F5M-Zk-aNH"/>
                             <constraint firstItem="ScR-OF-ai0" firstAttribute="top" secondItem="oFh-3n-2i7" secondAttribute="bottom" constant="30" id="J4y-4h-RnB"/>
                             <constraint firstItem="ScR-OF-ai0" firstAttribute="leading" secondItem="7h2-1R-U3P" secondAttribute="leading" constant="30" id="Ly2-Yl-RPo"/>
                             <constraint firstAttribute="trailing" secondItem="oFh-3n-2i7" secondAttribute="trailing" constant="30" id="NcE-r5-QPL"/>
                             <constraint firstItem="1Rz-CQ-sdc" firstAttribute="centerX" secondItem="ybY-bV-jLm" secondAttribute="centerX" id="OJB-rD-NCr"/>
-                            <constraint firstItem="oFh-3n-2i7" firstAttribute="top" secondItem="vfb-X0-1tk" secondAttribute="bottom" constant="1" id="WZx-r2-dJU"/>
-                            <constraint firstItem="tcH-Tp-UHn" firstAttribute="trailing" secondItem="vfb-X0-1tk" secondAttribute="trailing" id="Z1h-Fz-Jcs"/>
-                            <constraint firstItem="SeF-AM-WHz" firstAttribute="top" secondItem="ScR-OF-ai0" secondAttribute="bottom" constant="1" id="dt3-dN-9iG"/>
-                            <constraint firstItem="tcH-Tp-UHn" firstAttribute="top" secondItem="rcy-Q6-0lU" secondAttribute="bottom" constant="30" id="e4H-og-OHl"/>
-                            <constraint firstItem="vfb-X0-1tk" firstAttribute="leading" secondItem="7h2-1R-U3P" secondAttribute="leading" constant="30" id="kyg-G0-p8h"/>
+                            <constraint firstItem="7h2-1R-U3P" firstAttribute="trailing" secondItem="tcH-Tp-UHn" secondAttribute="trailing" constant="30" id="WZX-VS-H2a"/>
+                            <constraint firstItem="pCi-n7-zd2" firstAttribute="leading" secondItem="ScR-OF-ai0" secondAttribute="leading" id="bew-mS-ayK"/>
+                            <constraint firstItem="SeF-AM-WHz" firstAttribute="top" secondItem="ScR-OF-ai0" secondAttribute="bottom" constant="5" id="dt3-dN-9iG"/>
+                            <constraint firstItem="7h2-1R-U3P" firstAttribute="trailing" secondItem="vfb-X0-1tk" secondAttribute="trailing" constant="30" id="gfB-Ks-Bay"/>
                             <constraint firstItem="oFh-3n-2i7" firstAttribute="leading" secondItem="ybY-bV-jLm" secondAttribute="leading" constant="30" id="nQ3-bx-TBM"/>
-                            <constraint firstItem="rcy-Q6-0lU" firstAttribute="centerX" secondItem="ybY-bV-jLm" secondAttribute="centerX" id="oNv-p4-tRH"/>
-                            <constraint firstItem="pCi-n7-zd2" firstAttribute="top" secondItem="ScR-OF-ai0" secondAttribute="bottom" constant="1" id="pFi-l2-Y45"/>
+                            <constraint firstItem="vfb-X0-1tk" firstAttribute="top" secondItem="tcH-Tp-UHn" secondAttribute="bottom" constant="30" id="osG-5n-S5j"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SeF-AM-WHz" secondAttribute="trailing" constant="20" symbolic="YES" id="qYt-66-VJ1"/>
                             <constraint firstItem="SeF-AM-WHz" firstAttribute="leading" secondItem="7h2-1R-U3P" secondAttribute="leading" constant="30" id="rWe-kM-ujY"/>
-                            <constraint firstItem="pCi-n7-zd2" firstAttribute="leading" secondItem="ScR-OF-ai0" secondAttribute="leading" id="wO7-dk-ooM"/>
-                            <constraint firstItem="aQf-3V-e73" firstAttribute="centerX" secondItem="pCi-n7-zd2" secondAttribute="centerX" id="wdj-px-mJE"/>
-                            <constraint firstItem="vfb-X0-1tk" firstAttribute="top" secondItem="tcH-Tp-UHn" secondAttribute="bottom" constant="30" id="yh6-R6-znS"/>
+                            <constraint firstItem="tcH-Tp-UHn" firstAttribute="leading" secondItem="7h2-1R-U3P" secondAttribute="leading" constant="30" id="xKI-yt-uxs"/>
+                            <constraint firstItem="tcH-Tp-UHn" firstAttribute="top" secondItem="1Rz-CQ-sdc" secondAttribute="bottom" constant="50" id="xdk-ta-qE5"/>
+                            <constraint firstItem="aQf-3V-e73" firstAttribute="centerX" secondItem="pCi-n7-zd2" secondAttribute="centerX" id="ylq-fo-1mP"/>
+                            <constraint firstItem="SeF-AM-WHz" firstAttribute="top" secondItem="pCi-n7-zd2" secondAttribute="bottom" constant="4" id="z3a-en-p1u"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7h2-1R-U3P"/>
                     </view>
                     <navigationItem key="navigationItem" id="Hax-Z6-6hg"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="forgottenPassword" destination="SeF-AM-WHz" id="oju-0J-9xB"/>
+                        <outlet property="textView" destination="tcH-Tp-UHn" id="mTh-dn-lHz"/>
                         <outlet property="tfPassword" destination="ScR-OF-ai0" id="mBJ-fl-emB"/>
                         <outlet property="tfUsername" destination="vfb-X0-1tk" id="j9I-cx-eB1"/>
                         <segue destination="Ym6-0E-qVT" kind="presentation" identifier="SegueFromLogScreenToConnected" id="aDw-i0-Y4L"/>
@@ -1865,7 +1854,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gp1-Vr-Vkq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="150" y="-99"/>
+            <point key="canvasLocation" x="149.59999999999999" y="-99.400299850074973"/>
         </scene>
         <!--No Internet On First Connection-->
         <scene sceneID="20c-UI-Xxq">
@@ -1911,7 +1900,7 @@
     <resources>
         <image name="averses" width="285" height="285"/>
         <image name="brouillard" width="285" height="285"/>
-        <image name="clic&amp;farm-logo" width="90" height="90"/>
+        <image name="clic&amp;farm-logo" width="1300" height="1150"/>
         <image name="delete" width="50" height="50"/>
         <image name="expand-collapse" width="128" height="128"/>
         <image name="neige" width="285" height="285"/>
