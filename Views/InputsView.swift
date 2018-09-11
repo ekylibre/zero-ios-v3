@@ -334,10 +334,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return false
     }
     fertilizers.sort {
-      if ($0.value(forKey: "registered") as! Bool) != ($1.value(forKey: "registered") as! Bool) {
-        return (!($0.value(forKey: "registered") as! Bool) && ($1.value(forKey: "registered") as! Bool))
+      if $0.registered != $1.registered {
+        return !$0.registered && $1.registered
       } else {
-        return ($0.value(forKey: "name") as! String) < ($1.value(forKey: "name") as! String)
+        return $0.name! < $1.name!
       }
     }
     return true
