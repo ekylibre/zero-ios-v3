@@ -22,7 +22,7 @@
 
 // Intervention
 
-"toay_last_synchronization" = "Denière synchronisation %02d:%02d";
+"today_last_synchronization" = "Denière synchronisation %02d:%02d";
 "last_synchronization" = "Denière synchronisation ";
 "no_synchronization_listed" = "Aucune synchronisation répertoriée";
 "register_intervention" = "ENREGISTRER UNE INTERVENTION%@";
