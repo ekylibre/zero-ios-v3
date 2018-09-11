@@ -13,6 +13,16 @@
 "please_retry" = "Please try again";
 "unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
 
+// Intervention
+
+"today_last_synchronization" = "Last synchronization %02d:%02d";
+"last_synchronization" = "Last synchronization ";
+"no_synchronization_listed" = "No synchronization listed";
+"register_intervention" = "REGISTER AN INTERVENTION%@";
+"of" = " OF...";
+"crops_size" = "%d crops • %.1f ha";
+"crop_size" = "1 crop • %.1f ha";
+
 // Procedures
 
 "irrigation" = "Irrigation";
@@ -22,6 +32,27 @@
 "harvest" = "Harvest";
 "care" = "Care";
 "crop_protection" = "Crop protection";
+
+
+// Crop View
+
+"select_crops" = "Select crops";
+"no_selection" = "No selection";
+"validate" = "VALIDER";
+"surface_area" = "%.1f ha worked";
+
+// Inputs View
+
+"create_new_%@" = "+ CREATE A %@";
+"new_seed" = "NEW SEED";
+"new_phyto" = "NEW PHYTO";
+"new_fertilizer" = "NEW FERTILIZER";
+"seeds" = "Seeds";
+"phyto" = "Phyto.";
+"fertilizers" = "Fertilizers";
+"quantity" = "Quantity";
+"or" = "Or";
+"invalid_dose" = "Invalid dose";
 
 // Vegetal species
 
@@ -164,36 +195,10 @@
 "wind_speed" = "Vitesse du vent";
 "not_filled_in" = "Non renseignée";
 
-// Inputs View
-
-"create_new_%@" = "+ CREATE A %@";
-"new_seed" = "NEW SEED";
-"new_phyto" = "NEW PHYTO";
-"new_fertilizer" = "NEW FERTILIZER";
-"seeds" = "Seeds";
-"phyto" = "Phyto.";
-"fertilizers" = "Fertilizers";
-"quantity" = "Quantity";
-"or" = "Or";
-"invalid_dose" = "Invalid dose";
-
 // Storyboard
 
-/* Class = "UITextView"; text = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account..."; ObjectID = "tcH-Tp-UHn"; */
 "appli_description" = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account...";
-
-/* Class = "UIButton"; normalTitle = "Forgotten password"; Object = "SeF-AM-WHz"; */
 "forgotten_password" = "Forgotten password?";
-
-// Intervention
-
-"today_last_synchronization" = "Last synchronization %02d:%02d";
-"last_synchronization" = "Last synchronization ";
-"no_synchronization_listed" = "No synchronization listed";
-"register_intervention" = "REGISTER AN INTERVENTION%@";
-"of" = " OF...";
-"crops_size" = "%d crops • %.1f ha";
-"crop_size" = "1 crop • %.1f ha";
 
 // Language
 
@@ -205,4 +210,3 @@
 "hours" = "hours";
 "today" = "Today";
 "yesterday" = "Yesterday";
-

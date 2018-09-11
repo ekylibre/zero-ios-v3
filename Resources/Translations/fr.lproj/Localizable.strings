@@ -13,6 +13,15 @@
 "please_retry" = "Veuillez réessayer";
 "unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
 
+// Intervention
+
+"toay_last_synchronization" = "Denière synchronisation %02d:%02d";
+"last_synchronization" = "Denière synchronisation ";
+"no_synchronization_listed" = "Aucune synchronisation répertoriée";
+"register_intervention" = "ENREGISTRER UNE INTERVENTION%@";
+"of" = " DE...";
+"crops_size" = "%d cultures • %.1f ha";
+"crop_size" = "1 culture • %.1f ha";
 
 // Procedures
 
@@ -23,6 +32,26 @@
 "harvest" = "Récolte";
 "care" = "Entretien";
 "crop_protection" = "Pulvérisation";
+
+// Crop View
+
+"select_crops" = "Sélectionnez des cultures";
+"no_selection" = "Aucune sélection";
+"validate" = "VALIDER";
+"surface_area" = "%.1f ha travaillés";
+
+// Inputs View
+
+"create_new_%@" = "+ CRÉER UN%@";
+"new_seed" = "E NOUVELLE SEMENCE";
+"new_phyto" = "NOUVEAU PHYTO";
+"new_fertilizer" = "NOUVEAU FERTILISANT";
+"seeds" = "Semences";
+"phyto" = "Phyto.";
+"fertilizers" = "Fertilisants";
+"quantity" = "Quantité";
+"or" = "Soit";
+"invalid_dose" = "Dose invalide";
 
 // Vegetal species
 
@@ -165,36 +194,11 @@
 "wind_speed" = "Wind speed";
 "not_filled_in" = "Not filled in";
 
-// Inputs View
-
-"create_new_%@" = "+ CRÉER UN%@";
-"new_seed" = "E NOUVELLE SEMENCE";
-"new_phyto" = "NOUVEAU PHYTO";
-"new_fertilizer" = "NOUVEAU FERTILISANT";
-"seeds" = "Semences";
-"phyto" = "Phyto.";
-"fertilizers" = "Fertilisants";
-"quantity" = "Quantité";
-"or" = "Soit";
-"invalid_dose" = "Dose invalide";
 
 // Storyboard
 
-/* Class = "UITextView"; text = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account..."; ObjectID = "tcH-Tp-UHn"; */
 "appli_description" = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre...";
-
-/* Class = "UIButton"; normalTitle = "Forgotten password"; Object = "SeF-AM-WHz"; */
 "forgotten_password" = "Mot de passe oublié ?";
-
-// Intervention
-
-"toay_last_synchronization" = "Denière synchronisation %02d:%02d";
-"last_synchronization" = "Denière synchronisation ";
-"no_synchronization_listed" = "Aucune synchronisation répertoriée";
-"register_intervention" = "ENREGISTRER UNE INTERVENTION%@";
-"of" = " DE...";
-"crops_size" = "%d cultures • %.1f ha";
-"crop_size" = "1 culture • %.1f ha";
 
 // Language
 
