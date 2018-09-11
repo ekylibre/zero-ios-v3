@@ -93,7 +93,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   var seeds = [NSManagedObject]()
   var phytos = [NSManagedObject]()
-  var fertilizers = [NSManagedObject]()
+  var fertilizers = [Fertilizers]()
   var filteredInputs = [NSManagedObject]()
 
   //MARK: - Initialization
@@ -308,17 +308,30 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seedsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Seeds")
     let phytosFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Phytos")
     let fertilizersFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Fertilizers")
+    /*let registeredSort:NSSortDescriptor = NSSortDescriptor(key: "registered", ascending: true)
+    let varietySort:NSSortDescriptor = NSSortDescriptor(key: "variety", ascending: true)
+    let nameSort:NSSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+    seedsFetchRequest.sortDescriptors = [registeredSort, varietySort]
+    phytosFetchRequest.sortDescriptors = [registeredSort]
+    fertilizersFetchRequest.sortDescriptors = [registeredSort, nameSort]*/
 
     do {
       seeds = try managedContext.fetch(seedsFetchRequest)
       phytos = try managedContext.fetch(phytosFetchRequest)
-      fertilizers = try managedContext.fetch(fertilizersFetchRequest)
+      fertilizers = try managedContext.fetch(fertilizersFetchRequest) as! [Fertilizers]
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
 
     if seeds.count < 1 || phytos.count < 1 || fertilizers.count < 1 {
       return false
+    }
+    fertilizers.sort {
+      if ($0.value(forKey: "registered") as! Bool) != ($1.value(forKey: "registered") as! Bool) {
+        return (!($0.value(forKey: "registered") as! Bool) && ($1.value(forKey: "registered") as! Bool))
+      } else {
+        return ($0.value(forKey: "name") as! String) < ($1.value(forKey: "name") as! String)
+      }
     }
     return true
   }
@@ -412,7 +425,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizer.setValue("l/ha", forKey: "unit")
       fertilizer.setValue(0.0, forKey: "quantity")
       fertilizer.setValue(0, forKey: "row")
-      fertilizers.append(fertilizer)
+      fertilizers.append(fertilizer as! Fertilizers)
     }
 
     do {
@@ -490,7 +503,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.setValue("kg/ha", forKey: "unit")
     fertilizer.setValue(0.0, forKey: "quantity")
     fertilizer.setValue(0, forKey: "row")
-    fertilizers.append(fertilizer)
+    fertilizers.append(fertilizer as! Fertilizers)
 
     do {
       try managedContext.save()
