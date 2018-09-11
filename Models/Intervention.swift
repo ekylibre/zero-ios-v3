@@ -44,4 +44,8 @@ class Intervention {
     self.date = date
     self.status = status
   }
+
+  init() {
+    <#statements#>
+  }
 }

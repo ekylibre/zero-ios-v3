@@ -8,11 +8,10 @@
 
 "no" = "No";
 "yes" = "Yes";
+"error" = "Error";
 "are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %{element_to_delete} ?";
 "please_retry" = "Please try again";
 "unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
-"hour" = "hour";
-"hours" = "hours";
 
 // Procedures
 
@@ -185,3 +184,25 @@
 
 /* Class = "UIButton"; normalTitle = "Forgotten password"; Object = "SeF-AM-WHz"; */
 "forgotten_password" = "Forgotten password?";
+
+// Intervention
+
+"today_last_synchronization" = "Last synchronization %02d:%02d";
+"last_synchronization" = "Last synchronization ";
+"no_synchronization_listed" = "No synchronization listed";
+"register_intervention" = "REGISTER AN INTERVENTION%@";
+"of" = " OF...";
+"crops_size" = "%d crops • %.1f ha";
+"crop_size" = "1 crop • %.1f ha";
+
+// Language
+
+"local_code" = "en_EN";
+
+// Date / Time
+
+"hour" = "hour";
+"hours" = "hours";
+"today" = "Today";
+"yesterday" = "Yesterday";
+
