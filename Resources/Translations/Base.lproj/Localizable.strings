@@ -6,9 +6,7 @@
   Copyright © 2018 Ekylibre. All rights reserved.
 */
 
-"no" = "No";
-"yes" = "Yes";
-"error" = "Error";
+
 "are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %@?";
 "person" = "person";
 "equipment" = "equipment";
@@ -19,6 +17,16 @@
 "people" = "%d people";
 "equipments" = "%d equipments";
 "inputs" = "%d inputs";
+
+// Basic words
+"no" = "No";
+"yes" = "Yes";
+"error" = "Error";
+"cancel" = "CANCEL";
+"create" = "CREATE";
+"name" = "Name";
+"first_name" = "First name";
+"last_name" = "Last Name";
 
 // Login screen
 
@@ -66,6 +74,26 @@
 "quantity" = "Quantity";
 "or" = "Or";
 "invalid_dose" = "Invalid dose";
+
+// Create fertilizer view
+
+"fertilizer_creation" = "Fertilizer creation";
+"nature" = "Nature";
+"choose_nature" = "Choose a nature";
+
+// Create phyto view
+
+"phyto_creation" = "Creation of a phyto product";
+"brand" = "Brand";
+"maa_number" = "MAA N°";
+"re_entry_delay" = "Re-entry delay";
+"in_hours" = "in hours";
+
+// Create seed view
+
+"seed_creation" = "Seed creation";
+"specie" = "Specie";
+"variety" = "Variety";
 
 // Vegetal species
 

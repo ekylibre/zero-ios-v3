@@ -14,7 +14,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "Création d'un fertilisant"
+    titleLabel.text = "fertilizer_creation".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -22,7 +22,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var nameTextField: UITextField = {
     let nameTextField = UITextField(frame: CGRect.zero)
-    nameTextField.placeholder = "Nom"
+    nameTextField.placeholder = "name".localized
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
     nameTextField.borderStyle = .none
@@ -38,7 +38,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var natureLabel: UILabel = {
     let natureLabel = UILabel(frame: CGRect.zero)
-    natureLabel.text = "Nature"
+    natureLabel.text = "nature".localized
     natureLabel.font = UIFont.systemFont(ofSize: 14)
     natureLabel.textColor = AppColor.TextColors.DarkGray
     natureLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var natureButton: UIButton = {
     let natureButton = UIButton(frame: CGRect.zero)
-    natureButton.setTitle("Organique", for: .normal)
+    natureButton.setTitle("organic".localized, for: .normal)
     natureButton.setTitleColor(UIColor.black, for: .normal)
     natureButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     natureButton.contentHorizontalAlignment = .leading
@@ -57,13 +57,13 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
   }()
 
   lazy var natureAlertController: UIAlertController = {
-    let natureAlertController = UIAlertController(title: "Choisissez une nature", message: nil, preferredStyle: .actionSheet)
+    let natureAlertController = UIAlertController(title: "choose_nature".localized, message: nil, preferredStyle: .actionSheet)
     return natureAlertController
   }()
 
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("ANNULER", for: .normal)
+    cancelButton.setTitle("cancel".localized, for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +72,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("CRÉER", for: .normal)
+    createButton.setTitle("create".localized, for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
@@ -121,13 +121,13 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
   }
 
   private func setupActions() {
-    natureAlertController.addAction(UIAlertAction(title: "Organique", style: .default, handler: { action in
-      self.natureButton.setTitle("Organique", for: .normal)
+    natureAlertController.addAction(UIAlertAction(title: "organic".localized, style: .default, handler: { action in
+      self.natureButton.setTitle("organic".localized, for: .normal)
     }))
-    natureAlertController.addAction(UIAlertAction(title: "Minéral", style: .default, handler: { action in
-      self.natureButton.setTitle("Minéral", for: .normal)
+    natureAlertController.addAction(UIAlertAction(title: "mineral".localized, style: .default, handler: { action in
+      self.natureButton.setTitle("mineral".localized, for: .normal)
     }))
-    natureAlertController.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
+    natureAlertController.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
   }
@@ -149,7 +149,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
       nameTextField.text = ""
-      natureButton.setTitle("Organique", for: .normal)
+      natureButton.setTitle("organic".localized, for: .normal)
     }
     self.isHidden = true
   }

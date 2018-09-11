@@ -6,9 +6,6 @@
   Copyright © 2018 Ekylibre. All rights reserved.
 */
 
-"no" = "Non";
-"yes" = "Oui";
-"error" = "Erreur";
 "are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %@ ?";
 "person" = "la personne";
 "equipment" = "équipement";
@@ -19,6 +16,16 @@
 "people" = "%d personnes";
 "equipments" = "%d équipements";
 "inputs" = "%d intrants";
+
+// Basic words
+"no" = "Non";
+"yes" = "Oui";
+"error" = "Erreur";
+"cancel" = "ANNULER";
+"create" = "CRÉER";
+"name" = "Nom";
+"first_name" = "Prénom";
+"last_name" = "Nom";
 
 // Login screen
 
@@ -65,6 +72,26 @@
 "quantity" = "Quantité";
 "or" = "Soit";
 "invalid_dose" = "Dose invalide";
+
+// Create fertilizer view
+
+"fertilizer_creation" = "Création d'un fertilisant";
+"nature" = "Nature";
+"choose_nature" = "Choisissez une nature";
+
+// Create phyto view
+
+"phyto_creation" = "Création d'un produit phyto";
+"brand" = "Marque";
+"maa_number" = "N° AMM";
+"re_entry_delay" = "Délai de ré-éntrée";
+"in_hours" = "en heures";
+
+// Create seed view
+
+"seed_creation" = "Création de semence";
+"specie" = "Espèce";
+"variety" = "Variété";
 
 // Vegetal species
 
