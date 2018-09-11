@@ -12,12 +12,12 @@ import CoreData
 
 open class AuthentificationService {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   public var oauth2: OAuth2PasswordGrant
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  // MARK: Initialization
+  // MARK: - Initialization
 
   public init(username: String, password: String) {
     var keys: NSDictionary!
@@ -36,7 +36,7 @@ open class AuthentificationService {
       ] as OAuth2JSON)
   }
 
-  // MARK: Actions
+  // MARK: - Actions
 
   func emptyUsersList() {
     let context = appDelegate.persistentContainer.viewContext

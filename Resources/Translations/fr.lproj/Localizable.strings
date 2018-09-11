@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  Clic&Farm-iOS
+
+  Created by Jonathan DE HAAY on 05/09/2018.
+  Copyright © 2018 Ekylibre. All rights reserved.
+*/
+
+"no" = "Non";
+"yes" = "Oui";
+"are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %{element_to_delete} ?";
+"please_retry" = "Veuillez réessayer";
+"unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+
+// Procedures
+
+"irrigation" = "Irrigation";
+"ground_work" = "Travail du sol";
+"implantation" = "Semis";
+"fertilization" = "Fertilisation";
+"harvest" = "Récolte";
+"care" = "Entretien";
+"crop_protection" = "Pulvérisation";
+
+// Equipment types
+
+"airplanter" = "Semoir monograines";
+"baler_wrapper" = "Presse enrubanneuse";
+"corn-topper" = "Castreuse";
+"cubic_baler" = "Presse balle cubique";
+"disc_harrow" = "Déchaumeur à disque";
+"forage_platform" = "Plateau";
+"forager" = "Ensileuse";
+"grinder" = "Broyeur";
+"harrow" = "Herse";
+"harvester" = "Arracheuse";
+"hay_rake" = "Andaineur";
+"hiller" = "Butteuse";
+"hoe" = "Bineuse";
+"hoe_weeder" = "Désherbineuse";
+"implanter" = "Planteuse";
+"irrigation_pivot" = "Pivot";
+"liquid_manure_spreader" = "Tonne à lisier";
+"mower" = "Faucheuse";
+"mower_conditioner" = "Faucheuse conditionneuse";
+"plow" = "Charrue";
+"reaper" = "Moissonneuse-batteuse";
+"roll" = "Rouleau";
+"round_baler" = "Presse balle ronde";
+"rotary_hoe" = "Houe rotative";
+"seedbed_preparator" = "Outil de préparation du lit de semences";
+"soil_loosener" = "Décompacteur";
+"sower" = "Semoir";
+"sprayer" = "Pulvérisateur";
+"spreader" = "Épandeur à engrais";
+"spreader_trailer" = "Épandeur à fumier";
+"subsoil_plow" = "Sous soleuse";
+"superficial_plow" = "Déchaumeur";
+"tedder" = "Faneuse";
+"topper" = "Effaneuse";
+"tractor" = "Tracteur";
+"trailer" = "Remorque";
+"trimmer" = "Écimeuse";
+"vibrocultivator" = "Vibroculteur";
+"water_spreader" = "Enrouleur";
+"weeder" = "Désherbeur";
+"wrapper" = "Enrubanneuse";

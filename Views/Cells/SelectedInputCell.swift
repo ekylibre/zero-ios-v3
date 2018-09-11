@@ -14,37 +14,41 @@ protocol SelectedInputCellDelegate: class {
 }
 
 class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
+
+  // MARK: - Properties
+
   weak var cellDelegate: SelectedInputCellDelegate?
+  var addInterventionViewController: AddInterventionViewController?
   var indexPath: IndexPath!
   var type = ""
 
-  var addInterventionViewController: AddInterventionViewController?
-  let inputImage = UIImageView()
-  let inputName = UILabel()
-  let inputSpec = UILabel()
-  let inputQuantity = UITextField()
-  let quantity = UILabel()
-  let removeCell = UIButton()
-  let surfaceQuantity = UILabel()
-  let unitMeasureButton = UIButton()
-  let warningImage = UIImageView()
-  let warningLabel = UILabel()
-
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  lazy var inputImage: UIImageView = {
+    let inputImage = UIImageView(frame: CGRect.zero)
 
     inputImage.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputImage)
+    return inputImage
+  }()
+
+  lazy var inputLabel: UILabel = {
+    let inputLabel = UILabel(frame: CGRect.zero)
+
+    inputLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    inputLabel.translatesAutoresizingMaskIntoConstraints = false
+    return inputLabel
+  }()
+
+  lazy var inputName: UILabel = {
+    let inputName = UILabel(frame: CGRect.zero)
 
     inputName.font = UIFont.systemFont(ofSize: 14)
     inputName.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputName)
+    return inputName
+  }()
 
-    inputSpec.font = UIFont.boldSystemFont(ofSize: 14)
-    inputSpec.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputSpec)
+  lazy var inputQuantity: UITextField = {
+    let inputQuantity = UITextField(frame: CGRect.zero)
 
-    inputQuantity.backgroundColor = AppColor.CellColors.white
+    inputQuantity.backgroundColor = AppColor.ThemeColors.White
     inputQuantity.layer.borderColor = UIColor.lightGray.cgColor
     inputQuantity.layer.borderWidth = 1
     inputQuantity.layer.cornerRadius = 5
@@ -53,220 +57,159 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     inputQuantity.keyboardType = .decimalPad
     inputQuantity.textAlignment = .center
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(inputQuantity)
+    return inputQuantity
+  }()
+
+  lazy var quantity: UILabel = {
+    let quantity = UILabel(frame: CGRect.zero)
 
     quantity.text = "Quantité"
     quantity.textColor = AppColor.TextColors.DarkGray
     quantity.font = UIFont.systemFont(ofSize: 13)
     quantity.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(quantity)
+    return quantity
+  }()
+
+  lazy var removeCell: UIButton = {
+    let removeCell = UIButton(frame: CGRect.zero)
 
     removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
     removeCell.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
     removeCell.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(removeCell)
+    return removeCell
+  }()
+
+  lazy var surfaceQuantity: UILabel = {
+    let surfaceQuantity = UILabel(frame: CGRect.zero)
 
     surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = "Soit 0,0 A"
+    surfaceQuantity.text = "Soit 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(surfaceQuantity)
+    return surfaceQuantity
+  }()
+
+  lazy var unitMeasureButton: UIButton = {
+    let unitMeasureButton = UIButton(frame: CGRect.zero)
 
     unitMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-    unitMeasureButton.backgroundColor = AppColor.CellColors.white
+    unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    unitMeasureButton.backgroundColor = AppColor.ThemeColors.White
     unitMeasureButton.layer.borderColor = UIColor.lightGray.cgColor
     unitMeasureButton.layer.borderWidth = 1
     unitMeasureButton.layer.cornerRadius = 5
-    unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     unitMeasureButton.titleLabel?.textAlignment = .center
     unitMeasureButton.setTitle(nil, for: .normal)
     unitMeasureButton.addTarget(self, action: #selector(self.showUnitMeasure(sender:)), for: .touchUpInside)
     unitMeasureButton.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(unitMeasureButton)
+    return unitMeasureButton
+  }()
+
+  lazy var warningImage: UIImageView = {
+    let warningImage = UIImageView(frame: CGRect.zero)
 
     warningImage.isHidden = true
     warningImage.image = #imageLiteral(resourceName: "filled-circle")
     warningImage.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(warningImage)
+    return warningImage
+  }()
+
+  lazy var warningLabel: UILabel = {
+    let warningLabel = UILabel(frame: CGRect.zero)
 
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
     warningLabel.text = "dose invalide"
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
+    return warningLabel
+  }()
+
+  // MARK: - Initialization
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupCell()
+  }
+
+  private func setupCell() {
+    contentView.addSubview(inputImage)
+    contentView.addSubview(inputLabel)
+    contentView.addSubview(inputName)
+    contentView.addSubview(inputQuantity)
+    contentView.addSubview(quantity)
+    contentView.addSubview(removeCell)
+    contentView.addSubview(surfaceQuantity)
+    contentView.addSubview(unitMeasureButton)
+    contentView.addSubview(warningImage)
     contentView.addSubview(warningLabel)
+    setupLayout()
+  }
 
-    let viewsDict = [
-      "inputImage": inputImage,
-      "inputName": inputName,
-      "inputSpec": inputSpec,
-      "inputQuantity": inputQuantity,
-      "quantity": quantity,
-      "removeCell": removeCell,
-      "surfaceQuantity": surfaceQuantity,
-      "unitMeasureButton": unitMeasureButton,
-      "warningImage": warningImage,
-      "warningLabel": warningLabel
-      ] as [String: Any]
+  private func setupLayout() {
+    NSLayoutConstraint.activate([
+      inputImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+      inputImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      inputImage.heightAnchor.constraint(equalToConstant: 30),
+      inputImage.widthAnchor.constraint(equalToConstant: 30),
+      inputName.leftAnchor.constraint(equalTo: inputImage.rightAnchor, constant: 10),
+      inputLabel.leftAnchor.constraint(equalTo: inputName.rightAnchor, constant: 5),
 
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-10-[inputImage(==30)]-[inputName]-[inputSpec]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
+      quantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 20),
+      quantity.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+
+      removeCell.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      removeCell.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
+      removeCell.heightAnchor.constraint(equalToConstant: 15),
+      removeCell.widthAnchor.constraint(equalToConstant: 15),
+
+      inputName.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      inputQuantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 12.5),
+      inputQuantity.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: 10),
+      inputQuantity.heightAnchor.constraint(equalToConstant: 30),
+      inputQuantity.widthAnchor.constraint(equalToConstant: 100),
+
+      inputLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      unitMeasureButton.topAnchor.constraint(equalTo: inputLabel.bottomAnchor, constant: 12.5),
+      unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
+      unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
+      unitMeasureButton.widthAnchor.constraint(equalToConstant: 60),
+
+      warningImage.heightAnchor.constraint(equalToConstant: 10),
+      warningImage.widthAnchor.constraint(equalToConstant: 10),
+      warningImage.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
+      warningLabel.leadingAnchor.constraint(equalTo: warningImage.trailingAnchor, constant: 3),
+      surfaceQuantity.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
+      ]
     )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:[removeCell(==15)]-10-|",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-[quantity]-10-[inputQuantity(==100)][unitMeasureButton(==60)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-5-[inputImage(==30)]-10-[quantity]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[inputName]-12.5-[inputQuantity(==30)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[inputSpec]-12.5-[unitMeasureButton(==30)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-10-[removeCell(==15)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:[warningImage(==10)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    contentView.addConstraints(
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:[warningImage(==10)]",
-        options: [],
-        metrics: nil,
-        views: viewsDict
-      )
-    )
-
-    NSLayoutConstraint(
-      item: surfaceQuantity,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: inputQuantity,
-      attribute: .leading,
-      multiplier: 1,
-      constant: 0
-      ).isActive = true
-
-    NSLayoutConstraint(
-      item: warningImage,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: inputQuantity,
-      attribute: .leading,
-      multiplier: 1,
-      constant: 0
-      ).isActive = true
-
-    NSLayoutConstraint(
-      item: warningLabel,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: warningImage,
-      attribute: .trailing,
-      multiplier: 1,
-      constant: 3
-      ).isActive = true
 
     if warningImage.isHidden {
-      NSLayoutConstraint(
-        item: surfaceQuantity,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: inputQuantity,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 1
-        ).isActive = true
+      NSLayoutConstraint.activate([
+        surfaceQuantity.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 1)
+        ]
+      )
     } else {
-      NSLayoutConstraint(
-        item: warningImage,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: inputQuantity,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 5
-        ).isActive = true
-
-      NSLayoutConstraint(
-        item: warningLabel,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: inputQuantity,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 2
-        ).isActive = true
-
-      NSLayoutConstraint(
-        item: surfaceQuantity,
-        attribute: .top,
-        relatedBy: .equal,
-        toItem: warningImage,
-        attribute: .bottom,
-        multiplier: 1,
-        constant: 1
-        ).isActive = true
+      NSLayoutConstraint.activate([
+        warningImage.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 5),
+        warningLabel.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 2),
+        surfaceQuantity.topAnchor.constraint(equalTo: warningImage.bottomAnchor, constant: 1)
+        ]
+      )
     }
   }
 
+  // MARK: - Actions
+
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    let containsADot = textField.text?.contains(".")
+    var invalidCharacters: CharacterSet!
 
+    if containsADot! {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    } else {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    }
     return string.rangeOfCharacter(
       from: invalidCharacters,
       options: [],
@@ -277,7 +220,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
+        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
     }
     return false
   }
