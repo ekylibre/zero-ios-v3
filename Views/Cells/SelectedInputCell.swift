@@ -65,7 +65,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
     quantity.text = "quantity".localized
     quantity.textColor = AppColor.TextColors.DarkGray
-    quantity.font = UIFont.systemFont(ofSize: 13)
+    quantity.font = UIFont.systemFont(ofSize: 15)
     quantity.translatesAutoresizingMaskIntoConstraints = false
     return quantity
   }()
@@ -82,7 +82,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var surfaceQuantity: UILabel = {
     let surfaceQuantity = UILabel(frame: CGRect.zero)
 
-    surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
+    surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
     surfaceQuantity.text = "or".localized + " 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
@@ -170,7 +170,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       inputQuantity.widthAnchor.constraint(equalToConstant: 100),
 
       inputLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      unitMeasureButton.topAnchor.constraint(equalTo: inputLabel.bottomAnchor, constant: 12.5),
+      unitMeasureButton.topAnchor.constraint(equalTo: inputQuantity.topAnchor, constant: 0),
       unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
       unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
       unitMeasureButton.widthAnchor.constraint(equalToConstant: 60),
