@@ -160,6 +160,58 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }))
     self.present(alert, animated: true)
   }
+
+  func forTrailingZero(temp: Double) -> String {
+    let withoutTrailing = String(format: "%g", temp)
+
+    return withoutTrailing
+  }
+
+  func defineQuantityInFunctionOfSurface(unit: String, quantity: Double, indexPath: IndexPath) {
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
+    var surfaceArea: Double = 0
+    var efficiency: Double = 0
+
+    for selectedCrop in cropsView.selectedCrops {
+      surfaceArea += selectedCrop.value(forKey: "surfaceArea") as! Double
+    }
+
+    if (unit.contains("/")) {
+      let surfaceUnit = unit.components(separatedBy: "/")[1]
+      switch surfaceUnit {
+      case "ha":
+        efficiency = Double(quantity) * surfaceArea
+      case "m2":
+        efficiency = Double(quantity) * (surfaceArea * 10000)
+      default:
+        return
+      }
+      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
+      cell.surfaceQuantity.text = String(format: "Soit %@ %@", efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+    } else {
+      efficiency = Double(quantity) / surfaceArea
+      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
+      cell.surfaceQuantity.text = String(format: "Soit %@ %@ par hectare", efficiencyWithoutTrailing, unit)
+    }
+    cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
+  }
+  
+  func updateInputQuantity(indexPath: IndexPath) {
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
+    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let unit = cell.unitMeasureButton.titleLabel?.text
+
+    cell.surfaceQuantity.isHidden = false
+    if quantity == 0.0 {
+      cell.surfaceQuantity.text = "quantity_cant_be_nul".localized
+      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+    } else if totalLabel.text == "select".localized {
+      cell.surfaceQuantity.text = "no_crop_selected".localized
+      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+    } else {
+      defineQuantityInFunctionOfSurface(unit: unit!, quantity: quantity, indexPath: indexPath)
+    }
+  }
 }
 
 // Begin unselection of cells in inputs table view (not working for now)
