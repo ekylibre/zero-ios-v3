@@ -194,9 +194,9 @@
 			isa = PBXGroup;
 			children = (
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
+				04131399213FFC3E005437F0 /* Decodables.swift */,
 				6BEA65E22105CD8A0072840F /* Intervention.swift */,
 				6BEA65E12105CD8A0072840F /* KeychainService.swift */,
-				04131399213FFC3E005437F0 /* Decodables.swift */,
 				04139CAF21411D6F0067DEA9 /* StringExtension.swift */,
 			);
 			path = Models;
