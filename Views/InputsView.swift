@@ -299,8 +299,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     createButton.isHidden = isSearching
     tableViewTopAnchor.constant = isSearching ? 15 : 60
     tableView.reloadData()
-    tableView.layoutIfNeeded()
-    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
+    DispatchQueue.main.async {
+      if self.tableView.numberOfRows(inSection: 0) > 0 {
+        self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: true)
+      }
+    }
   }
 
   // MARK: - Core Data
@@ -315,12 +318,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seedsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Seeds")
     let phytosFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Phytos")
     let fertilizersFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Fertilizers")
-    /*let registeredSort:NSSortDescriptor = NSSortDescriptor(key: "registered", ascending: true)
-    let varietySort:NSSortDescriptor = NSSortDescriptor(key: "variety", ascending: true)
-    let nameSort:NSSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-    seedsFetchRequest.sortDescriptors = [registeredSort, varietySort]
-    phytosFetchRequest.sortDescriptors = [registeredSort]
-    fertilizersFetchRequest.sortDescriptors = [registeredSort, nameSort]*/
 
     do {
       seeds = try managedContext.fetch(seedsFetchRequest)
@@ -538,18 +535,18 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
-    let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
+    //let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
+    let fertilizer = Fertilizers(context: managedContext)
 
-    fertilizer.setValue("Fertilizer", forKey: "type")
-    fertilizer.setValue(false, forKey: "registered")
-    fertilizer.setValue(name, forKey: "name")
-    fertilizer.setValue(nature, forKey: "nature")
-    fertilizer.setValue("kg/ha", forKey: "unit")
-    fertilizer.setValue(0.0, forKey: "quantity")
-    fertilizer.setValue(0, forKey: "row")
-    fertilizer.setValue(false, forKey: "used")
-    fertilizers.append(fertilizer as! Fertilizers)
+    fertilizer.type = "Fertilzer"
+    fertilizer.registered = false
+    fertilizer.name = name
+    fertilizer.nature = nature
+    fertilizer.unit = "kg/ha"
+    fertilizer.quantity = 0
+    fertilizer.row = 0
+    fertilizer.used = false
+    fertilizers.append(fertilizer)
 
     do {
       try managedContext.save()
