@@ -618,6 +618,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     default:
       return
     }
+    sortInputs()
     tableView.reloadData()
     dimView.isHidden = true
   }
