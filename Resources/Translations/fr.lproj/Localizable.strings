@@ -13,6 +13,12 @@
 "person" = "la personne";
 "equipment" = "équipement";
 "input" = "intrant";
+"one_person" = "1 personne";
+"one_equipment" = "1 équipement";
+"one_input" = "1 intrant";
+"people" = "%d personnes";
+"equipments" = "%d équipements";
+"inputs" = "%d intrants";
 
 // Login screen
 
