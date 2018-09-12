@@ -14,7 +14,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "Création d'une semence"
+    titleLabel.text = "seed_creation".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -22,7 +22,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var specieLabel: UILabel = {
     let specieLabel = UILabel(frame: CGRect.zero)
-    specieLabel.text = "Espèce"
+    specieLabel.text = "specie".localized
     specieLabel.font = UIFont.systemFont(ofSize: 15)
     specieLabel.textColor = AppColor.TextColors.DarkGray
     specieLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var varietyTextField: UITextField = {
     let varietyTextField = UITextField(frame: CGRect.zero)
-    varietyTextField.placeholder = "Variété"
+    varietyTextField.placeholder = "variety".localized
     varietyTextField.autocorrectionType = .no
     varietyTextField.delegate = self
     varietyTextField.borderStyle = .none
@@ -58,7 +58,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("ANNULER", for: .normal)
+    cancelButton.setTitle("cancel".localized, for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +67,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("CRÉER", for: .normal)
+    createButton.setTitle("create".localized, for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false

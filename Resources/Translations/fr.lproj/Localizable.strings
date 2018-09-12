@@ -6,11 +6,42 @@
   Copyright © 2018 Ekylibre. All rights reserved.
 */
 
+"are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %@ ?";
+"person" = "la personne";
+"equipment" = "équipement";
+"input" = "intrant";
+"one_person" = "1 personne";
+"one_equipment" = "1 équipement";
+"one_input" = "1 intrant";
+"people" = "%d personnes";
+"equipments" = "%d équipements";
+"inputs" = "%d intrants";
+
+// Basic words
 "no" = "Non";
 "yes" = "Oui";
-"are_you_sure_you_want_to_delete" = "Êtes-vous sûr de vouloir supprimer %{element_to_delete} ?";
-"please_retry" = "Veuillez réessayer";
-"unknown_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+"error" = "Erreur";
+"cancel" = "ANNULER";
+"create" = "CRÉER";
+"name" = "Nom";
+"first_name" = "Prénom";
+"last_name" = "Nom";
+
+// Login screen
+
+"please_try_again" = "Veuillez réessayer";
+"unknow_username_or_incorrect_password" = "Identifiant inconnu ou mot de passe incorrect.";
+"forgotten_password" = "Mot de passe oublié ?";
+
+// Intervention
+
+"today_last_synchronization" = "Denière synchronisation %02d:%02d";
+"last_synchronization" = "Denière synchronisation ";
+"no_synchronization_listed" = "Aucune synchronisation répertoriée";
+"register_intervention" = "ENREGISTRER UNE INTERVENTION%@";
+"of" = " DE...";
+"crops_size" = "%d cultures • %.1f ha";
+"crop_size" = "1 culture • %.1f ha";
 
 // Procedures
 
@@ -21,6 +52,214 @@
 "harvest" = "Récolte";
 "care" = "Entretien";
 "crop_protection" = "Pulvérisation";
+
+// Crop View
+
+"select_crops" = "Sélectionnez des cultures";
+"no_selection" = "Aucune sélection";
+"validate" = "VALIDER";
+"surface_area" = "%.1f ha travaillés";
+
+// Inputs View
+
+"create_new_%@" = "+ CRÉER UN%@";
+"new_seed" = "E NOUVELLE SEMENCE";
+"new_phyto" = "NOUVEAU PHYTO";
+"new_fertilizer" = "NOUVEAU FERTILISANT";
+"seeds" = "Semences";
+"phyto" = "Phyto.";
+"fertilizers" = "Fertilisants";
+"quantity" = "Quantité";
+"or" = "Soit";
+"invalid_dose" = "Dose invalide";
+
+// Create fertilizer view
+
+"fertilizer_creation" = "Création d'un fertilisant";
+"nature" = "Nature";
+"choose_nature" = "Choisissez une nature";
+
+// Create phyto view
+
+"phyto_creation" = "Création d'un produit phyto";
+"brand" = "Marque";
+"maa_number" = "N° AMM";
+"re_entry_delay" = "Délai de ré-éntrée";
+"in_hours" = "en heures";
+
+// Create seed view
+
+"seed_creation" = "Création de semence";
+"specie" = "Espèce";
+"variety" = "Variété";
+
+// Vegetal species
+
+"allium_ascalonicum" = "Échalotte";
+"allium_cepa" = "Oignon";
+"allium_porrum" = "Poireau";
+"allium_sativum" = "Ail cultivé";
+"allium_schoenoprasum" = "Ciboulette";
+"anthriscus_cerefolium" = "Cerfeuil";
+"apium_graveolens" = "Céleri";
+"avena_sativa" = "Avoine cultivée";
+"beta_vulgaris" = "Betterave commune";
+"brassica_napus" = "Colza";
+"brassica_oleracea" = "Chou";
+"brassica_rapa" = "Brassica rapa";
+"cannabis_sativa" = "Chanvre";
+"capsicum_annuum" = "Poivron";
+"cicer_arietinum" = "Pois chiche";
+"cichorium_endivia" = "Chicorée endive";
+"cichorium_intybus" = "Chicorée sauvage";
+"citrullus_lanatus" = "Pastèque commune";
+"citrus_medica" = "Cédratier";
+"citrus_reticulata" = "Mandarinier";
+"citrus_sinensis" = "Orange";
+"corylus_avellana" = "Noisetier commun";
+"cucumis_melo" = "Melon";
+"cucumis_sativus" = "Concombre";
+"cucurbita_maxima" = "Potiron";
+"cucurbita_pepo" = "Citrouille";
+"cydonia_oblonga" = "Cognassier";
+"cynara_scolymus" = "Artichaut";
+"daucus_carota" = "Carotte commune";
+"foeniculum_vulgare" = "Fenouil doux";
+"fortunella_margarita" = "Kumquat ovale";
+"glycine_max" = "Soja";
+"helianthus_annuus" = "Tournesol annuel";
+"hordeum_vulgare" = "Orge commune";
+"juglans_regia" = "Noyer commun";
+"lactuca_sativa" = "Laitue cultivée";
+"lens_culinaris" = "Lentille cultivée";
+"linum_usitatissimum" = "Linum cultivé";
+"lolium_multiflorum" = "Ray grass Italien";
+"lolium_perenne" = "Ray grass Anglais";
+"lotus_corniculatus" = "Lotier corniculé";
+"malus_pumila" = "Pommier commun";
+"medicago_sativa" = "Luzerne cultivée";
+"olea_europaea" = "Olivier";
+"onobrychis_viciifolia" = "Sainfoin commun";
+"oryza_sativa" = "Riz cultivé";
+"petroselinum_crispum" = "Persil commun";
+"phaseolus_vulgaris" = "Haricot commun";
+"pisum_sativum" = "Pois commun";
+"poa_trivialis" = "Pâturin commun";
+"prunus_armeniaca" = "Abricotier";
+"prunus_avium" = "Merisier";
+"prunus_cerasifera" = "Prunier-cerise (Myrobolan)";
+"prunus_cerasus" = "Prunus cerasus";
+"prunus_domestica" = "Prunier domestique";
+"prunus_mahaleb" = "Merisier Ste Lucie";
+"prunus_persica" = "Pêcher";
+"prunus_salicina" = "Prunier du Japon";
+"pyrus_communis" = "Poirier commun";
+"raphanus_sativus" = "Radis";
+"ribes_nigrum" = "Cassissier";
+"ribes_rubrum" = "Groseiller à grappes";
+"rubus_idaeus" = "Framboisier";
+"solanum_lycopersicum" = "Tomate";
+"solanum_melongena" = "Aubergine";
+"solanum_torvum" = "Aubergine pois";
+"solanum_tuberosum" = "Pomme de terre";
+"spinacia_oleracea" = "Épinard";
+"trifolium_alexandrinum" = "Trèfle d’Alexandrie";
+"trifolium_incarnatum" = "Trèfle incarnat";
+"trifolium_pratense" = "Trèfle violet";
+"trifolium_repens" = "Trèfle blanc";
+"triticosecale" = "Triticale";
+"triticum_aestivum" = "Blé tendre";
+"triticum_durum" = "Blé dur";
+"valerianella_locusta" = "Mâche";
+"vicia_faba" = "Fève ou féverole";
+"vicia_sativa" = "Vesce cultivée";
+"vicia_villosa" = "Vesce villosa";
+"vitis" = "Vigne";
+"vitis_vinifera" = "Cépage Vitis vinifera";
+"zea_mays" = "Maïs";
+
+// Fertilizers
+
+"ammonitrate_27_fertilizer" = "Ammonitrate 27%";
+"ammonitrate_33_fertilizer" = "Ammonitrate 33,5%";
+"anaerobic_dehydrated_digestate_sludge" = "Boues digérées anaérobies déshydratées (C/N = 5,9) 11,3";
+"anaerobic_dehydrated_limed_digestate_sludge" = "Boues digérées anaérobies déshydratées chaulées (C/N = 6) 9,5";
+"anaerobic_dry_digestate_sludge" = "Boues digérées anaérobies sèchées (C/N = 6,1)";
+"anaerobic_liquid_digestate_sludge" = "Boues digérées anaérobies liquides IAA (C/N = 4,2) 2,1";
+"bio_urban_compost" = "Compost de bio-déchets";
+"calf_slurry" = "Lisier de veaux";
+"capra_manure" = "Fumier de caprins";
+"cattle_compost" = "Composts de fumiers de bovins jeune de moins de 6 mois";
+"chlorure_60_fertilizer" = "Chlorure 60%";
+"cowshed_cattle_manure" = "Fumier de bovin décomposé d’étable animaux entravés";
+"dap_18_46_fertilizer" = "DAP 18-46";
+"dehydrated_limed_activated_sludge" = "Boues activées déshydratées chaulées (C/N = 5,3)";
+"digestate_compost" = "Compost de boues (C/N = 11,8)";
+"diluted_cattle_slurry" = "Lisier de bovins dilué système couvert";
+"dry_activated_sludge" = "Boues activées séchées (C/N = 6)";
+"dry_anaerobic_digestion_digestate" = "Fraction sèche après séparation de phase";
+"dry_liquid_activated_sludge" = "Boues activées liquides égouttées IAA (C/N = 4,4)";
+"dry_litter_activated_sludge" = "Boues activées lits de séchage (C/N = 5,4)";
+"dry_poultry_guano" = "Fientes de volaille séchées (80%MS)";
+"green_compost" = "Compost de déchets verts de moins de 6 mois";
+"horse_manure" = "Fumier de cheval";
+"liquid_activated_sludge" = "Boues activées liquides IAA (C/N = 4,4)";
+"liquid_anaerobic_digestion_digestate" = "Fraction liquide après séparation de phase";
+"litter_cattle_manure" = "Fumier de bovin pailleux de litière accumulée";
+"litter_poultry_guano" = "Fientes de volaille avec litière";
+"mixed_sludge_1" = "Boues lit bactérien/disque bio liquides (C/N = 7,5)";
+"mixed_sludge_2" = "Boues lit bactérien déshydratées chaulées (C/N = 5)";
+"mixed_sludge_3" = "Boues décanteur digesteur (C/N = 8,1)";
+"mixed_sludge_4" = "Boues décanteur (C/N = 6 à 9)";
+"mixed_sludge_5" = "Boues de curage de lagunes urbaines (C/N = 6 à 11)";
+"mixed_sludge_6" = "Boues physicochimiques déshydratées (C/N = 5,5 à 17)";
+"mixed_sludge_7" = "Boues physico-chimiques déshydratées chaulées (C/N = 10 à 13)";
+"mixed_sludge_8" = "Boues digérées traitées thermiquement";
+"mixed_sludge_9" = "Matières de vidange (C/N = 11,8)";
+"mixed_sludge_10" = "Boues mixtes papetières C/N<15";
+"mixed_sludge_11" = "Boues mixtes papetières 15<C/N<20";
+"mixed_sludge_12" = "Boues mixtes papetières 20<C/N<35";
+"mixed_sludge_13" = "Boues mixtes papetières";
+"mixed_sludge_14" = "Boues de désencrage 40<C/N<70";
+"nitrate_solution_39_fertilizer" = "Solution azotée 39%";
+"old_cattle_compost" = "Composts de fumiers de bovins vieux de plus de 6 mois";
+"old_green_compost" = "Compost de déchets verts de plus de 6 mois";
+"old_pig_compost" = "Compost de fumier de ports âgé (de 6 à 10 mois)";
+"old_poultry_compost" = "Compost de fientes de volailles avec litière de 6 mois à 10 mois";
+"ovis_manure" = "Fumier d’ovins";
+"pig_compost" = "Compost de fumier de porcs jeune (moins de 6 mois)";
+"pig_manure" = "Fumier de porcs";
+"pig_slurry" = "Lisier de porc mixte";
+"poultry_compost" = "Compost de fientes de volailles avec litière de moins de 6 mois";
+"poultry_guano" = "Fientes de volailles 60 % MS";
+"pressed_unlimed_activated_sludge" = "Boues activées filtre presse non chaulées (C/N = 5,9)";
+"raw_anaerobic_digestion_digestate" = "Digestats bruts";
+"rhizophytes_litter_activated_sludge" = "Boues activées lits à rhizophytes (C/N =5,9)";
+"rubbish_urban_compost" = "Compost d’ordures ménagères résiduelles (par TMB)";
+"stodgy_activated_sludge" = "Boues activées pâteuses filtre à bandes (C/N = 5,2)";
+"sugar_vinasse" = "Vinasse de betterave concentrée";
+"super_46_fertilizer" = "Super 46%";
+"ternary_solution_15_fertilizer" = "15-15-15 28SO3";
+"undiluted_cattle_slurry" = "Lisier de bovins non dilué";
+"urban_dry_liquid_activated_sludge" = "Boues activées liquides égouttées urbaines (C/N = 4,9)";
+"urban_liquid_activated_sludge" = "Boues activées liquides urbaines (C/N = 4,9)";
+"urea_46_fertilizer" = "Urée 46 %";
+"wine_vinasse" = "Vinasse de distillerie";
+
+// Fetilizer nature
+
+"organic" = "Organique";
+"mineral" = "Minéral";
+
+// Input selection
+
+"or" = "Soit %@ %@";
+"or_per_hectare" = "Soit %@ %@ par hectare";
+"quantity_cant_be_nul" = "%@ ne peut être nul";
+"no_crop_selected" = "Aucune culture sélectionnée";
+"volume" = "Le volume";
+"mass" = "La masse";
+"select" = "+ SÉLECTIONNER";
 
 // Equipment types
 
@@ -66,12 +305,25 @@
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
 
-// Input selection
+// Weather
 
-"or" = "Soit %@ %@";
-"or_per_hectare" = "Soit %@ %@ par hectare";
-"quantity_cant_be_nul" = "%@ ne peut être nul";
-"no_crop_selected" = "Aucune culture sélectionnée";
-"volume" = "Le volume";
-"mass" = "La masse";
-"select" = "+ SÉLECTIONNER";
+"weather" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"not_filled_in" = "Not filled in";
+
+
+// Storyboard
+
+"appli_description" = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre...";
+
+// Language
+
+"local_code" = "fr_FR";
+
+// Date / Time
+
+"hour" = "heure";
+"hours" = "heures";
+"today" = "Aujourd'hui";
+"yesterday" = "Hier";

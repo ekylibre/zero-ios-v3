@@ -28,7 +28,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         print("Lexicon error")
       }
     } else {
-      print("equipment_types.json not found")
+      print("equipment-types.json not found")
     }
     return equipmentType
   }
@@ -235,18 +235,18 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   func removeEquipmentCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'outil ?",
+      message: String(format: "are_you_sure_you_want_to_delete".localized, "equipment".localized),
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
       let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
       let indexTab = NSIndexPath(row: row, section: 0)
       let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
 
       cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.white
+      cell.backgroundColor = AppColor.CellColors.White
       self.selectedEquipments.remove(at: indexPath.row)
       self.selectedEquipmentsTableView.reloadData()
 

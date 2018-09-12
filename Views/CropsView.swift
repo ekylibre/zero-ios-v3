@@ -15,7 +15,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "Sélectionnez des cultures"
+    titleLabel.text = "select_crops".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
     titleLabel.textColor = AppColor.TextColors.White
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var selectedCropsLabel: UILabel = {
     let selectedCropsLabel = UILabel(frame: CGRect.zero)
-    selectedCropsLabel.text = "Aucune sélection"
+    selectedCropsLabel.text = "no_selection".localized
     selectedCropsLabel.font = UIFont.boldSystemFont(ofSize: 17)
     selectedCropsLabel.textColor = AppColor.TextColors.White
     selectedCropsLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var validateButton: UIButton = {
     let validateButton = UIButton(frame: CGRect.zero)
-    validateButton.setTitle("VALIDER", for: .normal)
+    validateButton.setTitle("validate".localized, for: .normal)
     validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     validateButton.backgroundColor = UIColor.white
@@ -180,7 +180,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
       surfaceAreaLabel.textColor = UIColor.darkGray
       let surfaceArea = crop.value(forKey: "surfaceArea") as! Double
-      surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
+      surfaceAreaLabel.text = String(format: "surface_area".localized, surfaceArea)
       surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
       view.addSubview(surfaceAreaLabel)
       let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapCropView))
@@ -379,11 +379,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     if cropsCount == 0 {
-      selectedCropsLabel.text = "Aucune sélection"
+      selectedCropsLabel.text = "no_selection".localized
     } else if cropsCount == 1 {
-      selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
+      selectedCropsLabel.text = String(format: "crop_size".localized, totalSurfaceArea)
     } else {
-      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", cropsCount, totalSurfaceArea)
+      selectedCropsLabel.text = String(format: "crops_size".localized, cropsCount, totalSurfaceArea)
     }
   }
 
@@ -433,11 +433,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     if cropsCount == 0 {
-      selectedCropsLabel.text = "Aucune sélection"
+      selectedCropsLabel.text = "no_selection".localized
     } else if cropsCount == 1 {
-      selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
+      selectedCropsLabel.text = String(format: "crop_size".localized, totalSurfaceArea)
     } else {
-      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", cropsCount, totalSurfaceArea)
+      selectedCropsLabel.text = String(format: "crops_size".localized, cropsCount, totalSurfaceArea)
     }
   }
 }

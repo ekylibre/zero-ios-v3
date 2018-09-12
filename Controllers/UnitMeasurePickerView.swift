@@ -13,14 +13,14 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
   // MARK: - Initialization
 
   func initUnitMeasurePickerView() {
-    liquidUnitPicker.backgroundColor = AppColor.CellColors .white
+    liquidUnitPicker.backgroundColor = AppColor.CellColors .White
     liquidUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
     liquidUnitPicker.delegate = self
     liquidUnitPicker.dataSource = self
     liquidUnitPicker.isHidden = true
     view.addSubview(liquidUnitPicker)
 
-    solidUnitPicker.backgroundColor = AppColor.CellColors.white
+    solidUnitPicker.backgroundColor = AppColor.CellColors.White
     solidUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
     solidUnitPicker.delegate = self
     solidUnitPicker.dataSource = self
