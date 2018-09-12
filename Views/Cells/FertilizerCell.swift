@@ -25,6 +25,17 @@ class FertilizerCell: UITableViewCell {
     return natureLabel
   }()
 
+  lazy var starImageView: UIImageView = {
+    let starImageView = UIImageView(frame: CGRect.zero)
+    let starImage = #imageLiteral(resourceName: "star")
+    let tintedImage = starImage.withRenderingMode(.alwaysTemplate)
+    starImageView.image = tintedImage
+    starImageView.tintColor = AppColor.BarColors.Green
+    starImageView.translatesAutoresizingMaskIntoConstraints = false
+    starImageView.isHidden = true
+    return starImageView
+  }()
+
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCell()
@@ -33,6 +44,7 @@ class FertilizerCell: UITableViewCell {
   private func setupCell() {
     contentView.addSubview(nameLabel)
     contentView.addSubview(natureLabel)
+    contentView.addSubview(starImageView)
     setupLayout()
   }
 
@@ -42,7 +54,11 @@ class FertilizerCell: UITableViewCell {
       nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       natureLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
       natureLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15)
+      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      starImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      starImageView.heightAnchor.constraint(equalToConstant: 20),
+      starImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      starImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }
 

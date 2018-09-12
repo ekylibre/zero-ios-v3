@@ -223,6 +223,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
+      cell.starImageView.isHidden = isRegistered
       return cell
     default:
       fatalError("Switch error")
