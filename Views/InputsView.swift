@@ -199,10 +199,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
 
-      if fromSeeds.count > indexPath.row {
-        cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
-        cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
-      }
+      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
+      cell.specieLabel.text = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      let isRegistered = fromSeeds[indexPath.row].value(forKey: "registered") as! Bool
+      cell.starImageView.isHidden = isRegistered
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
@@ -214,6 +214,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
       let unit: String = inFieldReentryDelay > 1 ? "heures" : "heure"
       cell.inFieldReentryDelayLabel.text = "\(inFieldReentryDelay) " + unit
+      let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
+      cell.starImageView.isHidden = isRegistered
       return cell
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
