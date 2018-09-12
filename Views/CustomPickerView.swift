@@ -59,6 +59,7 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
   }
 
   private func setupView() {
+    self.isHidden = true
     self.addSubview(headerView)
     self.addSubview(pickerView)
     setupLayout()
@@ -75,7 +76,7 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
       headerView.widthAnchor.constraint(equalTo: self.widthAnchor),
       pickerView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
       pickerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      pickerView.heightAnchor.constraint(equalToConstant: 200),
+      pickerView.heightAnchor.constraint(equalToConstant: 216),
       pickerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
       pickerView.widthAnchor.constraint(equalTo: self.widthAnchor)
       ])

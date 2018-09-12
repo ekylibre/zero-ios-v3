@@ -17,7 +17,6 @@ extension AddInterventionViewController: UITextFieldDelegate {
     irrigationPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), units)
     irrigationPickerView.translatesAutoresizingMaskIntoConstraints = false
     self.view.addSubview(irrigationPickerView)
-    irrigationPickerView.isHidden = true
 
     setupLayout()
     setupActions()
@@ -26,7 +25,7 @@ extension AddInterventionViewController: UITextFieldDelegate {
   private func setupLayout() {
     NSLayoutConstraint.activate([
       irrigationPickerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-      irrigationPickerView.heightAnchor.constraint(equalToConstant: 300),
+      irrigationPickerView.heightAnchor.constraint(equalToConstant: 266),
       irrigationPickerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       irrigationPickerView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
       ])
