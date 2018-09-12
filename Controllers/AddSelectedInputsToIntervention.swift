@@ -191,7 +191,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
-  
+
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let quantity = (cell.inputQuantity.text! as NSString).doubleValue
@@ -206,6 +206,18 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
       defineQuantityInFunctionOfSurface(unit: unit!, quantity: quantity, indexPath: indexPath)
+    }
+  }
+
+  func updateAllInputQuantity() {
+    let totalCellNumber = selectedInputs.count
+    var indexPath: IndexPath!
+
+    if totalCellNumber > 0 {
+      for currentCell in 0..<(totalCellNumber) {
+        indexPath = NSIndexPath(row: currentCell, section: 0) as IndexPath?
+        updateInputQuantity(indexPath: indexPath)
+      }
     }
   }
 }
