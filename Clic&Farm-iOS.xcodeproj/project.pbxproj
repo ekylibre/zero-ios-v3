@@ -12,6 +12,7 @@
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		04139CB021411D6F0067DEA9 /* LocalizationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04139CAF21411D6F0067DEA9 /* LocalizationExtension.swift */; };
+		04161EB12149165C00851531 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04161EB02149165C00851531 /* AddIrrigation.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041855772142A20F0077A715 /* AddWeatherToIntervention.swift */; };
@@ -71,6 +72,7 @@
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041322442147B2A700E55D19 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		04139CAF21411D6F0067DEA9 /* LocalizationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationExtension.swift; sourceTree = "<group>"; };
+		04161EB02149165C00851531 /* AddIrrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		041855772142A20F0077A715 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				04ABD4522147E81F00BC5362 /* AddEntitiesToIntervention.swift */,
 				04ABD4502147E81600BC5362 /* AddEquipmentIntervention.swift */,
 				04ABD44E2147E80100BC5362 /* AddInterventionViewController.swift */,
+				04161EB02149165C00851531 /* AddIrrigation.swift */,
 				04ABD44C2147E7C200BC5362 /* AddSelectedInputsToIntervention.swift */,
 				041855772142A20F0077A715 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
@@ -408,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */,
+				04161EB12149165C00851531 /* AddIrrigation.swift in Sources */,
 				6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */,
 				6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */,
 				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,

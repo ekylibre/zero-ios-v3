@@ -153,7 +153,7 @@
     </entity>
     <entity name="WorkingPeriods" representedClassName="WorkingPeriods" syncable="YES" codeGenerationType="class">
         <attribute name="executionDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="hourDuration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="hourDuration" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
@@ -175,6 +175,6 @@
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
         <element name="Users" positionX="-441" positionY="401" width="128" height="60"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
-        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="88"/>
+        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="90"/>
     </elements>
 </model>

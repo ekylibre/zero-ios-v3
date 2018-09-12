@@ -21,6 +21,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var irrigationView: UIView!
+  @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
+  @IBOutlet weak var irrigationLabel: UILabel!
+  @IBOutlet weak var irrigationValueTextField: UITextField!
+  @IBOutlet weak var irrigationUnitButton: UIButton!
+  @IBOutlet weak var irrigationInfoLabel: UILabel!
+  @IBOutlet weak var irrigationSeparatorView: UIView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
@@ -59,6 +67,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsNumber: UILabel!
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
@@ -221,6 +230,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
+<<<<<<< HEAD
     initializeWeatherView()
     weathers = defineWeathers()
     saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
@@ -229,6 +239,48 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
+=======
+    irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
+
+    setupViewsAccordingInterventionType()
+  }
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+
+  private func setupViewsAccordingInterventionType() {
+    switch  interventionType {
+    case Intervention.InterventionType.Care.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+    case Intervention.InterventionType.CropProtection.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsView.segmentedControl.selectedSegmentIndex = 1
+      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
+    case Intervention.InterventionType.Fertilization.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsView.segmentedControl.selectedSegmentIndex = 2
+      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
+    case Intervention.InterventionType.GroundWork.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsSelectionView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case Intervention.InterventionType.Harvest.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsSelectionView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case Intervention.InterventionType.Implantation.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+    default:
+      return
+    }
+>>>>>>> fe6e81680f0fe6d4a0e3c600fa0caff12a411302
   }
 
   override func viewDidLayoutSubviews() {
@@ -469,7 +521,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     workingPeriod.setValue(newIntervention, forKey: "interventions")
     let datePicker = selectDateView.subviews.first as! UIDatePicker
     workingPeriod.setValue(datePicker.date, forKey: "executionDate")
-    let hourDuration = Int(durationTextField.text!)
+    let hourDuration = Float(durationTextField.text!)
     workingPeriod.setValue(hourDuration, forKey: "hourDuration")
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
@@ -600,7 +652,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let registeredSpecies = jsonResult as? [[String: Any]]
 
         for registeredSpecie in registeredSpecies! {
-          species.append(registeredSpecie["fra"] as! String)
+          let specie = registeredSpecie["name"] as! String
+          species.append(specie.localized)
         }
       } catch {
         print("Lexicon error")
@@ -609,7 +662,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       print("species.json not found")
     }
 
-    return species
+    return species.sorted()
   }
 
   func writeValueBack(value: String) {
@@ -679,6 +732,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
     totalLabel.sizeToFit()
+    updateIrrigation(self)
 
     cropsView.isHidden = true
     dimView.isHidden = true
@@ -702,12 +756,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
     }
     collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
-    /*dimView.isHidden = false
-     workingPeriodView.isHidden = false
-
-     UIView.animate(withDuration: 0.5, animations: {
-     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-     })*/
   }
 
   func getSelectedWorkingPeriod() -> String {
