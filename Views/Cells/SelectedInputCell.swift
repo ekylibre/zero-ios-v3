@@ -236,7 +236,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       addInterventionViewController?.solidUnitPicker.isHidden = false
     }
     cellDelegate?.changeUnitMeasure(indexPath)
-    addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
   }
 
   @objc func removeCell(sender: UIButton) {
