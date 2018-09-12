@@ -10,6 +10,7 @@ import UIKit
 
 protocol HarvestCellDelegate: class {
   func removeHarvestCell(_ indexPath: IndexPath)
+  func defineIndexPath(_ indexPath: IndexPath)
 }
 
 class HarvestCell: UITableViewCell {
@@ -24,5 +25,9 @@ class HarvestCell: UITableViewCell {
 
   @IBAction func removeCell(_ sender: UIButton) {
     cellDelegate?.removeHarvestCell(indexPath)
+  }
+
+  @IBAction func defineSelectedCell(_ sender: Any) {
+    cellDelegate?.defineIndexPath(indexPath)
   }
 }

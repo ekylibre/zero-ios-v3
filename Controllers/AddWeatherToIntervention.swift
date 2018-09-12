@@ -109,49 +109,6 @@ extension AddInterventionViewController {
     }
   }
 
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
-                 replacementString string: String) -> Bool {
-    let containsADot = textField.text?.contains(".")
-    var invalidCharacters: CharacterSet!
-
-    if containsADot! {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
-    } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
-    }
-
-    switch textField {
-    case temperatureTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    case windSpeedTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    default:
-      return true
-    }
-  }
-
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    switch textField {
-    case temperatureTextField:
-      weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
-      currentWeatherLabel.text = (temperatureTextField.text == "" ? "not_filled_in".localized : "\(temperatureTextField.text!) °C")
-    case windSpeedTextField:
-      weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
-    default:
-      return false
-    }
-    return false
-  }
-
   func saveWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return

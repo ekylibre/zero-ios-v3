@@ -10,6 +10,9 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: HarvestCellDelegate {
+  func defineIndexPath(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+  }
 
   func initializeHarvestTableView() {
     harvestTableView.layer.borderWidth  = 0.5
