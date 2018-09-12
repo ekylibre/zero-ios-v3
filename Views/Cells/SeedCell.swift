@@ -25,6 +25,14 @@ class SeedCell: UITableViewCell {
     return specieLabel
   }()
 
+  lazy var starImageView: UIImageView = {
+    let starImageView = UIImageView(frame: CGRect.zero)
+    starImageView.image = #imageLiteral(resourceName: "star")
+    starImageView.tintColor = UIColor.green
+    starImageView.translatesAutoresizingMaskIntoConstraints = false
+    return starImageView
+  }()
+
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCell()
@@ -37,6 +45,7 @@ class SeedCell: UITableViewCell {
     self.selectedBackgroundView = selectedColor
     contentView.addSubview(varietyLabel)
     contentView.addSubview(specieLabel)
+    contentView.addSubview(starImageView)
     setupLayout()
   }
 
@@ -46,7 +55,11 @@ class SeedCell: UITableViewCell {
       varietyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       specieLabel.topAnchor.constraint(equalTo: varietyLabel.bottomAnchor),
       specieLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15)
+      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      starImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      starImageView.heightAnchor.constraint(equalToConstant: 20),
+      starImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      starImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }
 
