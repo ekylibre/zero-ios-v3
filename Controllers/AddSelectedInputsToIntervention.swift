@@ -169,12 +169,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func defineQuantityInFunctionOfSurface(unit: String, quantity: Double, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    var surfaceArea: Double = 0
+    let surfaceArea = cropsView.totalSurfaceArea
     var efficiency: Double = 0
-
-    for selectedCrop in cropsView.selectedCrops {
-      surfaceArea += selectedCrop.value(forKey: "surfaceArea") as! Double
-    }
 
     if (unit.contains("/")) {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
@@ -187,11 +183,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         return
       }
       let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %@ %@", efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "or".localized, efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
     } else {
       efficiency = Double(quantity) / surfaceArea
       let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %@ %@ par hectare", efficiencyWithoutTrailing, unit)
+      cell.surfaceQuantity.text = String(format: "or_per_hectare".localized, efficiencyWithoutTrailing, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
@@ -203,7 +199,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     cell.surfaceQuantity.isHidden = false
     if quantity == 0.0 {
-      cell.surfaceQuantity.text = "quantity_cant_be_nul".localized
+      cell.surfaceQuantity.text = String(format: "quantity_cant_be_nul".localized, (cell.type == "Phyto" ? "volume".localized : "mass".localized))
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else if totalLabel.text == "select".localized {
       cell.surfaceQuantity.text = "no_crop_selected".localized

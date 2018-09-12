@@ -65,3 +65,13 @@
 "water_spreader" = "Water spreader";
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
+
+// Input selection
+
+"or" = "Or %@ %@";
+"or_per_hectare" = "Or %@ %@ per hectare";
+"quantity_cant_be_nul" = "%@ can't be nul";
+"no_crop_selected" = "No crop selected";
+"volume" = "The volume";
+"mass" = "The mass";
+"select" = "+ SELECT";
