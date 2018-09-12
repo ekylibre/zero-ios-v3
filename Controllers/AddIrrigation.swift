@@ -10,6 +10,32 @@ import UIKit
 
 extension AddInterventionViewController: UITextFieldDelegate {
 
+  func setupIrrigation() {
+    let units = ["l", "hl", "m³"]
+    irrigationPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), units)
+    irrigationPickerView.translatesAutoresizingMaskIntoConstraints = false
+    self.view.addSubview(irrigationPickerView)
+    irrigationPickerView.isHidden = true
+
+    setupLayout()
+    setupActions()
+  }
+
+  private func setupLayout() {
+    NSLayoutConstraint.activate([
+      irrigationPickerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+      irrigationPickerView.heightAnchor.constraint(equalToConstant: 400),
+      irrigationPickerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      irrigationPickerView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
+      ])
+  }
+
+  private func setupActions() {
+    irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
+    irrigationPickerView.cancelButton.addTarget(self, action: #selector(cancelPicking), for: .touchUpInside)
+    irrigationPickerView.validateButton.addTarget(self, action: #selector(validatePicking), for: .touchUpInside)
+  }
+
   @IBAction func tapIrrigationView(_ sender: Any) {
     if irrigationHeightConstraint.constant == 70 {
       irrigationHeightConstraint.constant = 140
@@ -45,5 +71,23 @@ extension AddInterventionViewController: UITextFieldDelegate {
       irrigationInfoLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
       irrigationInfoLabel.textColor = AppColor.TextColors.DarkGray
     }
+  }
+
+  @IBAction func tapUnit() {
+    dimView.isHidden = false
+    irrigationPickerView.isHidden = false
+  }
+
+  @objc func cancelPicking() {
+    irrigationPickerView.isHidden = true
+    dimView.isHidden = true
+  }
+
+  @objc func validatePicking() {
+    let selectedRow = irrigationPickerView.pickerView.selectedRow(inComponent: 0)
+    let unit = irrigationPickerView.values[selectedRow]
+    irrigationUnitButton.setTitle(unit, for: .normal)
+    irrigationPickerView.isHidden = true
+    dimView.isHidden = true
   }
 }

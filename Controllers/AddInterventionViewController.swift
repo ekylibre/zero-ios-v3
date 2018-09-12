@@ -77,6 +77,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var interventionType: String!
   var equipments = [NSManagedObject]()
   var selectDateView: SelectDateView!
+  var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
@@ -214,7 +215,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
+    setupIrrigation()
 
     setupViewsAccordingInterventionType()
   }

@@ -422,6 +422,9 @@
                                                         <state key="normal" title="l">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="tapUnit" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="9MO-Mv-SGJ"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Le volume ne peut être nul" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTq-na-vs2">
                                                         <rect key="frame" x="79" y="102" width="276" height="18"/>
