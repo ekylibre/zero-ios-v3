@@ -10,6 +10,8 @@ import UIKit
 
 extension AddInterventionViewController: UITextFieldDelegate {
 
+  // MARK: - Initialization
+
   func setupIrrigation() {
     let units = ["l", "hl", "m³"]
     irrigationPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), units)
@@ -24,7 +26,7 @@ extension AddInterventionViewController: UITextFieldDelegate {
   private func setupLayout() {
     NSLayoutConstraint.activate([
       irrigationPickerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-      irrigationPickerView.heightAnchor.constraint(equalToConstant: 400),
+      irrigationPickerView.heightAnchor.constraint(equalToConstant: 300),
       irrigationPickerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       irrigationPickerView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
       ])
@@ -33,8 +35,10 @@ extension AddInterventionViewController: UITextFieldDelegate {
   private func setupActions() {
     irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
     irrigationPickerView.cancelButton.addTarget(self, action: #selector(cancelPicking), for: .touchUpInside)
-    irrigationPickerView.validateButton.addTarget(self, action: #selector(validatePicking), for: .touchUpInside)
+    irrigationPickerView.validateButton.addTarget(self, action: #selector(validatePick), for: .touchUpInside)
   }
+
+  // MARK: - Actions
 
   @IBAction func tapIrrigationView(_ sender: Any) {
     if irrigationHeightConstraint.constant == 70 {
@@ -79,14 +83,23 @@ extension AddInterventionViewController: UITextFieldDelegate {
   }
 
   @objc func cancelPicking() {
+    let selectedRow = irrigationPickerView.selectedRow
+
+    irrigationPickerView.pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
     irrigationPickerView.isHidden = true
     dimView.isHidden = true
   }
 
-  @objc func validatePicking() {
+  @objc func validatePick() {
     let selectedRow = irrigationPickerView.pickerView.selectedRow(inComponent: 0)
     let unit = irrigationPickerView.values[selectedRow]
-    irrigationUnitButton.setTitle(unit, for: .normal)
+    let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let volume = Float(volumeString) ?? 0
+
+    self.irrigationUnitButton.setTitle(unit, for: .normal)
+    irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+    updateInfoLabel(Double(volume), unit)
+    irrigationPickerView.selectedRow = selectedRow
     irrigationPickerView.isHidden = true
     dimView.isHidden = true
   }

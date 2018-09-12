@@ -47,11 +47,13 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
   }()
 
   var values: [String]
+  var selectedRow: Int
 
   // MARK: - Initialization
 
   init(frame: CGRect, _ values: [String]) {
     self.values = values
+    self.selectedRow = 0
     super.init(frame: frame)
     setupView()
   }
