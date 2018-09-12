@@ -1,5 +1,5 @@
 //
-//  LocalizationExtension.swift
+//  Localizable.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 06/09/2018.
