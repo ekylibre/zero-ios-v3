@@ -40,14 +40,7 @@ extension AddInterventionViewController: UITextFieldDelegate {
       irrigationInfoLabel.text = "Aucune culture sélectionnée"
       irrigationInfoLabel.textColor = AppColor.TextColors.Red
     } else {
-      var surfaceArea: Double = 0
-      var efficiency: Double = 0
-
-      for selectedCrop in cropsView.selectedCrops {
-        surfaceArea += selectedCrop.value(forKey: "surfaceArea") as! Double
-      }
-
-      efficiency = Double(volume) / surfaceArea
+      let efficiency = Double(volume) / cropsView.totalSurfaceArea
 
       irrigationInfoLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
       irrigationInfoLabel.textColor = AppColor.TextColors.DarkGray
