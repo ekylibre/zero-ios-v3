@@ -11,6 +11,7 @@
 "person" = "person";
 "equipment" = "equipment";
 "input" = "input";
+"shipment" = "shipment";
 "one_person" = "1 person";
 "one_equipment" = "1 equipment";
 "one_input" = "1 input";

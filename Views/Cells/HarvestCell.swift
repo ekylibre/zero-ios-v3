@@ -8,10 +8,21 @@
 
 import UIKit
 
+protocol HarvestCellDelegate: class {
+  func removeHarvestCell(_ indexPath: IndexPath)
+}
+
 class HarvestCell: UITableViewCell {
   @IBOutlet weak var number: UITextField!
   @IBOutlet weak var quantity: UITextField!
   @IBOutlet weak var delete: UIButton!
   @IBOutlet weak var storage: UIButton!
   @IBOutlet weak var unit: UIButton!
+
+  weak var cellDelegate: HarvestCellDelegate?
+  var indexPath: IndexPath!
+
+  @IBAction func removeCell(_ sender: UIButton) {
+    cellDelegate?.removeHarvestCell(indexPath)
+  }
 }

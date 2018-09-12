@@ -10,6 +10,7 @@
 "person" = "la personne";
 "equipment" = "équipement";
 "input" = "intrant";
+"shipment" = "chargement";
 "one_person" = "1 personne";
 "one_equipment" = "1 équipement";
 "one_input" = "1 intrant";
