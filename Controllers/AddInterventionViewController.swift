@@ -490,6 +490,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.type = interventionType
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"
+    if interventionType == "irrigation".localized {
+      let waterQuantityString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+      let waterQuantity = Float(waterQuantityString) ?? 0
+      newIntervention.waterQuantity = waterQuantity
+      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+    }
     workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
