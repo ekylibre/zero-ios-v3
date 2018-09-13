@@ -40,7 +40,6 @@
 		6BA5D77E2149349A0054F969 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D778214934990054F969 /* LoginScreen.swift */; };
 		6BA5D77F2149349A0054F969 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D779214934990054F969 /* AddSelectedInputsToIntervention.swift */; };
 		6BA5D7802149349A0054F969 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77A214934990054F969 /* AddInterventionViewController.swift */; };
-		6BA5D7812149349A0054F969 /* UseToolsIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77B214934990054F969 /* UseToolsIntervention.swift */; };
 		6BA5D7822149349A0054F969 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77C214934990054F969 /* AddEntitiesToIntervention.swift */; };
 		6BA5D7832149349A0054F969 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77D2149349A0054F969 /* AddEquipmentIntervention.swift */; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
@@ -101,7 +100,6 @@
 		6BA5D778214934990054F969 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		6BA5D779214934990054F969 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
 		6BA5D77A214934990054F969 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
-		6BA5D77B214934990054F969 /* UseToolsIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseToolsIntervention.swift; sourceTree = "<group>"; };
 		6BA5D77C214934990054F969 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
 		6BA5D77D2149349A0054F969 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
 				6BA5D778214934990054F969 /* LoginScreen.swift */,
 				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
-				6BA5D77B214934990054F969 /* UseToolsIntervention.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -422,7 +419,6 @@
 				6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */,
 				6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */,
 				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,
-				6BA5D7812149349A0054F969 /* UseToolsIntervention.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */,
 				6BA5D7832149349A0054F969 /* AddEquipmentIntervention.swift in Sources */,
