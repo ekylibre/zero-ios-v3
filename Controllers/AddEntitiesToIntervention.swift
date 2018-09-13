@@ -130,7 +130,7 @@ extension AddInterventionViewController: DoerCellDelegate {
       let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
 
       cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.white
+      cell.backgroundColor = AppColor.CellColors.White
       self.doers.remove(at: indexPath.row)
       self.doersTableView.reloadData()
 

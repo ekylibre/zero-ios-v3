@@ -165,7 +165,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
-    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.white : AppColor.CellColors.LightGray
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)
