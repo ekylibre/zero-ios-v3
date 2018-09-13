@@ -73,7 +73,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Properties
 
-  var newIntervention: NSManagedObject!
+  var newIntervention: Interventions!
   var interventionType: String!
   var equipments = [NSManagedObject]()
   var selectDateView: SelectDateView!
@@ -484,19 +484,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    newIntervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
-    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
+    newIntervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
 
-    newIntervention.setValue(interventionType, forKey: "type")
-    newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
-    newIntervention.setValue("Infos", forKey: "infos")
-    workingPeriod.setValue(newIntervention, forKey: "interventions")
-    let datePicker = selectDateView.subviews.first as! UIDatePicker
-    workingPeriod.setValue(datePicker.date, forKey: "executionDate")
-    let hourDuration = Float(durationTextField.text!)
-    workingPeriod.setValue(hourDuration, forKey: "hourDuration")
+    newIntervention.type = interventionType
+    newIntervention.status = Intervention.Status.OutOfSync.rawValue
+    newIntervention.infos = "Infos"
+    workingPeriod.interventions = newIntervention
+    workingPeriod.executionDate = selectDateView.datePicker.date
+    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let hourDuration = Float(durationString) ?? 0
+    workingPeriod.hourDuration = hourDuration
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
@@ -732,18 +730,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func getSelectedWorkingPeriod() -> String {
-    var dateString: String!
-    var hoursNumber: String!
+    let dateString = selectDateButton.titleLabel!.text!
+    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let duration = Float(durationString) ?? 0
 
-    dateString = selectDateButton.titleLabel?.text
-
-    if durationTextField.text?.isEmpty == true {
-      hoursNumber = "0 h"
-    } else {
-      hoursNumber = durationTextField.text! + " h"
-    }
-
-    return dateString + " • " + hoursNumber
+    return String(format: "%@ • %g h", dateString, duration)
   }
   
   @IBAction func selectDate(_ sender: Any) {
