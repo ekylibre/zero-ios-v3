@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import os.log
 import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -144,11 +143,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
   // MARK: - Table view data source
   
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -160,7 +154,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
