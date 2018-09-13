@@ -75,9 +75,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return bottomView
   }()
 
-  var plots = [NSManagedObject]()
+  var plots = [Plots]()
   var viewsArray = [[UIView]]()
-  var selectedCrops = [NSManagedObject]()
+  var selectedCrops = [Crops]()
   var cropsCount = 0
   var totalSurfaceArea: Double = 0
 
@@ -380,9 +380,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cell = sender.view?.superview as! PlotCell
     let view = sender.view!
 
-    var plot: NSManagedObject!
-    var crops: [NSManagedObject]!
-    var crop: NSManagedObject!
+    var plot: Plots!
+    var crops: [Crops]!
+    var crop: Crops!
 
     for views in viewsArray {
       if let indexView = views.index(of: view) {
