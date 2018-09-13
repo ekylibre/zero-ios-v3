@@ -378,14 +378,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         }
       }
     }
-
-    if cropsCount == 0 {
-      selectedCropsLabel.text = "Aucune sélection"
-    } else if cropsCount == 1 {
-      selectedCropsLabel.text = String(format: "1 culture • %.1f ha", totalSurfaceArea)
-    } else {
-      selectedCropsLabel.text = String(format: "%d cultures • %.1f ha", cropsCount, totalSurfaceArea)
-    }
+    updateSelectedCropsLabel()
   }
 
   @objc func tapCropView(sender: UIGestureRecognizer) {
@@ -432,7 +425,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         }
       }
     }
+    updateSelectedCropsLabel()
+  }
 
+  private func updateSelectedCropsLabel() {
     if cropsCount == 0 {
       selectedCropsLabel.text = "Aucune sélection"
     } else if cropsCount == 1 {
