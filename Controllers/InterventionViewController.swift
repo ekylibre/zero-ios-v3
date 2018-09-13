@@ -441,7 +441,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 35 + line * 100, width: 70, height: 70)
       interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
       interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
-      //implantationButton.imageEdgeInsets = UIEdgeInsets(top: 50, left: 50, bottom: implantationButton.titleLabel!.frame.size.height, right: 0)
       bottomView.layoutIfNeeded()
 
       if index > 2 {

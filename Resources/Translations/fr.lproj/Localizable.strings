@@ -19,6 +19,7 @@
 "inputs" = "%d intrants";
 
 // Basic words
+
 "no" = "Non";
 "yes" = "Oui";
 "error" = "Erreur";
@@ -60,6 +61,12 @@
 "no_selection" = "Aucune sélection";
 "validate" = "VALIDER";
 "surface_area" = "%.1f ha travaillés";
+
+// Harvest
+
+"straw" = "paille";
+"seed" = "grain";
+"silaging" = "ensilage";
 
 // Inputs View
 

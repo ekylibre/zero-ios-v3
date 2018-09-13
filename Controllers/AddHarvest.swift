@@ -10,6 +10,9 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: HarvestCellDelegate {
+
+  // MARK: - Initialization
+
   func defineIndexPath(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
@@ -22,6 +25,33 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.delegate = self
     harvestTableView.bounces = false
   }
+
+  func initHarvestNaturePickerView() {
+    let unit = ["straw".localized, "seed".localized, "silaging".localized]
+
+    harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit)
+    harvestNaturePickerView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(harvestNaturePickerView)
+
+    setupHarvestPickerViewLayout()
+    setupHarvestPickerViewActions()
+  }
+
+  func setupHarvestPickerViewLayout() {
+    NSLayoutConstraint.activate([
+      harvestNaturePickerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      harvestNaturePickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      harvestNaturePickerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+      harvestNaturePickerView.heightAnchor.constraint(equalToConstant: 266)
+      ])
+  }
+
+  func setupHarvestPickerViewActions() {
+    harvestNaturePickerView.cancelButton.addTarget(self, action: #selector(cancelHarvestNaturePicking), for: .touchUpInside)
+    harvestNaturePickerView.validateButton.addTarget(self, action: #selector(validateHarvestNaturePicking), for: .touchUpInside)
+  }
+
+  // MARK: - Actions
 
   func createHarvest() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -42,6 +72,29 @@ extension AddInterventionViewController: HarvestCellDelegate {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  @IBAction func changeHarvestNature(_ sender: UIButton) {
+    dimView.isHidden = false
+    harvestNaturePickerView.isHidden = false
+  }
+
+  @objc func cancelHarvestNaturePicking() {
+    let selectedRow = harvestNaturePickerView.selectedRow
+
+    harvestNaturePickerView.pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+    harvestNaturePickerView.isHidden = true
+    dimView.isHidden = true
+  }
+
+  @objc func validateHarvestNaturePicking() {
+    let selectedRow = harvestNaturePickerView.pickerView.selectedRow(inComponent: 0)
+    let unit = harvestNaturePickerView.values[selectedRow]
+
+    harvestType.setTitle(unit, for: .normal)
+    harvestNaturePickerView.selectedRow = selectedRow
+    harvestNaturePickerView.isHidden = true
+    dimView.isHidden = true
   }
 
   func removeHarvestCell(_ indexPath: IndexPath) {

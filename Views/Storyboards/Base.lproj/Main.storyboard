@@ -412,6 +412,9 @@
                                                         <state key="normal" title="straw">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="changeHarvestNature:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="8G3-hE-8Fb"/>
+                                                        </connections>
                                                     </button>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MEy-aE-eC5">
                                                         <rect key="frame" x="20.5" y="108.5" width="334" height="150"/>
@@ -452,9 +455,6 @@
                                                                             <state key="normal" title="q">
                                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             </state>
-                                                                            <connections>
-                                                                                <action selector="defineSelectedCell:" destination="ANj-fI-wdR" eventType="touchUpInside" id="1Vp-XA-jt4"/>
-                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="raS-Jl-PM3">
                                                                             <rect key="frame" x="294" y="20" width="20" height="20"/>

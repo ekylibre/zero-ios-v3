@@ -25,6 +25,7 @@
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
+		04A9BECA214A5AA20010978C /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9BEC9214A5AA20010978C /* CustomPickerView.swift */; };
 		04ABD44B2147E74A00BC5362 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ABD44A2147E74A00BC5362 /* LoginScreen.swift */; };
 		04ABD44D2147E7C200BC5362 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ABD44C2147E7C200BC5362 /* AddSelectedInputsToIntervention.swift */; };
 		04ABD44F2147E80100BC5362 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ABD44E2147E80100BC5362 /* AddInterventionViewController.swift */; };
@@ -90,6 +91,7 @@
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
+		04A9BEC9214A5AA20010978C /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		04ABD44A2147E74A00BC5362 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginScreen.swift; path = ../../tmp/Controllers/LoginScreen.swift; sourceTree = "<group>"; };
 		04ABD44C2147E7C200BC5362 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddSelectedInputsToIntervention.swift; path = ../../tmp/Controllers/AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
 		04ABD44E2147E80100BC5362 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddInterventionViewController.swift; path = ../../tmp/Controllers/AddInterventionViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
 				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
 				044B4D5F2138173E001A5D3D /* CropsView.swift */,
+				04A9BEC9214A5AA20010978C /* CustomPickerView.swift */,
 				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
@@ -442,6 +445,7 @@
 				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
+				04A9BECA214A5AA20010978C /* CustomPickerView.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
 				041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */,
 				6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */,

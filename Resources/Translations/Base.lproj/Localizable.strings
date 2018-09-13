@@ -20,6 +20,7 @@
 "inputs" = "%d inputs";
 
 // Basic words
+
 "no" = "No";
 "yes" = "Yes";
 "error" = "Error";
@@ -61,6 +62,12 @@
 "no_selection" = "No selection";
 "validate" = "VALIDER";
 "surface_area" = "%.1f ha worked";
+
+// Harvest
+
+"straw" = "straw";
+"seed" = "seed";
+"silaging" = "silaging";
 
 // Inputs View
 
