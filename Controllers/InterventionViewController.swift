@@ -125,21 +125,24 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
+    fetchInterventions()
+    if interventions.count == 0 {
+      loadSampleInterventions()
+    }
+  }
+
+  private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    if interventions.count == 0 {
-      loadSampleInterventions()
     }
   }
 
