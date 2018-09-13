@@ -13,7 +13,7 @@ protocol HarvestCellDelegate: class {
   func defineIndexPath(_ indexPath: IndexPath)
 }
 
-class HarvestCell: UITableViewCell {
+class HarvestCell: UITableViewCell, UITextFieldDelegate {
   @IBOutlet weak var number: UITextField!
   @IBOutlet weak var quantity: UITextField!
   @IBOutlet weak var delete: UIButton!
@@ -21,6 +21,7 @@ class HarvestCell: UITableViewCell {
   @IBOutlet weak var unit: UIButton!
 
   weak var cellDelegate: HarvestCellDelegate?
+  var addInterventionController: AddInterventionViewController?
   var indexPath: IndexPath!
 
   @IBAction func removeCell(_ sender: UIButton) {
@@ -29,5 +30,19 @@ class HarvestCell: UITableViewCell {
 
   @IBAction func defineSelectedCell(_ sender: Any) {
     cellDelegate?.defineIndexPath(indexPath)
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    switch textField {
+    case quantity:
+      addInterventionController?.harvests[indexPath.row].setValue((quantity.text! as NSString).doubleValue, forKey: "quantity")
+      return false
+    case number:
+      addInterventionController?.harvests[indexPath.row].setValue(number.text!, forKey: "number")
+      return false
+    default:
+      return false
+    }
   }
 }
