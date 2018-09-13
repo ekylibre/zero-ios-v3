@@ -158,7 +158,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         })
       }
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   func forTrailingZero(temp: Double) -> String {

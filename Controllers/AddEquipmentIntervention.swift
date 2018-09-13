@@ -264,6 +264,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         })
       }
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 }

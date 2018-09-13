@@ -148,6 +148,6 @@ extension AddInterventionViewController: DoerCellDelegate {
         })
       }
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 }
