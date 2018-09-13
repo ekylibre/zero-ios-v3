@@ -1516,6 +1516,12 @@
                                                     <action selector="equipmentTypeSelection:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="nda-aa-aD3"/>
                                                 </connections>
                                             </button>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The equipment name can't be empty." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOA-ns-sXj">
+                                                <rect key="frame" x="15" y="102.5" width="225" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -1525,7 +1531,10 @@
                                             <constraint firstItem="A58-eW-7tB" firstAttribute="top" secondItem="Tur-MK-R4c" secondAttribute="bottom" constant="30" id="9d4-Gj-KOg"/>
                                             <constraint firstItem="Tur-MK-R4c" firstAttribute="top" secondItem="IvX-k2-3AV" secondAttribute="bottom" constant="20" id="Akr-Kb-4gd"/>
                                             <constraint firstItem="A58-eW-7tB" firstAttribute="leading" secondItem="kHt-fp-S63" secondAttribute="leading" constant="15" id="Cus-PB-AUe"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HOA-ns-sXj" secondAttribute="trailing" constant="20" symbolic="YES" id="GG1-wC-c5p"/>
                                             <constraint firstItem="3ay-Ie-glI" firstAttribute="top" secondItem="rno-vi-sP6" secondAttribute="bottom" constant="30" id="HEQ-9g-TLT"/>
+                                            <constraint firstItem="HOA-ns-sXj" firstAttribute="leading" secondItem="kHt-fp-S63" secondAttribute="leading" constant="15" id="McO-W0-2MY"/>
+                                            <constraint firstItem="HOA-ns-sXj" firstAttribute="top" secondItem="rno-vi-sP6" secondAttribute="bottom" constant="5" id="SuC-tJ-rYz"/>
                                             <constraint firstItem="rno-vi-sP6" firstAttribute="top" secondItem="BuY-c0-rnF" secondAttribute="bottom" constant="1" id="UVv-Jk-LPX"/>
                                             <constraint firstAttribute="trailing" secondItem="A58-eW-7tB" secondAttribute="trailing" constant="40" id="Ub7-1s-fps"/>
                                             <constraint firstAttribute="bottom" secondItem="tLB-CA-7x6" secondAttribute="bottom" constant="15" id="XTa-eh-8GH"/>
@@ -1931,6 +1940,7 @@
                         <outlet property="equipmentDarkLayer" destination="M7u-Pw-d2r" id="g3A-c5-M8N"/>
                         <outlet property="equipmentHeightConstraint" destination="HUo-Z0-DIF" id="BlQ-fC-dWi"/>
                         <outlet property="equipmentName" destination="BuY-c0-rnF" id="rG1-iz-HXh"/>
+                        <outlet property="equipmentNameWarning" destination="HOA-ns-sXj" id="aCk-Hr-IyV"/>
                         <outlet property="equipmentNumber" destination="3ay-Ie-glI" id="RFv-p9-JhT"/>
                         <outlet property="equipmentNumberLabel" destination="lB9-6U-iCz" id="zzA-cf-hte"/>
                         <outlet property="equipmentTableViewHeightConstraint" destination="fXC-sa-Rfz" id="ReC-cv-NBL"/>

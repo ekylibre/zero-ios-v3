@@ -337,3 +337,8 @@
 "hours" = "hours";
 "today" = "Today";
 "yesterday" = "Yesterday";
+
+// Warning
+
+"this_element_name_is_already_in_use" = "This %@ name is already in use. Please choose another one.";
+"the_element_name_cant_be_empty" = "The %@ name can't be empty";

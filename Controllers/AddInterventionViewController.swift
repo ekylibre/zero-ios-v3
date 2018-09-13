@@ -38,6 +38,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentName: UITextField!
   @IBOutlet weak var equipmentNumber: UITextField!
   @IBOutlet weak var equipmentType: UILabel!
+  @IBOutlet weak var equipmentNameWarning: UILabel!
   @IBOutlet weak var selectedEquipmentsTableView: UITableView!
   @IBOutlet weak var addEquipmentButton: UIButton!
   @IBOutlet weak var equipmentNumberLabel: UILabel!

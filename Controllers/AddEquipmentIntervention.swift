@@ -205,30 +205,51 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipmentName.text = nil
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
+    equipmentNameWarning.isHidden = true
     createEquipmentsView.isHidden = true
     fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
     equipmentsTableView.reloadData()
   }
 
-  @IBAction func createNewEquipement(_ sender: Any) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+  func checkIfEquipmentIsAvaible() -> Bool {
+    if equipmentName.text == "" {
+      equipmentNameWarning.isHidden = false
+      equipmentNameWarning.textColor = AppColor.TextColors.Red
+      equipmentNameWarning.text = String(format: "the_element_name_cant_be_empty".localized, "equipment".localized)
+      return false
     }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+    for equipment in equipments {
+      if equipmentName.text == equipment.value(forKey: "name") as? String {
+        equipmentNameWarning.isHidden = false
+        equipmentNameWarning.textColor = AppColor.TextColors.Red
+        equipmentNameWarning.text = String(format: "this_element_name_is_already_in_use".localized, "equipment".localized)
+        return false
+      }
+    }
+    return true
+  }
 
-    equipment.setValue(equipmentName.text, forKeyPath: "name")
-    equipment.setValue(equipmentNumber.text, forKeyPath: "number")
-    equipment.setValue(selectedEquipmentType, forKeyPath: "type")
-    equipment.setValue(UUID(), forKey: "uuid")
-    equipment.setValue(0, forKey: "row")
-    do {
-      try managedContext.save()
-      equipments.append(equipment)
-      closeEquipmentsCreationView(self)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
+  @IBAction func createNewEquipement(_ sender: Any) {
+    if checkIfEquipmentIsAvaible() {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return
+      }
+      let managedContext = appDelegate.persistentContainer.viewContext
+      let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
+      let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+
+      equipment.setValue(equipmentName.text, forKeyPath: "name")
+      equipment.setValue(equipmentNumber.text, forKeyPath: "number")
+      equipment.setValue(selectedEquipmentType, forKeyPath: "type")
+      equipment.setValue(UUID(), forKey: "uuid")
+      equipment.setValue(0, forKey: "row")
+      do {
+        try managedContext.save()
+        equipments.append(equipment)
+        closeEquipmentsCreationView(self)
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
     }
   }
 
