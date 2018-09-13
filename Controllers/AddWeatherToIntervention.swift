@@ -143,9 +143,28 @@ extension AddInterventionViewController: UITextFieldDelegate {
     switch textField {
     case temperatureTextField:
       weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
-      currentWeatherLabel.text = (temperatureTextField.text == "" ? "not_filled_in".localized : "\(temperatureTextField.text!) °C")
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
     case windSpeedTextField:
       weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
     default:
       return false
     }

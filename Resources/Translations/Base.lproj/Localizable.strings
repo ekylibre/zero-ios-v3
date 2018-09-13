@@ -72,3 +72,5 @@
 "temperature" = "Temperature";
 "wind_speed" = "Wind speed";
 "not_filled_in" = "Not filled in";
+"temp" = "Temp.: %@ °C |";
+"wind" = " wind: %@ km/h";
