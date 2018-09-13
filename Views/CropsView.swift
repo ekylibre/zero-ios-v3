@@ -145,6 +145,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cell = tableView.dequeueReusableCell(withIdentifier: "PlotCell", for: indexPath) as! PlotCell
     let plot = plots[indexPath.row]
     let crops = fetchCrops(fromPlot: plot)
+    var views = [UIView]()
 
     cell.checkboxButton.addTarget(self, action: #selector(tapCheckbox), for: .touchUpInside)
     cell.nameLabel.text = plot.name
@@ -152,38 +153,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", plot.surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
 
-    var views = [UIView]()
-
     for (index, crop) in crops.enumerated() {
-      let view = UIView(frame: CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60))
-      view.backgroundColor = UIColor.white
-      view.layer.borderColor = UIColor.lightGray.cgColor
-      view.layer.borderWidth = 0.5
-      let cropImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-      let cropImage = #imageLiteral(resourceName: "crop")
-      let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
-      cropImageView.image = tintedImage
-      cropImageView.tintColor = UIColor.darkGray
-      cropImageView.backgroundColor = UIColor.lightGray
-      view.addSubview(cropImageView)
-      let checkboxImage = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-      checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
-      view.addSubview(checkboxImage)
-      let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
-      nameLabel.textColor = UIColor.black
-      let calendar = Calendar.current
-      let year = calendar.component(.year, from: crop.startDate!)
-      nameLabel.text = crop.name! + " | \(year)"
-      nameLabel.font = UIFont.systemFont(ofSize: 13.0)
-      view.addSubview(nameLabel)
-      let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
-      surfaceAreaLabel.textColor = UIColor.darkGray
-      surfaceAreaLabel.text = String(format: "%.1f ha travaillés", crop.surfaceArea)
-      surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
-      view.addSubview(surfaceAreaLabel)
-      let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapCropView))
-      gesture.numberOfTapsRequired = 1
-      view.addGestureRecognizer(gesture)
+      let frame = CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60)
+      let view = CropView(frame: frame, crop)
+
+      view.gesture.addTarget(self, action: #selector(tapCropView))
       cell.addSubview(view)
       views.append(view)
     }
