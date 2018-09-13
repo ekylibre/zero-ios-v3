@@ -426,7 +426,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @IBAction func addIntervention(_ sender: Any) {
 
-    self.heightConstraint.constant = 240
+    heightConstraint.constant = 240
     addInterventionLabel.text = String(format: "register_intervention".localized, "of".localized)
     leftInterventionButton.isHidden = true
     rightInterventionButton.isHidden = true
