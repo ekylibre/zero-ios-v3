@@ -228,7 +228,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
+    let plotsFetchRequest: NSFetchRequest<Plots> = Plots.fetchRequest()
 
     do {
       plots = try managedContext.fetch(plotsFetchRequest)
@@ -236,20 +236,17 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
 
-    if plots.count < 1 {
-      return false
-    }
-    return true
+    return (plots.count > 0) ? true : false
   }
 
-  func fetchPlot(withName plotName: String) -> NSManagedObject {
+  func fetchPlot(withName plotName: String) -> Plots {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return NSManagedObject()
+      return Plots()
     }
 
-    var plots: [NSManagedObject]!
+    var plots: [Plots]!
     let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Plots")
+    let plotsFetchRequest: NSFetchRequest<Plots> = Plots.fetchRequest()
     let predicate = NSPredicate(format: "name == %@", plotName)
     plotsFetchRequest.predicate = predicate
 
@@ -262,17 +259,17 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     if plots.count == 1 {
       return plots.first!
     }
-    return NSManagedObject()
+    return Plots()
   }
 
-  func fetchCrops(fromPlot plot: NSManagedObject) -> [NSManagedObject] {
+  func fetchCrops(fromPlot plot: Plots) -> [Crops] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [NSManagedObject]()
+      return [Crops]()
     }
 
-    var crops: [NSManagedObject]!
+    var crops: [Crops]!
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Crops")
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
     let predicate = NSPredicate(format: "plots == %@", plot)
     cropsFetchRequest.predicate = predicate
 
@@ -305,11 +302,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsEntity = NSEntityDescription.entity(forEntityName: "Plots", in: managedContext)!
-    let plot = NSManagedObject(entity: plotsEntity, insertInto: managedContext)
+    let plot = Plots(context: managedContext)
 
-    plot.setValue(name, forKey: "name")
-    plot.setValue(surfaceArea, forKey: "surfaceArea")
+    plot.name = name
+    plot.surfaceArea = surfaceArea
 
     do {
       try managedContext.save()
@@ -325,14 +321,13 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsEntity = NSEntityDescription.entity(forEntityName: "Crops", in: managedContext)!
-    let crop = NSManagedObject(entity: cropsEntity, insertInto: managedContext)
+    let crop = Crops(context: managedContext)
     let plot = fetchPlot(withName: plotName)
 
-    crop.setValue(plot, forKey: "plots")
-    crop.setValue(name, forKey: "name")
-    crop.setValue(surfaceArea, forKey: "surfaceArea")
-    crop.setValue(startDate, forKey: "startDate")
+    crop.plots = plot
+    crop.name = name
+    crop.surfaceArea = surfaceArea
+    crop.startDate = startDate
 
     do {
       try managedContext.save()
