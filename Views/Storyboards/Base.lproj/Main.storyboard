@@ -444,9 +444,6 @@
                                                                             <nil key="textColor"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits"/>
-                                                                            <connections>
-                                                                                <action selector="defineSelectedCell:" destination="ANj-fI-wdR" eventType="touchUpInside" id="E1k-5k-PTB"/>
-                                                                            </connections>
                                                                         </textField>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-QQ-zrV">
                                                                             <rect key="frame" x="199" y="20" width="30" height="30"/>
@@ -455,6 +452,9 @@
                                                                             <state key="normal" title="q">
                                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="defineSelectedCell:" destination="ANj-fI-wdR" eventType="touchUpInside" id="toh-8j-KeI"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="raS-Jl-PM3">
                                                                             <rect key="frame" x="294" y="20" width="20" height="20"/>
@@ -491,9 +491,6 @@
                                                                             <nil key="textColor"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits"/>
-                                                                            <connections>
-                                                                                <action selector="defineSelectedCell:" destination="ANj-fI-wdR" eventType="touchDragInside" id="bmP-Ya-ReU"/>
-                                                                            </connections>
                                                                         </textField>
                                                                     </subviews>
                                                                     <constraints>

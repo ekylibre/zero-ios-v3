@@ -15,6 +15,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   func defineIndexPath(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
+    dimView.isHidden = false
+    harvestUnitPickerView.isHidden = false
+  }
+
+  func initHarvestView() {
+    initializeHarvestTableView()
+    initHarvestNaturePickerView()
+    initHarvestUnitPickerView()
+    setupHarvestPickerViewLayout()
+    setupHarvestPickerViewActions()
   }
 
   func initializeHarvestTableView() {
@@ -26,15 +36,20 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.bounces = false
   }
 
+  func initHarvestUnitPickerView () {
+    let unit = ["q", "t", "kg"]
+
+    harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit)
+    harvestUnitPickerView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(harvestUnitPickerView)
+  }
+
   func initHarvestNaturePickerView() {
     let unit = ["straw".localized, "seed".localized, "silaging".localized]
 
     harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit)
     harvestNaturePickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestNaturePickerView)
-
-    setupHarvestPickerViewLayout()
-    setupHarvestPickerViewActions()
   }
 
   func setupHarvestPickerViewLayout() {
@@ -42,13 +57,19 @@ extension AddInterventionViewController: HarvestCellDelegate {
       harvestNaturePickerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       harvestNaturePickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       harvestNaturePickerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-      harvestNaturePickerView.heightAnchor.constraint(equalToConstant: 266)
+      harvestNaturePickerView.heightAnchor.constraint(equalToConstant: 266),
+      harvestUnitPickerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      harvestUnitPickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      harvestUnitPickerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+      harvestUnitPickerView.heightAnchor.constraint(equalToConstant: 266)
       ])
   }
 
   func setupHarvestPickerViewActions() {
     harvestNaturePickerView.cancelButton.addTarget(self, action: #selector(cancelHarvestNaturePicking), for: .touchUpInside)
     harvestNaturePickerView.validateButton.addTarget(self, action: #selector(validateHarvestNaturePicking), for: .touchUpInside)
+    harvestUnitPickerView.cancelButton.addTarget(self, action: #selector(cancelHarvestUnitPicking), for: .touchUpInside)
+    harvestUnitPickerView.validateButton.addTarget(self, action: #selector(validateHarvestUnitPicking), for: .touchUpInside)
   }
 
   // MARK: - Actions
@@ -87,14 +108,36 @@ extension AddInterventionViewController: HarvestCellDelegate {
     dimView.isHidden = true
   }
 
+  @objc func cancelHarvestUnitPicking() {
+    let selectedRow = harvestNaturePickerView.selectedRow
+
+    harvestUnitPickerView.pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+    harvestUnitPickerView.isHidden = true
+    dimView.isHidden = true
+  }
+
   @objc func validateHarvestNaturePicking() {
     let selectedRow = harvestNaturePickerView.pickerView.selectedRow(inComponent: 0)
     let unit = harvestNaturePickerView.values[selectedRow]
 
+    for harvest in harvests {
+      harvest.setValue(unit, forKey: "type")
+    }
     harvestType.setTitle(unit, for: .normal)
     harvestNaturePickerView.selectedRow = selectedRow
     harvestNaturePickerView.isHidden = true
     dimView.isHidden = true
+  }
+
+  @objc func validateHarvestUnitPicking() {
+    let selectedRow = harvestUnitPickerView.pickerView.selectedRow(inComponent: 0)
+    let unit = harvestUnitPickerView.values[selectedRow]
+
+    harvests[cellIndexPath.row].setValue(unit, forKey: "unit")
+    harvestUnitPickerView.selectedRow = selectedRow
+    harvestUnitPickerView.isHidden = true
+    dimView.isHidden = true
+    harvestTableView.reloadData()
   }
 
   func removeHarvestCell(_ indexPath: IndexPath) {
