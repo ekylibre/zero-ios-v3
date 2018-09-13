@@ -147,9 +147,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let crops = fetchCrops(fromPlot: plot)
 
     cell.checkboxButton.addTarget(self, action: #selector(tapCheckbox), for: .touchUpInside)
-    cell.nameLabel.text = plot.value(forKey: "name") as? String
+    cell.nameLabel.text = plot.name
     cell.nameLabel.sizeToFit()
-    cell.surfaceAreaLabel.text = String(format: "%.1f ha", plot.value(forKey: "surfaceArea") as! Double)
+    cell.surfaceAreaLabel.text = String(format: "%.1f ha", plot.surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
 
     var views = [UIView]()
@@ -171,17 +171,14 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       view.addSubview(checkboxImage)
       let nameLabel = UILabel(frame: CGRect(x: 70, y: 7, width: 200, height: 20))
       nameLabel.textColor = UIColor.black
-      let name = crop.value(forKey: "name") as! String
       let calendar = Calendar.current
-      let date = crop.value(forKey: "startDate") as! Date
-      let year = calendar.component(.year, from: date)
-      nameLabel.text = name + " | \(year)"
+      let year = calendar.component(.year, from: crop.startDate!)
+      nameLabel.text = crop.name! + " | \(year)"
       nameLabel.font = UIFont.systemFont(ofSize: 13.0)
       view.addSubview(nameLabel)
       let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
       surfaceAreaLabel.textColor = UIColor.darkGray
-      let surfaceArea = crop.value(forKey: "surfaceArea") as! Double
-      surfaceAreaLabel.text = String(format: "%.1f ha travaillés", surfaceArea)
+      surfaceAreaLabel.text = String(format: "%.1f ha travaillés", crop.surfaceArea)
       surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
       view.addSubview(surfaceAreaLabel)
       let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapCropView))
@@ -339,41 +336,51 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
-    guard let cell = sender.superview?.superview as? PlotCell else {
-      return
-    }
-
+    let cell = sender.superview?.superview as! PlotCell
     let indexPath = tableView.indexPath(for: cell)!
     let plot = plots[indexPath.row]
-    let plotSurfaceArea = plot.value(forKey: "surfaceArea") as! Double
+    let plotSurfaceArea = plot.surfaceArea
     let crops = fetchCrops(fromPlot: plot)
 
     if !sender.isSelected {
       sender.isSelected = true
-      cropsCount += crops.count
-      totalSurfaceArea += plotSurfaceArea
-      for view in cell.subviews[1...crops.count] {
-        let checkboxImage = view.subviews[1] as! UIImageView
-        checkboxImage.image = #imageLiteral(resourceName: "check-box")
-      }
-      for crop in crops {
-        selectedCrops.append(crop)
-      }
+      selectPlot(crops, plotSurfaceArea, cell)
     } else {
       sender.isSelected = false
-      for (index, view) in cell.subviews[1...crops.count].enumerated() {
-        let checkboxImage = view.subviews[1] as! UIImageView
-        if checkboxImage.image == #imageLiteral(resourceName: "check-box") {
-          checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
-          cropsCount -= 1
-          totalSurfaceArea -= crops[index].value(forKey: "surfaceArea") as! Double
-          if let index = selectedCrops.index(of: crops[index]) {
-            selectedCrops.remove(at: index)
-          }
+      deselectPlot(crops, cell)
+    }
+    updateSelectedCropsLabel()
+  }
+
+  private func selectPlot(_ crops: [Crops], _ plotSurfaceArea: Double, _ cell: PlotCell) {
+    cropsCount += crops.count
+    totalSurfaceArea += plotSurfaceArea
+
+    for view in cell.subviews[1...crops.count] {
+      let checkboxImage = view.subviews[1] as! UIImageView
+
+      checkboxImage.image = #imageLiteral(resourceName: "check-box")
+    }
+
+    for crop in crops {
+      selectedCrops.append(crop)
+    }
+  }
+
+  private func deselectPlot(_ crops: [Crops], _ cell: PlotCell) {
+    for (index, view) in cell.subviews[1...crops.count].enumerated() {
+      let checkboxImage = view.subviews[1] as! UIImageView
+
+      if checkboxImage.image == #imageLiteral(resourceName: "check-box") {
+        cropsCount -= 1
+        totalSurfaceArea -= crops[index].surfaceArea
+        checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+
+        if let index = selectedCrops.index(of: crops[index]) {
+          selectedCrops.remove(at: index)
         }
       }
     }
-    updateSelectedCropsLabel()
   }
 
   @objc func tapCropView(sender: UIGestureRecognizer) {
@@ -395,11 +402,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let checkboxImage = view.subviews[1] as! UIImageView
 
     if checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") {
-      selectCrop(crop, cell)
       checkboxImage.image = #imageLiteral(resourceName: "check-box")
+      selectCrop(crop, cell)
     } else {
-      deselectCrop(crop, crops, cell)
       checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+      deselectCrop(crop, crops, cell)
     }
     updateSelectedCropsLabel()
   }
@@ -407,6 +414,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   private func selectCrop(_ crop: Crops, _ cell: PlotCell) {
     cropsCount += 1
     totalSurfaceArea += crop.surfaceArea
+
     if !cell.checkboxButton.isSelected {
       cell.checkboxButton.isSelected = true
     }
@@ -417,17 +425,18 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cropsCount -= 1
     totalSurfaceArea -= crop.surfaceArea
 
-    if let index = selectedCrops.index(of: crop) {
-      selectedCrops.remove(at: index)
-    }
-
     for (index, view) in cell.subviews[1...crops.count].enumerated() {
       let checkboxImage = view.subviews[1] as! UIImageView
+
       if checkboxImage.image == #imageLiteral(resourceName: "check-box") {
         break
       } else if checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") && index == crops.count - 1 {
         cell.checkboxButton.isSelected = false
       }
+    }
+
+    if let index = selectedCrops.index(of: crop) {
+      selectedCrops.remove(at: index)
     }
   }
 
