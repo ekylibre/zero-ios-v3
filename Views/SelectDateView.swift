@@ -10,7 +10,7 @@ import UIKit
 
 class SelectDateView: UIView {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   lazy var datePicker: UIDatePicker = {
     let datePicker = UIDatePicker(frame: CGRect.zero)
@@ -29,7 +29,7 @@ class SelectDateView: UIView {
     return validateButton
   }()
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)

@@ -551,13 +551,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    //let fertilizersEntity = NSEntityDescription.entity(forEntityName: "Fertilizers", in: managedContext)!
     let fertilizer = Fertilizers(context: managedContext)
 
     fertilizer.type = "Fertilzer"
     fertilizer.registered = false
     fertilizer.name = name
-    fertilizer.nature = nature
+    fertilizer.nature = (nature == "organic".localized) ? "organic" : "mineral"
     fertilizer.unit = "kg/ha"
     fertilizer.quantity = 0
     fertilizer.row = 0
