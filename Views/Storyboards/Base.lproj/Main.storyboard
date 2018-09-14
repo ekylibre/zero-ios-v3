@@ -383,13 +383,13 @@
                                                 <rect key="frame" x="0.0" y="142" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harvest" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWF-bA-PFJ">
-                                                        <rect key="frame" x="20.5" y="25" width="64.5" height="20.5"/>
+                                                        <rect key="frame" x="20" y="25" width="64.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <color key="textColor" red="0.070588235289999995" green="0.41568627450000001" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1D-nr-BV3">
-                                                        <rect key="frame" x="105" y="21" width="138" height="30"/>
+                                                        <rect key="frame" x="99.5" y="21" width="143.5" height="30"/>
                                                         <state key="normal" title="+ ADD A SHIPMENT">
                                                             <color key="titleColor" red="0.60392156862745094" green="0.78431372549019607" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
@@ -457,7 +457,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="raS-Jl-PM3">
-                                                                            <rect key="frame" x="296" y="20" width="20" height="20"/>
+                                                                            <rect key="frame" x="295" y="20" width="20" height="20"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="20" id="ePY-W6-Npz"/>
                                                                                 <constraint firstAttribute="height" constant="20" id="y16-yR-J7z"/>
@@ -480,14 +480,14 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNe-gr-L3f">
-                                                                            <rect key="frame" x="99" y="60" width="202" height="30"/>
+                                                                            <rect key="frame" x="99" y="60" width="201" height="30"/>
                                                                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                             <state key="normal" title="---">
                                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             </state>
                                                                         </button>
                                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Provided by the collector" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zF5-GL-OXu">
-                                                                            <rect key="frame" x="99" y="100" width="202" height="30"/>
+                                                                            <rect key="frame" x="99" y="100" width="201" height="30"/>
                                                                             <nil key="textColor"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits"/>
@@ -535,12 +535,11 @@
                                                     <constraint firstItem="vEX-tE-fGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ygo-6L-lF7" secondAttribute="leading" constant="20" symbolic="YES" id="0dm-aL-2po"/>
                                                     <constraint firstItem="G1D-nr-BV3" firstAttribute="centerY" secondItem="bWF-bA-PFJ" secondAttribute="centerY" id="1es-pS-zGu"/>
                                                     <constraint firstAttribute="trailing" secondItem="mNi-kd-EFz" secondAttribute="trailing" constant="308.5" id="1fM-WP-bit"/>
-                                                    <constraint firstAttribute="trailing" secondItem="bWF-bA-PFJ" secondAttribute="trailing" constant="290.5" id="3rw-OZ-Bfp"/>
                                                     <constraint firstItem="MEy-aE-eC5" firstAttribute="top" secondItem="vEX-tE-fGs" secondAttribute="bottom" constant="14" id="47p-4I-VuY"/>
                                                     <constraint firstItem="mNi-kd-EFz" firstAttribute="top" secondItem="bWF-bA-PFJ" secondAttribute="bottom" constant="25" id="Asv-80-iqi"/>
                                                     <constraint firstItem="MEy-aE-eC5" firstAttribute="leading" secondItem="mNi-kd-EFz" secondAttribute="leading" id="CvN-gV-J0D"/>
-                                                    <constraint firstItem="G1D-nr-BV3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bWF-bA-PFJ" secondAttribute="trailing" constant="8" symbolic="YES" id="DC8-Td-UZB"/>
-                                                    <constraint firstItem="bWF-bA-PFJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ygo-6L-lF7" secondAttribute="leading" id="DV2-Jh-Vhz"/>
+                                                    <constraint firstItem="G1D-nr-BV3" firstAttribute="leading" secondItem="bWF-bA-PFJ" secondAttribute="trailing" constant="15" id="DC8-Td-UZB"/>
+                                                    <constraint firstItem="bWF-bA-PFJ" firstAttribute="leading" secondItem="Ygo-6L-lF7" secondAttribute="leading" constant="20" id="DV2-Jh-Vhz"/>
                                                     <constraint firstAttribute="trailing" secondItem="G1D-nr-BV3" secondAttribute="trailing" constant="132" id="GRF-nd-IND"/>
                                                     <constraint firstAttribute="height" constant="70" id="KT9-Ox-5zi"/>
                                                     <constraint firstItem="MEy-aE-eC5" firstAttribute="centerX" secondItem="Ygo-6L-lF7" secondAttribute="centerX" id="TVf-sJ-1L9"/>
