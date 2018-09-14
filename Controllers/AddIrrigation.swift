@@ -35,7 +35,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   // MARK: - Picker view
 
-  func customPickerDidSelectRow(_ selectedValue: String?) {
+  func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?) {
     guard let unit = selectedValue else {
       return
     }
