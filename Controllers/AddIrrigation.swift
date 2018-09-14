@@ -16,6 +16,14 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     let units = ["m³", "l", "hl"]
 
+    irrigationValueTextField.layer.borderWidth = 0.5
+    irrigationValueTextField.layer.borderColor = UIColor.lightGray.cgColor
+    irrigationValueTextField.layer.cornerRadius = 5
+    irrigationValueTextField.clipsToBounds = false
+    irrigationUnitButton.layer.borderWidth = 0.5
+    irrigationUnitButton.layer.borderColor = UIColor.lightGray.cgColor
+    irrigationUnitButton.layer.cornerRadius = 5
+    irrigationUnitButton.clipsToBounds = false
     irrigationPickerView = CustomPickerView(frame: frame, units, superview: self.view)
     irrigationPickerView.reference = self
     setupActions()
@@ -45,15 +53,12 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   // MARK: - Actions
 
   @IBAction func tapIrrigationView(_ sender: Any) {
-    if irrigationHeightConstraint.constant == 70 {
-      irrigationHeightConstraint.constant = 140
-      irrigationLabel.isHidden = true
-      irrigationValueTextField.isHidden = false
-    } else {
-      irrigationHeightConstraint.constant = 70
-      irrigationLabel.isHidden = false
-      irrigationValueTextField.isHidden = true
-    }
+    let shouldExapand: Bool = (irrigationHeightConstraint.constant == 70)
+
+    irrigationHeightConstraint.constant = shouldExapand ? 140 : 70
+    irrigationLabel.isHidden = shouldExapand
+    irrigationValueTextField.isHidden = !shouldExapand
+    irrigationUnitButton.isHidden = !shouldExapand
     irrigationExpandCollapseImage.transform = irrigationExpandCollapseImage.transform.rotated(by: CGFloat.pi)
   }
 
