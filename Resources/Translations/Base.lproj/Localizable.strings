@@ -6,7 +6,6 @@
   Copyright © 2018 Ekylibre. All rights reserved.
 */
 
-
 "are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %@?";
 "person" = "person";
 "equipment" = "equipment";
@@ -212,10 +211,10 @@
 "mixed_sludge_1" = "Mixed sludge 1 (C/N = 7,5)";
 "mixed_sludge_2" = "Mixed sludge 2 (C/N = 5)";
 "mixed_sludge_3" = "Mixed sludge 3 (C/N = 8,1)";
-"mixed_sludge_4" = "Mixed sludge 4 (C/N = 6 à 9)";
-"mixed_sludge_5" = "Mixed sludge 5 (C/N = 6 à 11)";
-"mixed_sludge_6" = "Mixed sludge 6 (C/N = 5,5 à 17)";
-"mixed_sludge_7" = "Mixed sludge 7 (C/N = 10 à 13)";
+"mixed_sludge_4" = "Mixed sludge 4 (C/N = 6 to 9)";
+"mixed_sludge_5" = "Mixed sludge 5 (C/N = 6 to 11)";
+"mixed_sludge_6" = "Mixed sludge 6 (C/N = 5,5 to 17)";
+"mixed_sludge_7" = "Mixed sludge 7 (C/N = 10 to 13)";
 "mixed_sludge_8" = "Mixed sludge 8";
 "mixed_sludge_9" = "Mixed sludge 9 (C/N = 11,8)";
 "mixed_sludge_10" = "Mixed sludge 10 C/N<15";
@@ -297,10 +296,10 @@
 
 // Weather
 
-"weather" = "Météo";
-"temperature" = "Température";
-"wind_speed" = "Vitesse du vent";
-"not_filled_in" = "Non renseignée";
+"weather" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"not_filled_in" = "Not filled in";
 
 // Storyboard
 
