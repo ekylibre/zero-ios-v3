@@ -1446,7 +1446,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="airplanter" translatesAutoresizingMaskIntoConstraints="NO" id="wLA-ye-d8H">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wLA-ye-d8H">
                                                 <rect key="frame" x="130" y="55.5" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="KER-IK-2q0"/>
@@ -1961,6 +1961,7 @@
                         <outlet property="equipmentTableViewHeightConstraint" destination="fXC-sa-Rfz" id="ReC-cv-NBL"/>
                         <outlet property="equipmentType" destination="Tur-MK-R4c" id="0en-nU-XoV"/>
                         <outlet property="equipmentTypeButton" destination="A58-eW-7tB" id="teL-bG-Ea9"/>
+                        <outlet property="equipmentTypeImage" destination="wLA-ye-d8H" id="LrD-U7-KA6"/>
                         <outlet property="equipmentTypeTableView" destination="lyS-jh-cAc" id="4kk-dU-5PT"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="fogyButton" destination="8Tz-Cl-TTF" id="MD1-Ix-ZuM"/>
@@ -2237,7 +2238,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="airplanter" width="500" height="500"/>
         <image name="averses" width="285" height="285"/>
         <image name="brouillard" width="285" height="285"/>
         <image name="clic&amp;farm-logo" width="1300" height="1150"/>

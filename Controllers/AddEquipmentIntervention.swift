@@ -193,6 +193,9 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   }
 
   @IBAction func openEquipmentsCreationView(_ sender: Any) {
+    selectedEquipmentType = sortedEquipmentTypes[0]
+    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+    equipmentTypeImage.image = defineEquipmentImage(equipmentName: selectedEquipmentType)
     equipmentDarkLayer.isHidden = false
     createEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
@@ -251,6 +254,15 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         print("Could not save. \(error), \(error.userInfo)")
       }
     }
+  }
+
+  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
+    if selectedEquipmentType == sortedEquipmentTypes[0] {
+      equipmentTypeTableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+    } else {
+    equipmentTypeTableView.scrollToRow(at: IndexPath.init(row: (selectedIndexPath?.row)!, section: 0), at: .top, animated: false)
+    }
+    equipmentTypeTableView.isHidden = false
   }
 
   func removeEquipmentCell(_ indexPath: IndexPath) {

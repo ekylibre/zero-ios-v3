@@ -45,6 +45,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var searchEquipment: UISearchBar!
   @IBOutlet weak var equipmentTypeTableView: UITableView!
   @IBOutlet weak var equipmentTypeButton: UIButton!
+  @IBOutlet weak var equipmentTypeImage: UIImageView!
   @IBOutlet weak var createEquipment: UIView!
   @IBOutlet weak var createEntity: UIView!
   @IBOutlet weak var entityFirstName: UITextField!
@@ -175,6 +176,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     sortedEquipmentTypes = equipmentTypes.sorted()
     selectedEquipmentType = sortedEquipmentTypes[0]
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+    equipmentTypeImage.image = defineEquipmentImage(equipmentName: selectedEquipmentType)
 
     fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
     fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
@@ -499,6 +501,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       equipmentTypeTableView.reloadData()
       equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
       equipmentTypeTableView.isHidden = true
+      equipmentTypeImage.image = defineEquipmentImage(equipmentName: selectedEquipmentType)
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
@@ -545,14 +548,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
                               tableView: UITableView) {
     tableViewHeightConstraint.constant = tableView.contentSize.height
     viewHeightConstraint.constant = tableViewHeightConstraint.constant + 100
-  }
-
-  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
-    equipmentTypeTableView.isHidden = false
-    equipmentTypeTableView.layer.shadowColor = UIColor.black.cgColor
-    equipmentTypeTableView.layer.shadowOpacity = 1
-    equipmentTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
-    equipmentTypeTableView.layer.shadowRadius = 10
   }
 
   // MARK: - Core Data
