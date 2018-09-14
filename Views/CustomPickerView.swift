@@ -8,77 +8,41 @@
 
 import UIKit
 
-class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
+protocol CustomPickerViewProtocol {
+  func customPickerDidSelectRow(_ selectedValue: String?)
+}
+
+class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
 
   // MARK: - Properties
 
-  lazy var cancelButton: UIButton = {
-    let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("Annuler", for: .normal)
-    cancelButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
-    cancelButton.translatesAutoresizingMaskIntoConstraints = false
-    return cancelButton
-  }()
-
-  lazy var validateButton: UIButton = {
-    let validateButton = UIButton(frame: CGRect.zero)
-    validateButton.setTitle("Valider", for: .normal)
-    validateButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
-    validateButton.translatesAutoresizingMaskIntoConstraints = false
-    return validateButton
-  }()
-
-  lazy var headerView: UIView = {
-    let headerView = UIView(frame: CGRect.zero)
-    headerView.backgroundColor = AppColor.ThemeColors.White
-    headerView.addSubview(cancelButton)
-    headerView.addSubview(validateButton)
-    headerView.translatesAutoresizingMaskIntoConstraints = false
-    return headerView
-  }()
-
-  lazy var pickerView: UIPickerView = {
-    let pickerView = UIPickerView(frame: CGRect.zero)
-    pickerView.backgroundColor = AppColor.CellColors.LightGray
-    pickerView.delegate = self
-    pickerView.dataSource = self
-    pickerView.translatesAutoresizingMaskIntoConstraints = false
-    return pickerView
-  }()
-
+  var reference: CustomPickerViewProtocol?
   var values: [String]
-  var selectedRow: Int
 
   // MARK: - Initialization
 
-  init(frame: CGRect, _ values: [String]) {
+  init(frame: CGRect, _ values: [String], superview: UIView) {
     self.values = values
-    self.selectedRow = 0
     super.init(frame: frame)
-    setupView()
+    setupView(superview)
   }
 
-  private func setupView() {
+  private func setupView(_ superview: UIView) {
     self.isHidden = true
-    self.addSubview(headerView)
-    self.addSubview(pickerView)
+    self.backgroundColor = AppColor.CellColors.LightGray
+    self.delegate = self
+    self.dataSource = self
+    self.translatesAutoresizingMaskIntoConstraints = false
+    superview.addSubview(self)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      cancelButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-      cancelButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      validateButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
-      validateButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      headerView.heightAnchor.constraint(equalToConstant: 50),
-      headerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      headerView.widthAnchor.constraint(equalTo: self.widthAnchor),
-      pickerView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-      pickerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      pickerView.heightAnchor.constraint(equalToConstant: 216),
-      pickerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      pickerView.widthAnchor.constraint(equalTo: self.widthAnchor)
+      self.bottomAnchor.constraint(equalTo: self.superview!.bottomAnchor),
+      self.heightAnchor.constraint(equalToConstant: 216),
+      self.centerXAnchor.constraint(equalTo: self.superview!.centerXAnchor),
+      self.widthAnchor.constraint(equalTo: self.superview!.widthAnchor)
       ])
   }
 
@@ -86,7 +50,7 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Picker view
+  // MARK: - Data source
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -96,7 +60,15 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     return values.count
   }
 
+  // MARK: - Delegate
+
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return values[row]
+  }
+
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let selectedValue = values[row]
+
+    reference?.customPickerDidSelectRow(selectedValue)
   }
 }

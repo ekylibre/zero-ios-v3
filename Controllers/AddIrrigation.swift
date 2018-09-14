@@ -8,33 +8,38 @@
 
 import UIKit
 
-extension AddInterventionViewController: UITextFieldDelegate {
+extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewProtocol {
 
   // MARK: - Initialization
 
   func setupIrrigation() {
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     let units = ["l", "hl", "m³"]
-    irrigationPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), units)
-    irrigationPickerView.translatesAutoresizingMaskIntoConstraints = false
-    self.view.addSubview(irrigationPickerView)
 
-    setupLayout()
+    irrigationPickerView = CustomPickerView(frame: frame, units, superview: self.view)
+    irrigationPickerView.reference = self
     setupActions()
-  }
-
-  private func setupLayout() {
-    NSLayoutConstraint.activate([
-      irrigationPickerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-      irrigationPickerView.heightAnchor.constraint(equalToConstant: 266),
-      irrigationPickerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      irrigationPickerView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
-      ])
   }
 
   private func setupActions() {
     irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
-    irrigationPickerView.cancelButton.addTarget(self, action: #selector(cancelPicking), for: .touchUpInside)
-    irrigationPickerView.validateButton.addTarget(self, action: #selector(validatePick), for: .touchUpInside)
+  }
+
+  // MARK: - Picker view
+
+  func customPickerDidSelectRow(_ selectedValue: String?) {
+    guard let unit = selectedValue else {
+      return
+    }
+
+    let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let volume = Float(volumeString) ?? 0
+
+    self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
+    irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+    updateInfoLabel(Double(volume), unit)
+    irrigationPickerView.isHidden = true
+    dimView.isHidden = true
   }
 
   // MARK: - Actions
@@ -79,27 +84,5 @@ extension AddInterventionViewController: UITextFieldDelegate {
   @IBAction func tapUnit() {
     dimView.isHidden = false
     irrigationPickerView.isHidden = false
-  }
-
-  @objc func cancelPicking() {
-    let selectedRow = irrigationPickerView.selectedRow
-
-    irrigationPickerView.pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-    irrigationPickerView.isHidden = true
-    dimView.isHidden = true
-  }
-
-  @objc func validatePick() {
-    let selectedRow = irrigationPickerView.pickerView.selectedRow(inComponent: 0)
-    let unit = irrigationPickerView.values[selectedRow]
-    let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
-    let volume = Float(volumeString) ?? 0
-
-    self.irrigationUnitButton.setTitle(unit, for: .normal)
-    irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
-    updateInfoLabel(Double(volume), unit)
-    irrigationPickerView.selectedRow = selectedRow
-    irrigationPickerView.isHidden = true
-    dimView.isHidden = true
   }
 }
