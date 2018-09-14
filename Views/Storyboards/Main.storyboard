@@ -403,7 +403,7 @@
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YLy-wG-9j5">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YLy-wG-9j5">
                                                         <rect key="frame" x="79" y="67" width="60" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="7es-Q3-J9D"/>
@@ -414,7 +414,7 @@
                                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28Q-Cd-Lyq">
-                                                        <rect key="frame" x="139" y="66.5" width="40" height="25"/>
+                                                        <rect key="frame" x="149" y="66.5" width="40" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="iJL-A7-LY3"/>
                                                             <constraint firstAttribute="width" constant="40" id="rcj-uq-wHJ"/>
@@ -445,7 +445,7 @@
                                                     <constraint firstItem="lZ2-DO-10N" firstAttribute="centerY" secondItem="C4J-0E-41M" secondAttribute="centerY" id="Rqb-L2-Ec1"/>
                                                     <constraint firstItem="VEZ-KQ-zI8" firstAttribute="leading" secondItem="dFL-Ez-GIj" secondAttribute="leading" constant="20" id="TNh-P1-ON6"/>
                                                     <constraint firstItem="gTq-na-vs2" firstAttribute="top" secondItem="dFL-Ez-GIj" secondAttribute="top" constant="102" id="Y5A-Zy-gjk"/>
-                                                    <constraint firstItem="28Q-Cd-Lyq" firstAttribute="leading" secondItem="YLy-wG-9j5" secondAttribute="trailing" id="aBx-e5-4a2"/>
+                                                    <constraint firstItem="28Q-Cd-Lyq" firstAttribute="leading" secondItem="YLy-wG-9j5" secondAttribute="trailing" constant="10" id="aBx-e5-4a2"/>
                                                     <constraint firstItem="gTq-na-vs2" firstAttribute="leading" secondItem="dFL-Ez-GIj" secondAttribute="leading" constant="79" id="bp0-Vh-14s"/>
                                                     <constraint firstItem="VEZ-KQ-zI8" firstAttribute="top" secondItem="C4J-0E-41M" secondAttribute="bottom" constant="25" id="e5j-fg-jSg"/>
                                                     <constraint firstItem="sKN-nM-sDX" firstAttribute="leading" secondItem="C4J-0E-41M" secondAttribute="trailing" constant="15" id="eF3-Qs-j5O"/>
