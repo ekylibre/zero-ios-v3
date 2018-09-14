@@ -14,7 +14,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   func setupIrrigation() {
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    let units = ["l", "hl", "m³"]
+    let units = ["m³", "l", "hl"]
 
     irrigationPickerView = CustomPickerView(frame: frame, units, superview: self.view)
     irrigationPickerView.reference = self

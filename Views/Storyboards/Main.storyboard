@@ -419,7 +419,7 @@
                                                             <constraint firstAttribute="height" constant="25" id="iJL-A7-LY3"/>
                                                             <constraint firstAttribute="width" constant="40" id="rcj-uq-wHJ"/>
                                                         </constraints>
-                                                        <state key="normal" title="l">
+                                                        <state key="normal" title="m³">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
