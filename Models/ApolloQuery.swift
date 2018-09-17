@@ -18,17 +18,17 @@ class ApolloQuery {
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
       keys = NSDictionary(contentsOfFile: path)
     }
-    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(keys["parseClientSecret"]!)"]
+    let token = keys["parseClientSecret"]!
+    let url = URL(string: keys["graphQLServURL"] as! String)!
 
-    let url = URL(string: keys["parseUrl"] as! String)!
-
+    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
     return ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuration))
   }()
 
   func tryQuerySomeData() {
     apollo.fetch(query: ProfileQuery()) { (result, error) in
       guard let data = result?.data?.profile else {
-        print("\nNo result: \(String(describing: error))")
+        print("\nError: \(String(describing: error))")
         return
       }
 
