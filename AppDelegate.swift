@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Apollo
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

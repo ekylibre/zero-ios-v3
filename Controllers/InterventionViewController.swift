@@ -26,6 +26,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
+  var apolloQuery = ApolloQuery()
   var interventions = [NSManagedObject]() {
     didSet {
       tableView.reloadData()
@@ -38,6 +39,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    // Query
+
+    apolloQuery.tryQuerySomeData()
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
