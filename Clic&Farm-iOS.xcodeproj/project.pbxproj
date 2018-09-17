@@ -37,6 +37,9 @@
 		6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
 		6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
 		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
+		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
+		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
+		6B4CA8A1214F9B560052073D /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89E214F9B560052073D /* schema.json */; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA37142213963230086DF9B /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713F213963230086DF9B /* oauthInfo.plist */; };
@@ -94,6 +97,9 @@
 		6B11EED92139635400E2DEC4 /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B11EEE72139636200E2DEC4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
+		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
+		6B4CA89E214F9B560052073D /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
@@ -236,6 +242,16 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		6B4CA89B214F9B560052073D /* Graphql */ = {
+			isa = PBXGroup;
+			children = (
+				6B4CA89D214F9B560052073D /* mutations.graphql */,
+				6B4CA89C214F9B560052073D /* queries.graphql */,
+				6B4CA89E214F9B560052073D /* schema.json */,
+			);
+			path = Graphql;
+			sourceTree = "<group>";
+		};
 		6BA3713D213963230086DF9B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +271,7 @@
 				047BF0B22105D20B009F3945 /* Models */,
 				047BF0B12105D1F9009F3945 /* Views */,
 				047BF0BF2105F44F009F3945 /* CoreData */,
+				6B4CA89B214F9B560052073D /* Graphql */,
 				042A44322121B38600CE6B24 /* Constants */,
 				6BA3713D213963230086DF9B /* Resources */,
 				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
@@ -367,7 +384,10 @@
 				6B11EEE92139636300E2DEC4 /* Main.storyboard in Resources */,
 				041313B321401483005437F0 /* Localizable.strings in Resources */,
 				6BA37141213963230086DF9B /* Assets.xcassets in Resources */,
+				6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */,
+				6B4CA8A1214F9B560052073D /* schema.json in Resources */,
 				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
+				6B4CA89F214F9B560052073D /* queries.graphql in Resources */,
 				6BA37142213963230086DF9B /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
