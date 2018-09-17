@@ -40,7 +40,7 @@
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A1214F9B560052073D /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89E214F9B560052073D /* schema.json */; };
-		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
+		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6B4CA8AA214FAEFC0052073D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4CA8A9214FAEFB0052073D /* API.swift */; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
@@ -69,6 +69,10 @@
 
 /* Begin PBXFileReference section */
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
+		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
+		0411C4CC214FC30B005B6C01 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
+		0411C4CE214FC31B005B6C01 /* ApolloSQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApolloSQLite.framework; path = Carthage/Build/iOS/ApolloSQLite.framework; sourceTree = "<group>"; };
+		0411C4D0214FC329005B6C01 /* ApolloWebSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApolloWebSocket.framework; path = Carthage/Build/iOS/ApolloWebSocket.framework; sourceTree = "<group>"; };
 		0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
 		04131399213FFC3E005437F0 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -162,6 +166,10 @@
 		047B57CB2108605400C48F68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0411C4D0214FC329005B6C01 /* ApolloWebSocket.framework */,
+				0411C4CE214FC31B005B6C01 /* ApolloSQLite.framework */,
+				0411C4CC214FC30B005B6C01 /* Starscream.framework */,
+				0411C4CA214FC2FB005B6C01 /* SQLite.framework */,
 				6B4CA8A2214F9C560052073D /* Apollo.framework */,
 				041129592110937300AE884D /* OAuth2.framework */,
 			);
@@ -417,7 +425,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
 			);
 			outputPaths = (
 			);
@@ -431,13 +438,14 @@
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
 			);
 			name = "Generate Apollo GraphQL API";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd /Users/rouxg/GitHub/zero-ios-v3/Models   \n\n/Users/rouxg/GitHub/zero-ios-v3/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift";
+			shellScript = "cd /Users/jonathandehaay/GitHub/zero-ios-v3/Models\n\n/Users/jonathandehaay/GitHub/zero-ios-v3/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift";
 		};
 /* End PBXShellScriptBuildPhase section */
 
