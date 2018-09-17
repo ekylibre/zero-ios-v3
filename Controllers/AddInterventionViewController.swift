@@ -307,8 +307,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case Intervention.InterventionType.Irrigation.rawValue:
       harvestView.isHidden = true
     default:
-      irrigationView.isHidden = true
-      harvestView.isHidden = true
       return
     }
   }
@@ -710,7 +708,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     currentWeather.setValue(weather.value(forKey: "weatherDescription"), forKey: "weatherDescription")
     currentWeather.setValue(weather.value(forKey: "windSpeed"), forKey: "windSpeed")
 
-    print("\nweather: \(currentWeather)")
     do {
       try managedContext.save()
     } catch let error as NSError {

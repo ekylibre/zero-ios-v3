@@ -390,7 +390,7 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1D-nr-BV3">
                                                         <rect key="frame" x="99.5" y="21" width="143.5" height="30"/>
-                                                        <state key="normal" title="+ ADD A SHIPMENT">
+                                                        <state key="normal" title="+ ADD A LOAD">
                                                             <color key="titleColor" red="0.60392156862745094" green="0.78431372549019607" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
