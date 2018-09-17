@@ -569,7 +569,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     tableView.reloadData()
-    tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+    DispatchQueue.main.async {
+      if self.tableView.numberOfRows(inSection: 0) > 0 {
+        self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+      }
+    }
   }
 
   @objc func tapCreateButton() {

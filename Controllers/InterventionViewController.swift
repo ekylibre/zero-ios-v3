@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import os.log
 import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -134,21 +133,24 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
+    fetchInterventions()
+    if interventions.count == 0 {
+      loadSampleInterventions()
+    }
+  }
+
+  private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    if interventions.count == 0 {
-      loadSampleInterventions()
     }
   }
 
@@ -163,16 +165,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
-    if indexPath.row % 2 == 0 {
-      cell.backgroundColor = AppColor.CellColors.White
-    } else {
-      cell.backgroundColor = AppColor.CellColors.LightGray
-    }
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)
@@ -180,19 +177,19 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     cell.typeLabel.text = intervention.value(forKey: "type") as? String
     switch intervention.value(forKey: "type") as! String {
-    case InterventionType.care:
+    case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
-    case InterventionType.cropProtection:
+    case Intervention.InterventionType.CropProtection.rawValue:
       cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case InterventionType.fertilization:
+    case Intervention.InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
-    case InterventionType.groundWork:
+    case Intervention.InterventionType.GroundWork.rawValue:
       cell.typeImageView.image = UIImage(named: "ground-work")!
-    case InterventionType.harvest:
+    case Intervention.InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
-    case InterventionType.implantation:
+    case Intervention.InterventionType.Implantation.rawValue:
       cell.typeImageView.image = UIImage(named: "implantation")!
-    case InterventionType.irrigation:
+    case Intervention.InterventionType.Irrigation.rawValue:
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
       cell.typeLabel.text = "error".localized
@@ -366,10 +363,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
     //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
-    createIntervention(type: InterventionType.care, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: InterventionType.cropProtection, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: InterventionType.fertilization, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: InterventionType.groundWork, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
   // MARK: - Actions
