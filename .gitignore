@@ -42,3 +42,6 @@ oauthInfo.plist
 
 # Assets
 Resources/Assets.xcassets/lexicon/
+
+# API auto-generated files
+GraphQL/API.swift
