@@ -321,6 +321,14 @@
 "not_filled_in" = "Not filled in";
 "temp" = "Temp.: %@ °C |";
 "wind" = " vent: %@ km/h";
+"cloudy" = "Nuages";
+"cloudy_passage" = "Passages-nuageux";
+"fogy" = "Brouillard";
+"rain" = "Pluie";
+"rain_fall" = "Averses";
+"snow" = "Neige";
+"storm" = "Orage";
+"sunny" = "Soleil";
 
 // Storyboard
 

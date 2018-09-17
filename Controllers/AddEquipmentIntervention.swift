@@ -237,6 +237,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return
       }
+
       let managedContext = appDelegate.persistentContainer.viewContext
       let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
       let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
@@ -246,6 +247,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       equipment.setValue(selectedEquipmentType, forKeyPath: "type")
       equipment.setValue(UUID(), forKey: "uuid")
       equipment.setValue(0, forKey: "row")
+
       do {
         try managedContext.save()
         equipments.append(equipment)

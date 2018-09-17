@@ -17,34 +17,42 @@ extension AddInterventionViewController {
     cloudyButton.layer.borderColor = UIColor.lightGray.cgColor
     cloudyButton.layer.borderWidth = 2
     cloudyButton.layer.cornerRadius = 5
+    cloudyButton.tag = 0
 
     cloudyPassageButton.layer.borderColor = UIColor.lightGray.cgColor
     cloudyPassageButton.layer.borderWidth = 2
     cloudyPassageButton.layer.cornerRadius = 5
+    cloudyPassageButton.tag = 2
 
     fogyButton.layer.borderColor = UIColor.lightGray.cgColor
     fogyButton.layer.borderWidth = 2
     fogyButton.layer.cornerRadius = 5
+    fogyButton.tag = 4
 
     rainButton.layer.borderColor = UIColor.lightGray.cgColor
     rainButton.layer.borderWidth = 2
     rainButton.layer.cornerRadius = 5
+    rainButton.tag = 5
 
     rainFallButton.layer.borderColor = UIColor.lightGray.cgColor
     rainFallButton.layer.borderWidth = 2
     rainFallButton.layer.cornerRadius = 5
+    rainFallButton.tag = 3
 
     snowButton.layer.borderColor = UIColor.lightGray.cgColor
     snowButton.layer.borderWidth = 2
     snowButton.layer.cornerRadius = 5
+    snowButton.tag = 6
 
     stormButton.layer.borderColor = UIColor.lightGray.cgColor
     stormButton.layer.borderWidth = 2
     stormButton.layer.cornerRadius = 5
+    stormButton.tag = 7
 
     sunnyButton.layer.borderColor = UIColor.lightGray.cgColor
     sunnyButton.layer.borderWidth = 2
     sunnyButton.layer.cornerRadius = 5
+    sunnyButton.tag = 1
   }
 
   func defineWeathers() -> [UIButton] {
@@ -98,18 +106,18 @@ extension AddInterventionViewController {
         }
       }
       sender.layer.borderColor = AppColor.cgColor.Green
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.setValue(weatherTypes[sender.tag], forKey: "weatherDescription")
     } else if weatherIsSelected {
       sender.layer.borderColor = AppColor.cgColor.LightGray
       weatherIsSelected = false
     } else {
       sender.layer.borderColor = AppColor.cgColor.Green
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.setValue(weatherTypes[sender.tag], forKey: "weatherDescription")
       weatherIsSelected = true
     }
   }
 
-  func saveWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
+  func createWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -121,12 +129,6 @@ extension AddInterventionViewController {
     weatherEntity.setValue(windSpeed, forKey: "windSpeed")
     weatherEntity.setValue(temperature, forKey: "temperature")
     weatherEntity.setValue(weatherDescription, forKey: "weatherDescription")
-
-    do {
-      try managedContext.save()
-      weather.append(weatherEntity)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    weather = weatherEntity
   }
 }

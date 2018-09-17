@@ -67,12 +67,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvest.setValue(0, forKey: "quantity")
     harvest.setValue("straw", forKey: "type")
     harvest.setValue("q", forKey: "unit")
-    do {
-      try managedContext.save()
-      harvests.append(harvest)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    harvests.append(harvest)
   }
 
   @IBAction func changeHarvestNature(_ sender: UIButton) {

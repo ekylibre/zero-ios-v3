@@ -120,7 +120,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
   var weathers = [UIButton]()
-  var weather = [NSManagedObject]()
+  var weather = NSManagedObject()
+  var weatherTypes = [
+    "cloudy".localized,
+    "sunny".localized,
+    "cloudy_passage".localized,
+    "rain_fall".localized,
+    "fogy".localized,
+    "rain".localized,
+    "snow".localized,
+    "storm".localized]
   var harvests = [NSManagedObject]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
@@ -247,7 +256,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     initializeWeatherView()
     weathers = defineWeathers()
-    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    createWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
 
@@ -263,7 +272,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   private func setupViewsAccordingInterventionType() {
-    switch  interventionType {
+    switch interventionType {
     case Intervention.InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
@@ -298,6 +307,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case Intervention.InterventionType.Irrigation.rawValue:
       harvestView.isHidden = true
     default:
+      irrigationView.isHidden = true
+      harvestView.isHidden = true
       return
     }
   }
@@ -579,6 +590,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
+    saveHarvest(intervention: newIntervention)
+    saveWeather(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -610,6 +623,32 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func saveHarvest(intervention: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvestEntity = NSEntityDescription.entity(forEntityName: "Harvests", in: managedContext)!
+
+    for harvest in harvests {
+      let harvestManagedObject = NSManagedObject(entity: harvestEntity, insertInto: managedContext)
+      let type = harvestType.titleLabel?.text
+
+      harvestManagedObject.setValue(intervention, forKey: "interventions")
+      harvestManagedObject.setValue(type, forKey: "type")
+      harvestManagedObject.setValue(harvest.value(forKey: "number"), forKey: "number")
+      harvestManagedObject.setValue(harvest.value(forKey: "quantity"), forKey: "quantity")
+      harvestManagedObject.setValue(harvest.value(forKey: "unit"), forKey: "unit")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   func createEquipments(intervention: NSManagedObject) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -621,14 +660,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedEquipment in selectedEquipments {
       let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
-      let name = selectedEquipment.value(forKeyPath: "name") as! String
-      let type = selectedEquipment.value(forKey: "type") as! String
-      let equipmentUuid = selectedEquipment.value(forKey: "uuid") as! UUID
 
       equipment.setValue(intervention, forKey: "interventions")
-      equipment.setValue(name, forKey: "name")
-      equipment.setValue(type, forKey: "type")
-      equipment.setValue(equipmentUuid, forKey: "equipment")
+      equipment.setValue(selectedEquipment, forKey: "equipments")
     }
 
     do {
@@ -651,9 +685,32 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let isDriver = entity.value(forKey: "isDriver")
 
       doer.setValue(intervention, forKey: "interventions")
-      doer.setValue(UUID(), forKey: "uuid")
+      doer.setValue(entity, forKey: "entities")
       doer.setValue(isDriver, forKey: "isDriver")
     }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveWeather(intervention: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let weatherEntity = NSEntityDescription.entity(forEntityName: "Weather", in: managedContext)!
+    let currentWeather = NSManagedObject(entity: weatherEntity, insertInto: managedContext)
+
+    currentWeather.setValue(intervention, forKey: "interventions")
+    currentWeather.setValue(weather.value(forKey: "temperature"), forKey: "temperature")
+    currentWeather.setValue(weather.value(forKey: "weatherDescription"), forKey: "weatherDescription")
+    currentWeather.setValue(weather.value(forKey: "windSpeed"), forKey: "windSpeed")
+
+    print("\nweather: \(currentWeather)")
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -810,7 +867,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
         currentWeatherLabel.text = currentTemperature + currentWind
       }
-      weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
+      weather.setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
     case windSpeedTextField:
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
@@ -822,7 +879,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
         currentWeatherLabel.text = currentTemperature + currentWind
       }
-      weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
+      weather.setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
     default:
       return false
     }

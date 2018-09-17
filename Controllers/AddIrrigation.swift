@@ -34,10 +34,6 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
     switch pickerView {
     case harvestNaturePickerView:
-      print("Toto")
-      for harvest in harvests {
-        harvest.setValue(unit, forKey: "type")
-      }
       harvestType.setTitle(unit, for: .normal)
       harvestNaturePickerView.isHidden = true
       dimView.isHidden = true
