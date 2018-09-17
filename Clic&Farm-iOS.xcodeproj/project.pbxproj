@@ -249,14 +249,14 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		6B4CA89B214F9B560052073D /* Graphql */ = {
+		6B4CA89B214F9B560052073D /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
 				6B4CA89D214F9B560052073D /* mutations.graphql */,
 				6B4CA89C214F9B560052073D /* queries.graphql */,
 				6B4CA89E214F9B560052073D /* schema.json */,
 			);
-			path = Graphql;
+			path = GraphQL;
 			sourceTree = "<group>";
 		};
 		6BA3713D213963230086DF9B /* Resources */ = {
@@ -278,7 +278,7 @@
 				047BF0B22105D20B009F3945 /* Models */,
 				047BF0B12105D1F9009F3945 /* Views */,
 				047BF0BF2105F44F009F3945 /* CoreData */,
-				6B4CA89B214F9B560052073D /* Graphql */,
+				6B4CA89B214F9B560052073D /* GraphQL */,
 				042A44322121B38600CE6B24 /* Constants */,
 				6BA3713D213963230086DF9B /* Resources */,
 				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
