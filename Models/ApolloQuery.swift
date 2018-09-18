@@ -12,24 +12,6 @@ import CoreData
 
 class ApolloQuery {
 
-  var token: String?
-  var apollo: ApolloClient?
-  let authentificationService = AuthentificationService(username: "", password: "")
-
-  func initializeApolloClient() {
-    let configuration = URLSessionConfiguration.default
-    var keys: NSDictionary!
-
-    if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
-      keys = NSDictionary(contentsOfFile: path)
-    }
-    let token = authentificationService.oauth2.accessToken
-    let url = URL(string: keys["graphQLServURL"] as! String)!
-
-    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(token!)"]
-    apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuration))
-  }
-
   func saveFarmNameAndID(name: String?, id: String?) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -50,7 +32,9 @@ class ApolloQuery {
   }
 
   func defineFarmNameAndID(completion: @escaping (_ success: Bool) -> Void) {
-    apollo?.fetch(query: ProfileQuery()) { (result, error) in
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+    appDelegate.apollo?.fetch(query: ProfileQuery()) { (result, error) in
       guard let farms = result?.data?.farms else {
         print("Error: \(String(describing: error))")
         return

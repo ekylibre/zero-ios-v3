@@ -9,6 +9,7 @@
 import UIKit
 import os.log
 import CoreData
+import Apollo
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -41,24 +42,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Apollo Query
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-    let farmLabel = UILabel(frame: firstFrame)
-
-    apolloQuery.initializeApolloClient()
-    if userDatabase.entityIsEmpty(entity: "Farms") {
-      apolloQuery.defineFarmNameAndID { (success) -> Void in
-        if success {
-          farmLabel.text = self.fetchFarmNameAndId()
-          farmLabel.textColor = UIColor.white
-          self.navigationBar.addSubview(farmLabel)
-        }
-      }
-    } else {
-      farmLabel.text = fetchFarmNameAndId()
-      farmLabel.textColor = UIColor.white
-      navigationBar.addSubview(farmLabel)
-    }
+    initializeApolloClient()
+    displayFarmName()
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
@@ -136,26 +121,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func fetchFarmNameAndId() -> String? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
-
-    do {
-      let entities = try managedContext.fetch(entitiesFetchRequest)
-
-      for entity in entities {
-        return entity.value(forKey: "name") as? String
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
@@ -180,6 +145,67 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
+  }
+
+  // MARK: - Apollo
+
+  func checkIfTokenIsValid(authService: AuthentificationService) -> String {
+    if authService.oauth2.hasUnexpiredAccessToken() {
+      return authService.oauth2.accessToken!
+    } else {
+      authService.authorize(presenting: self)
+      return authService.oauth2.accessToken!
+    }
+  }
+
+  func initializeApolloClient() {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
+    let configuation = URLSessionConfiguration.default
+    let authService = AuthentificationService(username: "", password: "")
+    let token = checkIfTokenIsValid(authService: authService)
+
+    configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
+    appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+  }
+
+  func fetchFarmNameAndId() -> String? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        return entity.value(forKey: "name") as? String
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func displayFarmName() {
+    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+    let farmLabel = UILabel(frame: firstFrame)
+
+    if userDatabase.entityIsEmpty(entity: "Farms") {
+      apolloQuery.defineFarmNameAndID { (success) -> Void in
+        if success {
+          farmLabel.text = self.fetchFarmNameAndId()
+          farmLabel.textColor = UIColor.white
+          self.navigationBar.addSubview(farmLabel)
+        }
+      }
+    } else {
+      farmLabel.text = fetchFarmNameAndId()
+      farmLabel.textColor = UIColor.white
+      navigationBar.addSubview(farmLabel)
+    }
   }
 
   // MARK: - Table view data source
