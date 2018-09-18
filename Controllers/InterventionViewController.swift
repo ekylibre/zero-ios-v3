@@ -44,6 +44,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     initializeApolloClient()
     displayFarmName()
+    apolloQuery.defineEquipments()
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent

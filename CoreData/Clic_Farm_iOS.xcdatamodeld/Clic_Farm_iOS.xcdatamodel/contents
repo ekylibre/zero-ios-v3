@@ -23,11 +23,11 @@
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="entities" inverseEntity="Doers" syncable="YES"/>
     </entity>
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
+        <attribute name="equipmentIDEky" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="row" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipments" inverseName="equipments" inverseEntity="InterventionEquipments" syncable="YES"/>
     </entity>
     <entity name="Farms" representedClassName="Farms" syncable="YES" codeGenerationType="class">
@@ -164,7 +164,7 @@
         <element name="Crops" positionX="414" positionY="269" width="128" height="118"/>
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
         <element name="Entities" positionX="-351" positionY="-459" width="128" height="135"/>
-        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="28"/>
+        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="285"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="118"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>

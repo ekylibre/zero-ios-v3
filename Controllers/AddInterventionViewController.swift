@@ -493,12 +493,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
       let name = selectedEquipment.value(forKeyPath: "name") as! String
       let type = selectedEquipment.value(forKey: "type") as! String
-      let equipmentUuid = selectedEquipment.value(forKey: "uuid") as! UUID
 
       equipment.setValue(intervention, forKey: "interventions")
       equipment.setValue(name, forKey: "name")
       equipment.setValue(type, forKey: "type")
-      equipment.setValue(equipmentUuid, forKey: "equipment")
     }
 
     do {

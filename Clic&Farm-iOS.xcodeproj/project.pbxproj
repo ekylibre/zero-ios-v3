@@ -13,6 +13,7 @@
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		04139CB021411D6F0067DEA9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04139CAF21411D6F0067DEA9 /* StringExtension.swift */; };
 		0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */; };
+		04149EC421510C80007B5441 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04149EC321510C7F007B5441 /* API.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */; };
@@ -24,7 +25,6 @@
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
 		04E54585214FDD2B005D2836 /* ApolloQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E54584214FDD2B005D2836 /* ApolloQuery.swift */; };
-		04E54589214FEB01005D2836 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E54588214FEB01005D2836 /* API.swift */; };
 		6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
 		6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */; };
 		6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED22139635400E2DEC4 /* ListCell.swift */; };
@@ -80,6 +80,7 @@
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04139CAF21411D6F0067DEA9 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
+		04149EC321510C7F007B5441 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
@@ -94,7 +95,6 @@
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
 		04E54584214FDD2B005D2836 /* ApolloQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloQuery.swift; sourceTree = "<group>"; };
-		04E54588214FEB01005D2836 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		6B11EED02139635400E2DEC4 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
 		6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
 		6B11EED22139635400E2DEC4 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -262,7 +262,7 @@
 		6B4CA89B214F9B560052073D /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
-				04E54588214FEB01005D2836 /* API.swift */,
+				04149EC321510C7F007B5441 /* API.swift */,
 				6B4CA89D214F9B560052073D /* mutations.graphql */,
 				6B4CA89C214F9B560052073D /* queries.graphql */,
 				6B4CA89E214F9B560052073D /* schema.json */,
@@ -477,7 +477,7 @@
 				6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
-				04E54589214FEB01005D2836 /* API.swift in Sources */,
+				04149EC421510C80007B5441 /* API.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,

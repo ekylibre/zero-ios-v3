@@ -26,7 +26,7 @@
 
 "airplanter" = "Air planter";
 "baler_wrapper" = "Baler wrapper";
-"corn-topper" = "Corn topper";
+"corn_topper" = "Corn topper";
 "cubic_baler" = "Cubic baler";
 "disc_harrow" = "Disc arrow";
 "forage_platform" = "Forage platform";

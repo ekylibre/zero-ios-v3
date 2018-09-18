@@ -165,12 +165,6 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngb-a1-y0g">
-                                <rect key="frame" x="141.5" y="20" width="92" height="30"/>
-                                <state key="normal" title="Log-Out Tmp">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -187,9 +181,7 @@
                             <constraint firstItem="BuB-B1-p77" firstAttribute="bottom" secondItem="ttg-Mf-cp2" secondAttribute="bottom" constant="80" id="Tkh-TL-jMy"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="leading" secondItem="BuB-B1-p77" secondAttribute="leading" id="c04-Fj-ikK"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="dzo-Zi-Noy"/>
-                            <constraint firstItem="ngb-a1-y0g" firstAttribute="top" secondItem="BuB-B1-p77" secondAttribute="top" id="h29-03-FXR"/>
                             <constraint firstItem="BuB-B1-p77" firstAttribute="trailing" secondItem="LDw-rB-9Pp" secondAttribute="trailing" id="k4y-DG-Xag"/>
-                            <constraint firstItem="ngb-a1-y0g" firstAttribute="centerX" secondItem="Bki-1z-HKT" secondAttribute="centerX" id="kb5-As-iCf"/>
                             <constraint firstItem="qI5-Ep-5Qd" firstAttribute="top" secondItem="OwN-92-HaX" secondAttribute="bottom" constant="5" id="nAU-zd-KKi"/>
                             <constraint firstItem="qI5-Ep-5Qd" firstAttribute="trailing" secondItem="Bki-1z-HKT" secondAttribute="trailingMargin" id="tV6-Sj-UXK"/>
                             <constraint firstItem="LDw-rB-9Pp" firstAttribute="top" secondItem="ttg-Mf-cp2" secondAttribute="bottom" constant="80" id="u79-rF-XDR"/>
@@ -1704,6 +1696,6 @@
         <image name="expand-collapse" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vxv-f7-ZrT"/>
+        <segue reference="a8t-Pd-Dxa"/>
     </inferredMetricsTieBreakers>
 </document>
