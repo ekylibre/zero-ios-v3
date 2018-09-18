@@ -40,6 +40,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    initializeApolloClient()
+
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -154,14 +156,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func initializeApolloClient() {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var apollo = appDelegate.apollo
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
     let authService = AuthentificationService(username: "", password: "")
     let token = authService.oauth2.accessToken!
 
     configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
-    apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+    appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
   }
 
   func queryFarms() {
