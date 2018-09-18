@@ -105,18 +105,18 @@ query Farm {
       uuid
       name
       species
-      productionNature {
-        name
-        specie
-      }
+      #productionNature {
+      #name
+      #specie
+      #}
       productionMode
       provisionalYield
       startDate
       stopDate
       surfaceArea
-      plot {
-        uuid
-      }
+      #plot {
+      #uuid
+      #}
       #shape
     }
     people {
