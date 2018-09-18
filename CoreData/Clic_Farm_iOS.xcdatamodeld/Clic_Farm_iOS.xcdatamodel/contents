@@ -30,6 +30,10 @@
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipments" inverseName="equipments" inverseEntity="InterventionEquipments" syncable="YES"/>
     </entity>
+    <entity name="Farms" representedClassName="Farms" syncable="YES" codeGenerationType="class">
+        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Fertilizers" representedClassName="Fertilizers" syncable="YES" codeGenerationType="class">
         <attribute name="derivativeOf" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fertilizerIDEky" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -160,7 +164,7 @@
         <element name="Crops" positionX="414" positionY="269" width="128" height="118"/>
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
         <element name="Entities" positionX="-351" positionY="-459" width="128" height="135"/>
-        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
+        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="28"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="285"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="118"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
@@ -176,5 +180,6 @@
         <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
         <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="88"/>
+        <element name="Farms" positionX="-9" positionY="-396" width="128" height="73"/>
     </elements>
 </model>

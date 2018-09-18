@@ -26,6 +26,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
+  var userDatabase = UsersDatabase()
   var apolloQuery = ApolloQuery()
   var interventions = [NSManagedObject]() {
     didSet {
@@ -41,8 +42,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewDidLoad()
 
     // Apollo Query
+    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+    let farmLabel = UILabel(frame: firstFrame)
 
-    apolloQuery.tryQuerySomeData()
+    apolloQuery.initializeApolloClient()
+    if userDatabase.entityIsEmpty(entity: "Farms") {
+      apolloQuery.defineFarmNameAndID { (success) -> Void in
+        if success {
+          farmLabel.text = self.fetchFarmNameAndId()
+          farmLabel.textColor = UIColor.white
+          self.navigationBar.addSubview(farmLabel)
+        }
+      }
+    } else {
+      farmLabel.text = fetchFarmNameAndId()
+      farmLabel.textColor = UIColor.white
+      navigationBar.addSubview(farmLabel)
+    }
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
@@ -91,14 +107,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       synchroLabel.text = "Aucune synchronisation répertoriée"
     }
 
-    // Top label : name
-    //toolbar.frame = CGRect(x: 0, y: 623, width: 375, height: 100)
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-    let firstLabel = UILabel(frame: firstFrame)
-    firstLabel.text = "GAEC du Bois Joli"
-    firstLabel.textColor = UIColor.white
-    navigationBar.addSubview(firstLabel)
-
     initialiseInterventionButtons()
 
     // Load table view
@@ -126,6 +134,26 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionButtons.append(interventionButton)
       bottomView.addSubview(interventionButton)
     }
+  }
+
+  func fetchFarmNameAndId() -> String? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        return entity.value(forKey: "name") as? String
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
   }
 
   override func viewWillAppear(_ animated: Bool) {
