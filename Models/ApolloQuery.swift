@@ -40,7 +40,7 @@ class ApolloQuery {
     }
   }
 
-  func checkIfNewEquipment(equipmentID: Double) -> Bool {
+  func checkIfNewEquipment(equipmentID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
 
@@ -48,7 +48,7 @@ class ApolloQuery {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
       for entity in entities {
-        if equipmentID == entity.value(forKey: "equipmentIDEky") as? Double {
+        if equipmentID == entity.value(forKey: "equipmentIDEky") as? Int32 {
           return false
         }
       }
@@ -86,8 +86,60 @@ class ApolloQuery {
       for farm in farms {
         let equipments = farm.equipments!
         for equipment in equipments {
-          if self.checkIfNewEquipment(equipmentID: (equipment.id as NSString).doubleValue) {
+          if self.checkIfNewEquipment(equipmentID: (equipment.id as NSString).intValue) {
             self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+          }
+        }
+      }
+    }
+  }
+
+  func checkIfNewPerson(personID: Int32) -> Bool {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Entities")
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        if personID == entity.value(forKey: "personIDEky") as? Int32 {
+          return false
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return true
+  }
+
+  func savePeople(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let peopleEntity = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
+    let person = NSManagedObject(entity: peopleEntity, insertInto: managedContext)
+
+    person.setValue(farmID, forKey: "farmID")
+    person.setValue(fetchedPerson.firstName, forKey: "firstName")
+    person.setValue(fetchedPerson.lastName, forKey: "lastName")
+    person.setValue((fetchedPerson.id as NSString).intValue, forKey: "personIDEky")
+    person.setValue(false, forKey: "isDriver")
+    person.setValue(0, forKey: "row")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func definePeople() {
+    appDelegate.apollo?.fetch(query: FarmQuery()) { (result, error) in
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms. \(error!)"); return }
+
+      for farm in farms {
+        let people = farm.people!
+        for person in people {
+          if self.checkIfNewPerson(personID: (person.id as NSString).intValue) {
+            self.savePeople(fetchedPerson: person, farmID: farm.id)
           }
         }
       }
