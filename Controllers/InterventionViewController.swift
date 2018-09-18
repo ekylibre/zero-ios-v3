@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import Apollo
 import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -147,6 +148,37 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
+  }
+
+  // MARK: - Apollo
+
+  func initializeApolloClient() {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var apollo = appDelegate.apollo
+    let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
+    let configuation = URLSessionConfiguration.default
+    let authService = AuthentificationService(username: "", password: "")
+    let token = authService.oauth2.accessToken!
+
+    configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
+    apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+  }
+
+  func queryFarms() {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let apollo = appDelegate.apollo!
+    let query = FarmQuery()
+
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    apollo.fetch(query: query) { result, error in
+      if let error = error { print("Error: \(error)"); return }
+
+      guard let farms = result?.data?.farms else { print("Could not retrieve profile"); return }
+      for farm in farms {
+        print(farm.label)
+      }
+    }
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
   // MARK: - Table view data source
