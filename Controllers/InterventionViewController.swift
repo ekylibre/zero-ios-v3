@@ -40,7 +40,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Query
+    // Apollo Query
 
     apolloQuery.tryQuerySomeData()
 
