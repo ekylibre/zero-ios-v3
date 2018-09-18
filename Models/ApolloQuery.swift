@@ -58,16 +58,17 @@ class ApolloQuery {
     return true
   }
 
-  func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment) {
+  func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
     let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
     var type = fetchedEquipment.type?.rawValue
 
     type = type?.lowercased()
+    equipment.setValue(farmID, forKey: "farmID")
+    equipment.setValue(type?.localized, forKey: "type")
     equipment.setValue(fetchedEquipment.name, forKey: "name")
     equipment.setValue(fetchedEquipment.number, forKey: "number")
-    equipment.setValue(type?.localized, forKey: "type")
     equipment.setValue((fetchedEquipment.id as NSString).intValue, forKey: "equipmentIDEky")
     equipment.setValue(0, forKey: "row")
 
@@ -86,7 +87,7 @@ class ApolloQuery {
         let equipments = farm.equipments!
         for equipment in equipments {
           if self.checkIfNewEquipment(equipmentID: (equipment.id as NSString).doubleValue) {
-            self.saveEquipments(fetchedEquipment: equipment)
+            self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
           }
         }
       }
