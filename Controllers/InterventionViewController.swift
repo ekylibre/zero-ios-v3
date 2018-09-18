@@ -41,6 +41,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewDidLoad()
 
     initializeApolloClient()
+    queryFarms()
 
     // Change status bar appearance
     UIApplication.shared.statusBarStyle = .lightContent
@@ -165,6 +166,93 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
   }
 
+  func savePlots(plots: [FarmQuery.Data.Farm.Plot]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for plot in plots {
+      let newPlot = Plots(context: managedContext)
+
+      newPlot.uuid = UUID(uuidString: plot.uuid)
+      newPlot.name = plot.name
+      let splitString = plot.surfaceArea.split(separator: " ", maxSplits: 1)
+      let surfaceArea = Double(splitString.first!)!
+      newPlot.surfaceArea = surfaceArea
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveCrops(crops: [FarmQuery.Data.Farm.Crop]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+    for crop in crops {
+      let newCrop = Crops(context: managedContext)
+
+      newCrop.uuid = UUID(uuidString: crop.uuid)
+      newCrop.name = crop.name
+      newCrop.productionMode = crop.productionMode
+      newCrop.provisionalYield = crop.provisionalYield
+      newCrop.species = crop.species.rawValue
+      newCrop.startDate = dateFormatter.date(from: crop.startDate!)
+      newCrop.startDate = dateFormatter.date(from: crop.stopDate!)
+      let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
+      let surfaceArea = Double(splitString.first!)!
+      newCrop.surfaceArea = surfaceArea
+
+      let plot = fetchPlot(withName: crop.name)
+      newCrop.plots = plot
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func fetchPlot(withName plotName: String) -> Plots {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return Plots()
+    }
+
+    var plots: [Plots]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let plotsFetchRequest: NSFetchRequest<Plots> = Plots.fetchRequest()
+    let predicate = NSPredicate(format: "name == %@", plotName)
+    plotsFetchRequest.predicate = predicate
+
+    do {
+      plots = try managedContext.fetch(plotsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if plots.count == 1 {
+      return plots.first!
+    }
+    return Plots()
+  }
+
+  func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
+    for article in articles {
+      print("Name: ", article.name)
+    }
+  }
+
   func queryFarms() {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let apollo = appDelegate.apollo!
@@ -175,11 +263,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if let error = error { print("Error: \(error)"); return }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve profile"); return }
-      for farm in farms {
-        print(farm.label)
-      }
+      self.savePlots(plots: farms.first!.plots!)
+      self.saveCrops(crops: farms.first!.crops!)
+      self.saveArticles(articles: farms.first!.articles!)
     }
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
   // MARK: - Table view data source
