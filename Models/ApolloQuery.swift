@@ -20,11 +20,10 @@ class ApolloQuery {
 
   func saveFarmNameAndID(name: String?, id: String?) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let farmsEntity = NSEntityDescription.entity(forEntityName: "Farms", in: managedContext)!
-    let farm = NSManagedObject(entity: farmsEntity, insertInto: managedContext)
+    let farm = Farms(context: managedContext)
 
-    farm.setValue(name, forKey: "name")
-    farm.setValue(id, forKey: "farmID")
+    farm.farmID = id
+    farm.name = name
 
     do {
       try managedContext.save()
@@ -46,13 +45,13 @@ class ApolloQuery {
 
   func checkIfNewEquipment(equipmentID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Equipments")
+    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
 
     do {
-      let entities = try managedContext.fetch(entitiesFetchRequest)
+      let equipments = try managedContext.fetch(equipmentsFetchRequest)
 
-      for entity in entities {
-        if equipmentID == entity.value(forKey: "equipmentIDEky") as? Int32 {
+      for equipment in equipments {
+        if equipmentID == equipment.equipmentIDEky {
           return false
         }
       }
@@ -64,17 +63,16 @@ class ApolloQuery {
 
   func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+    let equipment = Equipments(context: managedContext)
     var type = fetchedEquipment.type?.rawValue
 
     type = type?.lowercased()
-    equipment.setValue(farmID, forKey: "farmID")
-    equipment.setValue(type?.localized, forKey: "type")
-    equipment.setValue(fetchedEquipment.name, forKey: "name")
-    equipment.setValue(fetchedEquipment.number, forKey: "number")
-    equipment.setValue((fetchedEquipment.id as NSString).intValue, forKey: "equipmentIDEky")
-    equipment.setValue(0, forKey: "row")
+    equipment.farmID = farmID
+    equipment.type = type?.localized
+    equipment.name = fetchedEquipment.name
+    equipment.number = fetchedEquipment.number
+    equipment.equipmentIDEky = (fetchedEquipment.id as NSString).intValue
+    equipment.row = 0
 
     do {
       try managedContext.save()
@@ -206,7 +204,7 @@ class ApolloQuery {
     return returnPerson!
   }
 
-  func saveDoers(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: NSManagedObject) -> NSManagedObject {
+  func saveDoersInIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: NSManagedObject) -> NSManagedObject {
     let managedContext = appDelegate.persistentContainer.viewContext
     let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
     let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
@@ -227,10 +225,36 @@ class ApolloQuery {
     return doer
   }
 
+  func saveEquipmentInInterventionEquipments(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool.Equipment, interventionEquipments: NSManagedObject) -> NSManagedObject {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
+    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+
+    equipment.setValue(fetchedEquipment.id, forKey: "equipmentID")
+    equipment.setValue(interventionEquipments, forKey: "interventionEquipments")
+    return equipment
+  }
+
+  func saveInterventionEquipmentsInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "InterventionEquipments", in: managedContext)!
+    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+    var equipments = [NSManagedObject]()
+
+    equipment.setValue(intervention, forKey: "interventions")
+    for fetchedTool in fetchedIntervention.tools! {
+      equipments.append(saveEquipmentInInterventionEquipments(fetchedEquipment: fetchedTool.equipment!, interventionEquipments: equipment))
+    }
+    //equipment.setValue(equipments, forKey: "equipments")
+    return equipment
+  }
+
   func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let farmsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    let intervention = NSManagedObject(entity: farmsEntity, insertInto: managedContext)
+    let intervention = Interventions(context: managedContext)
+    //let intervention = NSManagedObject(entity: farmsEntity, insertInto: managedContext)
+
+
 
     intervention.setValue(farmID, forKey: "farmID")
     intervention.setValue((fetchedIntervention.id as NSString).intValue, forKey: "interventionIDEky")
@@ -242,9 +266,10 @@ class ApolloQuery {
     intervention.setValue(saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention), forKey: "weather")
     let doers = NSSet()
     for fetchedOperator in fetchedIntervention.operators! {
-      doers.adding(saveDoers(fetchedOperator: fetchedOperator, intervention: intervention))
+      doers.adding(saveDoersInIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
     }
     intervention.setValue(doers, forKey: "doers")
+    intervention.setValue(saveInterventionEquipmentsInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention), forKey: "interventionEquipments")
 
     do {
       try managedContext.save()
