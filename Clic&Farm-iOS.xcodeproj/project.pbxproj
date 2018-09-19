@@ -442,7 +442,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $PROJECT_DIR/GraphQL\n\n$PROJECT_DIR/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift";
+			shellScript = "cd $PROJECT_DIR/GraphQL\n\n$PROJECT_DIR/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

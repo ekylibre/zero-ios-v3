@@ -44,7 +44,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     //queryFarms()
 
     // Change status bar appearance
-    UIApplication.shared.statusBarStyle = .lightContent
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Rounded buttons
