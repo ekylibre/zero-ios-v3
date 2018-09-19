@@ -65,3 +65,20 @@
 "water_spreader" = "Water spreader";
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
+
+// Weather
+
+"weather" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"not_filled_in" = "Not filled in";
+"temp" = "Temp.: %@ °C |";
+"wind" = " wind: %@ km/h";
+"Broken_clouds" = "Broken clouds";
+"few_clouds" = "Few clouds";
+"mist" = "Mist";
+"shower_rain" = "Shower rain";
+"light_rain" = "Light rain";
+"snow" = "Snow";
+"thunderstorm" = "Thunderstorm";
+"clear_sky" = "Clear sky";

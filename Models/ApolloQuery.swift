@@ -150,7 +150,7 @@ class ApolloQuery {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
 
-    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue
+    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased().localized
     weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
     weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
     weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
@@ -252,7 +252,6 @@ class ApolloQuery {
     let workingPeriod = WorkingPeriods(context: managedContext)
     let dateFormatter = DateFormatter()
 
-
     dateFormatter.locale = Locale(identifier: "fr_FR")
     dateFormatter.dateFormat = "yyyy-mm-dd"
     workingPeriod.executionDate = dateFormatter.date(from: fetchedDay.executionDate!)
@@ -310,14 +309,16 @@ class ApolloQuery {
 
     intervention.farmID = farmID
     intervention.interventionIDEky = (fetchedIntervention.id as NSString).intValue
-    intervention.type = fetchedIntervention.type.rawValue
+    intervention.type = fetchedIntervention.type.rawValue.lowercased().localized
     intervention.infos = fetchedIntervention.description
-    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     for workingDay in fetchedIntervention.workingDays {
       intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
     intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedIntervention: fetchedIntervention))
+
+    print("\nIntervention type: \(String(describing: intervention.type))")
 
     do {
       try managedContext.save()

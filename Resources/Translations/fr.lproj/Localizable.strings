@@ -65,3 +65,20 @@
 "water_spreader" = "Enrouleur";
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
+
+// Weather
+
+"weather" = "Météo";
+"temperature" = "Température";
+"wind_speed" = "Vitesse du vent";
+"not_filled_in" = "Non renseignée";
+"temp" = "Temp.: %@ °C |";
+"wind" = " vent: %@ km/h";
+"Broken_clouds" = "Nuages";
+"few_clouds" = "Passages-nuageux";
+"mist" = "Brouillard";
+"shower_rain" = "Pluie";
+"light_rain" = "Averses";
+"snow" = "Neige";
+"thunderstorm" = "Orage";
+"clear_sky" = "Soleil";
