@@ -47,7 +47,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     apolloQuery.loadEquipments()
     apolloQuery.loadPeople { (success) -> Void in
       if success {
-        //self.apolloQuery.loadIntervention()
+        self.apolloQuery.loadIntervention()
       }
     }
 

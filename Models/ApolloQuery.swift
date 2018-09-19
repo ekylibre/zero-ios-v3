@@ -97,13 +97,13 @@ class ApolloQuery {
 
   func checkIfNewPerson(personID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Entities")
+    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
       for entity in entities {
-        if personID == entity.value(forKey: "personIDEky") as? Int32 {
+        if personID == entity.personIDEky {
           return false
         }
       }
@@ -115,15 +115,14 @@ class ApolloQuery {
 
   func savePeople(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let peopleEntity = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-    let person = NSManagedObject(entity: peopleEntity, insertInto: managedContext)
+    let person = Entities(context: managedContext)
 
-    person.setValue(farmID, forKey: "farmID")
-    person.setValue(fetchedPerson.firstName, forKey: "firstName")
-    person.setValue(fetchedPerson.lastName, forKey: "lastName")
-    person.setValue((fetchedPerson.id as NSString).intValue, forKey: "personIDEky")
-    person.setValue(false, forKey: "isDriver")
-    person.setValue(0, forKey: "row")
+    person.farmID = farmID
+    person.firstName = fetchedPerson.firstName
+    person.lastName = fetchedPerson.lastName
+    person.personIDEky = (fetchedPerson.id as NSString).intValue
+    person.isDriver = false
+    person.row = 0
 
     do {
       try managedContext.save()
@@ -149,15 +148,15 @@ class ApolloQuery {
 
   func saveWeatherInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let weatherEntity = NSEntityDescription.entity(forEntityName: "Weather", in: managedContext)!
-    let weather = NSManagedObject(entity: weatherEntity, insertInto: managedContext)
+    let weather = Weather(context: managedContext)
 
-    weather.setValue(fetchedIntervention.weather?.temperature, forKey: "temperature")
-    weather.setValue(fetchedIntervention.weather?.description?.rawValue, forKey: "weatherDescription")
-    weather.setValue(fetchedIntervention.weather?.windSpeed, forKey: "windSpeed")
-    weather.setValue((fetchedIntervention.id as NSString).intValue, forKey: "interventionID")
-    weather.setValue(intervention, forKey: "interventions")
+    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue
+    weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
+    weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
+    weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
+    weather.interventions = intervention as? Interventions
 
+    print("\nWeather: \(weather)")
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -252,24 +251,20 @@ class ApolloQuery {
   func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let intervention = Interventions(context: managedContext)
-    //let intervention = NSManagedObject(entity: farmsEntity, insertInto: managedContext)
 
+    intervention.farmID = farmID
+    intervention.interventionIDEky = (fetchedIntervention.id as NSString).intValue
+    intervention.type = fetchedIntervention.type.rawValue
+    intervention.infos = fetchedIntervention.description
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
+    intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
 
-
-    intervention.setValue(farmID, forKey: "farmID")
-    intervention.setValue((fetchedIntervention.id as NSString).intValue, forKey: "interventionIDEky")
-    intervention.setValue(fetchedIntervention.type.rawValue, forKey: "type")
-    intervention.setValue(fetchedIntervention.description, forKey: "infos")
-    intervention.setValue(fetchedIntervention.waterQuantity, forKey: "waterQuantity")
-    intervention.setValue(fetchedIntervention.waterUnit?.rawValue, forKey: "waterUnit")
-    intervention.setValue(fetchedIntervention.globalOutputs, forKey: "output")
-    intervention.setValue(saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention), forKey: "weather")
-    let doers = NSSet()
+/*    let doers = NSSet()
     for fetchedOperator in fetchedIntervention.operators! {
       doers.adding(saveDoersInIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
     }
     intervention.setValue(doers, forKey: "doers")
-    intervention.setValue(saveInterventionEquipmentsInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention), forKey: "interventionEquipments")
+    intervention.setValue(saveInterventionEquipmentsInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention), forKey: "interventionEquipments")*/
 
     do {
       try managedContext.save()
