@@ -373,7 +373,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
 
       seed.setValue(true, forKey: "registered")
-      seed.setValue(registeredSeed.id, forKey: "seedIDEky")
+      seed.setValue(registeredSeed.id, forKey: "referenceID")
       seed.setValue(registeredSeed.specie, forKey: "specie")
       seed.setValue(registeredSeed.variety, forKey: "variety")
 
@@ -404,7 +404,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = NSManagedObject(entity: phytosEntity, insertInto: managedContext)
 
       phyto.setValue(true, forKey: "registered")
-      phyto.setValue(registeredPhyto.id, forKey: "phytoIDEky")
+      phyto.setValue(registeredPhyto.id, forKey: "referenceID")
       phyto.setValue(registeredPhyto.name, forKey: "name")
       phyto.setValue(registeredPhyto.nature, forKey: "nature")
       phyto.setValue(registeredPhyto.maaid, forKey: "maaID")
@@ -439,7 +439,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = NSManagedObject(entity: fertilizersEntity, insertInto: managedContext)
 
       fertilizer.setValue(true, forKey: "registered")
-      fertilizer.setValue(registeredFertilizer.id, forKey: "fertilizerIDEky")
+      fertilizer.setValue(registeredFertilizer.id, forKey: "referenceID")
       fertilizer.setValue(registeredFertilizer.name, forKey: "name")
       fertilizer.setValue(registeredFertilizer.variant, forKey: "variant")
       fertilizer.setValue(registeredFertilizer.variety, forKey: "variety")
