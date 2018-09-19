@@ -23,6 +23,7 @@
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
+		6B0B14002152523F001A3366 /* InterventionsViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B13FF2152523F001A3366 /* InterventionsViewController+Apollo.swift */; };
 		6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
 		6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */; };
 		6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED22139635400E2DEC4 /* ListCell.swift */; };
@@ -88,6 +89,7 @@
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
+		6B0B13FF2152523F001A3366 /* InterventionsViewController+Apollo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterventionsViewController+Apollo.swift"; sourceTree = "<group>"; };
 		6B11EED02139635400E2DEC4 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
 		6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
 		6B11EED22139635400E2DEC4 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
 				6BEA65DA2105CD820072840F /* LoginScreen.swift */,
 				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
+				6B0B13FF2152523F001A3366 /* InterventionsViewController+Apollo.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */,
 				6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */,
 				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,
+				6B0B14002152523F001A3366 /* InterventionsViewController+Apollo.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */,
 				0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */,
