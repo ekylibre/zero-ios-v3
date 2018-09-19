@@ -131,16 +131,7 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    print("count: \(articles.count)")
     for article in articles {
-      print("type: ", article.type.rawValue)
-      print("name: ", article.name)
-      print("id: ", article.id)
-      print("refID: ", article.referenceId)
-      print("unit: ", article.unit.rawValue)
-      print("variety: ", article.variety)
-      print("specie: ", article.species?.rawValue)
-      print("amm: ", article.marketingAuthorizationNumber, "\n")
       switch article.type.rawValue {
       case "SEED":
         saveSeed(managedContext, article)
