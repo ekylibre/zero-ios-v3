@@ -32,9 +32,9 @@ extension InterventionViewController {
     apollo.fetch(query: query) { result, error in
       if let error = error { print("Error: \(error)"); return }
 
-      guard let farms = result?.data?.farms else { print("Could not retrieve profile"); return }
-      self.savePlots(plots: farms.first!.plots!)
-      self.saveCrops(crops: farms.first!.crops!)
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
+      //self.savePlots(plots: farms.first!.plots!)
+      //self.saveCrops(crops: farms.first!.crops!)
       self.saveArticles(articles: farms.first!.articles!)
     }
   }
@@ -131,7 +131,16 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
+    print("count: \(articles.count)")
     for article in articles {
+      print("type: ", article.type.rawValue)
+      print("name: ", article.name)
+      print("id: ", article.id)
+      print("refID: ", article.referenceId)
+      print("unit: ", article.unit.rawValue)
+      print("variety: ", article.variety)
+      print("specie: ", article.species?.rawValue)
+      print("amm: ", article.marketingAuthorizationNumber, "\n")
       switch article.type.rawValue {
       case "SEED":
         saveSeed(managedContext, article)
@@ -154,9 +163,23 @@ extension InterventionViewController {
   }
 
   private func saveSeed(_ managedContext: NSManagedObjectContext,_ article: FarmQuery.Data.Farm.Article) {
-    let seed = Seeds(context: managedContext)
+    if article.referenceId != nil {
+      var seeds: [Seeds]
+      let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      seedsFetchRequest.predicate = predicate
 
-    if article.referenceId == nil {
+      do {
+        seeds = try managedContext.fetch(seedsFetchRequest)
+        seeds.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let seed = Seeds(context: managedContext)
+
+      seed.registered = false
+      seed.ekyID = Int32(article.id)!
       seed.variety = article.variety
       seed.specie = article.species?.rawValue
       seed.unit = article.unit.rawValue
@@ -167,6 +190,7 @@ extension InterventionViewController {
     let phyto = Phytos(context: managedContext)
 
     if article.referenceId == nil {
+      phyto.registered = false
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
     }
@@ -176,6 +200,7 @@ extension InterventionViewController {
     let fertilizer = Fertilizers(context: managedContext)
 
     if article.referenceId == nil {
+      fertilizer.registered = false
       fertilizer.name = article.name
       fertilizer.unit = article.unit.rawValue
     }
