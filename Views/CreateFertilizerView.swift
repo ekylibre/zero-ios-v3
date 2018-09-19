@@ -51,7 +51,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
     natureButton.setTitleColor(UIColor.black, for: .normal)
     natureButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     natureButton.contentHorizontalAlignment = .leading
-    natureButton.titleEdgeInsets = UIEdgeInsetsMake(13, 8, 0, 0)
+    natureButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
     natureButton.translatesAutoresizingMaskIntoConstraints = false
     return natureButton
   }()
