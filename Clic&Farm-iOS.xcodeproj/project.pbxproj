@@ -179,11 +179,11 @@
 				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
+				6B0B13FF2152523F001A3366 /* InterventionsViewController+Apollo.swift */,
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
 				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
 				6BEA65DA2105CD820072840F /* LoginScreen.swift */,
 				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
-				6B0B13FF2152523F001A3366 /* InterventionsViewController+Apollo.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
