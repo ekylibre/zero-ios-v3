@@ -156,7 +156,6 @@ class ApolloQuery {
     weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
     weather.interventions = intervention as? Interventions
 
-    print("\nWeather: \(weather)")
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -165,7 +164,7 @@ class ApolloQuery {
     return weather
   }
 
-  func returnPersonIfSame(personID: Int32) -> NSManagedObject? {
+  /*func returnPersonIfSame(personID: Int32) -> NSManagedObject? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Entities")
 
@@ -246,6 +245,63 @@ class ApolloQuery {
     }
     //equipment.setValue(equipments, forKey: "equipments")
     return equipment
+  }*/
+
+  func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let workingPeriod = WorkingPeriods(context: managedContext)
+    let dateFormatter = DateFormatter()
+
+
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "yyyy-mm-dd"
+    workingPeriod.executionDate = dateFormatter.date(from: fetchedDay.executionDate!)
+    workingPeriod.hourDuration = Float(fetchedDay.hourDuration!)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return workingPeriod
+  }
+
+  func returnEquipmentIfSame(equipmentID: Int32?) -> Equipments? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+
+    do {
+      let equipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      for equipment in equipments {
+        if equipmentID == equipment.equipmentIDEky {
+          return equipment
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func saveEquipmentsToIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> InterventionEquipments {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionEquipment = InterventionEquipments(context: managedContext)
+
+    for fetchedEquipment in fetchedIntervention.tools! {
+      let equipment = returnEquipmentIfSame(equipmentID: (fetchedEquipment.equipment?.id as NSString?)?.intValue)
+
+      if equipment != nil {
+        equipment?.addToInterventionEquipments(interventionEquipment)
+      }
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return interventionEquipment
   }
 
   func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
@@ -258,13 +314,10 @@ class ApolloQuery {
     intervention.infos = fetchedIntervention.description
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
-
-/*    let doers = NSSet()
-    for fetchedOperator in fetchedIntervention.operators! {
-      doers.adding(saveDoersInIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
+    for workingDay in fetchedIntervention.workingDays {
+      intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
-    intervention.setValue(doers, forKey: "doers")
-    intervention.setValue(saveInterventionEquipmentsInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention), forKey: "interventionEquipments")*/
+    intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedIntervention: fetchedIntervention))
 
     do {
       try managedContext.save()
