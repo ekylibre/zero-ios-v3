@@ -144,7 +144,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let surfaceArea = getPlotSurfaceArea(crops)
     var views = [CropView]()
 
+    print("-- index plot: \(indexPath.row)")
     for (index, crop) in crops.enumerated() {
+      print("index crop: \(index)")
+
       let frame = CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60)
       let view = CropView(frame: frame, crop)
 
@@ -159,6 +162,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.nameLabel.sizeToFit()
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
+    cell.selectionStyle = UITableViewCell.SelectionStyle.none
     return cell
   }
 
@@ -221,15 +225,13 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var index = 0
 
     for crop in crops {
-      if crop.plotName == name {
-        cropsFromSamePlot.append(crop)
-      } else {
+      if crop.plotName != name {
         name = crop.plotName
         organizedCrops.append(cropsFromSamePlot)
         cropsFromSamePlot = [Crops]()
-        cropsFromSamePlot.append(crop)
         index += 1
       }
+      cropsFromSamePlot.append(crop)
     }
     organizedCrops.append(cropsFromSamePlot)
 
