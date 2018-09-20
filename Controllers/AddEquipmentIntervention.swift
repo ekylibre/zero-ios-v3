@@ -216,8 +216,10 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     }
     
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+    let equipment = Equipments(context: managedContext)
+
+    equipment.name = equipmentName.text
+    equipment.number = equipmentNumber.text
 
     equipment.setValue(equipmentName.text, forKeyPath: "name")
     equipment.setValue(equipmentNumber.text, forKeyPath: "number")

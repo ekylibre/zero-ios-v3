@@ -49,6 +49,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     initializeApolloClient()
     displayFarmName()
     apolloQuery.loadEquipments()
+    apolloQuery.loadStorage()
     apolloQuery.loadPeople { (success) -> Void in
       if success {
         self.apolloQuery.loadIntervention()

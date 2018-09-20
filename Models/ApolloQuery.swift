@@ -146,6 +146,53 @@ class ApolloQuery {
     completion(true)
   }
 
+  func checkifNewStorage(storageID: Int32) -> Bool {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+
+    do {
+      let storages = try managedContext.fetch(storagesFetchRequest)
+
+      for storage in storages {
+        if storageID == storage.storageID {
+          return false
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return true
+  }
+
+  func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
+    let manaedContext = appDelegate.persistentContainer.viewContext
+    let storage = Storages(context: manaedContext)
+
+    storage.storageID = (fetchedStorage.id as NSString).intValue
+    storage.name = fetchedStorage.name
+    storage.type = fetchedStorage.type.rawValue.lowercased().localized
+
+    do {
+      try manaedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func loadStorage() {
+    appDelegate.apollo?.fetch(query: FarmQuery()) { (result, error) in
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
+
+      for farm in farms {
+        for storage in farm.storages! {
+          if self.checkifNewStorage(storageID: (storage.id as NSString).intValue) {
+            self.saveStorage(fetchedStorage: storage, farmID: farm.id)
+          }
+        }
+      }
+    }
+  }
+
   func saveWeatherInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
@@ -163,89 +210,6 @@ class ApolloQuery {
     }
     return weather
   }
-
-  /*func returnPersonIfSame(personID: Int32) -> NSManagedObject? {
-   let managedContext = appDelegate.persistentContainer.viewContext
-   let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Entities")
-
-   do {
-   let entities = try managedContext.fetch(entitiesFetchRequest)
-
-   for entity in entities {
-   if personID == entity.value(forKey: "personIDEky") as? Int32 {
-   return entity
-   }
-   }
-   } catch let error as NSError {
-   print("Could not fetch. \(error), \(error.userInfo)")
-   }
-   return nil
-   }
-
-   func saveEntities(fetchedPerson: InterventionQuery.Data.Farm.Intervention.Operator.Person) -> NSManagedObject {
-   let returnPerson = returnPersonIfSame(personID: (fetchedPerson.id as NSString).intValue)
-
-   if returnPerson == nil {
-   let managedContext = appDelegate.persistentContainer.viewContext
-   let entitiesEntity = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-   let entity = NSManagedObject(entity: entitiesEntity, insertInto: managedContext)
-
-   entity.setValue((fetchedPerson.id as NSString).intValue, forKey: "personID")
-
-   do {
-   try managedContext.save()
-   } catch let error as NSError {
-   print("Could not save. \(error), \(error.userInfo)")
-   }
-   return entity
-   }
-   return returnPerson!
-   }
-
-   func saveDoersInIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: NSManagedObject) -> NSManagedObject {
-   let managedContext = appDelegate.persistentContainer.viewContext
-   let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
-   let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
-
-   if fetchedOperator.role?.rawValue == "OPERATOR" {
-   doer.setValue(false, forKey: "isDriver")
-   } else {
-   doer.setValue(true, forKey: "isDriver")
-   }
-   doer.setValue(saveEntities(fetchedPerson: fetchedOperator.person!), forKey: "entities")
-   doer.setValue(intervention, forKey: "interventions")
-
-   do {
-   try managedContext.save()
-   } catch let error as NSError {
-   print("Could not save. \(error), \(error.userInfo)")
-   }
-   return doer
-   }
-
-   func saveEquipmentInInterventionEquipments(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool.Equipment, interventionEquipments: NSManagedObject) -> NSManagedObject {
-   let managedContext = appDelegate.persistentContainer.viewContext
-   let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-   let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
-
-   equipment.setValue(fetchedEquipment.id, forKey: "equipmentID")
-   equipment.setValue(interventionEquipments, forKey: "interventionEquipments")
-   return equipment
-   }
-
-   func saveInterventionEquipmentsInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
-   let managedContext = appDelegate.persistentContainer.viewContext
-   let equipmentsEntity = NSEntityDescription.entity(forEntityName: "InterventionEquipments", in: managedContext)!
-   let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
-   var equipments = [NSManagedObject]()
-
-   equipment.setValue(intervention, forKey: "interventions")
-   for fetchedTool in fetchedIntervention.tools! {
-   equipments.append(saveEquipmentInInterventionEquipments(fetchedEquipment: fetchedTool.equipment!, interventionEquipments: equipment))
-   }
-   //equipment.setValue(equipments, forKey: "equipments")
-   return equipment
-   }*/
 
   func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -342,6 +306,44 @@ class ApolloQuery {
     return doers
   }
 
+  func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Interventions) -> Harvests {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvest = Harvests(context: managedContext)
+
+    harvest.quantity = fetchedOutput.quantity ?? 0
+    harvest.type = fetchedOutput.nature.rawValue.lowercased().localized
+    harvest.unit = fetchedOutput.unit?.rawValue.lowercased().localized
+    harvest.number = fetchedOutput.id
+    harvest.interventions = intervention
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    print("\nGlobal Harvest: \(harvest)")
+    return harvest
+  }
+
+  func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvest = Harvests(context: managedContext)
+
+    harvest.interventions = intervention
+    harvest.type = nature
+    harvest.number = fetchedLoad.number
+    harvest.quantity = fetchedLoad.quantity
+    harvest.unit = fetchedLoad.unit?.rawValue.lowercased().localized
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    print("\nLoad: \(harvest)")
+    return harvest
+  }
+
   func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let intervention = Interventions(context: managedContext)
@@ -360,6 +362,16 @@ class ApolloQuery {
     }
     for fetchedOperator in fetchedIntervention.operators! {
       intervention.addToDoers(saveDoersToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
+    }
+    for fetchedOutput in fetchedIntervention.outputs! {
+      if fetchedIntervention.globalOutputs! {
+        let _ = createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention)
+        //intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
+      } else {
+        for load in fetchedOutput.loads! {
+          let _ = saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized)
+        }
+      }
     }
 
     do {
@@ -393,9 +405,9 @@ class ApolloQuery {
 
       for farm in farms {
         for intervention in farm.interventions! {
-          if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
+          //if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
-          }
+          //}
         }
       }
     }
