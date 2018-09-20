@@ -21,7 +21,7 @@ struct AppColor {
   }
 
   struct CellColors {
-    static let white = UIColor.white
+    static let White = UIColor.white
     static let LightGray = UIColor(red: 236/255, green: 235/255, blue: 235/255, alpha: 1)
   }
 
