@@ -362,7 +362,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

@@ -14,13 +14,13 @@ class Intervention {
   // MARK: - Properties
 
   enum InterventionType: String {
-    case Care = "Entretien"
-    case CropProtection = "Pulvérisation"
-    case Fertilization = "Fertilisation"
-    case GroundWork = "Travail du sol"
-    case Harvest = "Récolte"
-    case Implantation = "Semis"
-    case Irrigation = "Irrigation"
+    case Care = "care"
+    case CropProtection = "crop_protection"
+    case Fertilization = "fertilization"
+    case GroundWork = "ground_work"
+    case Harvest = "harvest"
+    case Implantation = "implantation"
+    case Irrigation = "irrigation"
   }
 
   enum Status: Int16 {
