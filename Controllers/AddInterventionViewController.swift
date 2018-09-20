@@ -249,7 +249,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   private func setupViewsAccordingInterventionType() {
-    switch  interventionType {
+    switch interventionType {
     case Intervention.InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
