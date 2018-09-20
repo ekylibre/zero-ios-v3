@@ -18,7 +18,9 @@ extension InterventionViewController {
     initializeApolloClient()
 
     if crops.count == 0 {
+      UIApplication.shared.isNetworkActivityIndicatorVisible = true
       queryFarms()
+      UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
   }
 
@@ -55,7 +57,6 @@ extension InterventionViewController {
     let apollo = appDelegate.apollo!
     let query = FarmQuery()
 
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
     apollo.fetch(query: query) { result, error in
       if let error = error { print("Error: \(error)"); return }
 
