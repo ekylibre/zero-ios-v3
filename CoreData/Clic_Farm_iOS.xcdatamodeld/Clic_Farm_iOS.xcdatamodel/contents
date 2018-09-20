@@ -80,6 +80,8 @@
         <attribute name="infos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="waterQuantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="waterUnit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="interventions" inverseEntity="Doers" syncable="YES"/>
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipments" inverseName="interventions" inverseEntity="InterventionEquipments" syncable="YES"/>
         <relationship name="interventionFertilizers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionFertilizers" inverseName="interventions" inverseEntity="InterventionFertilizers" syncable="YES"/>
@@ -153,7 +155,7 @@
     </entity>
     <entity name="WorkingPeriods" representedClassName="WorkingPeriods" syncable="YES" codeGenerationType="class">
         <attribute name="executionDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="hourDuration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="hourDuration" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
@@ -166,7 +168,7 @@
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="118"/>
         <element name="InterventionPhytosanitary" positionX="-315" positionY="-81" width="128" height="103"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="238"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
         <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="103"/>
         <element name="Materials" positionX="990" positionY="-139" width="128" height="103"/>
         <element name="Phytos" positionX="-578" positionY="-106" width="128" height="223"/>
@@ -175,6 +177,6 @@
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
         <element name="Users" positionX="-441" positionY="401" width="128" height="60"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
-        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="88"/>
+        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="90"/>
     </elements>
 </model>

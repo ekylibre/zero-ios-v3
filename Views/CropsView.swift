@@ -418,16 +418,17 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       checkboxImage.image = #imageLiteral(resourceName: "unchecked-checkbox")
       cropsCount -= 1
       totalSurfaceArea -= crop.value(forKey: "surfaceArea") as! Double
+
+      if let index = selectedCrops.index(of: crop) {
+        selectedCrops.remove(at: index)
+      }
+
       for (index, view) in cell.subviews[1...crops.count].enumerated() {
         let checkboxImage = view.subviews[1] as! UIImageView
         if checkboxImage.image == #imageLiteral(resourceName: "checked-checkbox") {
           break
         } else if checkboxImage.image == #imageLiteral(resourceName: "unchecked-checkbox") && index == crops.count - 1 {
           cell.checkboxButton.isSelected = false
-        }
-
-        if let index = selectedCrops.index(of: crop) {
-          selectedCrops.remove(at: index)
         }
       }
     }
