@@ -207,7 +207,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
 
-    return (plots.count > 0) ? true : false
+    return (plots.count > 0)
   }
 
   func fetchPlot(withName plotName: String) -> Plots {
