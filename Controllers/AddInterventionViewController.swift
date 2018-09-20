@@ -157,9 +157,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
 
     selectDateButton.setTitle(currentDateString, for: .normal)
-    selectDateButton.layer.cornerRadius = 5
     selectDateButton.layer.borderWidth = 0.5
     selectDateButton.layer.borderColor = UIColor.lightGray.cgColor
+    selectDateButton.layer.cornerRadius = 5
     selectDateButton.clipsToBounds = true
 
     durationTextField.layer.cornerRadius = 5
