@@ -536,23 +536,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(intervention: NSManagedObject) {
+  func createEquipments(intervention: Interventions) {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "InterventionEquipments", in: managedContext)!
 
     for selectedEquipment in selectedEquipments {
-      let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+      let equipment = InterventionEquipments(context: managedContext)
       let name = selectedEquipment.value(forKeyPath: "name") as! String
       let type = selectedEquipment.value(forKey: "type") as! String
 
-      equipment.setValue(intervention, forKey: "interventions")
-      equipment.setValue(name, forKey: "name")
-      equipment.setValue(type, forKey: "type")
+      equipment.interventions = intervention
+      equipment.name = name
+      equipment.type = type
     }
 
     do {

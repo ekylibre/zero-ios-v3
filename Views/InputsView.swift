@@ -368,21 +368,18 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let seedsEntity = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
 
     for registeredSeed in registeredSeeds {
-      let seed = NSManagedObject(entity: seedsEntity, insertInto: managedContext)
+      let seed = Seeds(context: managedContext)
 
-      seed.setValue(true, forKey: "registered")
-      seed.setValue(registeredSeed.id, forKey: "seedIDEky")
-      seed.setValue(registeredSeed.specie, forKey: "specie")
-      seed.setValue(registeredSeed.variety, forKey: "variety")
-
-      seed.setValue("Seed", forKey: "type")
-      seed.setValue("kg/ha", forKey: "unit")
-      seed.setValue(0.0, forKey: "quantity")
-      seed.setValue(0, forKey: "row")
-      seed.setValue(false, forKey: "used")
+      seed.registered = true
+      seed.seedIDEky = Int64(registeredSeed.id)
+      seed.specie = registeredSeed.specie
+      seed.variety = registeredSeed.variety
+      seed.type = "Seed".localized
+      seed.unit = "kg/ha"
+      seed.quantity = 0.0
+      seed.used = false
       seeds.append(seed)
     }
 
