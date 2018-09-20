@@ -283,16 +283,14 @@ class ApolloQuery {
     return nil
   }
 
-  func saveEquipmentsToIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> InterventionEquipments {
+  func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Interventions) -> InterventionEquipments {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipments(context: managedContext)
+    let equipment = returnEquipmentIfSame(equipmentID: (fetchedEquipment.equipment?.id as NSString?)?.intValue)
 
-    for fetchedEquipment in fetchedIntervention.tools! {
-      let equipment = returnEquipmentIfSame(equipmentID: (fetchedEquipment.equipment?.id as NSString?)?.intValue)
-
-      if equipment != nil {
-        equipment?.addToInterventionEquipments(interventionEquipment)
-      }
+    if equipment != nil {
+      equipment?.addToInterventionEquipments(interventionEquipment)
+      interventionEquipment.interventions = intervention
     }
 
     do {
@@ -301,6 +299,47 @@ class ApolloQuery {
       print("Could not save. \(error), \(error.userInfo)")
     }
     return interventionEquipment
+  }
+
+  func returnPersonIfSame(personID: Int32?) -> Entities? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        if personID == entity.personIDEky {
+          return entity
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func saveDoersToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> Doers {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let doers = Doers(context: managedContext)
+    let doer = returnPersonIfSame(personID: (fetchedOperator.person?.id as NSString?)?.intValue)
+
+    if doer != nil {
+      if fetchedOperator.role?.rawValue == "OPERATOR" {
+        doers.isDriver = false
+      } else {
+        doers.isDriver = true
+      }
+      doer?.addToDoers(doers)
+      doers.interventions = intervention
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return doers
   }
 
   func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
@@ -316,7 +355,12 @@ class ApolloQuery {
     for workingDay in fetchedIntervention.workingDays {
       intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
-    intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedIntervention: fetchedIntervention))
+    for fetchedEquipment in fetchedIntervention.tools! {
+      intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
+    }
+    for fetchedOperator in fetchedIntervention.operators! {
+      intervention.addToDoers(saveDoersToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
+    }
 
     do {
       try managedContext.save()

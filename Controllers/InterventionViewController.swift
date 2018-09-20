@@ -392,7 +392,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let destVC = segue.destination as! AddInterventionViewController
 
     if let type = (sender as? UIButton)?.titleLabel?.text {
-      destVC.interventionType = type
+      destVC.interventionType = type.localized
     }
   }
 
