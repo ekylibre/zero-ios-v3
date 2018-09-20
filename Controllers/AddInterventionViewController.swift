@@ -21,6 +21,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var irrigationView: UIView!
+  @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
+  @IBOutlet weak var irrigationLabel: UILabel!
+  @IBOutlet weak var irrigationValueTextField: UITextField!
+  @IBOutlet weak var irrigationUnitButton: UIButton!
+  @IBOutlet weak var irrigationInfoLabel: UILabel!
+  @IBOutlet weak var irrigationSeparatorView: UIView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
@@ -59,15 +67,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsNumber: UILabel!
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
 
   // MARK: - Properties
 
-  var newIntervention: NSManagedObject!
+  var newIntervention: Interventions!
   var interventionType: String!
   var equipments = [NSManagedObject]()
   var selectDateView: SelectDateView!
+  var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
@@ -111,9 +121,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
 
     selectDateButton.setTitle(currentDateString, for: .normal)
-    selectDateButton.layer.cornerRadius = 5
     selectDateButton.layer.borderWidth = 0.5
     selectDateButton.layer.borderColor = UIColor.lightGray.cgColor
+    selectDateButton.layer.cornerRadius = 5
     selectDateButton.clipsToBounds = true
 
     durationTextField.layer.cornerRadius = 5
@@ -204,6 +214,47 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     self.view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+
+    setupIrrigation()
+
+    setupViewsAccordingInterventionType()
+  }
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+
+  private func setupViewsAccordingInterventionType() {
+    switch  interventionType {
+    case Intervention.InterventionType.Care.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+    case Intervention.InterventionType.CropProtection.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsView.segmentedControl.selectedSegmentIndex = 1
+      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
+    case Intervention.InterventionType.Fertilization.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsView.segmentedControl.selectedSegmentIndex = 2
+      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
+    case Intervention.InterventionType.GroundWork.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsSelectionView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case Intervention.InterventionType.Harvest.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+      inputsSelectionView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case Intervention.InterventionType.Implantation.rawValue:
+      irrigationView.isHidden = true
+      irrigationSeparatorView.isHidden = true
+    default:
+      return
+    }
   }
 
   override func viewDidLayoutSubviews() {
@@ -433,19 +484,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    newIntervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
-    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
+    newIntervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
 
-    newIntervention.setValue(interventionType, forKey: "type")
-    newIntervention.setValue(Intervention.Status.OutOfSync.rawValue, forKey: "status")
-    newIntervention.setValue("Infos", forKey: "infos")
-    workingPeriod.setValue(newIntervention, forKey: "interventions")
-    let datePicker = selectDateView.subviews.first as! UIDatePicker
-    workingPeriod.setValue(datePicker.date, forKey: "executionDate")
-    let hourDuration = Int(durationTextField.text!)
-    workingPeriod.setValue(hourDuration, forKey: "hourDuration")
+    newIntervention.type = interventionType
+    newIntervention.status = Intervention.Status.OutOfSync.rawValue
+    newIntervention.infos = "Infos"
+    if interventionType == "irrigation".localized {
+      let waterQuantityString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+      let waterQuantity = Float(waterQuantityString) ?? 0
+      newIntervention.waterQuantity = waterQuantity
+      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+    }
+    workingPeriod.interventions = newIntervention
+    workingPeriod.executionDate = selectDateView.datePicker.date
+    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let hourDuration = Float(durationString) ?? 0
+    workingPeriod.hourDuration = hourDuration
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
@@ -573,7 +628,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let registeredSpecies = jsonResult as? [[String: Any]]
 
         for registeredSpecie in registeredSpecies! {
-          species.append(registeredSpecie["fra"] as! String)
+          let specie = registeredSpecie["name"] as! String
+          species.append(specie.localized)
         }
       } catch {
         print("Lexicon error")
@@ -582,7 +638,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       print("species.json not found")
     }
 
-    return species
+    return species.sorted()
   }
 
   func writeValueBack(value: String) {
@@ -652,6 +708,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
     totalLabel.sizeToFit()
+    updateIrrigation(self)
 
     cropsView.isHidden = true
     dimView.isHidden = true
@@ -674,27 +731,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
     }
     collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
-    /*dimView.isHidden = false
-     workingPeriodView.isHidden = false
-
-     UIView.animate(withDuration: 0.5, animations: {
-     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-     })*/
   }
 
   func getSelectedWorkingPeriod() -> String {
-    var dateString: String!
-    var hoursNumber: String!
+    let dateString = selectDateButton.titleLabel!.text!
+    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let duration = Float(durationString) ?? 0
 
-    dateString = selectDateButton.titleLabel?.text
-
-    if durationTextField.text?.isEmpty == true {
-      hoursNumber = "0 h"
-    } else {
-      hoursNumber = durationTextField.text! + " h"
-    }
-
-    return dateString + " • " + hoursNumber
+    return String(format: "%@ • %g h", dateString, duration)
   }
   
   @IBAction func selectDate(_ sender: Any) {

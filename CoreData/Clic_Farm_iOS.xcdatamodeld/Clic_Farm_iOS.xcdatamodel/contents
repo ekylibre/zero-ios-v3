@@ -98,7 +98,7 @@
         <attribute name="output" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="waterQuantity" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="waterQuantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="waterUnit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="interventions" inverseEntity="Doers" syncable="YES"/>
         <relationship name="harvests" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Harvests" inverseName="interventions" inverseEntity="Harvests" syncable="YES"/>
@@ -194,8 +194,8 @@
         <element name="InterventionEquipments" positionX="-378" positionY="-72" width="128" height="103"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="118"/>
-        <element name="InterventionPhytosanitary" positionX="-315" positionY="104" width="128" height="103"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="328"/>
+        <element name="InterventionPhytosanitary" positionX="-315" positionY="-81" width="128" height="103"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
         <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="103"/>
         <element name="Materials" positionX="990" positionY="-139" width="128" height="103"/>
         <element name="Phytos" positionX="-675" positionY="63" width="128" height="223"/>
@@ -204,7 +204,7 @@
         <element name="Storages" positionX="-819" positionY="-324" width="128" height="90"/>
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
         <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
-        <element name="Weather" positionX="-164" positionY="257" width="128" height="118"/>
-        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="88"/>
+        <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
+        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="90"/>
     </elements>
 </model>

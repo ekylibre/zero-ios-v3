@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import os.log
 import CoreData
 import Apollo
 
@@ -130,27 +129,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
+    fetchInterventions()
+    if interventions.count == 0 {
+      loadSampleInterventions()
+    }
+  }
+
+  private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    if interventions.count == 0 {
-      loadSampleInterventions()
-    }
-  }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
 
   // MARK: - Apollo
@@ -225,16 +222,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
-    if indexPath.row % 2 == 0 {
-      cell.backgroundColor = AppColor.CellColors.white
-    } else {
-      cell.backgroundColor = AppColor.CellColors.LightGray
-    }
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)
