@@ -345,9 +345,11 @@
 				TargetAttributes = {
 					6BEA656C2105C5EE0072840F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					6BEA65832105C5EF0072840F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 6BEA656C2105C5EE0072840F;
 					};
 				};
@@ -631,7 +633,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.Clic-Farm-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -652,7 +654,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.Clic-Farm-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -671,7 +673,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ekylibre.Clic-Farm-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clic&Farm-iOS.app/Clic&Farm-iOS";
 			};
@@ -691,7 +693,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ekylibre.Clic-Farm-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clic&Farm-iOS.app/Clic&Farm-iOS";
 			};
