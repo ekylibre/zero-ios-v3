@@ -12,7 +12,34 @@ import CoreData
 
 extension InterventionViewController {
 
-  func initializeApolloClient() {
+  func checkLocalData() {
+    let crops = fetchCrops()
+
+    initializeApolloClient()
+
+    if crops.count == 0 {
+      queryFarms()
+    }
+  }
+
+  private func fetchCrops() -> [Crops] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [Crops]()
+    }
+
+    var crops: [Crops]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return crops
+  }
+
+  private func initializeApolloClient() {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
@@ -23,7 +50,7 @@ extension InterventionViewController {
     appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
   }
 
-  func queryFarms() {
+  private func queryFarms() {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let apollo = appDelegate.apollo!
     let query = FarmQuery()
