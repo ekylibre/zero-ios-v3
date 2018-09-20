@@ -325,10 +325,30 @@ class ApolloQuery {
     return harvest
   }
 
+  func returnStorageIfSame(storageID: Int32?) -> Storages? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+
+    do {
+      let storages = try managedContext.fetch(storagesFetchRequest)
+
+      for storage in storages {
+        if storageID == storage.storageID {
+          return storage
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
   func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
+    let storage = returnStorageIfSame(storageID: (fetchedLoad.storage?.id as NSString?)?.intValue)
 
+    storage?.addToHarvests(harvest)
+    harvest.storages = storage
     harvest.interventions = intervention
     harvest.type = nature
     harvest.number = fetchedLoad.number
@@ -340,7 +360,6 @@ class ApolloQuery {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-    print("\nLoad: \(harvest)")
     return harvest
   }
 
@@ -365,11 +384,10 @@ class ApolloQuery {
     }
     for fetchedOutput in fetchedIntervention.outputs! {
       if fetchedIntervention.globalOutputs! {
-        let _ = createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention)
-        //intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
+        intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
       } else {
         for load in fetchedOutput.loads! {
-          let _ = saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized)
+          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized))
         }
       }
     }
