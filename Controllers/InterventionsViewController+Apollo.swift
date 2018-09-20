@@ -33,37 +33,12 @@ extension InterventionViewController {
       if let error = error { print("Error: \(error)"); return }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
-      //self.savePlots(plots: farms.first!.plots!)
-      //self.saveCrops(crops: farms.first!.crops!)
+      self.saveCrops(crops: farms.first!.crops!)
       self.saveArticles(articles: farms.first!.articles!)
     }
   }
 
   // MARK: - Crops
-
-  private func savePlots(plots: [FarmQuery.Data.Farm.Plot]) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for plot in plots {
-      let newPlot = Plots(context: managedContext)
-
-      newPlot.uuid = UUID(uuidString: plot.uuid)
-      newPlot.name = plot.name
-      let splitString = plot.surfaceArea.split(separator: " ", maxSplits: 1)
-      let surfaceArea = Double(splitString.first!)!
-      newPlot.surfaceArea = surfaceArea
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
 
   private func saveCrops(crops: [FarmQuery.Data.Farm.Crop]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -78,18 +53,15 @@ extension InterventionViewController {
       let newCrop = Crops(context: managedContext)
 
       newCrop.uuid = UUID(uuidString: crop.uuid)
-      newCrop.name = crop.name
+      newCrop.plotName = crop.name
       newCrop.productionMode = crop.productionMode
       newCrop.provisionalYield = crop.provisionalYield
       newCrop.species = crop.species.rawValue
       newCrop.startDate = dateFormatter.date(from: crop.startDate!)
       newCrop.startDate = dateFormatter.date(from: crop.stopDate!)
       let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
-      let surfaceArea = Double(splitString.first!)!
+      let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
-
-      let plot = fetchPlot(withName: crop.name)
-      newCrop.plots = plot
     }
 
     do {
@@ -97,29 +69,6 @@ extension InterventionViewController {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  private func fetchPlot(withName plotName: String) -> Plots {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return Plots()
-    }
-
-    var plots: [Plots]!
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let plotsFetchRequest: NSFetchRequest<Plots> = Plots.fetchRequest()
-    let predicate = NSPredicate(format: "name == %@", plotName)
-    plotsFetchRequest.predicate = predicate
-
-    do {
-      plots = try managedContext.fetch(plotsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    if plots.count == 1 {
-      return plots.first!
-    }
-    return Plots()
   }
 
   // MARK: - Articles
