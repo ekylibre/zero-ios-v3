@@ -130,7 +130,7 @@ extension InterventionViewController {
     }
   }
 
-  private func saveSeed(_ managedContext: NSManagedObjectContext,_ article: FarmQuery.Data.Farm.Article) {
+  private func saveSeed(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
     if article.referenceId != nil {
       var seeds: [Seeds]
       let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
@@ -154,32 +154,57 @@ extension InterventionViewController {
     }
   }
 
-  private func savePhyto(_ managedContext: NSManagedObjectContext,_ article: FarmQuery.Data.Farm.Article) {
-    let phyto = Phytos(context: managedContext)
+  private func savePhyto(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var phytos: [Phytos]
+      let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      phytosFetchRequest.predicate = predicate
 
-    if article.referenceId == nil {
+      do {
+        phytos = try managedContext.fetch(phytosFetchRequest)
+        phytos.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let phyto = Phytos(context: managedContext)
+
       phyto.registered = false
+      phyto.ekyID = Int32(article.id)!
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
     }
   }
 
-  private func saveFertilizer(_ managedContext: NSManagedObjectContext,_ article: FarmQuery.Data.Farm.Article) {
-    let fertilizer = Fertilizers(context: managedContext)
+  private func saveFertilizer(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var fertilizers: [Fertilizers]
+      let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      fertilizersFetchRequest.predicate = predicate
 
-    if article.referenceId == nil {
+      do {
+        fertilizers = try managedContext.fetch(fertilizersFetchRequest)
+        fertilizers.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let fertilizer = Fertilizers(context: managedContext)
+
       fertilizer.registered = false
+      fertilizer.ekyID = Int32(article.id)!
       fertilizer.name = article.name
       fertilizer.unit = article.unit.rawValue
     }
   }
 
-  private func saveMaterial(_ managedContext: NSManagedObjectContext,_ article: FarmQuery.Data.Farm.Article) {
+  private func saveMaterial(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
     let material = Materials(context: managedContext)
 
-    if article.referenceId == nil {
-      material.name = article.name
-      material.unit = article.unit.rawValue
-    }
+    material.name = article.name
+    material.ekyID = Int32(article.id)!
+    material.unit = article.unit.rawValue
   }
 }
