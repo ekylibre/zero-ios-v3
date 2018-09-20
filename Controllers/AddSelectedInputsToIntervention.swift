@@ -63,44 +63,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func storeSampleSeed(indexPath: IndexPath) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let seeds = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
-    let seed = NSManagedObject(entity: seeds, insertInto: managedContext)
-
-    seed.setValue("Aubergine", forKey: "specie")
-    seed.setValue("Marfa", forKey: "variety")
-    seed.setValue("kg/ha", forKey: "unit")
-    seed.setValue(false, forKey: "used")
-    seed.setValue(false, forKey: "registered")
-
-    do {
-      try managedContext.save()
-      createdSeed.append(seed)
-    } catch {
-      print("Unable to save managed context object.")
-    }
-  }
-
   func saveSelectedSeed(indexPath: IndexPath, seed: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedSeeds = NSEntityDescription.entity(forEntityName: "InterventionSeeds", in: managedContext)!
-    let selectedSeed = NSManagedObject(entity: selectedSeeds, insertInto: managedContext)
-
+    let selectedSeed = InterventionSeeds(context: managedContext)
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let quantity = (cell.inputQuantity.text! as NSString).doubleValue
     let unit = cell.unitMeasureButton.titleLabel?.text
 
-    selectedSeed.setValue(quantity, forKey: "quantity")
-    selectedSeed.setValue(unit, forKey: "unit")
+    selectedSeed.quantity = quantity
+    selectedSeed.unit = unit
 
     do {
       try managedContext.save()
@@ -115,15 +90,13 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedPhytos = NSEntityDescription.entity(forEntityName: "InterventionPhytosanitary", in: managedContext)!
-    let selectedPhyto = NSManagedObject(entity: selectedPhytos, insertInto: managedContext)
-
+    let selectedPhyto = InterventionPhytosanitary(context: managedContext)
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let quantity = (cell.inputQuantity.text! as NSString).doubleValue
     let unit = cell.unitMeasureButton.titleLabel?.text
 
-    selectedPhyto.setValue(quantity, forKey: "quantity")
-    selectedPhyto.setValue(unit, forKey: "unit")
+    selectedPhyto.quantity = quantity
+    selectedPhyto.unit = unit
 
     do {
       try managedContext.save()

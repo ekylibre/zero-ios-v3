@@ -321,7 +321,6 @@ class ApolloQuery {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-    print("\nGlobal Harvest: \(harvest)")
     return harvest
   }
 
@@ -423,9 +422,9 @@ class ApolloQuery {
 
       for farm in farms {
         for intervention in farm.interventions! {
-          //if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
+          if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
-          //}
+          }
         }
       }
     }

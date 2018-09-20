@@ -82,13 +82,30 @@ extension AddInterventionViewController: DoerCellDelegate {
     })
   }
 
+  func fetchEntities() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+
+    do {
+      entities = try managedContext.fetch(entitiesFetchRequest)
+
+      searchedEntities = entities
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
   @IBAction func closeEntitiesCreationView(_ sender: Any) {
     entityFirstName.text = nil
     entityLastName.text = nil
     entityRole.text = nil
     entityDarkLayer.isHidden = true
     createEntitiesView.isHidden = true
-    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    fetchEntities()
     entitiesTableView.reloadData()
   }
 
@@ -98,14 +115,13 @@ extension AddInterventionViewController: DoerCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-    let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
+    let entity = Entities(context: managedContext)
 
-    entity.setValue(false, forKey: "isDriver")
-    entity.setValue(entityFirstName.text, forKeyPath: "firstName")
-    entity.setValue(entityLastName.text, forKeyPath: "lastName")
-    entity.setValue(entityRole.text, forKeyPath: "role")
-    entity.setValue(0, forKey: "row")
+    entity.isDriver = false
+    entity.firstName = entityFirstName.text
+    entity.lastName = entityLastName.text
+    entity.role = entityRole.text
+    entity.row = 0
 
     do {
       try managedContext.save()

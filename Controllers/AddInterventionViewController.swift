@@ -87,10 +87,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var equipmentTypes: [String]!
   var sortedEquipmentTypes: [String]!
   var selectedEquipmentType: String!
-  var entities = [NSManagedObject]()
+  var entities = [Entities]()
   var entitiesTableViewTopAnchor: NSLayoutConstraint!
   var searchedEntities = [NSManagedObject]()
-  var doers = [NSManagedObject]()
+  var doers = [Entities]()
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
@@ -152,7 +152,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
 
     fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
-    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    //fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    fetchEntities()
 
     initUnitMeasurePickerView()
 
@@ -561,22 +562,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createDoers(intervention: NSManagedObject) {
+  func createDoers(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
 
     for entity in doers {
-      let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
+      let doer = Doers(context: managedContext)
       let isDriver = entity.value(forKey: "isDriver")
 
-      doer.setValue(intervention, forKey: "interventions")
-      doer.setValue(UUID(), forKey: "uuid")
-      doer.setValue(isDriver, forKey: "isDriver")
+      doer.interventions = intervention
+      doer.isDriver = (isDriver != nil)
+      doer.entities = entity
     }
+
     do {
       try managedContext.save()
     } catch let error as NSError {

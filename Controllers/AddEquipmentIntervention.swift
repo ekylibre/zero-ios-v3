@@ -220,11 +220,8 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     equipment.name = equipmentName.text
     equipment.number = equipmentNumber.text
-
-    equipment.setValue(equipmentName.text, forKeyPath: "name")
-    equipment.setValue(equipmentNumber.text, forKeyPath: "number")
-    equipment.setValue(selectedEquipmentType, forKeyPath: "type")
-    equipment.setValue(0, forKey: "row")
+    equipment.type = selectedEquipmentType
+    equipment.row = 0
 
     do {
       try managedContext.save()
