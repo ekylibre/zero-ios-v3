@@ -20,7 +20,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let segmentedControl = UISegmentedControl(items: ["seeds".localized, "phyto".localized, "fertilizers".localized])
     segmentedControl.selectedSegmentIndex = 0
     let font = UIFont.systemFont(ofSize: 16)
-    segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
+    segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
     return segmentedControl
   }()
@@ -164,7 +164,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupActions() {
-    segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControlEvents.valueChanged)
+    segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControl.Event.valueChanged)
     createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
     seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)
@@ -200,9 +200,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromSeeds = isSearching ? filteredInputs : seeds
 
       if fromSeeds.count > indexPath.row {
-        let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
-
-        cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
         let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
 
         cell.specieLabel.text = specie?.localized

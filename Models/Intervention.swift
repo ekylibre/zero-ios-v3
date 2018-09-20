@@ -9,17 +9,19 @@
 import UIKit
 import os.log
 
-struct InterventionType {
-  static var care = "care".localized
-  static var cropProtection = "crop_protection".localized
-  static var fertilization = "fertilization".localized
-  static var groundWork = "ground_work".localized
-  static var harvest = "harvest".localized
-  static var implantation = "implantation".localized
-  static var irrigation = "irrigation".localized
-}
-
 class Intervention {
+
+  // MARK: - Properties
+
+  enum InterventionType: String {
+    case Care = "Entretien"
+    case CropProtection = "Pulvérisation"
+    case Fertilization = "Fertilisation"
+    case GroundWork = "Travail du sol"
+    case Harvest = "Récolte"
+    case Implantation = "Semis"
+    case Irrigation = "Irrigation"
+  }
 
   enum Status: Int16 {
     case OutOfSync = 0
@@ -27,6 +29,7 @@ class Intervention {
     case Validated = 2
   }
 
+  var type: InterventionType
   var crops: String
   var infos: String
   var date: Date
@@ -34,7 +37,8 @@ class Intervention {
 
   // MARK: - Initialization
 
-  init(crops: String, infos: String, date: Date, status: Status) {
+  init(type: InterventionType, crops: String, infos: String, date: Date, status: Status) {
+    self.type = type
     self.crops = crops
     self.infos = infos
     self.date = date

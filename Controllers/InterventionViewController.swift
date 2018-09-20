@@ -35,11 +35,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   let dimView = UIView()
 
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Change status bar appearance
-    UIApplication.shared.statusBarStyle = .lightContent
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Rounded buttons
@@ -54,10 +57,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.translatesAutoresizingMaskIntoConstraints = false
     dimView.backgroundColor = UIColor.black
     dimView.alpha = 0.6
-    let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
-    let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
-    let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-    let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+    let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
+    let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
+    let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+    let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
     NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
     dimView.isUserInteractionEnabled = true
     let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
@@ -177,19 +180,19 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     cell.typeLabel.text = intervention.value(forKey: "type") as? String
     switch intervention.value(forKey: "type") as! String {
-    case InterventionType.care:
+    case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
-    case InterventionType.cropProtection:
+    case Intervention.InterventionType.CropProtection.rawValue:
       cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case InterventionType.fertilization:
+    case Intervention.InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
-    case InterventionType.groundWork:
+    case Intervention.InterventionType.GroundWork.rawValue:
       cell.typeImageView.image = UIImage(named: "ground-work")!
-    case InterventionType.harvest:
+    case Intervention.InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
-    case InterventionType.implantation:
+    case Intervention.InterventionType.Implantation.rawValue:
       cell.typeImageView.image = UIImage(named: "implantation")!
-    case InterventionType.irrigation:
+    case Intervention.InterventionType.Irrigation.rawValue:
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
       cell.typeLabel.text = "error".localized
@@ -363,10 +366,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
     //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
-    createIntervention(type: InterventionType.care, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: InterventionType.cropProtection, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: InterventionType.fertilization, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: InterventionType.groundWork, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
   // MARK: - Actions
