@@ -24,6 +24,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
     tfUsername.delegate = self
     tfPassword.delegate = self
 
@@ -61,6 +62,22 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
+  // MARK: - Text Field Delegate
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    switch textField {
+    case tfUsername:
+      tfPassword.becomeFirstResponder()
+      return false
+    case tfPassword:
+      checkAuthentification(sender: self)
+      return false
+    default:
+      return false
+    }
+  }
+
   // MARK: - Actions
 
   func authentifyUser() {
@@ -81,7 +98,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
-  @IBAction func checkAuthentification(sender: UIButton) {
+  @IBAction func checkAuthentification(sender: Any) {
     buttonIsPressed = true
     authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
     authentifyUser()
@@ -94,7 +111,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       keys = NSDictionary(contentsOfFile: path)
     }
     if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
-      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!, options: [:], completionHandler: nil)
+      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
   }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
