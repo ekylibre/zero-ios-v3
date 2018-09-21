@@ -53,16 +53,12 @@ class ApolloQuery {
     for article in articles {
       switch article.type.rawValue {
       case "SEED":
-        print("")
-        //saveSeed(managedContext, article)
+        saveSeed(managedContext, article)
       case "CHEMICAL":
-        print("")
-        //savePhyto(managedContext, article)
+        savePhyto(managedContext, article)
       case "FERTILIZER":
-        print("")
         saveFertilizer(managedContext, article)
       case "MATERIAL":
-        print("")
         saveMaterial(managedContext, article)
       default:
         fatalError(article.type.rawValue + ": Unknown value of TypeEnum")
@@ -603,7 +599,6 @@ class ApolloQuery {
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
       interventionSeed.seeds = seed
       interventionSeed.interventions = intervention
-      print("\nintervention seed: \(interventionSeed)")
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
       let interventionFertilizer = InterventionFertilizers(context: managedContext)
@@ -613,7 +608,6 @@ class ApolloQuery {
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
       interventionFertilizer.fertilizers = fertilizer
       interventionFertilizer.interventions =  intervention
-      print("\nintervention ferti: \(interventionFertilizer)")
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
       let interventionPhyto = InterventionPhytosanitary(context: managedContext)
@@ -623,7 +617,6 @@ class ApolloQuery {
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
       interventionPhyto.phytos = phyto
       interventionPhyto.interventions = intervention
-      print("\nintervention phyto: \(interventionPhyto)")
       intervention.addToInterventionPhytosanitary(interventionPhyto)
     case "MATERIAL":
       let interventionMaterial = InterventionMaterials(context: managedContext)
@@ -633,7 +626,6 @@ class ApolloQuery {
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
       interventionMaterial.materials = material
       interventionMaterial.interventions = intervention
-      print("\nintervention material: \(interventionMaterial)")
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
       fatalError((fetchedInput.article?.type.rawValue)! + ": Unknown value of TypeEnum")
