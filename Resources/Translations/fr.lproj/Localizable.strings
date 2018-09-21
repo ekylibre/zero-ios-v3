@@ -167,3 +167,36 @@
 "snow" = "Neige";
 "thunderstorm" = "Orage";
 "clear_sky" = "Soleil";
+
+// Article Type
+
+"seed" = "Semence";
+"fertilizer" = "Fertilisant";
+"chemical" = "Phytosanitaire";
+"material" = "Materiel";
+"phytosanitary" = "Phytosanitaire";
+
+// Unit
+
+"meter" = "m";
+"gram" = "g";
+"gram_per_square_meter" = "g/m2";
+"gram_per_hectare" = "g/ha";
+"kilogram" = "kg";
+"kilogram_per_square_meter" = "kg/m2";
+"kilogram_per_hectare" = "kg/ha";
+"quintal" = "q";
+"quintal_per_quare_meter" = "g/m2";
+"quintal_per_hectare" = "g/ha";
+"ton" = "t";
+"ton_per_square_meter" = "t/m2";
+"ton_per_hectare" = "t/ha";
+"liter" = "l";
+"liter_per_square_meter" = "l/m2";
+"liter_per_hectare" = "l/ha";
+"cubic_meter" = "m3";
+"cubic_meter_per_square_meter" = "m3/m2";
+"cubic_meter_per_hectare" = "m3/ha";
+"hectoliter" = "hl";
+"hectoliter_per_square_meter" = "hl/m2";
+"hectoliter_per_hectare" = "hl/ha";

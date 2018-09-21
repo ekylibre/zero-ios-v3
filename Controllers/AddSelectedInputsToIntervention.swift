@@ -74,7 +74,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let quantity = (cell.inputQuantity.text! as NSString).doubleValue
     let unit = cell.unitMeasureButton.titleLabel?.text
 
-    selectedSeed.quantity = quantity
+    selectedSeed.quantity = quantity as NSNumber
     selectedSeed.unit = unit
 
     do {
@@ -95,7 +95,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let quantity = (cell.inputQuantity.text! as NSString).doubleValue
     let unit = cell.unitMeasureButton.titleLabel?.text
 
-    selectedPhyto.quantity = quantity
+    selectedPhyto.quantity = quantity as NSNumber?
     selectedPhyto.unit = unit
 
     do {

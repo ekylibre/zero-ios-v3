@@ -415,7 +415,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   private func loadSampleInterventions() {
 
-    let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
+    /*let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
     //let inter1 = Intervention(type: .Irrigation, crops: "2 cultures", infos: "Volume 50", date: date1, status: .OutOfSync)
     let date2 = makeDate(year: 2018, month: 7, day: 24, hour: 9, minute: 5, second: 0)
     //let inter2 = Intervention(type: .TravailSol, crops: "1 culture", infos: "Kuhn Prolander", date: date2, status: .OutOfSync)
@@ -427,7 +427,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createIntervention(type: Intervention.InterventionType.Care.rawValue.localized, infos: "Volume 50mL", status: 0, executionDate: date1)
     createIntervention(type: Intervention.InterventionType.CropProtection.rawValue.localized, infos: "Kuhn Prolander", status: 0, executionDate: date2)
     createIntervention(type: Intervention.InterventionType.Fertilization.rawValue.localized, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue.localized, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue.localized, infos: "oui", status: 2, executionDate: date4)*/
   }
 
   // MARK: - Actions

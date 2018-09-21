@@ -83,7 +83,7 @@ class ApolloQuery {
 
   func loadEquipments() {
     appDelegate.apollo?.fetch(query: FarmQuery()) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms. \(error!)"); return }
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
 
       for farm in farms {
         for equipment in farm.equipments! {
@@ -341,6 +341,7 @@ class ApolloQuery {
     }
     return nil
   }
+
   func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
@@ -362,9 +363,135 @@ class ApolloQuery {
     return harvest
   }
 
+  func returnSeedIfSame(seedID: Int32?) -> Seeds? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
+
+    do {
+      let seeds = try managedContext.fetch(seedsFetchRequest)
+
+      for seed in seeds {
+        if seedID == seed.seedIDEky {
+          return seed
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func returnFertilizerIfSame(fertilizerID: Int32?) -> Fertilizers? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+
+    do {
+      let fertilizers = try managedContext.fetch(fertilizersFetchRequest)
+
+      for fertilizer in fertilizers {
+        if fertilizerID == fertilizer.fertilizerIDEky {
+          return fertilizer
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func returnPhytoIfSame(phytoID: Int32?) -> Phytos? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
+
+    do {
+      let phytos = try managedContext.fetch(phytosFetchRequest)
+
+      for phyto in phytos {
+        if phytoID == phyto.phytoIDEky {
+          return phyto
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func returnMaterialIfSame(materialID: Int32?) -> Materials? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let materialsFetchRequest: NSFetchRequest<Materials> = Materials.fetchRequest()
+
+    do {
+      let materials = try managedContext.fetch(materialsFetchRequest)
+
+      for material in materials {
+        if materialID == material.materialIDEky {
+          return material
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Interventions) -> Interventions {
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    switch fetchedInput.article?.type.rawValue {
+    case "SEED":
+      let interventionSeed = InterventionSeeds(context: managedContext)
+      let seed = returnSeedIfSame(seedID: (fetchedInput.article?.id as NSString?)?.intValue)
+
+      interventionSeed.unit = fetchedInput.unit.rawValue
+      interventionSeed.quantity = fetchedInput.quantity as NSNumber?
+      interventionSeed.seeds = seed
+      interventionSeed.interventions = intervention
+      intervention.addToInterventionSeeds(interventionSeed)
+    case "FERTILIZER":
+      let interventionFertilizer = InterventionFertilizers(context: managedContext)
+      let fertilizer = returnFertilizerIfSame(fertilizerID: (fetchedInput.article?.id as NSString?)?.intValue)
+
+      interventionFertilizer.unit = fetchedInput.unit.rawValue
+      interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
+      interventionFertilizer.fertilizers = fertilizer
+      interventionFertilizer.interventions =  intervention
+      intervention.addToInterventionFertilizers(interventionFertilizer)
+    case "CHEMICAL":
+      let interventionPhyto = InterventionPhytosanitary(context: managedContext)
+      let phyto = returnPhytoIfSame(phytoID: (fetchedInput.article?.id as NSString?)?.intValue)
+
+      interventionPhyto.unit = fetchedInput.unit.rawValue
+      interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
+      interventionPhyto.phytos = phyto
+      interventionPhyto.interventions = intervention
+      intervention.addToInterventionPhytosanitary(interventionPhyto)
+    case "MATERIAL":
+      let interventionMaterial = InterventionMaterials(context: managedContext)
+      let material = returnMaterialIfSame(materialID: (fetchedInput.article?.id as NSString?)?.intValue)
+
+      interventionMaterial.unit = fetchedInput.unit.rawValue
+      interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
+      interventionMaterial.materials = material
+      interventionMaterial.interventions = intervention
+      intervention.addToInterventionMaterials(interventionMaterial)
+    default:
+      fatalError((fetchedInput.article?.type.rawValue)! + ": Unknown value of TypeEnum")
+    }
+
+    do {
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    return intervention
+  }
+
   func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let intervention = Interventions(context: managedContext)
+    var intervention = Interventions(context: managedContext)
 
     intervention.farmID = farmID
     intervention.interventionIDEky = (fetchedIntervention.id as NSString).intValue
@@ -389,6 +516,9 @@ class ApolloQuery {
           intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized))
         }
       }
+    }
+    for fetchedInput in fetchedIntervention.inputs! {
+      intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
 
     do {

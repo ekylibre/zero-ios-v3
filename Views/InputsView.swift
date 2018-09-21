@@ -373,7 +373,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.seedIDEky = Int64(registeredSeed.id)
+      seed.seedIDEky = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
       seed.type = "Seed".localized
