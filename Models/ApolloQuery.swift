@@ -643,16 +643,7 @@ class ApolloQuery {
 
   // MARK: - Intervention
 
-  private func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
-    let managedContext = appDelegate.persistentContainer.viewContext
-    var intervention = Interventions(context: managedContext)
-
-    intervention.farmID = farmID
-    intervention.ekyID = (fetchedIntervention.id as NSString).intValue
-    intervention.type = fetchedIntervention.type.rawValue.lowercased().localized
-    intervention.infos = fetchedIntervention.description
-    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
-    intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
+  private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions{
     for workingDay in fetchedIntervention.workingDays {
       intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
@@ -671,6 +662,21 @@ class ApolloQuery {
         }
       }
     }
+
+    return intervention
+  }
+
+  private func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var intervention = Interventions(context: managedContext)
+
+    intervention.farmID = farmID
+    intervention.ekyID = (fetchedIntervention.id as NSString).intValue
+    intervention.type = fetchedIntervention.type.rawValue.lowercased().localized
+    intervention.infos = fetchedIntervention.description
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
+    intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
+    intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }

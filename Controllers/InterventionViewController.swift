@@ -113,7 +113,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func initialiseInterventionButtons() {
 
-    let interventionNames: [String] = ["Semis", "Travail du sol", "Irrigation", "Récolte", "Entretien", "Fertilisation", "Pulvérisation"]
+    let interventionNames: [String] = [
+      "implantation".localized,
+      "ground_work".localized,
+      "irrigation".localized,
+      "harvest".localized,
+      "care".localized,
+      "fertilization".localized,
+      "crop_protection".localized
+    ]
     let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
 
     for buttonCount in 0...6 {
@@ -402,7 +410,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let destVC = segue.destination as! AddInterventionViewController
 
     if let type = (sender as? UIButton)?.titleLabel?.text {
-      destVC.interventionType = type.localized
+      destVC.interventionType = type
     }
   }
 

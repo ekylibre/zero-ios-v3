@@ -97,8 +97,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
-  let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
+  let solidUnitMeasure = ["g", "g/ha", "g/m²", "kg", "kg/ha", "kg/m²", "q", "q/ha", "q/m²", "t", "t/ha", "t/m²"]
+  let liquidUnitMeasure = ["l", "l/ha", "l/m²", "hl", "hl/ha", "hl/m²", "m³","m³/ha", "m³/m²"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -226,7 +226,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   private func setupViewsAccordingInterventionType() {
-    switch  interventionType {
+    print("\nInterventionType: \(String(describing: interventionType))")
+    switch interventionType {
     case Intervention.InterventionType.Care.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
