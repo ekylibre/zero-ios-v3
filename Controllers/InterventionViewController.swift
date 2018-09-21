@@ -46,7 +46,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    initializeApolloClient()
+    /*initializeApolloClient()
     displayFarmName()
     apolloQuery.loadEquipments()
     apolloQuery.loadStorage()
@@ -54,7 +54,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if success {
         self.apolloQuery.loadIntervention()
       }
-    }
+    }*/
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -134,10 +134,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    fetchInterventions()
-    if interventions.count == 0 {
-      loadSampleInterventions()
+    initializeApolloClient()
+    displayFarmName()
+    apolloQuery.checkLocalData()
+    apolloQuery.loadEquipments()
+    apolloQuery.loadStorage()
+    apolloQuery.loadPeople { (success) -> Void in
+      if success {
+        self.apolloQuery.loadIntervention()
+        self.tableView.reloadData()
+      }
     }
+    fetchInterventions()
   }
 
   private func fetchInterventions() {
@@ -153,6 +161,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+    tableView.reloadData()
   }
 
   // MARK: - Apollo
@@ -413,23 +422,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return calendar.date(from: components)!
   }
 
-  private func loadSampleInterventions() {
-
-    /*let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
-    //let inter1 = Intervention(type: .Irrigation, crops: "2 cultures", infos: "Volume 50", date: date1, status: .OutOfSync)
-    let date2 = makeDate(year: 2018, month: 7, day: 24, hour: 9, minute: 5, second: 0)
-    //let inter2 = Intervention(type: .TravailSol, crops: "1 culture", infos: "Kuhn Prolander", date: date2, status: .OutOfSync)
-    let date3 = makeDate(year: 2018, month: 7, day: 23, hour: 9, minute: 5, second: 0)
-    //let inter3 = Intervention(type: .Pulverisation, crops: "2 cultures", infos: "PRIORI GOLD", date: date3, status: .OutOfSync)
-    let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
-    //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
-
-    createIntervention(type: Intervention.InterventionType.Care.rawValue.localized, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue.localized, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue.localized, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue.localized, infos: "oui", status: 2, executionDate: date4)*/
-  }
-
   // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
@@ -443,6 +435,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
     UserDefaults.standard.set(date, forKey: "lastSyncDate")
     UserDefaults.standard.synchronize()
+    fetchInterventions()
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return

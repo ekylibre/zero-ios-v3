@@ -18,6 +18,142 @@ class ApolloQuery {
 
   // MARK: - Actions
 
+  func checkLocalData() {
+    //let crops = fetchCrops()
+
+    //if crops.count == 0 {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    queryFarms()
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    //}
+  }
+
+  private func queryFarms() {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let apollo = appDelegate.apollo!
+    let query = FarmQuery()
+
+    apollo.fetch(query: query) { result, error in
+      if let error = error { print("Error: \(error)"); return }
+
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
+      self.saveArticles(articles: farms.first!.articles!)
+    }
+  }
+
+  // MARK: - Articles
+
+  private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for article in articles {
+      switch article.type.rawValue {
+      case "SEED":
+        print("")
+        //saveSeed(managedContext, article)
+      case "CHEMICAL":
+        print("")
+        //savePhyto(managedContext, article)
+      case "FERTILIZER":
+        print("")
+        saveFertilizer(managedContext, article)
+      case "MATERIAL":
+        print("")
+        saveMaterial(managedContext, article)
+      default:
+        fatalError(article.type.rawValue + ": Unknown value of TypeEnum")
+      }
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func saveSeed(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var seeds: [Seeds]
+      let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      seedsFetchRequest.predicate = predicate
+
+      do {
+        seeds = try managedContext.fetch(seedsFetchRequest)
+        seeds.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let seed = Seeds(context: managedContext)
+
+      seed.registered = false
+      seed.ekyID = Int32(article.id)!
+      seed.variety = article.variety
+      seed.specie = article.species?.rawValue
+      seed.unit = article.unit.rawValue
+    }
+  }
+
+  private func savePhyto(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var phytos: [Phytos]
+      let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      phytosFetchRequest.predicate = predicate
+
+      do {
+        phytos = try managedContext.fetch(phytosFetchRequest)
+        phytos.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let phyto = Phytos(context: managedContext)
+
+      phyto.registered = false
+      phyto.ekyID = Int32(article.id)!
+      phyto.name = article.name
+      phyto.unit = article.unit.rawValue
+    }
+  }
+
+  private func saveFertilizer(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var fertilizers: [Fertilizers]
+      let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      fertilizersFetchRequest.predicate = predicate
+
+      do {
+        fertilizers = try managedContext.fetch(fertilizersFetchRequest)
+        fertilizers.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let fertilizer = Fertilizers(context: managedContext)
+
+      fertilizer.registered = false
+      fertilizer.ekyID = Int32(article.id)!
+      fertilizer.name = article.name
+      fertilizer.unit = article.unit.rawValue
+    }
+  }
+
+  private func saveMaterial(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    let material = Materials(context: managedContext)
+
+    material.name = article.name
+    material.ekyID = Int32(article.id)!
+    material.unit = article.unit.rawValue
+  }
+
   func saveFarmNameAndID(name: String?, id: String?) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let farm = Farms(context: managedContext)
@@ -32,6 +168,8 @@ class ApolloQuery {
     }
   }
 
+  // MARK: - Farms
+
   func defineFarmNameAndID(completion: @escaping (_ success: Bool) -> Void) {
     appDelegate.apollo?.fetch(query: ProfileQuery()) { (result, error) in
       guard let farms = result?.data?.farms else { print("Could not retrieve profile"); return }
@@ -43,7 +181,9 @@ class ApolloQuery {
     }
   }
 
-  func checkIfNewEquipment(equipmentID: Int32) -> Bool {
+  // MARK: - Equipments
+
+  private func checkIfNewEquipment(equipmentID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
 
@@ -51,7 +191,7 @@ class ApolloQuery {
       let equipments = try managedContext.fetch(equipmentsFetchRequest)
 
       for equipment in equipments {
-        if equipmentID == equipment.equipmentIDEky {
+        if equipmentID == equipment.ekyID {
           return false
         }
       }
@@ -61,7 +201,7 @@ class ApolloQuery {
     return true
   }
 
-  func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
+  private func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipments(context: managedContext)
     var type = fetchedEquipment.type?.rawValue
@@ -71,7 +211,7 @@ class ApolloQuery {
     equipment.type = type?.localized
     equipment.name = fetchedEquipment.name
     equipment.number = fetchedEquipment.number
-    equipment.equipmentIDEky = (fetchedEquipment.id as NSString).intValue
+    equipment.ekyID = (fetchedEquipment.id as NSString).intValue
     equipment.row = 0
 
     do {
@@ -95,7 +235,9 @@ class ApolloQuery {
     }
   }
 
-  func checkIfNewPerson(personID: Int32) -> Bool {
+  // MARK: - People
+
+  private func checkIfNewPerson(personID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
 
@@ -103,7 +245,7 @@ class ApolloQuery {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
       for entity in entities {
-        if personID == entity.personIDEky {
+        if personID == entity.ekyID {
           return false
         }
       }
@@ -113,14 +255,14 @@ class ApolloQuery {
     return true
   }
 
-  func savePeople(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
+  private func savePeople(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let person = Entities(context: managedContext)
 
     person.farmID = farmID
     person.firstName = fetchedPerson.firstName
     person.lastName = fetchedPerson.lastName
-    person.personIDEky = (fetchedPerson.id as NSString).intValue
+    person.ekyID = (fetchedPerson.id as NSString).intValue
     person.isDriver = false
     person.row = 0
 
@@ -146,7 +288,9 @@ class ApolloQuery {
     completion(true)
   }
 
-  func checkifNewStorage(storageID: Int32) -> Bool {
+  // MARK: - Storages
+
+  private func checkifNewStorage(storageID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
     let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
 
@@ -164,7 +308,7 @@ class ApolloQuery {
     return true
   }
 
-  func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
+  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
     let manaedContext = appDelegate.persistentContainer.viewContext
     let storage = Storages(context: manaedContext)
 
@@ -193,7 +337,9 @@ class ApolloQuery {
     }
   }
 
-  func saveWeatherInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
+  // MARK: - Weather
+
+  private func saveWeatherInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
 
@@ -211,7 +357,9 @@ class ApolloQuery {
     return weather
   }
 
-  func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
+  // MARK: - Working Periods
+
+  private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriod = WorkingPeriods(context: managedContext)
     let dateFormatter = DateFormatter()
@@ -229,7 +377,9 @@ class ApolloQuery {
     return workingPeriod
   }
 
-  func returnEquipmentIfSame(equipmentID: Int32?) -> Equipments? {
+  // MARK: - Intervention Equipments
+
+  private func returnEquipmentIfSame(equipmentID: Int32?) -> Equipments? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
 
@@ -237,7 +387,7 @@ class ApolloQuery {
       let equipments = try managedContext.fetch(equipmentsFetchRequest)
 
       for equipment in equipments {
-        if equipmentID == equipment.equipmentIDEky {
+        if equipmentID == equipment.ekyID {
           return equipment
         }
       }
@@ -247,7 +397,7 @@ class ApolloQuery {
     return nil
   }
 
-  func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Interventions) -> InterventionEquipments {
+  private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Interventions) -> InterventionEquipments {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipments(context: managedContext)
     let equipment = returnEquipmentIfSame(equipmentID: (fetchedEquipment.equipment?.id as NSString?)?.intValue)
@@ -265,7 +415,9 @@ class ApolloQuery {
     return interventionEquipment
   }
 
-  func returnPersonIfSame(personID: Int32?) -> Entities? {
+  // MARK: - Doers
+
+  private func returnPersonIfSame(personID: Int32?) -> Entities? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
 
@@ -273,7 +425,7 @@ class ApolloQuery {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
       for entity in entities {
-        if personID == entity.personIDEky {
+        if personID == entity.ekyID {
           return entity
         }
       }
@@ -283,7 +435,7 @@ class ApolloQuery {
     return nil
   }
 
-  func saveDoersToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> Doers {
+  private func saveDoersToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> Doers {
     let managedContext = appDelegate.persistentContainer.viewContext
     let doers = Doers(context: managedContext)
     let doer = returnPersonIfSame(personID: (fetchedOperator.person?.id as NSString?)?.intValue)
@@ -306,7 +458,9 @@ class ApolloQuery {
     return doers
   }
 
-  func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Interventions) -> Harvests {
+  // MARK: - Harvests
+
+  private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Interventions) -> Harvests {
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
 
@@ -324,7 +478,7 @@ class ApolloQuery {
     return harvest
   }
 
-  func returnStorageIfSame(storageID: Int32?) -> Storages? {
+  private func returnStorageIfSame(storageID: Int32?) -> Storages? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
 
@@ -342,7 +496,7 @@ class ApolloQuery {
     return nil
   }
 
-  func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
+  private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
     let storage = returnStorageIfSame(storageID: (fetchedLoad.storage?.id as NSString?)?.intValue)
@@ -363,7 +517,9 @@ class ApolloQuery {
     return harvest
   }
 
-  func returnSeedIfSame(seedID: Int32?) -> Seeds? {
+  // MARK: - Inputs
+
+  private func returnSeedIfSame(seedID: Int32?) -> Seeds? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
 
@@ -371,7 +527,7 @@ class ApolloQuery {
       let seeds = try managedContext.fetch(seedsFetchRequest)
 
       for seed in seeds {
-        if seedID == seed.seedIDEky {
+        if seedID == seed.ekyID {
           return seed
         }
       }
@@ -381,7 +537,7 @@ class ApolloQuery {
     return nil
   }
 
-  func returnFertilizerIfSame(fertilizerID: Int32?) -> Fertilizers? {
+  private func returnFertilizerIfSame(fertilizerID: Int32?) -> Fertilizers? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
 
@@ -389,7 +545,7 @@ class ApolloQuery {
       let fertilizers = try managedContext.fetch(fertilizersFetchRequest)
 
       for fertilizer in fertilizers {
-        if fertilizerID == fertilizer.fertilizerIDEky {
+        if fertilizerID == fertilizer.ekyID {
           return fertilizer
         }
       }
@@ -399,7 +555,7 @@ class ApolloQuery {
     return nil
   }
 
-  func returnPhytoIfSame(phytoID: Int32?) -> Phytos? {
+  private func returnPhytoIfSame(phytoID: Int32?) -> Phytos? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
 
@@ -407,7 +563,7 @@ class ApolloQuery {
       let phytos = try managedContext.fetch(phytosFetchRequest)
 
       for phyto in phytos {
-        if phytoID == phyto.phytoIDEky {
+        if phytoID == phyto.ekyID {
           return phyto
         }
       }
@@ -417,7 +573,7 @@ class ApolloQuery {
     return nil
   }
 
-  func returnMaterialIfSame(materialID: Int32?) -> Materials? {
+  private func returnMaterialIfSame(materialID: Int32?) -> Materials? {
     let managedContext = appDelegate.persistentContainer.viewContext
     let materialsFetchRequest: NSFetchRequest<Materials> = Materials.fetchRequest()
 
@@ -425,7 +581,7 @@ class ApolloQuery {
       let materials = try managedContext.fetch(materialsFetchRequest)
 
       for material in materials {
-        if materialID == material.materialIDEky {
+        if materialID == material.ekyID {
           return material
         }
       }
@@ -435,7 +591,7 @@ class ApolloQuery {
     return nil
   }
 
-  func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Interventions) -> Interventions {
+  private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Interventions) -> Interventions {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     switch fetchedInput.article?.type.rawValue {
@@ -447,6 +603,7 @@ class ApolloQuery {
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
       interventionSeed.seeds = seed
       interventionSeed.interventions = intervention
+      print("\nintervention seed: \(interventionSeed)")
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
       let interventionFertilizer = InterventionFertilizers(context: managedContext)
@@ -456,6 +613,7 @@ class ApolloQuery {
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
       interventionFertilizer.fertilizers = fertilizer
       interventionFertilizer.interventions =  intervention
+      print("\nintervention ferti: \(interventionFertilizer)")
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
       let interventionPhyto = InterventionPhytosanitary(context: managedContext)
@@ -465,6 +623,7 @@ class ApolloQuery {
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
       interventionPhyto.phytos = phyto
       interventionPhyto.interventions = intervention
+      print("\nintervention phyto: \(interventionPhyto)")
       intervention.addToInterventionPhytosanitary(interventionPhyto)
     case "MATERIAL":
       let interventionMaterial = InterventionMaterials(context: managedContext)
@@ -474,6 +633,7 @@ class ApolloQuery {
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
       interventionMaterial.materials = material
       interventionMaterial.interventions = intervention
+      print("\nintervention material: \(interventionMaterial)")
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
       fatalError((fetchedInput.article?.type.rawValue)! + ": Unknown value of TypeEnum")
@@ -489,12 +649,14 @@ class ApolloQuery {
     return intervention
   }
 
-  func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
+  // MARK: - Intervention
+
+  private func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
     var intervention = Interventions(context: managedContext)
 
     intervention.farmID = farmID
-    intervention.interventionIDEky = (fetchedIntervention.id as NSString).intValue
+    intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue.lowercased().localized
     intervention.infos = fetchedIntervention.description
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
@@ -521,6 +683,8 @@ class ApolloQuery {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
 
+    print("\nintervention: \(intervention)")
+
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -528,7 +692,7 @@ class ApolloQuery {
     }
   }
 
-  func checkIfNewIntervention(interventionID: Int32) -> Bool {
+  private func checkIfNewIntervention(interventionID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
 
@@ -536,7 +700,7 @@ class ApolloQuery {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
       for intervention in interventions {
-        if interventionID == intervention.interventionIDEky {
+        if interventionID == intervention.ekyID {
           return false
         }
       }
