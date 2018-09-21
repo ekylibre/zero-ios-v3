@@ -13,7 +13,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Properties
 
-  public var titleLabel: UILabel = {
+  lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "Sélectionnez des cultures"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
@@ -46,7 +46,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return tableView
   }()
 
-  public var selectedCropsLabel: UILabel = {
+  lazy var selectedCropsLabel: UILabel = {
     let selectedCropsLabel = UILabel(frame: CGRect.zero)
     selectedCropsLabel.text = "Aucune sélection"
     selectedCropsLabel.font = UIFont.boldSystemFont(ofSize: 17)
@@ -55,7 +55,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return selectedCropsLabel
   }()
 
-  public var validateButton: UIButton = {
+  lazy var validateButton: UIButton = {
     let validateButton = UIButton(frame: CGRect.zero)
     validateButton.setTitle("VALIDER", for: .normal)
     validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -85,8 +85,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    fetchCrops()
     setupView()
+    fetchCrops()
   }
 
   private func setupView() {
@@ -149,9 +149,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     for (index, _) in crops.enumerated() {
-      //let frame = CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60)
-
-      //self.cropViews[indexPath.row][index].frame = frame
+      self.cropViews[indexPath.row][index].frame.size.width = cell.frame.size.width - 30
       cell.contentView.addSubview(self.cropViews[indexPath.row][index])
     }
 
@@ -234,13 +232,12 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   private func createCropViews() {
     var frame: CGRect
-    let width = tableView.frame.size.width - 30
     var cropViews = [CropView]()
     var view: CropView
 
     for crops in self.crops {
       for (index, crop) in crops.enumerated() {
-        frame = CGRect(x: 15, y: 60 + index * 60, width: 354, height: 60)
+        frame = CGRect(x: 15, y: 60 + index * 60, width: 0, height: 60)
         view = CropView(frame: frame, crop)
         view.gesture.addTarget(self, action: #selector(tapCropView))
         cropViews.append(view)
