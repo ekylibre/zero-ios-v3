@@ -10,7 +10,7 @@ import UIKit
 
 protocol SelectedInputCellDelegate: class {
   func removeInputCell(_ indexPath: IndexPath)
-  func changeUnitMeasure(_ indexPath: IndexPath)
+  func saveSelectedRow(_ indexPath: IndexPath)
 }
 
 class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
@@ -56,6 +56,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     inputQuantity.text = ""
     inputQuantity.keyboardType = .decimalPad
     inputQuantity.textAlignment = .center
+    inputQuantity.addTarget(self, action: #selector(saveQuantity), for: .editingChanged)
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
     return inputQuantity
   }()
@@ -219,10 +220,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
-    }
+    saveQuantity(self)
     return false
   }
 
@@ -233,11 +231,17 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     } else {
       addInterventionViewController?.solidUnitPicker.isHidden = false
     }
-    cellDelegate?.changeUnitMeasure(indexPath)
+    cellDelegate?.saveSelectedRow(indexPath)
   }
 
   @objc func removeCell(sender: UIButton) {
     cellDelegate?.removeInputCell(indexPath)
+  }
+
+  @objc func saveQuantity(_ sender: Any) {
+    addInterventionViewController?.selectedInputs[indexPath.row].setValue(
+      (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+    addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
   }
 
   required init?(coder aDecoder: NSCoder) {

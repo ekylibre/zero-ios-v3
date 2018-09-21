@@ -102,6 +102,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
@@ -688,6 +689,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return
     }
+  }
+
+  // MARK: - Text Field Delegate
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return false
   }
 
   // MARK: - Actions

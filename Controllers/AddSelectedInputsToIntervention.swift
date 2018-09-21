@@ -13,7 +13,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  func changeUnitMeasure(_ indexPath: IndexPath) {
+  func saveSelectedRow(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
 
@@ -135,12 +135,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'intrant ?",
+      message: String(format: "are_you_sure_you_want_to_delete".localized, "input".localized),
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
       self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
@@ -158,7 +158,67 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         })
       }
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
+  }
+
+  func forTrailingZero(temp: Double) -> String {
+    let withoutTrailing = String(format: "%g", temp)
+
+    return withoutTrailing
+  }
+
+  func defineQuantityInFunctionOfSurface(unit: String, quantity: Double, indexPath: IndexPath) {
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
+    let surfaceArea = cropsView.totalSurfaceArea
+    var efficiency: Double = 0
+
+    if (unit.contains("/")) {
+      let surfaceUnit = unit.components(separatedBy: "/")[1]
+      switch surfaceUnit {
+      case "ha":
+        efficiency = Double(quantity) * surfaceArea
+      case "m2":
+        efficiency = Double(quantity) * (surfaceArea * 10000)
+      default:
+        return
+      }
+      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
+      cell.surfaceQuantity.text = String(format: "or".localized, efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+    } else {
+      efficiency = Double(quantity) / surfaceArea
+      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
+      cell.surfaceQuantity.text = String(format: "or_per_hectare".localized, efficiencyWithoutTrailing, unit)
+    }
+    cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
+  }
+
+  func updateInputQuantity(indexPath: IndexPath) {
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
+    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let unit = cell.unitMeasureButton.titleLabel?.text
+
+    cell.surfaceQuantity.isHidden = false
+    if quantity == 0.0 {
+      cell.surfaceQuantity.text = String(format: "quantity_cant_be_nul".localized, (cell.type == "Phyto" ? "volume".localized : "mass".localized))
+      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+    } else if totalLabel.text == "select".localized {
+      cell.surfaceQuantity.text = "no_crop_selected".localized
+      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+    } else {
+      defineQuantityInFunctionOfSurface(unit: unit!, quantity: quantity, indexPath: indexPath)
+    }
+  }
+
+  func updateAllInputQuantity() {
+    let totalCellNumber = selectedInputs.count
+    var indexPath: IndexPath!
+
+    if totalCellNumber > 0 {
+      for currentCell in 0..<(totalCellNumber) {
+        indexPath = NSIndexPath(row: currentCell, section: 0) as IndexPath?
+        updateInputQuantity(indexPath: indexPath)
+      }
+    }
   }
 }
 
