@@ -39,6 +39,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     tableView.tableFooterView = UIView()
     tableView.bounces = false
     tableView.register(PlotCell.self, forCellReuseIdentifier: "PlotCell")
+    tableView.rowHeight = UITableView.automaticDimension
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -142,21 +143,18 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cell = tableView.dequeueReusableCell(withIdentifier: "PlotCell", for: indexPath) as! PlotCell
     let crops = self.crops[indexPath.row]
     let surfaceArea = getPlotSurfaceArea(crops)
-    var views = [CropView]()
 
-    print("-- index plot: \(indexPath.row)")
-    for (index, crop) in crops.enumerated() {
-      print("index crop: \(index)")
-
-      let frame = CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60)
-      let view = CropView(frame: frame, crop)
-
-      view.gesture.addTarget(self, action: #selector(tapCropView))
-      cell.addSubview(view)
-      views.append(view)
+    for case let view as CropView in cell.contentView.subviews {
+      view.removeFromSuperview()
     }
 
-    cropViews.append(views)
+    for (index, _) in crops.enumerated() {
+      //let frame = CGRect(x: 15, y: 60 + index * 60, width: Int(cell.frame.size.width - 30), height: 60)
+
+      //self.cropViews[indexPath.row][index].frame = frame
+      cell.contentView.addSubview(self.cropViews[indexPath.row][index])
+    }
+
     cell.checkboxButton.addTarget(self, action: #selector(tapCheckbox), for: .touchUpInside)
     cell.nameLabel.text = crops.first?.plotName
     cell.nameLabel.sizeToFit()
@@ -213,29 +211,44 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
       organizeCropsByPlot(crops)
+      createCropViews()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
   private func organizeCropsByPlot(_ crops: [Crops]) {
-    var organizedCrops = [[Crops]]()
     var cropsFromSamePlot = [Crops]()
     var name = crops.first?.plotName
-    var index = 0
 
     for crop in crops {
       if crop.plotName != name {
         name = crop.plotName
-        organizedCrops.append(cropsFromSamePlot)
+        self.crops.append(cropsFromSamePlot)
         cropsFromSamePlot = [Crops]()
-        index += 1
       }
       cropsFromSamePlot.append(crop)
     }
-    organizedCrops.append(cropsFromSamePlot)
+    self.crops.append(cropsFromSamePlot)
+  }
 
-    self.crops = organizedCrops
+  private func createCropViews() {
+    var frame: CGRect
+    let width = tableView.frame.size.width - 30
+    var cropViews = [CropView]()
+    var view: CropView
+
+    for crops in self.crops {
+      for (index, crop) in crops.enumerated() {
+        frame = CGRect(x: 15, y: 60 + index * 60, width: 354, height: 60)
+        view = CropView(frame: frame, crop)
+        view.gesture.addTarget(self, action: #selector(tapCropView))
+        cropViews.append(view)
+      }
+      self.cropViews.append(cropViews)
+      cropViews = [CropView]()
+    }
+    self.cropViews.append(cropViews)
   }
 
   // MARK: - Actions
@@ -268,7 +281,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   private func deselectPlot(_ crops: [Crops], _ cell: PlotCell) {
     var index: Int = 0
 
-    for case let view as CropView in cell.subviews {
+    for case let view as CropView in cell.contentView.subviews {
       if view.checkboxImage.image == #imageLiteral(resourceName: "check-box") {
         view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
         selectedCropsCount -= 1
@@ -280,7 +293,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   @objc func tapCropView(sender: UIGestureRecognizer) {
-    let cell = sender.view?.superview as! PlotCell
+    let cell = sender.view?.superview?.superview as! PlotCell
     let plotIndex = tableView.indexPath(for: cell)!.row
     let view = sender.view as! CropView
     let cropIndex = cropViews[plotIndex].firstIndex(of: view)!
@@ -310,7 +323,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   private func deselectCrop(_ crop: Crops, _ crops: [Crops], _ cell: PlotCell) {
     var index: Int = 1
 
-    for case let view as CropView in cell.subviews {
+    for case let view as CropView in cell.contentView.subviews {
       if view.checkboxImage.image == #imageLiteral(resourceName: "check-box") {
         break
       } else if (view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank")) && (index == crops.count) {
