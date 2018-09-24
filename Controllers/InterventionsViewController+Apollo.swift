@@ -22,6 +22,8 @@ extension InterventionViewController {
       queryFarms()
       UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+
+    registerFarmID()
   }
 
   private func fetchCrops() -> [Crops] {
@@ -42,7 +44,10 @@ extension InterventionViewController {
   }
 
   private func initializeApolloClient() {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
     let authService = AuthentificationService(username: "", password: "")
@@ -53,7 +58,10 @@ extension InterventionViewController {
   }
 
   private func queryFarms() {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
     let apollo = appDelegate.apollo!
     let query = FarmQuery()
 
@@ -64,6 +72,22 @@ extension InterventionViewController {
       self.saveFarms(farms)
       self.saveCrops(crops: farms.first!.crops!)
       self.saveArticles(articles: farms.first!.articles!)
+    }
+  }
+
+  private func registerFarmID() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let farmsFetchRequest: NSFetchRequest<Farms> = Farms.fetchRequest()
+
+    do {
+      let farms = try managedContext.fetch(farmsFetchRequest)
+      appDelegate.farmID = farms.first?.id
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
