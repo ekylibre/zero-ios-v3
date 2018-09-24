@@ -32,14 +32,22 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     cellDelegate?.defineIndexPath(indexPath)
   }
 
+  @IBAction func defineQuantity(_ sender: Any) {
+    addInterventionController?.harvests[indexPath.row].setValue((quantity.text! as NSString).doubleValue, forKey: "quantity")
+  }
+
+  @IBAction func defineNumber(_ sender: Any) {
+    addInterventionController?.harvests[indexPath.row].setValue(number.text!, forKey: "number")
+  }
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     switch textField {
     case quantity:
-      addInterventionController?.harvests[indexPath.row].setValue((quantity.text! as NSString).doubleValue, forKey: "quantity")
+      defineQuantity(self)
       return false
     case number:
-      addInterventionController?.harvests[indexPath.row].setValue(number.text!, forKey: "number")
+      defineNumber(self)
       return false
     default:
       return false

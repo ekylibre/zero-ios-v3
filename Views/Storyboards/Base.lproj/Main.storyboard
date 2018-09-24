@@ -443,6 +443,9 @@
                                                                             <nil key="textColor"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits"/>
+                                                                            <connections>
+                                                                                <action selector="defineQuantity:" destination="ANj-fI-wdR" eventType="editingChanged" id="8Wi-mn-4qx"/>
+                                                                            </connections>
                                                                         </textField>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-QQ-zrV">
                                                                             <rect key="frame" x="199" y="20" width="30" height="30"/>
@@ -490,6 +493,9 @@
                                                                             <nil key="textColor"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits"/>
+                                                                            <connections>
+                                                                                <action selector="defineNumber:" destination="ANj-fI-wdR" eventType="editingChanged" id="GF6-DZ-cOr"/>
+                                                                            </connections>
                                                                         </textField>
                                                                     </subviews>
                                                                     <constraints>

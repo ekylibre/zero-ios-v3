@@ -12,14 +12,15 @@ import os.log
 class Intervention {
 
   // MARK: - Properties
+
   enum InterventionType: String {
-    case Care = "Entretien"
-    case CropProtection = "Pulvérisation"
-    case Fertilization = "Fertilisation"
-    case GroundWork = "Travail du sol"
-    case Harvest = "Récolte"
-    case Implantation = "Semis"
-    case Irrigation = "Irrigation"
+    case Care = "care"
+    case CropProtection = "crop_protection"
+    case Fertilization = "fertilization"
+    case GroundWork = "ground_work"
+    case Harvest = "harvest"
+    case Implantation = "implantation"
+    case Irrigation = "irrigation"
   }
 
   enum Status: Int16 {
@@ -35,6 +36,7 @@ class Intervention {
   var status: Status
 
   // MARK: - Initialization
+
   init(type: InterventionType, crops: String, infos: String, date: Date, status: Status) {
     self.type = type
     self.crops = crops
