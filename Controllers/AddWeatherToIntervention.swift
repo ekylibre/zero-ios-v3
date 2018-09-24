@@ -44,19 +44,19 @@ extension AddInterventionViewController {
 
 
   @IBAction func selectWeather(_ sender: UIButton) {
-    if weatherIsSelected && sender.layer.borderColor == AppColor.cgColor.LightGray {
+    if weatherIsSelected && sender.layer.borderColor == UIColor.lightGray.cgColor {
       for weather in weatherButtons {
-        if weather.layer.borderColor == AppColor.cgColor.Green {
-          weather.layer.borderColor = AppColor.cgColor.LightGray
+        if weather.layer.borderColor == AppColor.BarColors.Green.cgColor {
+          weather.layer.borderColor = UIColor.lightGray.cgColor
         }
       }
-      sender.layer.borderColor = AppColor.cgColor.Green
+      sender.layer.borderColor = AppColor.BarColors.Green.cgColor
       weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
     } else if weatherIsSelected {
-      sender.layer.borderColor = AppColor.cgColor.LightGray
+      sender.layer.borderColor = UIColor.lightGray.cgColor
       weatherIsSelected = false
     } else {
-      sender.layer.borderColor = AppColor.cgColor.Green
+      sender.layer.borderColor = AppColor.BarColors.Green.cgColor
       weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
       weatherIsSelected = true
     }
