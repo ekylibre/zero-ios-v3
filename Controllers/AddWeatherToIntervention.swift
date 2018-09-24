@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: UITextFieldDelegate {
+extension AddInterventionViewController {
 
   // MARK: - Initialization
 

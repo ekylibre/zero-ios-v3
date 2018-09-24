@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import os.log
 import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -40,7 +39,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewDidLoad()
 
     // Change status bar appearance
-    UIApplication.shared.statusBarStyle = .lightContent
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Rounded buttons
@@ -55,10 +53,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.translatesAutoresizingMaskIntoConstraints = false
     dimView.backgroundColor = UIColor.black
     dimView.alpha = 0.6
-    let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
-    let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
-    let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-    let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutAttribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+    let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
+    let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
+    let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+    let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
     NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
     dimView.isUserInteractionEnabled = true
     let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
@@ -126,27 +124,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
+    fetchInterventions()
+    if interventions.count == 0 {
+      loadSampleInterventions()
+    }
+  }
+
+  private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Interventions")
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    if interventions.count == 0 {
-      loadSampleInterventions()
-    }
-  }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
 
   // MARK: - Table view data source
@@ -160,16 +156,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
-    if indexPath.row % 2 == 0 {
-      cell.backgroundColor = AppColor.CellColors.White
-    } else {
-      cell.backgroundColor = AppColor.CellColors.LightGray
-    }
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)

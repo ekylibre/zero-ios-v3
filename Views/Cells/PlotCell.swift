@@ -34,12 +34,12 @@ class PlotCell: UITableViewCell {
 
   lazy var expandCollapseImageView: UIImageView = {
     let expandCollapseImageView = UIImageView(frame: CGRect.zero)
-    expandCollapseImageView.image = #imageLiteral(resourceName: "expand-collapse")
+    expandCollapseImageView.image = #imageLiteral(resourceName: "expand-more")
     expandCollapseImageView.translatesAutoresizingMaskIntoConstraints = false
     return expandCollapseImageView
   }()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCell()
   }
