@@ -455,7 +455,7 @@
                                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             </state>
                                                                             <connections>
-                                                                                <action selector="defineSelectedCell:" destination="ANj-fI-wdR" eventType="touchUpInside" id="toh-8j-KeI"/>
+                                                                                <action selector="defineUnit:" destination="ANj-fI-wdR" eventType="touchUpInside" id="atz-Zg-HrZ"/>
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="raS-Jl-PM3">
@@ -487,6 +487,9 @@
                                                                             <state key="normal" title="---">
                                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="defineStorage:" destination="ANj-fI-wdR" eventType="touchUpInside" id="d18-KA-TyS"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Provided by the collector" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zF5-GL-OXu">
                                                                             <rect key="frame" x="99" y="100" width="201" height="30"/>

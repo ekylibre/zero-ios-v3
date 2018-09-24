@@ -13,16 +13,24 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   // MARK: - Initialization
 
-  func defineIndexPath(_ indexPath: IndexPath) {
+  func defineUnit(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
     dimView.isHidden = false
     harvestUnitPickerView.isHidden = false
   }
 
+  func defineStorage(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+    dimView.isHidden = false
+    storagesPickerView.isHidden = false
+  }
+
   func initHarvestView() {
+    createSampleStorage()
     initializeHarvestTableView()
     initHarvestNaturePickerView()
     initHarvestUnitPickerView()
+    initStoragesPickerView()
   }
 
   func initializeHarvestTableView() {
@@ -52,7 +60,67 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(harvestNaturePickerView)
   }
 
+  func initStoragesPickerView() {
+    let storages = fetchStoragesName()
+
+    storagesPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), storages ?? ["---"], superview: view)
+    storagesPickerView.reference = self
+    storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(storagesPickerView)
+  }
+
   // MARK: - Actions
+
+  func searchStorage(name: String) -> Storages? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    var storages: [Storages]
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let predicate = NSPredicate(format: "name == %@", name)
+
+    storagesFetchRequest.predicate = predicate
+
+    do {
+      storages = try managedContext.fetch(storagesFetchRequest)
+      return storages.first
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func fetchStoragesName() -> [String]? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    var storagesNames = [String]()
+
+    do {
+      let storages = try managedContext.fetch(storagesFetchRequest)
+
+      for storage in storages {
+        if storage.name != nil {
+          storagesNames.append(storage.name!)
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return storagesNames
+  }
+
+  func createSampleStorage() {
+    createStorage(name: "Silot 1", type: "silo")
+    createStorage(name: "Bati 42", type: "building")
+    createStorage(name: "bati simple", type: "building")
+    createStorage(name: "bati silo", type: "silo")
+  }
 
   func createHarvest() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -60,14 +128,32 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvestsEntity = NSEntityDescription.entity(forEntityName: "Harvests", in: managedContext)!
-    let harvest = NSManagedObject(entity: harvestsEntity, insertInto: managedContext)
+    let harvest = Harvests(context: managedContext)
 
-    harvest.setValue("", forKey: "number")
-    harvest.setValue(0, forKey: "quantity")
-    harvest.setValue("straw", forKey: "type")
-    harvest.setValue("q", forKey: "unit")
+    harvest.number = ""
+    harvest.quantity = 0
+    harvest.type = "straw"
+    harvest.unit = "q"
     harvests.append(harvest)
+  }
+
+  func createStorage(name: String, type: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storage = Storages(context: managedContext)
+
+    storage.name = name
+    storage.type = type
+
+    do {
+      try managedContext.save()
+      storages.append(storage)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   @IBAction func changeHarvestNature(_ sender: UIButton) {

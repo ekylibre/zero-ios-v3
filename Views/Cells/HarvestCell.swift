@@ -10,7 +10,8 @@ import UIKit
 
 protocol HarvestCellDelegate: class {
   func removeHarvestCell(_ indexPath: IndexPath)
-  func defineIndexPath(_ indexPath: IndexPath)
+  func defineUnit(_ indexPath: IndexPath)
+  func defineStorage(_ indexPath: IndexPath)
 }
 
 class HarvestCell: UITableViewCell, UITextFieldDelegate {
@@ -28,8 +29,12 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     cellDelegate?.removeHarvestCell(indexPath)
   }
 
-  @IBAction func defineSelectedCell(_ sender: Any) {
-    cellDelegate?.defineIndexPath(indexPath)
+  @IBAction func defineUnit(_ sender: Any) {
+    cellDelegate?.defineUnit(indexPath)
+  }
+
+  @IBAction func defineStorage(_ sender: Any) {
+    cellDelegate?.defineStorage(indexPath)
   }
 
   @IBAction func defineQuantity(_ sender: Any) {
@@ -38,6 +43,10 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
 
   @IBAction func defineNumber(_ sender: Any) {
     addInterventionController?.harvests[indexPath.row].setValue(number.text!, forKey: "number")
+  }
+
+  @IBAction func selectStorage(_ sender: Any) {
+    
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {

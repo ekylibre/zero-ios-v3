@@ -130,9 +130,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     "rain".localized,
     "snow".localized,
     "storm".localized]
-  var harvests = [NSManagedObject]()
+  var harvests = [Harvests]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
+  var storagesPickerView: CustomPickerView!
+  var storages = [Storages]()
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -465,10 +467,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.unit.layer.borderColor = AppColor.cgColor.LightGray
       cell.unit.layer.borderWidth = 1
       cell.unit.layer.cornerRadius = 5
+      cell.unit.setTitle(harvest?.value(forKey: "unit") as? String, for: .normal)
       cell.storage.backgroundColor = AppColor.ThemeColors.White
       cell.storage.layer.borderColor = AppColor.cgColor.LightGray
       cell.storage.layer.borderWidth = 1
       cell.storage.layer.cornerRadius = 5
+      cell.storage.setTitle(harvests[indexPath.row].storages?.name ?? "---", for: .normal)
       cell.quantity.keyboardType = .decimalPad
       cell.quantity.layer.borderColor = AppColor.cgColor.LightGray
       cell.quantity.layer.borderWidth = 1
@@ -480,7 +484,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.number.layer.cornerRadius = 5
       cell.number.text = harvest?.value(forKey: "number") as? String
       cell.number.delegate = cell
-      cell.unit.setTitle(harvest?.value(forKey: "unit") as? String, for: .normal)
       return cell
     default:
       fatalError("Unknown tableView: \(tableView)")

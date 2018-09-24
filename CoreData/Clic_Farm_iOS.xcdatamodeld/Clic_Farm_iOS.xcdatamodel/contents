@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -51,6 +51,7 @@
     <entity name="Harvests" representedClassName="Harvests" syncable="YES" codeGenerationType="class">
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="storageID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="harvests" inverseEntity="Interventions" syncable="YES"/>
@@ -146,6 +147,7 @@
     </entity>
     <entity name="Storages" representedClassName="Storages" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="storageID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="harvests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Harvests" inverseName="storages" inverseEntity="Harvests" syncable="YES"/>
     </entity>
@@ -174,7 +176,7 @@
         <element name="Entities" positionX="-119" positionY="-810" width="128" height="135"/>
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="285"/>
-        <element name="Harvests" positionX="-281" positionY="-414" width="128" height="133"/>
+        <element name="Harvests" positionX="-281" positionY="-414" width="128" height="150"/>
         <element name="InterventionEquipments" positionX="-387" positionY="-172" width="128" height="75"/>
         <element name="InterventionFertilizers" positionX="450" positionY="-337" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="520" positionY="-199" width="128" height="118"/>
@@ -185,7 +187,7 @@
         <element name="Phytos" positionX="-549" positionY="65" width="128" height="223"/>
         <element name="Plots" positionX="754" positionY="389" width="128" height="133"/>
         <element name="Seeds" positionX="153" positionY="-859" width="128" height="193"/>
-        <element name="Storages" positionX="-441" positionY="-594" width="128" height="88"/>
+        <element name="Storages" positionX="-441" positionY="-594" width="128" height="105"/>
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
         <element name="Users" positionX="-540" positionY="480" width="128" height="60"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>

@@ -50,6 +50,11 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       harvestUnitPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
+    case storagesPickerView:
+      harvests[cellIndexPath.row].setValue(searchStorage(name: unit), forKey: "storages")
+      storagesPickerView.isHidden = true
+      dimView.isHidden = true
+      harvestTableView.reloadData()
     case irrigationPickerView:
       let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
       let volume = Float(volumeString) ?? 0
