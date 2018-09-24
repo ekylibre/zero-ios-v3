@@ -75,14 +75,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var weatherCollapseButton: UIButton!
   @IBOutlet weak var temperatureTextField: UITextField!
   @IBOutlet weak var windSpeedTextField: UITextField!
-  @IBOutlet weak var cloudyButton: UIButton!
-  @IBOutlet weak var sunnyButton: UIButton!
-  @IBOutlet weak var cloudyPassageButton: UIButton!
-  @IBOutlet weak var rainFallButton: UIButton!
-  @IBOutlet weak var fogyButton: UIButton!
-  @IBOutlet weak var rainButton: UIButton!
-  @IBOutlet weak var snowButton: UIButton!
-  @IBOutlet weak var stormButton: UIButton!
+  @IBOutlet weak var brokenClouds: UIButton!
+  @IBOutlet weak var clearSky: UIButton!
+  @IBOutlet weak var fewClouds: UIButton!
+  @IBOutlet weak var lightRain: UIButton!
+  @IBOutlet weak var mist: UIButton!
+  @IBOutlet weak var showerRain: UIButton!
+  @IBOutlet weak var snow: UIButton!
+  @IBOutlet weak var thunderstorm: UIButton!
 
   // MARK: - Properties
 
@@ -111,8 +111,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var pickerValue: String?
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
-  var weathers = [UIButton]()
-  var weather = [NSManagedObject]()
+  var weatherButtons = [UIButton]()
+  var weather = [Weather]()
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -231,8 +231,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    initializeWeatherView()
-    weathers = defineWeathers()
+    initializeWeatherButtons()
     saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad

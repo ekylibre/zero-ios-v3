@@ -898,7 +898,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="am3-R5-yYs"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                                        <state key="normal" title="cloudy" image="nuages"/>
+                                                        <state key="normal" title="cloudy" image="broken-clouds"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Zee-QG-SHl"/>
                                                         </connections>
@@ -910,7 +910,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="FrT-bV-pWf"/>
                                                             <constraint firstAttribute="height" constant="70" id="Jse-Kr-UJV"/>
                                                         </constraints>
-                                                        <state key="normal" title="sunny" image="soleil"/>
+                                                        <state key="normal" title="sunny" image="clear-sky"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="tvp-LJ-evi"/>
                                                         </connections>
@@ -922,7 +922,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="Osh-Om-iEa"/>
                                                             <constraint firstAttribute="height" constant="70" id="sj3-aa-Zjm"/>
                                                         </constraints>
-                                                        <state key="normal" title="cloudyPassage" image="passages-nuageux"/>
+                                                        <state key="normal" title="cloudyPassage" image="few-clouds"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="aVR-Tp-vv6"/>
                                                         </connections>
@@ -934,7 +934,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="9ii-2x-zAU"/>
                                                             <constraint firstAttribute="height" constant="70" id="Ioh-dP-tnk"/>
                                                         </constraints>
-                                                        <state key="normal" title="rainFall" image="averses"/>
+                                                        <state key="normal" title="rainFall" image="light-rain"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="JJh-6f-vYY"/>
                                                         </connections>
@@ -946,7 +946,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="poB-u2-npn"/>
                                                             <constraint firstAttribute="height" constant="70" id="wV2-w5-FZ4"/>
                                                         </constraints>
-                                                        <state key="normal" title="fogy" image="brouillard"/>
+                                                        <state key="normal" title="fogy" image="mist"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="kqV-Rj-P8H"/>
                                                         </connections>
@@ -958,7 +958,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="491-5X-uS0"/>
                                                             <constraint firstAttribute="width" constant="70" id="Slb-Gb-71i"/>
                                                         </constraints>
-                                                        <state key="normal" title="rain" image="pluie"/>
+                                                        <state key="normal" title="rain" image="shower-rain"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="tDh-Fp-n1N"/>
                                                         </connections>
@@ -970,7 +970,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="ja3-uJ-JgX"/>
                                                             <constraint firstAttribute="height" constant="70" id="uLK-KY-dn6"/>
                                                         </constraints>
-                                                        <state key="normal" title="snow" image="neige"/>
+                                                        <state key="normal" title="snow" image="snow"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="45m-S7-lY2"/>
                                                         </connections>
@@ -982,7 +982,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="7Yo-6z-2Cz"/>
                                                             <constraint firstAttribute="height" constant="70" id="7jt-KE-Im7"/>
                                                         </constraints>
-                                                        <state key="normal" title="storm" image="orage"/>
+                                                        <state key="normal" title="storm" image="thunderstorm"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="h1g-Tc-RMY"/>
                                                         </connections>
@@ -1683,8 +1683,8 @@
                         <outlet property="addEntitiesButton" destination="yGb-zU-Lzj" id="4LP-bc-YKZ"/>
                         <outlet property="addEquipmentButton" destination="5AO-Jj-0ZP" id="lX4-Wo-L1c"/>
                         <outlet property="addInputsButton" destination="xR1-hG-glp" id="pRW-RT-UWb"/>
-                        <outlet property="cloudyButton" destination="ca3-oq-1ls" id="tSr-Gi-GLs"/>
-                        <outlet property="cloudyPassageButton" destination="4EX-oh-FEb" id="KAd-Pp-qHn"/>
+                        <outlet property="brokenClouds" destination="ca3-oq-1ls" id="Jvd-Cu-OWo"/>
+                        <outlet property="clearSky" destination="8jz-fe-slq" id="dv4-mc-oxb"/>
                         <outlet property="collapseButton" destination="fJR-CJ-tlU" id="eiF-In-vl8"/>
                         <outlet property="collapseWorkingPeriodImage" destination="4VE-aQ-Xe3" id="mTX-34-7jk"/>
                         <outlet property="createEntitiesView" destination="KmC-aZ-h9V" id="k4F-wF-5ZR"/>
@@ -1714,7 +1714,7 @@
                         <outlet property="equipmentTypeButton" destination="A58-eW-7tB" id="teL-bG-Ea9"/>
                         <outlet property="equipmentTypeTableView" destination="lyS-jh-cAc" id="4kk-dU-5PT"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
-                        <outlet property="fogyButton" destination="8Tz-Cl-TTF" id="MD1-Ix-ZuM"/>
+                        <outlet property="fewClouds" destination="4EX-oh-FEb" id="ajR-eG-YMN"/>
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
                         <outlet property="inputsHeightConstraint" destination="0oM-1M-kPB" id="GpI-j6-Loh"/>
                         <outlet property="inputsNumber" destination="Rof-yp-WzL" id="2T8-pe-K1y"/>
@@ -1728,9 +1728,9 @@
                         <outlet property="irrigationUnitButton" destination="28Q-Cd-Lyq" id="ePr-r8-wKk"/>
                         <outlet property="irrigationValueTextField" destination="YLy-wG-9j5" id="YB0-c0-RSM"/>
                         <outlet property="irrigationView" destination="dFL-Ez-GIj" id="ZYv-Z5-sbA"/>
+                        <outlet property="lightRain" destination="lr9-gj-MXe" id="BbZ-kf-XZR"/>
+                        <outlet property="mist" destination="8Tz-Cl-TTF" id="zJE-hS-tEh"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
-                        <outlet property="rainButton" destination="rEb-3z-Qyi" id="IZE-cA-Af0"/>
-                        <outlet property="rainFallButton" destination="lr9-gj-MXe" id="qd1-4U-pYR"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="searchEntity" destination="DKn-en-9g6" id="CHn-ZG-lJK"/>
                         <outlet property="searchEquipment" destination="3af-DS-yQg" id="e3s-Wj-rgP"/>
@@ -1741,10 +1741,10 @@
                         <outlet property="selectedInputsTableView" destination="6C4-57-Ghw" id="xOS-xe-Tgz"/>
                         <outlet property="selectedInputsTableViewHeightConstraint" destination="Bbt-1y-Pg7" id="HoL-WX-Zuz"/>
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
-                        <outlet property="snowButton" destination="Io4-JY-DOw" id="IyN-aG-fHX"/>
-                        <outlet property="stormButton" destination="vcc-mx-nY4" id="tcZ-ve-L89"/>
-                        <outlet property="sunnyButton" destination="8jz-fe-slq" id="bap-Eu-8eX"/>
+                        <outlet property="showerRain" destination="rEb-3z-Qyi" id="hJ4-Ry-aNc"/>
+                        <outlet property="snow" destination="Io4-JY-DOw" id="OAJ-t8-IJw"/>
                         <outlet property="temperatureTextField" destination="pOP-WE-pVI" id="oDq-IT-cK4"/>
+                        <outlet property="thunderstorm" destination="vcc-mx-nY4" id="l3o-WJ-Qg9"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
                         <outlet property="weatherCollapseButton" destination="wzQ-CL-iF5" id="Zq7-jm-i6J"/>
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
@@ -2003,18 +2003,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="averses" width="285" height="285"/>
-        <image name="brouillard" width="285" height="285"/>
+        <image name="broken-clouds" width="285" height="285"/>
+        <image name="clear-sky" width="285" height="285"/>
         <image name="clic&amp;farm-logo" width="90" height="90"/>
         <image name="delete" width="50" height="50"/>
         <image name="expand-less" width="24" height="24"/>
         <image name="expand-more" width="24" height="24"/>
-        <image name="neige" width="285" height="285"/>
-        <image name="nuages" width="285" height="285"/>
-        <image name="orage" width="285" height="285"/>
-        <image name="passages-nuageux" width="285" height="285"/>
-        <image name="pluie" width="285" height="285"/>
-        <image name="soleil" width="285" height="285"/>
+        <image name="few-clouds" width="285" height="285"/>
+        <image name="light-rain" width="285" height="285"/>
+        <image name="mist" width="285" height="285"/>
+        <image name="shower-rain" width="285" height="285"/>
+        <image name="snow" width="285" height="285"/>
+        <image name="thunderstorm" width="285" height="285"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vxv-f7-ZrT"/>
