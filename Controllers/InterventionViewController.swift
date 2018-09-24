@@ -134,7 +134,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     initializeApolloClient()
     displayFarmName()
-    apolloQuery.checkLocalData()
     apolloQuery.loadEquipments()
     apolloQuery.loadStorage()
     apolloQuery.loadPeople { (success) -> Void in
@@ -159,7 +158,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    tableView.reloadData()
   }
 
   // MARK: - Apollo
@@ -287,26 +285,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
-
+  func fetchTargets(of intervention: NSManagedObject) -> [Targets]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [NSManagedObject]()
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Targets")
+    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
     let predicate = NSPredicate(format: "interventions == %@", intervention)
     targetsFetchRequest.predicate = predicate
 
-    var targets: [NSManagedObject]!
-
     do {
-      targets = try managedContext.fetch(targetsFetchRequest)
+      let targets = try managedContext.fetch(targetsFetchRequest)
+      return targets
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    return targets
+    return nil
   }
 
   func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
@@ -331,18 +326,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return workingPeriods.first!
   }
 
-  func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
+  func updateCropsLabel(_ targets: [Targets]?) -> String {
+    var totalSurfaceArea: Float = 0
 
-    var totalSurfaceArea: Double = 0
-
-    for target in targets {
-      let crop = target.value(forKey: "crops") as! NSManagedObject
-      let surfaceArea = crop.value(forKey: "surfaceArea") as! Double
-      totalSurfaceArea += surfaceArea 
+    if targets != nil {
+      for target in targets! {
+        let crop = target.crops
+        totalSurfaceArea += crop?.surfaceArea ?? 0
+      }
     }
 
-    if targets.count > 1 {
-      return String(format: "%d cultures • %.1f ha", targets.count, totalSurfaceArea)
+    if targets?.count ?? 0 > 1 {
+      return String(format: "%d cultures • %.1f ha", targets!.count, totalSurfaceArea)
     } else {
       return String(format: "1 culture • %.1f ha", totalSurfaceArea)
     }
@@ -433,7 +428,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
     UserDefaults.standard.set(date, forKey: "lastSyncDate")
     UserDefaults.standard.synchronize()
-    fetchInterventions()
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return

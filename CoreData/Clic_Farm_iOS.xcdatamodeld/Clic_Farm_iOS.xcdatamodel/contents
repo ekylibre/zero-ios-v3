@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productionMode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="provisionalYield" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="species" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="surfaceArea" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="plots" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plots" inverseName="crops" inverseEntity="Plots" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="crops" inverseEntity="Targets" syncable="YES"/>
     </entity>
     <entity name="Doers" representedClassName="Doers" syncable="YES" codeGenerationType="class">
@@ -39,7 +39,7 @@
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipments" inverseName="equipments" inverseEntity="InterventionEquipments" syncable="YES"/>
     </entity>
     <entity name="Farms" representedClassName="Farms" syncable="YES" codeGenerationType="class">
-        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Fertilizers" representedClassName="Fertilizers" syncable="YES" codeGenerationType="class">
@@ -146,13 +146,6 @@
         <attribute name="used" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="interventionPhytosanitary" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPhytosanitary" inverseName="phytos" inverseEntity="InterventionPhytosanitary" syncable="YES"/>
     </entity>
-    <entity name="Plots" representedClassName="Plots" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="surfaceArea" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="crops" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Crops" inverseName="plots" inverseEntity="Crops" syncable="YES"/>
-    </entity>
     <entity name="Seeds" representedClassName="Seeds" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -208,7 +201,6 @@
         <element name="InterventionSeeds" positionX="-308.328125" positionY="117.0859375" width="128" height="105"/>
         <element name="Materials" positionX="-825.2265625" positionY="22.87109375" width="128" height="120"/>
         <element name="Phytos" positionX="1130.04296875" positionY="-303.23828125" width="128" height="270"/>
-        <element name="Plots" positionX="1317.71875" positionY="124.7421875" width="128" height="133"/>
         <element name="Seeds" positionX="-671.421875" positionY="266.7109375" width="128" height="210"/>
         <element name="Storages" positionX="673.625" positionY="-668.91015625" width="128" height="105"/>
         <element name="Targets" positionX="680.625" positionY="122.57421875" width="128" height="90"/>

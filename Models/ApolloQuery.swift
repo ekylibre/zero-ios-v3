@@ -16,145 +16,13 @@ class ApolloQuery {
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  // MARK: - Actions
-
-  func checkLocalData() {
-    //let crops = fetchCrops()
-
-    //if crops.count == 0 {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
-    queryFarms()
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-    //}
-  }
-
-  private func queryFarms() {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let apollo = appDelegate.apollo!
-    let query = FarmQuery()
-
-    apollo.fetch(query: query) { result, error in
-      if let error = error { print("Error: \(error)"); return }
-
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
-      self.saveArticles(articles: farms.first!.articles!)
-    }
-  }
-
-  // MARK: - Articles
-
-  private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for article in articles {
-      switch article.type.rawValue {
-      case "SEED":
-        saveSeed(managedContext, article)
-      case "CHEMICAL":
-        savePhyto(managedContext, article)
-      case "FERTILIZER":
-        saveFertilizer(managedContext, article)
-      case "MATERIAL":
-        saveMaterial(managedContext, article)
-      default:
-        fatalError(article.type.rawValue + ": Unknown value of TypeEnum")
-      }
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  private func saveSeed(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
-    if article.referenceId != nil {
-      var seeds: [Seeds]
-      let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
-      seedsFetchRequest.predicate = predicate
-
-      do {
-        seeds = try managedContext.fetch(seedsFetchRequest)
-        seeds.first?.ekyID = Int32(article.id)!
-      } catch let error as NSError {
-        print("Could not fetch. \(error), \(error.userInfo)")
-      }
-    } else {
-      let seed = Seeds(context: managedContext)
-
-      seed.registered = false
-      seed.ekyID = Int32(article.id)!
-      seed.variety = article.variety
-      seed.specie = article.species?.rawValue
-      seed.unit = article.unit.rawValue
-    }
-  }
-
-  private func savePhyto(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
-    if article.referenceId != nil {
-      var phytos: [Phytos]
-      let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
-      phytosFetchRequest.predicate = predicate
-
-      do {
-        phytos = try managedContext.fetch(phytosFetchRequest)
-        phytos.first?.ekyID = Int32(article.id)!
-      } catch let error as NSError {
-        print("Could not fetch. \(error), \(error.userInfo)")
-      }
-    } else {
-      let phyto = Phytos(context: managedContext)
-
-      phyto.registered = false
-      phyto.ekyID = Int32(article.id)!
-      phyto.name = article.name
-      phyto.unit = article.unit.rawValue
-    }
-  }
-
-  private func saveFertilizer(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
-    if article.referenceId != nil {
-      var fertilizers: [Fertilizers]
-      let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
-      fertilizersFetchRequest.predicate = predicate
-
-      do {
-        fertilizers = try managedContext.fetch(fertilizersFetchRequest)
-        fertilizers.first?.ekyID = Int32(article.id)!
-      } catch let error as NSError {
-        print("Could not fetch. \(error), \(error.userInfo)")
-      }
-    } else {
-      let fertilizer = Fertilizers(context: managedContext)
-
-      fertilizer.registered = false
-      fertilizer.ekyID = Int32(article.id)!
-      fertilizer.name = article.name
-      fertilizer.unit = article.unit.rawValue
-    }
-  }
-
-  private func saveMaterial(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
-    let material = Materials(context: managedContext)
-
-    material.name = article.name
-    material.ekyID = Int32(article.id)!
-    material.unit = article.unit.rawValue
-  }
+  // MARK: - Farms
 
   func saveFarmNameAndID(name: String?, id: String?) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let farm = Farms(context: managedContext)
 
-    farm.farmID = id
+    farm.id = id
     farm.name = name
 
     do {
@@ -163,8 +31,6 @@ class ApolloQuery {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
-
-  // MARK: - Farms
 
   func defineFarmNameAndID(completion: @escaping (_ success: Bool) -> Void) {
     appDelegate.apollo?.fetch(query: ProfileQuery()) { (result, error) in
@@ -411,6 +277,39 @@ class ApolloQuery {
     return interventionEquipment
   }
 
+  // MARK: - Targets
+
+  private func returnCropIfSame(cropUUID: UUID?) -> Crops? {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+
+    do {
+      let crops = try managedContext.fetch(cropsFetchRequest)
+
+      for crop in crops {
+        if cropUUID == crop.uuid && crop.uuid != nil {
+          return crop
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Interventions) -> Targets {
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let target = Targets(context: managedContext)
+    let crop = returnCropIfSame(cropUUID: UUID(uuidString: fetchedTarget.crop.uuid))
+
+    if crop != nil {
+      target.workAreaPercentage = Int16(fetchedTarget.workingPercentage)
+      target.crops = crop
+      target.interventions = intervention
+    }
+    return target
+  }
+
   // MARK: - Doers
 
   private func returnPersonIfSame(personID: Int32?) -> Entities? {
@@ -653,6 +552,9 @@ class ApolloQuery {
     for fetchedOperator in fetchedIntervention.operators! {
       intervention.addToDoers(saveDoersToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
     }
+    for fetchedTarget in fetchedIntervention.targets {
+      intervention.addToTargets(saveTargetToIntervention(fetchedTarget: fetchedTarget, intervention: intervention))
+    }
     for fetchedOutput in fetchedIntervention.outputs! {
       if fetchedIntervention.globalOutputs! {
         intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
@@ -679,8 +581,6 @@ class ApolloQuery {
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
-
-    print("\nintervention: \(intervention)")
 
     do {
       try managedContext.save()
