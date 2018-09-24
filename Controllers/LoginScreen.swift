@@ -68,6 +68,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   // MARK: - Text Field Delegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    view.frame.origin.y = 0
     textField.resignFirstResponder()
     switch textField {
     case tfUsername:
@@ -82,15 +83,24 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   }
 
   @objc func keyboardWillShow(notification: NSNotification) {
-    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-      if self.view.frame.origin.y == 0 {
-        self.view.frame.origin.y -= keyboardSize.height
+    let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)!.cgRectValue
+    let offset = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)!.cgRectValue
+
+    if keyboardSize.height == offset.height {
+      if view.frame.origin.y == 0 {
+        UIView.animate(withDuration: 0.1, animations: {
+          self.view.frame.origin.y -= keyboardSize.height
+        })
       }
+    } else {
+      UIView.animate(withDuration: 0.1, animations: {
+        self.view.frame.origin.y += keyboardSize.height - offset.height
+      })
     }
   }
 
   @objc func keyboardWillHide(notification: NSNotification) {
-    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
       if self.view.frame.origin.y != 0 {
         self.view.frame.origin.y += keyboardSize.height
       }

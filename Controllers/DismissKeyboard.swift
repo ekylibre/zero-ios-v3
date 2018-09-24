@@ -17,5 +17,6 @@ extension UIViewController {
 
   @objc func dismissKeyboard() {
     view.endEditing(true)
+    view.frame.origin.y = 0
   }
 }
