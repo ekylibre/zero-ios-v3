@@ -38,8 +38,10 @@
 		6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
 		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
+		6B77C3D42141297500520840 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77C3D32141297500520840 /* AddIrrigation.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA37142213963230086DF9B /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713F213963230086DF9B /* oauthInfo.plist */; };
+		6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D7862149391C0054F969 /* CustomPickerView.swift */; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
@@ -95,9 +97,11 @@
 		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B11EEE72139636200E2DEC4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
+		6B77C3D32141297500520840 /* AddIrrigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BA5D7862149391C0054F969 /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
 		6BB2253E211849090036E167 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BEA656D2105C5EE0072840F /* Clic&Farm-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clic&Farm-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +166,7 @@
 				0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */,
 				0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */,
 				6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */,
+				6B77C3D32141297500520840 /* AddIrrigation.swift */,
 				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
@@ -182,6 +187,7 @@
 				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
 				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
 				044B4D5F2138173E001A5D3D /* CropsView.swift */,
+				6BA5D7862149391C0054F969 /* CustomPickerView.swift */,
 				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
@@ -421,8 +427,10 @@
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */,
+				6B77C3D42141297500520840 /* AddIrrigation.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
+				6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
