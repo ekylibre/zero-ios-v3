@@ -487,6 +487,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
+      pushInput(unit: ArticleUnitEnum.kilogram, name: variety, type: ArticleTypeEnum.seed)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -515,6 +516,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
+      pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -541,6 +543,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
+      pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -604,6 +607,22 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
     tableView.reloadData()
     dimView.isHidden = true
+  }
+
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      }
+    }
   }
 
   @objc func hideDimView() {

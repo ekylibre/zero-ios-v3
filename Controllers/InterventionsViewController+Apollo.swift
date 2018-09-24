@@ -21,9 +21,9 @@ extension InterventionViewController {
       UIApplication.shared.isNetworkActivityIndicatorVisible = true
       queryFarms()
       UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    } else {
+      registerFarmID()
     }
-
-    registerFarmID()
   }
 
   private func fetchCrops() -> [Crops] {
@@ -85,7 +85,7 @@ extension InterventionViewController {
 
     do {
       let farms = try managedContext.fetch(farmsFetchRequest)
-      appDelegate.farmID = farms.first?.id
+      appDelegate.farmID = farms.first!.id!
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -103,13 +103,13 @@ extension InterventionViewController {
     for farm in farms {
       let newFarm = Farms(context: managedContext)
 
-      print(farm.id)
       newFarm.id = farm.id
       newFarm.name = farm.label
     }
 
     do {
       try managedContext.save()
+      appDelegate.farmID = farms.first?.id
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }

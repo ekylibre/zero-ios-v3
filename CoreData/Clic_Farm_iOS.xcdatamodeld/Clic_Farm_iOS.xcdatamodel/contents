@@ -166,7 +166,6 @@
     <elements>
         <element name="Crops" positionX="414" positionY="269" width="128" height="195"/>
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
-        <element name="Entities" positionX="-351" positionY="-459" width="128" height="135"/>
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="315"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="118"/>
@@ -183,5 +182,6 @@
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
         <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="90"/>
         <element name="Farms" positionX="-245.3203125" positionY="388.06640625" width="128" height="75"/>
+        <element name="Entities" positionX="-450" positionY="-747" width="128" height="135"/>
     </elements>
 </model>
