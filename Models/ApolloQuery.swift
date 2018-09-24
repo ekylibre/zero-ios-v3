@@ -643,7 +643,7 @@ class ApolloQuery {
 
   // MARK: - Intervention
 
-  private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions{
+  private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions {
     for workingDay in fetchedIntervention.workingDays {
       intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
@@ -662,7 +662,6 @@ class ApolloQuery {
         }
       }
     }
-
     return intervention
   }
 
