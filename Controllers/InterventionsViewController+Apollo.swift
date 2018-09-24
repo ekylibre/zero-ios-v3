@@ -61,8 +61,33 @@ extension InterventionViewController {
       if let error = error { print("Error: \(error)"); return }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
+      self.saveFarms(farms)
       self.saveCrops(crops: farms.first!.crops!)
       self.saveArticles(articles: farms.first!.articles!)
+    }
+  }
+
+  // MARK: - Farms
+
+  private func saveFarms(_ farms: [FarmQuery.Data.Farm]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for farm in farms {
+      let newFarm = Farms(context: managedContext)
+
+      print(farm.id)
+      newFarm.id = farm.id
+      newFarm.name = farm.label
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
