@@ -46,16 +46,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    /*initializeApolloClient()
-    displayFarmName()
-    apolloQuery.loadEquipments()
-    apolloQuery.loadStorage()
-    apolloQuery.loadPeople { (success) -> Void in
-      if success {
-        self.apolloQuery.loadIntervention()
-      }
-    }*/
-
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 

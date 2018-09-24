@@ -361,7 +361,7 @@ class ApolloQuery {
     let dateFormatter = DateFormatter()
 
     dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "yyyy-mm-dd"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     workingPeriod.executionDate = dateFormatter.date(from: fetchedDay.executionDate!)
     workingPeriod.hourDuration = Float(fetchedDay.hourDuration!)
 
