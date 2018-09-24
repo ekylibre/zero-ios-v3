@@ -25,8 +25,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    super.moveViewWhenKeyboardAppears()
 
     tfUsername.delegate = self
     tfPassword.delegate = self
@@ -79,31 +78,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       return false
     default:
       return false
-    }
-  }
-
-  @objc func keyboardWillShow(notification: NSNotification) {
-    let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)!.cgRectValue
-    let offset = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)!.cgRectValue
-
-    if keyboardSize.height == offset.height {
-      if view.frame.origin.y == 0 {
-        UIView.animate(withDuration: 0.1, animations: {
-          self.view.frame.origin.y -= keyboardSize.height
-        })
-      }
-    } else {
-      UIView.animate(withDuration: 0.1, animations: {
-        self.view.frame.origin.y += keyboardSize.height - offset.height
-      })
-    }
-  }
-
-  @objc func keyboardWillHide(notification: NSNotification) {
-    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-      if self.view.frame.origin.y != 0 {
-        self.view.frame.origin.y += keyboardSize.height
-      }
     }
   }
 
