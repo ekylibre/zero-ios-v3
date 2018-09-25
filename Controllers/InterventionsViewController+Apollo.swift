@@ -136,10 +136,8 @@ extension InterventionViewController {
       let localCrop = fetchCrop(uuid: crop.uuid)
 
       if let localCrop = localCrop {
-        print("update:", crop.name)
         updateCrop(local: localCrop, updated: crop)
       } else {
-        print("insert:", crop.name)
         insertCrop(crop)
       }
     }
@@ -335,10 +333,8 @@ extension InterventionViewController {
       let localArticle = fetchArticle(type: type, ekyID: article.id)
 
       if let localArticle = localArticle {
-        print("update: \(article.id)")
         updateArticle(local: localArticle, updated: article)
       } else {
-        print("insert: \(article.id)")
         insertArticle(type, article)
       }
     }
@@ -396,9 +392,12 @@ extension InterventionViewController {
       article.setValue((new.referenceId != nil), forKey: "registered")
     }
     
-    article.setValue(new.id, forKey: "ekyID")
-    article.setValue(new.referenceId, forKey: "referenceID")
+    article.setValue(Int(new.id), forKey: "ekyID")
     article.setValue(new.unit.rawValue.lowercased(), forKey: "unit")
+
+    if new.referenceId != nil {
+      article.setValue(Int(new.referenceId!), forKey: "referenceID")
+    }
 
     if new.type.rawValue == "SEED" {
       article.setValue(new.species?.rawValue.lowercased(), forKey: "specie")
