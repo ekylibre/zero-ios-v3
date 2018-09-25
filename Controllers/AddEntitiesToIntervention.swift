@@ -110,9 +110,26 @@ extension AddInterventionViewController: DoerCellDelegate {
     do {
       try managedContext.save()
       entities.append(entity)
+      pushPerson(first: entityFirstName.text ?? "", last: entityLastName.text ?? "")
       closeEntitiesCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func pushPerson(first: String, last: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushPersonMutation(farmId: farmID, firstName: first, lastName: last)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      }
     }
   }
 
