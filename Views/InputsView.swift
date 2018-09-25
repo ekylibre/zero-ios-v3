@@ -199,16 +199,16 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
 
-      if fromSeeds.count > indexPath.row {
-        cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
-        let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
-        cell.specieLabel.text = specie?.localized
-      }
+      cell.backgroundColor = (fromSeeds[indexPath.row].value(forKey: "used") as! Bool ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
+      let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      cell.specieLabel.text = specie?.localized
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs : phytos
 
+      cell.backgroundColor = (fromPhytos[indexPath.row].value(forKey: "used") as! Bool ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
@@ -220,6 +220,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
 
+      cell.backgroundColor = (fromFertilizers[indexPath.row].value(forKey: "used") as! Bool ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
       return cell
@@ -241,47 +242,35 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 0:
       let fromSeeds = isSearching ? filteredInputs : seeds
       let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
-      let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
       if !used {
-        fromSeeds[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.LightGray
+        isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
         let selectedSeed = addInterventionViewController?.saveSelectedSeed(seed: fromSeeds[indexPath.row] as! Seeds)
         if selectedSeed != nil {
           addInterventionViewController?.selectedInputs.append(selectedSeed!)
         }
-      } else {
-        cell.backgroundColor = AppColor.CellColors.White
       }
     case 1:
       let fromPhytos = isSearching ? filteredInputs : phytos
-      let used = phytos[indexPath.row].value(forKey: "used") as! Bool
-      let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
+      let used = fromPhytos[indexPath.row].value(forKey: "used") as! Bool
 
       if !used {
-        fromPhytos[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.LightGray
+        isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
         let selectedPhyto = addInterventionViewController?.saveSelectedPhyto(phyto: fromPhytos[indexPath.row] as! Phytos)
         if selectedPhyto != nil {
           addInterventionViewController?.selectedInputs.append(selectedPhyto!)
         }
-      } else {
-        cell.backgroundColor = AppColor.CellColors.White
       }
     case 2:
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
-      let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
-      let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
+      let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
 
       if !used {
-        fromFertilizers[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.LightGray
+        isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
         let selectedFertilizer = addInterventionViewController?.saveSelectedFertilizer(fertilizer: fromFertilizers[indexPath.row] as! Fertilizers)
         if selectedFertilizer != nil {
           addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
         }
-      } else {
-        cell.backgroundColor = AppColor.CellColors.White
       }
     default:
       print("Error")
