@@ -226,9 +226,26 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     do {
       try managedContext.save()
       equipments.append(equipment)
+      let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;                #warning("Wrong type passed")
+      pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
       closeEquipmentsCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushEquipmentMutation(farmId: farmID, type: type, name: name, number: number)
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      }
     }
   }
 
