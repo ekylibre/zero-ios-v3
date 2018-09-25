@@ -53,6 +53,7 @@ extension InterventionViewController {
       } else {
         self.registerFarmID()
         self.checkCropsData(crops: farms.first!.crops!)
+        self.checkArticlesData(articles: farms.first!.articles!)
       }
     }
   }
@@ -324,5 +325,95 @@ extension InterventionViewController {
     material.name = article.name
     material.ekyID = Int32(article.id)!
     material.unit = article.unit.rawValue
+  }
+
+  private func checkArticlesData(articles : [FarmQuery.Data.Farm.Article]) {
+    let types = ["SEED": "Seeds", "CHEMICAL": "Phytos", "FERTILIZER": "Fertilizers", "MATERIAL": "Materials"]
+
+    for article in articles {
+      let type = types[article.type.rawValue]!
+      let localArticle = fetchArticle(type: type, ekyID: article.id)
+
+      if let localArticle = localArticle {
+        print("update: \(article.id)")
+        updateArticle(local: localArticle, updated: article)
+      } else {
+        print("insert: \(article.id)")
+        insertArticle(type, article)
+      }
+    }
+  }
+
+  private func fetchArticle(type: String, ekyID: String) -> NSManagedObject? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    var articles = [NSManagedObject]()
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let articlesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: type)
+    let predicate = NSPredicate(format: "ekyID == %@", ekyID)
+    articlesFetchRequest.predicate = predicate
+
+    do {
+      articles = try managedContext.fetch(articlesFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return articles.first
+  }
+
+  private func updateArticle(local: NSManagedObject, updated: FarmQuery.Data.Farm.Article) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    if local is Seeds {
+      return
+    } else {
+      local.setValue(updated.name, forKey: "name")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func insertArticle(_ type: String, _ new: FarmQuery.Data.Farm.Article) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let articleEntity = NSEntityDescription.entity(forEntityName: type, in: managedContext)!
+    let article = NSManagedObject(entity: articleEntity, insertInto: managedContext)
+
+    if new.type.rawValue != "MATERIAL" {
+      article.setValue((new.referenceId != nil), forKey: "registered")
+    }
+    
+    article.setValue(new.id, forKey: "ekyID")
+    article.setValue(new.referenceId, forKey: "referenceID")
+    article.setValue(new.unit.rawValue.lowercased(), forKey: "unit")
+
+    if new.type.rawValue == "SEED" {
+      article.setValue(new.species?.rawValue.lowercased(), forKey: "specie")
+      article.setValue(new.variety, forKey: "variety")
+    } else if new.type.rawValue == "CHEMICAL"{
+      article.setValue(new.name, forKey: "name")
+      article.setValue(new.marketingAuthorizationNumber, forKey: "maaID")
+    } else {
+      article.setValue(new.name, forKey: "name")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 }
