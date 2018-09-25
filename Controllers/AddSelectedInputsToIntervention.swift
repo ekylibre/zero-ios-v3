@@ -102,6 +102,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     return selectedFertilizer
   }
 
+  func resetInputsUsedAttribute(index: Int) {
+    switch selectedInputs[index] {
+    case is InterventionSeeds:
+      (selectedInputs[index] as! InterventionSeeds).seeds?.used = false
+    case is InterventionPhytosanitaries:
+      (selectedInputs[index] as! InterventionPhytosanitaries).phytos?.used = false
+    case is InterventionFertilizers:
+      (selectedInputs[index] as! InterventionFertilizers).fertilizers?.used = false
+    default:
+      return
+    }
+  }
+
   func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
@@ -111,6 +124,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+      self.resetInputsUsedAttribute(index: indexPath.row)
       self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
