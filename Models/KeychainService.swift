@@ -8,7 +8,7 @@
 
 import UIKit
 
-/*class KeychainService: NSObject {
+class KeychainService: NSObject {
 
   enum KeychainError: Error {
     case noPassword
@@ -63,4 +63,4 @@ import UIKit
 
     return returned_string
   }
-}*/
+}
