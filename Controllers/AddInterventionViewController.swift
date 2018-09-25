@@ -488,7 +488,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
 
     newIntervention.type = interventionType
-    newIntervention.status = Intervention.Status.OutOfSync.rawValue
+    newIntervention.status = Int32(Intervention.Status.Created.rawValue)
     newIntervention.infos = "Infos"
     if interventionType == "irrigation".localized {
       let waterQuantityString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")

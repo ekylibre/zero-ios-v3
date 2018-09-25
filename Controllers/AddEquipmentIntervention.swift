@@ -226,7 +226,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     do {
       try managedContext.save()
       equipments.append(equipment)
-      let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;                #warning("Wrong type passed")
+      let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;              #warning("Wrong type passed")
       pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
       closeEquipmentsCreationView(self)
     } catch let error as NSError {

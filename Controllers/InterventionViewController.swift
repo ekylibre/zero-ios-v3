@@ -190,10 +190,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.typeLabel.text = "Erreur"
     }
 
-    switch intervention.value(forKey: "status") as! Int16 {
-    case Intervention.Status.OutOfSync.rawValue:
+    switch intervention.value(forKey: "status") as! Int {
+    case Intervention.Status.Created.rawValue:
       cell.syncImage.backgroundColor = UIColor.orange
-    case Intervention.Status.Synchronised.rawValue:
+    case Intervention.Status.Synced.rawValue:
       cell.syncImage.backgroundColor = UIColor.yellow
     case Intervention.Status.Validated.rawValue:
       cell.syncImage.backgroundColor = UIColor.green
@@ -350,13 +350,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   private func loadSampleInterventions() {
 
     let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
-    //let inter1 = Intervention(type: .Irrigation, crops: "2 cultures", infos: "Volume 50", date: date1, status: .OutOfSync)
     let date2 = makeDate(year: 2018, month: 7, day: 24, hour: 9, minute: 5, second: 0)
-    //let inter2 = Intervention(type: .TravailSol, crops: "1 culture", infos: "Kuhn Prolander", date: date2, status: .OutOfSync)
     let date3 = makeDate(year: 2018, month: 7, day: 23, hour: 9, minute: 5, second: 0)
-    //let inter3 = Intervention(type: .Pulverisation, crops: "2 cultures", infos: "PRIORI GOLD", date: date3, status: .OutOfSync)
     let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
-    //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
     createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
     createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
@@ -385,8 +381,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for intervention in interventions {
-      if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
-        intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
+      if intervention.value(forKey: "status") as? Int == Intervention.Status.Created.rawValue {
+        intervention.setValue(Intervention.Status.Synced.rawValue, forKey: "status")
       }
     }
 
