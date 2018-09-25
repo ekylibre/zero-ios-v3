@@ -250,6 +250,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         if selectedSeed != nil {
           addInterventionViewController?.selectedInputs.append(selectedSeed!)
         }
+      } else {
+        cell.backgroundColor = AppColor.CellColors.White
       }
     case 1:
       let fromPhytos = isSearching ? filteredInputs : phytos
@@ -263,6 +265,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         if selectedPhyto != nil {
           addInterventionViewController?.selectedInputs.append(selectedPhyto!)
         }
+      } else {
+        cell.backgroundColor = AppColor.CellColors.White
       }
     case 2:
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
@@ -276,6 +280,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         if selectedFertilizer != nil {
           addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
         }
+      } else {
+        cell.backgroundColor = AppColor.CellColors.White
       }
     default:
       print("Error")

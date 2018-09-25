@@ -76,13 +76,13 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     return selectedSeed
   }
 
-  func saveSelectedPhyto(phyto: Phytos) -> InterventionPhytosanitary? {
+  func saveSelectedPhyto(phyto: Phytos) -> InterventionPhytosanitaries? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedPhyto = InterventionPhytosanitary(context: managedContext)
+    let selectedPhyto = InterventionPhytosanitaries(context: managedContext)
 
     selectedPhyto.phytos = phyto
     selectedPhyto.unit = phyto.unit

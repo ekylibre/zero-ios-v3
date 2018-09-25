@@ -333,7 +333,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           cell.inputName.text = seed.specie
           cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
-        case is InterventionPhytosanitary:
+        case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
@@ -539,7 +539,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    for case let interventionPhyto as InterventionPhytosanitary in selectedInputs {
+    for case let interventionPhyto as InterventionPhytosanitaries in selectedInputs {
       interventionPhyto.interventions = intervention
 
       do {
