@@ -221,8 +221,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
       addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
     }
     return false

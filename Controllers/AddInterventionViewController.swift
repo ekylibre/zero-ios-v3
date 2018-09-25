@@ -314,38 +314,37 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
-    var input: NSManagedObject?
 
     switch tableView {
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
       if selectedInputs.count > indexPath.row {
-        input = selectedInputs[indexPath.row]
-        let quantity = String(input?.value(forKey: "quantity") as! Double)
+        let selectedInput = selectedInputs[indexPath.row]
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.type = input?.value(forKey: "type") as! String
-        cell.inputQuantity.text = quantity
-        cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
+        cell.unitMeasureButton.setTitle(selectedInput.value(forKey: "unit") as? String, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
-        switch cell.type {
-        case "Seed":
-          cell.inputName.text = input?.value(forKey: "specie") as? String
-          cell.inputLabel.text = input?.value(forKey: "variety") as? String
+        switch selectedInput {
+        case is InterventionSeeds:
+          let seed = selectedInput.value(forKey: "seeds") as! Seeds
+          cell.inputName.text = seed.specie
+          cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
-        case "Phyto":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "firmName") as? String
+        case is InterventionPhytosanitary:
+          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+          cell.inputName.text = phyto.name
+          cell.inputLabel.text = phyto.firmName
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
-        case "Fertilizer":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "nature") as? String
+        case is InterventionFertilizers:
+          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+          cell.inputName.text = fertilizer.name
+          cell.inputLabel.text = fertilizer.nature
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
-          print("No type")
+          fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
       }
       return cell
