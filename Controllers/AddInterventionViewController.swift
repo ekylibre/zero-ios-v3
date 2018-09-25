@@ -503,11 +503,70 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
+    saveInterventionSeeds(intervention: newIntervention)
+    saveInterventionPhytos(intervention: newIntervention)
+    saveInterventionFertilizers(intervention: newIntervention)
 
     do {
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveInterventionSeeds(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for case let interventionSeed as InterventionSeeds in selectedInputs {
+      interventionSeed.interventions = intervention
+
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+  }
+
+  func saveInterventionPhytos(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for case let interventionPhyto as InterventionPhytosanitary in selectedInputs {
+      interventionPhyto.interventions = intervention
+
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+  }
+
+  func saveInterventionFertilizers(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    //var fertilizer = InterventionFertilizers(context: managedContext)
+
+    for case let interventionFertilizer as InterventionFertilizers in selectedInputs {
+      interventionFertilizer.interventions = intervention
+      //fertilizer = interventionFertilizer
+
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
     }
   }
 
