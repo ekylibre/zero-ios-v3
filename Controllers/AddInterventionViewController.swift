@@ -506,11 +506,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     saveInterventionSeeds(intervention: newIntervention)
     saveInterventionPhytos(intervention: newIntervention)
     saveInterventionFertilizers(intervention: newIntervention)
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
 
     do {
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func resetInputsAttributes(entity: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        entity.setValue(false, forKey: "used")
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save or fetch. \(error), \(error.userInfo)")
     }
   }
 
@@ -836,12 +859,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
     dismiss(animated: true, completion: nil)
   }
 
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {
-
     if entities.count > 0 && constraint.constant == 70 {
       addEntityButton.isHidden = true
       numberLabel.isHidden = false
