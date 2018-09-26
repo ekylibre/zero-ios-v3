@@ -98,30 +98,30 @@ extension AddInterventionViewController: DoerCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-    let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
+    let entity = Entities(context: managedContext)
 
-    entity.setValue(false, forKey: "isDriver")
-    entity.setValue(entityFirstName.text, forKeyPath: "firstName")
-    entity.setValue(entityLastName.text, forKeyPath: "lastName")
-    entity.setValue(entityRole.text, forKeyPath: "role")
-    entity.setValue(0, forKey: "row")
+    entity.isDriver = false
+    entity.firstName = entityFirstName.text
+    entity.lastName = entityLastName.text
+    entity.role = entityRole.text
+    entity.row = 0
 
     do {
       try managedContext.save()
+      entity.ekyID = pushPerson(first: entityFirstName.text ?? "", last: entityLastName.text ?? "")
       entities.append(entity)
-      pushPerson(first: entityFirstName.text ?? "", last: entityLastName.text ?? "")
       closeEntitiesCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
-  private func pushPerson(first: String, last: String) {
+  private func pushPerson(first: String, last: String) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+      return 0
     }
 
+    var id: Int32 = 0
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let mutation = PushPersonMutation(farmId: farmID, firstName: first, lastName: last)
@@ -129,8 +129,11 @@ extension AddInterventionViewController: DoerCellDelegate {
     apollo.perform(mutation: mutation) { (result, error) in
       if error != nil {
         print(error!)
+      } else {
+        id = Int32(result!.data!.createPerson!.person!.id)!
       }
     }
+    return id
   }
 
   func removeDoerCell(_ indexPath: IndexPath) {

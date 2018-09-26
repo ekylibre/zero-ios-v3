@@ -19,6 +19,7 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="doers" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="Entities" representedClassName="Entities" syncable="YES" codeGenerationType="class">
+        <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -167,7 +168,7 @@
     <elements>
         <element name="Crops" positionX="414" positionY="269" width="128" height="195"/>
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
-        <element name="Entities" positionX="-450" positionY="-747" width="128" height="135"/>
+        <element name="Entities" positionX="-450" positionY="-747" width="128" height="150"/>
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="133"/>
         <element name="Farms" positionX="-245.3203125" positionY="388.06640625" width="128" height="75"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="315"/>
