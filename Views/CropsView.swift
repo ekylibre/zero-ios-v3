@@ -241,7 +241,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var crops: [Crops]!
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-    let predicate = NSPredicate(format: "plots == %@", plot)
+    let predicate = NSPredicate(format: "plot == %@", plot)
     cropsFetchRequest.predicate = predicate
 
     do {
