@@ -51,13 +51,13 @@ extension AddInterventionViewController {
         }
       }
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
     } else if weatherIsSelected {
       sender.layer.borderColor = UIColor.lightGray.cgColor
       weatherIsSelected = false
     } else {
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
       weatherIsSelected = true
     }
   }
@@ -95,7 +95,7 @@ extension AddInterventionViewController {
     textField.resignFirstResponder()
     switch textField {
     case temperatureTextField:
-      weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -107,7 +107,7 @@ extension AddInterventionViewController {
         currentWeatherLabel.text = currentTemp + currentWind
       }
     case windSpeedTextField:
-      weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -138,7 +138,7 @@ extension AddInterventionViewController {
 
     do {
       try managedContext.save()
-      weather.append(weatherEntity)
+      weather = weatherEntity
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
