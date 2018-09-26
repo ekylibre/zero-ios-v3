@@ -295,7 +295,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let crop = Crops(context: managedContext)
     let plot = fetchPlot(withName: plotName)
 
-    crop.plots = plot
+    crop.plot = plot
     crop.name = name
     crop.surfaceArea = surfaceArea
     crop.startDate = startDate
