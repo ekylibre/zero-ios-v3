@@ -509,14 +509,14 @@ class ApolloQuery {
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
-      let interventionPhyto = InterventionPhytosanitary(context: managedContext)
+      let interventionPhyto = InterventionPhytosanitaries(context: managedContext)
       let phyto = returnPhytoIfSame(phytoID: (fetchedInput.article?.id as NSString?)?.intValue)
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
       interventionPhyto.phytos = phyto
       interventionPhyto.interventions = intervention
-      intervention.addToInterventionPhytosanitary(interventionPhyto)
+      intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
       let interventionMaterial = InterventionMaterials(context: managedContext)
       let material = returnMaterialIfSame(materialID: (fetchedInput.article?.id as NSString?)?.intValue)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040D4AB4215BB227001BEC24 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D4AB3215BB226001BEC24 /* AddWeatherToIntervention.swift */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
@@ -72,6 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040D4AB3215BB226001BEC24 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		0411C4CC214FC30B005B6C01 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */,
 				0417A58521539C22009529D5 /* AddIrrigation.swift */,
 				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
+				040D4AB3215BB226001BEC24 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
@@ -486,6 +489,7 @@
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */,
+				040D4AB4215BB227001BEC24 /* AddWeatherToIntervention.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
 				04149EC421510C80007B5441 /* API.swift in Sources */,

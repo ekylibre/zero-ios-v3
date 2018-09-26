@@ -151,6 +151,16 @@
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
 
+// Input selection
+
+"or" = "Soit %@ %@";
+"or_per_hectare" = "Soit %@ %@ par hectare";
+"quantity_cant_be_nul" = "%@ ne peut être nul";
+"no_crop_selected" = "Aucune culture sélectionnée";
+"volume" = "Le volume";
+"mass" = "La masse";
+"select" = "+ SÉLECTIONNER";
+
 // Weather
 
 "weather" = "Météo";

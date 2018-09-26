@@ -65,7 +65,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
     quantity.text = "Quantité"
     quantity.textColor = AppColor.TextColors.DarkGray
-    quantity.font = UIFont.systemFont(ofSize: 13)
+    quantity.font = UIFont.systemFont(ofSize: 15)
     quantity.translatesAutoresizingMaskIntoConstraints = false
     return quantity
   }()
@@ -82,7 +82,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var surfaceQuantity: UILabel = {
     let surfaceQuantity = UILabel(frame: CGRect.zero)
 
-    surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
+    surfaceQuantity.isHidden = true
+    surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
     surfaceQuantity.text = "Soit 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
@@ -220,8 +221,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
     }
     return false
   }

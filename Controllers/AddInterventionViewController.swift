@@ -70,6 +70,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var currentWeatherLabel: UILabel!
+  @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var temperatureTextField: UITextField!
+  @IBOutlet weak var windSpeedTextField: UITextField!
+  @IBOutlet weak var brokenClouds: UIButton!
+  @IBOutlet weak var clearSky: UIButton!
+  @IBOutlet weak var fewClouds: UIButton!
+  @IBOutlet weak var lightRain: UIButton!
+  @IBOutlet weak var mist: UIButton!
+  @IBOutlet weak var showerRain: UIButton!
+  @IBOutlet weak var snow: UIButton!
+  @IBOutlet weak var thunderstorm: UIButton!
 
   // MARK: - Properties
 
@@ -97,6 +110,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
+  var weatherIsSelected: Bool = false
+  var weatherButtons = [UIButton]()
+  var weather = [Weather]()
   let solidUnitMeasure = ["g", "g/ha", "g/m²", "kg", "kg/ha", "kg/m²", "q", "q/ha", "q/m²", "t", "t/ha", "t/m²"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m²", "hl", "hl/ha", "hl/m²", "m³","m³/ha", "m³/m²"]
 
@@ -109,7 +125,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
     selectDateView.center.x = self.view.center.x
     selectDateView.center.y = self.view.center.y
-    self.view.addSubview(selectDateView)
+    view.addSubview(selectDateView)
 
     let dateFormatter = DateFormatter()
 
@@ -210,12 +226,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     inputsView.addInterventionViewController = self
-    self.view.addSubview(inputsView)
+    view.addSubview(inputsView)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
-    self.view.addSubview(cropsView)
+    view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
+    initializeWeatherButtons()
+    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
+
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
     setupIrrigation()
 
     setupViewsAccordingInterventionType()
@@ -315,38 +338,37 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
-    var input: NSManagedObject?
 
     switch tableView {
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
       if selectedInputs.count > indexPath.row {
-        input = selectedInputs[indexPath.row]
-        let quantity = String(input?.value(forKey: "quantity") as! Double)
+        let selectedInput = selectedInputs[indexPath.row]
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.type = input?.value(forKey: "type") as! String
-        cell.inputQuantity.text = quantity
-        cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
+        cell.unitMeasureButton.setTitle(selectedInput.value(forKey: "unit") as? String, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
-        switch cell.type {
-        case "Seed":
-          cell.inputName.text = input?.value(forKey: "specie") as? String
-          cell.inputLabel.text = input?.value(forKey: "variety") as? String
+        switch selectedInput {
+        case is InterventionSeeds:
+          let seed = selectedInput.value(forKey: "seeds") as! Seeds
+          cell.inputName.text = seed.specie
+          cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
-        case "Phyto":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "firmName") as? String
+        case is InterventionPhytosanitaries:
+          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+          cell.inputName.text = phyto.name
+          cell.inputLabel.text = phyto.firmName
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
-        case "Fertilizer":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "nature") as? String
+        case is InterventionFertilizers:
+          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+          cell.inputName.text = fertilizer.name
+          cell.inputLabel.text = fertilizer.nature
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
-          print("No type")
+          fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
       }
       return cell
@@ -505,6 +527,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
+    saveInterventionInputs(intervention: newIntervention)
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
 
     do {
       try managedContext.save()
@@ -513,19 +539,38 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createTargets(intervention: Interventions) {
+  func resetInputsAttributes(entity: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let target = Targets(context: managedContext)
-    let selectedCrops = fetchSelectedCrops()
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+    let predicate = NSPredicate(format: "used == true")
 
-    for crop in selectedCrops {
-      target.interventions = intervention
-      target.crops = crop
-      target.workAreaPercentage = 100
+    entitiesFetchRequest.predicate = predicate
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        entity.setValue(false, forKey: "used")
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save or fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveInterventionInputs(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for selectedInput in selectedInputs {
+      selectedInput.setValue(intervention, forKey: "interventions")
     }
 
     do {
@@ -554,8 +599,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return crops
   }
 
-  func createEquipments(intervention: Interventions) {
+  func createTargets(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
 
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let target = Targets(context: managedContext)
+    let selectedCrops = fetchSelectedCrops()
+
+    for crop in selectedCrops {
+      target.interventions = intervention
+      target.crops = crop
+      target.workAreaPercentage = 100
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createEquipments(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -603,7 +669,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -731,6 +796,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.isHidden = true
     dimView.isHidden = true
 
+    updateAllInputQuantity()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
@@ -758,7 +824,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     return String(format: "%@ • %g h", dateString, duration)
   }
-  
+
   @IBAction func selectDate(_ sender: Any) {
     dimView.isHidden = false
     selectDateView.isHidden = false
@@ -793,12 +859,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
     dismiss(animated: true, completion: nil)
   }
 
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {
-
     if entities.count > 0 && constraint.constant == 70 {
       addEntityButton.isHidden = true
       numberLabel.isHidden = false
@@ -818,3 +886,4 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
+

@@ -28,7 +28,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         print("Lexicon error")
       }
     } else {
-      print("equipment_types.json not found")
+      print("equipment-types.json not found")
     }
     return equipmentType
   }
