@@ -63,43 +63,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func saveSelectedSeed(seed: Seeds) -> InterventionSeeds? {
+  func saveSelectedInput(input: NSManagedObject, entityName: String, relationShip: String) -> NSManagedObject? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedSeed = InterventionSeeds(context: managedContext)
+    let selectedInputs = NSEntityDescription.entity(forEntityName: entityName, in: managedContext)!
+    let selectedInput = NSManagedObject(entity: selectedInputs, insertInto: managedContext)
+    let unit = input.value(forKey: "unit")
 
-    selectedSeed.seeds = seed
-    selectedSeed.unit = seed.unit
-    return selectedSeed
-  }
-
-  func saveSelectedPhyto(phyto: Phytos) -> InterventionPhytosanitaries? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedPhyto = InterventionPhytosanitaries(context: managedContext)
-
-    selectedPhyto.phytos = phyto
-    selectedPhyto.unit = phyto.unit
-    return selectedPhyto
-  }
-
-  func saveSelectedFertilizer(fertilizer: Fertilizers) -> InterventionFertilizers? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedFertilizer = InterventionFertilizers(context: managedContext)
-
-    selectedFertilizer.fertilizers = fertilizer
-    selectedFertilizer.unit = fertilizer.unit
-    return selectedFertilizer
+    selectedInput.setValue(unit, forKey: "unit")
+    selectedInput.setValue(input, forKey: relationShip)
+    return selectedInput
   }
 
   func resetInputsUsedAttribute(index: Int) {

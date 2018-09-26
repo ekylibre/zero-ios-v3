@@ -249,7 +249,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromSeeds = isSearching ? filteredInputs : seeds
 
       isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
-      let selectedSeed = addInterventionViewController?.saveSelectedSeed(seed: fromSeeds[indexPath.row] as! Seeds)
+      let selectedSeed = addInterventionViewController?.saveSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
       if selectedSeed != nil {
         addInterventionViewController?.selectedInputs.append(selectedSeed!)
       }
@@ -257,7 +257,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromPhytos = isSearching ? filteredInputs : phytos
 
       isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
-      let selectedPhyto = addInterventionViewController?.saveSelectedPhyto(phyto: fromPhytos[indexPath.row] as! Phytos)
+      let selectedPhyto = addInterventionViewController?.saveSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
       if selectedPhyto != nil {
         addInterventionViewController?.selectedInputs.append(selectedPhyto!)
       }
@@ -265,7 +265,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
 
       isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
-      let selectedFertilizer = addInterventionViewController?.saveSelectedFertilizer(fertilizer: fromFertilizers[indexPath.row] as! Fertilizers)
+      let selectedFertilizer = addInterventionViewController?.saveSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
       if selectedFertilizer != nil {
         addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
       }
