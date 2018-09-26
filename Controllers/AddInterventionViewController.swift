@@ -70,6 +70,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var currentWeatherLabel: UILabel!
+  @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var temperatureTextField: UITextField!
+  @IBOutlet weak var windSpeedTextField: UITextField!
+  @IBOutlet weak var brokenClouds: UIButton!
+  @IBOutlet weak var clearSky: UIButton!
+  @IBOutlet weak var fewClouds: UIButton!
+  @IBOutlet weak var lightRain: UIButton!
+  @IBOutlet weak var mist: UIButton!
+  @IBOutlet weak var showerRain: UIButton!
+  @IBOutlet weak var snow: UIButton!
+  @IBOutlet weak var thunderstorm: UIButton!
 
   // MARK: - Properties
 
@@ -97,6 +110,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
+  var weatherIsSelected: Bool = false
+  var weatherButtons = [UIButton]()
+  var weather = [Weather]()
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -109,7 +125,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
     selectDateView.center.x = self.view.center.x
     selectDateView.center.y = self.view.center.y
-    self.view.addSubview(selectDateView)
+    view.addSubview(selectDateView)
 
     let dateFormatter = DateFormatter()
 
@@ -209,12 +225,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     inputsView.addInterventionViewController = self
-    self.view.addSubview(inputsView)
+    view.addSubview(inputsView)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
-    self.view.addSubview(cropsView)
+    view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
+    initializeWeatherButtons()
+    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
+
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
     setupIrrigation()
 
     setupViewsAccordingInterventionType()
@@ -786,7 +809,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     return String(format: "%@ • %g h", dateString, duration)
   }
-  
+
   @IBAction func selectDate(_ sender: Any) {
     dimView.isHidden = false
     selectDateView.isHidden = false
@@ -848,3 +871,4 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
+
