@@ -15,6 +15,7 @@
 		0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
+		041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041855772142A20F0077A715 /* AddWeatherToIntervention.swift */; };
 		0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */; };
 		041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
@@ -74,6 +75,7 @@
 		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		041855772142A20F0077A715 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
 		0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
 		041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */,
 				6B77C3D32141297500520840 /* AddIrrigation.swift */,
 				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
+				041855772142A20F0077A715 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
@@ -338,9 +341,11 @@
 				TargetAttributes = {
 					6BEA656C2105C5EE0072840F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					6BEA65832105C5EF0072840F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 6BEA656C2105C5EE0072840F;
 					};
 				};
@@ -434,6 +439,7 @@
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
+				041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */,
 				0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */,
 				6BEA65E72105CD8B0072840F /* Intervention.swift in Sources */,
 				047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */,
@@ -613,7 +619,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.Clic-Farm-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -634,7 +640,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.Clic-Farm-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -653,7 +659,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ekylibre.Clic-Farm-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clic&Farm-iOS.app/Clic&Farm-iOS";
 			};
@@ -673,7 +679,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ekylibre.Clic-Farm-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clic&Farm-iOS.app/Clic&Farm-iOS";
 			};
