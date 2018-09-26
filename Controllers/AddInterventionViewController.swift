@@ -232,7 +232,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
     initializeWeatherButtons()
-    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    initWeather()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
 
@@ -530,6 +530,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
+    saveWeather(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -645,6 +646,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doer.setValue(UUID(), forKey: "uuid")
       doer.setValue(isDriver, forKey: "isDriver")
     }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveWeather(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var currentWeather = Weather(context: managedContext)
+
+    currentWeather = weather
+    currentWeather.interventions = intervention
 
     do {
       try managedContext.save()

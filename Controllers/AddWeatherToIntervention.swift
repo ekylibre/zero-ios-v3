@@ -124,23 +124,14 @@ extension AddInterventionViewController {
     return false
   }
 
-  func saveWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
+  func initWeather() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let weatherEntity = Weather(context: managedContext)
+    let weather = Weather(context: managedContext)
 
-    weatherEntity.windSpeed = windSpeed
-    weatherEntity.temperature = temperature
-    weatherEntity.weatherDescription = weatherDescription
-
-    do {
-      try managedContext.save()
-      weather = weatherEntity
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    self.weather = weather
   }
 }
