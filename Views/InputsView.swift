@@ -487,7 +487,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      pushInput(unit: ArticleUnitEnum.kilogram, name: variety, type: ArticleTypeEnum.seed)
+      let ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: variety, type: ArticleTypeEnum.seed)
+      seed.setValue(ekyID, forKey: "ekyID")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -516,7 +517,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
+      let ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
+      phyto.setValue(ekyID, forKey: "ekyID")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -543,7 +545,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
+      let ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
+      fertilizer.setValue(ekyID, forKey: "ekyID")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -609,11 +612,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     dimView.isHidden = true
   }
 
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) {
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+      return 0
     }
 
+    var id: Int32 = 0
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
@@ -621,8 +625,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     apollo.perform(mutation: mutation) { (result, error) in
       if error != nil {
         print(error!)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
       }
     }
+    return id
   }
 
   @objc func hideDimView() {
