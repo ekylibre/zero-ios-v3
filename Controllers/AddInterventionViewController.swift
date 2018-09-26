@@ -113,7 +113,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
   var weather = [Weather]()
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
+  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
   override func viewDidLoad() {
@@ -337,38 +337,37 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
-    var input: NSManagedObject?
 
     switch tableView {
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
       if selectedInputs.count > indexPath.row {
-        input = selectedInputs[indexPath.row]
-        let quantity = String(input?.value(forKey: "quantity") as! Double)
+        let selectedInput = selectedInputs[indexPath.row]
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.type = input?.value(forKey: "type") as! String
-        cell.inputQuantity.text = quantity
-        cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
+        cell.unitMeasureButton.setTitle(selectedInput.value(forKey: "unit") as? String, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
-        switch cell.type {
-        case "Seed":
-          cell.inputName.text = input?.value(forKey: "specie") as? String
-          cell.inputLabel.text = input?.value(forKey: "variety") as? String
+        switch selectedInput {
+        case is InterventionSeeds:
+          let seed = selectedInput.value(forKey: "seeds") as! Seeds
+          cell.inputName.text = seed.specie
+          cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
-        case "Phyto":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "firmName") as? String
+        case is InterventionPhytosanitaries:
+          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+          cell.inputName.text = phyto.name
+          cell.inputLabel.text = phyto.firmName
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
-        case "Fertilizer":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "nature") as? String
+        case is InterventionFertilizers:
+          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+          cell.inputName.text = fertilizer.name
+          cell.inputLabel.text = fertilizer.nature
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
-          print("No type")
+          fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
       }
       return cell
@@ -527,6 +526,51 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
+    saveInterventionInputs(intervention: newIntervention)
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func resetInputsAttributes(entity: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+    let predicate = NSPredicate(format: "used == true")
+
+    entitiesFetchRequest.predicate = predicate
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        entity.setValue(false, forKey: "used")
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save or fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveInterventionInputs(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for selectedInput in selectedInputs {
+      selectedInput.setValue(intervention, forKey: "interventions")
+    }
 
     do {
       try managedContext.save()
@@ -559,7 +603,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createEquipments(intervention: NSManagedObject) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -602,6 +645,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doer.setValue(UUID(), forKey: "uuid")
       doer.setValue(isDriver, forKey: "isDriver")
     }
+
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -610,7 +654,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -738,6 +781,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.isHidden = true
     dimView.isHidden = true
 
+    updateAllInputQuantity()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
@@ -800,12 +844,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
     dismiss(animated: true, completion: nil)
   }
 
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {
-
     if entities.count > 0 && constraint.constant == 70 {
       addEntityButton.isHidden = true
       numberLabel.isHidden = false

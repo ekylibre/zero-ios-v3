@@ -198,17 +198,21 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
+      let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
 
+      cell.isUserInteractionEnabled = !used
+      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
       let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
       cell.specieLabel.text = specie?.localized
-      let isRegistered = fromSeeds[indexPath.row].value(forKey: "registered") as! Bool
-      cell.starImageView.isHidden = isRegistered
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs : phytos
+      let used = fromPhytos[indexPath.row].value(forKey: "used") as! Bool
 
+      cell.isUserInteractionEnabled = !used
+      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
@@ -221,7 +225,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
+      let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
 
+      cell.isUserInteractionEnabled = !used
+      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
       let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
@@ -244,36 +251,27 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       let fromSeeds = isSearching ? filteredInputs : seeds
-      let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
-      let cell = tableView.cellForRow(at: indexPath) as! SeedCell
 
-      if !used {
-        fromSeeds[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.LightGray
-        addInterventionViewController?.selectedInputs.append(fromSeeds[indexPath.row])
-        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
+      let selectedSeed = addInterventionViewController?.createSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
+      if selectedSeed != nil {
+        addInterventionViewController?.selectedInputs.append(selectedSeed!)
       }
     case 1:
       let fromPhytos = isSearching ? filteredInputs : phytos
-      let used = phytos[indexPath.row].value(forKey: "used") as! Bool
-      let cell = tableView.cellForRow(at: indexPath) as! PhytoCell
 
-      if !used {
-        fromPhytos[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.LightGray
-        addInterventionViewController?.selectedInputs.append(fromPhytos[indexPath.row])
-        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
+      let selectedPhyto = addInterventionViewController?.createSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
+      if selectedPhyto != nil {
+        addInterventionViewController?.selectedInputs.append(selectedPhyto!)
       }
     case 2:
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
-      let used = fertilizers[indexPath.row].value(forKey: "used") as! Bool
-      let cell = tableView.cellForRow(at: indexPath) as! FertilizerCell
 
-      if !used {
-        fromFertilizers[indexPath.row].setValue(true, forKey: "used")
-        cell.backgroundColor = AppColor.CellColors.LightGray
-        addInterventionViewController?.selectedInputs.append(fromFertilizers[indexPath.row])
-        addInterventionViewController?.selectedInputs[(addInterventionViewController?.selectedInputs.count)! - 1].setValue(indexPath.row, forKey: "row")
+      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
+      let selectedFertilizer = addInterventionViewController?.createSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
+      if selectedFertilizer != nil {
+        addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
       }
     default:
       print("Error")
@@ -404,14 +402,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.seedIDEky = Int32(registeredSeed.id)
+      seed.ekyID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
-
-      seed.type = "Seed"
       seed.unit = "kg/ha"
-      seed.quantity = 0
-      seed.row = 0
       seed.used = false
       seeds.append(seed)
     }
@@ -434,18 +428,14 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.phytoIDEky = Int32(registeredPhyto.id)
+      phyto.ekyID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
       phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
       phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
       phyto.firmName = registeredPhyto.firmName
-
-      phyto.type = "Phyto"
       phyto.unit = "l/ha"
-      phyto.quantity = 0
-      phyto.row = 0
       phyto.used = false
       phytos.append(phyto)
     }
@@ -468,7 +458,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.fertilizerIDEky = Int32(registeredFertilizer.id)
+      fertilizer.ekyID = Int32(registeredFertilizer.id)
       fertilizer.name = registeredFertilizer.name
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety
@@ -478,11 +468,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
       fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
       fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
-
-      fertilizer.type = "Fertilizer"
-      fertilizer.unit = "l/ha"
-      fertilizer.quantity = 0
-      fertilizer.row = 0
+      fertilizer.unit = "kg/ha"
       fertilizer.used = false
       fertilizers.append(fertilizer)
     }
@@ -502,13 +488,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let managedContext = appDelegate.persistentContainer.viewContext
     let seed = Seeds(context: managedContext)
 
-    seed.type = "Seed"
     seed.registered = false
-    seed.variety = variety
     seed.specie = specie
+    seed.variety = variety
     seed.unit = "kg/ha"
-    seed.quantity = 0
-    seed.row = 0
     seed.used = false
     seeds.append(seed)
 
@@ -531,11 +514,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.name = name
     phyto.firmName = firmName
     phyto.maaID = maaID
-    phyto.type = "Phyto"
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
     phyto.unit = "l/ha"
-    phyto.quantity = 0
-    phyto.row = 0
     phyto.used = false
     phytos.append(phyto)
 
@@ -554,13 +534,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let managedContext = appDelegate.persistentContainer.viewContext
     let fertilizer = Fertilizers(context: managedContext)
 
-    fertilizer.type = "Fertilzer"
     fertilizer.registered = false
     fertilizer.name = name
-    fertilizer.nature = (nature == "organic".localized) ? "organic" : "mineral"
+    fertilizer.nature = nature
     fertilizer.unit = "kg/ha"
-    fertilizer.quantity = 0
-    fertilizer.row = 0
     fertilizer.used = false
     fertilizers.append(fertilizer)
 
