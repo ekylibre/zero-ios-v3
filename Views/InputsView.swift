@@ -511,8 +511,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let phyto = Phytos(context: managedContext)
 
     phyto.registered = false
-    phyto.name = firmName
-    phyto.maaID = String(maaID)
+    phyto.name = name
+    phyto.firmName = firmName
+    phyto.maaID = maaID
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
     phyto.unit = "l/ha"
     phyto.used = false
