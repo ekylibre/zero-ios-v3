@@ -627,55 +627,6 @@ class ApolloQuery {
 
   // MARK: Interventions
 
-  func returnInputsFromIntervention(intervention: Interventions) -> [InterventionInputAttributes]? {
-    let seeds = intervention.interventionSeeds?.allObjects
-    let phytos = intervention.interventionPhytosanitaries?.allObjects
-    let fertilizers = intervention.interventionFertilizers?.allObjects
-
-    print("\nSeeds: \(String(describing: seeds))")
-    print("\nPhytos: \(String(describing: phytos))")
-    print("\nFerti: \(String(describing: fertilizers))")
-    return nil
-  }
-
-  func returnWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
-    var weather = WeatherAttributes()
-
-    weather.temperature = intervention.weather?.temperature as? Double
-    weather.windSpeed = intervention.weather?.windSpeed as? Double
-    weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
-    return weather
-  }
-
-  func returnTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
-    let targets = intervention.targets
-    var targetsAttributes = [InterventionTargetAttributes]()
-
-    for target in targets! {
-      let targetAttributes = InterventionTargetAttributes(
-        cropId: (target as AnyObject).value(forKey: "crops") as? GraphQLID,
-        workZone: nil,
-        workAreaPercentage: (target as AnyObject).value(forKey: "workAreaPercentage") as! Int)
-
-      targetsAttributes.append(targetAttributes)
-    }
-    return targetsAttributes
-  }
-
-  func returnEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
-    let equipments = intervention.interventionEquipments
-    var equipmentsAttributes = [InterventionToolAttributes]()
-
-    for equipment in equipments! {
-      let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipment as AnyObject).value(forKey: "equipments") as? GraphQLID)
-
-      //print("\nEqui: \(equipmentAttributes)")
-      equipmentsAttributes.append(equipmentAttributes)
-    }
-
-    return equipmentsAttributes
-  }
-
   func returnWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
     let workingDays = intervention.workingPeriods
     var workingDaysAttributes = [InterventionWorkingDayAttributes]()
@@ -694,6 +645,60 @@ class ApolloQuery {
     return workingDaysAttributes
   }
 
+  func returnTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
+    let targets = intervention.targets
+    var targetsAttributes = [InterventionTargetAttributes]()
+
+    for target in targets! {
+      let target = (target as! Targets)
+      let targetAttributes = InterventionTargetAttributes(
+        cropId: "\(String(describing: target.crops))",
+        workZone: nil,
+        workAreaPercentage: Int(target.workAreaPercentage))
+
+      targetsAttributes.append(targetAttributes)
+    }
+    return targetsAttributes
+  }
+
+  func returnEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
+    let equipments = intervention.interventionEquipments
+    var equipmentsAttributes = [InterventionToolAttributes]()
+
+    for equipment in equipments! {
+      let equipmentID = (equipment as! InterventionEquipments).equipments?.ekyID
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: "\(equipmentID!)")
+
+      equipmentsAttributes.append(equipmentAttributes)
+    }
+    return equipmentsAttributes
+  }
+
+  func returnOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
+    let doers = intervention.doers
+    var operatorsAttributes = [InterventionOperatorAttributes]()
+
+    for doer in doers! {
+      let personID = (doer as! Doers).entities?.ekyID
+      let role = (doer as! Doers).isDriver
+      let operatorAttributes = InterventionOperatorAttributes(
+        personId: "\(personID!)",
+        role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
+
+      operatorsAttributes.append(operatorAttributes)
+    }
+    return operatorsAttributes
+  }
+
+  func returnWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
+    var weather = WeatherAttributes()
+
+    weather.temperature = intervention.weather?.temperature as? Double
+    weather.windSpeed = intervention.weather?.windSpeed as? Double
+    weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
+    return weather
+  }
+
   func pushIntervention(intervention: Interventions) {
 
     let mutation = PushInterMutation(
@@ -707,10 +712,10 @@ class ApolloQuery {
       outputs: intervention.harvests?.allObjects as? [InterventionOutputAttributes],
       globalOutputs: false,
       tools: returnEquipmentAttributesFrom(intervention: intervention),
-      operators: intervention.doers?.allObjects as? [InterventionOperatorAttributes],
+      operators: returnOperatorAttributesFrom(intervention: intervention),
       weather: returnWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
-    //print("\nMutation: \(String(describing: mutation.tools))")
+    print("\nMutation: \(String(describing: mutation.operators))")
   }
 }
