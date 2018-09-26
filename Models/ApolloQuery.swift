@@ -627,7 +627,7 @@ class ApolloQuery {
 
   // MARK: Interventions
 
-  func returnWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
+  func defineWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
     let workingDays = intervention.workingPeriods
     var workingDaysAttributes = [InterventionWorkingDayAttributes]()
 
@@ -645,7 +645,7 @@ class ApolloQuery {
     return workingDaysAttributes
   }
 
-  func returnTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
+  func defineTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
     let targets = intervention.targets
     var targetsAttributes = [InterventionTargetAttributes]()
 
@@ -661,7 +661,30 @@ class ApolloQuery {
     return targetsAttributes
   }
 
-  func returnEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
+  func defineHarvestAttributesFrom(intervention: Interventions) -> [InterventionOutputAttributes] {
+    let harvests = intervention.harvests
+    var harvestsAttributes = [InterventionOutputAttributes]()
+    for harvest in harvests! {
+      let harvest = (harvest as! Harvests)
+      let loads = HarvestLoadAttributes(
+        quantity: harvest.quantity,
+        netQuantity: nil,
+        unit: HarvestLoadUnitEnum(rawValue: harvest.unit!),
+        number: harvest.number,
+        storageId: "\(String(describing: harvest.storages))")
+      let harvestAttributes = InterventionOutputAttributes(
+        quantity: nil,
+        nature: InterventionOutputTypeEnum(rawValue: harvest.type!.uppercased()),
+        unit: nil,
+        approximative: nil,
+        loads: [loads])
+
+      harvestsAttributes.append(harvestAttributes)
+    }
+    return harvestsAttributes
+  }
+
+  func defineEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
     let equipments = intervention.interventionEquipments
     var equipmentsAttributes = [InterventionToolAttributes]()
 
@@ -674,7 +697,7 @@ class ApolloQuery {
     return equipmentsAttributes
   }
 
-  func returnOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
+  func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
     let doers = intervention.doers
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
@@ -690,7 +713,7 @@ class ApolloQuery {
     return operatorsAttributes
   }
 
-  func returnWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
+  func defineWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
     var weather = WeatherAttributes()
 
     weather.temperature = intervention.weather?.temperature as? Double
@@ -704,18 +727,18 @@ class ApolloQuery {
     let mutation = PushInterMutation(
       farmId: intervention.farmID!,
       procedure: InterventionTypeEnum(rawValue: intervention.type!.uppercased())!,
-      cropList: returnTargetAttributesFrom(intervention: intervention),
-      workingDays: returnWorkingDayAttributesFrom(intervention: intervention),
+      cropList: defineTargetAttributesFrom(intervention: intervention),
+      workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
       waterQuantity: Int(intervention.waterQuantity),
       waterUnit: InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit ?? "LITER"),
       inputs: intervention.interventionSeeds?.value(forKey: "seeds") as? [InterventionInputAttributes],
-      outputs: intervention.harvests?.allObjects as? [InterventionOutputAttributes],
+      outputs: defineHarvestAttributesFrom(intervention: intervention),
       globalOutputs: false,
-      tools: returnEquipmentAttributesFrom(intervention: intervention),
-      operators: returnOperatorAttributesFrom(intervention: intervention),
-      weather: returnWeatherAttributesFrom(intervention: intervention),
+      tools: defineEquipmentAttributesFrom(intervention: intervention),
+      operators: defineOperatorAttributesFrom(intervention: intervention),
+      weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
-    print("\nMutation: \(String(describing: mutation.operators))")
+    print("\nMutation: \(String(describing: mutation))")
   }
 }
