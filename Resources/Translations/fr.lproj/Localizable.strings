@@ -150,3 +150,12 @@
 "water_spreader" = "Enrouleur";
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
+
+// Weather
+
+"weather" = "Météo";
+"temperature" = "Température";
+"wind_speed" = "Vitesse du vent";
+"not_filled_in" = "Non renseignée";
+"temp" = "Temp.: %@ °C |";
+"wind" = " vent: %@ km/h";
