@@ -63,72 +63,31 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func storeSampleSeed(indexPath: IndexPath) {
+  func createSelectedInput(input: NSManagedObject, entityName: String, relationShip: String) -> NSManagedObject? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let seeds = NSEntityDescription.entity(forEntityName: "Seeds", in: managedContext)!
-    let seed = NSManagedObject(entity: seeds, insertInto: managedContext)
+    let selectedInputs = NSEntityDescription.entity(forEntityName: entityName, in: managedContext)!
+    let selectedInput = NSManagedObject(entity: selectedInputs, insertInto: managedContext)
+    let unit = input.value(forKey: "unit")
 
-    seed.setValue("Aubergine", forKey: "specie")
-    seed.setValue("Marfa", forKey: "variety")
-    seed.setValue("kg/ha", forKey: "unit")
-    seed.setValue(false, forKey: "used")
-    seed.setValue(false, forKey: "registered")
-
-    do {
-      try managedContext.save()
-      createdSeed.append(seed)
-    } catch {
-      print("Unable to save managed context object.")
-    }
+    selectedInput.setValue(unit, forKey: "unit")
+    selectedInput.setValue(input, forKey: relationShip)
+    return selectedInput
   }
 
-  func saveSelectedSeed(indexPath: IndexPath, seed: NSManagedObject) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+  func resetInputsUsedAttribute(index: Int) {
+    switch selectedInputs[index] {
+    case is InterventionSeeds:
+      (selectedInputs[index] as! InterventionSeeds).seeds?.used = false
+    case is InterventionPhytosanitaries:
+      (selectedInputs[index] as! InterventionPhytosanitaries).phytos?.used = false
+    case is InterventionFertilizers:
+      (selectedInputs[index] as! InterventionFertilizers).fertilizers?.used = false
+    default:
       return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedSeeds = NSEntityDescription.entity(forEntityName: "InterventionSeeds", in: managedContext)!
-    let selectedSeed = NSManagedObject(entity: selectedSeeds, insertInto: managedContext)
-
-    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
-    let unit = cell.unitMeasureButton.titleLabel?.text
-
-    selectedSeed.setValue(quantity, forKey: "quantity")
-    selectedSeed.setValue(unit, forKey: "unit")
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  func saveSelectedPhyto(indexPath: IndexPath, phyto: NSManagedObject) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedPhytos = NSEntityDescription.entity(forEntityName: "InterventionPhytosanitary", in: managedContext)!
-    let selectedPhyto = NSManagedObject(entity: selectedPhytos, insertInto: managedContext)
-
-    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
-    let unit = cell.unitMeasureButton.titleLabel?.text
-
-    selectedPhyto.setValue(quantity, forKey: "quantity")
-    selectedPhyto.setValue(unit, forKey: "unit")
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
@@ -141,6 +100,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
+      self.resetInputsUsedAttribute(index: indexPath.row)
       self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
@@ -221,29 +181,3 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 }
-
-// Begin unselection of cells in inputs table view (not working for now)
-
-/*let type = self.selectedInputs[indexPath.row].value(forKey: "type") as! String
- let row = self.selectedInputs[indexPath.row].value(forKey: "row") as! Int
- let cellIndexPath = NSIndexPath(row: row, section: 0)
-
- switch type {
- case "Seed":
- let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! SeedCell
-
- cell.isAvaible = true
- cell.backgroundColor = AppColor.CellColors.white
- case "Phyto":
- let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! PhytoCell
-
- cell.isAvaible = true
- cell.backgroundColor = AppColor.CellColors.white
- case "Fertilizer":
- let cell = self.inputsView.tableView.cellForRow(at: cellIndexPath as IndexPath) as! FertilizerCell
-
- cell.isAvaible = true
- cell.backgroundColor = AppColor.CellColors.white
- default:
- print("No type")
- }*/
