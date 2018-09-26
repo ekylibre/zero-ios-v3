@@ -295,7 +295,7 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-collapse" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-aQ-Xe3">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-more" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-aQ-Xe3">
                                                         <rect key="frame" x="339" y="27" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="QL9-Hx-ikl"/>
@@ -510,7 +510,7 @@
                                                             <constraint firstAttribute="width" constant="16" id="HEw-hH-DuS"/>
                                                             <constraint firstAttribute="height" constant="16" id="bo7-rs-IL4"/>
                                                         </constraints>
-                                                        <state key="normal" image="expand-collapse"/>
+                                                        <state key="normal" image="expand-more"/>
                                                         <connections>
                                                             <action selector="collapseInputsView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="i9N-5t-Mat"/>
                                                         </connections>
@@ -645,7 +645,7 @@
                                                             <constraint firstAttribute="width" constant="16" id="AEA-z1-m1a"/>
                                                             <constraint firstAttribute="height" constant="16" id="EKZ-Yo-I3K"/>
                                                         </constraints>
-                                                        <state key="normal" image="expand-collapse"/>
+                                                        <state key="normal" image="expand-more"/>
                                                         <connections>
                                                             <action selector="collapseEquipmentView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Tx7-Ec-9xi"/>
                                                         </connections>
@@ -712,7 +712,7 @@
                                                             <constraint firstAttribute="width" constant="16" id="Hja-JA-E70"/>
                                                             <constraint firstAttribute="height" constant="16" id="xIe-zP-1Aa"/>
                                                         </constraints>
-                                                        <state key="normal" image="expand-collapse"/>
+                                                        <state key="normal" image="expand-more"/>
                                                         <connections>
                                                             <action selector="collapseDoersView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="17z-rV-kzo"/>
                                                         </connections>
@@ -850,7 +850,7 @@
                                                             <constraint firstAttribute="height" constant="16" id="A3s-vR-vJw"/>
                                                             <constraint firstAttribute="width" constant="16" id="USE-9g-9E8"/>
                                                         </constraints>
-                                                        <state key="normal" image="expand-collapse"/>
+                                                        <state key="normal" image="expand-more"/>
                                                         <connections>
                                                             <action selector="collapseOrExpandWeatherView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Wjw-0w-OyL"/>
                                                         </connections>
@@ -1705,8 +1705,8 @@
                         <outlet property="addEntitiesButton" destination="yGb-zU-Lzj" id="4LP-bc-YKZ"/>
                         <outlet property="addEquipmentButton" destination="5AO-Jj-0ZP" id="lX4-Wo-L1c"/>
                         <outlet property="addInputsButton" destination="xR1-hG-glp" id="pRW-RT-UWb"/>
-                        <outlet property="cloudyButton" destination="ca3-oq-1ls" id="tSr-Gi-GLs"/>
-                        <outlet property="cloudyPassageButton" destination="4EX-oh-FEb" id="KAd-Pp-qHn"/>
+                        <outlet property="brokenClouds" destination="ca3-oq-1ls" id="Wau-QD-H2E"/>
+                        <outlet property="clearSky" destination="8jz-fe-slq" id="pMJ-I2-u0I"/>
                         <outlet property="collapseButton" destination="fJR-CJ-tlU" id="eiF-In-vl8"/>
                         <outlet property="collapseWorkingPeriodImage" destination="4VE-aQ-Xe3" id="mTX-34-7jk"/>
                         <outlet property="createEntitiesView" destination="KmC-aZ-h9V" id="k4F-wF-5ZR"/>
@@ -1736,7 +1736,7 @@
                         <outlet property="equipmentTypeButton" destination="A58-eW-7tB" id="teL-bG-Ea9"/>
                         <outlet property="equipmentTypeTableView" destination="lyS-jh-cAc" id="4kk-dU-5PT"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
-                        <outlet property="fogyButton" destination="8Tz-Cl-TTF" id="MD1-Ix-ZuM"/>
+                        <outlet property="fewClouds" destination="4EX-oh-FEb" id="c0B-CS-QRO"/>
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
                         <outlet property="inputsHeightConstraint" destination="0oM-1M-kPB" id="GpI-j6-Loh"/>
                         <outlet property="inputsNumber" destination="Rof-yp-WzL" id="2T8-pe-K1y"/>
@@ -1746,12 +1746,13 @@
                         <outlet property="irrigationHeightConstraint" destination="HQz-9h-D9H" id="8BB-hv-NcG"/>
                         <outlet property="irrigationInfoLabel" destination="gTq-na-vs2" id="RZG-49-hJU"/>
                         <outlet property="irrigationLabel" destination="sKN-nM-sDX" id="HVG-sh-vQj"/>
+                        <outlet property="irrigationSeparatorView" destination="N2X-Sp-MVE" id="FwI-ME-czH"/>
                         <outlet property="irrigationUnitButton" destination="28Q-Cd-Lyq" id="ePr-r8-wKk"/>
                         <outlet property="irrigationValueTextField" destination="YLy-wG-9j5" id="YB0-c0-RSM"/>
                         <outlet property="irrigationView" destination="dFL-Ez-GIj" id="ZYv-Z5-sbA"/>
+                        <outlet property="lightRain" destination="lr9-gj-MXe" id="kzO-5e-b5V"/>
+                        <outlet property="mist" destination="8Tz-Cl-TTF" id="c5b-on-l8U"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
-                        <outlet property="rainButton" destination="rEb-3z-Qyi" id="IZE-cA-Af0"/>
-                        <outlet property="rainFallButton" destination="lr9-gj-MXe" id="qd1-4U-pYR"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
                         <outlet property="searchEntity" destination="DKn-en-9g6" id="CHn-ZG-lJK"/>
                         <outlet property="searchEquipment" destination="3af-DS-yQg" id="e3s-Wj-rgP"/>
@@ -1762,10 +1763,10 @@
                         <outlet property="selectedInputsTableView" destination="6C4-57-Ghw" id="xOS-xe-Tgz"/>
                         <outlet property="selectedInputsTableViewHeightConstraint" destination="Bbt-1y-Pg7" id="HoL-WX-Zuz"/>
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
-                        <outlet property="snowButton" destination="Io4-JY-DOw" id="IyN-aG-fHX"/>
-                        <outlet property="stormButton" destination="vcc-mx-nY4" id="tcZ-ve-L89"/>
-                        <outlet property="sunnyButton" destination="8jz-fe-slq" id="bap-Eu-8eX"/>
+                        <outlet property="showerRain" destination="rEb-3z-Qyi" id="pHv-Kc-MdO"/>
+                        <outlet property="snow" destination="Io4-JY-DOw" id="awp-kR-DQY"/>
                         <outlet property="temperatureTextField" destination="pOP-WE-pVI" id="oDq-IT-cK4"/>
+                        <outlet property="thunderstorm" destination="vcc-mx-nY4" id="GGp-7u-CMA"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
                         <outlet property="weatherCollapseButton" destination="wzQ-CL-iF5" id="Zq7-jm-i6J"/>
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
@@ -2007,8 +2008,8 @@
         <image name="brouillard" width="285" height="285"/>
         <image name="clic&amp;farm-logo" width="1300" height="1150"/>
         <image name="delete" width="50" height="50"/>
-        <image name="expand-collapse" width="128" height="128"/>
         <image name="expand-less" width="24" height="24"/>
+        <image name="expand-more" width="24" height="24"/>
         <image name="neige" width="285" height="285"/>
         <image name="nuages" width="285" height="285"/>
         <image name="orage" width="285" height="285"/>

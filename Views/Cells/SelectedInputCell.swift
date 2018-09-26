@@ -82,6 +82,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var surfaceQuantity: UILabel = {
     let surfaceQuantity = UILabel(frame: CGRect.zero)
 
+    surfaceQuantity.isHidden = true
     surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
     surfaceQuantity.text = "or".localized + " 0,0"
@@ -220,8 +221,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
     }
     return false
   }

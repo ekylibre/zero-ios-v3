@@ -12,8 +12,8 @@ class PlotCell: UITableViewCell {
 
   lazy var checkboxButton: UIButton = {
     let checkboxButton = UIButton(frame: CGRect.zero)
-    checkboxButton.setImage(#imageLiteral(resourceName: "unchecked-checkbox"), for: .normal)
-    checkboxButton.setImage(#imageLiteral(resourceName: "checked-checkbox"), for: .selected)
+    checkboxButton.setImage(#imageLiteral(resourceName: "check-box-blank"), for: .normal)
+    checkboxButton.setImage(#imageLiteral(resourceName: "check-box"), for: .selected)
     checkboxButton.translatesAutoresizingMaskIntoConstraints = false
     return checkboxButton
   }()
@@ -54,19 +54,20 @@ class PlotCell: UITableViewCell {
   }
 
   private func setupLayout() {
-    let viewsDict = [
-      "checkbox" : checkboxButton,
-      "name" : nameLabel,
-      "surface" : surfaceAreaLabel,
-      "expand" : expandCollapseImageView,
-      ] as [String : Any]
-
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[checkbox(20)]-15-[name]", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[surface]-25-[expand(16)]-20-|", options: [], metrics: nil, views: viewsDict))
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[checkbox(20)]", options: [], metrics: nil, views: viewsDict))
-    NSLayoutConstraint(item: nameLabel, attribute: .centerY, relatedBy: .equal, toItem: checkboxButton, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: surfaceAreaLabel, attribute: .centerY, relatedBy: .equal, toItem: checkboxButton, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-    contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-22-[expand(16)]", options: [], metrics: nil, views: viewsDict))
+    NSLayoutConstraint.activate([
+      checkboxButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+      checkboxButton.heightAnchor.constraint(equalToConstant: 20),
+      checkboxButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+      checkboxButton.widthAnchor.constraint(equalToConstant: 20),
+      nameLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
+      nameLabel.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 15),
+      surfaceAreaLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
+      surfaceAreaLabel.trailingAnchor.constraint(equalTo: expandCollapseImageView.leadingAnchor, constant: -25),
+      expandCollapseImageView.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
+      expandCollapseImageView.heightAnchor.constraint(equalToConstant: 24),
+      expandCollapseImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 24)
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {
