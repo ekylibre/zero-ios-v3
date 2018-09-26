@@ -523,6 +523,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
     let predicate = NSPredicate(format: "used == true")
+
     entitiesFetchRequest.predicate = predicate
 
     do {
@@ -546,11 +547,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedInput in selectedInputs {
       selectedInput.setValue(intervention, forKey: "interventions")
-      do {
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
@@ -578,7 +580,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createEquipments(intervention: NSManagedObject) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -621,6 +622,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doer.setValue(UUID(), forKey: "uuid")
       doer.setValue(isDriver, forKey: "isDriver")
     }
+
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -629,7 +631,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
