@@ -242,21 +242,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let targets = fetchTargets(of: intervention)
     let workingPeriod = fetchWorkingPeriod(of: intervention)
 
-    cell.typeLabel.text = intervention.value(forKey: "type") as? String
+    cell.typeLabel.text = (intervention.value(forKey: "type") as? String)?.localized
     switch intervention.value(forKey: "type") as! String {
-    case Intervention.InterventionType.Care.rawValue.localized:
+    case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
-    case Intervention.InterventionType.CropProtection.rawValue.localized:
+    case Intervention.InterventionType.CropProtection.rawValue:
       cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case Intervention.InterventionType.Fertilization.rawValue.localized:
+    case Intervention.InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
-    case Intervention.InterventionType.GroundWork.rawValue.localized:
+    case Intervention.InterventionType.GroundWork.rawValue:
       cell.typeImageView.image = UIImage(named: "ground-work")!
-    case Intervention.InterventionType.Harvest.rawValue.localized:
+    case Intervention.InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
-    case Intervention.InterventionType.Implantation.rawValue.localized:
+    case Intervention.InterventionType.Implantation.rawValue:
       cell.typeImageView.image = UIImage(named: "implantation")!
-    case Intervention.InterventionType.Irrigation.rawValue.localized:
+    case Intervention.InterventionType.Irrigation.rawValue:
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
       cell.typeLabel.text = "Erreur"
@@ -394,7 +394,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
 
-    if let type = (sender as? UIButton)?.titleLabel?.text {
+    if var type = (sender as? UIButton)?.titleLabel?.text {
+      switch type {
+      case Intervention.InterventionType.Care.rawValue.localized:
+        type = Intervention.InterventionType.Care.rawValue
+      case Intervention.InterventionType.CropProtection.rawValue.localized:
+        type = Intervention.InterventionType.CropProtection.rawValue
+      case Intervention.InterventionType.Fertilization.rawValue.localized:
+        type = Intervention.InterventionType.Fertilization.rawValue
+      case Intervention.InterventionType.GroundWork.rawValue.localized:
+        type = Intervention.InterventionType.GroundWork.rawValue
+      case Intervention.InterventionType.Harvest.rawValue.localized:
+        type = Intervention.InterventionType.Harvest.rawValue
+      case Intervention.InterventionType.Implantation.rawValue.localized:
+        type = Intervention.InterventionType.Implantation.rawValue
+      case Intervention.InterventionType.Irrigation.rawValue.localized:
+        type = Intervention.InterventionType.Irrigation.rawValue
+      default:
+        return
+      }
       destVC.interventionType = type
     }
   }
@@ -448,6 +466,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     tableView.reloadData()
+    for intervention in interventions {
+      apolloQuery.pushIntervention(intervention: intervention as! Interventions)
+    }
   }
 
   @objc func action(sender: UIButton) {

@@ -16,7 +16,9 @@ class ApolloQuery {
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  // MARK: - Farms
+  // MARK: - Qeries :
+
+  // MARK: Farms
 
   func saveFarmNameAndID(name: String?, id: String?) {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -43,7 +45,7 @@ class ApolloQuery {
     }
   }
 
-  // MARK: - Equipments
+  // MARK: Equipments
 
   private func checkIfNewEquipment(equipmentID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -97,7 +99,7 @@ class ApolloQuery {
     }
   }
 
-  // MARK: - People
+  // MARK: People
 
   private func checkIfNewPerson(personID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -150,7 +152,7 @@ class ApolloQuery {
     completion(true)
   }
 
-  // MARK: - Storages
+  // MARK: Storages
 
   private func checkifNewStorage(storageID: Int32) -> Bool {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -199,7 +201,7 @@ class ApolloQuery {
     }
   }
 
-  // MARK: - Weather
+  // MARK: Weather
 
   private func saveWeatherInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -219,7 +221,7 @@ class ApolloQuery {
     return weather
   }
 
-  // MARK: - Working Periods
+  // MARK: Working Periods
 
   private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -239,7 +241,7 @@ class ApolloQuery {
     return workingPeriod
   }
 
-  // MARK: - Intervention Equipments
+  // MARK: Intervention Equipments
 
   private func returnEquipmentIfSame(equipmentID: Int32?) -> Equipments? {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -277,7 +279,7 @@ class ApolloQuery {
     return interventionEquipment
   }
 
-  // MARK: - Targets
+  // MARK: Targets
 
   private func returnCropIfSame(cropUUID: UUID?) -> Crops? {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -310,7 +312,7 @@ class ApolloQuery {
     return target
   }
 
-  // MARK: - Doers
+  // MARK: Doers
 
   private func returnPersonIfSame(personID: Int32?) -> Entities? {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -353,7 +355,7 @@ class ApolloQuery {
     return doers
   }
 
-  // MARK: - Harvests
+  // MARK: Harvests
 
   private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Interventions) -> Harvests {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -412,7 +414,7 @@ class ApolloQuery {
     return harvest
   }
 
-  // MARK: - Inputs
+  // MARK: Inputs
 
   private func returnSeedIfSame(seedID: Int32?) -> Seeds? {
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -540,7 +542,7 @@ class ApolloQuery {
     return intervention
   }
 
-  // MARK: - Intervention
+  // MARK: Intervention
 
   private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions {
     for workingDay in fetchedIntervention.workingDays {
@@ -573,7 +575,7 @@ class ApolloQuery {
 
     intervention.farmID = farmID
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
-    intervention.type = fetchedIntervention.type.rawValue.lowercased().localized
+    intervention.type = fetchedIntervention.type.rawValue.lowercased()
     intervention.infos = fetchedIntervention.description
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
@@ -619,5 +621,96 @@ class ApolloQuery {
         }
       }
     }
+  }
+
+  // MARK: - Mutations :
+
+  // MARK: Interventions
+
+  func returnInputsFromIntervention(intervention: Interventions) -> [InterventionInputAttributes]? {
+    let seeds = intervention.interventionSeeds?.allObjects
+    let phytos = intervention.interventionPhytosanitaries?.allObjects
+    let fertilizers = intervention.interventionFertilizers?.allObjects
+
+    print("\nSeeds: \(String(describing: seeds))")
+    print("\nPhytos: \(String(describing: phytos))")
+    print("\nFerti: \(String(describing: fertilizers))")
+    return nil
+  }
+
+  func returnWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
+    var weather = WeatherAttributes()
+
+    weather.temperature = intervention.weather?.temperature as? Double
+    weather.windSpeed = intervention.weather?.windSpeed as? Double
+    weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
+    return weather
+  }
+
+  func returnTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
+    let targets = intervention.targets
+    var targetsAttributes = [InterventionTargetAttributes]()
+
+    for target in targets! {
+      let targetAttributes = InterventionTargetAttributes(
+        cropId: (target as AnyObject).value(forKey: "crops") as? GraphQLID,
+        workZone: nil,
+        workAreaPercentage: (target as AnyObject).value(forKey: "workAreaPercentage") as! Int)
+
+      targetsAttributes.append(targetAttributes)
+    }
+    return targetsAttributes
+  }
+
+  func returnEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
+    let equipments = intervention.interventionEquipments
+    var equipmentsAttributes = [InterventionToolAttributes]()
+
+    for equipment in equipments! {
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipment as AnyObject).value(forKey: "equipments") as? GraphQLID)
+
+      //print("\nEqui: \(equipmentAttributes)")
+      equipmentsAttributes.append(equipmentAttributes)
+    }
+
+    return equipmentsAttributes
+  }
+
+  func returnWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
+    let workingDays = intervention.workingPeriods
+    var workingDaysAttributes = [InterventionWorkingDayAttributes]()
+
+    for workingDay in workingDays! {
+      let executionDate = (workingDay as AnyObject).value(forKey: "executionDate")
+      let formatter = DateFormatter()
+
+      formatter.dateFormat = "yyyy-MM-dd"
+      let workingDayAttributes = InterventionWorkingDayAttributes(
+        executionDate: formatter.string(from: executionDate as! Date),
+        hourDuration: (workingDay as AnyObject).value(forKey: "hourDuration") as? Double)
+
+      workingDaysAttributes.append(workingDayAttributes)
+    }
+    return workingDaysAttributes
+  }
+
+  func pushIntervention(intervention: Interventions) {
+
+    let mutation = PushInterMutation(
+      farmId: intervention.farmID!,
+      procedure: InterventionTypeEnum(rawValue: intervention.type!.uppercased())!,
+      cropList: returnTargetAttributesFrom(intervention: intervention),
+      workingDays: returnWorkingDayAttributesFrom(intervention: intervention),
+      waterQuantity: Int(intervention.waterQuantity),
+      waterUnit: InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit ?? "LITER"),
+      inputs: intervention.interventionSeeds?.value(forKey: "seeds") as? [InterventionInputAttributes],
+      outputs: intervention.harvests?.allObjects as? [InterventionOutputAttributes],
+      globalOutputs: false,
+      tools: returnEquipmentAttributesFrom(intervention: intervention),
+      operators: intervention.doers?.allObjects as? [InterventionOperatorAttributes],
+      weather: returnWeatherAttributesFrom(intervention: intervention),
+      description: intervention.infos)
+
+    //print("\nMutation: \(String(describing: mutation.tools))")
   }
 }

@@ -152,7 +152,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let typeLabel = UILabel()
 
     if interventionType != nil {
-      typeLabel.text = interventionType
+      typeLabel.text = interventionType.localized
     }
     typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
     typeLabel.textColor = UIColor.white
@@ -510,6 +510,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention = Interventions(context: managedContext)
     let workingPeriod = WorkingPeriods(context: managedContext)
 
+    print("new type: \(String(describing: interventionType))")
     newIntervention.type = interventionType
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"
