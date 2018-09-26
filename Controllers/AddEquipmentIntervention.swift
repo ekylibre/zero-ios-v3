@@ -223,30 +223,37 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipment.setValue(selectedEquipmentType, forKeyPath: "type")
     equipment.setValue(UUID(), forKey: "uuid")
     equipment.setValue(0, forKey: "row")
+
     do {
       try managedContext.save()
-      equipments.append(equipment)
       let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;              #warning("Wrong type passed")
-      pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
+      let ekyID = pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
+      equipment.setValue(ekyID, forKey: "ekyID")
+      equipments.append(equipment)
       closeEquipmentsCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
-  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) {
+  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+      return 0
     }
 
+    var id: Int32 = 0
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let mutation = PushEquipmentMutation(farmId: farmID, type: type, name: name, number: number)
+
     apollo.perform(mutation: mutation) { (result, error) in
       if error != nil {
         print(error!)
+      } else {
+        id = Int32(result!.data!.createEquipment!.equipment!.id)!
       }
     }
+    return id
   }
 
   func removeEquipmentCell(_ indexPath: IndexPath) {
