@@ -554,60 +554,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveInterventionSeeds(intervention: Interventions) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for case let interventionSeed as InterventionSeeds in selectedInputs {
-      interventionSeed.interventions = intervention
-
-      do {
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-  }
-
-  func saveInterventionPhytos(intervention: Interventions) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for case let interventionPhyto as InterventionPhytosanitaries in selectedInputs {
-      interventionPhyto.interventions = intervention
-
-      do {
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-  }
-
-  func saveInterventionFertilizers(intervention: Interventions) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for case let interventionFertilizer as InterventionFertilizers in selectedInputs {
-      interventionFertilizer.interventions = intervention
-
-      do {
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-  }
-
   func createTargets(intervention: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
