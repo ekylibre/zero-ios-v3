@@ -23,8 +23,8 @@
 "no" = "No";
 "yes" = "Yes";
 "error" = "Error";
-"cancel" = "CANCEL";
-"create" = "CREATE";
+"cancel" = "Cancel";
+"create" = "Create";
 "name" = "Name";
 "first_name" = "First name";
 "last_name" = "Last Name";
@@ -40,7 +40,7 @@
 "today_last_synchronization" = "Last synchronization %02d:%02d";
 "last_synchronization" = "Last synchronization ";
 "no_synchronization_listed" = "No synchronization listed";
-"register_intervention" = "REGISTER AN INTERVENTION%@";
+"register_intervention" = "Register an intervention%@";
 "of" = " OF...";
 "crops_size" = "%d crops • %.1f ha";
 "crop_size" = "1 crop • %.1f ha";
@@ -59,7 +59,7 @@
 
 "select_crops" = "Select crops";
 "no_selection" = "No selection";
-"validate" = "VALIDER";
+"validate" = "Validate";
 "surface_area" = "%.1f ha worked";
 
 // Harvest
@@ -70,10 +70,10 @@
 
 // Inputs View
 
-"create_new_%@" = "+ CREATE A %@";
-"new_seed" = "NEW SEED";
-"new_phyto" = "NEW PHYTO";
-"new_fertilizer" = "NEW FERTILIZER";
+"create_new_%@" = "+ Create a %@";
+"new_seed" = "New seed";
+"new_phyto" = "New phyto";
+"new_fertilizer" = "New fertilizer";
 "seeds" = "Seeds";
 "phyto" = "Phyto.";
 "fertilizers" = "Fertilizers";
@@ -91,9 +91,9 @@
 
 "phyto_creation" = "Creation of a phyto product";
 "brand" = "Brand";
-"maa_number" = "MAA N°";
+"maa_number" = "Maa n°";
 "re_entry_delay" = "Re-entry delay";
-"in_hours" = "in hours";
+"in_hours" = "In hours";
 
 // Create seed view
 
@@ -267,7 +267,7 @@
 "no_crop_selected" = "No crop selected";
 "volume" = "The volume";
 "mass" = "The mass";
-"select" = "+ SELECT";
+"select" = "+ Select";
 
 // Equipment types
 
