@@ -503,9 +503,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
-    saveInterventionSeeds(intervention: newIntervention)
-    saveInterventionPhytos(intervention: newIntervention)
-    saveInterventionFertilizers(intervention: newIntervention)
+    saveInterventionInputs(intervention: newIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
@@ -524,6 +522,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+    let predicate = NSPredicate(format: "used == true")
+    entitiesFetchRequest.predicate = predicate
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -534,6 +534,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save or fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveInterventionInputs(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for selectedInput in selectedInputs {
+      selectedInput.setValue(intervention, forKey: "interventions")
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
     }
   }
 

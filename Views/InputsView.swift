@@ -201,7 +201,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
 
       cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (fromSeeds[indexPath.row].value(forKey: "used") as! Bool ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
       let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
       cell.specieLabel.text = specie?.localized
@@ -212,7 +212,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let used = fromPhytos[indexPath.row].value(forKey: "used") as! Bool
 
       cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (fromPhytos[indexPath.row].value(forKey: "used") as! Bool ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
@@ -226,7 +226,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
 
       cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (fromFertilizers[indexPath.row].value(forKey: "used") as! Bool ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
       return cell
@@ -249,7 +249,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromSeeds = isSearching ? filteredInputs : seeds
 
       isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
-      let selectedSeed = addInterventionViewController?.saveSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
+      let selectedSeed = addInterventionViewController?.createSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
       if selectedSeed != nil {
         addInterventionViewController?.selectedInputs.append(selectedSeed!)
       }
@@ -257,7 +257,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromPhytos = isSearching ? filteredInputs : phytos
 
       isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
-      let selectedPhyto = addInterventionViewController?.saveSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
+      let selectedPhyto = addInterventionViewController?.createSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
       if selectedPhyto != nil {
         addInterventionViewController?.selectedInputs.append(selectedPhyto!)
       }
@@ -265,7 +265,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
 
       isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
-      let selectedFertilizer = addInterventionViewController?.saveSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
+      let selectedFertilizer = addInterventionViewController?.createSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
       if selectedFertilizer != nil {
         addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
       }

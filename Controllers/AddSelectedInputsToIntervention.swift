@@ -63,7 +63,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func saveSelectedInput(input: NSManagedObject, entityName: String, relationShip: String) -> NSManagedObject? {
+  func createSelectedInput(input: NSManagedObject, entityName: String, relationShip: String) -> NSManagedObject? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
