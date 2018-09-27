@@ -650,7 +650,7 @@ class ApolloQuery {
     var targetsAttributes = [InterventionTargetAttributes]()
 
     for target in targets! {
-      let target = (target as! Targets)
+      let target = target as! Targets
       let targetAttributes = InterventionTargetAttributes(
         cropId: "\(String(describing: target.crops))",
         workZone: nil,
@@ -661,11 +661,93 @@ class ApolloQuery {
     return targetsAttributes
   }
 
+  func initializeInputsArray(inputs: inout [NSManagedObject], entities: [Any]?) {
+    if entities != nil {
+      for entity in entities! {
+        inputs.append(entity as! NSManagedObject)
+      }
+    }
+  }
+
+  func defineInputsAttributesFrom(intervention: Interventions) -> [InterventionInputAttributes] {
+    let seeds = intervention.interventionSeeds?.allObjects
+    let phytos = intervention.interventionPhytosanitaries?.allObjects
+    let fertilizers = intervention.interventionFertilizers?.allObjects
+    let materials = intervention.interventionMaterials?.allObjects
+    var inputs = [NSManagedObject]()
+    var inputsAttributes = [InterventionInputAttributes]()
+
+    initializeInputsArray(inputs: &inputs, entities: seeds)
+    initializeInputsArray(inputs: &inputs, entities: phytos)
+    initializeInputsArray(inputs: &inputs, entities: fertilizers)
+    initializeInputsArray(inputs: &inputs, entities: materials)
+    for input in inputs {
+      var inputAttributes: InterventionInputAttributes
+      switch input {
+      case is InterventionSeeds:
+        let seed = input as! InterventionSeeds
+        let article = InterventionArticleAttributes(
+          id: "\(String(describing: seed.seeds?.ekyID))",
+          referenceId: "\(String(describing: seed.seeds?.seedID))",
+          type: ArticleTypeEnum(rawValue: "SEED"))
+        inputAttributes = InterventionInputAttributes(
+          marketingAuthorizationNumber: nil,
+          article: article,
+          quantity: seed.quantity as! Double,
+          unit: ArticleAllUnitEnum(rawValue: seed.unit!)!,
+          unitPrice: nil)
+        inputsAttributes.append(inputAttributes)
+      case is InterventionPhytosanitaries:
+        let phyto = input as! InterventionPhytosanitaries
+        let article = InterventionArticleAttributes(
+          id: "\(String(describing: phyto.phytos?.ekyID))",
+          referenceId: "\(String(describing: phyto.phytos?.referenceID))",
+          type: ArticleTypeEnum(rawValue: "CHEMICAL"))
+        inputAttributes = InterventionInputAttributes(
+          marketingAuthorizationNumber: phyto.phytos?.maaID,
+          article: article,
+          quantity: phyto.quantity as! Double,
+          unit: ArticleAllUnitEnum(rawValue: phyto.unit!)!,
+          unitPrice: nil)
+        inputsAttributes.append(inputAttributes)
+      case is InterventionFertilizers:
+        let fertilizer = input as! InterventionFertilizers
+        let article = InterventionArticleAttributes(
+          id: "\(String(describing: fertilizer.fertilizers?.ekyID))",
+          referenceId: "\(String(describing: fertilizer.fertilizers?.referenceID))",
+          type: ArticleTypeEnum(rawValue: "FERTILIZER"))
+        inputAttributes = InterventionInputAttributes(
+          marketingAuthorizationNumber: nil,
+          article: article,
+          quantity: fertilizer.quantity as! Double,
+          unit: ArticleAllUnitEnum(rawValue: fertilizer.unit!)!,
+          unitPrice: nil)
+        inputsAttributes.append(inputAttributes)
+      case is InterventionMaterials:
+        let material = input as! InterventionMaterials
+        let article = InterventionArticleAttributes(
+          id: "\(String(describing: material.materials?.ekyID))",
+          referenceId: "\(String(describing: material.materials?.materialID))",
+          type: ArticleTypeEnum(rawValue: "MATERIAL"))
+        inputAttributes = InterventionInputAttributes(
+          marketingAuthorizationNumber: nil,
+          article: article,
+          quantity: material.quantity as! Double,
+          unit: ArticleAllUnitEnum(rawValue: material.unit!)!,
+          unitPrice: nil)
+        inputsAttributes.append(inputAttributes)
+      default:
+        print("No type")
+      }
+    }
+    return inputsAttributes
+  }
+
   func defineHarvestAttributesFrom(intervention: Interventions) -> [InterventionOutputAttributes] {
     let harvests = intervention.harvests
     var harvestsAttributes = [InterventionOutputAttributes]()
     for harvest in harvests! {
-      let harvest = (harvest as! Harvests)
+      let harvest = harvest as! Harvests
       let loads = HarvestLoadAttributes(
         quantity: harvest.quantity,
         netQuantity: nil,
@@ -690,7 +772,7 @@ class ApolloQuery {
 
     for equipment in equipments! {
       let equipmentID = (equipment as! InterventionEquipments).equipments?.ekyID
-      let equipmentAttributes = InterventionToolAttributes(equipmentId: "\(equipmentID!)")
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: "\(String(describing: equipmentID))")
 
       equipmentsAttributes.append(equipmentAttributes)
     }
@@ -705,7 +787,7 @@ class ApolloQuery {
       let personID = (doer as! Doers).entities?.ekyID
       let role = (doer as! Doers).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
-        personId: "\(personID!)",
+        personId: "\(String(describing: personID))",
         role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
 
       operatorsAttributes.append(operatorAttributes)
@@ -723,7 +805,6 @@ class ApolloQuery {
   }
 
   func pushIntervention(intervention: Interventions) {
-
     let mutation = PushInterMutation(
       farmId: intervention.farmID!,
       procedure: InterventionTypeEnum(rawValue: intervention.type!.uppercased())!,
@@ -731,7 +812,7 @@ class ApolloQuery {
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
       waterQuantity: Int(intervention.waterQuantity),
       waterUnit: InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit ?? "LITER"),
-      inputs: intervention.interventionSeeds?.value(forKey: "seeds") as? [InterventionInputAttributes],
+      inputs: defineInputsAttributesFrom(intervention: intervention),
       outputs: defineHarvestAttributesFrom(intervention: intervention),
       globalOutputs: false,
       tools: defineEquipmentAttributesFrom(intervention: intervention),
@@ -739,6 +820,6 @@ class ApolloQuery {
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
-    print("\nMutation: \(String(describing: mutation))")
+    print("\nMutation: \(String(describing: mutation.inputs))")
   }
 }

@@ -127,6 +127,7 @@
     <entity name="Materials" representedClassName="Materials" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="materialDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="materialID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventionMaterials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionMaterials" inverseName="materials" inverseEntity="InterventionMaterials" syncable="YES"/>
@@ -202,7 +203,7 @@
         <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>
         <element name="Interventions" positionX="130.25390625" positionY="-243.984375" width="210.39453125" height="330"/>
         <element name="InterventionSeeds" positionX="-308.328125" positionY="117.0859375" width="128" height="135"/>
-        <element name="Materials" positionX="-825.2265625" positionY="22.87109375" width="128" height="120"/>
+        <element name="Materials" positionX="-825.2265625" positionY="22.87109375" width="128" height="135"/>
         <element name="Phytos" positionX="1142.34765625" positionY="-214.15234375" width="128" height="225"/>
         <element name="Plots" positionX="1204.6484375" positionY="234.33984375" width="128" height="133"/>
         <element name="Seeds" positionX="-671.421875" positionY="266.7109375" width="128" height="210"/>
