@@ -41,7 +41,7 @@ class CropView: UIView {
   lazy var surfaceAreaLabel: UILabel = {
     let surfaceAreaLabel = UILabel(frame: CGRect(x: 70, y: 33, width: 200, height: 20))
     surfaceAreaLabel.textColor = UIColor.darkGray
-    surfaceAreaLabel.text = String(format: "surface_area".localized, crop.surfaceArea)
+    surfaceAreaLabel.text = String(format: "%.1f ha travaillés", crop.surfaceArea)
     surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
     return surfaceAreaLabel
   }()

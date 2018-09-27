@@ -72,7 +72,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "local_code".localized)
+      dateFormatter.locale = Locale(identifier: "locale".localized)
       dateFormatter.dateFormat = "d MMMM"
 
       let hour = calendar.component(.hour, from: date)
@@ -106,17 +106,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func initialiseInterventionButtons() {
-
-    let interventionNames: [String] = [
-      "implantation".localized,
-      "ground_work".localized,
-      "irrigation".localized,
-      "harvest".localized,
-      "care".localized,
-      "fertilization".localized,
-      "crop_protection".localized
-    ]
     let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
+    let interventionNames: [String] = [
+      "IMPLANTATION".localized,
+      "GROUND_WORK".localized,
+      "IRRIGATION".localized,
+      "HARVEST".localized,
+      "CARE".localized,
+      "FERTILIZATION".localized,
+      "CROP_PROTECTION".localized
+    ]
 
     for buttonCount in 0...6 {
 
@@ -266,7 +265,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
-
     var totalSurfaceArea: Double = 0
 
     for target in targets {
@@ -275,11 +273,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       totalSurfaceArea += surfaceArea 
     }
 
-    if targets.count > 1 {
-      return String(format: "crops_size".localized, targets.count, totalSurfaceArea)
-    } else {
-      return String(format: "crop_size".localized, totalSurfaceArea)
-    }
+    let cropString = targets.count < 2 ? "crop".localized : "crops".localized
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
   func transformDate(date: Date) -> String {
@@ -292,9 +287,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let year = calendar.component(.year, from: date)
 
     if calendar.isDateInToday(date) {
-      return "today".localized
+      return "today".localized.lowercased()
     } else if calendar.isDateInYesterday(date) {
-      return "yesterday".localized
+      return "yesterday".localized.lowercased()
     } else {
       if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
         dateString.append(" \(year)")
@@ -375,10 +370,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
-
     let date = Date()
     let calendar = Calendar.current
-
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
@@ -414,10 +407,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc func hideInterventionAdd() {
-    addInterventionLabel.text = String(format: "register_intervention".localized, "")
     for interventionButton in interventionButtons {
       interventionButton.isHidden = true
     }
+    addInterventionLabel.text = "register_an_intervention".localized
     leftInterventionButton.isHidden = false
     rightInterventionButton.isHidden = false
     heightConstraint.constant = 80
@@ -427,7 +420,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBAction func addIntervention(_ sender: Any) {
 
     self.heightConstraint.constant = 240
-    addInterventionLabel.text = String(format: "register_intervention".localized, "of".localized)
+    addInterventionLabel.text = "finishing_intervention_text".localized.uppercased()
     leftInterventionButton.isHidden = true
     rightInterventionButton.isHidden = true
     bottomView.layoutIfNeeded()

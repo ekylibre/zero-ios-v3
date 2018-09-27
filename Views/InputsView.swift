@@ -17,7 +17,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var isSearching: Bool = false
 
   lazy var segmentedControl: UISegmentedControl = {
-    let segmentedControl = UISegmentedControl(items: ["seeds".localized, "phyto".localized, "fertilizers".localized])
+    let segmentedControl = UISegmentedControl(items: ["seeds".localized, "phytos".localized, "fertilizers".localized])
     segmentedControl.selectedSegmentIndex = 0
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
@@ -36,7 +36,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle(String(format: "create_new_%@".localized, "new_seed".localized), for: .normal)
+    createButton.setTitle("create_new_seed".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
@@ -554,13 +554,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   @objc func changeSegment() {
     let searchText = searchBar.text!
-
-    //let createButtonTitles = [0: "+ CRÉER UNE NOUVELLE SEMENCE", 1: "+ CRÉER UN NOUVEAU PHYTO", 2: "+ CRÉER UN NOUVEAU FERTILISANT"]
     let createButtonTitles = [
-      0: String(format: "create_new_%@".localized, "new_seed".localized),
-      1: String(format: "create_new_%@".localized, "new_phyto".localized),
-      2: String(format: "create_new_%@".localized, "new_fertilizer".localized)
+      0: "create_new_seed".localized.uppercased(),
+      1: "create_new_phyto".localized.uppercased(),
+      2: "create_new_ferti".localized.uppercased()
     ]
+
     createButton.setTitle(createButtonTitles[segmentedControl.selectedSegmentIndex], for: .normal)
     let inputs:[Int: [NSManagedObject]] = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!

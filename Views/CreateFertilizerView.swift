@@ -14,7 +14,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "fertilizer_creation".localized
+    titleLabel.text = "create_ferti_title".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -57,7 +57,9 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
   }()
 
   lazy var natureAlertController: UIAlertController = {
-    let natureAlertController = UIAlertController(title: "choose_nature".localized, message: nil, preferredStyle: .actionSheet)
+    let natureAlertController = UIAlertController(title: "chose_nature".localized,
+                                                  message: nil,
+                                                  preferredStyle: .actionSheet)
     return natureAlertController
   }()
 

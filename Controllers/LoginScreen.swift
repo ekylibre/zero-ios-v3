@@ -28,7 +28,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     super.viewDidLoad()
     tfUsername.delegate = self
     tfPassword.delegate = self
-    textView.text = "appli_description".localized
+    textView.text = "welcome_text".localized
     forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
     forgottenPassword.underline()
 
@@ -53,12 +53,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
       } else {
         let alert = UIAlertController(
-          title: "please_try_again".localized,
-          message: "unknown_username_or_incorrect_password".localized,
+          title: nil,
+          message: "login_failure".localized,
           preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {

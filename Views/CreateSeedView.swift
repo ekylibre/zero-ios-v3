@@ -14,7 +14,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "seed_creation".localized
+    titleLabel.text = "create_seed_title".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -22,7 +22,7 @@ class CreateSeedView: UIView, UITextFieldDelegate {
 
   lazy var specieLabel: UILabel = {
     let specieLabel = UILabel(frame: CGRect.zero)
-    specieLabel.text = "specie".localized
+    specieLabel.text = "chose_specie".localized
     specieLabel.font = UIFont.systemFont(ofSize: 15)
     specieLabel.textColor = AppColor.TextColors.DarkGray
     specieLabel.translatesAutoresizingMaskIntoConstraints = false

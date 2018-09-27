@@ -97,26 +97,26 @@ extension AddInterventionViewController {
     case temperatureTextField:
       weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-        currentWeatherLabel.text = "not_filled_in".localized
+        currentWeatherLabel.text = "not_provided".localized
       } else {
-        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
-        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
-        let currentTemp = String(format: "temp".localized, temperature!)
-        let currentWind = String(format: "wind".localized, wind!)
+        let temperature = temperatureTextField.text!.isEmpty ? "--" : temperatureTextField.text!
+        let windSpeed = windSpeedTextField.text!.isEmpty ? "--" : windSpeedTextField.text!
+        let detailedTemperature = String(format: "Temp.: %@ %@ | ", temperature, "celsius".localized)
+        let detailedWindSpeed = String(format: "vent: %@ %@", windSpeed, "km_per_hour".localized)
 
-        currentWeatherLabel.text = currentTemp + currentWind
+        currentWeatherLabel.text = detailedTemperature + detailedWindSpeed
       }
     case windSpeedTextField:
       weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-        currentWeatherLabel.text = "not_filled_in".localized
+        currentWeatherLabel.text = "not_provided".localized
       } else {
-        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
-        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
-        let currentTemp = String(format: "temp".localized, temperature!)
-        let currentWind = String(format: "wind".localized, wind!)
+        let temperature = temperatureTextField.text!.isEmpty ? "--" : temperatureTextField.text!
+        let windSpeed = windSpeedTextField.text!.isEmpty ? "--" : windSpeedTextField.text!
+        let detailedTemperature = String(format: "Temp.: %@ %@ | ", temperature, "celsius".localized)
+        let detailedWindSpeed = String(format: "vent: %@ %@", windSpeed, "km_per_hour".localized)
 
-        currentWeatherLabel.text = currentTemp + currentWind
+        currentWeatherLabel.text = detailedTemperature + detailedWindSpeed
       }
     default:
       return false

@@ -14,7 +14,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "phyto_creation".localized
+    titleLabel.text = "create_phyto_title".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -39,7 +39,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var firmNameTextField: UITextField = {
     let firmNameTextField = UITextField(frame: CGRect.zero)
-    firmNameTextField.placeholder = "brand".localized
+    firmNameTextField.placeholder = "firmName".localized
     firmNameTextField.autocorrectionType = .no
     firmNameTextField.delegate = self
     firmNameTextField.tag = 11
@@ -92,7 +92,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
-    unitLabel.text = "in_hours".localized
+    unitLabel.text = "en " + "hours".localized
     unitLabel.font = UIFont.systemFont(ofSize: 14)
     unitLabel.textColor = UIColor.lightGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false

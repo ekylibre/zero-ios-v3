@@ -421,3 +421,5 @@
 "km_per_hour" = "km/h";
 "ok" = "Ok";
 "crop_list" = "Liste des cultures";
+
+"locale" = "fr_FR";
