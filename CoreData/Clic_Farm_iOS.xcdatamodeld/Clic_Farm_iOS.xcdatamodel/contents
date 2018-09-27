@@ -155,8 +155,8 @@
     </entity>
     <entity name="Seeds" representedClassName="Seeds" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="referenceID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="registered" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="seedID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="specie" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="used" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -206,7 +206,7 @@
         <element name="Materials" positionX="-825.2265625" positionY="22.87109375" width="128" height="135"/>
         <element name="Phytos" positionX="1142.34765625" positionY="-214.15234375" width="128" height="225"/>
         <element name="Plots" positionX="1204.6484375" positionY="234.33984375" width="128" height="133"/>
-        <element name="Seeds" positionX="-671.421875" positionY="266.7109375" width="128" height="210"/>
+        <element name="Seeds" positionX="-671.421875" positionY="266.7109375" width="128" height="165"/>
         <element name="Storages" positionX="673.625" positionY="-668.91015625" width="128" height="105"/>
         <element name="Targets" positionX="680.625" positionY="122.57421875" width="128" height="90"/>
         <element name="Users" positionX="172.30078125" positionY="368.75" width="128" height="60"/>

@@ -250,30 +250,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue.localized:
+    case Intervention.InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
-    case Intervention.InterventionType.CropProtection.rawValue.localized:
+    case Intervention.InterventionType.CropProtection.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-    case Intervention.InterventionType.Fertilization.rawValue.localized:
+    case Intervention.InterventionType.Fertilization.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-    case Intervention.InterventionType.GroundWork.rawValue.localized:
+    case Intervention.InterventionType.GroundWork.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Harvest.rawValue.localized:
+    case Intervention.InterventionType.Harvest.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue.localized:
+    case Intervention.InterventionType.Implantation.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
     default:
@@ -513,11 +513,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.type = interventionType
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"
-    if interventionType == "irrigation".localized {
+    newIntervention.farmID = appDelegate.farmID
+    if interventionType == "irrigation" {
       let waterQuantityString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
       let waterQuantity = Float(waterQuantityString) ?? 0
       newIntervention.waterQuantity = waterQuantity
-      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+      switch irrigationUnitButton.titleLabel?.text {
+      case "m³":
+        newIntervention.waterUnit = "CUBIC_METER"
+      case "l":
+        newIntervention.waterUnit = "LITER"
+      case "hl":
+        newIntervention.waterUnit = "HECTOLITER"
+      default:
+        newIntervention.waterUnit = ""
+      }
     }
     workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
@@ -556,7 +566,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       for entity in entities {
         entity.setValue(false, forKey: "used")
       }
-      try managedContext.save()
+      //try managedContext.save()
     } catch let error as NSError {
       print("Could not save or fetch. \(error), \(error.userInfo)")
     }

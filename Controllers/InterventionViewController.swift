@@ -133,15 +133,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewWillAppear(animated)
 
     initializeApolloClient()
-    displayFarmName()
-    apolloQuery.loadEquipments()
-    apolloQuery.loadStorage()
-    apolloQuery.loadPeople { (success) -> Void in
-      if success {
-        self.apolloQuery.loadIntervention()
-        self.tableView.reloadData()
-      }
-    }
+    apolloQuery.checkLocalData()
     fetchInterventions()
   }
 
@@ -202,7 +194,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func displayFarmName() {
+  /*func displayFarmName() {
     let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
     let farmLabel = UILabel(frame: firstFrame)
 
@@ -219,7 +211,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       farmLabel.textColor = UIColor.white
       navigationBar.addSubview(farmLabel)
     }
-  }
+  }*/
 
   // MARK: - Table view data source
   
@@ -457,6 +449,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
         intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
       }
+      print("\nIntervention: \(intervention)")
+      apolloQuery.pushIntervention(intervention: intervention as! Interventions)
     }
 
     do {
@@ -466,9 +460,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     tableView.reloadData()
-    for intervention in interventions {
-      apolloQuery.pushIntervention(intervention: intervention as! Interventions)
-    }
   }
 
   @objc func action(sender: UIButton) {
