@@ -6,95 +6,7 @@
   Copyright © 2018 Ekylibre. All rights reserved.
 */
 
-"are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %@?";
-"person" = "person";
-"equipment" = "equipment";
-"input" = "input";
-"one_person" = "1 person";
-"one_equipment" = "1 equipment";
-"one_input" = "1 input";
-"people" = "%d people";
-"equipments" = "%d equipments";
-"inputs" = "%d inputs";
-
-// Basic words
-"no" = "No";
-"yes" = "Yes";
-"error" = "Error";
-"cancel" = "CANCEL";
-"create" = "CREATE";
-"name" = "Name";
-"first_name" = "First name";
-"last_name" = "Last Name";
-
-// Login screen
-
-"please_try_again" = "Please try again";
-"unknow_username_or_incorrect_password" = "Unknown username or incorrect password.";
-"forgotten_password" = "Forgotten password?";
-
-// Intervention
-
-"today_last_synchronization" = "Last synchronization %02d:%02d";
-"last_synchronization" = "Last synchronization ";
-"no_synchronization_listed" = "No synchronization listed";
-"register_intervention" = "REGISTER AN INTERVENTION%@";
-"of" = " OF...";
-"crops_size" = "%d crops • %.1f ha";
-"crop_size" = "1 crop • %.1f ha";
-
-// Procedures
-
-"irrigation" = "Irrigation";
-"ground_work" = "Ground work";
-"implantation" = "Implantation";
-"fertilization" = "Fertilization";
-"harvest" = "Harvest";
-"care" = "Care";
-"crop_protection" = "Crop protection";
-
-// Crop View
-
-"select_crops" = "Select crops";
-"no_selection" = "No selection";
-"validate" = "VALIDER";
-"surface_area" = "%.1f ha worked";
-
-// Inputs View
-
-"create_new_%@" = "+ CREATE A %@";
-"new_seed" = "NEW SEED";
-"new_phyto" = "NEW PHYTO";
-"new_fertilizer" = "NEW FERTILIZER";
-"seeds" = "Seeds";
-"phyto" = "Phyto.";
-"fertilizers" = "Fertilizers";
-"quantity" = "Quantity";
-"or" = "Or";
-"invalid_dose" = "Invalid dose";
-
-// Create fertilizer view
-
-"fertilizer_creation" = "Fertilizer creation";
-"nature" = "Nature";
-"choose_nature" = "Choose a nature";
-
-// Create phyto view
-
-"phyto_creation" = "Creation of a phyto product";
-"brand" = "Brand";
-"maa_number" = "MAA N°";
-"re_entry_delay" = "Re-entry delay";
-"in_hours" = "in hours";
-
-// Create seed view
-
-"seed_creation" = "Seed creation";
-"specie" = "Specie";
-"variety" = "Variety";
-
 // Vegetal species
-
 "allium_ascalonicum" = "Shallot";
 "allium_cepa" = "Onion";
 "allium_porrum" = "Allium porrum";
@@ -178,8 +90,16 @@
 "vitis_vinifera" = "Common grape vine";
 "zea_mays" = "Corn";
 
-// Fertilizers
+// Procedures
+"irrigation" = "Irrigation";
+"ground_work" = "Ground work";
+"implantation" = "Implantation";
+"fertilization" = "Fertilization";
+"harvest" = "Harvest";
+"care" = "Care";
+"crop_protection" = "Crop protection";
 
+// Fertilizers
 "ammonitrate_27_fertilizer" = "Ammonitrate 27%";
 "ammonitrate_33_fertilizer" = "Ammonitrate 33,5%";
 "anaerobic_dehydrated_digestate_sludge" = "Anaerobic dehydrated digestate sludge";
@@ -246,11 +166,7 @@
 "urea_46_fertilizer" = "Urea 46 %";
 "wine_vinasse" = "Wine vinasse";
 
-"organic" = "Organic";
-"mineral" = "Mineral";
-
-// Equipment types
-
+// Equipments
 "airplanter" = "Air planter";
 "baler_wrapper" = "Baler wrapper";
 "corn-topper" = "Corn topper";
@@ -293,36 +209,215 @@
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
 
-// Input selection
-
-"or" = "Or %@ %@";
-"or_per_hectare" = "Or %@ %@ per hectare";
-"quantity_cant_be_nul" = "%@ can't be nul";
-"no_crop_selected" = "No crop selected";
-"volume" = "The volume";
-"mass" = "The mass";
-"select" = "+ SELECT";
-
-// Weather
-
-"weather" = "Weather";
-"temperature" = "Temperature";
-"wind_speed" = "Wind speed";
-"not_filled_in" = "Not filled in";
-"temp" = "Temp.: %@ °C |";
-"wind" = " wind: %@ km/h";
-
-// Storyboard
-
-"appli_description" = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account...";
-
-// Language
-
-"local_code" = "en_EN";
-
-// Date / Time
-
+// Plurals
+"crop" = "%d crop";
+"crops" = "%d crops";
+"input" = "%d input";
+"inputs" = "%d inputs";
+"material" = "%d material";
+"materials" = "%d materials";
+"equipment" = "%d equipment";
+"equipments" = "%d equipments";
+"person" = "%d person";
+"persons" = "%d persons";
+"load" = "%d load";
+"loads" = "%d loads";
+"day" = "%d day";
+"days" = "%d days";
 "hour" = "hour";
 "hours" = "hours";
-"today" = "Today";
-"yesterday" = "Yesterday";
+"x_hour" = "%d hour";
+"x_hours" = "%d hours";
+
+// Volume units
+"LITER" = "l";
+"LITER_PER_HECTARE" = "l/ha";
+"LITER_PER_SQUARE_METER" = "l/m²";
+"HECTOLITER" = "hl";
+"HECTOLITER_PER_HECTARE" = "hl/ha";
+"HECTOLITER_PER_SQUARE_METER" = "hl/m²";
+"CUBIC_METER" = "m³";
+"CUBIC_METER_PER_HECTARE" = "m³/ha";
+"CUBIC_METER_PER_SQUARE_METER" = "m³/m²";
+
+// Mass units
+"GRAM" = "g";
+"GRAM_PER_HECTARE" = "g/ha";
+"GRAM_PER_SQUARE_METER" = "g/m²";
+"KILOGRAM" = "kg";
+"KILOGRAM_PER_HECTARE" = "kg/ha";
+"KILOGRAM_PER_SQUARE_METER" = "kg/m²";
+"QUINTAL" = "quintal";
+"QUINTAL_PER_HECTARE" = "q/ha";
+"QUINTAL_PER_SQUARE_METER" = "q/m²";
+"TON" = "ton";
+"TON_PER_HECTARE" = "ton/ha";
+"TON_PER_SQUARE_METER" = "ton/m²";
+
+// Other units
+"METER" = "Meter";
+"UNITY" = "Unity";
+"THOUSAND" = "Thousand";
+
+// Output types
+"STRAW" = "Straw";
+"GRAIN" = "Grain";
+"SILAGE" = "Silage";
+
+// Storage types
+"HEAP" = "Heap";
+"SILO" = "Silo";
+
+"organic" = "Organic";
+"mineral" = "Mineral";
+
+// App strings
+"app_name" = "Clic&Farm";
+"nav_button" = "nav button";
+"prompt_email" = "Email";
+"prompt_password" = "Password";
+"action_sign_in" = "Sign in";
+"menu_logout" = "Log out";
+"cancel" = "Cancel";
+"validate" = "Validate";
+"delete" = "Delete";
+
+"starting_intervention_text" = "Start recording intervention";
+"finishing_intervention_text" = "Register done intervention";
+"starting_intervention" = "Start intervention";
+"finished_intervention" = "Already done";
+"register_an_intervention" = "Register an intervention";
+"save_intervention" = "Save";
+
+"recyclerview_nodata" = "There is no data to display… Start using the application by registering a new intervention with below actions.";
+"none" = "None";
+"unspecified" = "Unspecified";
+"not_provided" = "Not provided";
+
+"label_working_period" = "Working period";
+"label_inputs" = "Inputs";
+"label_equipments" = "Tools";
+"label_materials" = "Materials";
+"label_persons" = "Persons";
+"label_crops" = "Crops";
+"label_irrigation" = "Irrigation";
+"label_weather" = "Weather";
+"label_harvest" = "Harvest";
+
+"starting_date" = "Starting the";
+"duration" = "Duration";
+"default_working_period_main_line" = "Today • 7 h";
+"default_working_period_duration" = "7";
+"default_working_period_date" = "Today";
+
+"add_input" = "+ Add an input";
+"default_input_name" = "Blé dur";
+"default_input_name_more" = "Tablur";
+"quantity" = "Quantity";
+"default_quantity_value" = "0";
+"default_unit" = "kg";
+"default_input_summary" = "0 input";
+"inputs_count" = "%d inputs";
+
+"seeds" = "Seeds";
+"fertilizers" = "Fertilizers";
+"phytos" = "Phytos";
+"all" = "All";
+
+"create_seed_title" = "Create new seed";
+"create_phyto_title" = "Create new phyto";
+"create_ferti_title" = "Create new fertilizer";
+"create_material_title" = "Create new material";
+"create_equipment_title" = "Create new tool";
+"create_person_title" = "Create new person";
+
+"create_new_seed" = "+ Create new seed";
+"create_new_phyto" = "+ Create new phyto";
+"create_new_ferti" = "+ Create new ferti";
+"create_new_material" = "+ Create new material";
+"create_new_equipment" = "+ Create new tool";
+"create_new_person" = "+ Create new person";
+
+"selecting_crops" = "Select a crop";
+"selecting_tools" = "Select a tool";
+"selecting_people" = "Select a person";
+
+"delete_input_prompt" = "Are you sure you want to remove the input?";
+"delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
+"delete_equipment_prompt" = "Are you sure you want to remove the tool?";
+"delete_material_prompt" = "Are you sure you want to remove the material?";
+"delete_person_prompt" = "Are you sure you want to remove the person?";
+
+"add" = "+ Add";
+"add_equipment" = "+ Add tool";
+"add_material" = "+ Add material";
+"add_person" = "+ Add person";
+"add_load" = "+ Add load";
+"select_crops" = "+ Select";
+"no_crop_selected" = "No crop selected";
+
+"chose_specie" = "Specie";
+"chose_nature" = "Nature";
+"chose_type" = "Type";
+"chose_unit" = "Unit";
+
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"quantity_cannot_be_null" = "Quantity cannot be null";
+"stock_place" = "Storage";
+"number" = "Number";
+"name" = "Name";
+"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account …";
+"no" = "No";
+"yes" = "Yes";
+"sync_failure" = "Sync failure…";
+"network_failure" = "Network error, try again later.";
+"login_failure" = "Unknown E-mail or invalid password. Try again.";
+"loading_initial_data" = "Loading initial data…";
+"authentificating" = "Authentificating, please wait…";
+"create" = "Créer";
+"volume" = "Volume";
+"volume_cannot_be_null" = "Le volume ne peut être nul";
+"finish" = "Terminer";
+"pause" = "Pause";
+"speed" = "Vitesse";
+"working_width" = "Largeur de\ntravail";
+"worked_area" = "Surface\ntravaillée";
+"preparation" = "Préparation";
+"mooving" = "Déplacement";
+"intervention" = "Intervention";
+"notes" = "Notes";
+"no_connexion_try_again" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
+"date_not_corresponding_to_crop" = "La date d'intervention doit correspondre aux dates de la culture !";
+"you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
+"you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
+"you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
+"implantation_have_to_be_on_same_crop_nature" = "Vous ne pouvez pas semer sur des productions de natures différentes !";
+"you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
+"you_must_select_seed" = "Vous devez ajouter au moins une semence !";
+"you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
+"you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
+"you_must_enter_a_water_volume" = "Vous devez rentrer le volume d'eau utilisé !";
+"you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
+"you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
+"confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
+"start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
+"title" = "Titre";
+"first_name" = "Prénom";
+"last_name" = "Nom de famille";
+"equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
+"my_cultures" = "Mes cultures";
+"unknown_login_failure" = "Désolé, une erreur inconnue s\'est produite, veuillez contacter le support.";
+"no_internet" = "Vous devez être connecté à internet pour vous identifier la première fois.";
+"no_parcells" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
+"no_internet_try_later" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
+"sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
+"you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
+"non_authorized_mix" = "Mélange non autorisé";
+"nature" = "Nature";
+"celsius" = "°C";
+"km_per_hour" = "km/h";
+"ok" = "Ok";
+"crop_list" = "Liste des cultures";
