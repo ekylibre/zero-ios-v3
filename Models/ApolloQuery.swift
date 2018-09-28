@@ -895,16 +895,29 @@ class ApolloQuery {
       switch input {
       case is InterventionSeeds:
         let seed = input as! InterventionSeeds
-        let article = InterventionArticleAttributes(
-          id: (seed.seeds?.ekyID as NSNumber?)?.stringValue,
-          referenceId: (seed.seeds?.referenceID as NSNumber?)?.stringValue,
-          type: ArticleTypeEnum(rawValue: "SEED"))
-        inputAttributes = InterventionInputAttributes(
-          marketingAuthorizationNumber: nil,
-          article: article,
-          quantity: seed.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: seed.unit!.uppercased())!,
-          unitPrice: nil)
+        if seed.seeds?.ekyID == 0 {
+          let article = InterventionArticleAttributes(
+            id: "0",
+            referenceId: (seed.seeds?.referenceID as NSNumber?)?.stringValue,
+            type: ArticleTypeEnum(rawValue: "SEED"))
+          inputAttributes = InterventionInputAttributes(
+            marketingAuthorizationNumber: nil,
+            article: article,
+            quantity: seed.quantity as! Double,
+            unit: ArticleAllUnitEnum(rawValue: seed.unit!.uppercased())!,
+            unitPrice: nil)
+        } else {
+          let article = InterventionArticleAttributes(
+            id: (seed.seeds?.ekyID as NSNumber?)?.stringValue,
+            referenceId: "0",
+            type: ArticleTypeEnum(rawValue: "SEED"))
+          inputAttributes = InterventionInputAttributes(
+            marketingAuthorizationNumber: nil,
+            article: article,
+            quantity: seed.quantity as! Double,
+            unit: ArticleAllUnitEnum(rawValue: seed.unit!.uppercased())!,
+            unitPrice: nil)
+        }
         inputsAttributes.append(inputAttributes)
       case is InterventionPhytosanitaries:
         let phyto = input as! InterventionPhytosanitaries

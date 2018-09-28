@@ -402,7 +402,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.referenceID = Int32(registeredSeed.id)
+      seed.ekyID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
       seed.unit = "kilogram_per_hectare"
@@ -494,12 +494,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.unit = "kilogram_per_hectare"
     seed.used = false
     seeds.append(seed)
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    pushInput(unit: ArticleUnitEnum.liter, name: seed.variety!, type: ArticleTypeEnum.seed, managedContext: managedContext, input: seed)
   }
 
   private func createPhyto(name: String, firmName: String, _ maaID: String, _ inFieldReentryDelay: Int) {
@@ -607,6 +602,32 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     sortInputs()
     tableView.reloadData()
     dimView.isHidden = true
+  }
+
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum, managedContext: NSManagedObjectContext, input: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    var ekyID: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        ekyID = Int32(result!.data!.createArticle!.article!.id)!
+        input.setValue(ekyID, forKey: "ekyID")
+
+        do {
+          try managedContext.save()
+        } catch let error as NSError {
+          print("Could not save. \(error), \(error.userInfo)")
+        }
+      }
+    }
   }
 
   @objc func hideDimView() {
