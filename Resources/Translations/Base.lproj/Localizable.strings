@@ -314,23 +314,6 @@
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
 
-// Weather
-
-"weather" = "Météo";
-"temperature" = "Température";
-"wind_speed" = "Vitesse du vent";
-"not_filled_in" = "Non renseignée";
-"temp" = "Temp.: %@ °C |";
-"wind" = " wind: %@ km/h";
-"cloudy" = "Cloudy";
-"cloudy_passage" = "Cloudy passage";
-"fogy" = "Fogy";
-"rain" = "Rain";
-"rain_fall" = "Rain fall";
-"snow" = "Snow";
-"storm" = "Storm";
-"sunny" = "Sunny";
-
 // Storyboard
 
 "appli_description" = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account...";
@@ -350,3 +333,21 @@
 
 "this_element_name_is_already_in_use" = "This %@ name is already in use. Please choose another one.";
 "the_element_name_cant_be_empty" = "The %@ name can't be empty";
+
+
+"or" = "Or %@ %@";
+"or_per_hectare" = "Or %@ %@ per hectare";
+"quantity_cant_be_nul" = "%@ can't be nul";
+"no_crop_selected" = "No crop selected";
+"volume" = "The volume";
+"mass" = "The mass";
+"select" = "+ SELECT";
+
+// Weather
+
+"weather" = "Weather";
+"temperature" = "Temperature";
+"wind_speed" = "Wind speed";
+"not_filled_in" = "Not filled in";
+"temp" = "Temp.: %@ °C |";
+"wind" = " wind: %@ km/h";

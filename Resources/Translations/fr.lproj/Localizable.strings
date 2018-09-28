@@ -313,23 +313,6 @@
 "weeder" = "Désherbeur";
 "wrapper" = "Enrubanneuse";
 
-// Weather
-
-"weather" = "Weather";
-"temperature" = "Temperature";
-"wind_speed" = "Wind speed";
-"not_filled_in" = "Not filled in";
-"temp" = "Temp.: %@ °C |";
-"wind" = " vent: %@ km/h";
-"cloudy" = "Nuages";
-"cloudy_passage" = "Passages-nuageux";
-"fogy" = "Brouillard";
-"rain" = "Pluie";
-"rain_fall" = "Averses";
-"snow" = "Neige";
-"storm" = "Orage";
-"sunny" = "Soleil";
-
 // Storyboard
 
 "appli_description" = "Bienvenue dans l'application mobile Clic&Farm ! Pour commencer, identifiez-vous avec votre compte Ekylibre...";
@@ -349,3 +332,21 @@
 
 "this_element_name_is_already_in_use" = "Ce nom d'%@ est déjà utilisé. Veuillez en choisir un autre.";
 "the_element_name_cant_be_empty" = "Le nom de l'%@ ne peut être vide.";
+
+
+"or" = "Soit %@ %@";
+"or_per_hectare" = "Soit %@ %@ par hectare";
+"quantity_cant_be_nul" = "%@ ne peut être nul";
+"no_crop_selected" = "Aucune culture sélectionnée";
+"volume" = "Le volume";
+"mass" = "La masse";
+"select" = "+ SÉLECTIONNER";
+
+// Weather
+
+"weather" = "Météo";
+"temperature" = "Température";
+"wind_speed" = "Vitesse du vent";
+"not_filled_in" = "Non renseignée";
+"temp" = "Temp.: %@ °C |";
+"wind" = " vent: %@ km/h";
