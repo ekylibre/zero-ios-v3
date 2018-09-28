@@ -402,10 +402,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.ekyID = Int32(registeredSeed.id)
+      seed.referenceID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
-      seed.unit = "kg/ha"
+      seed.unit = "kilogram_per_hectare"
       seed.used = false
       seeds.append(seed)
     }
@@ -428,14 +428,14 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.ekyID = Int32(registeredPhyto.id)
+      phyto.referenceID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
       phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
       phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
       phyto.firmName = registeredPhyto.firmName
-      phyto.unit = "l/ha"
+      phyto.unit = "liter_per_hectare"
       phyto.used = false
       phytos.append(phyto)
     }
@@ -458,7 +458,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.ekyID = Int32(registeredFertilizer.id)
+      fertilizer.referenceID = Int32(registeredFertilizer.id)
       fertilizer.name = registeredFertilizer.name
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety
@@ -468,7 +468,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
       fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
       fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
-      fertilizer.unit = "kg/ha"
+      fertilizer.unit = "kilogram_per_hectare"
       fertilizer.used = false
       fertilizers.append(fertilizer)
     }
@@ -491,7 +491,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.registered = false
     seed.specie = specie
     seed.variety = variety
-    seed.unit = "kg/ha"
+    seed.unit = "kilogram_per_hectare"
     seed.used = false
     seeds.append(seed)
 
@@ -515,7 +515,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.firmName = firmName
     phyto.maaID = maaID
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
-    phyto.unit = "l/ha"
+    phyto.unit = "liter_per_hectare"
     phyto.used = false
     phytos.append(phyto)
 
@@ -537,7 +537,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.registered = false
     fertilizer.name = name
     fertilizer.nature = nature
-    fertilizer.unit = "kg/ha"
+    fertilizer.unit = "kilogram_per_hectare"
     fertilizer.used = false
     fertilizers.append(fertilizer)
 

@@ -165,7 +165,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
-      defineQuantityInFunctionOfSurface(unit: unit!, quantity: quantity, indexPath: indexPath)
+      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity, indexPath: indexPath)
     }
   }
 

@@ -196,7 +196,7 @@
 "kilogram_per_square_meter" = "kg/m²";
 "kilogram_per_hectare" = "kg/ha";
 "quintal" = "q";
-"quintal_per_quare_meter" = "g/m²";
+"quintal_per_square_meter" = "g/m²";
 "quintal_per_hectare" = "g/ha";
 "ton" = "t";
 "ton_per_square_meter" = "t/m²";

@@ -113,8 +113,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
   var weather = [Weather]()
-  let solidUnitMeasure = ["g", "g/ha", "g/m²", "kg", "kg/ha", "kg/m²", "q", "q/ha", "q/m²", "t", "t/ha", "t/m²"]
-  let liquidUnitMeasure = ["l", "l/ha", "l/m²", "hl", "hl/ha", "hl/m²", "m³","m³/ha", "m³/m²"]
+  var apolloQuery = ApolloQuery()
+  let solidUnitMeasure = [
+    "gram",
+    "gram_per_hectare",
+    "gram_per_square_meter",
+    "kilogram",
+    "kilogram_per_hectare",
+    "kilogram_per_square_meter",
+    "quintal",
+    "quintal_per_hectare",
+    "quintal_per_square_meter",
+    "ton",
+    "ton_per_hectare",
+    "ton_per_square_meter"]
+  let liquidUnitMeasure = [
+    "liter",
+    "liter_per_hectare",
+    "liter_per_square_meter",
+    "hectoliter",
+    "hectoliter_per_hectare",
+    "hectoliter_per_square_meter",
+    "cubic_meter",
+    "cubic_meter_per_hectare",
+    "cubic_meter_per_square_meter"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -348,7 +370,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.unitMeasureButton.setTitle(selectedInput.value(forKey: "unit") as? String, for: .normal)
+        let unit = selectedInput.value(forKey: "unit") as? String
+        cell.unitMeasureButton.setTitle(unit?.localized, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
         switch selectedInput {
@@ -541,6 +564,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
+    let id = apolloQuery.pushIntervention(intervention: newIntervention)
+    newIntervention.ekyID = id
 
     do {
       try managedContext.save()
@@ -667,7 +692,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let isDriver = entity.value(forKey: "isDriver")
 
       doer.interventions = intervention
-      doer.isDriver = (isDriver != nil)
+      doer.isDriver = isDriver as! Bool
       doer.entities = entity
     }
 

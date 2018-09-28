@@ -808,7 +808,33 @@ class ApolloQuery {
     }
   }
 
-  // MARK: - Mutations: Interventions
+  // MARK: - Mutations: Inputs
+
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+    let group = DispatchGroup()
+    group.enter()
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
+        print("ID: \(String(describing: id))")
+      }
+      group.leave()
+    }
+    return id
+  }
+
+  // MARK: Interventions
 
   func defineWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
     let workingDays = intervention.workingPeriods
@@ -870,59 +896,60 @@ class ApolloQuery {
       case is InterventionSeeds:
         let seed = input as! InterventionSeeds
         let article = InterventionArticleAttributes(
-          id: "\(String(describing: seed.seeds?.ekyID))",
-          referenceId: "\(String(describing: seed.seeds?.referenceID))",
+          id: (seed.seeds?.ekyID as NSNumber?)?.stringValue,
+          referenceId: (seed.seeds?.referenceID as NSNumber?)?.stringValue,
           type: ArticleTypeEnum(rawValue: "SEED"))
         inputAttributes = InterventionInputAttributes(
           marketingAuthorizationNumber: nil,
           article: article,
           quantity: seed.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: seed.unit!)!,
+          unit: ArticleAllUnitEnum(rawValue: seed.unit!.uppercased())!,
           unitPrice: nil)
         inputsAttributes.append(inputAttributes)
       case is InterventionPhytosanitaries:
         let phyto = input as! InterventionPhytosanitaries
         let article = InterventionArticleAttributes(
-          id: "\(String(describing: phyto.phytos?.ekyID))",
-          referenceId: "\(String(describing: phyto.phytos?.referenceID))",
+          id: (phyto.phytos?.ekyID as NSNumber?)?.stringValue,
+          referenceId: (phyto.phytos?.referenceID as NSNumber?)?.stringValue,
           type: ArticleTypeEnum(rawValue: "CHEMICAL"))
         inputAttributes = InterventionInputAttributes(
           marketingAuthorizationNumber: phyto.phytos?.maaID,
           article: article,
           quantity: phyto.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: phyto.unit!)!,
+          unit: ArticleAllUnitEnum(rawValue: phyto.unit!.uppercased())!,
           unitPrice: nil)
         inputsAttributes.append(inputAttributes)
       case is InterventionFertilizers:
         let fertilizer = input as! InterventionFertilizers
         let article = InterventionArticleAttributes(
-          id: "\(String(describing: fertilizer.fertilizers?.ekyID))",
-          referenceId: "\(String(describing: fertilizer.fertilizers?.referenceID))",
+          id: (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue,
+          referenceId: (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue,
           type: ArticleTypeEnum(rawValue: "FERTILIZER"))
         inputAttributes = InterventionInputAttributes(
           marketingAuthorizationNumber: nil,
           article: article,
           quantity: fertilizer.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: fertilizer.unit!)!,
+          unit: ArticleAllUnitEnum(rawValue: fertilizer.unit!.uppercased())!,
           unitPrice: nil)
         inputsAttributes.append(inputAttributes)
       case is InterventionMaterials:
         let material = input as! InterventionMaterials
         let article = InterventionArticleAttributes(
-          id: "\(String(describing: material.materials?.ekyID))",
-          referenceId: "\(String(describing: material.materials?.materialID))",
+          id: (material.materials?.ekyID as NSNumber?)?.stringValue,
+          referenceId: (material.materials?.materialID as NSNumber?)?.stringValue,
           type: ArticleTypeEnum(rawValue: "MATERIAL"))
         inputAttributes = InterventionInputAttributes(
           marketingAuthorizationNumber: nil,
           article: article,
           quantity: material.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: material.unit!)!,
+          unit: ArticleAllUnitEnum(rawValue: material.unit!.uppercased())!,
           unitPrice: nil)
         inputsAttributes.append(inputAttributes)
       default:
         print("No type")
       }
     }
+    print("\nInputsAttributes: \(inputsAttributes)")
     return inputsAttributes
   }
 
@@ -955,7 +982,7 @@ class ApolloQuery {
 
     for equipment in equipments! {
       let equipmentID = (equipment as! InterventionEquipments).equipments?.ekyID
-      let equipmentAttributes = InterventionToolAttributes(equipmentId: "\(String(describing: equipmentID))")
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipmentID as NSNumber?)?.stringValue)
 
       equipmentsAttributes.append(equipmentAttributes)
     }
@@ -970,7 +997,7 @@ class ApolloQuery {
       let personID = (doer as! Doers).entities?.ekyID
       let role = (doer as! Doers).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
-        personId: "\(String(describing: personID))",
+        personId: (personID as NSNumber?)?.stringValue,
         role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
 
       operatorsAttributes.append(operatorAttributes)
@@ -987,14 +1014,20 @@ class ApolloQuery {
     return weather
   }
 
-  func pushIntervention(intervention: Interventions) {
+  func pushIntervention(intervention: Interventions) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo
     let mutation = PushInterMutation(
       farmId: intervention.farmID!,
       procedure: InterventionTypeEnum(rawValue: intervention.type!.uppercased())!,
       cropList: defineTargetAttributesFrom(intervention: intervention),
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
-      waterQuantity: Int(intervention.waterQuantity),
-      waterUnit: InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit ?? "LITER"),
+      waterQuantity: intervention.type == "irrigation" ? Int(intervention.waterQuantity) : nil,
+      waterUnit: intervention.type == "irrigation" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!.uppercased()) : nil,
       inputs: defineInputsAttributesFrom(intervention: intervention),
       outputs: defineHarvestAttributesFrom(intervention: intervention),
       globalOutputs: false,
@@ -1002,5 +1035,17 @@ class ApolloQuery {
       operators: defineOperatorAttributesFrom(intervention: intervention),
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
+
+    apollo?.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        print("\nResult: \(String(describing: result))")
+        if result?.data?.createIntervention?.intervention?.id != nil {
+          id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
+        }
+      }
+    }
+    return id
   }
 }
