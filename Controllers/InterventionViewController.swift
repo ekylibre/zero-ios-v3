@@ -449,8 +449,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
         intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
       }
-      print("\nIntervention: \(intervention)")
-      apolloQuery.pushIntervention(intervention: intervention as! Interventions)
     }
 
     do {
