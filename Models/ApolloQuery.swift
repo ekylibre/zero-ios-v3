@@ -36,6 +36,7 @@ class ApolloQuery {
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
       if UserDefaults.isFirstLaunch() {
         self.saveFarms(farms)
+        self.saveCrops(crops: farms.first!.crops!)
         self.loadEquipments()
         self.loadStorage()
         self.loadPeople { (success) -> Void in
@@ -45,6 +46,7 @@ class ApolloQuery {
         }
       } else {
         self.registerFarmID()
+        self.checkCropsData(crops: farms.first!.crops!)
         self.loadEquipments()
         self.loadStorage()
         self.loadPeople { (success) -> Void in
@@ -119,6 +121,128 @@ class ApolloQuery {
    completion(true)
    }
    }*/
+
+  // MARK: - Crops
+
+  private func saveCrops(crops: [FarmQuery.Data.Farm.Crop]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+    for crop in crops {
+      print("\nCrop: \(crop)")
+      let newCrop = Crops(context: managedContext)
+
+      newCrop.uuid = UUID(uuidString: crop.uuid)
+      newCrop.plotName = crop.name
+      newCrop.productionMode = crop.productionMode
+      newCrop.provisionalYield = crop.provisionalYield
+      newCrop.species = crop.species.rawValue
+      newCrop.startDate = dateFormatter.date(from: crop.startDate!)
+      newCrop.startDate = dateFormatter.date(from: crop.stopDate!)
+      let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
+      let surfaceArea = Float(splitString.first!)!
+      newCrop.surfaceArea = surfaceArea
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func checkCropsData(crops : [FarmQuery.Data.Farm.Crop]) {
+    for crop in crops {
+      let localCrop = fetchCrop(uuid: crop.uuid)
+
+      if let localCrop = localCrop {
+        print("\nUpdate crop")
+        updateCrop(local: localCrop, updated: crop)
+      } else {
+        print("\nInsertCrop")
+        insertCrop(crop)
+      }
+    }
+  }
+
+  private func fetchCrop(uuid: String) -> Crops? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    var crops = [Crops]()
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let predicate = NSPredicate(format: "uuid == %@", uuid)
+    cropsFetchRequest.predicate = predicate
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return crops.first
+  }
+
+  private func updateCrop(local: Crops, updated: FarmQuery.Data.Farm.Crop) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+    local.plotName = updated.name
+    local.productionMode = updated.productionMode
+    local.provisionalYield = updated.provisionalYield
+    local.species = updated.species.rawValue
+    local.startDate = dateFormatter.date(from: updated.startDate!)
+    local.startDate = dateFormatter.date(from: updated.stopDate!)
+    let splitString = updated.surfaceArea.split(separator: " ", maxSplits: 1)
+    let surfaceArea = Float(splitString.first!)!
+    local.surfaceArea = surfaceArea
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func insertCrop(_ new: FarmQuery.Data.Farm.Crop) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let crop = Crops(context: managedContext)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+    crop.uuid = UUID(uuidString: new.uuid)
+    crop.plotName = new.name
+    crop.productionMode = new.productionMode
+    crop.provisionalYield = new.provisionalYield
+    crop.species = new.species.rawValue
+    crop.startDate = dateFormatter.date(from: new.startDate!)
+    crop.startDate = dateFormatter.date(from: new.stopDate!)
+    let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
+    let surfaceArea = Float(splitString.first!)!
+    crop.surfaceArea = surfaceArea
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
 
   // MARK: Equipments
 
@@ -808,33 +932,7 @@ class ApolloQuery {
     }
   }
 
-  // MARK: - Mutations: Inputs
-
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
-    let group = DispatchGroup()
-    group.enter()
-
-    apollo.perform(mutation: mutation) { (result, error) in
-      if error != nil {
-        print(error!)
-      } else {
-        id = Int32(result!.data!.createArticle!.article!.id)!
-        print("ID: \(String(describing: id))")
-      }
-      group.leave()
-    }
-    return id
-  }
-
-  // MARK: Interventions
+  // MARK: - Mutations: Interventions
 
   func defineWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
     let workingDays = intervention.workingPeriods
@@ -851,6 +949,7 @@ class ApolloQuery {
 
       workingDaysAttributes.append(workingDayAttributes)
     }
+    print("\nWorkingDaysAttributes: \(workingDaysAttributes)")
     return workingDaysAttributes
   }
 
@@ -861,12 +960,13 @@ class ApolloQuery {
     for target in targets! {
       let target = target as! Targets
       let targetAttributes = InterventionTargetAttributes(
-        cropId: "\(String(describing: target.crops))",
+        cropId: (target.crops?.uuid)?.uuidString,
         workZone: nil,
         workAreaPercentage: Int(target.workAreaPercentage))
 
       targetsAttributes.append(targetAttributes)
     }
+    print("\nTargetsAttributes: \(targetsAttributes)")
     return targetsAttributes
   }
 
@@ -876,6 +976,21 @@ class ApolloQuery {
         inputs.append(entity as! NSManagedObject)
       }
     }
+  }
+
+  func appendInputAttributes(id: String?, referenceID: String?, type: ArticleTypeEnum?, quantity: NSNumber, unit: String) -> InterventionInputAttributes {
+    let article = InterventionArticleAttributes(
+      id: id,
+      referenceId: referenceID,
+      type: type)
+    let inputAttributes = InterventionInputAttributes(
+      marketingAuthorizationNumber: nil,
+      article: article,
+      quantity: Double(truncating: quantity),
+      unit: ArticleAllUnitEnum(rawValue: unit)!,
+      unitPrice: nil)
+
+    return inputAttributes
   }
 
   func defineInputsAttributesFrom(intervention: Interventions) -> [InterventionInputAttributes] {
@@ -891,73 +1006,59 @@ class ApolloQuery {
     initializeInputsArray(inputs: &inputs, entities: fertilizers)
     initializeInputsArray(inputs: &inputs, entities: materials)
     for input in inputs {
-      var inputAttributes: InterventionInputAttributes
       switch input {
       case is InterventionSeeds:
         let seed = input as! InterventionSeeds
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
         if seed.seeds?.ekyID == 0 {
-          let article = InterventionArticleAttributes(
-            id: "0",
-            referenceId: (seed.seeds?.referenceID as NSNumber?)?.stringValue,
-            type: ArticleTypeEnum(rawValue: "SEED"))
-          inputAttributes = InterventionInputAttributes(
-            marketingAuthorizationNumber: nil,
-            article: article,
-            quantity: seed.quantity as! Double,
-            unit: ArticleAllUnitEnum(rawValue: seed.unit!.uppercased())!,
-            unitPrice: nil)
+          referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "SEED")
         } else {
-          let article = InterventionArticleAttributes(
-            id: (seed.seeds?.ekyID as NSNumber?)?.stringValue,
-            referenceId: "0",
-            type: ArticleTypeEnum(rawValue: "SEED"))
-          inputAttributes = InterventionInputAttributes(
-            marketingAuthorizationNumber: nil,
-            article: article,
-            quantity: seed.quantity as! Double,
-            unit: ArticleAllUnitEnum(rawValue: seed.unit!.uppercased())!,
-            unitPrice: nil)
+          id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(inputAttributes)
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity!, unit: seed.unit!.uppercased()))
       case is InterventionPhytosanitaries:
         let phyto = input as! InterventionPhytosanitaries
-        let article = InterventionArticleAttributes(
-          id: (phyto.phytos?.ekyID as NSNumber?)?.stringValue,
-          referenceId: (phyto.phytos?.referenceID as NSNumber?)?.stringValue,
-          type: ArticleTypeEnum(rawValue: "CHEMICAL"))
-        inputAttributes = InterventionInputAttributes(
-          marketingAuthorizationNumber: phyto.phytos?.maaID,
-          article: article,
-          quantity: phyto.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: phyto.unit!.uppercased())!,
-          unitPrice: nil)
-        inputsAttributes.append(inputAttributes)
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if phyto.phytos?.ekyID == 0 {
+          referenceId = (phyto.phytos?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "CHEMICAL")
+        } else {
+          id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!.uppercased()))
       case is InterventionFertilizers:
         let fertilizer = input as! InterventionFertilizers
-        let article = InterventionArticleAttributes(
-          id: (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue,
-          referenceId: (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue,
-          type: ArticleTypeEnum(rawValue: "FERTILIZER"))
-        inputAttributes = InterventionInputAttributes(
-          marketingAuthorizationNumber: nil,
-          article: article,
-          quantity: fertilizer.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: fertilizer.unit!.uppercased())!,
-          unitPrice: nil)
-        inputsAttributes.append(inputAttributes)
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if fertilizer.fertilizers?.ekyID == 0 {
+          referenceId = (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "FERTILIZER")
+        } else {
+          id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity!, unit: fertilizer.unit!.uppercased()))
       case is InterventionMaterials:
         let material = input as! InterventionMaterials
-        let article = InterventionArticleAttributes(
-          id: (material.materials?.ekyID as NSNumber?)?.stringValue,
-          referenceId: (material.materials?.materialID as NSNumber?)?.stringValue,
-          type: ArticleTypeEnum(rawValue: "MATERIAL"))
-        inputAttributes = InterventionInputAttributes(
-          marketingAuthorizationNumber: nil,
-          article: article,
-          quantity: material.quantity as! Double,
-          unit: ArticleAllUnitEnum(rawValue: material.unit!.uppercased())!,
-          unitPrice: nil)
-        inputsAttributes.append(inputAttributes)
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if material.materials?.ekyID == 0 {
+          referenceId = (material.materials?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "MATERIAL")
+        } else {
+          id = (material.materials?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!.uppercased()))
       default:
         print("No type")
       }
@@ -986,6 +1087,7 @@ class ApolloQuery {
 
       harvestsAttributes.append(harvestAttributes)
     }
+    print("\nHarvestsAttributes: \(harvestsAttributes)")
     return harvestsAttributes
   }
 
@@ -999,6 +1101,7 @@ class ApolloQuery {
 
       equipmentsAttributes.append(equipmentAttributes)
     }
+    print("\nEquipmentsAttributes: \(equipmentsAttributes)")
     return equipmentsAttributes
   }
 
@@ -1015,6 +1118,7 @@ class ApolloQuery {
 
       operatorsAttributes.append(operatorAttributes)
     }
+    print("\nOperatorsAttributes: \(operatorsAttributes)")
     return operatorsAttributes
   }
 
@@ -1024,6 +1128,7 @@ class ApolloQuery {
     weather.temperature = intervention.weather?.temperature as? Double
     weather.windSpeed = intervention.weather?.windSpeed as? Double
     weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
+    print("\nWeather: \(weather)")
     return weather
   }
 

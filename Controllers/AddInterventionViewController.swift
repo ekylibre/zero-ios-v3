@@ -524,6 +524,32 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Core Data
 
+  func createSampleHarvestForMutation(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvest = Harvests(context: managedContext)
+    let storage = Storages(context: managedContext)
+
+    harvest.number = "1"
+    harvest.unit = "TON"
+    harvest.quantity = 2
+    harvest.type = "SILAGE"
+    harvest.interventions = intervention
+    harvest.storages = storage
+    storage.name = "Storage test n°1"
+    storage.type = "BUILDING"
+    storage.addToHarvests(harvest)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   func createIntervention() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -561,6 +587,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
+    if newIntervention.type == "harvest" {
+      createSampleHarvestForMutation(intervention: newIntervention)
+    }
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
@@ -591,7 +620,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       for entity in entities {
         entity.setValue(false, forKey: "used")
       }
-      //try managedContext.save()
+      try managedContext.save()
     } catch let error as NSError {
       print("Could not save or fetch. \(error), \(error.userInfo)")
     }
@@ -623,7 +652,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var crops: [Crops]!
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-    let predicate = NSPredicate(format: "isSelected == %@", NSNumber(value: true))
+    let predicate = NSPredicate(format: "isSelected == true")
     cropsFetchRequest.predicate = predicate
 
     do {
@@ -640,10 +669,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let target = Targets(context: managedContext)
     let selectedCrops = fetchSelectedCrops()
 
     for crop in selectedCrops {
+      let target = Targets(context: managedContext)
+
       target.interventions = intervention
       target.crops = crop
       target.workAreaPercentage = 100

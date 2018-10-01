@@ -428,7 +428,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.referenceID = Int32(registeredPhyto.id)
+      phyto.ekyID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
@@ -458,7 +458,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.referenceID = Int32(registeredFertilizer.id)
+      fertilizer.ekyID = Int32(registeredFertilizer.id)
       fertilizer.name = registeredFertilizer.name
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety

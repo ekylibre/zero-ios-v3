@@ -121,31 +121,31 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     self.present(alert, animated: true)
   }
 
-  func forTrailingZero(temp: Double) -> String {
+  func forTrailingZero(temp: Float) -> String {
     let withoutTrailing = String(format: "%g", temp)
 
     return withoutTrailing
   }
 
-  func defineQuantityInFunctionOfSurface(unit: String, quantity: Double, indexPath: IndexPath) {
+  func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let surfaceArea = cropsView.totalSurfaceArea
-    var efficiency: Double = 0
+    let surfaceArea = cropsView.selectedSurfaceArea
+    var efficiency: Float = 0
 
     if (unit.contains("/")) {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
       switch surfaceUnit {
       case "ha":
-        efficiency = Double(quantity) * surfaceArea
+        efficiency = quantity * surfaceArea
       case "m2":
-        efficiency = Double(quantity) * (surfaceArea * 10000)
+        efficiency = quantity * (surfaceArea * 10000)
       default:
         return
       }
       let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
       cell.surfaceQuantity.text = String(format: "or".localized, efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
     } else {
-      efficiency = Double(quantity) / surfaceArea
+      efficiency = quantity / surfaceArea
       let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
       cell.surfaceQuantity.text = String(format: "or_per_hectare".localized, efficiencyWithoutTrailing, unit)
     }
@@ -165,7 +165,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
-      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity, indexPath: indexPath)
+      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: Float(quantity), indexPath: indexPath)
     }
   }
 

@@ -319,7 +319,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func updateCropsLabel(_ targets: [Targets]?) -> String {
-    var totalSurfaceArea: Double = 0
+    var totalSurfaceArea: Float = 0
 
     if targets != nil {
       for target in targets! {
