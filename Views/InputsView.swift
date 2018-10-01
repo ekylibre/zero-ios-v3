@@ -13,9 +13,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Properties
 
-  var addInterventionViewController: AddInterventionViewController?
-  var isSearching: Bool = false
-
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
     segmentedControl.selectedSegmentIndex = 0
@@ -90,9 +87,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return fertilizerView
   }()
 
+  var addInterventionViewController: AddInterventionViewController?
   var seeds = [Seeds]()
   var phytos = [Phytos]()
   var fertilizers = [Fertilizers]()
+  var isSearching: Bool = false
   var filteredInputs = [NSManagedObject]()
 
   // MARK: - Initialization
@@ -137,8 +136,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       tableViewTopAnchor,
       tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
-      tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
