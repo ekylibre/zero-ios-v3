@@ -865,19 +865,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func checkCropsProduction() -> Bool {
-    let selectedCrops = fetchSelectedCrops()
-    let firstCrop = selectedCrops.first?.species
+    if interventionType == "harvest" || interventionType == "implantation" {
+      let selectedCrops = fetchSelectedCrops()
+      let firstCrop = selectedCrops.first?.species
 
-    for selectedCrop in selectedCrops {
-      if selectedCrop.species != firstCrop {
-        let alert = UIAlertController(
-          title: "",
-          message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
-          preferredStyle: .alert)
+      for selectedCrop in selectedCrops {
+        if selectedCrop.species != firstCrop {
+          let alert = UIAlertController(
+            title: "",
+            message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+            preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        present(alert, animated: true)
-        return false
+          alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+          present(alert, animated: true)
+          return false
+        }
       }
     }
     return true
@@ -1018,4 +1020,3 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
-
