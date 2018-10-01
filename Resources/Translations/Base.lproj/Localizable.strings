@@ -267,6 +267,7 @@
 // Storage types
 "HEAP" = "Heap";
 "SILO" = "Silo";
+"BUILDING" = "Building";
 
 "organic" = "Organic";
 "mineral" = "Mineral";
@@ -327,6 +328,7 @@
 "create_seed_title" = "Create new seed";
 "create_phyto_title" = "Create new phyto";
 "create_ferti_title" = "Create new fertilizer";
+"create_storage_title" = "Create new storage";
 "create_material_title" = "Create new material";
 "create_equipment_title" = "Create new tool";
 "create_person_title" = "Create new person";

@@ -267,6 +267,7 @@
 // Storage types
 "HEAP" = "Tas";
 "SILO" = "Silo";
+"BUILDING" = "Bâtiment";
 
 "organic" = "Organique";
 "mineral" = "Minéral";
@@ -327,6 +328,7 @@
 "create_seed_title" = "Création d'une semence";
 "create_phyto_title" = "Création d'un produit phyto";
 "create_ferti_title" = "Création d'un fertilisant";
+"create_storage_title" = "Création d'un lieu de stockage";
 "create_material_title" = "Création d'un matériau";
 "create_equipment_title" = "Création d'un équipement";
 "create_person_title" = "Création d'un opérateur";
