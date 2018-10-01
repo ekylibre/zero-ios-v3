@@ -906,7 +906,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func selectWorkingPeriod(_ sender: Any) {
-
     if workingPeriodHeight.constant == 70 {
       workingPeriodHeight.constant = 155
       selectedWorkingPeriodLabel.isHidden = true
@@ -937,19 +936,49 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
   }
 
+  func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
+    let selectedCrops = fetchSelectedCrops()
+
+    if selectedCrops.count > 0 {
+      var startDate = selectedCrops.first?.startDate
+      var stopDate = selectedCrops.first?.stopDate
+
+      for selectedCrop in selectedCrops {
+        startDate = (selectedCrop.startDate! > startDate! ? selectedCrop.startDate! : startDate)
+        stopDate = (selectedCrop.stopDate! > stopDate! ? selectedCrop.stopDate! : stopDate)
+      }
+      if selectedDate < startDate! || selectedDate > stopDate! {
+        let message = (selectedDate < startDate! ? String(format: "started_must_be_on_or_after".localized, startDate! as CVarArg) :
+          String(format: "started_must_be_on_or_before".localized, stopDate! as CVarArg))
+        let alert = UIAlertController(
+          title: "working_periods_is_invalid".localized,
+          message: message,
+          preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+        return false
+      }
+    }
+    return true
+  }
+
   @objc func validateDate() {
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "d MMMM"
-    let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
-    selectDateButton.setTitle(selectedDate, for: .normal)
+    if checkIfSelectedDateMatchProductionPeriod(selectedDate: selectDateView.datePicker.date) {
+      let dateFormatter = DateFormatter()
 
-    selectDateView.isHidden = true
-    dimView.isHidden = true
+      dateFormatter.locale = Locale(identifier: "fr_FR")
+      dateFormatter.dateFormat = "d MMMM"
+      let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
 
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
+      selectDateButton.setTitle(selectedDate, for: .normal)
+      selectDateView.isHidden = true
+      dimView.isHidden = true
+
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+      })
+    }
   }
 
   @IBAction func selectInput(_ sender: Any) {

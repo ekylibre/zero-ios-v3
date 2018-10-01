@@ -214,3 +214,9 @@
 // Errors
 
 "impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
+
+// Working Periods
+
+"working_periods_is_invalid" = "Working periods is invalid";
+"started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
+"started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";

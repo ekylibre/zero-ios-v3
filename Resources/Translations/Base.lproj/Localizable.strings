@@ -214,3 +214,9 @@
 // Errors
 
 "impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
+
+// Working Periods
+
+"working_periods_is_invalid" = "Working periods is invalid";
+"started_must_be_on_or_after" = "Started must be on or after %@";
+"started_must_be_on_or_before" = "Started must be on or before %@";
