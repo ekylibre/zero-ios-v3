@@ -248,36 +248,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    switch segmentedControl.selectedSegmentIndex {
-    case 0:
-      let fromSeeds = isSearching ? filteredInputs : seeds
+    let inputs: [Int: [NSManagedObject]] = [0: seeds, 1: phytos, 2: fertilizers]
+    let fromInputs = isSearching ? filteredInputs : inputs[segmentedControl.selectedSegmentIndex]!
 
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
-      let selectedSeed = addInterventionViewController?.createSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
-      if selectedSeed != nil {
-        addInterventionViewController?.selectedInputs.append(selectedSeed!)
-      }
-    case 1:
-      let fromPhytos = isSearching ? filteredInputs : phytos
-
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
-      let selectedPhyto = addInterventionViewController?.createSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
-      if selectedPhyto != nil {
-        addInterventionViewController?.selectedInputs.append(selectedPhyto!)
-      }
-    case 2:
-      let fromFertilizers = isSearching ? filteredInputs : fertilizers
-
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
-      let selectedFertilizer = addInterventionViewController?.createSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
-      if selectedFertilizer != nil {
-        addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
-      }
-    default:
-      print("Error")
-    }
-    addInterventionViewController?.selectedInputsTableView.reloadData()
-    addInterventionViewController?.closeInputsSelectionView()
+    fromInputs[indexPath.row].setValue(true, forKey: "used")
+    tableView.reloadData()
+    addInterventionViewController?.selectInput(fromInputs[indexPath.row])
   }
 
   // MARK: - Search bar
