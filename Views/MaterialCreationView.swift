@@ -133,11 +133,11 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  @objc func closeView(sender: UIButton) {
+  @objc private func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
-      unitButton.setTitle("meter".localized, for: .normal)
       nameTextField.text = ""
+      unitButton.setTitle("meter".localized, for: .normal)
     }
     self.isHidden = true
   }

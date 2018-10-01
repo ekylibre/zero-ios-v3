@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
-class MaterialsView: UIView, UISearchBarDelegate {
+class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Properties
 
   public var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "Sélectionnez un matériau"
+    titleLabel.text = "selecting_materials".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
     titleLabel.textColor = AppColor.TextColors.White
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +41,7 @@ class MaterialsView: UIView, UISearchBarDelegate {
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("+ CRÉER UN NOUVEAU MATÉRIAU", for: .normal)
+    createButton.setTitle("create_new_material".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
@@ -52,10 +53,213 @@ class MaterialsView: UIView, UISearchBarDelegate {
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
     tableView.bounces = false
-    tableView.register(PlotCell.self, forCellReuseIdentifier: "PlotCell")
+    tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()
+
+  var tableViewTopAnchor: NSLayoutConstraint!
+
+  lazy var dimView: UIView = {
+    let dimView = UIView(frame: CGRect.zero)
+    dimView.backgroundColor = UIColor.black
+    dimView.alpha = 0.6
+    dimView.isHidden = true
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    return dimView
+  }()
+
+  lazy var creationView: MaterialCreationView = {
+    let creationView = MaterialCreationView(frame: CGRect.zero)
+    creationView.translatesAutoresizingMaskIntoConstraints = false
+    return creationView
+  }()
+
+  var materials = [Materials]()
+  var isSearching: Bool = false
+  var filteredMaterials = [Materials]()
+
+  // MARK: - Initialization
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setupView()
+    fetchMaterials()
+    tableView.reloadData()
+  }
+
+  private func setupView() {
+    self.isHidden = true
+    self.backgroundColor = UIColor.white
+    self.layer.cornerRadius = 5
+    self.clipsToBounds = true
+    self.addSubview(headerView)
+    self.addSubview(searchBar)
+    self.addSubview(createButton)
+    self.addSubview(tableView)
+    self.addSubview(dimView)
+    self.addSubview(creationView)
+    setupLayout()
+    setupActions()
+  }
+
+  private func setupLayout() {
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
+
+    NSLayoutConstraint.activate([
+      headerView.topAnchor.constraint(equalTo: self.topAnchor),
+      headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
+      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
+      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      tableViewTopAnchor,
+      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
+      ])
+
+    bindFrameToSuperViewBounds(dimView, height: 0)
+    bindFrameToSuperViewBounds(creationView, height: 250)
+  }
+
+  private func bindFrameToSuperViewBounds(_ view: UIView, height: CGFloat) {
+    let customHeightAnchor: NSLayoutConstraint
+
+    if height > 0 {
+      customHeightAnchor = view.heightAnchor.constraint(equalToConstant: height)
+    } else {
+      customHeightAnchor = view.heightAnchor.constraint(equalTo: view.superview!.heightAnchor)
+    }
+
+    NSLayoutConstraint.activate([
+      customHeightAnchor,
+      view.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      view.widthAnchor.constraint(equalTo: self.widthAnchor),
+      view.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      ])
+  }
+
+  private func setupActions() {
+    createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
+    creationView.cancelButton.addTarget(self, action: #selector(cancelCreation), for: .touchUpInside)
+    creationView.createButton.addTarget(self, action: #selector(validateCreation), for: .touchUpInside)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Search bar
+
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    isSearching = true
+  }
+
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    isSearching = false
+  }
+
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    filteredMaterials = searchText.isEmpty ? materials : materials.filter({(material: Materials) -> Bool in
+      let name = material.name!
+      return name.range(of: searchText, options: .caseInsensitive) != nil
+    })
+    isSearching = !searchText.isEmpty
+    createButton.isHidden = isSearching
+    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableView.reloadData()
+    DispatchQueue.main.async {
+      if self.tableView.numberOfRows(inSection: 0) > 0 {
+        self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+      }
+    }
+  }
+
+  // MARK: - Table view
+
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return isSearching ? filteredMaterials.count : materials.count
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialCell", for: indexPath) as! MaterialCell
+    let fromMaterials = isSearching ? filteredMaterials : materials
+    let used = fromMaterials[indexPath.row].used
+
+    cell.nameLabel.text = fromMaterials[indexPath.row].name
+    cell.isUserInteractionEnabled = !used
+    cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+    return cell
+  }
+
+  // MARK: - Core Data
+
+  private func fetchMaterials() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let materialsFetchRequest: NSFetchRequest<Materials> = Materials.fetchRequest()
+
+    do {
+      materials = try managedContext.fetch(materialsFetchRequest)
+      materials = materials.sorted(by: { $0.name! < $1.name! })
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func createMaterial(name: String, unit: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let material = Materials(context: managedContext)
+
+    material.name = name
+    material.unit = unit
+    material.used = false
+    materials.append(material)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  // MARK: - Actions
+
+  @objc private func tapCreateButton() {
+    dimView.isHidden = false
+    creationView.isHidden = false
+  }
+
+  @objc private func cancelCreation() {
+    dimView.isHidden = true
+  }
+
+  @objc private func validateCreation() {
+    createMaterial(name: creationView.nameTextField.text!, unit: creationView.unitButton.titleLabel!.text!)
+    creationView.nameTextField.text = ""
+    creationView.unitButton.setTitle("meter".localized, for: .normal)
+    materials = materials.sorted(by: { $0.name! < $1.name! })
+    tableView.reloadData()
+    dimView.isHidden = true
+  }
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.endEditing(true)
+  }
 }
