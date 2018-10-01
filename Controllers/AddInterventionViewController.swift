@@ -21,6 +21,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+
+  // Irrigation
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
@@ -29,6 +31,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationUnitButton: UIButton!
   @IBOutlet weak var irrigationInfoLabel: UILabel!
   @IBOutlet weak var irrigationSeparatorView: UIView!
+
+  // Materials
+  @IBOutlet var materialsGesture: UITapGestureRecognizer!
+
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
@@ -93,6 +99,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
   var inputsView: InputsView!
+  var materialsView: MaterialsView!
   var interventionEquipments = [NSManagedObject]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
   var selectedEquipments = [NSManagedObject]()
@@ -230,6 +237,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+
+    setupMaterialsView()
 
     initializeWeatherButtons()
     saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
@@ -849,6 +858,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Fertilizers")
     dismiss(animated: true, completion: nil)
   }
+
+  @IBAction func selectMaterials(_ sender: Any) {
+    dimView.isHidden = false
+    materialsView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
 
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {

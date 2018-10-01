@@ -51,6 +51,10 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
   lazy var tableView: UITableView = {
     let tableView = UITableView(frame: CGRect.zero)
     tableView.separatorInset = UIEdgeInsets.zero
+    let frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1 / UIScreen.main.scale)
+    let line = UIView(frame: frame)
+    line.backgroundColor = tableView.separatorColor
+    tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
     tableView.bounces = false
     tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
@@ -109,7 +113,10 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
 
     NSLayoutConstraint.activate([
+      titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+      titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       headerView.topAnchor.constraint(equalTo: self.topAnchor),
+      headerView.heightAnchor.constraint(equalToConstant: 60),
       headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
