@@ -21,5 +21,11 @@ extension AddInterventionViewController {
       materialsView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
       materialsView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
+
+    materialsView.creationView.unitButton.addTarget(self, action: #selector(showUnits), for: .touchUpInside)
+  }
+
+  @objc private func showUnits() {
+    self.performSegue(withIdentifier: "showMaterialUnitList", sender: self)
   }
 }

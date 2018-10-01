@@ -1884,6 +1884,7 @@
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecieList" id="uas-Qa-jvK"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnitList" id="nwb-tQ-9Vq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2152,5 +2153,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vxv-f7-ZrT"/>
+        <segue reference="nwb-tQ-9Vq"/>
     </inferredMetricsTieBreakers>
 </document>

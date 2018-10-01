@@ -687,6 +687,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.cellsStrings = loadSpecies()
+      destVC.tag = 0
+    case "showMaterialUnitList":
+      let destVC = segue.destination as! ListTableViewController
+      destVC.delegate = self
+      destVC.cellsStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                             "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+      destVC.tag = 1
     default:
       guard let button = sender as? UIButton, button == saveInterventionButton else {
         return
@@ -706,7 +713,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
         for registeredSpecie in registeredSpecies! {
           let specie = registeredSpecie["name"] as! String
-          species.append(specie.localized)
+          species.append(specie.uppercased())
         }
       } catch {
         print("Lexicon error")
@@ -718,8 +725,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return species.sorted()
   }
 
-  func writeValueBack(value: String) {
-    inputsView.seedView.specieButton.setTitle(value, for: .normal)
+  func writeValueBack(tag: Int, value: String) {
+    switch tag {
+    case 0:
+      inputsView.seedView.specieButton.setTitle(value, for: .normal)
+    case 1:
+      materialsView.creationView.unitButton.setTitle(value, for: .normal)
+    default:
+      fatalError("writeValueBack: Unknown value for tag")
+    }
   }
 
   // MARK: - Search Bar Delegate

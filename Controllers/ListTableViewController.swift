@@ -14,6 +14,7 @@ class ListTableViewController: UITableViewController {
 
   var delegate: WriteValueBackDelegate?
   var cellsStrings: [String]!
+  var tag: Int!
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,14 +36,15 @@ class ListTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
+    let string = cellsStrings[indexPath.row]
 
-    cell.label.text = cellsStrings[indexPath.row]
+    cell.label.text = string.localized
     return cell
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let cell = tableView.cellForRow(at: indexPath) as! ListCell
-    delegate?.writeValueBack(value: cell.label.text!)
+    delegate?.writeValueBack(tag: tag, value: cell.label.text!)
     self.dismiss(animated: true, completion: nil)
   }
 }
