@@ -88,15 +88,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   var newIntervention: Interventions!
   var interventionType: String!
-  var equipments = [NSManagedObject]()
+  var equipments = [Equipments]()
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
   var inputsView: InputsView!
   var interventionEquipments = [NSManagedObject]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
-  var selectedEquipments = [NSManagedObject]()
-  var searchedEquipments = [NSManagedObject]()
+  var selectedEquipments = [Equipments]()
+  var searchedEquipments = [Equipments]()
   var equipmentTypes: [String]!
   var sortedEquipmentTypes: [String]!
   var selectedEquipmentType: String!
@@ -112,7 +112,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
-  var weather = [Weather]()
+  var weather = Weather()
   var apolloQuery = ApolloQuery()
   let solidUnitMeasure = [
     "gram",
@@ -189,8 +189,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedEquipmentType = sortedEquipmentTypes[0]
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
 
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
-    //fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    fetchEquipments()
     fetchEntities()
 
     initUnitMeasurePickerView()
@@ -255,7 +254,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
     initializeWeatherButtons()
-    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    initWeather()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
 
@@ -590,6 +589,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if newIntervention.type == "harvest" {
       createSampleHarvestForMutation(intervention: newIntervention)
     }
+    saveWeather(intervention: newIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
@@ -695,12 +695,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedEquipment in selectedEquipments {
       let equipment = InterventionEquipments(context: managedContext)
-      let name = selectedEquipment.value(forKeyPath: "name") as! String
-      let type = selectedEquipment.value(forKey: "type") as! String
 
+      equipment.equipments = selectedEquipment
       equipment.interventions = intervention
-      equipment.name = name
-      equipment.type = type
+      equipment.name = equipment.equipments?.name
+      equipment.type = equipment.equipments?.type
     }
 
     do {
@@ -747,6 +746,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       print("Could not fetch. \(error), \(error.userInfo)")
     }
     searchedEntity = entity
+  }
+
+  func saveWeather(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var currentWeather = Weather(context: managedContext)
+
+    currentWeather = weather
+    currentWeather.interventions = intervention
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   // MARK: - Navigation

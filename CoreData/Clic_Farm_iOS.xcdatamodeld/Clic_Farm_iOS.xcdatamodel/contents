@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
-        <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productionMode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="provisionalYield" optional="YES" attributeType="String" syncable="YES"/>
@@ -188,7 +188,7 @@
         <element name="Farms" positionX="171.9375" positionY="458.03515625" width="128" height="75"/>
         <element name="Fertilizers" positionX="698.671875" positionY="-517.89453125" width="128" height="315"/>
         <element name="Harvests" positionX="440.734375" positionY="-461.35546875" width="128" height="150"/>
-        <element name="InterventionEquipments" positionX="-406.23046875" positionY="-243.62890625" width="128" height="103"/>
+        <element name="InterventionEquipments" positionX="-406.23046875" positionY="-243.62890625" width="128" height="105"/>
         <element name="InterventionFertilizers" positionX="495.1875" positionY="-178.2578125" width="128" height="105"/>
         <element name="InterventionMaterials" positionX="-514.30859375" positionY="-32.35546875" width="128" height="120"/>
         <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>

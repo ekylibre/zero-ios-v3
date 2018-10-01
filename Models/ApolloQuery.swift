@@ -161,10 +161,8 @@ class ApolloQuery {
       let localCrop = fetchCrop(uuid: crop.uuid)
 
       if let localCrop = localCrop {
-        print("\nUpdate crop")
         updateCrop(local: localCrop, updated: crop)
       } else {
-        print("\nInsertCrop")
         insertCrop(crop)
       }
     }
@@ -1161,6 +1159,7 @@ class ApolloQuery {
         print("\nResult: \(String(describing: result))")
         if result?.data?.createIntervention?.intervention?.id != nil {
           id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
+          print("\nIntervention ID: \(id)")
         }
       }
     }

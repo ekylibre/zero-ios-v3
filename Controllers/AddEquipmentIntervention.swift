@@ -206,7 +206,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
     createEquipmentsView.isHidden = true
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEquipments()
     equipmentsTableView.reloadData()
   }
 
@@ -229,6 +229,23 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       closeEquipmentsCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func fetchEquipments() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+
+    do {
+      equipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      searchedEquipments = equipments
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 

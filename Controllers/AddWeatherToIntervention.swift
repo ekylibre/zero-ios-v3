@@ -51,13 +51,13 @@ extension AddInterventionViewController {
         }
       }
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
     } else if weatherIsSelected {
       sender.layer.borderColor = UIColor.lightGray.cgColor
       weatherIsSelected = false
     } else {
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
       weatherIsSelected = true
     }
   }
@@ -95,7 +95,7 @@ extension AddInterventionViewController {
     textField.resignFirstResponder()
     switch textField {
     case temperatureTextField:
-      weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
+      weather.setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -107,7 +107,7 @@ extension AddInterventionViewController {
         currentWeatherLabel.text = currentTemp + currentWind
       }
     case windSpeedTextField:
-      weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
+      weather.setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -124,23 +124,14 @@ extension AddInterventionViewController {
     return false
   }
 
-  func saveWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
+  func initWeather() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let weatherEntity = Weather(context: managedContext)
+    let weather = Weather(context: managedContext)
 
-    weatherEntity.windSpeed = windSpeed as NSNumber
-    weatherEntity.temperature = temperature as NSNumber
-    weatherEntity.weatherDescription = weatherDescription
-
-    do {
-      try managedContext.save()
-      weather.append(weatherEntity)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    self.weather = weather
   }
 }
