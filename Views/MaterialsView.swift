@@ -81,6 +81,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     return creationView
   }()
 
+  var addInterventionViewController: AddInterventionViewController?
   var materials = [Materials]()
   var isSearching: Bool = false
   var filteredMaterials = [Materials]()
@@ -206,6 +207,13 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     cell.isUserInteractionEnabled = !used
     cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let fromMaterials = isSearching ? filteredMaterials : materials
+
+    fromMaterials[indexPath.row].used = true
+    addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row])
   }
 
   // MARK: - Core Data

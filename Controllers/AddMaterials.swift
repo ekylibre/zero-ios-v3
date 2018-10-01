@@ -25,6 +25,19 @@ extension AddInterventionViewController {
     materialsView.creationView.unitButton.addTarget(self, action: #selector(showUnits), for: .touchUpInside)
   }
 
+  func selectMaterial(_ material: Materials) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedMaterial = InterventionMaterials(context: managedContext)
+
+    selectedMaterial.unit = material.unit
+    selectedMaterial.materials = material
+    selectedMaterials.append(selectedMaterial)
+  }
+
   @objc private func showUnits() {
     self.performSegue(withIdentifier: "showMaterialUnitList", sender: self)
   }

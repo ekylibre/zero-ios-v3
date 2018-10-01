@@ -100,6 +100,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropsView: CropsView!
   var inputsView: InputsView!
   var materialsView: MaterialsView!
+  var selectedMaterials = [InterventionMaterials]()
   var interventionEquipments = [NSManagedObject]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
   var selectedEquipments = [NSManagedObject]()
