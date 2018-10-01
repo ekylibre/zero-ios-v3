@@ -1151,10 +1151,10 @@ class ApolloQuery {
       description: intervention.infos)
 
     apollo?.perform(mutation: mutation) { (result, error) in
-      if error != nil {
-        print(error!)
+      if error != nil /*|| result?.data?.createIntervention?.errors != nil*/ {
+        print("Error: \(String(describing: error)), result error: \(String(describing: result?.data?.createIntervention?.errors))")
       } else {
-        print("\nResult: \(String(describing: result))")
+        print("\nResult: \(String(describing: result?.data))")
         if result?.data?.createIntervention?.intervention?.id != nil {
           id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
           print("\nIntervention ID: \(id)")
