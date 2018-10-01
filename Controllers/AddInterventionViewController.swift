@@ -864,24 +864,45 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
   }
 
-  @objc func validateCrops(_ sender: Any) {
-    if cropsView.selectedCropsLabel.text == "Aucune sélection" {
-      totalLabel.text = "+ SÉLECTIONNER"
-      totalLabel.textColor = AppColor.TextColors.Green
-    } else {
-      totalLabel.text = cropsView.selectedCropsLabel.text
-      totalLabel.textColor = AppColor.TextColors.DarkGray
+  func checkCropsProduction() -> Bool {
+    let selectedCrops = fetchSelectedCrops()
+    let firstCrop = selectedCrops.first?.species
+
+    for selectedCrop in selectedCrops {
+      if selectedCrop.species != firstCrop {
+        let alert = UIAlertController(
+          title: "",
+          message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+          preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+        return false
+      }
     }
-    totalLabel.sizeToFit()
-    updateIrrigation(self)
+    return true
+  }
 
-    cropsView.isHidden = true
-    dimView.isHidden = true
+  @objc func validateCrops(_ sender: Any) {
+    if checkCropsProduction() {
+      if cropsView.selectedCropsLabel.text == "Aucune sélection" {
+        totalLabel.text = "+ SÉLECTIONNER"
+        totalLabel.textColor = AppColor.TextColors.Green
+      } else {
+        totalLabel.text = cropsView.selectedCropsLabel.text
+        totalLabel.textColor = AppColor.TextColors.DarkGray
+      }
+      totalLabel.sizeToFit()
+      updateIrrigation(self)
 
-    updateAllInputQuantity()
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
+      cropsView.isHidden = true
+      dimView.isHidden = true
+
+      updateAllInputQuantity()
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+      })
+    }
   }
 
   @IBAction func selectWorkingPeriod(_ sender: Any) {

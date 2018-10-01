@@ -210,3 +210,7 @@
 "hectoliter" = "hl";
 "hectoliter_per_square_meter" = "hl/m²";
 "hectoliter_per_hectare" = "hl/ha";
+
+// Errors
+
+"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
