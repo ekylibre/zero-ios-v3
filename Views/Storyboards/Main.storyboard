@@ -898,7 +898,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="am3-R5-yYs"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                                        <state key="normal" title="cloudy" image="broken-clouds"/>
+                                                        <state key="normal" title="BROKEN_CLOUDS" image="broken-clouds"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Zee-QG-SHl"/>
                                                         </connections>
@@ -910,7 +910,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="FrT-bV-pWf"/>
                                                             <constraint firstAttribute="height" constant="70" id="Jse-Kr-UJV"/>
                                                         </constraints>
-                                                        <state key="normal" title="sunny" image="clear-sky"/>
+                                                        <state key="normal" title="CLEAR_SKY" image="clear-sky"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="tvp-LJ-evi"/>
                                                         </connections>
@@ -922,7 +922,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="Osh-Om-iEa"/>
                                                             <constraint firstAttribute="height" constant="70" id="sj3-aa-Zjm"/>
                                                         </constraints>
-                                                        <state key="normal" title="cloudyPassage" image="few-clouds"/>
+                                                        <state key="normal" title="FEW_CLOUDS" image="few-clouds"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="aVR-Tp-vv6"/>
                                                         </connections>
@@ -934,7 +934,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="9ii-2x-zAU"/>
                                                             <constraint firstAttribute="height" constant="70" id="Ioh-dP-tnk"/>
                                                         </constraints>
-                                                        <state key="normal" title="rainFall" image="light-rain"/>
+                                                        <state key="normal" title="LIGHT_RAIN" image="light-rain"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="JJh-6f-vYY"/>
                                                         </connections>
@@ -946,7 +946,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="poB-u2-npn"/>
                                                             <constraint firstAttribute="height" constant="70" id="wV2-w5-FZ4"/>
                                                         </constraints>
-                                                        <state key="normal" title="fogy" image="mist"/>
+                                                        <state key="normal" title="MIST" image="mist"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="kqV-Rj-P8H"/>
                                                         </connections>
@@ -958,7 +958,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="491-5X-uS0"/>
                                                             <constraint firstAttribute="width" constant="70" id="Slb-Gb-71i"/>
                                                         </constraints>
-                                                        <state key="normal" title="rain" image="shower-rain"/>
+                                                        <state key="normal" title="SHOWER_RAIN" image="shower-rain"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="tDh-Fp-n1N"/>
                                                         </connections>
@@ -970,7 +970,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="ja3-uJ-JgX"/>
                                                             <constraint firstAttribute="height" constant="70" id="uLK-KY-dn6"/>
                                                         </constraints>
-                                                        <state key="normal" title="snow" image="snow"/>
+                                                        <state key="normal" title="SNOW" image="snow"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="45m-S7-lY2"/>
                                                         </connections>
@@ -982,7 +982,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="7Yo-6z-2Cz"/>
                                                             <constraint firstAttribute="height" constant="70" id="7jt-KE-Im7"/>
                                                         </constraints>
-                                                        <state key="normal" title="storm" image="thunderstorm"/>
+                                                        <state key="normal" title="THUNDERSTORM" image="thunderstorm"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="h1g-Tc-RMY"/>
                                                         </connections>
