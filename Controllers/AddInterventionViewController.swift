@@ -129,8 +129,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let dateFormatter = DateFormatter()
 
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "d MMMM"
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMM"
     let currentDateString = dateFormatter.string(from: Date())
     let validateButton = selectDateView.subviews.last as! UIButton
 
@@ -827,8 +827,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @objc func validateDate() {
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "d MMMM"
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMM"
     let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
     selectDateButton.setTitle(selectedDate, for: .normal)
 
