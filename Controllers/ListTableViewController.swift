@@ -43,8 +43,7 @@ class ListTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let cell = tableView.cellForRow(at: indexPath) as! ListCell
-    delegate?.writeValueBack(tag: tag, value: cell.label.text!)
+    delegate?.writeValueBack(tag: tag, value: cellsStrings[indexPath.row])
     self.dismiss(animated: true, completion: nil)
   }
 }
