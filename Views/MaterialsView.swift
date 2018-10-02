@@ -58,6 +58,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     tableView.tableFooterView = UIView()
     tableView.bounces = false
     tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
+    tableView.rowHeight = 50
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
