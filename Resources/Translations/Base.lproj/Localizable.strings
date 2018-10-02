@@ -210,15 +210,15 @@
 "WRAPPER" = "Wrapper";
 
 // Plurals
-"crop" = "%d crop";
+"crop" = "1 crop";
 "crops" = "%d crops";
-"input" = "%d input";
+"input" = "1 input";
 "inputs" = "%d inputs";
-"material" = "%d material";
+"material" = "1 material";
 "materials" = "%d materials";
-"equipment" = "%d equipment";
+"equipment" = "1 equipment";
 "equipments" = "%d equipments";
-"person" = "%d person";
+"person" = "1 person";
 "persons" = "%d persons";
 "load" = "%d load";
 "loads" = "%d loads";
@@ -297,7 +297,7 @@
 
 "label_working_period" = "Working period";
 "label_inputs" = "Inputs";
-"label_equipments" = "Tools";
+"label_equipments" = "Equipments";
 "label_materials" = "Materials";
 "label_persons" = "Persons";
 "label_crops" = "Crops";
@@ -330,29 +330,29 @@
 "create_ferti_title" = "Create new fertilizer";
 "create_storage_title" = "Create new storage";
 "create_material_title" = "Create new material";
-"create_equipment_title" = "Create new tool";
+"create_equipment_title" = "Create new equipment";
 "create_person_title" = "Create new person";
 
 "create_new_seed" = "+ Create new seed";
 "create_new_phyto" = "+ Create new phyto";
 "create_new_ferti" = "+ Create new ferti";
 "create_new_material" = "+ Create new material";
-"create_new_equipment" = "+ Create new tool";
+"create_new_equipment" = "+ Create new equipment";
 "create_new_person" = "+ Create new person";
 
 "selecting_crops" = "Select a crop";
 "selecting_materials" = "Select a material";
-"selecting_tools" = "Select a tool";
+"selecting_equipments" = "Select a equipment";
 "selecting_people" = "Select a person";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
 "delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
-"delete_equipment_prompt" = "Are you sure you want to remove the tool?";
+"delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
 "delete_material_prompt" = "Are you sure you want to remove the material?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
 
 "add" = "+ Add";
-"add_equipment" = "+ Add tool";
+"add_equipment" = "+ Add equipment";
 "add_material" = "+ Add material";
 "add_person" = "+ Add person";
 "add_load" = "+ Add load";

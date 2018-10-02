@@ -863,11 +863,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       numberLabel.isHidden = false
       switch entities {
       case selectedEquipments:
-        numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
+        numberLabel.text = (entities.count == 1 ? "equipment".localized : String(format: "equipments".localized, entities.count))
       case doers:
-        numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+        numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
       case selectedInputs:
-        numberLabel.text = (entities.count == 1 ? "1 intrant": "\(entities.count) intrants")
+        numberLabel.text = (entities.count == 1 ? "input".localized : String(format: "inputs".localized, entities.count))
       default:
         return
       }

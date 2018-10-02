@@ -212,13 +212,13 @@
 // Plurals
 "crop" = "%d culture";
 "crops" = "%d cultures";
-"input" = "%d intrant";
+"input" = "1 intrant";
 "inputs" = "%d intrants";
-"material" = "%d matériau";
+"material" = "1 matériau";
 "materials" = "%d matériaux";
-"equipment" = "%d équipement";
+"equipment" = "1 équipement";
 "equipments" = "%d équipements";
-"person" = "%d opérateur";
+"person" = "1 opérateur";
 "persons" = "%d opérateurs";
 "load" = "%d chargement";
 "loads" = "%d chargements";
@@ -342,7 +342,7 @@
 
 "selecting_crops" = "Sélectionnez des cultures";
 "selecting_materials" = "Sélectionnez un matériau";
-"selecting_tools" = "Sélectionnez un équipement";
+"selecting_equipments" = "Sélectionnez un équipement";
 "selecting_people" = "Sélectionnez un opérateur";
 
 "delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
