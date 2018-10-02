@@ -426,3 +426,8 @@
 "crop_list" = "Liste des cultures";
 
 "locale" = "en_EN";
+
+// Synchronization
+"today_last_synchronization" = "Last synchronization %@:%@";
+"last_synchronization" = "Last synchronization %@";
+"no_synchronization_listed" = "No synchonization listed";
