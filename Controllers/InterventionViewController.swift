@@ -18,7 +18,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var synchroLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var leftInterventionButton: UIButton!
-  @IBOutlet weak var rightInterventionButton: UIButton!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
   @IBOutlet weak var addInterventionLabel: UILabel!
@@ -50,8 +49,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Rounded buttons
     leftInterventionButton.layer.cornerRadius = 3
     leftInterventionButton.clipsToBounds = true
-    rightInterventionButton.layer.cornerRadius = 3
-    rightInterventionButton.clipsToBounds = true
 
     // Dim view
     self.view.addSubview(dimView)
@@ -413,7 +410,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionButton.isHidden = true
     }
     leftInterventionButton.isHidden = false
-    rightInterventionButton.isHidden = false
     heightConstraint.constant = 80
     dimView.isHidden = true
   }
@@ -423,7 +419,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     self.heightConstraint.constant = 240
     addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION DE..."
     leftInterventionButton.isHidden = true
-    rightInterventionButton.isHidden = true
     bottomView.layoutIfNeeded()
     var index: CGFloat = 1
     var line: CGFloat = 0
