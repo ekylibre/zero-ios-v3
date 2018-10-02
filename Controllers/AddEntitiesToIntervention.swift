@@ -92,27 +92,47 @@ extension AddInterventionViewController: DoerCellDelegate {
     entitiesTableView.reloadData()
   }
 
-  @IBAction func createNewEntity(_ sender: Any) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+  func checkIfEntityIsAvaible() -> Bool {
+    if entityFirstName.text == "" {
+      entityNameWarning.isHidden = false
+      entityNameWarning.textColor = AppColor.TextColors.Red
+      entityNameWarning.text = "person_name_is_empty".localized
+      return false
     }
+    for entity in entities {
+      if entityFirstName.text == entity.value(forKey: "firstName") as? String {
+        entityNameWarning.isHidden = false
+        entityNameWarning.textColor = AppColor.TextColors.Red
+        entityNameWarning.text = "person_name_not_available".localized
+        return false
+      }
+    }
+    return true
+  }
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-    let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
+  @IBAction func createNewEntity(_ sender: Any) {
+    if checkIfEntityIsAvaible() {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return
+      }
 
-    entity.setValue(false, forKey: "isDriver")
-    entity.setValue(entityFirstName.text, forKeyPath: "firstName")
-    entity.setValue(entityLastName.text, forKeyPath: "lastName")
-    entity.setValue(entityRole.text, forKeyPath: "role")
-    entity.setValue(0, forKey: "row")
+      let managedContext = appDelegate.persistentContainer.viewContext
+      let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
+      let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
 
-    do {
-      try managedContext.save()
-      entities.append(entity)
-      closeEntitiesCreationView(self)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
+      entity.setValue(false, forKey: "isDriver")
+      entity.setValue(entityFirstName.text, forKeyPath: "firstName")
+      entity.setValue(entityLastName.text, forKeyPath: "lastName")
+      entity.setValue(entityRole.text, forKeyPath: "role")
+      entity.setValue(0, forKey: "row")
+
+      do {
+        try managedContext.save()
+        entities.append(entity)
+        closeEntitiesCreationView(self)
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
     }
   }
 

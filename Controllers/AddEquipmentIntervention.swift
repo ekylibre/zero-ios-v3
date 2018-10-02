@@ -234,6 +234,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
   @objc func hideWarningMessage(_ sender: Any) {
     equipmentNameWarning.isHidden = true
+    entityNameWarning.isHidden = true
   }
 
   @IBAction func createNewEquipement(_ sender: Any) {

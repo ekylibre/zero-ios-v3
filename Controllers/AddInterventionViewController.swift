@@ -54,6 +54,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var createEntitiesView: UIView!
   @IBOutlet weak var entitiesTableView: UITableView!
   @IBOutlet weak var entityRole: UITextField!
+  @IBOutlet weak var entityNameWarning: UILabel!
   @IBOutlet weak var entityDarkLayer: UIView!
   @IBOutlet weak var doersTableView: UITableView!
   @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
@@ -210,7 +211,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentsTableView.bounces = false
 
     equipmentName.addTarget(self, action: #selector(hideWarningMessage(_:)), for: .editingChanged)
-    equipmentNumber.addTarget(self, action: #selector(hideWarningMessage(_:)), for: .editingChanged)
+    entityFirstName.addTarget(self, action: #selector(hideWarningMessage(_:)), for: .editingChanged)
 
     searchEquipment.delegate = self
     searchEquipment.autocapitalizationType = .none
