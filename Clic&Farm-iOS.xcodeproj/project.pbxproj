@@ -18,6 +18,7 @@
 		04149EC421510C80007B5441 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04149EC321510C7F007B5441 /* API.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
+		041782D52163549A00FF772F /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041782D42163549A00FF772F /* SpinnerViewController.swift */; };
 		0417A58621539C22009529D5 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0417A58521539C22009529D5 /* AddIrrigation.swift */; };
 		0417A58821539CB5009529D5 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0417A58721539CB5009529D5 /* CustomPickerView.swift */; };
 		0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */; };
@@ -90,6 +91,7 @@
 		04149EC321510C7F007B5441 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		041782D42163549A00FF772F /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		0417A58521539C22009529D5 /* AddIrrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
 		0417A58721539CB5009529D5 /* CustomPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPickerView.swift; path = Views/CustomPickerView.swift; sourceTree = SOURCE_ROOT; };
 		0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
 				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
 				6BEA65DA2105CD820072840F /* LoginScreen.swift */,
+				041782D42163549A00FF772F /* SpinnerViewController.swift */,
 				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
@@ -516,6 +519,7 @@
 				6B11EEE12139635400E2DEC4 /* EquipmentCell.swift in Sources */,
 				04F9B70D21591E2B00086731 /* CropView.swift in Sources */,
 				0413139A213FFC3E005437F0 /* Decodables.swift in Sources */,
+				041782D52163549A00FF772F /* SpinnerViewController.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

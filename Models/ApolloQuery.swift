@@ -14,19 +14,17 @@ class ApolloQuery {
 
   // MARK: - Properties
 
+  let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
   func checkLocalData() {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    //UIApplication.shared.isNetworkActivityIndicatorVisible = true
     queryFarms()
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    //UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
   // MARK: - Queries: Farms
 
   private func queryFarms() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     let apollo = appDelegate.apollo!
     let query = FarmQuery()
 
@@ -914,7 +912,7 @@ class ApolloQuery {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
+    
     appDelegate.apollo?.fetch(query: InterventionQuery()) { (result, error) in
       guard let farms = result?.data?.farms else { print("Could not retrieve interventions"); return }
 

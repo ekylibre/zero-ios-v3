@@ -35,9 +35,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   var interventionButtons: [UIButton] = []
-
   let dimView = UIView()
-
+  let refreshControl = UIRefreshControl()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
@@ -95,10 +94,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     initialiseInterventionButtons()
 
     // Load table view
-    self.tableView.dataSource = self
-    self.tableView.delegate = self
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.refreshControl = refreshControl
 
-    tableView.bounces = false
+    refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
   }
 
   func initialiseInterventionButtons() {
@@ -134,8 +134,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     initializeApolloClient()
     apolloQuery.checkLocalData()
-    fetchInterventions()
-  }
+    self.fetchInterventions()
+}
 
   private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -195,23 +195,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   /*func displayFarmName() {
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-    let farmLabel = UILabel(frame: firstFrame)
+   let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+   let farmLabel = UILabel(frame: firstFrame)
 
-    if userDatabase.entityIsEmpty(entity: "Farms") {
-      apolloQuery.defineFarmNameAndID { (success) -> Void in
-        if success {
-          farmLabel.text = self.fetchFarmNameAndId()
-          farmLabel.textColor = UIColor.white
-          self.navigationBar.addSubview(farmLabel)
-        }
-      }
-    } else {
-      farmLabel.text = fetchFarmNameAndId()
-      farmLabel.textColor = UIColor.white
-      navigationBar.addSubview(farmLabel)
-    }
-  }*/
+   if userDatabase.entityIsEmpty(entity: "Farms") {
+   apolloQuery.defineFarmNameAndID { (success) -> Void in
+   if success {
+   farmLabel.text = self.fetchFarmNameAndId()
+   farmLabel.textColor = UIColor.white
+   self.navigationBar.addSubview(farmLabel)
+   }
+   }
+   } else {
+   farmLabel.text = fetchFarmNameAndId()
+   farmLabel.textColor = UIColor.white
+   navigationBar.addSubview(farmLabel)
+   }
+   }*/
 
   // MARK: - Table view data source
   
@@ -428,10 +428,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
-
     let date = Date()
     let calendar = Calendar.current
-
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
@@ -444,6 +442,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
+    let group = DispatchGroup()
+
+    group.enter()
+    DispatchQueue.global(qos: .userInitiated).async {
+      self.apolloQuery.checkLocalData()
+      group.leave()
+    }
+    group.wait()
+    fetchInterventions()
 
     for intervention in interventions {
       if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
@@ -453,11 +460,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     do {
       try managedContext.save()
+      tableView.reloadData()
+      if refreshControl.isRefreshing {
+        refreshControl.endRefreshing()
+      }
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-
-    tableView.reloadData()
   }
 
   @objc func action(sender: UIButton) {
