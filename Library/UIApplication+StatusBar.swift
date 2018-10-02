@@ -6,7 +6,6 @@
 //  Copyright © 2018 Ekylibre. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension UIApplication {
