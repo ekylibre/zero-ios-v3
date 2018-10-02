@@ -5,14 +5,14 @@
 /* Class = "UILabel"; text = "Infos Label"; ObjectID = "342-8b-SlZ"; */
 "342-8b-SlZ.text" = "Infos Label";
 
-/* Class = "UITextField"; text = "7"; ObjectID = "3Fz-6d-VQ1"; */
-"3Fz-6d-VQ1.text" = "7";
+/* Class = "UITextField"; text = "7.0"; ObjectID = "3Fz-6d-VQ1"; */
+"3Fz-6d-VQ1.text" = "7,0";
 
 /* Class = "UITextField"; placeholder = "Number"; ObjectID = "3ay-Ie-glI"; */
 "3ay-Ie-glI.placeholder" = "Numéro";
 
-/* Class = "UILabel"; text = "Hours"; ObjectID = "3cP-JT-NmL"; */
-"3cP-JT-NmL.text" = "Heures";
+/* Class = "UILabel"; text = "hours"; ObjectID = "3cP-JT-NmL"; */
+"3cP-JT-NmL.text" = "heures";
 
 /* Class = "UIButton"; normalTitle = "+ ADD"; ObjectID = "5AO-Jj-0ZP"; */
 "5AO-Jj-0ZP.normalTitle" = "+ AJOUTER";
