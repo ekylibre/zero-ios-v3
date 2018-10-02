@@ -218,14 +218,14 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     if equipmentName.text == "" {
       equipmentNameWarning.isHidden = false
       equipmentNameWarning.textColor = AppColor.TextColors.Red
-      equipmentNameWarning.text = String(format: "the_element_name_cant_be_empty".localized, "equipment".localized)
+      equipmentNameWarning.text = "equipment_name_is_empty".localized
       return false
     }
     for equipment in equipments {
       if equipmentName.text == equipment.value(forKey: "name") as? String {
         equipmentNameWarning.isHidden = false
         equipmentNameWarning.textColor = AppColor.TextColors.Red
-        equipmentNameWarning.text = String(format: "this_element_name_is_already_in_use".localized, "equipment".localized)
+        equipmentNameWarning.text = "equipment_name_not_available".localized
         return false
       }
     }

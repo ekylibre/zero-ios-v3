@@ -330,8 +330,8 @@
 
 // Warning
 
-"this_element_name_is_already_in_use" = "Ce nom d'%@ est déjà utilisé. Veuillez en choisir un autre.";
-"the_element_name_cant_be_empty" = "Le nom de l'%@ ne peut être vide.";
+"equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
 
 
 "or" = "Soit %@ %@";
