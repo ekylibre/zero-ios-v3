@@ -209,6 +209,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     equipmentsTableView.delegate = self
     equipmentsTableView.bounces = false
 
+    equipmentName.addTarget(self, action: #selector(hideWarningMessage(_:)), for: .editingChanged)
+    equipmentNumber.addTarget(self, action: #selector(hideWarningMessage(_:)), for: .editingChanged)
+
     searchEquipment.delegate = self
     searchEquipment.autocapitalizationType = .none
 

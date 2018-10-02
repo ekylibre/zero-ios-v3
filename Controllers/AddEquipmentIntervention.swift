@@ -232,6 +232,10 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     return true
   }
 
+  @objc func hideWarningMessage(_ sender: Any) {
+    equipmentNameWarning.isHidden = true
+  }
+
   @IBAction func createNewEquipement(_ sender: Any) {
     if checkIfEquipmentIsAvaible() {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
