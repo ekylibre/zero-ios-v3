@@ -13,7 +13,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  func changeUnitMeasure(_ indexPath: IndexPath) {
+  func saveSelectedRow(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
 
@@ -94,12 +94,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'intrant ?",
+      message: String(format: "are_you_sure_you_want_to_delete".localized, "input".localized),
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
       self.resetInputsUsedAttribute(index: indexPath.row)
       self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
@@ -118,7 +118,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         })
       }
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   func forTrailingZero(temp: Double) -> String {
