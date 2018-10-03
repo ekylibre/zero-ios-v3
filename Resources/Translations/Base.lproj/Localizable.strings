@@ -1,49 +1,16 @@
 /* 
- Localizable.strings
- Clic&Farm-iOS
+  Localizable.strings
+  Clic&Farm-iOS
 
- Created by Jonathan DE HAAY on 05/09/2018.
- Copyright © 2018 Ekylibre. All rights reserved.
- */
-
-"are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %@?";
-"person" = "person";
-"equipment" = "equipment";
-"input" = "input";
-"shipment" = "shipment";
-"one_person" = "1 person";
-"one_equipment" = "1 equipment";
-"one_input" = "1 input";
-"people" = "%d people";
-"equipments" = "%d equipments";
-"inputs" = "%d inputs";
-
-// Basic words
+  Created by Jonathan DE HAAY on 05/09/2018.
+  Copyright © 2018 Ekylibre. All rights reserved.
+*/
 
 "no" = "No";
 "yes" = "Yes";
-"error" = "Error";
-"cancel" = "Cancel";
-"create" = "Create";
-"name" = "Name";
-"first_name" = "First name";
-"last_name" = "Last Name";
-
-// Login screen
-
-"please_try_again" = "Please try again";
-"unknown_username_or_incorrect_password" = "Unknown username or incorrect password.";
-"forgotten_password" = "Forgotten password?";
-
-// Intervention
-
-"today_last_synchronization" = "Last synchronization %02d:%02d";
-"last_synchronization" = "Last synchronization ";
-"no_synchronization_listed" = "No synchronization listed";
-"register_intervention" = "Register an intervention%@";
-"of" = " OF...";
-"crops_size" = "%d crops • %.1f ha";
-"crop_size" = "1 crop • %.1f ha";
+"are_you_sure_you_want_to_delete" = "Are you sure you want to delete the %{element_to_delete} ?";
+"please_retry" = "Please try again";
+"unknown_username_or_incorrect_password" = "Unkown username or password incorrect.";
 
 // Procedures
 
@@ -54,52 +21,6 @@
 "harvest" = "Harvest";
 "care" = "Care";
 "crop_protection" = "Crop protection";
-
-// Crop View
-
-"select_crops" = "Select crops";
-"no_selection" = "No selection";
-"validate" = "Validate";
-"surface_area" = "%.1f ha worked";
-
-// Harvest
-
-"straw" = "straw";
-"seed" = "seed";
-"silaging" = "silaging";
-
-// Inputs View
-
-"create_new_%@" = "+ Create a %@";
-"new_seed" = "New seed";
-"new_phyto" = "New phyto";
-"new_fertilizer" = "New fertilizer";
-"seeds" = "Seeds";
-"phyto" = "Phyto.";
-"fertilizers" = "Fertilizers";
-"quantity" = "Quantity";
-"or" = "Or";
-"invalid_dose" = "Invalid dose";
-
-// Create fertilizer view
-
-"fertilizer_creation" = "Fertilizer creation";
-"nature" = "Nature";
-"choose_nature" = "Choose a nature";
-
-// Create phyto view
-
-"phyto_creation" = "Creation of a phyto product";
-"brand" = "Brand";
-"maa_number" = "Maa n°";
-"re_entry_delay" = "Re-entry delay";
-"in_hours" = "In hours";
-
-// Create seed view
-
-"seed_creation" = "Seed creation";
-"specie" = "Specie";
-"variety" = "Variety";
 
 // Vegetal species
 
@@ -186,89 +107,6 @@
 "vitis_vinifera" = "Common grape vine";
 "zea_mays" = "Corn";
 
-// Fertilizers
-
-"ammonitrate_27_fertilizer" = "Ammonitrate 27%";
-"ammonitrate_33_fertilizer" = "Ammonitrate 33,5%";
-"anaerobic_dehydrated_digestate_sludge" = "Anaerobic dehydrated digestate sludge";
-"anaerobic_dehydrated_limed_digestate_sludge" = "Anaerobic dehydrated limed digestate sludge";
-"anaerobic_dry_digestate_sludge" = "Anaerobic dry digestate sludge";
-"anaerobic_liquid_digestate_sludge" = "Anaerobicliquid digestate sludge";
-"bio_urban_compost" = "Bio urban compost";
-"calf_slurry" = "Calf slurry";
-"capra_manure" = "Capra manure";
-"cattle_compost" = "Cattle compost";
-"chlorure_60_fertilizer" = "Chlorure 60%";
-"cowshed_cattle_manure" = "Cowshed cattle manure";
-"dap_18_46_fertilizer" = "DAP 18-46";
-"dehydrated_limed_activated_sludge" = "Dehydrated limed activated sludge (C/N = 5,3)";
-"digestate_compost" = "Digestate compost (C/N = 11,8)";
-"diluted_cattle_slurry" = "Diluted cattle slurry";
-"dry_activated_sludge" = "Dry activated sludge (C/N = 6)";
-"dry_anaerobic_digestion_digestate" = "Dry anaerobic digestion digestate";
-"dry_liquid_activated_sludge" = "Dry liquid activated sludge (C/N = 4,4)";
-"dry_litter_activated_sludge" = "Dry litter activated sludge (C/N = 5,4)";
-"dry_poultry_guano" = "Dry poultry guano (80%MS)";
-"green_compost" = "Green compost";
-"horse_manure" = "Horse manure";
-"liquid_activated_sludge" = "Liquid activated sludge (C/N = 4,4)";
-"liquid_anaerobic_digestion_digestate" = "Liquid anaerobic digestion digestate";
-"litter_cattle_manure" = "Litter cattle manure";
-"litter_poultry_guano" = "Litter poultry guano";
-"mixed_sludge_1" = "Mixed sludge 1 (C/N = 7,5)";
-"mixed_sludge_2" = "Mixed sludge 2 (C/N = 5)";
-"mixed_sludge_3" = "Mixed sludge 3 (C/N = 8,1)";
-"mixed_sludge_4" = "Mixed sludge 4 (C/N = 6 à 9)";
-"mixed_sludge_5" = "Mixed sludge 5 (C/N = 6 à 11)";
-"mixed_sludge_6" = "Mixed sludge 6 (C/N = 5,5 à 17)";
-"mixed_sludge_7" = "Mixed sludge 7 (C/N = 10 à 13)";
-"mixed_sludge_8" = "Mixed sludge 8";
-"mixed_sludge_9" = "Mixed sludge 9 (C/N = 11,8)";
-"mixed_sludge_10" = "Mixed sludge 10 C/N<15";
-"mixed_sludge_11" = "Mixed sludge 11 15<C/N<20";
-"mixed_sludge_12" = "Mixed sludge 12 20<C/N<35";
-"mixed_sludge_13" = "Mixed sludge 13";
-"mixed_sludge_14" = "Mixed sludge 14 40<C/N<70";
-"nitrate_solution_39_fertilizer" = "Nitrate solution 39%";
-"old_cattle_compost" = "Old cattle compost";
-"old_green_compost" = "Old green compost";
-"old_pig_compost" = "Old pig compost";
-"old_poultry_compost" = "Old poultry compost";
-"ovis_manure" = "Ovis manure";
-"pig_compost" = "Pig compost";
-"pig_manure" = "Pig manure";
-"pig_slurry" = "Pig slurry";
-"poultry_compost" = "Poultry compost";
-"poultry_guano" = "Poultry guano 60 % MS";
-"pressed_unlimed_activated_sludge" = "Pressed unlimed activated sludge (C/N = 5,9)";
-"raw_anaerobic_digestion_digestate" = "Raw anaerobic digestion digestate";
-"rhizophytes_litter_activated_sludge" = "Rhizophytes litter activated sludge (C/N =5,9)";
-"rubbish_urban_compost" = "Rubbish urban compost";
-"stodgy_activated_sludge" = "Stodgy activated sludge (C/N = 5,2)";
-"sugar_vinasse" = "Sugar vinasse";
-"super_46_fertilizer" = "Super 46%";
-"ternary_solution_15_fertilizer" = "15-15-15 28SO3";
-"undiluted_cattle_slurry" = "Undiluted cattle slurry";
-"urban_dry_liquid_activated_sludge" = "Urban dry liquid activated sludge (C/N = 4,9)";
-"urban_liquid_activated_sludge" = "Urban liquid activated sludge (C/N = 4,9)";
-"urea_46_fertilizer" = "Urea 46 %";
-"wine_vinasse" = "Wine vinasse";
-
-// Fetilizer nature
-
-"organic" = "Organic";
-"mineral" = "Mineral";
-
-// Input selection
-
-"or" = "Or %@ %@";
-"or_per_hectare" = "Or %@ %@ per hectare";
-"quantity_cant_be_nul" = "%@ can't be nul";
-"no_crop_selected" = "No crop selected";
-"volume" = "The volume";
-"mass" = "The mass";
-"select" = "+ Select";
-
 // Equipment types
 
 "airplanter" = "Air planter";
@@ -313,6 +151,16 @@
 "weeder" = "Weeder";
 "wrapper" = "Wrapper";
 
+// Input selection
+
+"or" = "Or %@ %@";
+"or_per_hectare" = "Or %@ %@ per hectare";
+"quantity_cant_be_nul" = "%@ can't be nul";
+"no_crop_selected" = "No crop selected";
+"volume" = "The volume";
+"mass" = "The mass";
+"select" = "+ SELECT";
+
 // Weather
 
 "weather" = "Weather";
@@ -321,25 +169,3 @@
 "not_filled_in" = "Not filled in";
 "temp" = "Temp.: %@ °C |";
 "wind" = " wind: %@ km/h";
-
-// Storyboard
-
-"appli_description" = "Welcome to the Clic&Farm mobile application! To start, log in with your Ekylibre account...";
-
-// Language
-
-"local_code" = "en_EN";
-
-// Date / Time
-
-"hour" = "hour";
-"hours" = "hours";
-"today" = "Today";
-"yesterday" = "Yesterday";
-
-// Warning
-
-"this_element_name_is_already_in_use" = "This %@ name is already in use. Please choose another one.";
-"the_element_name_cant_be_empty" = "The %@ name can't be empty.";
-"this_first_name_is_already_in_use" = "This first name is already in use. Please choose another one.";
-"the_first_name_cant_be_empty" = "The first name can't be empty.";
