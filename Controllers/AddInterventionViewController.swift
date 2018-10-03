@@ -21,6 +21,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var durationUnitLabel: UILabel!
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
@@ -153,8 +154,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let dateFormatter = DateFormatter()
 
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "d MMMM"
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMM"
     let currentDateString = dateFormatter.string(from: Date())
     let validateButton = selectDateView.subviews.last as! UIButton
 
@@ -170,6 +171,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     durationTextField.layer.borderWidth = 0.5
     durationTextField.layer.borderColor = UIColor.lightGray.cgColor
     durationTextField.clipsToBounds = true
+    durationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -255,14 +257,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
+    setupIrrigation()
+
     initializeWeatherButtons()
     initWeather()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
-
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
-    setupIrrigation()
 
     setupViewsAccordingInterventionType()
   }
@@ -565,9 +567,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.infos = "Infos"
     newIntervention.farmID = appDelegate.farmID
     if interventionType == "irrigation" {
-      let waterQuantityString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
-      let waterQuantity = Float(waterQuantityString) ?? 0
-      newIntervention.waterQuantity = waterQuantity
+      let waterVolume = irrigationValueTextField.text!.floatValue
+      newIntervention.waterQuantity = waterVolume
       switch irrigationUnitButton.titleLabel?.text {
       case "m³":
         newIntervention.waterUnit = "CUBIC_METER"
@@ -581,9 +582,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
     workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
-    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
-    let hourDuration = Float(durationString) ?? 0
-    workingPeriod.hourDuration = hourDuration
+    let duration = durationTextField.text!.floatValue
+    workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
@@ -974,25 +974,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func selectWorkingPeriod(_ sender: Any) {
-    if workingPeriodHeight.constant == 70 {
-      workingPeriodHeight.constant = 155
-      selectedWorkingPeriodLabel.isHidden = true
-      selectDateButton.isHidden = false
-    } else {
-      workingPeriodHeight.constant = 70
-      selectedWorkingPeriodLabel.isHidden = false
-      selectDateButton.isHidden = true
-      selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
+    let shouldExpand = (workingPeriodHeight.constant == 70)
+
+    if shouldExpand {
+      let dateString = selectDateButton.titleLabel!.text!
+      let duration = durationTextField.text!.floatValue
+
+      selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", dateString, duration)
     }
+
+    workingPeriodHeight.constant = shouldExpand ? 155 : 70
+    selectedWorkingPeriodLabel.isHidden = shouldExpand
+    selectDateButton.isHidden = !shouldExpand
     collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
-  }
-
-  func getSelectedWorkingPeriod() -> String {
-    let dateString = selectDateButton.titleLabel!.text!
-    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
-    let duration = Float(durationString) ?? 0
-
-    return String(format: "%@ • %g h", dateString, duration)
   }
 
   @IBAction func selectDate(_ sender: Any) {
@@ -1039,6 +1033,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       dateFormatter.dateFormat = "d MMMM"
       let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
 
+
       selectDateButton.setTitle(selectedDate, for: .normal)
       selectDateView.isHidden = true
       dimView.isHidden = true
@@ -1047,6 +1042,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
       })
     }
+  }
+
+  @objc func updateDurationUnit() {
+    let duration = durationTextField.text!.floatValue
+
+    durationUnitLabel.text = (duration <= 1) ? "hour".localized : "hours".localized
   }
 
   @IBAction func selectInput(_ sender: Any) {
@@ -1072,11 +1073,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       numberLabel.isHidden = false
       switch entities {
       case selectedEquipments:
-        numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
+        numberLabel.text = (entities.count == 1 ? "equipment".localized : String(format: "equipments".localized, entities.count))
       case doers:
-        numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+        numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
       case selectedInputs:
-        numberLabel.text = (entities.count == 1 ? "1 intrant": "\(entities.count) intrants")
+        numberLabel.text = (entities.count == 1 ? "input".localized : String(format: "inputs".localized, entities.count))
       default:
         return
       }

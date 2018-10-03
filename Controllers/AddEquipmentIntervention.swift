@@ -252,12 +252,12 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   func removeEquipmentCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: "Êtes-vous sûr de vouloir supprimer l'outil ?",
+      message: "delete_equipment_prompt".localized,
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
       let indexTab = NSIndexPath(row: row, section: 0)
       let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell

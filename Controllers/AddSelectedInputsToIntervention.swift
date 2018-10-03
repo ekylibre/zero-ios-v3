@@ -94,12 +94,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: String(format: "are_you_sure_you_want_to_delete".localized, "input".localized),
+      message: "delete_input_prompt".localized,
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.resetInputsUsedAttribute(index: indexPath.row)
       self.selectedInputs.remove(at: indexPath.row)
       self.selectedInputsTableView.reloadData()
@@ -143,11 +143,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         return
       }
       let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "or".localized, efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "Soit %d %@", efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
     } else {
       efficiency = quantity / surfaceArea
       let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "or_per_hectare".localized, efficiencyWithoutTrailing, unit)
+      cell.surfaceQuantity.text = String(format: "Soit %d %@ par hectare", efficiencyWithoutTrailing, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
@@ -158,10 +158,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let unit = cell.unitMeasureButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false
-    if quantity == 0.0 {
-      cell.surfaceQuantity.text = String(format: "quantity_cant_be_nul".localized, (cell.type == "Phyto" ? "volume".localized : "mass".localized))
+    if quantity == 0 {
+      let error = (cell.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
+      cell.surfaceQuantity.text = error
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
-    } else if totalLabel.text == "select".localized {
+    } else if totalLabel.text == "select_crops".localized {
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {

@@ -78,7 +78,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "fr_FR")
+      dateFormatter.locale = Locale(identifier: "locale".localized)
       dateFormatter.dateFormat = "d MMMM"
 
       let hour = calendar.component(.hour, from: date)
@@ -86,12 +86,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let dateString = dateFormatter.string(from: date)
 
       if calendar.isDateInToday(date) {
-        synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
+        synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
       } else {
-        synchroLabel.text = "Dernière synchronisation " + dateString
+        synchroLabel.text = "last_synchronization".localized + dateString
       }
     } else {
-      synchroLabel.text = "Aucune synchronisation répertoriée"
+      synchroLabel.text = "no_synchronization_listed".localized
     }
 
     initialiseInterventionButtons()
@@ -105,17 +105,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func initialiseInterventionButtons() {
-
-    let interventionNames: [String] = [
-      "implantation".localized,
-      "ground_work".localized,
-      "irrigation".localized,
-      "harvest".localized,
-      "care".localized,
-      "fertilization".localized,
-      "crop_protection".localized
-    ]
     let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
+    let interventionNames: [String] = [
+      "IMPLANTATION".localized,
+      "GROUND_WORK".localized,
+      "IRRIGATION".localized,
+      "HARVEST".localized,
+      "CARE".localized,
+      "FERTILIZATION".localized,
+      "CROP_PROTECTION".localized
+    ]
 
     for buttonCount in 0...6 {
 
@@ -257,7 +256,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     case Intervention.InterventionType.Irrigation.rawValue:
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
-      cell.typeLabel.text = "Erreur"
+      cell.typeLabel.text = "error".localized
     }
 
     switch intervention.value(forKey: "status") as! Int16 {
@@ -324,7 +323,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return workingPeriods.first!
   }
 
-  func updateCropsLabel(_ targets: [Targets]?) -> String {
+  func updateCropsLabel(_ targets: [Targets]?) -> String? {
     var totalSurfaceArea: Float = 0
 
     if targets != nil {
@@ -332,13 +331,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         let crop = target.crops
         totalSurfaceArea += crop?.surfaceArea ?? 0
       }
+      let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
+      return String(format: cropString, targets!.count) + String(format: " • %.1f ha", totalSurfaceArea)
     }
-
-    if targets?.count ?? 0 > 1 {
-      return String(format: "%d cultures • %.1f ha", targets!.count, totalSurfaceArea)
-    } else {
-      return String(format: "1 culture • %.1f ha", totalSurfaceArea)
-    }
+    return nil
   }
 
   func transformDate(date: Date) -> String {
@@ -351,9 +347,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let year = calendar.component(.year, from: date)
 
     if calendar.isDateInToday(date) {
-      return "aujourd'hui"
+      return "today".localized.lowercased()
     } else if calendar.isDateInYesterday(date) {
-      return "hier"
+      return "yesterday".localized.lowercased()
     } else {
       if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
         dateString.append(" \(year)")
@@ -459,7 +455,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } catch let error as NSError {
           print("Could not save. \(error), \(error.userInfo)")
         }
-        self.synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
+        self.synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
       } else {

@@ -880,7 +880,7 @@ class ApolloQuery {
 
     intervention.farmID = farmID
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
-    intervention.type = fetchedIntervention.type.rawValue.lowercased()
+    intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather

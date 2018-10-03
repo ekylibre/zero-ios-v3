@@ -14,8 +14,10 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   // MARK: - Properties
 
+  @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var tfUsername: UITextField!
   @IBOutlet weak var tfPassword: UITextField!
+  @IBOutlet weak var forgottenPassword: UIButton!
 
   var authentificationService: AuthentificationService?
   var buttonIsPressed: Bool = false
@@ -29,6 +31,9 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
     tfUsername.delegate = self
     tfPassword.delegate = self
+    textView.text = "welcome_text".localized
+    forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
+    forgottenPassword.underline()
 
     struct staticIndex {
       static var firstLaunch = false
@@ -51,12 +56,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
       } else {
         let alert = UIAlertController(
-          title: "Veuillez réessayer",
-          message: "Identifiant inconnu ou mot de passe incorrect.",
+          title: nil,
+          message: "login_failure".localized,
           preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
