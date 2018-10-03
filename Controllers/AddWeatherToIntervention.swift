@@ -51,96 +51,25 @@ extension AddInterventionViewController {
         }
       }
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
     } else if weatherIsSelected {
       sender.layer.borderColor = UIColor.lightGray.cgColor
       weatherIsSelected = false
     } else {
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
       weatherIsSelected = true
     }
   }
 
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
-                 replacementString string: String) -> Bool {
-    let containsADot = textField.text?.contains(".")
-    var invalidCharacters: CharacterSet!
-
-    if containsADot! {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
-    } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
-    }
-
-    switch textField {
-    case temperatureTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    case windSpeedTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    default:
-      return true
-    }
-  }
-
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    switch textField {
-    case temperatureTextField:
-      weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
-      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-        currentWeatherLabel.text = "not_filled_in".localized
-      } else {
-        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
-        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
-        let currentTemp = String(format: "temp".localized, temperature!)
-        let currentWind = String(format: "wind".localized, wind!)
-
-        currentWeatherLabel.text = currentTemp + currentWind
-      }
-    case windSpeedTextField:
-      weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
-      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-        currentWeatherLabel.text = "not_filled_in".localized
-      } else {
-        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
-        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
-        let currentTemp = String(format: "temp".localized, temperature!)
-        let currentWind = String(format: "wind".localized, wind!)
-
-        currentWeatherLabel.text = currentTemp + currentWind
-      }
-    default:
-      return false
-    }
-    return false
-  }
-
-  func saveWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
+  func initWeather() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let weatherEntity = Weather(context: managedContext)
+    let weather = Weather(context: managedContext)
 
-    weatherEntity.windSpeed = windSpeed
-    weatherEntity.temperature = temperature
-    weatherEntity.weatherDescription = weatherDescription
-
-    do {
-      try managedContext.save()
-      weather.append(weatherEntity)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    self.weather = weather
   }
 }
