@@ -23,10 +23,6 @@ class MaterialCell: UITableViewCell {
   }
 
   private func setupCell() {
-    let selectedColor = UIView()
-
-    selectedColor.backgroundColor = AppColor.CellColors.LightGray
-    self.selectedBackgroundView = selectedColor
     contentView.addSubview(nameLabel)
     setupLayout()
   }
