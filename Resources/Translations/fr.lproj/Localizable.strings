@@ -274,7 +274,7 @@
 
 // App strings
 "app_name" = "Clic&Farm";
-"nav_button" = "nav";
+"nav_button" = "Nav";
 "prompt_email" = "Email";
 "prompt_password" = "Mot de passe";
 "action_sign_in" = "Connexion";
@@ -365,6 +365,7 @@
 "chose_unit" = "Unité";
 
 "temperature" = "Température";
+"wind" = "Vent";
 "wind_speed" = "Vitesse du vent";
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";

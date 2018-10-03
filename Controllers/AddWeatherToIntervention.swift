@@ -102,7 +102,8 @@ extension AddInterventionViewController {
         let temperature = temperatureTextField.text!.isEmpty ? "--" : temperatureTextField.text!
         let windSpeed = windSpeedTextField.text!.isEmpty ? "--" : windSpeedTextField.text!
         let detailedTemperature = String(format: "Temp.: %@ %@ | ", temperature, "celsius".localized)
-        let detailedWindSpeed = String(format: "vent: %@ %@", windSpeed, "km_per_hour".localized)
+        let detailedWindSpeed = String(format: "%@: %@ %@", "wind".localized.lowercased(),
+                                       windSpeed, "km_per_hour".localized)
 
         currentWeatherLabel.text = detailedTemperature + detailedWindSpeed
       }
@@ -114,7 +115,8 @@ extension AddInterventionViewController {
         let temperature = temperatureTextField.text!.isEmpty ? "--" : temperatureTextField.text!
         let windSpeed = windSpeedTextField.text!.isEmpty ? "--" : windSpeedTextField.text!
         let detailedTemperature = String(format: "Temp.: %@ %@ | ", temperature, "celsius".localized)
-        let detailedWindSpeed = String(format: "vent: %@ %@", windSpeed, "km_per_hour".localized)
+        let detailedWindSpeed = String(format: "%@: %@ %@", "wind".localized.lowercased(),
+                                       windSpeed, "km_per_hour".localized)
 
         currentWeatherLabel.text = detailedTemperature + detailedWindSpeed
       }

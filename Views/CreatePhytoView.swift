@@ -92,7 +92,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
-    unitLabel.text = "en " + "hours".localized
+    unitLabel.text = "en heures"
     unitLabel.font = UIFont.systemFont(ofSize: 14)
     unitLabel.textColor = UIColor.lightGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false

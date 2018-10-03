@@ -85,7 +85,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     surfaceQuantity.isHidden = true
     surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = "or".localized + " 0,0"
+    surfaceQuantity.text = "Soit 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
     return surfaceQuantity
   }()
