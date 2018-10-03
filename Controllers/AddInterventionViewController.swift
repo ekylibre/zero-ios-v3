@@ -113,12 +113,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
-  var weather = [Weather]()
+  var weather: Weather!
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+    super.moveViewWhenKeyboardAppears()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
@@ -233,16 +235,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    initializeWeatherButtons()
-    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
-    temperatureTextField.delegate = self
-    temperatureTextField.keyboardType = .decimalPad
-
-    windSpeedTextField.delegate = self
-    windSpeedTextField.keyboardType = .decimalPad
     setupIrrigation()
 
-    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    initializeWeatherButtons()
+    initWeather()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
     windSpeedTextField.delegate = self
@@ -536,6 +532,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
+    saveWeather(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -659,6 +656,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func saveWeather(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var currentWeather = Weather(context: managedContext)
+
+    currentWeather = weather
+    currentWeather.interventions = intervention
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -760,6 +775,70 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return
     }
+  }
+
+  // MARK: - Text Field Delegate
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    let containsADot = textField.text?.contains(".")
+    var invalidCharacters: CharacterSet!
+
+    if containsADot! {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    } else {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    }
+
+    switch textField {
+    case temperatureTextField:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    case windSpeedTextField:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    default:
+      return true
+    }
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    switch textField {
+    case temperatureTextField:
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
+    case windSpeedTextField:
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
+    default:
+      return false
+    }
+    return false
   }
 
   // MARK: - Actions

@@ -13,7 +13,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  func changeUnitMeasure(_ indexPath: IndexPath) {
+  func saveSelectedRow(_ indexPath: IndexPath) {
     cellIndexPath = indexPath
   }
 
@@ -118,7 +118,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         })
       }
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   func forTrailingZero(temp: Double) -> String {

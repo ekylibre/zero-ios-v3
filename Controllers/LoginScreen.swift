@@ -26,6 +26,9 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+    super.moveViewWhenKeyboardAppears()
+
     tfUsername.delegate = self
     tfPassword.delegate = self
     textView.text = "welcome_text".localized
@@ -66,6 +69,23 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
+  // MARK: - Text Field Delegate
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    view.frame.origin.y = 0
+    textField.resignFirstResponder()
+    switch textField {
+    case tfUsername:
+      tfPassword.becomeFirstResponder()
+      return false
+    case tfPassword:
+      checkAuthentification(sender: self)
+      return false
+    default:
+      return false
+    }
+  }
+
   // MARK: - Actions
 
   func authentifyUser() {
@@ -86,7 +106,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
-  @IBAction func checkAuthentification(sender: UIButton) {
+  @IBAction func checkAuthentification(sender: Any) {
     buttonIsPressed = true
     authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
     authentifyUser()

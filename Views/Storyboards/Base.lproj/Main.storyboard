@@ -48,7 +48,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ttg-Mf-cp2">
-                                <rect key="frame" x="0.0" y="93" width="375" height="450"/>
+                                <rect key="frame" x="0.0" y="93" width="375" height="470"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
@@ -128,45 +128,26 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1h-B8-3FP">
-                                <rect key="frame" x="0.0" y="543" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="563" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRU-Wr-aoY">
-                                        <rect key="frame" x="15" y="37" width="166" height="30"/>
+                                        <rect key="frame" x="15" y="15" width="345" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="ALREADY DONE">
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="REGISTER AN INTERVENTION">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="addIntervention:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="MiT-95-7SW"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHP-kl-RhJ">
-                                        <rect key="frame" x="194" y="37" width="166" height="30"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="WICH BEGINS">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REGISTER AN INTERVENTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNw-dJ-5Yi">
-                                        <rect key="frame" x="8" y="8" width="359" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1137254902" green="0.5450980392" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="jHP-kl-RhJ" secondAttribute="trailing" constant="15" id="3pT-tW-R9x"/>
+                                    <constraint firstItem="XRU-Wr-aoY" firstAttribute="centerY" secondItem="L1h-B8-3FP" secondAttribute="centerY" id="3Ws-Zi-dOt"/>
                                     <constraint firstItem="XRU-Wr-aoY" firstAttribute="leading" secondItem="L1h-B8-3FP" secondAttribute="leading" constant="15" id="5K2-JY-vXh"/>
-                                    <constraint firstAttribute="bottom" secondItem="XRU-Wr-aoY" secondAttribute="bottom" constant="13" id="Rnb-PN-s8V"/>
-                                    <constraint firstItem="jHP-kl-RhJ" firstAttribute="width" secondItem="XRU-Wr-aoY" secondAttribute="width" id="Z4k-Tj-iP5"/>
-                                    <constraint firstAttribute="height" constant="80" id="aP0-3P-QcV"/>
-                                    <constraint firstItem="jHP-kl-RhJ" firstAttribute="leading" secondItem="XRU-Wr-aoY" secondAttribute="trailing" constant="13" id="cyI-NW-aoQ"/>
-                                    <constraint firstItem="jHP-kl-RhJ" firstAttribute="leading" secondItem="XRU-Wr-aoY" secondAttribute="trailing" constant="13" id="eVS-6A-R2V"/>
-                                    <constraint firstItem="NNw-dJ-5Yi" firstAttribute="leading" secondItem="L1h-B8-3FP" secondAttribute="leading" constant="8" id="mXJ-uH-uuo"/>
-                                    <constraint firstAttribute="bottom" secondItem="jHP-kl-RhJ" secondAttribute="bottom" constant="13" id="mda-Vp-m7f"/>
-                                    <constraint firstAttribute="trailing" secondItem="NNw-dJ-5Yi" secondAttribute="trailing" constant="8" id="xoQ-HP-e61"/>
-                                    <constraint firstItem="NNw-dJ-5Yi" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="top" constant="8" id="zZ0-7j-ukk"/>
+                                    <constraint firstAttribute="height" constant="60" id="aP0-3P-QcV"/>
+                                    <constraint firstAttribute="trailing" secondItem="XRU-Wr-aoY" secondAttribute="trailing" constant="15" id="eG3-5a-JcA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-rB-9Pp">
@@ -203,13 +184,11 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="addInterventionLabel" destination="NNw-dJ-5Yi" id="D9m-zp-D70"/>
                         <outlet property="bottomBottom" destination="3KT-Wa-4oY" id="1oL-X5-TOg"/>
                         <outlet property="bottomView" destination="L1h-B8-3FP" id="OFz-wX-08P"/>
+                        <outlet property="createInterventionButton" destination="XRU-Wr-aoY" id="NFa-kI-oUK"/>
                         <outlet property="heightConstraint" destination="aP0-3P-QcV" id="zXq-CV-FZJ"/>
-                        <outlet property="leftInterventionButton" destination="XRU-Wr-aoY" id="JgT-wD-RLh"/>
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
-                        <outlet property="rightInterventionButton" destination="jHP-kl-RhJ" id="lY5-qW-rPg"/>
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="addIntervention" id="74J-jI-YTr"/>
@@ -914,11 +893,11 @@
                                                         <rect key="frame" x="20" y="166" width="70" height="70"/>
                                                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="70" id="BRA-dK-acP"/>
                                                             <constraint firstAttribute="height" constant="70" id="am3-R5-yYs"/>
-                                                            <constraint firstAttribute="width" constant="70" id="dme-ar-uMb"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                                        <state key="normal" image="nuages"/>
+                                                        <state key="normal" title="BROKEN_CLOUDS" image="broken-clouds"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Zee-QG-SHl"/>
                                                         </connections>
@@ -930,7 +909,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="Jse-Kr-UJV"/>
                                                             <constraint firstAttribute="width" constant="70" id="rEy-WV-gh6"/>
                                                         </constraints>
-                                                        <state key="normal" image="soleil"/>
+                                                        <state key="normal" title="CLEAR_SKY" image="clear-sky"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="tvp-LJ-evi"/>
                                                         </connections>
@@ -942,7 +921,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="OsX-Yg-ouj"/>
                                                             <constraint firstAttribute="height" constant="70" id="sj3-aa-Zjm"/>
                                                         </constraints>
-                                                        <state key="normal" image="passages-nuageux"/>
+                                                        <state key="normal" title="FEW_CLOUDS" image="few-clouds"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="aVR-Tp-vv6"/>
                                                         </connections>
@@ -954,7 +933,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="Ioh-dP-tnk"/>
                                                             <constraint firstAttribute="width" constant="70" id="TmL-cp-cgd"/>
                                                         </constraints>
-                                                        <state key="normal" image="averses"/>
+                                                        <state key="normal" title="LIGHT_RAIN" image="light-rain"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="JJh-6f-vYY"/>
                                                         </connections>
@@ -966,7 +945,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="4g6-yI-sgG"/>
                                                             <constraint firstAttribute="height" constant="70" id="wV2-w5-FZ4"/>
                                                         </constraints>
-                                                        <state key="normal" image="brouillard"/>
+                                                        <state key="normal" title="MIST" image="mist"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="kqV-Rj-P8H"/>
                                                         </connections>
@@ -978,7 +957,7 @@
                                                             <constraint firstAttribute="height" constant="70" id="491-5X-uS0"/>
                                                             <constraint firstAttribute="width" constant="70" id="d8G-7l-NgH"/>
                                                         </constraints>
-                                                        <state key="normal" image="pluie"/>
+                                                        <state key="normal" title="SHOWER_RAIN" image="shower-rain"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="tDh-Fp-n1N"/>
                                                         </connections>
@@ -990,7 +969,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="t9N-X5-NRg"/>
                                                             <constraint firstAttribute="height" constant="70" id="uLK-KY-dn6"/>
                                                         </constraints>
-                                                        <state key="normal" image="neige"/>
+                                                        <state key="normal" title="SNOW" image="snow"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="45m-S7-lY2"/>
                                                         </connections>
@@ -1002,7 +981,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="11j-6a-0z2"/>
                                                             <constraint firstAttribute="height" constant="70" id="7jt-KE-Im7"/>
                                                         </constraints>
-                                                        <state key="normal" image="orage"/>
+                                                        <state key="normal" title="THUNDERSTORM" image="thunderstorm"/>
                                                         <connections>
                                                             <action selector="selectWeather:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="h1g-Tc-RMY"/>
                                                         </connections>
@@ -1065,7 +1044,7 @@
                                                         <rect key="frame" x="20" y="30" width="335" height="18"/>
                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" smartDashesType="no" smartInsertDeleteType="no"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyf-rd-GWm">
                                                         <rect key="frame" x="20" y="49" width="335" height="0.5"/>
@@ -1888,7 +1867,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" textContentType="username"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="username"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFh-3n-2i7">
                                 <rect key="frame" x="30" y="427" width="315" height="1"/>
@@ -2014,18 +1993,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="averses" width="285" height="285"/>
-        <image name="brouillard" width="285" height="285"/>
+        <image name="broken-clouds" width="285" height="285"/>
+        <image name="clear-sky" width="285" height="285"/>
         <image name="clic&amp;farm-logo" width="1300" height="1150"/>
         <image name="delete" width="50" height="50"/>
         <image name="expand-less" width="24" height="24"/>
         <image name="expand-more" width="24" height="24"/>
-        <image name="neige" width="285" height="285"/>
-        <image name="nuages" width="285" height="285"/>
-        <image name="orage" width="285" height="285"/>
-        <image name="passages-nuageux" width="285" height="285"/>
-        <image name="pluie" width="285" height="285"/>
-        <image name="soleil" width="285" height="285"/>
+        <image name="few-clouds" width="285" height="285"/>
+        <image name="light-rain" width="285" height="285"/>
+        <image name="mist" width="285" height="285"/>
+        <image name="shower-rain" width="285" height="285"/>
+        <image name="snow" width="16" height="16"/>
+        <image name="thunderstorm" width="285" height="285"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="a8t-Pd-Dxa"/>
