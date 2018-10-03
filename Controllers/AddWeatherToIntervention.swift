@@ -51,34 +51,25 @@ extension AddInterventionViewController {
         }
       }
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
     } else if weatherIsSelected {
       sender.layer.borderColor = UIColor.lightGray.cgColor
       weatherIsSelected = false
     } else {
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather[0].setValue(sender.titleLabel?.text, forKey: "weatherDescription")
+      weather.weatherDescription = sender.titleLabel?.text
       weatherIsSelected = true
     }
   }
 
-  func saveWeather(windSpeed: Double, temperature: Double, weatherDescription: String) {
+  func initWeather() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let weatherEntity = Weather(context: managedContext)
+    let weather = Weather(context: managedContext)
 
-    weatherEntity.windSpeed = windSpeed
-    weatherEntity.temperature = temperature
-    weatherEntity.weatherDescription = weatherDescription
-
-    do {
-      try managedContext.save()
-      weather.append(weatherEntity)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    self.weather = weather
   }
 }

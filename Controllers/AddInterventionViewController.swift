@@ -112,7 +112,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
-  var weather = [Weather]()
+  var weather: Weather!
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
@@ -234,7 +234,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
     initializeWeatherButtons()
-    saveWeather(windSpeed: 0, temperature: 0, weatherDescription: "cloudy")
+    initWeather()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
 
@@ -532,6 +532,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
+    saveWeather(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -647,6 +648,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doer.setValue(UUID(), forKey: "uuid")
       doer.setValue(isDriver, forKey: "isDriver")
     }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveWeather(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var currentWeather = Weather(context: managedContext)
+
+    currentWeather = weather
+    currentWeather.interventions = intervention
 
     do {
       try managedContext.save()
@@ -793,7 +812,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     textField.resignFirstResponder()
     switch textField {
     case temperatureTextField:
-      weather[0].setValue((temperatureTextField.text! as NSString).doubleValue, forKey: "temperature")
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -805,7 +824,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         currentWeatherLabel.text = currentTemp + currentWind
       }
     case windSpeedTextField:
-      weather[0].setValue((windSpeedTextField.text! as NSString).doubleValue, forKey: "windSpeed")
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
