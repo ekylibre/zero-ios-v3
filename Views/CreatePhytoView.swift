@@ -14,7 +14,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "Création d'un produit phyto"
+    titleLabel.text = "create_phyto_title".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -22,7 +22,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var nameTextField: UITextField = {
     let nameTextField = UITextField(frame: CGRect.zero)
-    nameTextField.placeholder = "Nom"
+    nameTextField.placeholder = "name".localized
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
     nameTextField.tag = 10
@@ -39,7 +39,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var firmNameTextField: UITextField = {
     let firmNameTextField = UITextField(frame: CGRect.zero)
-    firmNameTextField.placeholder = "Marque"
+    firmNameTextField.placeholder = "firmName".localized
     firmNameTextField.autocorrectionType = .no
     firmNameTextField.delegate = self
     firmNameTextField.tag = 11
@@ -57,7 +57,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   lazy var maaTextField: UITextField = {
     let maaTextField = UITextField(frame: CGRect.zero)
     maaTextField.keyboardType = .numberPad
-    maaTextField.placeholder = "N° AMM"
+    maaTextField.placeholder = "maa_number".localized
     maaTextField.autocorrectionType = .no
     maaTextField.delegate = self
     maaTextField.tag = 12
@@ -75,7 +75,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   lazy var reentryDelayTextField: UITextField = {
     let reentryDelayTextField = UITextField(frame: CGRect.zero)
     reentryDelayTextField.keyboardType = .numberPad
-    reentryDelayTextField.placeholder = "Délai de ré-entrée"
+    reentryDelayTextField.placeholder = "re_entry_delay".localized
     reentryDelayTextField.autocorrectionType = .no
     reentryDelayTextField.delegate = self
     reentryDelayTextField.tag = 13
@@ -101,7 +101,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("ANNULER", for: .normal)
+    cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +110,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("CRÉER", for: .normal)
+    createButton.setTitle("create".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false

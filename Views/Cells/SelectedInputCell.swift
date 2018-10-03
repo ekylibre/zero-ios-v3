@@ -64,7 +64,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var quantity: UILabel = {
     let quantity = UILabel(frame: CGRect.zero)
 
-    quantity.text = "Quantité"
+    quantity.text = "quantity".localized
     quantity.textColor = AppColor.TextColors.DarkGray
     quantity.font = UIFont.systemFont(ofSize: 15)
     quantity.translatesAutoresizingMaskIntoConstraints = false
@@ -122,7 +122,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "dose invalide"
+    warningLabel.text = "non_authorized_mix".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
   }()
@@ -172,7 +172,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       inputQuantity.widthAnchor.constraint(equalToConstant: 100),
 
       inputLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      unitMeasureButton.topAnchor.constraint(equalTo: inputLabel.bottomAnchor, constant: 12.5),
+      unitMeasureButton.topAnchor.constraint(equalTo: inputQuantity.topAnchor, constant: 0),
       unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
       unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
       unitMeasureButton.widthAnchor.constraint(equalToConstant: 60),
