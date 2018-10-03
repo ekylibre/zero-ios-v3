@@ -428,20 +428,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
-    let date = Date()
-    let calendar = Calendar.current
-    let hour = calendar.component(.hour, from: date)
-    let minute = calendar.component(.minute, from: date)
-
-    synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
-    UserDefaults.standard.set(date, forKey: "lastSyncDate")
-    UserDefaults.standard.synchronize()
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
+    let date = Date()
+    let calendar = Calendar.current
+    let hour = calendar.component(.hour, from: date)
+    let minute = calendar.component(.minute, from: date)
 
     apolloQuery.queryFarms { (success) in
       if success {
@@ -455,17 +450,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
         do {
           try managedContext.save()
-          self.refreshControl.endRefreshing()
-          self.tableView.reloadData()
         } catch let error as NSError {
           print("Could not save. \(error), \(error.userInfo)")
         }
+        self.synchroLabel.text = String(format: "Dernière synchronisation %02d:%02d", hour, minute)
+        UserDefaults.standard.set(date, forKey: "lastSyncDate")
+        UserDefaults.standard.synchronize()
+      } else {
+        self.synchroLabel.text = "sync_failure".localized
       }
+      self.refreshControl.endRefreshing()
+      self.tableView.reloadData()
     }
   }
 
   @objc func action(sender: UIButton) {
-
     hideInterventionAdd()
     performSegue(withIdentifier: "addIntervention", sender: sender)
   }

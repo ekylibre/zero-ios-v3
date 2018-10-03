@@ -17,10 +17,10 @@ class ApolloQuery {
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
   /*func checkLocalData() {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
-    queryFarms(endResult: <#((Bool) -> ())#>)
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-  }*/
+   UIApplication.shared.isNetworkActivityIndicatorVisible = true
+   queryFarms(endResult: <#((Bool) -> ())#>)
+   UIApplication.shared.isNetworkActivityIndicatorVisible = false
+   }*/
 
   // MARK: - Queries: Farms
 
@@ -29,7 +29,11 @@ class ApolloQuery {
     let query = FarmQuery()
 
     apollo.fetch(query: query) { result, error in
-      if let error = error { print("Error: \(error)"); return }
+      if let error = error {
+        print("Error: \(error)")
+        endResult(false)
+        return
+      }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
       if UserDefaults.isFirstLaunch() {
@@ -40,10 +44,10 @@ class ApolloQuery {
         self.loadPeople { (success) -> Void in
           if success {
             self.loadIntervention(onCompleted: { (success) -> Void in
-              if success {
-                endResult(true)
-              }
+              endResult(success)
             })
+          } else {
+            endResult(false)
           }
         }
       } else {
@@ -54,10 +58,10 @@ class ApolloQuery {
         self.loadPeople { (success) -> Void in
           if success {
             self.loadIntervention(onCompleted: { (success) -> Void in
-              if success {
-                endResult(true)
-              }
+              endResult(success)
             })
+          } else {
+            endResult(false)
           }
         }
       }

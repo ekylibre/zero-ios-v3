@@ -220,3 +220,5 @@
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Started must be on or after %@";
 "started_must_be_on_or_before" = "Started must be on or before %@";
+
+"sync_failure" = "Sync failure…";
