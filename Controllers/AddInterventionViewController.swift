@@ -411,7 +411,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
 
       equipment = searchedEquipments[indexPath.row]
+      let number = equipment?.value(forKey: "number") as? String
+
       cell.nameLabel.text = equipment?.value(forKey: "name") as? String
+      cell.numberLabel.text = number != "" ? "#\(number!)" : ""
       cell.typeLabel.text = equipment?.value(forKey: "type") as? String
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
@@ -419,10 +422,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
 
       selectedEquipment = selectedEquipments[indexPath.row]
+      let number = selectedEquipment?.value(forKey: "number") as? String
+
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
+      cell.numberLabel.text = number != "" ? "#\(number!)" : ""
       cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
