@@ -16,15 +16,15 @@ class ApolloQuery {
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  func checkLocalData() {
-    //UIApplication.shared.isNetworkActivityIndicatorVisible = true
-    queryFarms()
-    //UIApplication.shared.isNetworkActivityIndicatorVisible = false
-  }
+  /*func checkLocalData() {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    queryFarms(endResult: <#((Bool) -> ())#>)
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  }*/
 
   // MARK: - Queries: Farms
 
-  private func queryFarms() {
+  func queryFarms(endResult: @escaping ((_ success: Bool) -> ())) {
     let apollo = appDelegate.apollo!
     let query = FarmQuery()
 
@@ -39,7 +39,11 @@ class ApolloQuery {
         self.loadStorage()
         self.loadPeople { (success) -> Void in
           if success {
-            self.loadIntervention()
+            self.loadIntervention(onCompleted: { (success) -> Void in
+              if success {
+                endResult(true)
+              }
+            })
           }
         }
       } else {
@@ -49,7 +53,11 @@ class ApolloQuery {
         self.loadStorage()
         self.loadPeople { (success) -> Void in
           if success {
-            self.loadIntervention()
+            self.loadIntervention(onCompleted: { (success) -> Void in
+              if success {
+                endResult(true)
+              }
+            })
           }
         }
       }
@@ -356,7 +364,11 @@ class ApolloQuery {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery()) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
+      guard let farms = result?.data?.farms else {
+        print("Could not retrieve farms.")
+        completion(false)
+        return
+      }
 
       for farm in farms {
         for person in farm.people! {
@@ -908,13 +920,21 @@ class ApolloQuery {
     return true
   }
 
-  func loadIntervention() {
+  func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-    
+
+    let group = DispatchGroup()
+
+    group.enter()
     appDelegate.apollo?.fetch(query: InterventionQuery()) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve interventions"); return }
+      guard let farms = result?.data?.farms else {
+        print("Could not retrieve interventions")
+        group.leave()
+        onCompleted(false)
+        return
+      }
 
       for farm in farms {
         for intervention in farm.interventions! {
@@ -923,6 +943,12 @@ class ApolloQuery {
           }
         }
       }
+      group.leave()
+    }
+
+    group.notify(queue: DispatchQueue.main) {
+      let _ = appDelegate.apollo?.clearCache()
+      onCompleted(true)
     }
   }
 

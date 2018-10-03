@@ -133,9 +133,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewWillAppear(animated)
 
     initializeApolloClient()
-    apolloQuery.checkLocalData()
+    //apolloQuery.checkLocalData()
     self.fetchInterventions()
-}
+  }
 
   private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -442,30 +442,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let group = DispatchGroup()
 
-    group.enter()
-    DispatchQueue.global(qos: .userInitiated).async {
-      self.apolloQuery.checkLocalData()
-      group.leave()
-    }
-    group.wait()
-    fetchInterventions()
+    apolloQuery.queryFarms { (success) in
+      if success {
+        self.fetchInterventions()
 
-    for intervention in interventions {
-      if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
-        intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
+        for intervention in self.interventions {
+          if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
+            intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
+          }
+        }
+
+        do {
+          try managedContext.save()
+          self.refreshControl.endRefreshing()
+          self.tableView.reloadData()
+        } catch let error as NSError {
+          print("Could not save. \(error), \(error.userInfo)")
+        }
       }
-    }
-
-    do {
-      try managedContext.save()
-      tableView.reloadData()
-      if refreshControl.isRefreshing {
-        refreshControl.endRefreshing()
-      }
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
