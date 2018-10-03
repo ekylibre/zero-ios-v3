@@ -42,7 +42,6 @@ extension AddInterventionViewController {
     hideWeatherItems(!shouldExpand)
   }
 
-
   @IBAction func selectWeather(_ sender: UIButton) {
     if weatherIsSelected && sender.layer.borderColor == UIColor.lightGray.cgColor {
       for weather in weatherButtons {

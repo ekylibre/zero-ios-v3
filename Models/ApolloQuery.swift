@@ -16,12 +16,6 @@ class ApolloQuery {
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  /*func checkLocalData() {
-   UIApplication.shared.isNetworkActivityIndicatorVisible = true
-   queryFarms(endResult: <#((Bool) -> ())#>)
-   UIApplication.shared.isNetworkActivityIndicatorVisible = false
-   }*/
-
   // MARK: - Queries: Farms
 
   func queryFarms(endResult: @escaping ((_ success: Bool) -> ())) {
@@ -973,7 +967,6 @@ class ApolloQuery {
 
       workingDaysAttributes.append(workingDayAttributes)
     }
-    print("\nWorkingDaysAttributes: \(workingDaysAttributes)")
     return workingDaysAttributes
   }
 
@@ -990,7 +983,6 @@ class ApolloQuery {
 
       targetsAttributes.append(targetAttributes)
     }
-    print("\nTargetsAttributes: \(targetsAttributes)")
     return targetsAttributes
   }
 
@@ -1087,7 +1079,6 @@ class ApolloQuery {
         print("No type")
       }
     }
-    print("\nInputsAttributes: \(inputsAttributes)")
     return inputsAttributes
   }
 
@@ -1111,7 +1102,6 @@ class ApolloQuery {
 
       harvestsAttributes.append(harvestAttributes)
     }
-    print("\nHarvestsAttributes: \(harvestsAttributes)")
     return harvestsAttributes
   }
 
@@ -1125,7 +1115,6 @@ class ApolloQuery {
 
       equipmentsAttributes.append(equipmentAttributes)
     }
-    print("\nEquipmentsAttributes: \(equipmentsAttributes)")
     return equipmentsAttributes
   }
 
@@ -1142,7 +1131,6 @@ class ApolloQuery {
 
       operatorsAttributes.append(operatorAttributes)
     }
-    print("\nOperatorsAttributes: \(operatorsAttributes)")
     return operatorsAttributes
   }
 
@@ -1152,7 +1140,6 @@ class ApolloQuery {
     weather.temperature = intervention.weather?.temperature as? Double
     weather.windSpeed = intervention.weather?.windSpeed as? Double
     weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
-    print("\nWeather: \(weather)")
     return weather
   }
 
@@ -1178,15 +1165,12 @@ class ApolloQuery {
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
+    let _ = apollo?.clearCache()
     apollo?.perform(mutation: mutation) { (result, error) in
-      if error != nil /*|| result?.data?.createIntervention?.errors != nil*/ {
+      if error != nil || result?.data?.createIntervention?.errors != nil {
         print("Error: \(String(describing: error)), result error: \(String(describing: result?.data?.createIntervention?.errors))")
       } else {
-        print("\nResult: \(String(describing: result?.data))")
-        if result?.data?.createIntervention?.intervention?.id != nil {
-          id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
-          print("\nIntervention ID: \(id)")
-        }
+        id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
       }
     }
     return id

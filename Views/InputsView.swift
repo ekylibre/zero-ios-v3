@@ -402,7 +402,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.ekyID = Int32(registeredSeed.id)
+      seed.referenceID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
       seed.unit = "kilogram_per_hectare"
@@ -428,7 +428,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.ekyID = Int32(registeredPhyto.id)
+      phyto.referenceID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
@@ -458,7 +458,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.ekyID = Int32(registeredFertilizer.id)
+      fertilizer.referenceID = Int32(registeredFertilizer.id)
       fertilizer.name = registeredFertilizer.name
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety

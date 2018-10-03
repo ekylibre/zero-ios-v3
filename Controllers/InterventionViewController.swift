@@ -133,8 +133,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewWillAppear(animated)
 
     initializeApolloClient()
-    //apolloQuery.checkLocalData()
-    self.fetchInterventions()
+    apolloQuery.queryFarms { (success) in
+      if success {
+        self.fetchInterventions()
+      }
+    }
   }
 
   private func fetchInterventions() {
