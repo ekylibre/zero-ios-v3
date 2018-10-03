@@ -13,7 +13,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
   // MARK: - Initialization
 
-  private func loadEquipmentTypes() -> [String] {
+  func loadEquipmentTypes() -> [String] {
     var equipmentType = [String]()
 
     if let asset = NSDataAsset(name: "equipment-types") {
@@ -22,7 +22,8 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         let registeredEquipments = jsonResult as? [[String: Any]]
 
         for registeredEquipment in registeredEquipments! {
-          equipmentType.append(registeredEquipment["nature"] as! String)
+          let type = registeredEquipment["nature"] as! String
+          equipmentType.append(type.uppercased())
         }
       } catch {
         print("Lexicon error")
@@ -30,7 +31,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     } else {
       print("equipment-types.json not found")
     }
-    return equipmentType
+    return equipmentType.sorted()
   }
 
   func defineEquipmentTypes() -> [String] {

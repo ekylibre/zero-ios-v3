@@ -501,11 +501,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func equipmentTypeSelection(_ sender: UIButton) {
-    equipmentTypeTableView.isHidden = false
-    equipmentTypeTableView.layer.shadowColor = UIColor.black.cgColor
-    equipmentTypeTableView.layer.shadowOpacity = 1
-    equipmentTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
-    equipmentTypeTableView.layer.shadowRadius = 10
+    self.performSegue(withIdentifier: "showEquipmentTypes", sender: self)
   }
 
   // MARK: - Core Data
@@ -695,6 +691,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.cellsStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                              "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
       destVC.tag = 1
+    case "showEquipmentTypes":
+      let destVC = segue.destination as! ListTableViewController
+      destVC.delegate = self
+      destVC.cellsStrings = loadEquipmentTypes()
+      destVC.tag = 2
     default:
       guard let button = sender as? UIButton, button == saveInterventionButton else {
         return
@@ -732,6 +733,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       inputsView.seedView.specieButton.setTitle(value, for: .normal)
     case 1:
       materialsView.creationView.unitButton.setTitle(value, for: .normal)
+    case 2:
+      equipmentTypeButton.setTitle(value, for: .normal)
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }
