@@ -118,45 +118,26 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1h-B8-3FP">
-                                <rect key="frame" x="0.0" y="543" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="563" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRU-Wr-aoY">
-                                        <rect key="frame" x="15" y="37" width="166" height="30"/>
+                                        <rect key="frame" x="15" y="15" width="345" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="DÉJÀ RÉALISÉE">
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="ENREGISTRER UNE INTERVENTION">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="addIntervention:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="MiT-95-7SW"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHP-kl-RhJ">
-                                        <rect key="frame" x="194" y="37" width="166" height="30"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="QUI COMMENCE">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENREGISTRER UNE INTERVENTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNw-dJ-5Yi">
-                                        <rect key="frame" x="8" y="8" width="359" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1137254902" green="0.5450980392" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="jHP-kl-RhJ" secondAttribute="trailing" constant="15" id="3pT-tW-R9x"/>
+                                    <constraint firstItem="XRU-Wr-aoY" firstAttribute="centerY" secondItem="L1h-B8-3FP" secondAttribute="centerY" id="3Ws-Zi-dOt"/>
                                     <constraint firstItem="XRU-Wr-aoY" firstAttribute="leading" secondItem="L1h-B8-3FP" secondAttribute="leading" constant="15" id="5K2-JY-vXh"/>
-                                    <constraint firstAttribute="bottom" secondItem="XRU-Wr-aoY" secondAttribute="bottom" constant="13" id="Rnb-PN-s8V"/>
-                                    <constraint firstItem="jHP-kl-RhJ" firstAttribute="width" secondItem="XRU-Wr-aoY" secondAttribute="width" id="Z4k-Tj-iP5"/>
-                                    <constraint firstAttribute="height" constant="80" id="aP0-3P-QcV"/>
-                                    <constraint firstItem="jHP-kl-RhJ" firstAttribute="leading" secondItem="XRU-Wr-aoY" secondAttribute="trailing" constant="13" id="cyI-NW-aoQ"/>
-                                    <constraint firstItem="jHP-kl-RhJ" firstAttribute="leading" secondItem="XRU-Wr-aoY" secondAttribute="trailing" constant="13" id="eVS-6A-R2V"/>
-                                    <constraint firstItem="NNw-dJ-5Yi" firstAttribute="leading" secondItem="L1h-B8-3FP" secondAttribute="leading" constant="8" id="mXJ-uH-uuo"/>
-                                    <constraint firstAttribute="bottom" secondItem="jHP-kl-RhJ" secondAttribute="bottom" constant="13" id="mda-Vp-m7f"/>
-                                    <constraint firstAttribute="trailing" secondItem="NNw-dJ-5Yi" secondAttribute="trailing" constant="8" id="xoQ-HP-e61"/>
-                                    <constraint firstItem="NNw-dJ-5Yi" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="top" constant="8" id="zZ0-7j-ukk"/>
+                                    <constraint firstAttribute="height" constant="60" id="aP0-3P-QcV"/>
+                                    <constraint firstAttribute="trailing" secondItem="XRU-Wr-aoY" secondAttribute="trailing" constant="15" id="eG3-5a-JcA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-rB-9Pp">
@@ -193,13 +174,11 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="addInterventionLabel" destination="NNw-dJ-5Yi" id="D9m-zp-D70"/>
                         <outlet property="bottomBottom" destination="3KT-Wa-4oY" id="1oL-X5-TOg"/>
                         <outlet property="bottomView" destination="L1h-B8-3FP" id="OFz-wX-08P"/>
+                        <outlet property="createInterventionButton" destination="XRU-Wr-aoY" id="NFa-kI-oUK"/>
                         <outlet property="heightConstraint" destination="aP0-3P-QcV" id="zXq-CV-FZJ"/>
-                        <outlet property="leftInterventionButton" destination="XRU-Wr-aoY" id="JgT-wD-RLh"/>
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
-                        <outlet property="rightInterventionButton" destination="jHP-kl-RhJ" id="lY5-qW-rPg"/>
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="addIntervention" id="74J-jI-YTr"/>
@@ -1033,7 +1012,7 @@
                                                         <rect key="frame" x="20" y="30" width="335" height="18"/>
                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" smartDashesType="no" smartInsertDeleteType="no"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyf-rd-GWm">
                                                         <rect key="frame" x="20" y="49" width="335" height="0.5"/>
@@ -1843,7 +1822,7 @@
                                 <rect key="frame" x="30" y="393" width="315" height="20"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" textContentType="username"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="username"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ScR-OF-ai0">
                                 <rect key="frame" x="30" y="445" width="315" height="20"/>

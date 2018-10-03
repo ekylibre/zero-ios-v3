@@ -110,10 +110,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
+  var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
-  var weather = Weather()
-  var apolloQuery = ApolloQuery()
   let solidUnitMeasure = [
     "gram",
     "gram_per_hectare",
@@ -137,9 +136,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     "cubic_meter",
     "cubic_meter_per_hectare",
     "cubic_meter_per_square_meter"]
+  var apolloQuery = ApolloQuery()
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+    super.moveViewWhenKeyboardAppears()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
@@ -731,7 +733,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
-
+  
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -851,6 +853,70 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return
     }
+  }
+
+  // MARK: - Text Field Delegate
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    let containsADot = textField.text?.contains(".")
+    var invalidCharacters: CharacterSet!
+
+    if containsADot! {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    } else {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    }
+
+    switch textField {
+    case temperatureTextField:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    case windSpeedTextField:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    default:
+      return true
+    }
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    switch textField {
+    case temperatureTextField:
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
+    case windSpeedTextField:
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
+    default:
+      return false
+    }
+    return false
   }
 
   // MARK: - Actions
