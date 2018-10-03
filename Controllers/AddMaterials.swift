@@ -23,6 +23,7 @@ extension AddInterventionViewController {
       ])
 
     materialsView.creationView.unitButton.addTarget(self, action: #selector(showUnits), for: .touchUpInside)
+    materialsView.addInterventionViewController = self
   }
 
   func selectMaterial(_ material: Materials) {
@@ -36,6 +37,17 @@ extension AddInterventionViewController {
     selectedMaterial.unit = material.unit
     selectedMaterial.materials = material
     selectedMaterials.append(selectedMaterial)
+    closeView()
+    updateTableView()
+  }
+
+  private func closeView() {
+    materialsView.isHidden = true
+    dimView.isHidden = true
+  }
+
+  private func updateTableView() {
+
   }
 
   @objc private func showUnits() {

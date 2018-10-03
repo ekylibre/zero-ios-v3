@@ -214,6 +214,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     let fromMaterials = isSearching ? filteredMaterials : materials
 
     fromMaterials[indexPath.row].used = true
+    tableView.reloadData()
     addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row])
   }
 
