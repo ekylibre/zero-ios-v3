@@ -56,7 +56,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var validateButton: UIButton = {
     let validateButton = UIButton(frame: CGRect.zero)
-    validateButton.setTitle("validate".localized, for: .normal)
+    validateButton.setTitle("validate".localized.uppercased(), for: .normal)
     validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     validateButton.backgroundColor = UIColor.white
