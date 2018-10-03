@@ -17,10 +17,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var synchroLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
-  @IBOutlet weak var leftInterventionButton: UIButton!
+  @IBOutlet weak var createInterventionButton: UIButton!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
-  @IBOutlet weak var addInterventionLabel: UILabel!
 
   // MARK: - Properties
 
@@ -47,8 +46,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Rounded buttons
-    leftInterventionButton.layer.cornerRadius = 3
-    leftInterventionButton.clipsToBounds = true
+    createInterventionButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+    createInterventionButton.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+    createInterventionButton.layer.shadowOpacity = 1.0
+    createInterventionButton.layer.shadowRadius = 0.0
+    createInterventionButton.layer.masksToBounds = false
+    createInterventionButton.layer.cornerRadius = 3
+    //createInterventionButton.clipsToBounds = true
 
     // Dim view
     self.view.addSubview(dimView)
@@ -399,38 +403,33 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc func action(sender: UIButton) {
-
     hideInterventionAdd()
     performSegue(withIdentifier: "addIntervention", sender: sender)
   }
 
   @objc func hideInterventionAdd() {
-    addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION"
     for interventionButton in interventionButtons {
       interventionButton.isHidden = true
     }
-    leftInterventionButton.isHidden = false
-    heightConstraint.constant = 80
+
+    createInterventionButton.isHidden = false
+    heightConstraint.constant = 60
     dimView.isHidden = true
   }
 
   @IBAction func addIntervention(_ sender: Any) {
-
-    self.heightConstraint.constant = 240
-    addInterventionLabel.text = "ENREGISTRER UNE INTERVENTION DE..."
-    leftInterventionButton.isHidden = true
+    self.heightConstraint.constant = 220
+    createInterventionButton.isHidden = true
     bottomView.layoutIfNeeded()
     var index: CGFloat = 1
     var line: CGFloat = 0
     let width = bottomView.frame.size.width
 
     for interventionButton in interventionButtons {
-
       interventionButton.isHidden = false
-      interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 35 + line * 100, width: 70, height: 70)
+      interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
       interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
       interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
-      //implantationButton.imageEdgeInsets = UIEdgeInsets(top: 50, left: 50, bottom: implantationButton.titleLabel!.frame.size.height, right: 0)
       bottomView.layoutIfNeeded()
 
       if index > 2 {
