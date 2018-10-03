@@ -378,7 +378,7 @@
 "login_failure" = "Unknown E-mail or invalid password. Try again.";
 "loading_initial_data" = "Loading initial data…";
 "authentificating" = "Authentificating, please wait…";
-"create" = "Créer";
+"create" = "Create";
 "volume" = "Volume";
 "volume_cannot_be_null" = "Le volume ne peut être nul";
 "finish" = "Terminer";
