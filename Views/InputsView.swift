@@ -14,7 +14,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   // MARK: - Properties
 
   lazy var segmentedControl: UISegmentedControl = {
-    let segmentedControl = UISegmentedControl(items: ["Semences", "Phyto.", "Fertilisants"])
+    let segmentedControl = UISegmentedControl(items: ["seeds".localized, "phytos".localized, "fertilizers".localized])
     segmentedControl.selectedSegmentIndex = 0
     let font = UIFont.systemFont(ofSize: 16)
     segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
@@ -33,7 +33,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("+ CRÉER UNE NOUVELLE SEMENCE", for: .normal)
+    createButton.setTitle("create_new_seed".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
@@ -198,38 +198,40 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
       let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
+      let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
-      let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
       cell.specieLabel.text = specie?.localized
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs : phytos
       let used = fromPhytos[indexPath.row].value(forKey: "used") as! Bool
+      let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
+      let unit: String = inFieldReentryDelay > 1 ? "hours".localized : "hour".localized
+      let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
-      let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
-      let unit: String = inFieldReentryDelay > 1 ? "heures" : "heure"
       cell.inFieldReentryDelayLabel.text = "\(inFieldReentryDelay) " + unit
-      let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
       cell.starImageView.isHidden = isRegistered
       return cell
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
       let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
+      let name = fromFertilizers[indexPath.row].value(forKey: "name") as? String
+      let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
-      cell.nameLabel.text = fromFertilizers[indexPath.row].value(forKey: "name") as? String
-      cell.natureLabel.text = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      cell.nameLabel.text = name?.localized
+      cell.natureLabel.text = nature?.localized
       let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
       cell.starImageView.isHidden = isRegistered
       return cell
@@ -551,8 +553,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   @objc func changeSegment() {
     let searchText = searchBar.text!
+    let createButtonTitles = [
+      0: "create_new_seed".localized.uppercased(),
+      1: "create_new_phyto".localized.uppercased(),
+      2: "create_new_ferti".localized.uppercased()
+    ]
 
-    let createButtonTitles = [0: "+ CRÉER UNE NOUVELLE SEMENCE", 1: "+ CRÉER UN NOUVEAU PHYTO", 2: "+ CRÉER UN NOUVEAU FERTILISANT"]
     createButton.setTitle(createButtonTitles[segmentedControl.selectedSegmentIndex], for: .normal)
     let inputs:[Int: [NSManagedObject]] = [0: seeds, 1: phytos, 2: fertilizers]
     let inputsToUse = inputs[segmentedControl.selectedSegmentIndex]!
@@ -599,7 +605,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 2:
       createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
       fertilizerView.nameTextField.text = ""
-      fertilizerView.natureButton.setTitle("Organique", for: .normal)
+      fertilizerView.natureButton.setTitle("organic".localized, for: .normal)
     default:
       return
     }
