@@ -279,37 +279,44 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
     case Intervention.InterventionType.Care.rawValue.localized:
+      interventionType = Intervention.InterventionType.Care.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
     case Intervention.InterventionType.CropProtection.rawValue.localized:
+      interventionType = Intervention.InterventionType.CropProtection.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-    case Intervention.InterventionType.Fertilization.rawValue.localized:
+    case Intervention.InterventionType.Fertilization.rawValue:
+      interventionType = Intervention.InterventionType.Fertilization.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
     case Intervention.InterventionType.GroundWork.rawValue.localized:
+      interventionType = Intervention.InterventionType.GroundWork.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
       harvestView.isHidden = true
     case Intervention.InterventionType.Harvest.rawValue.localized:
+      interventionType = Intervention.InterventionType.Harvest.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
     case Intervention.InterventionType.Implantation.rawValue.localized:
+      interventionType = Intervention.InterventionType.Implantation.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
     case Intervention.InterventionType.Irrigation.rawValue.localized:
+      interventionType = Intervention.InterventionType.Irrigation.rawValue
       harvestView.isHidden = true
     default:
       return
@@ -580,6 +587,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention = Interventions(context: managedContext)
     let workingPeriod = WorkingPeriods(context: managedContext)
 
+    print("\nInterventionType: \(interventionType)")
     newIntervention.type = interventionType
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"

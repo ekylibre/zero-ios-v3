@@ -179,9 +179,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)
     let workingPeriod = fetchWorkingPeriod(of: intervention)
+    let type = intervention.value(forKey: "type") as? String
 
-    cell.typeLabel.text = intervention.value(forKey: "type") as? String
-    switch intervention.value(forKey: "type") as! String {
+    cell.typeLabel.text = type?.localized
+    switch type {
     case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
     case Intervention.InterventionType.CropProtection.rawValue:
@@ -332,7 +333,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
 
-    if let type = (sender as? UIButton)?.titleLabel?.text {
+    if var type = (sender as? UIButton)?.titleLabel?.text {
       destVC.interventionType = type
     }
   }
