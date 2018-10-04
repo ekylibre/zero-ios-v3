@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: HarvestCellDelegate {
-
   // MARK: - Initialization
 
   func defineUnit(_ indexPath: IndexPath) {
@@ -26,7 +25,13 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestView() {
-    createSampleStorage()
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    if appDelegate.entityIsEmpty(entity: "Harvests") {
+      createSampleStorage()
+    }
     initializeHarvestTableView()
     initHarvestNaturePickerView()
     initHarvestUnitPickerView()
@@ -43,7 +48,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestUnitPickerView () {
-    let unit = ["q", "t", "kg"]
+    let unit = ["QUINTAL".localized, "TON".localized, "KILOGRAM".localized]
 
     harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
     harvestUnitPickerView.reference = self
@@ -52,7 +57,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestNaturePickerView() {
-    let unit = ["straw".localized, "grain".localized, "silaged".localized]
+    let unit = ["STRAW".localized, "GRAIN".localized, "SILAGE".localized]
 
     harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
     harvestNaturePickerView.reference = self
@@ -132,8 +137,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     harvest.number = ""
     harvest.quantity = 0
-    harvest.type = "straw"
-    harvest.unit = "q"
+    harvest.type = "STRAW"
+    harvest.unit = "QUINTAL"
     harvests.append(harvest)
   }
 

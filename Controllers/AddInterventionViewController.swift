@@ -382,8 +382,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
-    var harvest: NSManagedObject?
-
 
     switch tableView {
     case selectedInputsTableView:
@@ -472,15 +470,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return cell
     case harvestTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
+      let harvest = harvests[indexPath.row]
+      let unit = harvest.unit
 
-      harvest = harvests[indexPath.row]
       cell.addInterventionController = self
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.unit.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.unit.layer.borderWidth = 1
       cell.unit.layer.cornerRadius = 5
-      cell.unit.setTitle(harvest?.value(forKey: "unit") as? String, for: .normal)
+      cell.unit.setTitle(unit?.localized, for: .normal)
       cell.storage.backgroundColor = AppColor.ThemeColors.White
       cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.storage.layer.borderWidth = 1
@@ -490,12 +489,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.quantity.layer.borderWidth = 1
       cell.quantity.layer.cornerRadius = 5
-      cell.quantity.text = String(harvest?.value(forKey: "quantity") as! Double)
+      cell.quantity.text = String(harvest.quantity)
       cell.quantity.delegate = cell
       cell.number.layer.borderColor =  AppColor.CellColors.LightGray.cgColor
       cell.number.layer.borderWidth = 1
       cell.number.layer.cornerRadius = 5
-      cell.number.text = harvest?.value(forKey: "number") as? String
+      cell.number.text = harvest.number
       cell.number.delegate = cell
       return cell
     default:
