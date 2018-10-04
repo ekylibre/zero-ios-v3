@@ -114,8 +114,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
   var weather: Weather!
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
-  let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
+  let massUnitMeasure = [
+    "GRAM",
+    "GRAM_PER_HECTARE",
+    "GRAM_PER_SQUARE_METER",
+    "KILOGRAM",
+    "KILOGRAM_PER_HECTARE",
+    "KILOGRAM_PER_SQUARE_METER",
+    "QUINTAL",
+    "QUINTAL_PER_HECTARE",
+    "QUINTAL_PER_SQUARE_METER",
+    "TON",
+    "TON_PER_HECTARE",
+    "TON_PER_SQUARE_METER"]
+  let volumeUnitMeasure = [
+    "LITER",
+    "LITER_PER_HECTARE",
+    "LITER_SQUARE_METER",
+    "HECTOLITER",
+    "HECTOLITER_PER_HECTARE",
+    "HECTOLITER_PER_SQUARE_METER",
+    "CUBIC_METER",
+    "CUBIC_METER_PER_HECTARE",
+    "CUBIC_METER_PER_SQUARE_METER"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -348,25 +369,31 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if selectedInputs.count > indexPath.row {
         let selectedInput = selectedInputs[indexPath.row]
+        let unit = selectedInput.value(forKey: "unit") as? String
+
+        print("\nDisplayed unit: \(unit), localized unit: \(String(describing: unit?.localized))")
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.unitMeasureButton.setTitle(selectedInput.value(forKey: "unit") as? String, for: .normal)
+        cell.unitMeasureButton.setTitle(unit?.localized, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
         switch selectedInput {
         case is InterventionSeeds:
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
+
           cell.inputName.text = seed.specie
           cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+
           cell.inputName.text = fertilizer.name
           cell.inputLabel.text = fertilizer.nature
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
@@ -847,6 +874,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     dimView.isHidden = false
     cropsView.isHidden = false
 
+    updateAllInputQuantity()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })

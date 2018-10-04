@@ -381,7 +381,7 @@
 "authentificating" = "Authentificating, please wait…";
 "create" = "Create";
 "volume" = "Volume";
-"volume_cannot_be_null" = "Le volume ne peut être nul";
+"volume_cannot_be_null" = "Volume cannot be null";
 "finish" = "Terminer";
 "pause" = "Pause";
 "speed" = "Vitesse";

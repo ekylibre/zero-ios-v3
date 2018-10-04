@@ -130,52 +130,45 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     present(alert, animated: true)
   }
 
-  func forTrailingZero(temp: Double) -> String {
-    let withoutTrailing = String(format: "%g", temp)
-
-    return withoutTrailing
-  }
-
-  func defineQuantityInFunctionOfSurface(unit: String, quantity: Double, indexPath: IndexPath) {
+  func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let surfaceArea = cropsView.totalSurfaceArea
-    var efficiency: Double = 0
+    var efficiency: Float = 0
 
+    print("\nUnit: \(unit)")
     if (unit.contains("/")) {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
       switch surfaceUnit {
       case "ha":
-        efficiency = Double(quantity) * surfaceArea
+        efficiency = quantity * surfaceArea
       case "m2":
-        efficiency = Double(quantity) * (surfaceArea * 10000)
+        efficiency = quantity * (surfaceArea * 10000)
       default:
         return
       }
-      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %d %@", efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "Soit %.1f %@", efficiency, (unit.components(separatedBy: "/")[0]))
     } else {
-      efficiency = Double(quantity) / surfaceArea
-      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %d %@ par hectare", efficiencyWithoutTrailing, unit)
+      efficiency = quantity / surfaceArea
+      cell.surfaceQuantity.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
 
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let quantity = Float(cell.inputQuantity.text!)
     let unit = cell.unitMeasureButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false
-    if quantity == 0 {
+    if quantity == 0 || quantity == nil {
       let error = (cell.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
       cell.surfaceQuantity.text = error
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
-    } else if totalLabel.text == "select_crops".localized {
+    } else if totalLabel.text == "select_crops".localized.uppercased() {
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
-      defineQuantityInFunctionOfSurface(unit: unit!, quantity: quantity, indexPath: indexPath)
+      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity ?? 0, indexPath: indexPath)
     }
   }
 

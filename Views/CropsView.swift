@@ -79,7 +79,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   var viewsArray = [[UIView]]()
   var selectedCrops = [Crops]()
   var cropsCount = 0
-  var totalSurfaceArea: Double = 0
+  var totalSurfaceArea: Float = 0
 
   // MARK: - Initialization
 
@@ -267,7 +267,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     createCrop(plotName: "Cabécou", name: "Cornichon", surfaceArea: 4.84, startDate: Date())
   }
 
-  func createPlot(name: String, surfaceArea: Double) {
+  func createPlot(name: String, surfaceArea: Float) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -286,7 +286,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  func createCrop(plotName: String, name: String, surfaceArea: Double, startDate: Date) {
+  func createCrop(plotName: String, name: String, surfaceArea: Float, startDate: Date) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -326,7 +326,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     updateSelectedCropsLabel()
   }
 
-  private func selectPlot(_ crops: [Crops], _ plotSurfaceArea: Double, _ cell: PlotCell) {
+  private func selectPlot(_ crops: [Crops], _ plotSurfaceArea: Float, _ cell: PlotCell) {
     cropsCount += crops.count
     totalSurfaceArea += plotSurfaceArea
 
