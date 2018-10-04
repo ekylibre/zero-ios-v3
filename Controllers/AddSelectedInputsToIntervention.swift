@@ -135,7 +135,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let surfaceArea = cropsView.totalSurfaceArea
     var efficiency: Float = 0
 
-    print("\nUnit: \(unit)")
     if (unit.contains("/")) {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
       switch surfaceUnit {

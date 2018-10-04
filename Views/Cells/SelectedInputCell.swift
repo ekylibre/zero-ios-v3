@@ -240,7 +240,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @objc func saveQuantity(_ sender: Any) {
-    print("\nSave quantity")
     addInterventionViewController?.selectedInputs[indexPath.row].setValue(
       (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
     addInterventionViewController?.updateInputQuantity(indexPath: indexPath)

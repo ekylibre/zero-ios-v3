@@ -371,7 +371,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         let selectedInput = selectedInputs[indexPath.row]
         let unit = selectedInput.value(forKey: "unit") as? String
 
-        print("\nDisplayed unit: \(unit), localized unit: \(String(describing: unit?.localized))")
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
