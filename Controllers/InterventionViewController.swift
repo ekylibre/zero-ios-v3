@@ -29,8 +29,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  var interventionButtons: [UIButton] = []
-
+  let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
+                           "CARE", "FERTILIZATION", "CROP_PROTECTION"]
+  var interventionButtons = [UIButton]()
   let dimView = UIView()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -110,23 +111,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func initialiseInterventionButtons() {
     let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
-    let interventionNames: [String] = [
-      "IMPLANTATION".localized,
-      "GROUND_WORK".localized,
-      "IRRIGATION".localized,
-      "HARVEST".localized,
-      "CARE".localized,
-      "FERTILIZATION".localized,
-      "CROP_PROTECTION".localized
-    ]
 
     for buttonCount in 0...6 {
-
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
 
       interventionButton.backgroundColor = UIColor.white
       interventionButton.setBackgroundImage(interventionImages[buttonCount], for: .normal)
-      interventionButton.setTitle(interventionNames[buttonCount], for: .normal)
+      interventionButton.setTitle(interventionTypes[buttonCount].localized, for: .normal)
       interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false
@@ -182,33 +173,33 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     cell.typeLabel.text = intervention.value(forKey: "type") as? String
     switch intervention.value(forKey: "type") as! String {
-    case Intervention.InterventionType.Care.rawValue:
+    case InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
-    case Intervention.InterventionType.CropProtection.rawValue:
+    case InterventionType.CropProtection.rawValue:
       cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case Intervention.InterventionType.Fertilization.rawValue:
+    case InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
-    case Intervention.InterventionType.GroundWork.rawValue:
+    case InterventionType.GroundWork.rawValue:
       cell.typeImageView.image = UIImage(named: "ground-work")!
-    case Intervention.InterventionType.Harvest.rawValue:
+    case InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
-    case Intervention.InterventionType.Implantation.rawValue:
+    case InterventionType.Implantation.rawValue:
       cell.typeImageView.image = UIImage(named: "implantation")!
-    case Intervention.InterventionType.Irrigation.rawValue:
+    case InterventionType.Irrigation.rawValue:
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
       cell.typeLabel.text = "error".localized
     }
 
     switch intervention.value(forKey: "status") as! Int16 {
-    case Intervention.Status.OutOfSync.rawValue:
+    case InterventionState.Created.rawValue:
       cell.syncImage.backgroundColor = UIColor.orange
-    case Intervention.Status.Synchronised.rawValue:
+    case InterventionState.Synced.rawValue:
       cell.syncImage.backgroundColor = UIColor.yellow
-    case Intervention.Status.Validated.rawValue:
+    case InterventionState.Validated.rawValue:
       cell.syncImage.backgroundColor = UIColor.green
     default:
-      cell.syncImage.backgroundColor = UIColor.purple
+      fatalError("InterventionState enum: case no found")
     }
 
     cell.cropsLabel.text = updateCropsLabel(targets)
@@ -224,7 +215,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return [NSManagedObject]()
     }
@@ -246,7 +236,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return NSManagedObject()
     }
@@ -302,7 +291,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -331,10 +319,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
+    let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
 
-    if let type = (sender as? UIButton)?.titleLabel?.text {
-      destVC.interventionType = type
-    }
+    destVC.interventionType = interventionTypes[index]
   }
 
   @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
@@ -356,18 +343,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   private func loadSampleInterventions() {
 
     let date1 = makeDate(year: 2018, month: 7, day: 25, hour: 9, minute: 5, second: 0)
-    //let inter1 = Intervention(type: .Irrigation, crops: "2 cultures", infos: "Volume 50", date: date1, status: .OutOfSync)
     let date2 = makeDate(year: 2018, month: 7, day: 24, hour: 9, minute: 5, second: 0)
-    //let inter2 = Intervention(type: .TravailSol, crops: "1 culture", infos: "Kuhn Prolander", date: date2, status: .OutOfSync)
     let date3 = makeDate(year: 2018, month: 7, day: 23, hour: 9, minute: 5, second: 0)
-    //let inter3 = Intervention(type: .Pulverisation, crops: "2 cultures", infos: "PRIORI GOLD", date: date3, status: .OutOfSync)
     let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
-    //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
-    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
   // MARK: - Actions
@@ -389,8 +372,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for intervention in interventions {
-      if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
-        intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
+      if intervention.value(forKey: "status") as? Int16 == InterventionState.Created.rawValue {
+        intervention.setValue(InterventionState.Synced.rawValue, forKey: "status")
       }
     }
 

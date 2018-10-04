@@ -156,7 +156,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let typeLabel = UILabel()
 
     if interventionType != nil {
-      typeLabel.text = interventionType
+      typeLabel.text = interventionType.localized
     }
     typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
     typeLabel.textColor = UIColor.white
@@ -253,30 +253,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue:
+    case InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
-    case Intervention.InterventionType.CropProtection.rawValue:
+    case InterventionType.CropProtection.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-    case Intervention.InterventionType.Fertilization.rawValue:
+    case InterventionType.Fertilization.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-    case Intervention.InterventionType.GroundWork.rawValue:
+    case InterventionType.GroundWork.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Harvest.rawValue:
+    case InterventionType.Harvest.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue:
+    case InterventionType.Implantation.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
     default:
@@ -514,7 +514,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
 
     newIntervention.type = interventionType
-    newIntervention.status = Intervention.Status.OutOfSync.rawValue
+    newIntervention.status = InterventionState.Created.rawValue
     newIntervention.infos = "Infos"
     if interventionType == "IRRIGATION".localized {
       let waterVolume = irrigationValueTextField.text!.floatValue
