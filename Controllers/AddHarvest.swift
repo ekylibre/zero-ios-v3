@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: HarvestCellDelegate {
+  
   // MARK: - Initialization
 
   func defineUnit(_ indexPath: IndexPath) {
@@ -169,7 +170,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   func removeHarvestCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: String(format: "are_you_sure_you_want_to_delete".localized, "shipment".localized),
+      message: "delete_harvest_prompt".localized,
       preferredStyle: .alert
     )
 
