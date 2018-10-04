@@ -10,12 +10,12 @@ import UIKit
 
 class SelectDateView: UIView {
 
-  //MARK: - Properties
+  // MARK: - Properties
 
   lazy var datePicker: UIDatePicker = {
     let datePicker = UIDatePicker(frame: CGRect.zero)
     datePicker.datePickerMode = .date
-    datePicker.locale = Locale(identifier: "fr")
+    datePicker.locale = Locale(identifier: "locale".localized)
     datePicker.translatesAutoresizingMaskIntoConstraints = false
     return datePicker
   }()
@@ -23,13 +23,13 @@ class SelectDateView: UIView {
   lazy var validateButton: UIButton = {
     let validateButton = UIButton(frame: CGRect.zero)
     validateButton.backgroundColor = UIColor.white
-    validateButton.setTitle("VALIDER", for: .normal)
+    validateButton.setTitle("validate".localized.uppercased(), for: .normal)
     validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     validateButton.translatesAutoresizingMaskIntoConstraints = false
     return validateButton
   }()
 
-  //MARK: - Initialization
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)

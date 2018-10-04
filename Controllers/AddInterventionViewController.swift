@@ -21,6 +21,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
+  @IBOutlet weak var durationUnitLabel: UILabel!
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
@@ -70,6 +71,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var currentWeatherLabel: UILabel!
+  @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var temperatureTextField: UITextField!
+  @IBOutlet weak var windSpeedTextField: UITextField!
+  @IBOutlet weak var brokenClouds: UIButton!
+  @IBOutlet weak var clearSky: UIButton!
+  @IBOutlet weak var fewClouds: UIButton!
+  @IBOutlet weak var lightRain: UIButton!
+  @IBOutlet weak var mist: UIButton!
+  @IBOutlet weak var showerRain: UIButton!
+  @IBOutlet weak var snow: UIButton!
+  @IBOutlet weak var thunderstorm: UIButton!
 
   // MARK: - Properties
 
@@ -97,11 +111,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m3", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
+  var weatherIsSelected: Bool = false
+  var weatherButtons = [UIButton]()
+  var weather: Weather!
+  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+    super.moveViewWhenKeyboardAppears()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
@@ -109,12 +128,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
     selectDateView.center.x = self.view.center.x
     selectDateView.center.y = self.view.center.y
-    self.view.addSubview(selectDateView)
+    view.addSubview(selectDateView)
 
     let dateFormatter = DateFormatter()
 
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "d MMMM"
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMM"
     let currentDateString = dateFormatter.string(from: Date())
     let validateButton = selectDateView.subviews.last as! UIButton
 
@@ -130,6 +149,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     durationTextField.layer.borderWidth = 0.5
     durationTextField.layer.borderColor = UIColor.lightGray.cgColor
     durationTextField.clipsToBounds = true
+    durationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -209,13 +229,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     inputsView.addInterventionViewController = self
-    self.view.addSubview(inputsView)
+    view.addSubview(inputsView)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
-    self.view.addSubview(cropsView)
+    view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
     setupIrrigation()
+
+    initializeWeatherButtons()
+    initWeather()
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
 
     setupViewsAccordingInterventionType()
   }
@@ -225,7 +252,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   private func setupViewsAccordingInterventionType() {
-    switch  interventionType {
+    switch interventionType {
     case Intervention.InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
@@ -314,38 +341,37 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
-    var input: NSManagedObject?
 
     switch tableView {
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
       if selectedInputs.count > indexPath.row {
-        input = selectedInputs[indexPath.row]
-        let quantity = String(input?.value(forKey: "quantity") as! Double)
+        let selectedInput = selectedInputs[indexPath.row]
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.type = input?.value(forKey: "type") as! String
-        cell.inputQuantity.text = quantity
-        cell.unitMeasureButton.setTitle(input?.value(forKey: "unit") as? String, for: .normal)
+        cell.unitMeasureButton.setTitle(selectedInput.value(forKey: "unit") as? String, for: .normal)
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
-        switch cell.type {
-        case "Seed":
-          cell.inputName.text = input?.value(forKey: "specie") as? String
-          cell.inputLabel.text = input?.value(forKey: "variety") as? String
+        switch selectedInput {
+        case is InterventionSeeds:
+          let seed = selectedInput.value(forKey: "seeds") as! Seeds
+          cell.inputName.text = seed.specie
+          cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
-        case "Phyto":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "firmName") as? String
+        case is InterventionPhytosanitaries:
+          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+          cell.inputName.text = phyto.name
+          cell.inputLabel.text = phyto.firmName
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
-        case "Fertilizer":
-          cell.inputName.text = input?.value(forKey: "name") as? String
-          cell.inputLabel.text = input?.value(forKey: "nature") as? String
+        case is InterventionFertilizers:
+          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+          cell.inputName.text = fertilizer.name
+          cell.inputLabel.text = fertilizer.nature
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
-          print("No type")
+          fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
       }
       return cell
@@ -490,20 +516,64 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.type = interventionType
     newIntervention.status = Int32(Intervention.Status.Created.rawValue)
     newIntervention.infos = "Infos"
-    if interventionType == "irrigation".localized {
-      let waterQuantityString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
-      let waterQuantity = Float(waterQuantityString) ?? 0
-      newIntervention.waterQuantity = waterQuantity
+    if interventionType == "IRRIGATION".localized {
+      let waterVolume = irrigationValueTextField.text!.floatValue
+      newIntervention.waterQuantity = waterVolume
       newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
     }
     workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
-    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
-    let hourDuration = Float(durationString) ?? 0
-    workingPeriod.hourDuration = hourDuration
+    let duration = durationTextField.text!.floatValue
+    workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
+    saveInterventionInputs(intervention: newIntervention)
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
+    saveWeather(intervention: newIntervention)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func resetInputsAttributes(entity: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+    let predicate = NSPredicate(format: "used == true")
+
+    entitiesFetchRequest.predicate = predicate
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        entity.setValue(false, forKey: "used")
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save or fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveInterventionInputs(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for selectedInput in selectedInputs {
+      selectedInput.setValue(intervention, forKey: "interventions")
+    }
 
     do {
       try managedContext.save()
@@ -556,7 +626,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createEquipments(intervention: NSManagedObject) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -599,6 +668,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doer.setValue(UUID(), forKey: "uuid")
       doer.setValue(isDriver, forKey: "isDriver")
     }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func saveWeather(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var currentWeather = Weather(context: managedContext)
+
+    currentWeather = weather
+    currentWeather.interventions = intervention
+
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -607,7 +695,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -710,6 +797,70 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  // MARK: - Text Field Delegate
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    let containsADot = textField.text?.contains(".")
+    var invalidCharacters: CharacterSet!
+
+    if containsADot! {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    } else {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+    }
+
+    switch textField {
+    case temperatureTextField:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    case windSpeedTextField:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    default:
+      return true
+    }
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    switch textField {
+    case temperatureTextField:
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
+    case windSpeedTextField:
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
+      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+        currentWeatherLabel.text = "not_filled_in".localized
+      } else {
+        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
+        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+        let currentTemp = String(format: "temp".localized, temperature!)
+        let currentWind = String(format: "wind".localized, wind!)
+
+        currentWeatherLabel.text = currentTemp + currentWind
+      }
+    default:
+      return false
+    }
+    return false
+  }
+
   // MARK: - Actions
 
   @IBAction func selectCrops(_ sender: Any) {
@@ -722,8 +873,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func validateCrops(_ sender: Any) {
-    if cropsView.selectedCropsLabel.text == "Aucune sélection" {
-      totalLabel.text = "+ SÉLECTIONNER"
+    if cropsView.selectedCropsLabel.text == "no_crop_selected".localized {
+      totalLabel.text = "select_crops".localized.uppercased()
       totalLabel.textColor = AppColor.TextColors.Green
     } else {
       totalLabel.text = cropsView.selectedCropsLabel.text
@@ -735,34 +886,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.isHidden = true
     dimView.isHidden = true
 
+    updateAllInputQuantity()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
   }
 
   @IBAction func selectWorkingPeriod(_ sender: Any) {
+    let shouldExpand = (workingPeriodHeight.constant == 70)
 
-    if workingPeriodHeight.constant == 70 {
-      workingPeriodHeight.constant = 155
-      selectedWorkingPeriodLabel.isHidden = true
-      selectDateButton.isHidden = false
-    } else {
-      workingPeriodHeight.constant = 70
-      selectedWorkingPeriodLabel.isHidden = false
-      selectDateButton.isHidden = true
-      selectedWorkingPeriodLabel.text = getSelectedWorkingPeriod()
+    if shouldExpand {
+      let dateString = selectDateButton.titleLabel!.text!
+      let duration = durationTextField.text!.floatValue
+
+      selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", dateString, duration)
     }
+
+    workingPeriodHeight.constant = shouldExpand ? 155 : 70
+    selectedWorkingPeriodLabel.isHidden = shouldExpand
+    selectDateButton.isHidden = !shouldExpand
     collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
   }
 
-  func getSelectedWorkingPeriod() -> String {
-    let dateString = selectDateButton.titleLabel!.text!
-    let durationString = durationTextField.text!.replacingOccurrences(of: ",", with: ".")
-    let duration = Float(durationString) ?? 0
-
-    return String(format: "%@ • %g h", dateString, duration)
-  }
-  
   @IBAction func selectDate(_ sender: Any) {
     dimView.isHidden = false
     selectDateView.isHidden = false
@@ -774,17 +919,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @objc func validateDate() {
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "d MMMM"
-    let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
-    selectDateButton.setTitle(selectedDate, for: .normal)
+    let selectedDate: String
 
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMM"
+    selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
+    selectDateButton.setTitle(selectedDate, for: .normal)
     selectDateView.isHidden = true
     dimView.isHidden = true
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
+  }
+
+  @objc func updateDurationUnit() {
+    let duration = durationTextField.text!.floatValue
+
+    durationUnitLabel.text = (duration <= 1) ? "hour".localized : "hours".localized
   }
 
   @IBAction func selectInput(_ sender: Any) {
@@ -797,22 +949,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
     dismiss(animated: true, completion: nil)
   }
 
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {
-
     if entities.count > 0 && constraint.constant == 70 {
       addEntityButton.isHidden = true
       numberLabel.isHidden = false
       switch entities {
       case selectedEquipments:
-        numberLabel.text = (entities.count == 1 ? "1 equipement" : "\(entities.count) equipements")
+        numberLabel.text = (entities.count == 1 ? "equipment".localized : String(format: "equipments".localized, entities.count))
       case doers:
-        numberLabel.text = (entities.count == 1 ? "1 personne" : "\(entities.count) personnes")
+        numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
       case selectedInputs:
-        numberLabel.text = (entities.count == 1 ? "1 intrant": "\(entities.count) intrants")
+        numberLabel.text = (entities.count == 1 ? "input".localized : String(format: "inputs".localized, entities.count))
       default:
         return
       }
@@ -822,3 +976,4 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
+

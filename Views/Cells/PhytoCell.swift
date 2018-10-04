@@ -27,7 +27,7 @@ class PhytoCell: UITableViewCell {
 
   lazy var maaLabel: UILabel = {
     let maaLabel = UILabel(frame: CGRect.zero)
-    maaLabel.text = "N° AMM"
+    maaLabel.text = "maa_number".localized
     maaLabel.font = UIFont.italicSystemFont(ofSize: 14)
     maaLabel.textColor = AppColor.TextColors.DarkGray
     maaLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ class PhytoCell: UITableViewCell {
 
   lazy var reentryLabel: UILabel = {
     let reentryLabel = UILabel(frame: CGRect.zero)
-    reentryLabel.text = "Délai de réentrée"
+    reentryLabel.text = "re_entry_delay".localized
     reentryLabel.font = UIFont.italicSystemFont(ofSize: 14)
     reentryLabel.textColor = AppColor.TextColors.DarkGray
     reentryLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +55,17 @@ class PhytoCell: UITableViewCell {
     inFieldReentryDelayLabel.font = UIFont.systemFont(ofSize: 14)
     inFieldReentryDelayLabel.translatesAutoresizingMaskIntoConstraints = false
     return inFieldReentryDelayLabel
+  }()
+
+  lazy var starImageView: UIImageView = {
+    let starImageView = UIImageView(frame: CGRect.zero)
+    let starImage = #imageLiteral(resourceName: "star")
+    let tintedImage = starImage.withRenderingMode(.alwaysTemplate)
+    starImageView.image = tintedImage
+    starImageView.tintColor = AppColor.BarColors.Green
+    starImageView.translatesAutoresizingMaskIntoConstraints = false
+    starImageView.isHidden = true
+    return starImageView
   }()
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -69,6 +80,7 @@ class PhytoCell: UITableViewCell {
     contentView.addSubview(maaIDLabel)
     contentView.addSubview(reentryLabel)
     contentView.addSubview(inFieldReentryDelayLabel)
+    contentView.addSubview(starImageView)
     setupLayout()
   }
 
@@ -85,7 +97,11 @@ class PhytoCell: UITableViewCell {
       reentryLabel.topAnchor.constraint(equalTo: maaLabel.bottomAnchor),
       reentryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       inFieldReentryDelayLabel.topAnchor.constraint(equalTo: maaIDLabel.bottomAnchor),
-      inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15)
+      inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15),
+      starImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      starImageView.heightAnchor.constraint(equalToConstant: 20),
+      starImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      starImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }
 

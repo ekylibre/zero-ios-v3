@@ -10,7 +10,7 @@ import UIKit
 
 protocol SelectedInputCellDelegate: class {
   func removeInputCell(_ indexPath: IndexPath)
-  func changeUnitMeasure(_ indexPath: IndexPath)
+  func saveSelectedRow(_ indexPath: IndexPath)
 }
 
 class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
@@ -56,6 +56,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     inputQuantity.text = ""
     inputQuantity.keyboardType = .decimalPad
     inputQuantity.textAlignment = .center
+    inputQuantity.addTarget(self, action: #selector(saveQuantity), for: .editingChanged)
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
     return inputQuantity
   }()
@@ -63,9 +64,9 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var quantity: UILabel = {
     let quantity = UILabel(frame: CGRect.zero)
 
-    quantity.text = "Quantité"
+    quantity.text = "quantity".localized
     quantity.textColor = AppColor.TextColors.DarkGray
-    quantity.font = UIFont.systemFont(ofSize: 13)
+    quantity.font = UIFont.systemFont(ofSize: 15)
     quantity.translatesAutoresizingMaskIntoConstraints = false
     return quantity
   }()
@@ -82,7 +83,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var surfaceQuantity: UILabel = {
     let surfaceQuantity = UILabel(frame: CGRect.zero)
 
-    surfaceQuantity.font = UIFont.systemFont(ofSize: 13)
+    surfaceQuantity.isHidden = true
+    surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
     surfaceQuantity.text = "Soit 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +122,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "dose invalide"
+    warningLabel.text = "non_authorized_mix".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
   }()
@@ -170,7 +172,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       inputQuantity.widthAnchor.constraint(equalToConstant: 100),
 
       inputLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      unitMeasureButton.topAnchor.constraint(equalTo: inputLabel.bottomAnchor, constant: 12.5),
+      unitMeasureButton.topAnchor.constraint(equalTo: inputQuantity.topAnchor, constant: 0),
       unitMeasureButton.leftAnchor.constraint(equalTo: inputQuantity.rightAnchor, constant: 0),
       unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
       unitMeasureButton.widthAnchor.constraint(equalToConstant: 60),
@@ -219,10 +221,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-        (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
-    }
+    saveQuantity(self)
     return false
   }
 
@@ -233,11 +232,17 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     } else {
       addInterventionViewController?.solidUnitPicker.isHidden = false
     }
-    cellDelegate?.changeUnitMeasure(indexPath)
+    cellDelegate?.saveSelectedRow(indexPath)
   }
 
   @objc func removeCell(sender: UIButton) {
     cellDelegate?.removeInputCell(indexPath)
+  }
+
+  @objc func saveQuantity(_ sender: Any) {
+    addInterventionViewController?.selectedInputs[indexPath.row].setValue(
+      (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+    addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
   }
 
   required init?(coder aDecoder: NSCoder) {
