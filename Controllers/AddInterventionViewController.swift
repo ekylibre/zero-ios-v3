@@ -587,7 +587,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention = Interventions(context: managedContext)
     let workingPeriod = WorkingPeriods(context: managedContext)
 
-    print("\nInterventionType: \(interventionType)")
     newIntervention.type = interventionType
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"

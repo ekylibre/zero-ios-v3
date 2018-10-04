@@ -333,7 +333,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
 
-    if var type = (sender as? UIButton)?.titleLabel?.text {
+    if let type = (sender as? UIButton)?.titleLabel?.text {
       destVC.interventionType = type
     }
   }
