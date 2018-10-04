@@ -239,6 +239,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     initializeWeatherButtons()
     initWeather()
+    setupWeatherActions()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
     windSpeedTextField.delegate = self

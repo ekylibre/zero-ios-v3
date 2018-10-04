@@ -23,7 +23,13 @@ extension AddInterventionViewController {
     }
   }
 
+  func setupWeatherActions() {
+    temperatureTextField.addTarget(self, action: #selector(saveCurrentWeather), for: .editingChanged)
+    windSpeedTextField.addTarget(self, action: #selector(saveCurrentWeather), for: .editingChanged)
+  }
+
   // MARK: - Actions
+
 
   func hideWeatherItems(_ state: Bool) {
     for index in 0..<weatherButtons.count {
@@ -60,6 +66,21 @@ extension AddInterventionViewController {
       weather.weatherDescription = sender.titleLabel?.text
       weatherIsSelected = true
     }
+  }
+
+  @objc func saveCurrentWeather(_ sender: Any) {
+    if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+      currentWeatherLabel.text = "not_filled_in".localized
+    } else {
+      let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "")
+      let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+      let currentTemperature = String(format: "temp".localized, temperature!)
+      let currentWind = String(format: "wind".localized, wind!)
+
+      currentWeatherLabel.text = currentTemperature + currentWind
+    }
+    weather.temperature = (temperatureTextField.text! as NSString).doubleValue
+    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
   }
 
   func initWeather() {
