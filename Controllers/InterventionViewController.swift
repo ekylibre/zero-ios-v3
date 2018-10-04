@@ -17,11 +17,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var synchroLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
-  @IBOutlet weak var leftInterventionButton: UIButton!
-  @IBOutlet weak var rightInterventionButton: UIButton!
+  @IBOutlet weak var createInterventionButton: UIButton!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
   @IBOutlet weak var bottomBottom: NSLayoutConstraint!
-  @IBOutlet weak var addInterventionLabel: UILabel!
 
   // MARK: - Properties
 
@@ -41,15 +39,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+    super.moveViewWhenKeyboardAppears()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Rounded buttons
-    leftInterventionButton.layer.cornerRadius = 3
-    leftInterventionButton.clipsToBounds = true
-    rightInterventionButton.layer.cornerRadius = 3
-    rightInterventionButton.clipsToBounds = true
+    createInterventionButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+    createInterventionButton.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+    createInterventionButton.layer.shadowOpacity = 1.0
+    createInterventionButton.layer.shadowRadius = 0.0
+    createInterventionButton.layer.masksToBounds = false
+    createInterventionButton.layer.cornerRadius = 3
+    //createInterventionButton.clipsToBounds = true
 
     // Dim view
     self.view.addSubview(dimView)
@@ -72,7 +75,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "local_code".localized)
+      dateFormatter.locale = Locale(identifier: "locale".localized)
       dateFormatter.dateFormat = "d MMMM"
 
       let hour = calendar.component(.hour, from: date)
@@ -80,7 +83,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let dateString = dateFormatter.string(from: date)
 
       if calendar.isDateInToday(date) {
-        synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+        synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
       } else {
         synchroLabel.text = "last_synchronization".localized + dateString
       }
@@ -106,17 +109,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func initialiseInterventionButtons() {
-
-    let interventionNames: [String] = [
-      "implantation".localized,
-      "ground_work".localized,
-      "irrigation".localized,
-      "harvest".localized,
-      "care".localized,
-      "fertilization".localized,
-      "crop_protection".localized
-    ]
     let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
+    let interventionNames: [String] = [
+      "IMPLANTATION".localized,
+      "GROUND_WORK".localized,
+      "IRRIGATION".localized,
+      "HARVEST".localized,
+      "CARE".localized,
+      "FERTILIZATION".localized,
+      "CROP_PROTECTION".localized
+    ]
 
     for buttonCount in 0...6 {
 
@@ -180,19 +182,19 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     cell.typeLabel.text = intervention.value(forKey: "type") as? String
     switch intervention.value(forKey: "type") as! String {
-    case Intervention.InterventionType.Care.rawValue.localized:
+    case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
-    case Intervention.InterventionType.CropProtection.rawValue.localized:
+    case Intervention.InterventionType.CropProtection.rawValue:
       cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case Intervention.InterventionType.Fertilization.rawValue.localized:
+    case Intervention.InterventionType.Fertilization.rawValue:
       cell.typeImageView.image = UIImage(named: "fertilization")!
-    case Intervention.InterventionType.GroundWork.rawValue.localized:
+    case Intervention.InterventionType.GroundWork.rawValue:
       cell.typeImageView.image = UIImage(named: "ground-work")!
-    case Intervention.InterventionType.Harvest.rawValue.localized:
+    case Intervention.InterventionType.Harvest.rawValue:
       cell.typeImageView.image = UIImage(named: "harvest")!
-    case Intervention.InterventionType.Implantation.rawValue.localized:
+    case Intervention.InterventionType.Implantation.rawValue:
       cell.typeImageView.image = UIImage(named: "implantation")!
-    case Intervention.InterventionType.Irrigation.rawValue.localized:
+    case Intervention.InterventionType.Irrigation.rawValue:
       cell.typeImageView.image = UIImage(named: "irrigation")!
     default:
       cell.typeLabel.text = "error".localized
@@ -266,7 +268,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
-
     var totalSurfaceArea: Double = 0
 
     for target in targets {
@@ -275,11 +276,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       totalSurfaceArea += surfaceArea 
     }
 
-    if targets.count > 1 {
-      return String(format: "crops_size".localized, targets.count, totalSurfaceArea)
-    } else {
-      return String(format: "crop_size".localized, totalSurfaceArea)
-    }
+    let cropString = targets.count < 2 ? "crop".localized : "crops".localized
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
   func transformDate(date: Date) -> String {
@@ -292,9 +290,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let year = calendar.component(.year, from: date)
 
     if calendar.isDateInToday(date) {
-      return "today".localized
+      return "today".localized.lowercased()
     } else if calendar.isDateInYesterday(date) {
-      return "yesterday".localized
+      return "yesterday".localized.lowercased()
     } else {
       if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
         dateString.append(" \(year)")
@@ -366,23 +364,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
     //let inter4 = Intervention(type: .Entretien, crops: "4 cultures", infos: "oui", date: date4, status: .OutOfSync)
 
-    createIntervention(type: Intervention.InterventionType.Care.rawValue.localized, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue.localized, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue.localized, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue.localized, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
   // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
-
     let date = Date()
     let calendar = Calendar.current
-
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+    synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
     UserDefaults.standard.set(date, forKey: "lastSyncDate")
     UserDefaults.standard.synchronize()
 
@@ -408,37 +404,31 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc func action(sender: UIButton) {
-
     hideInterventionAdd()
     performSegue(withIdentifier: "addIntervention", sender: sender)
   }
 
   @objc func hideInterventionAdd() {
-    addInterventionLabel.text = String(format: "register_intervention".localized, "")
     for interventionButton in interventionButtons {
       interventionButton.isHidden = true
     }
-    leftInterventionButton.isHidden = false
-    rightInterventionButton.isHidden = false
-    heightConstraint.constant = 80
+
+    createInterventionButton.isHidden = false
+    heightConstraint.constant = 60
     dimView.isHidden = true
   }
 
   @IBAction func addIntervention(_ sender: Any) {
-
-    heightConstraint.constant = 240
-    addInterventionLabel.text = String(format: "register_intervention".localized, "of".localized)
-    leftInterventionButton.isHidden = true
-    rightInterventionButton.isHidden = true
+    self.heightConstraint.constant = 220
+    createInterventionButton.isHidden = true
     bottomView.layoutIfNeeded()
     var index: CGFloat = 1
     var line: CGFloat = 0
     let width = bottomView.frame.size.width
 
     for interventionButton in interventionButtons {
-
       interventionButton.isHidden = false
-      interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 35 + line * 100, width: 70, height: 70)
+      interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
       interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
       interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
       bottomView.layoutIfNeeded()

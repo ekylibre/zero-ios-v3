@@ -10,7 +10,7 @@ import UIKit
 
 protocol SelectedInputCellDelegate: class {
   func removeInputCell(_ indexPath: IndexPath)
-  func changeUnitMeasure(_ indexPath: IndexPath)
+  func saveSelectedRow(_ indexPath: IndexPath)
 }
 
 class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
@@ -56,6 +56,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     inputQuantity.text = ""
     inputQuantity.keyboardType = .decimalPad
     inputQuantity.textAlignment = .center
+    inputQuantity.addTarget(self, action: #selector(saveQuantity), for: .editingChanged)
     inputQuantity.translatesAutoresizingMaskIntoConstraints = false
     return inputQuantity
   }()
@@ -85,7 +86,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     surfaceQuantity.isHidden = true
     surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = "or".localized + " 0,0"
+    surfaceQuantity.text = "Soit 0,0"
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
     return surfaceQuantity
   }()
@@ -121,7 +122,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "invalid_dose".localized
+    warningLabel.text = "non_authorized_mix".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
   }()
@@ -220,10 +221,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    if textField == inputQuantity {
-      addInterventionViewController?.selectedInputs[indexPath.row].setValue((inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
-      addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
-    }
+    saveQuantity(self)
     return false
   }
 
@@ -234,11 +232,17 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     } else {
       addInterventionViewController?.solidUnitPicker.isHidden = false
     }
-    cellDelegate?.changeUnitMeasure(indexPath)
+    cellDelegate?.saveSelectedRow(indexPath)
   }
 
   @objc func removeCell(sender: UIButton) {
     cellDelegate?.removeInputCell(indexPath)
+  }
+
+  @objc func saveQuantity(_ sender: Any) {
+    addInterventionViewController?.selectedInputs[indexPath.row].setValue(
+      (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+    addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
   }
 
   required init?(coder aDecoder: NSCoder) {

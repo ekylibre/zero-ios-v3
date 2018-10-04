@@ -14,7 +14,6 @@
 		0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
-		04139CB021411D6F0067DEA9 /* LocalizationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04139CAF21411D6F0067DEA9 /* LocalizationExtension.swift */; };
 		0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
@@ -32,6 +31,10 @@
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
+		0480CA5621650DDB0039FCB9 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5321650DDB0039FCB9 /* String+FloatValue.swift */; };
+		0480CA5721650DDB0039FCB9 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5421650DDB0039FCB9 /* UIApplication+StatusBar.swift */; };
+		0480CA5821650DDB0039FCB9 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5521650DDB0039FCB9 /* Localizable.swift */; };
+		0480CA5A21650DF20039FCB9 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5921650DF20039FCB9 /* HandleKeyboard.swift */; };
 		6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
 		6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */; };
 		6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED22139635400E2DEC4 /* ListCell.swift */; };
@@ -50,7 +53,6 @@
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
-		6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */; };
 		6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DA2105CD820072840F /* LoginScreen.swift */; };
 		6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DC2105CD820072840F /* InterventionViewController.swift */; };
 		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
@@ -78,7 +80,6 @@
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041322442147B2A700E55D19 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
-		04139CAF21411D6F0067DEA9 /* LocalizationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationExtension.swift; sourceTree = "<group>"; };
 		0413DE83211B3E2800AE8337 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
@@ -99,6 +100,10 @@
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
+		0480CA5321650DDB0039FCB9 /* String+FloatValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FloatValue.swift"; sourceTree = "<group>"; };
+		0480CA5421650DDB0039FCB9 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
+		0480CA5521650DDB0039FCB9 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		0480CA5921650DF20039FCB9 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
 		6B11EED02139635400E2DEC4 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
 		6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
 		6B11EED22139635400E2DEC4 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -118,7 +123,6 @@
 		6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
 		6BEA658A2105C5EF0072840F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		6BEA65DA2105CD820072840F /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		6BEA65DC2105CD820072840F /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 				0418C746212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift */,
 				041855772142A20F0077A715 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
+				0480CA5921650DF20039FCB9 /* HandleKeyboard.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
 				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
@@ -203,7 +208,6 @@
 				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
-				6BEA65CF2105CC590072840F /* UIApplicationExtensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,7 +219,6 @@
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				6BEA65E22105CD8A0072840F /* Intervention.swift */,
 				040EF677215E11C80006C2C9 /* KeychainService.swift */,
-				04139CAF21411D6F0067DEA9 /* LocalizationExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,6 +230,16 @@
 				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		0480CA5221650DDB0039FCB9 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				0480CA5321650DDB0039FCB9 /* String+FloatValue.swift */,
+				0480CA5421650DDB0039FCB9 /* UIApplication+StatusBar.swift */,
+				0480CA5521650DDB0039FCB9 /* Localizable.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		6B11EECE2139635400E2DEC4 /* Cells */ = {
@@ -276,6 +289,7 @@
 				047BF0BF2105F44F009F3945 /* CoreData */,
 				042A44322121B38600CE6B24 /* Constants */,
 				6BA3713D213963230086DF9B /* Resources */,
+				0480CA5221650DDB0039FCB9 /* Library */,
 				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
 				6BEA656E2105C5EE0072840F /* Products */,
 				047B57CB2108605400C48F68 /* Frameworks */,
@@ -431,20 +445,22 @@
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */,
 				0418C747212EDD750078B6D6 /* AddSelectedInputsToIntervention.swift in Sources */,
+				0480CA5821650DDB0039FCB9 /* Localizable.swift in Sources */,
 				043D449A214A9DD500B5FD59 /* HarvestCell.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
 				6B11EEE22139635400E2DEC4 /* EntityCell.swift in Sources */,
+				0480CA5721650DDB0039FCB9 /* UIApplication+StatusBar.swift in Sources */,
 				6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */,
 				043D4496214A9D3100B5FD59 /* AddInterventionViewController.swift in Sources */,
 				6B11EEDE2139635400E2DEC4 /* SeedCell.swift in Sources */,
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
+				0480CA5A21650DF20039FCB9 /* HandleKeyboard.swift in Sources */,
 				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				0413DE84211B3E2800AE8337 /* AddEquipmentIntervention.swift in Sources */,
 				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
-				6BEA65D02105CC5A0072840F /* UIApplicationExtensions.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				043D4498214A9DBE00B5FD59 /* CustomPickerView.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
@@ -460,12 +476,12 @@
 				044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				040EF678215E11C80006C2C9 /* KeychainService.swift in Sources */,
-				04139CB021411D6F0067DEA9 /* LocalizationExtension.swift in Sources */,
 				6B11EEE12139635400E2DEC4 /* EquipmentCell.swift in Sources */,
 				040EF67A215E11E30006C2C9 /* CropView.swift in Sources */,
 				043D4492214A9CFB00B5FD59 /* AddHarvest.swift in Sources */,
 				0413139A213FFC3E005437F0 /* Decodables.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
+				0480CA5621650DDB0039FCB9 /* String+FloatValue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "select_crops".localized
+    titleLabel.text = "selecting_crops".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
     titleLabel.textColor = AppColor.TextColors.White
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var selectedCropsLabel: UILabel = {
     let selectedCropsLabel = UILabel(frame: CGRect.zero)
-    selectedCropsLabel.text = "no_selection".localized
+    selectedCropsLabel.text = "no_crop_selected".localized
     selectedCropsLabel.font = UIFont.boldSystemFont(ofSize: 17)
     selectedCropsLabel.textColor = AppColor.TextColors.White
     selectedCropsLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   public var validateButton: UIButton = {
     let validateButton = UIButton(frame: CGRect.zero)
-    validateButton.setTitle("validate".localized, for: .normal)
+    validateButton.setTitle("validate".localized.uppercased(), for: .normal)
     validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     validateButton.backgroundColor = UIColor.white
@@ -416,11 +416,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   private func updateSelectedCropsLabel() {
     if cropsCount == 0 {
-      selectedCropsLabel.text = "no_selection".localized
-    } else if cropsCount == 1 {
-      selectedCropsLabel.text = String(format: "crop_size".localized, totalSurfaceArea)
+      selectedCropsLabel.text = "no_crop_selected".localized
     } else {
-      selectedCropsLabel.text = String(format: "crops_size".localized, cropsCount, totalSurfaceArea)
+      let cropString = cropsCount < 2 ? "crop".localized : "crops".localized
+
+      selectedCropsLabel.text = String(format: cropString, cropsCount) + String(format: " • %.1f ha", totalSurfaceArea)
     }
   }
 }

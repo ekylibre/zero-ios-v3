@@ -26,9 +26,12 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+    super.moveViewWhenKeyboardAppears()
+
     tfUsername.delegate = self
     tfPassword.delegate = self
-    textView.text = "appli_description".localized
+    textView.text = "welcome_text".localized
     forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
     forgottenPassword.underline()
 
@@ -53,16 +56,33 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
       } else {
         let alert = UIAlertController(
-          title: "please_try_again".localized,
-          message: "unknown_username_or_incorrect_password".localized,
+          title: nil,
+          message: "login_failure".localized,
           preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+    }
+  }
+
+  // MARK: - Text Field Delegate
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    view.frame.origin.y = 0
+    textField.resignFirstResponder()
+    switch textField {
+    case tfUsername:
+      tfPassword.becomeFirstResponder()
+      return false
+    case tfPassword:
+      checkAuthentification(sender: self)
+      return false
+    default:
+      return false
     }
   }
 
@@ -86,7 +106,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
   }
 
-  @IBAction func checkAuthentification(sender: UIButton) {
+  @IBAction func checkAuthentification(sender: Any) {
     buttonIsPressed = true
     authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
     authentifyUser()

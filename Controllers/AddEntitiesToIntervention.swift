@@ -139,12 +139,12 @@ extension AddInterventionViewController: DoerCellDelegate {
   func removeDoerCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
-      message: String(format: "are_you_sure_you_want_to_delete".localized, "person".localized),
+      message: "delete_person_prompt".localized,
       preferredStyle: .alert
     )
 
-    alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       let row = self.doers[indexPath.row].value(forKey: "row") as! Int
       let indexTab = NSIndexPath(row: row, section: 0)
       let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell

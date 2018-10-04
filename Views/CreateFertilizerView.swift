@@ -14,7 +14,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "fertilizer_creation".localized
+    titleLabel.text = "create_ferti_title".localized
     titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
@@ -57,13 +57,15 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
   }()
 
   lazy var natureAlertController: UIAlertController = {
-    let natureAlertController = UIAlertController(title: "choose_nature".localized, message: nil, preferredStyle: .actionSheet)
+    let natureAlertController = UIAlertController(title: "chose_nature".localized,
+                                                  message: nil,
+                                                  preferredStyle: .actionSheet)
     return natureAlertController
   }()
 
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("cancel".localized, for: .normal)
+    cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +74,7 @@ class CreateFertilizerView: UIView, UITextFieldDelegate {
 
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("create".localized, for: .normal)
+    createButton.setTitle("create".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
