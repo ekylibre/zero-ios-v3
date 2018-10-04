@@ -480,7 +480,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="0UA-b8-3zL"/>
                                                         </constraints>
-                                                        <state key="normal" title="straw">
+                                                        <state key="normal" title="Straw">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
