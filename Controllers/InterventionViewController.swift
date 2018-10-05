@@ -165,46 +165,19 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
-    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
-
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(intervention)
     let workingPeriod = fetchWorkingPeriod(intervention)
+    let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+    let stateColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.yellow, 2: UIColor.green]
 
     cell.typeLabel.text = intervention.type?.localized
-    switch intervention.type {
-    case InterventionType.Care.rawValue:
-      cell.typeImageView.image = UIImage(named: "care")!
-    case InterventionType.CropProtection.rawValue:
-      cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case InterventionType.Fertilization.rawValue:
-      cell.typeImageView.image = UIImage(named: "fertilization")!
-    case InterventionType.GroundWork.rawValue:
-      cell.typeImageView.image = UIImage(named: "ground-work")!
-    case InterventionType.Harvest.rawValue:
-      cell.typeImageView.image = UIImage(named: "harvest")!
-    case InterventionType.Implantation.rawValue:
-      cell.typeImageView.image = UIImage(named: "implantation")!
-    case InterventionType.Irrigation.rawValue:
-      cell.typeImageView.image = UIImage(named: "irrigation")!
-    default:
-      cell.typeLabel.text = "error".localized
-    }
-
-    switch intervention.status {
-    case InterventionState.Created.rawValue:
-      cell.syncImage.backgroundColor = UIColor.orange
-    case InterventionState.Synced.rawValue:
-      cell.syncImage.backgroundColor = UIColor.yellow
-    case InterventionState.Validated.rawValue:
-      cell.syncImage.backgroundColor = UIColor.green
-    default:
-      fatalError("InterventionState enum: case no found")
-    }
-
+    cell.typeImageView.image = UIImage(named: assetName)
+    cell.syncImage.backgroundColor = stateColors[intervention.status]
     cell.cropsLabel.text = updateCropsLabel(targets!)
     cell.infosLabel.text = intervention.infos
     cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
