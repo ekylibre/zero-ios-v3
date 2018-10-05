@@ -303,7 +303,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func showList() {
-    self.performSegue(withIdentifier: "showSpecieList", sender: self)
+    self.performSegue(withIdentifier: "showSpecies", sender: self)
   }
 
   @objc func showAlert() {
@@ -666,12 +666,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
     switch segue.identifier {
-    case "showSpecieList":
+    case "showSpecies":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.rawStrings = loadSpecies()
       destVC.tag = 0
-    case "showMaterialUnitList":
+    case "showMaterialUnits":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",

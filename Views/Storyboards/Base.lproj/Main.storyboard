@@ -1856,8 +1856,8 @@
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecieList" id="uas-Qa-jvK"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnitList" id="nwb-tQ-9Vq"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecies" id="uas-Qa-jvK"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnits" id="nwb-tQ-9Vq"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showEquipmentTypes" id="EKH-vj-NkS"/>
                     </connections>
                 </viewController>
@@ -2106,6 +2106,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="a8t-Pd-Dxa"/>
-        <segue reference="EKH-vj-NkS"/>
+        <segue reference="nwb-tQ-9Vq"/>
     </inferredMetricsTieBreakers>
 </document>

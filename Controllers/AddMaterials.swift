@@ -51,6 +51,6 @@ extension AddInterventionViewController {
   }
 
   @objc private func showUnits() {
-    self.performSegue(withIdentifier: "showMaterialUnitList", sender: self)
+    self.performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
 }
