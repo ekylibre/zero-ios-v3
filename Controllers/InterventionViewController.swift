@@ -23,7 +23,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
-  var interventions = [NSManagedObject]() {
+  var interventions = [Interventions]() {
     didSet {
       tableView.reloadData()
     }
@@ -168,11 +168,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     let intervention = interventions[indexPath.row]
-    let targets = fetchTargets(of: intervention)
-    let workingPeriod = fetchWorkingPeriod(of: intervention)
+    let targets = fetchTargets(intervention)
+    let workingPeriod = fetchWorkingPeriod(intervention)
 
-    cell.typeLabel.text = intervention.value(forKey: "type") as? String
-    switch intervention.value(forKey: "type") as! String {
+    cell.typeLabel.text = intervention.type?.localized
+    switch intervention.type {
     case InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
     case InterventionType.CropProtection.rawValue:
@@ -191,7 +191,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.typeLabel.text = "error".localized
     }
 
-    switch intervention.value(forKey: "status") as! Int16 {
+    switch intervention.status {
     case InterventionState.Created.rawValue:
       cell.syncImage.backgroundColor = UIColor.orange
     case InterventionState.Synced.rawValue:
@@ -202,9 +202,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       fatalError("InterventionState enum: case no found")
     }
 
-    cell.cropsLabel.text = updateCropsLabel(targets)
-    cell.infosLabel.text = intervention.value(forKey: "infos") as? String
-    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKey: "executionDate") as! Date)
+    cell.cropsLabel.text = updateCropsLabel(targets!)
+    cell.infosLabel.text = intervention.infos
+    cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
@@ -214,46 +214,42 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
+  func fetchTargets(_ intervention: Interventions) -> [Targets]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [NSManagedObject]()
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Targets")
+    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
     let predicate = NSPredicate(format: "interventions == %@", intervention)
     targetsFetchRequest.predicate = predicate
 
-    var targets: [NSManagedObject]!
-
     do {
-      targets = try managedContext.fetch(targetsFetchRequest)
+      let targets = try managedContext.fetch(targetsFetchRequest)
+      return targets
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    return targets
+    return nil
   }
 
-  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
+  func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return NSManagedObject()
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
+    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriods> = WorkingPeriods.fetchRequest()
     let predicate = NSPredicate(format: "interventions == %@", intervention)
     workingPeriodsFetchRequest.predicate = predicate
 
-    var workingPeriods: [NSManagedObject]!
-
     do {
-      workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+      return workingPeriods.first
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    return workingPeriods.first!
+    return nil
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
@@ -296,16 +292,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-    let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
-    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
+    let intervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
 
-    intervention.setValue(type, forKey: "type")
-    intervention.setValue(infos, forKey: "infos")
-    intervention.setValue(status, forKey: "status")
-    workingPeriod.setValue(intervention, forKey: "interventions")
-    workingPeriod.setValue(executionDate, forKey: "executionDate")
+    intervention.type = type
+    intervention.infos = infos
+    intervention.status = status
+    workingPeriod.interventions = intervention
+    workingPeriod.executionDate = executionDate
 
     do {
       try managedContext.save()
@@ -372,8 +366,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for intervention in interventions {
-      if intervention.value(forKey: "status") as? Int16 == InterventionState.Created.rawValue {
-        intervention.setValue(InterventionState.Synced.rawValue, forKey: "status")
+      if intervention.status == InterventionState.Created.rawValue {
+        intervention.status = InterventionState.Synced.rawValue
       }
     }
 
