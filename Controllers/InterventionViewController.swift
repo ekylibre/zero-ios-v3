@@ -84,7 +84,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let dateString = dateFormatter.string(from: date)
 
       if calendar.isDateInToday(date) {
-        synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
+        synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
       } else {
         synchroLabel.text = "last_synchronization".localized + dateString
       }
@@ -328,7 +328,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
+    synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
     UserDefaults.standard.set(date, forKey: "lastSyncDate")
     UserDefaults.standard.synchronize()
 
