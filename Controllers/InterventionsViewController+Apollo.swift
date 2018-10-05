@@ -48,12 +48,12 @@ extension InterventionViewController {
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
       if UserDefaults.isFirstLaunch() {
         self.saveFarms(farms)
-        self.saveCrops(crops: farms.first!.crops!)
-        self.saveArticles(articles: farms.first!.articles!)
+        self.saveCrops(crops: farms.first!.crops)
+        self.saveArticles(articles: farms.first!.articles)
       } else {
         self.registerFarmID()
-        self.checkCropsData(crops: farms.first!.crops!)
-        self.checkArticlesData(articles: farms.first!.articles!)
+        self.checkCropsData(crops: farms.first!.crops)
+        self.checkArticlesData(articles: farms.first!.articles)
       }
     }
   }
