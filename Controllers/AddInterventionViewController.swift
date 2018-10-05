@@ -357,7 +357,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         switch selectedInput {
         case is InterventionSeeds:
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
-          cell.inputName.text = seed.specie
+          cell.inputName.text = seed.specie?.localized
           cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case is InterventionPhytosanitaries:
@@ -367,8 +367,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
-          cell.inputName.text = fertilizer.name
-          cell.inputLabel.text = fertilizer.nature
+          cell.inputName.text = fertilizer.name?.localized
+          cell.inputLabel.text = fertilizer.nature?.localized
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")

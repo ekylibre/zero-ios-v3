@@ -357,7 +357,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       if $0.registered != $1.registered {
         return !$0.registered && $1.registered
       } else {
-        return $0.name! < $1.name!
+        return $0.name!.localized < $1.name!.localized
       }
     }
   }
@@ -405,7 +405,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       seed.registered = true
       seed.ekyID = Int32(registeredSeed.id)
-      seed.specie = registeredSeed.specie
+      seed.specie = registeredSeed.specie.uppercased()
       seed.variety = registeredSeed.variety
       seed.unit = "kg/ha"
       seed.used = false
@@ -461,7 +461,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       fertilizer.registered = true
       fertilizer.ekyID = Int32(registeredFertilizer.id)
-      fertilizer.name = registeredFertilizer.name
+      fertilizer.name = registeredFertilizer.name.uppercased()
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety
       fertilizer.derivativeOf = registeredFertilizer.derivativeOf
