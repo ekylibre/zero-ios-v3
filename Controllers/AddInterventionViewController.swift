@@ -719,9 +719,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func writeValueBack(tag: Int, value: String) {
     switch tag {
     case 0:
-      inputsView.seedView.specieButton.setTitle(value, for: .normal)
+      inputsView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
-      materialsView.creationView.unitButton.setTitle(value, for: .normal)
+      materialsView.creationView.unitButton.setTitle(value.localized, for: .normal)
     case 2:
       selectedEquipmentType = value
       equipmentTypeButton.setTitle(selectedEquipmentType.localized, for: .normal)
