@@ -703,18 +703,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showSpecieList":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.cellsStrings = loadSpecies()
+      destVC.rawStrings = loadSpecies()
       destVC.tag = 0
     case "showMaterialUnitList":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.cellsStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                              "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
       destVC.tag = 1
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.cellsStrings = loadEquipmentTypes()
+      destVC.rawStrings = loadEquipmentTypes()
       destVC.tag = 2
     default:
       guard let button = sender as? UIButton, button == saveInterventionButton else {
