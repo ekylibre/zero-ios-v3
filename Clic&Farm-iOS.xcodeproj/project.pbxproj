@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		040D4AB4215BB227001BEC24 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D4AB3215BB226001BEC24 /* AddWeatherToIntervention.swift */; };
+		0410A5FC2166192700529DA1 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 0410A5FB2166192700529DA1 /* schema.json */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412B7882126B62500976DB6 /* AddEntitiesToIntervention.swift */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
@@ -50,7 +51,6 @@
 		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
-		6B4CA8A1214F9B560052073D /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89E214F9B560052073D /* schema.json */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6B63806D210EFB47004DE5CC /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
@@ -78,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		040D4AB3215BB226001BEC24 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
+		0410A5FB2166192700529DA1 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		0411C4CC214FC30B005B6C01 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
@@ -125,7 +126,6 @@
 		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
-		6B4CA89E214F9B560052073D /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B63806C210EFB47004DE5CC /* AddInterventionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 				04149EC321510C7F007B5441 /* API.swift */,
 				6B4CA89D214F9B560052073D /* mutations.graphql */,
 				6B4CA89C214F9B560052073D /* queries.graphql */,
-				6B4CA89E214F9B560052073D /* schema.json */,
+				0410A5FB2166192700529DA1 /* schema.json */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -451,9 +451,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				041313B321401483005437F0 /* Localizable.strings in Resources */,
+				0410A5FC2166192700529DA1 /* schema.json in Resources */,
 				6BA37141213963230086DF9B /* Assets.xcassets in Resources */,
 				6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */,
-				6B4CA8A1214F9B560052073D /* schema.json in Resources */,
 				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
 				0480CA4D216508AB0039FCB9 /* Main.storyboard in Resources */,
 				6B4CA89F214F9B560052073D /* queries.graphql in Resources */,

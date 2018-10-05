@@ -32,7 +32,7 @@ class ApolloQuery {
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
       if UserDefaults.isFirstLaunch() {
         self.saveFarms(farms)
-        self.saveCrops(crops: farms.first!.crops!)
+        self.saveCrops(crops: farms.first!.crops)
         self.loadEquipments()
         self.loadStorage()
         self.loadPeople { (success) -> Void in
@@ -46,7 +46,7 @@ class ApolloQuery {
         }
       } else {
         self.registerFarmID()
-        self.checkCropsData(crops: farms.first!.crops!)
+        self.checkCropsData(crops: farms.first!.crops)
         self.loadEquipments()
         self.loadStorage()
         self.loadPeople { (success) -> Void in
@@ -301,7 +301,7 @@ class ApolloQuery {
       guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
 
       for farm in farms {
-        for equipment in farm.equipments! {
+        for equipment in farm.equipments {
           if self.checkIfNewEquipment(equipmentID: (equipment.id as NSString).intValue) {
             self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
           }
@@ -369,7 +369,7 @@ class ApolloQuery {
       }
 
       for farm in farms {
-        for person in farm.people! {
+        for person in farm.people {
           if self.checkIfNewPerson(personID: (person.id as NSString).intValue) {
             self.savePeople(fetchedPerson: person, farmID: farm.id)
           }
@@ -431,7 +431,7 @@ class ApolloQuery {
       guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
 
       for farm in farms {
-        for storage in farm.storages! {
+        for storage in farm.storages {
           if self.checkifNewStorage(storageID: (storage.id as NSString).intValue) {
             self.saveStorage(fetchedStorage: storage, farmID: farm.id)
           }
@@ -935,7 +935,7 @@ class ApolloQuery {
       }
 
       for farm in farms {
-        for intervention in farm.interventions! {
+        for intervention in farm.interventions {
           if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
           }
@@ -1165,14 +1165,18 @@ class ApolloQuery {
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
+    let group = DispatchGroup()
     let _ = apollo?.clearCache()
-    apollo?.perform(mutation: mutation) { (result, error) in
+
+    group.enter()
+    apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if error != nil || result?.data?.createIntervention?.errors != nil {
-        print("Error: \(String(describing: error)), result error: \(String(describing: result?.data?.createIntervention?.errors))")
       } else {
         id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
       }
-    }
+      group.leave()
+    })
+    group.wait()
     return id
   }
 }
