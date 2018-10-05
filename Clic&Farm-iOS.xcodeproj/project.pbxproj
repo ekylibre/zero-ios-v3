@@ -16,6 +16,7 @@
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		0417A58221538B5B009529D5 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65CF2105CC590072840F /* UIApplication+StatusBar.swift */; };
+		0418AE3A2167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0418AE392167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework */; };
 		041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 		044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D44213816B9001A5D3D /* ListTableViewController.swift */; };
@@ -80,6 +81,7 @@
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		041855772142A20F0077A715 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
+		0418AE392167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
 		041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0411295A2110937300AE884D /* OAuth2.framework in Frameworks */,
+				0418AE3A2167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +167,7 @@
 		047B57CB2108605400C48F68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0418AE392167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework */,
 				041129592110937300AE884D /* OAuth2.framework */,
 			);
 			name = Frameworks;
@@ -418,6 +422,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework",
 			);
 			outputPaths = (
 			);
