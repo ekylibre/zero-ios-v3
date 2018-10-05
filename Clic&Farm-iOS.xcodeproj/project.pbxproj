@@ -55,7 +55,6 @@
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 		6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DC2105CD820072840F /* InterventionViewController.swift */; };
 		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
-		6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E12105CD8A0072840F /* KeychainService.swift */; };
 		6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65EA2105CD900072840F /* RoundedButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -124,7 +123,6 @@
 		6BEA65CF2105CC590072840F /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
 		6BEA65DC2105CD820072840F /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
-		6BEA65E12105CD8A0072840F /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		6BEA65EA2105CD900072840F /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,7 +214,7 @@
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				6B81CD572166597D00D2DCF7 /* InterventionState.swift */,
 				6BA3FEDB216653490070DA35 /* InterventionType.swift */,
-				6BEA65E12105CD8A0072840F /* KeychainService.swift */,
+				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,7 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */,
-				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -460,7 +457,6 @@
 				6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				0410EF0621550C1C003DA2D1 /* HandleKeyboard.swift in Sources */,
-				6BEA65E62105CD8B0072840F /* KeychainService.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
 				6BA5D77E2149349A0054F969 /* LoginScreen.swift in Sources */,
 				6BA3FEDC216653490070DA35 /* InterventionType.swift in Sources */,
