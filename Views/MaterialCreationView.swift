@@ -15,7 +15,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "create_material_title".localized
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
   }()
@@ -38,7 +38,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
 
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
-    unitLabel.text = "unit".localized
+    unitLabel.text = "chose_unit".localized
     unitLabel.font = UIFont.systemFont(ofSize: 15)
     unitLabel.textColor = AppColor.TextColors.DarkGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false

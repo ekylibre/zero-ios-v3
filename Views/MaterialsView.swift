@@ -242,7 +242,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
 
     do {
       materials = try managedContext.fetch(materialsFetchRequest)
-      materials = materials.sorted(by: { $0.name! < $1.name! })
+      materials = materials.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased() })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -283,7 +283,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     createMaterial(name: creationView.nameTextField.text!, unit: creationView.unitButton.titleLabel!.text!)
     creationView.nameTextField.text = ""
     creationView.unitButton.setTitle("meter".localized, for: .normal)
-    materials = materials.sorted(by: { $0.name! < $1.name! })
+    materials = materials.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased() })
     tableView.reloadData()
     dimView.isHidden = true
   }
