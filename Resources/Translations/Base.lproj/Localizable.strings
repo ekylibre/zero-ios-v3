@@ -432,3 +432,6 @@
 "today_last_synchronization" = "Last synchronization %02d:%02d";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
+
+"in_field_re_entry_delay" = "In field reentry delay";
+"maa_number" = "MAA number";

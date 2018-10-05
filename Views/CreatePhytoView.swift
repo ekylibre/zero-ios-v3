@@ -75,7 +75,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   lazy var reentryDelayTextField: UITextField = {
     let reentryDelayTextField = UITextField(frame: CGRect.zero)
     reentryDelayTextField.keyboardType = .numberPad
-    reentryDelayTextField.placeholder = "re_entry_delay".localized
+    reentryDelayTextField.placeholder = "in_field_re_entry_delay".localized
     reentryDelayTextField.autocorrectionType = .no
     reentryDelayTextField.delegate = self
     reentryDelayTextField.tag = 13

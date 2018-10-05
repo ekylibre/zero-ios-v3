@@ -43,7 +43,7 @@ class PhytoCell: UITableViewCell {
 
   lazy var reentryLabel: UILabel = {
     let reentryLabel = UILabel(frame: CGRect.zero)
-    reentryLabel.text = "re_entry_delay".localized
+    reentryLabel.text = "in_field_re_entry_delay".localized
     reentryLabel.font = UIFont.italicSystemFont(ofSize: 14)
     reentryLabel.textColor = AppColor.TextColors.DarkGray
     reentryLabel.translatesAutoresizingMaskIntoConstraints = false

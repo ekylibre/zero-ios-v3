@@ -432,3 +432,6 @@
 "today_last_synchronization" = "Dernière synchronisation %02d:%02d";
 "last_synchronization" = "Dernière synchronisation %@";
 "no_synchronization_listed" = "Aucune synchonisation répertoriée";
+
+"in_field_re_entry_delay" = "Délai de réentrée";
+"maa_number" = "N° AMM";
