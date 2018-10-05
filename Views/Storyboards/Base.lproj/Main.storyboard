@@ -750,7 +750,7 @@
                                                         </prototypes>
                                                     </tableView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5AO-Jj-0ZP">
-                                                        <rect key="frame" x="132.5" y="20" width="45" height="30"/>
+                                                        <rect key="frame" x="142.5" y="20" width="45" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <state key="normal" title="+ ADD">
                                                             <color key="titleColor" red="0.54117647058823526" green="0.75686274509803919" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -771,7 +771,7 @@
                                                         </connections>
                                                     </button>
                                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB9-6U-iCz">
-                                                        <rect key="frame" x="132.5" y="25" width="0.0" height="0.0"/>
+                                                        <rect key="frame" x="142.5" y="25" width="0.0" height="0.0"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1504,40 +1504,6 @@
                                     <constraint firstItem="01a-h3-lM4" firstAttribute="top" secondItem="3af-DS-yQg" secondAttribute="bottom" id="zv1-1E-L37"/>
                                 </constraints>
                             </view>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lyS-jh-cAc">
-                                <rect key="frame" x="35" y="329" width="305" height="338"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="338" id="I9I-Oy-wWh"/>
-                                </constraints>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EquipmentTypesCell" id="Kqe-Bl-Q7I" customClass="EquipmentTypesCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="305" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kqe-Bl-Q7I" id="5v3-oG-qco">
-                                            <rect key="frame" x="0.0" y="0.0" width="305" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUk-5i-pGA">
-                                                    <rect key="frame" x="21" y="8" width="0.0" height="28"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="uUk-5i-pGA" firstAttribute="top" secondItem="5v3-oG-qco" secondAttribute="top" constant="8" id="NGE-gP-XTi"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uUk-5i-pGA" secondAttribute="trailingMargin" id="ank-oZ-Ae7"/>
-                                                <constraint firstItem="uUk-5i-pGA" firstAttribute="leading" secondItem="5v3-oG-qco" secondAttribute="leadingMargin" constant="6" id="frf-L0-p5k"/>
-                                                <constraint firstAttribute="bottom" secondItem="uUk-5i-pGA" secondAttribute="bottom" constant="8" id="qLx-Ot-xEJ"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="nameLabel" destination="uUk-5i-pGA" id="Cnb-ya-Qu2"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkl-cP-TQz" userLabel="Select Entities View">
                                 <rect key="frame" x="20" y="40" width="335" height="569"/>
                                 <subviews>
@@ -1789,12 +1755,10 @@
                         <constraints>
                             <constraint firstItem="mbF-nF-QUt" firstAttribute="top" secondItem="TZH-N4-7jc" secondAttribute="top" id="38y-FJ-yfu"/>
                             <constraint firstItem="fGp-gL-8mm" firstAttribute="top" secondItem="q3s-Gt-LrC" secondAttribute="bottom" id="4Jw-z0-aFc"/>
-                            <constraint firstItem="lyS-jh-cAc" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" constant="35" id="5Cy-EY-FTN"/>
                             <constraint firstItem="vkl-cP-TQz" firstAttribute="top" secondItem="TZH-N4-7jc" secondAttribute="top" constant="20" id="8hP-q5-ldF"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="top" secondItem="k1P-VF-83v" secondAttribute="bottom" constant="14" id="AEI-tD-sXa"/>
                             <constraint firstItem="k1P-VF-83v" firstAttribute="centerX" secondItem="fGp-gL-8mm" secondAttribute="centerX" id="OIj-dv-Hgq"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="top" secondItem="96m-Su-72M" secondAttribute="bottom" id="PJY-kn-gNg"/>
-                            <constraint firstItem="TZH-N4-7jc" firstAttribute="trailing" secondItem="lyS-jh-cAc" secondAttribute="trailing" constant="35" id="PRs-z2-dBu"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="top" secondItem="vkl-cP-TQz" secondAttribute="bottom" constant="14" id="QJc-bB-KUw"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="leading" secondItem="DUW-oV-g3X" secondAttribute="leading" id="Qac-Pa-0rs"/>
                             <constraint firstItem="mbF-nF-QUt" firstAttribute="trailing" secondItem="TZH-N4-7jc" secondAttribute="trailing" id="QeT-Hw-9V5"/>
@@ -1814,7 +1778,6 @@
                             <constraint firstItem="vkl-cP-TQz" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" constant="20" id="ghT-5V-i9b"/>
                             <constraint firstItem="TZH-N4-7jc" firstAttribute="bottom" secondItem="96m-Su-72M" secondAttribute="bottom" id="jo2-PX-ujF"/>
                             <constraint firstItem="q3s-Gt-LrC" firstAttribute="trailing" secondItem="TZH-N4-7jc" secondAttribute="trailing" id="lNf-HW-d1Q"/>
-                            <constraint firstItem="lyS-jh-cAc" firstAttribute="bottom" secondItem="dVv-q0-QD8" secondAttribute="bottom" id="lpN-Vo-Y9i"/>
                             <constraint firstItem="fGp-gL-8mm" firstAttribute="trailing" secondItem="q3s-Gt-LrC" secondAttribute="trailing" id="ye5-oW-ObI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TZH-N4-7jc"/>
@@ -1855,7 +1818,6 @@
                         <outlet property="equipmentTableViewHeightConstraint" destination="fXC-sa-Rfz" id="ReC-cv-NBL"/>
                         <outlet property="equipmentType" destination="Tur-MK-R4c" id="0en-nU-XoV"/>
                         <outlet property="equipmentTypeButton" destination="A58-eW-7tB" id="teL-bG-Ea9"/>
-                        <outlet property="equipmentTypeTableView" destination="lyS-jh-cAc" id="4kk-dU-5PT"/>
                         <outlet property="equipmentsTableView" destination="2QD-fJ-aXc" id="ulH-kH-taH"/>
                         <outlet property="fewClouds" destination="4EX-oh-FEb" id="c0B-CS-QRO"/>
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
@@ -2143,8 +2105,7 @@
         <image name="thunderstorm" width="285" height="285"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vxv-f7-ZrT"/>
-        <segue reference="EKH-vj-NkS"/>
         <segue reference="a8t-Pd-Dxa"/>
+        <segue reference="EKH-vj-NkS"/>
     </inferredMetricsTieBreakers>
 </document>

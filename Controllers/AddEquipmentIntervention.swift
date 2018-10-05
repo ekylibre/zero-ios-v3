@@ -35,18 +35,19 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   }
 
   func defineEquipmentTypes() -> [String] {
-    var types = loadEquipmentTypes()
-    var translatedTypes = [String]()
+    let types = loadEquipmentTypes()
+    var localizedTypes = [String]()
 
-    types = types.sorted()
     for type in types {
-       translatedTypes.append(type.localized)
+      localizedTypes.append(type.localized)
     }
-    return translatedTypes
+    return localizedTypes.sorted()
   }
 
   func defineEquipmentImage(equipmentName: String) -> UIImage? {
-    switch equipmentName {
+    let equipmentTypes = loadEquipmentTypes()
+
+    switch equipmentName.uppercased() {
     case equipmentTypes[0]:
       return #imageLiteral(resourceName: "airplanter")
     case equipmentTypes[1]:
@@ -207,23 +208,40 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
     createEquipmentsView.isHidden = true
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEquipments()
     equipmentsTableView.reloadData()
   }
+
+  func fetchEquipments() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+
+    do {
+      equipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      searchedEquipments = equipments
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
 
   @IBAction func createNewEquipement(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
 
-    equipment.setValue(equipmentName.text, forKeyPath: "name")
-    equipment.setValue(equipmentNumber.text, forKeyPath: "number")
-    equipment.setValue(selectedEquipmentType, forKeyPath: "type")
-    equipment.setValue(UUID(), forKey: "uuid")
-    equipment.setValue(0, forKey: "row")
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipment = Equipments(context: managedContext)
+
+    equipment.name = equipmentName.text
+    equipment.number = equipmentNumber.text
+    equipment.type = selectedEquipmentType
+
     do {
       try managedContext.save()
       equipments.append(equipment)
@@ -242,12 +260,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
-      let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.White
       self.selectedEquipments.remove(at: indexPath.row)
       self.selectedEquipmentsTableView.reloadData()
 

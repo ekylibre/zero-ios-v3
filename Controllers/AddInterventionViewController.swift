@@ -49,7 +49,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var addEquipmentButton: UIButton!
   @IBOutlet weak var equipmentNumberLabel: UILabel!
   @IBOutlet weak var searchEquipment: UISearchBar!
-  @IBOutlet weak var equipmentTypeTableView: UITableView!
   @IBOutlet weak var equipmentTypeButton: UIButton!
   @IBOutlet weak var createEquipment: UIView!
   @IBOutlet weak var createEntity: UIView!
@@ -95,7 +94,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   var newIntervention: Interventions!
   var interventionType: String!
-  var equipments = [NSManagedObject]()
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
@@ -104,9 +102,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedMaterials = [InterventionMaterials]()
   var interventionEquipments = [NSManagedObject]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
-  var selectedEquipments = [NSManagedObject]()
-  var searchedEquipments = [NSManagedObject]()
-  var equipmentTypes: [String]!
+  var equipments = [Equipments]()
+  var selectedEquipments = [Equipments]()
+  var searchedEquipments = [Equipments]()
   var sortedEquipmentTypes: [String]!
   var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
@@ -174,12 +172,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
-    equipmentTypes = defineEquipmentTypes()
-    sortedEquipmentTypes = equipmentTypes.sorted()
-    selectedEquipmentType = sortedEquipmentTypes[0]
-    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+    let equipmentTypes = defineEquipmentTypes()
+    equipmentTypeButton.setTitle(equipmentTypes[0], for: .normal)
 
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEquipments()
     fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
 
     initUnitMeasurePickerView()
@@ -212,10 +208,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     searchEntity.delegate = self
     searchEntity.autocapitalizationType = .none
-
-    equipmentTypeTableView.dataSource = self
-    equipmentTypeTableView.delegate = self
-    equipmentTypeTableView.bounces = false
 
     equipmentsTableViewTopAnchor = equipmentsTableView.topAnchor.constraint(equalTo: searchEquipment.bottomAnchor, constant: 40.5)
     NSLayoutConstraint.activate([equipmentsTableViewTopAnchor])
@@ -331,8 +323,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return searchedEquipments.count
     case selectedEquipmentsTableView:
       return selectedEquipments.count
-    case equipmentTypeTableView:
-      return equipmentTypes.count
     case entitiesTableView:
       return searchedEntities.count
     case doersTableView:
@@ -345,9 +335,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var equipment: NSManagedObject?
-    var selectedEquipment: NSManagedObject?
-    var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
 
@@ -386,28 +373,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
+      let equipment = searchedEquipments[indexPath.row]
 
-      equipment = searchedEquipments[indexPath.row]
-      cell.nameLabel.text = equipment?.value(forKey: "name") as? String
-      cell.typeLabel.text = equipment?.value(forKey: "type") as? String
-      cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
+      cell.nameLabel.text = equipment.name
+      cell.typeLabel.text = equipment.type?.localized
+      cell.typeImageView.image = defineEquipmentImage(equipmentName: equipment.type!)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
+      let selectedEquipment = selectedEquipments[indexPath.row]
 
-      selectedEquipment = selectedEquipments[indexPath.row]
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
-      cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
-      cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
-      return cell
-    case equipmentTypeTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
-
-      equipmentType = sortedEquipmentTypes[indexPath.row]
-      cell.nameLabel.text = equipmentType
+      cell.nameLabel.text = selectedEquipment.name
+      cell.typeLabel.text = selectedEquipment.type?.localized
+      cell.typeImageView.image = defineEquipmentImage(equipmentName: selectedEquipment.type!)
       return cell
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
@@ -446,19 +427,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case equipmentsTableView:
       let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
-      if cell.isAvaible {
         selectedEquipments.append(searchedEquipments[indexPath.row])
-        selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.LightGray
-      }
       closeEquipmentsSelectionView()
-    case equipmentTypeTableView:
-      selectedEquipmentType = sortedEquipmentTypes[indexPath.row]
-      equipmentTypeTableView.reloadData()
-      equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
-      equipmentTypeTableView.isHidden = true
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
@@ -610,24 +583,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(intervention: NSManagedObject) {
+  func createEquipments(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "InterventionEquipments", in: managedContext)!
-
     for selectedEquipment in selectedEquipments {
-      let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
-      let name = selectedEquipment.value(forKeyPath: "name") as! String
-      let type = selectedEquipment.value(forKey: "type") as! String
-      let equipmentUuid = selectedEquipment.value(forKey: "uuid") as! UUID
+      let interventionEquipment = InterventionEquipments(context: managedContext)
 
-      equipment.setValue(intervention, forKey: "interventions")
-      equipment.setValue(name, forKey: "name")
-      equipment.setValue(type, forKey: "type")
-      equipment.setValue(equipmentUuid, forKey: "equipment")
+      interventionEquipment.equipments = selectedEquipment
+      interventionEquipment.interventions = intervention
     }
 
     do {
@@ -754,7 +720,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case 1:
       materialsView.creationView.unitButton.setTitle(value, for: .normal)
     case 2:
-      equipmentTypeButton.setTitle(value, for: .normal)
+      selectedEquipmentType = value
+      equipmentTypeButton.setTitle(selectedEquipmentType.localized, for: .normal)
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }
