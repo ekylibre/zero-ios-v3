@@ -1081,7 +1081,7 @@
                                 <rect key="frame" x="0.0" y="563" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qD8-2V-ooz">
-                                        <rect key="frame" x="8" y="16" width="59" height="30"/>
+                                        <rect key="frame" x="8" y="15" width="59" height="30"/>
                                         <state key="normal" title="CANCEL">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -1090,8 +1090,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBB-VD-0Gd">
-                                        <rect key="frame" x="318" y="16" width="37" height="30"/>
+                                        <rect key="frame" x="298" y="15" width="57" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="JH9-WQ-vBB"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="SAVE">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -1102,8 +1106,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="mBB-VD-0Gd" firstAttribute="baseline" secondItem="qD8-2V-ooz" secondAttribute="baseline" id="Egl-vJ-BH0"/>
-                                    <constraint firstAttribute="bottom" secondItem="mBB-VD-0Gd" secondAttribute="bottom" constant="14" id="Hok-0A-frf"/>
+                                    <constraint firstItem="mBB-VD-0Gd" firstAttribute="centerY" secondItem="96m-Su-72M" secondAttribute="centerY" id="JrV-Zd-hSk"/>
+                                    <constraint firstItem="qD8-2V-ooz" firstAttribute="centerY" secondItem="mBB-VD-0Gd" secondAttribute="centerY" id="QvX-FA-yx5"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qD8-2V-ooz" secondAttribute="trailingMargin" id="TaP-9H-oRC"/>
                                     <constraint firstItem="mBB-VD-0Gd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="96m-Su-72M" secondAttribute="leading" constant="20" symbolic="YES" id="XmN-x9-4z0"/>
                                     <constraint firstAttribute="trailing" secondItem="mBB-VD-0Gd" secondAttribute="trailing" constant="20" id="bBj-3w-hYp"/>
