@@ -36,15 +36,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // Materials
   @IBOutlet var materialsGesture: UITapGestureRecognizer!
 
+  // Equipment
+  @IBOutlet weak var equipmentDarkLayer: UIView!
+  @IBOutlet weak var equipmentName: UITextField!
+  @IBOutlet weak var equipmentNumber: UITextField!
+  @IBOutlet weak var equipmentType: UILabel!
+  @IBOutlet weak var exitEquipment: UIButton!
+
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var selectEquipmentsView: UIView!
   @IBOutlet weak var createEquipmentsView: UIView!
-  @IBOutlet weak var equipmentDarkLayer: UIView!
-  @IBOutlet weak var equipmentName: UITextField!
-  @IBOutlet weak var equipmentNumber: UITextField!
-  @IBOutlet weak var equipmentType: UILabel!
   @IBOutlet weak var selectedEquipmentsTableView: UITableView!
   @IBOutlet weak var addEquipmentButton: UIButton!
   @IBOutlet weak var equipmentNumberLabel: UILabel!
@@ -431,7 +434,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.LightGray
-      closeEquipmentsSelectionView()
+      closeEquipmentsSelectionView(self)
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
@@ -442,7 +445,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.LightGray
       }
-      closeEntitiesSelectionView()
+      closeEntitiesSelectionView(self)
     default:
       print("Nothing to do")
     }

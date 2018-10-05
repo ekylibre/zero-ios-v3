@@ -30,6 +30,13 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     return headerView
   }()
 
+  lazy var exitButton: UIButton = {
+    let exitButton = UIButton(frame: CGRect.zero)
+    exitButton.setImage(UIImage(named: "exit"), for: .normal)
+    exitButton.translatesAutoresizingMaskIntoConstraints = false
+    return exitButton
+  }()
+
   lazy var searchBar: UISearchBar = {
     let searchBar = UISearchBar(frame: CGRect.zero)
     searchBar.searchBarStyle = .minimal
@@ -102,6 +109,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
     self.addSubview(headerView)
+    self.addSubview(exitButton)
     self.addSubview(searchBar)
     self.addSubview(createButton)
     self.addSubview(tableView)
@@ -121,6 +129,10 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
       headerView.heightAnchor.constraint(equalToConstant: 60),
       headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      exitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      exitButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+      exitButton.widthAnchor.constraint(equalToConstant: 20),
+      exitButton.heightAnchor.constraint(equalToConstant: 20),
       searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
       searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
       searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),

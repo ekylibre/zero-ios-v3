@@ -1263,13 +1263,26 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnG-O6-q8S" userLabel="Exit">
+                                                <rect key="frame" x="300" y="20" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="7jK-P7-afk"/>
+                                                    <constraint firstAttribute="height" constant="20" id="bCF-63-eJE"/>
+                                                </constraints>
+                                                <state key="normal" image="exit"/>
+                                                <connections>
+                                                    <action selector="closeEquipmentsSelectionView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="l4b-ep-HzB"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.50196078430000002" green="0.73333333329999995" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sPo-hC-Lsa" secondAttribute="trailing" constant="20" symbolic="YES" id="KiU-Mj-sYk"/>
+                                            <constraint firstItem="GnG-O6-q8S" firstAttribute="centerY" secondItem="FSb-Nn-Xag" secondAttribute="centerY" id="VPk-zf-EGb"/>
                                             <constraint firstItem="sPo-hC-Lsa" firstAttribute="leading" secondItem="FSb-Nn-Xag" secondAttribute="leading" constant="15" id="WpP-bT-uqr"/>
                                             <constraint firstItem="sPo-hC-Lsa" firstAttribute="top" secondItem="FSb-Nn-Xag" secondAttribute="top" constant="18.5" id="mTT-JQ-zSw"/>
                                             <constraint firstAttribute="height" constant="60" id="qWY-I7-hHg"/>
+                                            <constraint firstAttribute="trailing" secondItem="GnG-O6-q8S" secondAttribute="trailing" constant="15" id="znl-qZ-RIC"/>
                                         </constraints>
                                     </view>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="3af-DS-yQg">
@@ -1516,13 +1529,26 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sf1-oU-l8Q" userLabel="Exit">
+                                                <rect key="frame" x="300" y="20" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="16S-r6-9sA"/>
+                                                    <constraint firstAttribute="width" constant="20" id="7FX-ZR-uo8"/>
+                                                </constraints>
+                                                <state key="normal" image="exit"/>
+                                                <connections>
+                                                    <action selector="closeEntitiesSelectionView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="6vN-pE-nh2"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.50196078430000002" green="0.73333333329999995" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstItem="sf1-oU-l8Q" firstAttribute="centerY" secondItem="Txg-9h-yyT" secondAttribute="centerY" id="6W7-Tg-bHH"/>
                                             <constraint firstAttribute="height" constant="60" id="EtB-wY-56Z"/>
                                             <constraint firstItem="SrW-ud-Ehh" firstAttribute="top" secondItem="Txg-9h-yyT" secondAttribute="top" constant="18.5" id="JT4-Aw-XhS"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SrW-ud-Ehh" secondAttribute="trailing" constant="20" symbolic="YES" id="NG3-Ch-8OZ"/>
                                             <constraint firstItem="SrW-ud-Ehh" firstAttribute="leading" secondItem="Txg-9h-yyT" secondAttribute="leading" constant="15" id="Rd0-PK-4hp"/>
+                                            <constraint firstAttribute="trailing" secondItem="sf1-oU-l8Q" secondAttribute="trailing" constant="15" id="Twk-Mk-gty"/>
                                         </constraints>
                                     </view>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKn-en-9g6">
@@ -2095,6 +2121,7 @@
         <image name="clear-sky" width="285" height="285"/>
         <image name="clic&amp;farm-logo" width="1300" height="1150"/>
         <image name="delete" width="50" height="50"/>
+        <image name="exit" width="50" height="50"/>
         <image name="expand-less" width="24" height="24"/>
         <image name="expand-more" width="24" height="24"/>
         <image name="few-clouds" width="285" height="285"/>

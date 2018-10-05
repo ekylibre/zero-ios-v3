@@ -88,7 +88,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     })
   }
 
-  func closeEquipmentsSelectionView() {
+  @IBAction func closeEquipmentsSelectionView(_ sender: Any) {
     dimView.isHidden = true
     selectEquipmentsView.isHidden = true
 
