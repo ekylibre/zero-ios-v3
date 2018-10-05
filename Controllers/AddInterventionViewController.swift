@@ -41,7 +41,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentName: UITextField!
   @IBOutlet weak var equipmentNumber: UITextField!
   @IBOutlet weak var equipmentType: UILabel!
-  @IBOutlet weak var exitEquipment: UIButton!
+  @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
@@ -77,8 +78,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var inputsSeparatorView: UIView!
-  @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
@@ -176,7 +175,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationBar.setItems([navigationItem], animated: false)
 
     let equipmentTypes = defineEquipmentTypes()
-    equipmentTypeButton.setTitle(equipmentTypes[0], for: .normal)
+    equipmentTypeButton.setTitle(equipmentTypes[0].localized, for: .normal)
+    selectedEquipmentType = equipmentTypes[0]
 
     fetchEquipments()
     fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)

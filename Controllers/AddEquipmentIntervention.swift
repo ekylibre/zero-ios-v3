@@ -35,13 +35,14 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   }
 
   func defineEquipmentTypes() -> [String] {
-    let types = loadEquipmentTypes()
-    var localizedTypes = [String]()
+    var types = loadEquipmentTypes()
 
-    for type in types {
-      localizedTypes.append(type.localized)
-    }
-    return localizedTypes.sorted()
+    types = types.sorted(by: {
+      $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        <
+        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    })
+    return types
   }
 
   func defineEquipmentImage(equipmentName: String) -> UIImage? {
@@ -137,7 +138,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     do {
       equipments = try managedContext.fetch(equipmentsFetchRequest)
-
       searchedEquipments = equipments
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
