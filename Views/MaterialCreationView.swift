@@ -107,7 +107,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
       unitLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
       unitButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      unitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -60),
+      unitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
