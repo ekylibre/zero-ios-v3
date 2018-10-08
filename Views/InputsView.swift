@@ -431,6 +431,49 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
+  // MARK: - GraphQL
+
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
+      }
+    }
+    return id
+  }
+
+  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
+                                       specie: SpecieEnum(rawValue: specie), variety: variety)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
+      }
+    }
+    return id
+  }
+
   // MARK: - Actions
 
   @objc func changeSegment() {
@@ -493,47 +536,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
     sortInputs()
     dimView.isHidden = true
-  }
-
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
-
-    apollo.perform(mutation: mutation) { (result, error) in
-      if error != nil {
-        print(error!)
-      } else {
-        id = Int32(result!.data!.createArticle!.article!.id)!
-      }
-    }
-    return id
-  }
-
-  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
-                                       specie: SpecieEnum(rawValue: specie), variety: variety)
-
-    apollo.perform(mutation: mutation) { (result, error) in
-      if error != nil {
-        print(error!)
-      } else {
-        id = Int32(result!.data!.createArticle!.article!.id)!
-      }
-    }
-    return id
   }
 
   @objc func hideDimView() {
