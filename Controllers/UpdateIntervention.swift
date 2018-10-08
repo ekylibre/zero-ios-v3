@@ -20,7 +20,7 @@ extension AddInterventionViewController {
         doers.append(doer)
       }
       for target in currentIntervention?.targets?.allObjects as! [Targets] {
-        cropsView.selectedCrops.append(target.crops!)
+
       }
       for interventionSeed in currentIntervention?.interventionSeeds?.allObjects as! [InterventionSeeds] {
         selectedInputs.append(interventionSeed)

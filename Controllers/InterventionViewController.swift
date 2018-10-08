@@ -42,6 +42,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.hideKeyboardWhenTappedAround()
     super.moveViewWhenKeyboardAppears()
 
+    checkLocalData()
+
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
