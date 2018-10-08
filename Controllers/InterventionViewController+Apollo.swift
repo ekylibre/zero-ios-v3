@@ -1,5 +1,5 @@
 //
-//  InterventionsViewController+Apollo.swift
+//  InterventionViewController+Apollo.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 19/09/2018.
@@ -16,6 +16,9 @@ extension InterventionViewController {
     initializeApolloClient()
 
     UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    if !UserDefaults.standard.bool(forKey: "hasBeenLaunchedBefore") {
+      loadRegisteredInputs()
+    }
     queryFarms()
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
