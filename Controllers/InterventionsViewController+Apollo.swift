@@ -265,9 +265,10 @@ extension InterventionViewController {
 
       seed.registered = false
       seed.ekyID = Int32(article.id)!
-      seed.variety = article.variety
+      seed.variety = (article.variety == nil) ? article.name : article.variety
       seed.specie = article.species?.rawValue
       seed.unit = article.unit.rawValue
+      seed.used = false
     }
   }
 
@@ -291,6 +292,7 @@ extension InterventionViewController {
       phyto.ekyID = Int32(article.id)!
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
+      phyto.used = false
     }
   }
 
@@ -314,6 +316,7 @@ extension InterventionViewController {
       fertilizer.ekyID = Int32(article.id)!
       fertilizer.name = article.name
       fertilizer.unit = article.unit.rawValue
+      fertilizer.used = false
     }
   }
 

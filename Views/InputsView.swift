@@ -200,11 +200,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromSeeds = isSearching ? filteredInputs : seeds
       let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
       let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      let isRegistered = fromSeeds[indexPath.row].value(forKey: "registered") as! Bool
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
       cell.specieLabel.text = specie?.localized
+      cell.starImageView.isHidden = isRegistered
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
@@ -228,12 +230,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
       let name = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = name?.localized
       cell.natureLabel.text = nature?.localized
-      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
       cell.starImageView.isHidden = isRegistered
       return cell
     default:
