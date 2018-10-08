@@ -183,6 +183,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.typeLabel.sizeToFit()
     cell.cropsLabel.sizeToFit()
     cell.infosLabel.sizeToFit()
+    cell.selectionStyle = .none
 
     return cell
   }

@@ -346,6 +346,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
+      cell.selectionStyle = .none
       if selectedInputs.count > indexPath.row {
         let selectedInput = selectedInputs[indexPath.row]
         cell.cellDelegate = self
@@ -382,6 +383,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.nameLabel.text = equipment?.value(forKey: "name") as? String
       cell.typeLabel.text = equipment?.value(forKey: "type") as? String
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
+      cell.selectionStyle = .none
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -393,6 +395,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
       cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
+      cell.selectionStyle = .none
       return cell
     case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
@@ -407,6 +410,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.firstName.text = entity?.value(forKey: "firstName") as? String
       cell.lastName.text = entity?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
+      cell.selectionStyle = .none
       return cell
     case doersTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
@@ -420,6 +424,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
+      cell.selectionStyle = .none
       return cell
     default:
       fatalError("Switch error")
