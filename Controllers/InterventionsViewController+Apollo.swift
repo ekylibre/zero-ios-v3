@@ -390,21 +390,23 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let articleEntity = NSEntityDescription.entity(forEntityName: type, in: managedContext)!
     let article = NSManagedObject(entity: articleEntity, insertInto: managedContext)
+    let variety = (new.variety == nil) ? new.name : new.variety
 
     if new.type.rawValue != "MATERIAL" {
       article.setValue((new.referenceId != nil), forKey: "registered")
     }
     
     article.setValue(Int(new.id), forKey: "ekyID")
-    article.setValue(new.unit.rawValue.lowercased(), forKey: "unit")
+    article.setValue(new.unit.rawValue, forKey: "unit")
+    article.setValue(false, forKey: "used")
 
     if new.referenceId != nil {
       article.setValue(Int(new.referenceId!), forKey: "referenceID")
     }
 
     if new.type.rawValue == "SEED" {
-      article.setValue(new.species?.rawValue.lowercased(), forKey: "specie")
-      article.setValue(new.variety, forKey: "variety")
+      article.setValue(new.species?.rawValue, forKey: "specie")
+      article.setValue(variety, forKey: "variety")
     } else if new.type.rawValue == "CHEMICAL"{
       article.setValue(new.name, forKey: "name")
       article.setValue(new.marketingAuthorizationNumber, forKey: "maaID")

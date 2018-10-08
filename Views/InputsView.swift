@@ -100,10 +100,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
-    if !fetchInputs() {
-      loadRegisteredInputs()
-      tableView.reloadData()
-    }
+    fetchInputs()
   }
 
   private func setupView() {
@@ -315,9 +312,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Core Data
 
-  private func fetchInputs() -> Bool {
+  private func fetchInputs() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return false
+      return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -332,12 +329,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    if seeds.count < 1 || phytos.count < 1 || fertilizers.count < 1 {
-      return false
-    }
     sortInputs()
-    return true
   }
 
   private func sortInputs() {
@@ -362,6 +354,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         return $0.name! < $1.name!
       }
     }
+    tableView.reloadData()
   }
 
   private func loadRegisteredInputs() {
@@ -619,7 +612,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return
     }
     sortInputs()
-    tableView.reloadData()
     dimView.isHidden = true
   }
 
