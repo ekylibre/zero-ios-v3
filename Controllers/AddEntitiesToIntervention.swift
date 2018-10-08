@@ -124,15 +124,20 @@ extension AddInterventionViewController: DoerCellDelegate {
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
     let mutation = PushPersonMutation(farmId: farmID, firstName: first, lastName: last)
+    let _ = apollo.clearCache()
 
-    apollo.perform(mutation: mutation) { (result, error) in
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if error != nil {
         print(error!)
       } else {
         id = Int32(result!.data!.createPerson!.person!.id)!
       }
-    }
+      group.leave()
+    })
+    group.wait()
     return id
   }
 

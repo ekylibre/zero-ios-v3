@@ -441,15 +441,20 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+    let _ = apollo.clearCache()
 
-    apollo.perform(mutation: mutation) { (result, error) in
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if error != nil {
         print(error!)
       } else {
         id = Int32(result!.data!.createArticle!.article!.id)!
       }
-    }
+      group.leave()
+    })
+    group.wait()
     return id
   }
 
@@ -461,16 +466,21 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
                                        specie: SpecieEnum(rawValue: specie), variety: variety)
+    let _ = apollo.clearCache()
 
-    apollo.perform(mutation: mutation) { (result, error) in
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if error != nil {
         print(error!)
       } else {
         id = Int32(result!.data!.createArticle!.article!.id)!
       }
-    }
+      group.leave()
+    })
+    group.wait()
     return id
   }
 
