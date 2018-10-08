@@ -133,6 +133,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     super.hideKeyboardWhenTappedAround()
     super.moveViewWhenKeyboardAppears()
 
+
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     // Working period
@@ -161,21 +162,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     durationTextField.layer.borderColor = UIColor.lightGray.cgColor
     durationTextField.clipsToBounds = true
     durationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
-
-    // Adds type label on the navigation bar
-    let navigationItem = UINavigationItem(title: "")
-    let typeLabel = UILabel()
-
-    if interventionType != nil {
-      typeLabel.text = interventionType
-    }
-    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
-    typeLabel.textColor = UIColor.white
-
-    let leftItem = UIBarButtonItem.init(customView: typeLabel)
-
-    navigationItem.leftBarButtonItem = leftItem
-    navigationBar.setItems([navigationItem], animated: false)
 
     equipmentTypes = defineEquipmentTypes()
     sortedEquipmentTypes = equipmentTypes.sorted()
@@ -259,6 +245,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     setupViewsAccordingInterventionType()
     refreshSelectedEquipment()
+    refreshSelectedPersons()
+
+    // Adds type label on the navigation bar
+    let navigationItem = UINavigationItem(title: "")
+    let typeLabel = UILabel()
+
+    if interventionType != nil {
+      typeLabel.text = interventionType
+    }
+    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
+    typeLabel.textColor = UIColor.white
+
+    let leftItem = UIBarButtonItem.init(customView: typeLabel)
+
+    navigationItem.leftBarButtonItem = leftItem
+    navigationBar.setItems([navigationItem], animated: false)
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -352,8 +354,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var equipment: NSManagedObject?
     var equipmentType: String?
-    var entity: NSManagedObject?
-    var doer: NSManagedObject?
 
     switch tableView {
     case selectedInputsTableView:
@@ -416,22 +416,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
 
-      entity = searchedEntities[indexPath.row]
-      cell.firstName.text = entity?.value(forKey: "firstName") as? String
-      cell.lastName.text = entity?.value(forKey: "lastName") as? String
+      let entity = searchedEntities[indexPath.row]
+      cell.firstName.text = entity.firstName
+      cell.lastName.text = entity.lastName
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
     case doersTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
 
-      doer = doers[indexPath.row]
+      let doer = doers[indexPath.row]
       cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
-      cell.firstName.text = doer?.value(forKey: "firstName") as? String
-      cell.lastName.text = doer?.value(forKey: "lastName") as? String
+      cell.driver.isOn = doer.isDriver
+      cell.firstName.text = doer.entities?.firstName
+      cell.lastName.text = doer.entities?.lastName
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
     default:
@@ -453,7 +453,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       addSelectedEquipment(equipment: searchedEquipments[indexPath.row])
       selectedEquipmentsTableView.reloadData()
-      cell.isAvaible = false
       cell.backgroundColor = AppColor.CellColors.LightGray
       closeEquipmentsSelectionView()
     case equipmentTypeTableView:
@@ -463,19 +462,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       equipmentTypeTableView.isHidden = true
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
-
-      if cell.isAvaible {
-        addSelectedPerson(person: entities[indexPath.row])
-        doersTableView.reloadData()
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.LightGray
-      }
+      
+      addSelectedPerson(person: entities[indexPath.row])
+      doersTableView.reloadData()
+      cell.backgroundColor = AppColor.CellColors.LightGray
       closeEntitiesSelectionView()
     default:
       print("Nothing to do")
     }
   }
-
+  
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
     case doersTableView:
@@ -636,21 +632,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createDoers(intervention: NSManagedObject) {
+  func createDoers(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
 
     for entity in doers {
-      let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
-      let isDriver = entity.value(forKey: "isDriver")
+      let doer = Doers(context: managedContext)
 
-      doer.setValue(intervention, forKey: "interventions")
-      doer.setValue(UUID(), forKey: "uuid")
-      doer.setValue(isDriver, forKey: "isDriver")
+      doer.interventions = intervention
+      doer.isDriver = entity.isDriver
+      doer.entities = entity.entities
     }
 
     do {

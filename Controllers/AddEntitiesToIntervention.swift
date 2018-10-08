@@ -10,13 +10,13 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: DoerCellDelegate {
-
+  
   // MARK: - Actions
-
+  
   func updateDriverStatus(_ indexPath: IndexPath, driver: UISwitch) {
     doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
   }
-
+  
   @IBAction func collapseDoersView(_ sender: Any) {
     if doersHeightConstraint.constant != 70 {
       UIView.animate(withDuration: 0.5, animations: {
@@ -42,7 +42,7 @@ extension AddInterventionViewController: DoerCellDelegate {
       numberLabel: doersNumber,
       addEntityButton: addEntitiesButton)
   }
-
+  
   @IBAction func openEntitiesSelectionView(_ sender: Any) {
     dimView.isHidden = false
     selectEntitiesView.isHidden = false
@@ -51,11 +51,24 @@ extension AddInterventionViewController: DoerCellDelegate {
       self.view.layoutIfNeeded()
     })
   }
-
+  
+  func refreshSelectedPersons() {
+    if doers.count > 0 {
+      doersTableView.reloadData()
+      doersCollapsedButton.isHidden = false
+      addEntitiesButton.isHidden = true
+      showEntitiesNumber(
+        entities: doers,
+        constraint: doersHeightConstraint,
+        numberLabel: doersNumber,
+        addEntityButton: addEntitiesButton)
+    }
+  }
+  
   func closeEntitiesSelectionView() {
     dimView.isHidden = true
     selectEntitiesView.isHidden = true
-
+    
     if doers.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -72,7 +85,7 @@ extension AddInterventionViewController: DoerCellDelegate {
     searchedEntities = entities
     doersTableView.reloadData()
   }
-
+  
   @IBAction func openEntitiesCreationView(_ sender: Any) {
     entityDarkLayer.isHidden = false
     createEntitiesView.isHidden = false
@@ -81,7 +94,7 @@ extension AddInterventionViewController: DoerCellDelegate {
       self.view.layoutIfNeeded()
     })
   }
-
+  
   @IBAction func closeEntitiesCreationView(_ sender: Any) {
     entityFirstName.text = nil
     entityLastName.text = nil
@@ -91,36 +104,35 @@ extension AddInterventionViewController: DoerCellDelegate {
     fetchEntities()
     entitiesTableView.reloadData()
   }
-
+  
   func fetchEntities() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
+    
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
-
+    
     do {
       entities = try managedContext.fetch(entitiesFetchRequest)
-
+      
       searchedEntities = entities
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
-
+  
   @IBAction func createNewEntity(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
+    
     let managedContext = appDelegate.persistentContainer.viewContext
     let entity = Entities(context: managedContext)
 
-    entity.setValue(false, forKey: "isDriver")
-    entity.setValue(entityFirstName.text, forKeyPath: "firstName")
-    entity.setValue(entityLastName.text, forKeyPath: "lastName")
-    entity.setValue(entityRole.text, forKeyPath: "role")
+    entity.firstName = entityFirstName.text
+    entity.lastName = entityLastName.text
+    entity.role = entityRole.text
 
     do {
       try managedContext.save()
@@ -130,31 +142,32 @@ extension AddInterventionViewController: DoerCellDelegate {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
-
+  
   func addSelectedPerson(person: Entities) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
+    
     let managedContext = appDelegate.persistentContainer.viewContext
     let selectedPerson = Doers(context: managedContext)
-
+    
     selectedPerson.entities = person
     selectedPerson.isDriver = false
+    doers.append(selectedPerson)
   }
-
+  
   func removeDoerCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
       title: "",
       message: "delete_person_prompt".localized,
       preferredStyle: .alert
     )
-
+    
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.doers.remove(at: indexPath.row)
       self.doersTableView.reloadData()
-
+      
       if self.doers.count == 0 {
         self.doersTableView.isHidden = true
         self.doersCollapsedButton.isHidden = true
