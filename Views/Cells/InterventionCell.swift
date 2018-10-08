@@ -16,5 +16,4 @@ class InterventionCell: UITableViewCell {
   @IBOutlet weak var infosLabel: UILabel!
   @IBOutlet weak var dateLabel: UILabel!
   @IBOutlet weak var syncImage: UIImageView!
-
 }

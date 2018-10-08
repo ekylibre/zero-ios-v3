@@ -15,13 +15,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
-  @IBOutlet weak var equipmentsTableView: UITableView!
+  @IBOutlet weak var navigationBar: UINavigationBar!
+  @IBOutlet weak var collapseButton: UIButton!
+  @IBOutlet weak var saveInterventionButton: UIButton!
+
+  // Working Period
   @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
   @IBOutlet weak var durationUnitLabel: UILabel!
+
+  // Inputs
+  @IBOutlet weak var inputsSelectionView: UIView!
+  @IBOutlet weak var inputsCollapseButton: UIButton!
+  @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var addInputsButton: UIButton!
+  @IBOutlet weak var inputsNumber: UILabel!
+  @IBOutlet weak var selectedInputsTableView: UITableView!
+  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsSeparatorView: UIView!
+
+  // Irrigation
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
@@ -30,9 +46,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationUnitButton: UIButton!
   @IBOutlet weak var irrigationInfoLabel: UILabel!
   @IBOutlet weak var irrigationSeparatorView: UIView!
-  @IBOutlet weak var navigationBar: UINavigationBar!
-  @IBOutlet weak var collapseButton: UIButton!
-  @IBOutlet weak var saveInterventionButton: UIButton!
+
+  // Equipments
+  @IBOutlet weak var equipmentsTableView: UITableView!
   @IBOutlet weak var selectEquipmentsView: UIView!
   @IBOutlet weak var createEquipmentsView: UIView!
   @IBOutlet weak var equipmentDarkLayer: UIView!
@@ -46,6 +62,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentTypeTableView: UITableView!
   @IBOutlet weak var equipmentTypeButton: UIButton!
   @IBOutlet weak var createEquipment: UIView!
+  @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+
+  // Entities
   @IBOutlet weak var createEntity: UIView!
   @IBOutlet weak var entityFirstName: UITextField!
   @IBOutlet weak var entityLastName: UITextField!
@@ -54,23 +74,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var entitiesTableView: UITableView!
   @IBOutlet weak var entityRole: UITextField!
   @IBOutlet weak var entityDarkLayer: UIView!
+  @IBOutlet weak var addEntitiesButton: UIButton!
+  @IBOutlet weak var searchEntity: UISearchBar!
   @IBOutlet weak var doersTableView: UITableView!
   @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var doersTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var doersCollapsedButton: UIButton!
   @IBOutlet weak var doersNumber: UILabel!
-  @IBOutlet weak var addEntitiesButton: UIButton!
-  @IBOutlet weak var searchEntity: UISearchBar!
-  @IBOutlet weak var inputsSelectionView: UIView!
-  @IBOutlet weak var inputsCollapseButton: UIButton!
-  @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var addInputsButton: UIButton!
-  @IBOutlet weak var inputsNumber: UILabel!
-  @IBOutlet weak var selectedInputsTableView: UITableView!
-  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var inputsSeparatorView: UIView!
-  @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+
+  // Weather
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
@@ -87,26 +99,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Properties
 
-  var newIntervention: Interventions!
+  var interventionState: Intervention.State.RawValue!
+  var currentIntervention: Interventions!
   var interventionType: String!
-  var equipments = [NSManagedObject]()
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
   var inputsView: InputsView!
-  var interventionEquipments = [NSManagedObject]()
+  var selectedInputs = [NSManagedObject]()
+  var equipments = [Equipments]()
+  var searchedEquipments = [Equipments]()
+  var selectedEquipments = [InterventionEquipments]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
-  var selectedEquipments = [NSManagedObject]()
-  var searchedEquipments = [NSManagedObject]()
   var equipmentTypes: [String]!
   var sortedEquipmentTypes: [String]!
   var selectedEquipmentType: String!
-  var entities = [NSManagedObject]()
+  var entities = [Entities]()
+  var searchedEntities = [Entities]()
+  var doers = [Doers]()
   var entitiesTableViewTopAnchor: NSLayoutConstraint!
-  var searchedEntities = [NSManagedObject]()
-  var doers = [NSManagedObject]()
-  var createdSeed = [NSManagedObject]()
-  var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
   var liquidUnitPicker = UIPickerView()
   var pickerValue: String?
@@ -171,8 +182,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedEquipmentType = sortedEquipmentTypes[0]
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
 
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
-    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    fetchEquipments()
+    fetchEntities()
 
     initUnitMeasurePickerView()
 
@@ -244,7 +255,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
 
+    loadInterventionData()
+
     setupViewsAccordingInterventionType()
+    refreshSelectedEquipment()
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -253,30 +267,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue:
+    case Intervention.InterventionType.Care.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
-    case Intervention.InterventionType.CropProtection.rawValue:
+    case Intervention.InterventionType.CropProtection.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-    case Intervention.InterventionType.Fertilization.rawValue:
+    case Intervention.InterventionType.Fertilization.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-    case Intervention.InterventionType.GroundWork.rawValue:
+    case Intervention.InterventionType.GroundWork.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Harvest.rawValue:
+    case Intervention.InterventionType.Harvest.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue:
+    case Intervention.InterventionType.Implantation.rawValue.localized:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
     default:
@@ -337,7 +351,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var equipment: NSManagedObject?
-    var selectedEquipment: NSManagedObject?
     var equipmentType: String?
     var entity: NSManagedObject?
     var doer: NSManagedObject?
@@ -386,12 +399,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
 
-      selectedEquipment = selectedEquipments[indexPath.row]
+      let selectedEquipment = selectedEquipments[indexPath.row]
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
-      cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
+      cell.nameLabel.text = selectedEquipment.equipments?.name
+      cell.typeLabel.text = selectedEquipment.equipments?.type
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
     case equipmentTypeTableView:
@@ -426,6 +439,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+
   // Expand/collapse cell when tapped
   var selectedIndexPath: IndexPath?
   var indexPaths: [IndexPath] = []
@@ -437,13 +451,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case equipmentsTableView:
       let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
 
-      if cell.isAvaible {
-        selectedEquipments.append(searchedEquipments[indexPath.row])
-        selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
-        selectedEquipmentsTableView.reloadData()
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.LightGray
-      }
+      addSelectedEquipment(equipment: searchedEquipments[indexPath.row])
+      selectedEquipmentsTableView.reloadData()
+      cell.isAvaible = false
+      cell.backgroundColor = AppColor.CellColors.LightGray
       closeEquipmentsSelectionView()
     case equipmentTypeTableView:
       selectedEquipmentType = sortedEquipmentTypes[indexPath.row]
@@ -454,8 +465,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
       if cell.isAvaible {
-        doers.append(entities[indexPath.row])
-        doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
+        addSelectedPerson(person: entities[indexPath.row])
         doersTableView.reloadData()
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.LightGray
@@ -510,29 +520,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    newIntervention = Interventions(context: managedContext)
+    currentIntervention = Interventions(context: managedContext)
     let workingPeriod = WorkingPeriods(context: managedContext)
 
-    newIntervention.type = interventionType
-    newIntervention.status = Intervention.Status.OutOfSync.rawValue
-    newIntervention.infos = "Infos"
+    currentIntervention.type = interventionType
+    currentIntervention.status = Intervention.Status.OutOfSync.rawValue
+    currentIntervention.infos = "Infos"
     if interventionType == "IRRIGATION".localized {
       let waterVolume = irrigationValueTextField.text!.floatValue
-      newIntervention.waterQuantity = waterVolume
-      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+      currentIntervention.waterQuantity = waterVolume
+      currentIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
     }
-    workingPeriod.interventions = newIntervention
+    workingPeriod.interventions = currentIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     let duration = durationTextField.text!.floatValue
     workingPeriod.hourDuration = duration
-    createTargets(intervention: newIntervention)
-    createEquipments(intervention: newIntervention)
-    createDoers(intervention: newIntervention)
-    saveInterventionInputs(intervention: newIntervention)
+    createTargets(intervention: currentIntervention)
+    createEquipments(intervention: currentIntervention)
+    createDoers(intervention: currentIntervention)
+    saveInterventionInputs(intervention: currentIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
-    saveWeather(intervention: newIntervention)
+    saveWeather(intervention: currentIntervention)
 
     do {
       try managedContext.save()
@@ -605,24 +615,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(intervention: NSManagedObject) {
+  func createEquipments(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "InterventionEquipments", in: managedContext)!
 
     for selectedEquipment in selectedEquipments {
-      let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
-      let name = selectedEquipment.value(forKeyPath: "name") as! String
-      let type = selectedEquipment.value(forKey: "type") as! String
-      let equipmentUuid = selectedEquipment.value(forKey: "uuid") as! UUID
+      let equipment = InterventionEquipments(context: managedContext)
 
-      equipment.setValue(intervention, forKey: "interventions")
-      equipment.setValue(name, forKey: "name")
-      equipment.setValue(type, forKey: "type")
-      equipment.setValue(equipmentUuid, forKey: "equipment")
+      equipment.interventions = intervention
+      equipment.equipments = selectedEquipment.equipments
     }
 
     do {
@@ -704,7 +708,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         return
       }
 
-      createIntervention()
+      if interventionState == Intervention.State.New.rawValue {
+        createIntervention()
+      }
     }
   }
 

@@ -23,7 +23,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
-  var interventions = [NSManagedObject]() {
+  var interventions = [Interventions]() {
     didSet {
       tableView.reloadData()
     }
@@ -223,6 +223,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    performSegue(withIdentifier: "updateIntervention", sender: self)
+  }
+
   func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -308,16 +312,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-    let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
-    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
+    let intervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
 
-    intervention.setValue(type, forKey: "type")
-    intervention.setValue(infos, forKey: "infos")
-    intervention.setValue(status, forKey: "status")
-    workingPeriod.setValue(intervention, forKey: "interventions")
-    workingPeriod.setValue(executionDate, forKey: "executionDate")
+    intervention.type = type
+    intervention.infos = infos
+    intervention.status = status
+    workingPeriod.interventions = intervention
+    workingPeriod.executionDate = executionDate
 
     do {
       try managedContext.save()
@@ -331,9 +333,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
+    let type = (sender as? UIButton)?.titleLabel?.text
 
-    if let type = (sender as? UIButton)?.titleLabel?.text {
+    if segue.identifier == "addIntervention" && type != nil {
       destVC.interventionType = type
+      destVC.interventionState = Intervention.State.New.rawValue
+    } else if segue.identifier == "updateIntervention" {
+      let indexPath = tableView.indexPathForSelectedRow
+
+      if indexPath != nil {
+        let intervention = interventions[(indexPath?.row)!]
+
+        destVC.currentIntervention = intervention
+        destVC.interventionState = Intervention.State.Created.rawValue
+      }
     }
   }
 
@@ -341,7 +354,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     if sender.source is AddInterventionViewController {
       if let senderVC = sender.source as? AddInterventionViewController {
-        interventions.append(senderVC.newIntervention)
+        interventions.append(senderVC.currentIntervention)
       }
       tableView.reloadData()
     }

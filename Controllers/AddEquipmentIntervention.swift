@@ -135,7 +135,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
   // MARK: - Actions
 
-  @IBAction func collapseEquipmentView(_ send: Any) {
+  @IBAction func collapseEquipmentView(_ sender: Any) {
     if equipmentHeightConstraint.constant != 70 {
       UIView.animate(withDuration: 0.5, animations: {
         self.selectedEquipmentsTableView.isHidden = true
@@ -171,11 +171,24 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     })
   }
 
+  func refreshSelectedEquipment() {
+    if selectedEquipments.count > 0 {
+      selectedEquipmentsTableView.reloadData()
+      collapseButton.isHidden = false
+      addEquipmentButton.isHidden = true
+      showEntitiesNumber(
+        entities: selectedEquipments,
+        constraint: equipmentHeightConstraint,
+        numberLabel: equipmentNumberLabel,
+        addEntityButton: addEquipmentButton)
+    }
+  }
+
   func closeEquipmentsSelectionView() {
     dimView.isHidden = true
     selectEquipmentsView.isHidden = true
-
     if selectedEquipments.count > 0 {
+      selectedEquipmentsTableView.reloadData()
       UIView.animate(withDuration: 0.5, animations: {
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
         self.collapseButton.isHidden = false
@@ -206,8 +219,25 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
     createEquipmentsView.isHidden = true
-    fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
+    fetchEquipments()
     equipmentsTableView.reloadData()
+  }
+
+  func fetchEquipments() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+
+    do {
+      equipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      searchedEquipments = equipments
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
   }
 
   @IBAction func createNewEquipement(_ sender: Any) {
@@ -215,14 +245,12 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
       return
     }
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+    let equipment = Equipments(context: managedContext)
 
     equipment.setValue(equipmentName.text, forKeyPath: "name")
     equipment.setValue(equipmentNumber.text, forKeyPath: "number")
     equipment.setValue(selectedEquipmentType, forKeyPath: "type")
-    equipment.setValue(UUID(), forKey: "uuid")
-    equipment.setValue(0, forKey: "row")
+
     do {
       try managedContext.save()
       equipments.append(equipment)
@@ -230,6 +258,18 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  func addSelectedEquipment(equipment: Equipments) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedEquipment = InterventionEquipments(context: managedContext)
+
+    selectedEquipment.equipments = equipment
+    selectedEquipments.append(selectedEquipment)
   }
 
   func removeEquipmentCell(_ indexPath: IndexPath) {
@@ -241,12 +281,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
-      let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.White
       self.selectedEquipments.remove(at: indexPath.row)
       self.selectedEquipmentsTableView.reloadData()
 

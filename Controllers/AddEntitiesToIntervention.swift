@@ -88,8 +88,25 @@ extension AddInterventionViewController: DoerCellDelegate {
     entityRole.text = nil
     entityDarkLayer.isHidden = true
     createEntitiesView.isHidden = true
-    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
+    fetchEntities()
     entitiesTableView.reloadData()
+  }
+
+  func fetchEntities() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+
+    do {
+      entities = try managedContext.fetch(entitiesFetchRequest)
+
+      searchedEntities = entities
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
   }
 
   @IBAction func createNewEntity(_ sender: Any) {
@@ -98,14 +115,12 @@ extension AddInterventionViewController: DoerCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-    let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
+    let entity = Entities(context: managedContext)
 
     entity.setValue(false, forKey: "isDriver")
     entity.setValue(entityFirstName.text, forKeyPath: "firstName")
     entity.setValue(entityLastName.text, forKeyPath: "lastName")
     entity.setValue(entityRole.text, forKeyPath: "role")
-    entity.setValue(0, forKey: "row")
 
     do {
       try managedContext.save()
@@ -114,6 +129,18 @@ extension AddInterventionViewController: DoerCellDelegate {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  func addSelectedPerson(person: Entities) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedPerson = Doers(context: managedContext)
+
+    selectedPerson.entities = person
+    selectedPerson.isDriver = false
   }
 
   func removeDoerCell(_ indexPath: IndexPath) {
@@ -125,12 +152,6 @@ extension AddInterventionViewController: DoerCellDelegate {
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
-      let row = self.doers[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.White
       self.doers.remove(at: indexPath.row)
       self.doersTableView.reloadData()
 

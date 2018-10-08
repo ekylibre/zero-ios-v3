@@ -29,6 +29,12 @@ class Intervention {
     case Validated = 2
   }
 
+  enum State: Int16 {
+    case New = 0
+    case Created = 1
+    case Validated = 2
+  }
+
   var type: InterventionType
   var crops: String
   var infos: String
