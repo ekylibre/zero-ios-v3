@@ -472,6 +472,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 75
     case selectedInputsTableView:
       return 110
+    case equipmentsTableView:
+      return 70
+    case selectedEquipmentsTableView:
+      return 70
     default:
       return 60
     }
@@ -483,6 +487,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 75
     case selectedInputsTableView:
       return 110
+    case equipmentsTableView:
+      return 70
+    case selectedEquipmentsTableView:
+      return 70
     default:
       return 60
     }
