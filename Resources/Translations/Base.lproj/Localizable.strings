@@ -258,6 +258,18 @@
 "METER" = "Meter";
 "UNITY" = "Unity";
 "THOUSAND" = "Thousand";
+"FRENCH_HORSEPOWER" = "French horsepower";
+
+// Equipment indicators
+"plowshare_count" = "Number of plowshares";
+"motor_power" = "Motor power";
+"application_width" = "Application width";
+"rows_count" = "Number of rows";
+"nominal_storable_net_volume" = "Net storage volume";
+"nominal_storable_net_mass" = "Net storage mass";
+"diameter" = "Diameter";
+"width" = "Width";
+"length" = "Length";
 
 // Output types
 "STRAW" = "Straw";

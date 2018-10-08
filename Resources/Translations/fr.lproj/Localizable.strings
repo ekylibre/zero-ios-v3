@@ -258,6 +258,18 @@
 "METER" = "Mètre";
 "UNITY" = "Unité";
 "THOUSAND" = "Millier";
+"FRENCH_HORSEPOWER" = "Cheval-vapeur français (ch)";
+
+// Equipment indicators
+"plowshare_count" = "Nombre de socs";
+"motor_power" = "Puissance du moteur";
+"application_width" = "Largeur de travail";
+"rows_count" = "Nombre de rangs";
+"nominal_storable_net_volume" = "Capacité de stockage volumique nominale";
+"nominal_storable_net_mass" = "Capacité de stockage massique nominale";
+"diameter" = "Diamètre";
+"width" = "Largeur";
+"length" = "Longueur";
 
 // Output types
 "STRAW" = "Paille";
