@@ -374,7 +374,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      let ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: variety, type: ArticleTypeEnum.seed)
+      let ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: variety, specie: specie, type: ArticleTypeEnum.seed)
       seed.setValue(ekyID, forKey: "ekyID")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -504,6 +504,27 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
+      }
+    }
+    return id
+  }
+
+  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
+                                       specie: SpecieEnum(rawValue: specie), variety: variety)
 
     apollo.perform(mutation: mutation) { (result, error) in
       if error != nil {
