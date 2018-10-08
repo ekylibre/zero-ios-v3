@@ -37,6 +37,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     initHarvestNaturePickerView()
     initHarvestUnitPickerView()
     initStoragesPickerView()
+    harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
   }
 
   func initializeHarvestTableView() {
@@ -49,7 +50,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestUnitPickerView () {
-    let unit = ["QUINTAL".localized, "TON".localized, "KILOGRAM".localized]
+    let unit = ["QUINTAL", "TON", "KILOGRAM"]
 
     harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
     harvestUnitPickerView.reference = self
@@ -58,7 +59,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestNaturePickerView() {
-    let unit = ["STRAW".localized, "GRAIN".localized, "SILAGE".localized]
+    let unit = ["STRAW", "GRAIN", "SILAGE"]
 
     harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
     harvestNaturePickerView.reference = self

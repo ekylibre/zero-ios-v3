@@ -38,11 +38,11 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @IBAction func defineQuantity(_ sender: Any) {
-    addInterventionController?.harvests[indexPath.row].setValue((quantity.text! as NSString).doubleValue, forKey: "quantity")
+    addInterventionController?.harvests[indexPath.row].quantity = (quantity.text! as NSString).doubleValue
   }
 
   @IBAction func defineNumber(_ sender: Any) {
-    addInterventionController?.harvests[indexPath.row].setValue(number.text!, forKey: "number")
+    addInterventionController?.harvests[indexPath.row].number = number.text!
   }
 
   @IBAction func selectStorage(_ sender: Any) {

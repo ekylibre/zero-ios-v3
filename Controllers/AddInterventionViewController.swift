@@ -79,12 +79,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var weatherCollapseButton: UIButton!
   @IBOutlet weak var temperatureTextField: UITextField!
   @IBOutlet weak var windSpeedTextField: UITextField!
-  @IBOutlet weak var harvestView: UIView!
-  @IBOutlet weak var harvestTableView: UITableView!
-  @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var harvestNature: UILabel!
-  @IBOutlet weak var harvestType: UIButton!
   @IBOutlet weak var brokenClouds: UIButton!
   @IBOutlet weak var clearSky: UIButton!
   @IBOutlet weak var fewClouds: UIButton!
@@ -93,6 +87,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var showerRain: UIButton!
   @IBOutlet weak var snow: UIButton!
   @IBOutlet weak var thunderstorm: UIButton!
+
+  // Harvest
+  @IBOutlet weak var harvestView: UIView!
+  @IBOutlet weak var harvestTableView: UITableView!
+  @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestNature: UILabel!
+  @IBOutlet weak var harvestType: UIButton!
 
   // MARK: - Properties
 
@@ -128,8 +130,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var storages = [Storages]()
   var weatherButtons = [UIButton]()
   var weather: Weather!
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
-  let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
+  let massUnitMeasure = [
+    "GRAM",
+    "GRAM_PER_HECTARE",
+    "GRAM_PER_SQUARE_METER",
+    "KILOGRAM",
+    "KILOGRAM_PER_HECTARE",
+    "KILOGRAM_PER_SQUARE_METER",
+    "QUINTAL",
+    "QUINTAL_PER_HECTARE",
+    "QUINTAL_PER_SQUARE_METER",
+    "TON",
+    "TON_PER_HECTARE",
+    "TON_PER_SQUARE_METER"]
+  let volumeUnitMeasure = [
+    "LITER",
+    "LITER_PER_HECTARE",
+    "LITER_SQUARE_METER",
+    "HECTOLITER",
+    "HECTOLITER_PER_HECTARE",
+    "HECTOLITER_PER_SQUARE_METER",
+    "CUBIC_METER",
+    "CUBIC_METER_PER_HECTARE",
+    "CUBIC_METER_PER_SQUARE_METER"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -679,23 +702,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveHarvest(intervention: NSManagedObject) {
+  func saveHarvest(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvestEntity = NSEntityDescription.entity(forEntityName: "Harvests", in: managedContext)!
 
-    for harvest in harvests {
-      let harvestManagedObject = NSManagedObject(entity: harvestEntity, insertInto: managedContext)
+    for harvestEntity in harvests {
+      let harvest = Harvests(context: managedContext)
       let type = harvestType.titleLabel?.text
 
-      harvestManagedObject.setValue(intervention, forKey: "interventions")
-      harvestManagedObject.setValue(type, forKey: "type")
-      harvestManagedObject.setValue(harvest.value(forKey: "number"), forKey: "number")
-      harvestManagedObject.setValue(harvest.value(forKey: "quantity"), forKey: "quantity")
-      harvestManagedObject.setValue(harvest.value(forKey: "unit"), forKey: "unit")
+      harvest.interventions = intervention
+      harvest.type = type
+      harvest.number = harvestEntity.number
+      harvest.quantity = harvestEntity.quantity
+      harvest.unit = harvestEntity.unit
+      harvest.storages = harvestEntity.storages
     }
 
     do {

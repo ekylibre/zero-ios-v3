@@ -42,16 +42,16 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
     switch pickerView {
     case harvestNaturePickerView:
-      harvestType.setTitle(unit, for: .normal)
+      harvestType.setTitle(unit.localized, for: .normal)
       harvestNaturePickerView.isHidden = true
       dimView.isHidden = true
     case harvestUnitPickerView:
-      harvests[cellIndexPath.row].setValue(unit, forKey: "unit")
+      harvests[cellIndexPath.row].unit = unit
       harvestUnitPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
     case storagesPickerView:
-      harvests[cellIndexPath.row].setValue(searchStorage(name: unit), forKey: "storages")
+      harvests[cellIndexPath.row].storages = searchStorage(name: unit)
       storagesPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
