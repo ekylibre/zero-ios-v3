@@ -234,7 +234,6 @@
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				6BEA65E22105CD8A0072840F /* Intervention.swift */,
 				6BEA65E12105CD8A0072840F /* KeychainService.swift */,
-				6BC805F1215A2D22002D504B /* UserDefaults+isFirstLaunch.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -301,6 +300,7 @@
 				04139CAF21411D6F0067DEA9 /* Localizable.swift */,
 				6BB46F3D2163A392005763A2 /* String+FloatValue.swift */,
 				6BEA65CF2105CC590072840F /* UIApplication+StatusBar.swift */,
+				6BC805F1215A2D22002D504B /* UserDefaults+isFirstLaunch.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
