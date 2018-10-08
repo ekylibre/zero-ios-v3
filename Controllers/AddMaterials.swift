@@ -10,6 +10,8 @@ import UIKit
 
 extension AddInterventionViewController {
 
+  // MARK: - Initialization
+
   func setupMaterialsView() {
     materialsView = MaterialsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     materialsView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,10 +24,20 @@ extension AddInterventionViewController {
       materialsView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
+    selectedMaterialsTableView.layer.borderWidth  = 0.5
+    selectedMaterialsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedMaterialsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    selectedMaterialsTableView.layer.cornerRadius = 4
+    selectedMaterialsTableView.bounces = false
+    //selectedMaterialsTableView.dataSource = self
+    //selectedMaterialsTableView.delegate = self
+
+    materialsView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
     materialsView.creationView.unitButton.addTarget(self, action: #selector(showUnits), for: .touchUpInside)
     materialsView.addInterventionViewController = self
-    setupExitAction()
   }
+
+  // MARK: - Selection
 
   func selectMaterial(_ material: Materials) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -38,21 +50,48 @@ extension AddInterventionViewController {
     selectedMaterial.unit = material.unit
     selectedMaterial.materials = material
     selectedMaterials.append(selectedMaterial)
-    closeView()
-    updateTableView()
+    closeSelectionView()
+    updateView()
   }
 
-  func setupExitAction() {
-    materialsView.exitButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+  private func updateView() {
+    let shouldExpand = selectedMaterials.count > 0
+    let tableViewHeight = (selectedMaterials.count % 4) * 70
+
+    materialsExpandImage.isHidden = !shouldExpand
+    materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
   }
 
-  @objc private func closeView() {
+
+  // MARK: - Actions
+
+  @IBAction private func tapMaterialsView() {
+    let shouldExpand = (materialsHeightConstraint.constant == 70)
+    let tableViewHeight = (selectedMaterials.count % 4) * 70
+
+    if selectedMaterials.count == 0 {
+      return
+    }
+
+    updateCountLabel()
+    materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    materialsAddButton.isHidden = !shouldExpand
+    materialsCountLabel.isHidden = shouldExpand
+    materialsExpandImage.transform = materialsExpandImage.transform.rotated(by: CGFloat.pi)
+  }
+
+  private func updateCountLabel() {
+    if selectedMaterials.count == 1 {
+      materialsCountLabel.text = "material".localized
+    } else {
+      materialsCountLabel.text = String(format: "materials".localized, selectedMaterials.count)
+    }
+  }
+
+  @objc private func closeSelectionView() {
     materialsView.isHidden = true
     dimView.isHidden = true
-  }
-
-  private func updateTableView() {
-
   }
 
   @objc private func showUnits() {

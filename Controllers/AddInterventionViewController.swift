@@ -34,12 +34,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationSeparatorView: UIView!
 
   // Materials
+  @IBOutlet weak var materialsHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var materialsAddButton: UIButton!
   @IBOutlet weak var materialsCountLabel: UILabel!
   @IBOutlet weak var materialsExpandImage: UIImageView!
   @IBOutlet weak var selectedMaterialsTableView: UITableView!
   @IBOutlet weak var materialsTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet var materialsGesture: UITapGestureRecognizer!
 
   // Equipment
   @IBOutlet weak var equipmentDarkLayer: UIView!
