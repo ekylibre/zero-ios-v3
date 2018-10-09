@@ -49,6 +49,14 @@ extension AddInterventionViewController {
       for interventionFertilizer in currentIntervention.interventionFertilizers?.allObjects as! [InterventionFertilizers] {
         selectedInputs.append(interventionFertilizer)
       }
+      if interventionType == Intervention.InterventionType.Irrigation.rawValue {
+        irrigationValueTextField.text = String(currentIntervention.waterQuantity)
+        irrigationUnitButton.setTitle(currentIntervention.waterUnit, for: .normal)
+        updateIrrigation(self)
+        irrigationExpandCollapseImage.isHidden = true
+        irrigationGestureRecognizer.isEnabled = false
+        tapIrrigationView(self)
+      }
       weather = currentIntervention?.weather
       updateWorkingPeriod()
       refreshSelectedEquipment()

@@ -29,7 +29,7 @@
         <!--Intervention View Controller-->
         <scene sceneID="GPv-6C-vQQ">
             <objects>
-                <viewController id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bki-1z-HKT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -51,7 +51,7 @@
                                 <rect key="frame" x="0.0" y="93" width="375" height="470"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionCell" customModule="clic_and_farm" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IvT-FB-GAn" id="bnZ-Ve-doS">
@@ -208,7 +208,7 @@
         <!--Add Intervention View Controller-->
         <scene sceneID="PGn-fO-1Ks">
             <objects>
-                <viewController id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DUW-oV-g3X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -483,7 +483,7 @@
                                                             <constraint firstAttribute="height" id="Bbt-1y-Pg7"/>
                                                         </constraints>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectedInputsTableViewCell" id="MAD-Pp-K0B" customClass="SelectedInputsTableViewCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectedInputsTableViewCell" id="MAD-Pp-K0B" customClass="SelectedInputsTableViewCell" customModule="clic_and_farm" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MAD-Pp-K0B" id="Jb9-nv-dXl">
@@ -557,7 +557,7 @@
                                                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="SelectedEquipmentCell" rowHeight="70" id="iLS-rZ-s4M" customClass="SelectedEquipmentCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="SelectedEquipmentCell" rowHeight="70" id="iLS-rZ-s4M" customClass="SelectedEquipmentCell" customModule="clic_and_farm" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iLS-rZ-s4M" id="sE8-VA-Faw">
@@ -713,7 +713,7 @@
                                                             <constraint firstAttribute="height" id="mfR-vs-HG6"/>
                                                         </constraints>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DoerCell" id="nC4-ff-Ntp" customClass="DoerCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DoerCell" id="nC4-ff-Ntp" customClass="DoerCell" customModule="clic_and_farm" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nC4-ff-Ntp" id="x2d-by-4Qd">
@@ -1183,7 +1183,7 @@
                                         <rect key="frame" x="0.0" y="155.5" width="335" height="413.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EquipmentCell" rowHeight="70" id="xwY-oT-on3" customClass="EquipmentCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EquipmentCell" rowHeight="70" id="xwY-oT-on3" customClass="EquipmentCell" customModule="clic_and_farm" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xwY-oT-on3" id="zbU-5b-dYp">
@@ -1380,7 +1380,7 @@
                                     <constraint firstAttribute="height" constant="338" id="I9I-Oy-wWh"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EquipmentTypesCell" id="Kqe-Bl-Q7I" customClass="EquipmentTypesCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EquipmentTypesCell" id="Kqe-Bl-Q7I" customClass="EquipmentTypesCell" customModule="clic_and_farm" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="305" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kqe-Bl-Q7I" id="5v3-oG-qco">
@@ -1470,7 +1470,7 @@
                                         <rect key="frame" x="0.0" y="155.5" width="335" height="413.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EntityCell" rowHeight="70" id="7wY-Ei-9fD" customClass="EntityCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="EntityCell" rowHeight="70" id="7wY-Ei-9fD" customClass="EntityCell" customModule="clic_and_farm" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="335" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7wY-Ei-9fD" id="C67-8t-w0k">
@@ -1733,6 +1733,7 @@
                         <outlet property="inputsSelectionView" destination="e04-dp-jck" id="Vi8-9W-myT"/>
                         <outlet property="inputsSeparatorView" destination="cL0-7p-xry" id="gVI-bW-lIa"/>
                         <outlet property="irrigationExpandCollapseImage" destination="lZ2-DO-10N" id="5a4-GZ-1gz"/>
+                        <outlet property="irrigationGestureRecognizer" destination="2TT-lW-pd5" id="B2B-ht-MQ6"/>
                         <outlet property="irrigationHeightConstraint" destination="HQz-9h-D9H" id="8BB-hv-NcG"/>
                         <outlet property="irrigationInfoLabel" destination="gTq-na-vs2" id="RZG-49-hJU"/>
                         <outlet property="irrigationLabel" destination="sKN-nM-sDX" id="HVG-sh-vQj"/>
@@ -1789,13 +1790,13 @@
         <!--List Table View Controller-->
         <scene sceneID="Gxg-d7-MJI">
             <objects>
-                <tableViewController id="mHI-gi-QLg" customClass="ListTableViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="mHI-gi-QLg" customClass="ListTableViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XGF-Qx-Lnm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="mxm-yl-8v2" customClass="ListCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="mxm-yl-8v2" customClass="ListCell" customModule="clic_and_farm" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mxm-yl-8v2" id="vdR-bD-PDH">
@@ -1837,7 +1838,7 @@
         <!--Login Screen-->
         <scene sceneID="qGL-rz-WS6">
             <objects>
-                <viewController id="krK-gd-8UN" customClass="LoginScreen" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="krK-gd-8UN" customClass="LoginScreen" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ybY-bV-jLm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1899,7 +1900,7 @@
                                     <action selector="openForgottenPasswordLinkWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="1rn-ME-Wsc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="clic_and_farm" customModuleProvider="target">
                                 <rect key="frame" x="162.5" y="576" width="50" height="36"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Login">
@@ -1956,7 +1957,7 @@
         <!--No Internet On First Connection-->
         <scene sceneID="20c-UI-Xxq">
             <objects>
-                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i5Q-WN-VSA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

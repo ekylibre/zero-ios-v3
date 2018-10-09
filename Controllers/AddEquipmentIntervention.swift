@@ -175,13 +175,13 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     if selectedEquipments.count > 0 {
       selectedEquipmentsTableView.reloadData()
       collapseButton.isHidden = false
-      addEquipmentButton.isHidden = true
-      showEntitiesNumber(
-        entities: selectedEquipments,
-        constraint: equipmentHeightConstraint,
-        numberLabel: equipmentNumberLabel,
-        addEntityButton: addEquipmentButton)
     }
+    addEquipmentButton.isHidden = true
+    showEntitiesNumber(
+      entities: selectedEquipments,
+      constraint: equipmentHeightConstraint,
+      numberLabel: equipmentNumberLabel,
+      addEntityButton: addEquipmentButton)
   }
 
   func closeEquipmentsSelectionView() {

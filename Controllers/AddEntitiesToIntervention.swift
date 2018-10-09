@@ -56,13 +56,13 @@ extension AddInterventionViewController: DoerCellDelegate {
     if doers.count > 0 {
       doersTableView.reloadData()
       doersCollapsedButton.isHidden = false
-      addEntitiesButton.isHidden = true
-      showEntitiesNumber(
-        entities: doers,
-        constraint: doersHeightConstraint,
-        numberLabel: doersNumber,
-        addEntityButton: addEntitiesButton)
     }
+    addEntitiesButton.isHidden = true
+    showEntitiesNumber(
+      entities: doers,
+      constraint: doersHeightConstraint,
+      numberLabel: doersNumber,
+      addEntityButton: addEntitiesButton)
   }
 
   func closeEntitiesSelectionView() {

@@ -47,6 +47,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationUnitButton: UIButton!
   @IBOutlet weak var irrigationInfoLabel: UILabel!
   @IBOutlet weak var irrigationSeparatorView: UIView!
+  @IBOutlet weak var irrigationGestureRecognizer: UIGestureRecognizer!
 
   // Equipments
   @IBOutlet weak var equipmentsTableView: UITableView!
