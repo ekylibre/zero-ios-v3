@@ -26,12 +26,11 @@ extension AddInterventionViewController {
 
     selectedMaterialsTableView.layer.borderWidth  = 0.5
     selectedMaterialsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedMaterialsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedMaterialsTableView.layer.cornerRadius = 4
+    selectedMaterialsTableView.layer.cornerRadius = 5
     selectedMaterialsTableView.bounces = false
-    //selectedMaterialsTableView.dataSource = self
-    //selectedMaterialsTableView.delegate = self
-
+    selectedMaterialsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
+    selectedMaterialsTableView.dataSource = self
+    selectedMaterialsTableView.delegate = self
     materialsView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
     materialsView.creationView.unitButton.addTarget(self, action: #selector(showUnits), for: .touchUpInside)
     materialsView.addInterventionViewController = self
@@ -56,11 +55,12 @@ extension AddInterventionViewController {
 
   private func updateView() {
     let shouldExpand = selectedMaterials.count > 0
-    let tableViewHeight = (selectedMaterials.count % 4) * 70
+    let tableViewHeight = (selectedMaterials.count > 4) ? 4 * 80 : selectedMaterials.count * 80
 
     materialsExpandImage.isHidden = !shouldExpand
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    selectedMaterialsTableView.reloadData()
   }
 
 
@@ -68,7 +68,7 @@ extension AddInterventionViewController {
 
   @IBAction private func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedMaterials.count % 4) * 70
+    let tableViewHeight = (selectedMaterials.count > 4) ? 4 * 80 : selectedMaterials.count * 80
 
     if selectedMaterials.count == 0 {
       return

@@ -325,8 +325,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
     switch tableView {
+    case selectedInputsTableView:
+      return selectedInputs.count
+    case selectedMaterialsTableView:
+      return selectedMaterials.count
     case equipmentsTableView:
       return searchedEquipments.count
     case selectedEquipmentsTableView:
@@ -335,8 +338,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return searchedEntities.count
     case doersTableView:
       return doers.count
-    case selectedInputsTableView:
-      return selectedInputs.count
     default:
       return 1
     }
@@ -378,6 +379,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
       }
+      return cell
+    case selectedMaterialsTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
+      let selectedMaterial = selectedMaterials[indexPath.row]
+
+      cell.nameLabel.text = "test"
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
@@ -458,21 +465,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
-    case doersTableView:
-      return 75
     case selectedInputsTableView:
       return 110
-    default:
-      return 60
-    }
-  }
-
-  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    switch tableView {
+    case selectedMaterialsTableView:
+      return 80
     case doersTableView:
       return 75
-    case selectedInputsTableView:
-      return 110
     default:
       return 60
     }

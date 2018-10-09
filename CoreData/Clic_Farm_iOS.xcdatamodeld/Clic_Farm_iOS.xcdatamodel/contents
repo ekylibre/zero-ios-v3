@@ -102,7 +102,7 @@
         <attribute name="materialDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="used" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="used" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="interventionMaterials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionMaterials" inverseName="materials" inverseEntity="InterventionMaterials" syncable="YES"/>
     </entity>
     <entity name="Phytos" representedClassName="Phytos" syncable="YES" codeGenerationType="class">
