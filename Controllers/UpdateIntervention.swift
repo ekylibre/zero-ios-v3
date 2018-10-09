@@ -28,6 +28,7 @@ extension AddInterventionViewController {
 
   func loadInterventionData() {
     if interventionState == Intervention.State.Validated.rawValue {
+      warningView.isHidden = false
       interventionType = currentIntervention?.type
       for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
         selectedEquipments.append(interventionEquipment)
@@ -36,9 +37,9 @@ extension AddInterventionViewController {
         doers.append(doer)
       }
       for target in currentIntervention?.targets?.allObjects as! [Targets] {
-        /*target.crops?.isSelected = true
+        target.crops?.isSelected = true
         cropsView.selectedCropsCount += 1
-        cropsView.selectedSurfaceArea += (target.crops?.surfaceArea)!*/
+        cropsView.selectedSurfaceArea += (target.crops?.surfaceArea)!
       }
       for interventionSeed in currentIntervention?.interventionSeeds?.allObjects as! [InterventionSeeds] {
         selectedInputs.append(interventionSeed)

@@ -18,6 +18,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
+  @IBOutlet weak var warningView: UIView!
 
   // Working Period
   @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!

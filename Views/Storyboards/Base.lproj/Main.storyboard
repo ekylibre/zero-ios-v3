@@ -223,6 +223,32 @@
                                     <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="633.5"/>
                                         <subviews>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EbW-PO-pBu" userLabel="Warning View">
+                                                <rect key="frame" x="0.0" y="-70" width="375" height="70"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="I93-yz-cPb">
+                                                        <rect key="frame" x="15" y="25" width="20" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="fa0-q8-Ozc"/>
+                                                            <constraint firstAttribute="width" constant="20" id="gPo-e4-1gs"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vous ne pouvez pas modifier cette intervention car elle a été validée en ligne." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEB-tN-ck9">
+                                                        <rect key="frame" x="50" y="26" width="527.5" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" red="1" green="0.51357022959999998" blue="0.16542215139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="I93-yz-cPb" firstAttribute="centerY" secondItem="EbW-PO-pBu" secondAttribute="centerY" id="8jN-kf-sn5"/>
+                                                    <constraint firstItem="NEB-tN-ck9" firstAttribute="leading" secondItem="I93-yz-cPb" secondAttribute="trailing" constant="15" id="PUU-Uh-W2X"/>
+                                                    <constraint firstAttribute="height" constant="70" id="QPP-sL-bRE"/>
+                                                    <constraint firstItem="I93-yz-cPb" firstAttribute="leading" secondItem="EbW-PO-pBu" secondAttribute="leading" constant="15" id="REm-Qw-wSa"/>
+                                                    <constraint firstItem="NEB-tN-ck9" firstAttribute="centerY" secondItem="I93-yz-cPb" secondAttribute="centerY" id="RTK-NP-b1t"/>
+                                                </constraints>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-fY-myQ" userLabel="Plots View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                                 <subviews>
@@ -1759,6 +1785,7 @@
                         <outlet property="temperatureTextField" destination="pOP-WE-pVI" id="oDq-IT-cK4"/>
                         <outlet property="thunderstorm" destination="vcc-mx-nY4" id="GGp-7u-CMA"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
+                        <outlet property="warningView" destination="EbW-PO-pBu" id="9Zm-dd-Dis"/>
                         <outlet property="weatherCollapseButton" destination="wzQ-CL-iF5" id="Zq7-jm-i6J"/>
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
@@ -2004,6 +2031,7 @@
         <image name="expand-more" width="24" height="24"/>
         <image name="few-clouds" width="285" height="285"/>
         <image name="light-rain" width="285" height="285"/>
+        <image name="lock" width="50" height="50"/>
         <image name="mist" width="285" height="285"/>
         <image name="shower-rain" width="285" height="285"/>
         <image name="snow" width="16" height="16"/>

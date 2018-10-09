@@ -208,11 +208,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
-      /*if interventionState == Intervention.State.Validated.rawValue {
+      if interventionState == Intervention.State.Validated.rawValue {
         organizeCropsBySelectedPlot(crops)
-      } else {*/
+      } else {
       organizeCropsByPlot(crops)
-      //}
+      }
       createCropViews()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
