@@ -249,6 +249,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     refreshSelectedEquipment()
     refreshSelectedPersons()
     refreshSelectedInputs()
+    refreshWeather()
 
     disableUserInteraction()
 
@@ -849,29 +850,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     textField.resignFirstResponder()
     switch textField {
     case temperatureTextField:
-      weather.temperature = (temperatureTextField.text! as NSString).doubleValue
-      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-        currentWeatherLabel.text = "not_filled_in".localized
-      } else {
-        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
-        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
-        let currentTemp = String(format: "temp".localized, temperature!)
-        let currentWind = String(format: "wind".localized, wind!)
-
-        currentWeatherLabel.text = currentTemp + currentWind
-      }
+      saveCurrentWeather(self)
     case windSpeedTextField:
-      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
-      if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-        currentWeatherLabel.text = "not_filled_in".localized
-      } else {
-        let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
-        let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
-        let currentTemp = String(format: "temp".localized, temperature!)
-        let currentWind = String(format: "wind".localized, wind!)
-
-        currentWeatherLabel.text = currentTemp + currentWind
-      }
+      saveCurrentWeather(self)
     default:
       return false
     }

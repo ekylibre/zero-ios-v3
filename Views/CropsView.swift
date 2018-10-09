@@ -208,8 +208,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
-      for crop in crops {
-      }
       /*if interventionState == Intervention.State.Validated.rawValue {
         organizeCropsBySelectedPlot(crops)
       } else {*/

@@ -42,7 +42,6 @@ extension AddInterventionViewController {
     hideWeatherItems(!shouldExpand)
   }
 
-
   @IBAction func selectWeather(_ sender: UIButton) {
     if weatherIsSelected && sender.layer.borderColor == UIColor.lightGray.cgColor {
       for weather in weatherButtons {
@@ -60,6 +59,26 @@ extension AddInterventionViewController {
       weather.weatherDescription = sender.titleLabel?.text
       weatherIsSelected = true
     }
+  }
+
+  func refreshWeather() {
+    temperatureTextField.text = String(weather.temperature)
+    windSpeedTextField.text = String(weather.windSpeed)
+    saveCurrentWeather(self)
+  }
+
+  @objc func saveCurrentWeather(_ sender: Any) {
+    if temperatureTextField.text == "" && windSpeedTextField.text == "" {
+      currentWeatherLabel.text = "not_filled_in".localized
+    } else {
+      let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "")
+      let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
+      let currentTemperature = String(format: "temp".localized, temperature!)
+      let currentWind = String(format: "wind".localized, wind!)
+      currentWeatherLabel.text = currentTemperature + currentWind
+    }
+    weather.temperature = (temperatureTextField.text! as NSString).doubleValue
+    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
   }
 
   func initWeather() {

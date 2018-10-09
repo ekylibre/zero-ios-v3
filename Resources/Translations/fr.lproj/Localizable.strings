@@ -365,7 +365,9 @@
 "chose_unit" = "Unité";
 
 "temperature" = "Température";
-"wind" = "Vent";
+"temp" = "Temp.: %@ °C |";
+"wind_label" = "Vent";
+"wind" = " vent: %@ km/h";
 "wind_speed" = "Vitesse du vent";
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
