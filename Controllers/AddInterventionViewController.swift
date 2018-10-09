@@ -26,6 +26,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectDateButton: UIButton!
   @IBOutlet weak var durationTextField: UITextField!
   @IBOutlet weak var durationUnitLabel: UILabel!
+  @IBOutlet weak var workingPeriodGestureRecognizer: UIGestureRecognizer!
 
   // Inputs
   @IBOutlet weak var inputsSelectionView: UIView!

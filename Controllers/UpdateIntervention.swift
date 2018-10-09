@@ -22,6 +22,8 @@ extension AddInterventionViewController {
     dateFormatter.dateFormat = "d MMM"
     selectedDate = dateFormatter.string(from: date!)
     selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", selectedDate, duration!)
+    collapseWorkingPeriodImage.isHidden = true
+    workingPeriodGestureRecognizer.isEnabled = false
   }
 
   func loadInterventionData() {
