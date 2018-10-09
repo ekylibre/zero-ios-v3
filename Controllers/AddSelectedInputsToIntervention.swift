@@ -44,16 +44,16 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func refreshSelectedInputs() {
+    addInputsButton.isHidden = true
     if selectedInputs.count > 0 {
       selectedInputsTableView.reloadData()
       inputsCollapseButton.isHidden = false
-      addInputsButton.isHidden = true
-      showEntitiesNumber(
-        entities: selectedInputs,
-        constraint: inputsHeightConstraint,
-        numberLabel: inputsNumber,
-        addEntityButton: addInputsButton)
     }
+    showEntitiesNumber(
+      entities: selectedInputs,
+      constraint: inputsHeightConstraint,
+      numberLabel: inputsNumber,
+      addEntityButton: addInputsButton)
   }
 
   func closeInputsSelectionView() {

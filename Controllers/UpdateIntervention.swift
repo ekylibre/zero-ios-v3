@@ -29,8 +29,6 @@ extension AddInterventionViewController {
   func loadInterventionData() {
     if interventionState == Intervention.State.Validated.rawValue {
       interventionType = currentIntervention?.type
-      weather = currentIntervention?.weather
-      updateWorkingPeriod()
       for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
         selectedEquipments.append(interventionEquipment)
       }
@@ -52,5 +50,12 @@ extension AddInterventionViewController {
         selectedInputs.append(interventionFertilizer)
       }
     }
+    weather = currentIntervention?.weather
+    updateWorkingPeriod()
+    refreshSelectedEquipment()
+    refreshSelectedPersons()
+    refreshSelectedInputs()
+    refreshWeather()
+    disableUserInteraction()
   }
 }

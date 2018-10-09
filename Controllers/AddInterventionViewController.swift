@@ -247,12 +247,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     loadInterventionData()
 
     setupViewsAccordingInterventionType()
-    refreshSelectedEquipment()
-    refreshSelectedPersons()
-    refreshSelectedInputs()
-    refreshWeather()
-
-    disableUserInteraction()
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -956,6 +950,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {
+    print("\nCOUNT: \(entities.count), entity: \(entities)")
     if entities.count > 0 && constraint.constant == 70 {
       addEntityButton.isHidden = true
       numberLabel.isHidden = false
@@ -970,8 +965,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         return
       }
     } else if interventionState == Intervention.State.Validated.rawValue {
-      numberLabel.isHidden = true
+      print("\nNONE")
+      numberLabel.isHidden = false
+      numberLabel.text = "none".localized
     } else {
+      print("\nEUH")
       numberLabel.isHidden = true
       addEntityButton.isHidden = false
     }
