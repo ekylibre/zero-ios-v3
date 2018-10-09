@@ -29,6 +29,7 @@ extension AddInterventionViewController {
   func loadInterventionData() {
     if interventionState == Intervention.State.Validated.rawValue {
       warningView.isHidden = false
+      warningMessage.text = "you_are_in_consult_mode".localized
       interventionType = currentIntervention?.type
       for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
         selectedEquipments.append(interventionEquipment)
