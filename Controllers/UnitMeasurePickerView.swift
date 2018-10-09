@@ -64,6 +64,6 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
       selectedInputs[cellIndexPath.row].setValue(solidUnitMeasure[row], forKey: "unit")
       cell.unitMeasureButton.setTitle(solidUnitMeasure[row], for: .normal)
     }
-    updateInputQuantity(indexPath: cellIndexPath)
+    //updateInputQuantity(indexPath: cellIndexPath)
   }
 }

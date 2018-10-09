@@ -64,7 +64,7 @@ extension AddInterventionViewController: DoerCellDelegate {
         addEntityButton: addEntitiesButton)
     }
   }
-  
+
   func closeEntitiesSelectionView() {
     dimView.isHidden = true
     selectEntitiesView.isHidden = true

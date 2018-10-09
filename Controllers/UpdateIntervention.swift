@@ -7,10 +7,24 @@
 //
 
 import UIKit
+import CoreData
 
 extension AddInterventionViewController {
+
+  func updateCrops(crop: Crops) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var newCrop = Crops(context: managedContext)
+
+    newCrop = crop
+    newCrop.isSelected = true
+  }
+
   func loadInterventionData() {
-    if interventionState == Intervention.State.Created.rawValue {
+    if interventionState == Intervention.State.Validated.rawValue {
       interventionType = currentIntervention?.type
       weather = currentIntervention?.weather
       for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
@@ -20,7 +34,9 @@ extension AddInterventionViewController {
         doers.append(doer)
       }
       for target in currentIntervention?.targets?.allObjects as! [Targets] {
-
+        /*target.crops?.isSelected = true
+        cropsView.selectedCropsCount += 1
+        cropsView.selectedSurfaceArea += (target.crops?.surfaceArea)!*/
       }
       for interventionSeed in currentIntervention?.interventionSeeds?.allObjects as! [InterventionSeeds] {
         selectedInputs.append(interventionSeed)

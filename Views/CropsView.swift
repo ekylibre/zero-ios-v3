@@ -76,6 +76,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return bottomView
   }()
 
+  var interventionState: Intervention.State.RawValue!
   var crops = [[Crops]]()
   var cropViews = [[CropView]]()
   var selectedCropsCount: Int = 0
@@ -86,7 +87,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
-    fetchCrops()
   }
 
   private func setupView() {
@@ -208,7 +208,13 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
+      for crop in crops {
+      }
+      /*if interventionState == Intervention.State.Validated.rawValue {
+        organizeCropsBySelectedPlot(crops)
+      } else {*/
       organizeCropsByPlot(crops)
+      //}
       createCropViews()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -226,6 +232,23 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         cropsFromSamePlot = [Crops]()
       }
       cropsFromSamePlot.append(crop)
+    }
+    self.crops.append(cropsFromSamePlot)
+  }
+
+  private func organizeCropsBySelectedPlot(_ crops: [Crops]) {
+    var cropsFromSamePlot = [Crops]()
+    var name = crops.first?.plotName
+
+    for crop in crops {
+      if crop.isSelected == true {
+        if crop.plotName != name {
+          name = crop.plotName
+          self.crops.append(cropsFromSamePlot)
+          cropsFromSamePlot = [Crops]()
+        }
+        cropsFromSamePlot.append(crop)
+      }
     }
     self.crops.append(cropsFromSamePlot)
   }

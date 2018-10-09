@@ -43,6 +43,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       addEntityButton: addInputsButton)
   }
 
+  func refreshSelectedInputs() {
+    if selectedInputs.count > 0 {
+      selectedInputsTableView.reloadData()
+      inputsCollapseButton.isHidden = false
+      addInputsButton.isHidden = true
+      showEntitiesNumber(
+        entities: selectedInputs,
+        constraint: inputsHeightConstraint,
+        numberLabel: inputsNumber,
+        addEntityButton: addInputsButton)
+    }
+  }
+
   func closeInputsSelectionView() {
     dimView.isHidden = true
     inputsView.isHidden = true
@@ -169,7 +182,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if totalCellNumber > 0 {
       for currentCell in 0..<(totalCellNumber) {
         indexPath = NSIndexPath(row: currentCell, section: 0) as IndexPath?
-        updateInputQuantity(indexPath: indexPath)
+        //updateInputQuantity(indexPath: indexPath)
       }
     }
   }

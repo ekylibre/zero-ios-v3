@@ -229,6 +229,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(inputsView)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    cropsView.interventionState = interventionState
+    cropsView.fetchCrops()
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
@@ -246,6 +248,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupViewsAccordingInterventionType()
     refreshSelectedEquipment()
     refreshSelectedPersons()
+    refreshSelectedInputs()
+
+    disableUserInteraction()
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -348,6 +353,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return selectedInputs.count
     default:
       return 1
+    }
+  }
+
+  func disableUserInteraction() {
+    if interventionState == Intervention.State.Validated.rawValue {
+      selectedInputsTableView.isUserInteractionEnabled = false
+      selectedEquipmentsTableView.isUserInteractionEnabled = false
+      doersTableView.isUserInteractionEnabled = false
+      temperatureTextField.isUserInteractionEnabled = false
+      windSpeedTextField.isUserInteractionEnabled = false
+      for weatherButton in weatherButtons {
+        weatherButton.isUserInteractionEnabled = false
+      }
     }
   }
 
@@ -969,6 +987,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       default:
         return
       }
+    } else if interventionState == Intervention.State.Validated.rawValue {
+      numberLabel.isHidden = true
     } else {
       numberLabel.isHidden = true
       addEntityButton.isHidden = false
