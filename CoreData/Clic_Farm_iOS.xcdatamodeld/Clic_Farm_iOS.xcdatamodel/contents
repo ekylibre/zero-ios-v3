@@ -61,7 +61,7 @@
     </entity>
     <entity name="InterventionMaterials" representedClassName="InterventionMaterials" syncable="YES" codeGenerationType="class">
         <attribute name="approximativeValue" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionMaterials" inverseEntity="Interventions" syncable="YES"/>
         <relationship name="materials" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Materials" inverseName="interventionMaterials" inverseEntity="Materials" syncable="YES"/>
@@ -162,7 +162,7 @@
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="255"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="105"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
-        <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="118"/>
+        <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="120"/>
         <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>
         <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
         <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="135"/>

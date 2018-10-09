@@ -282,7 +282,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
   @objc private func validateCreation() {
     createMaterial(name: creationView.nameTextField.text!, unit: creationView.unitButton.titleLabel!.text!)
     creationView.nameTextField.text = ""
-    creationView.unitButton.setTitle("meter".localized, for: .normal)
+    creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
     materials = materials.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased() })
     tableView.reloadData()
     dimView.isHidden = true

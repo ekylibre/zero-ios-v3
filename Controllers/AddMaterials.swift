@@ -97,4 +97,39 @@ extension AddInterventionViewController {
   @objc private func showUnits() {
     self.performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
+
+  @objc func tapDeleteButton(sender: UIButton) {
+    let cell = sender.superview?.superview as! SelectedMaterialCell
+    let indexPath = selectedMaterialsTableView.indexPath(for: cell)!
+    let alert = UIAlertController(title: nil, message: "delete_material_prompt".localized, preferredStyle: .alert)
+
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
+      self.deleteMaterial(indexPath.row)
+    }))
+    self.present(alert, animated: true)
+  }
+
+  private func deleteMaterial(_ index: Int)  {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedMaterial = selectedMaterials[index]
+
+    let test = selectedMaterial.materials
+    selectedMaterial.materials?.used = false
+    materialsView.tableView.reloadData()
+    managedContext.delete(selectedMaterial)
+    print(test?.interventionMaterials?.count)
+    selectedMaterials.remove(at: index)
+    updateView()
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
 }

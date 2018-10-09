@@ -47,7 +47,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
 
   lazy var unitButton: UIButton = {
     let unitButton = UIButton(frame: CGRect.zero)
-    unitButton.setTitle("meter".localized, for: .normal)
+    unitButton.setTitle("METER".localized.lowercased(), for: .normal)
     unitButton.setTitleColor(UIColor.black, for: .normal)
     unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     unitButton.contentHorizontalAlignment = .leading

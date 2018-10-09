@@ -384,7 +384,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
       let selectedMaterial = selectedMaterials[indexPath.row]
 
-      cell.nameLabel.text = "test"
+      cell.nameLabel.text = selectedMaterial.materials?.name
+      cell.unitButton.setTitle(selectedMaterial.unit?.localized, for: .normal)
+      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
@@ -510,6 +512,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let duration = durationTextField.text!.floatValue
     workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)
+    createMaterials(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
@@ -580,6 +583,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       target.setValue(intervention, forKey: "interventions")
       target.setValue(selectedCrop, forKey: "crops")
       target.setValue(100, forKey: "workAreaPercentage")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func createMaterials(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for (index, selectedMaterial) in selectedMaterials.enumerated() {
+      let cell = selectedMaterialsTableView.cellForRow(at: IndexPath(row: index, section: 0)) as! SelectedMaterialCell
+
+      selectedMaterial.interventions = intervention
+      selectedMaterial.quantity = cell.quantityTextField.text?.floatValue ?? 0
+      selectedMaterial.unit = cell.unitButton.title(for: .normal)
+      selectedMaterial.materials?.used = false
     }
 
     do {

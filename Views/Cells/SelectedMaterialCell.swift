@@ -16,7 +16,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var materialImage: UIImageView = {
     let materialImage = UIImageView(frame: CGRect.zero)
-    materialImage.image = UIImage(named: "material")
+    materialImage.image = UIImage(named: "materials")
     materialImage.translatesAutoresizingMaskIntoConstraints = false
     return materialImage
   }()
@@ -28,11 +28,11 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
     return nameLabel
   }()
 
-  lazy var removeButton: UIButton = {
-    let removeButton = UIButton(frame: CGRect.zero)
-    removeButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
-    removeButton.translatesAutoresizingMaskIntoConstraints = false
-    return removeButton
+  lazy var deleteButton: UIButton = {
+    let deleteButton = UIButton(frame: CGRect.zero)
+    deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
+    deleteButton.translatesAutoresizingMaskIntoConstraints = false
+    return deleteButton
   }()
 
   lazy var quantityLabel: UILabel = {
@@ -84,7 +84,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
     self.backgroundColor = AppColor.CellColors.LightGray
     contentView.addSubview(materialImage)
     contentView.addSubview(nameLabel)
-    contentView.addSubview(removeButton)
+    contentView.addSubview(deleteButton)
     contentView.addSubview(quantityLabel)
     contentView.addSubview(quantityTextField)
     contentView.addSubview(unitButton)
@@ -99,10 +99,10 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       materialImage.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: materialImage.trailingAnchor, constant: 10),
-      removeButton.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
-      removeButton.heightAnchor.constraint(equalToConstant: 20),
-      removeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      removeButton.widthAnchor.constraint(equalToConstant: 20),
+      deleteButton.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
+      deleteButton.heightAnchor.constraint(equalToConstant: 20),
+      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.widthAnchor.constraint(equalToConstant: 20),
       quantityLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       quantityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
