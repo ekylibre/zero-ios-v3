@@ -11,22 +11,24 @@ import CoreData
 
 extension AddInterventionViewController {
 
-  func updateCrops(crop: Crops) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
+  func updateWorkingPeriod() {
+    let dateFormatter = DateFormatter()
+    let selectedDate: String
+    let workingPeriods = currentIntervention.workingPeriods?.allObjects as! [WorkingPeriods]
+    let date = workingPeriods.first?.executionDate
+    let duration = workingPeriods.first?.hourDuration
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    var newCrop = Crops(context: managedContext)
-
-    newCrop = crop
-    newCrop.isSelected = true
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMM"
+    selectedDate = dateFormatter.string(from: date!)
+    selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", selectedDate, duration!)
   }
 
   func loadInterventionData() {
     if interventionState == Intervention.State.Validated.rawValue {
       interventionType = currentIntervention?.type
       weather = currentIntervention?.weather
+      updateWorkingPeriod()
       for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
         selectedEquipments.append(interventionEquipment)
       }
