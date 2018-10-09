@@ -383,19 +383,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
         switch selectedInput {
         case is InterventionSeeds:
-          let seed = selectedInput.value(forKey: "seeds") as! Seeds
-          cell.inputName.text = seed.specie
-          cell.inputLabel.text = seed.variety
+          let interventionSeed = selectedInput as! InterventionSeeds
+          cell.inputName.text = interventionSeed.seeds?.specie
+          cell.inputLabel.text = interventionSeed.seeds?.variety
+          cell.inputQuantity.text = (interventionSeed.quantity as NSNumber).stringValue
+          cell.unitMeasureButton.setTitle(interventionSeed.unit, for: .normal)
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case is InterventionPhytosanitaries:
-          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
-          cell.inputName.text = phyto.name
-          cell.inputLabel.text = phyto.firmName
+          let interventionPhyto = selectedInput as! InterventionPhytosanitaries
+          cell.inputName.text = interventionPhyto.phytos?.name
+          cell.inputLabel.text = interventionPhyto.phytos?.firmName
+          cell.inputQuantity.text = (interventionPhyto.quantity as NSNumber).stringValue
+          cell.unitMeasureButton.setTitle(interventionPhyto.unit, for: .normal)
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
         case is InterventionFertilizers:
-          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
-          cell.inputName.text = fertilizer.name
-          cell.inputLabel.text = fertilizer.nature
+          let interventionFertilizer = selectedInput as! InterventionFertilizers
+          cell.inputName.text = interventionFertilizer.fertilizers?.name
+          cell.inputLabel.text = interventionFertilizer.fertilizers?.nature
+          cell.inputQuantity.text = (interventionFertilizer.quantity as NSNumber).stringValue
+          cell.unitMeasureButton.setTitle(interventionFertilizer.unit, for: .normal)
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")

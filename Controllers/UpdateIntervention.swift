@@ -49,13 +49,13 @@ extension AddInterventionViewController {
       for interventionFertilizer in currentIntervention.interventionFertilizers?.allObjects as! [InterventionFertilizers] {
         selectedInputs.append(interventionFertilizer)
       }
+      weather = currentIntervention?.weather
+      updateWorkingPeriod()
+      refreshSelectedEquipment()
+      refreshSelectedPersons()
+      refreshSelectedInputs()
+      refreshWeather()
+      disableUserInteraction()
     }
-    weather = currentIntervention?.weather
-    updateWorkingPeriod()
-    refreshSelectedEquipment()
-    refreshSelectedPersons()
-    refreshSelectedInputs()
-    refreshWeather()
-    disableUserInteraction()
   }
 }
