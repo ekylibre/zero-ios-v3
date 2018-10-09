@@ -214,20 +214,19 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialCell", for: indexPath) as! MaterialCell
     let fromMaterials = isSearching ? filteredMaterials : materials
-    let used = fromMaterials[indexPath.row].used
+    let isSelected = addInterventionViewController!.selectedMaterials.contains(fromMaterials[indexPath.row])
 
     cell.nameLabel.text = fromMaterials[indexPath.row].name
-    cell.isUserInteractionEnabled = !used
-    cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+    cell.isUserInteractionEnabled = !isSelected
+    cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let fromMaterials = isSearching ? filteredMaterials : materials
 
-    fromMaterials[indexPath.row].used = true
-    tableView.reloadData()
     addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row])
+    tableView.reloadData()
   }
 
   // MARK: - Core Data
@@ -258,7 +257,6 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
 
     material.name = name
     material.unit = unit
-    material.used = false
     materials.append(material)
 
     do {

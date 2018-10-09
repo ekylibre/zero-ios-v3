@@ -106,7 +106,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropsView: CropsView!
   var inputsView: InputsView!
   var materialsView: MaterialsView!
-  var selectedMaterials = [InterventionMaterials]()
+  var selectedMaterials = [Materials]()
   var interventionEquipments = [NSManagedObject]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
   var equipments = [Equipments]()
@@ -384,7 +384,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
       let selectedMaterial = selectedMaterials[indexPath.row]
 
-      cell.nameLabel.text = selectedMaterial.materials?.name
+      cell.nameLabel.text = selectedMaterial.name
       cell.unitButton.setTitle(selectedMaterial.unit?.localized, for: .normal)
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       return cell
@@ -600,12 +600,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for (index, selectedMaterial) in selectedMaterials.enumerated() {
+      let interventionMaterial = InterventionMaterials(context: managedContext)
       let cell = selectedMaterialsTableView.cellForRow(at: IndexPath(row: index, section: 0)) as! SelectedMaterialCell
 
-      selectedMaterial.interventions = intervention
-      selectedMaterial.quantity = cell.quantityTextField.text?.floatValue ?? 0
-      selectedMaterial.unit = cell.unitButton.title(for: .normal)
-      selectedMaterial.materials?.used = false
+      interventionMaterial.interventions = intervention
+      interventionMaterial.materials = selectedMaterial
+      interventionMaterial.quantity = cell.quantityTextField.text?.floatValue ?? 0
+      interventionMaterial.unit = cell.unitButton.title(for: .normal)
     }
 
     do {

@@ -39,16 +39,7 @@ extension AddInterventionViewController {
   // MARK: - Selection
 
   func selectMaterial(_ material: Materials) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedMaterial = InterventionMaterials(context: managedContext)
-
-    selectedMaterial.unit = material.unit
-    selectedMaterial.materials = material
-    selectedMaterials.append(selectedMaterial)
+    selectedMaterials.append(material)
     closeSelectionView()
     updateView()
   }
@@ -111,25 +102,8 @@ extension AddInterventionViewController {
   }
 
   private func deleteMaterial(_ index: Int)  {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedMaterial = selectedMaterials[index]
-
-    let test = selectedMaterial.materials
-    selectedMaterial.materials?.used = false
-    materialsView.tableView.reloadData()
-    managedContext.delete(selectedMaterial)
-    print(test?.interventionMaterials?.count)
     selectedMaterials.remove(at: index)
     updateView()
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
+    materialsView.tableView.reloadData()
   }
 }
