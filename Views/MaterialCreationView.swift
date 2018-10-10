@@ -137,7 +137,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
       nameTextField.text = ""
-      unitButton.setTitle("meter".localized, for: .normal)
+      unitButton.setTitle("METER".localized.lowercased(), for: .normal)
     }
     self.isHidden = true
   }

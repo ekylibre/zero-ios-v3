@@ -102,6 +102,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   var newIntervention: Interventions!
   var interventionType: String!
+  var selectedRow: Int!
+  var selectedValue: String!
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
@@ -385,11 +387,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return cell
     case selectedMaterialsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
-      let selectedMaterial = selectedMaterials[0][indexPath.row] as! Materials
+      let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
+      let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
 
-      cell.nameLabel.text = selectedMaterial.name
+      cell.nameLabel.text = name
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
-      cell.unitButton.setTitle(selectedMaterial.unit?.localized, for: .normal)
+      cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
+      cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       cell.selectionStyle = .none
       return cell
@@ -715,11 +719,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                              "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
       destVC.tag = 1
+    case "showSelectedMaterialUnits":
+      let destVC = segue.destination as! ListTableViewController
+      destVC.delegate = self
+      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                           "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+      destVC.tag = 2
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.rawStrings = loadEquipmentTypes()
-      destVC.tag = 2
+      destVC.tag = 3
     default:
       guard let button = sender as? UIButton, button == saveInterventionButton else {
         return
@@ -752,12 +762,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func writeValueBack(tag: Int, value: String) {
+    selectedValue = value
+
     switch tag {
     case 0:
       inputsView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
-      materialsView.creationView.unitButton.setTitle(value.localized, for: .normal)
+      materialsView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
     case 2:
+      selectedMaterials[1][selectedRow].setValue(value, forKey: "unit")
+      selectedMaterialsTableView.reloadData()
+    case 3:
       selectedEquipmentType = value
       equipmentTypeButton.setTitle(selectedEquipmentType.localized, for: .normal)
     default:

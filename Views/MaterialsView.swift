@@ -226,6 +226,9 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     let fromMaterials = isSearching ? filteredMaterials : materials
 
     addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row])
+    searchBar.text = nil
+    searchBar.endEditing(true)
+    isSearching = false
     tableView.reloadData()
   }
 
@@ -279,7 +282,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
   }
 
   @objc private func validateCreation() {
-    createMaterial(name: creationView.nameTextField.text!, unit: creationView.unitButton.titleLabel!.text!)
+    createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue ?? "METER")
     creationView.nameTextField.text = ""
     creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
     materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)

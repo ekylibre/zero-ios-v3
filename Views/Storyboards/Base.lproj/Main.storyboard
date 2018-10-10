@@ -1828,6 +1828,7 @@
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecies" id="uas-Qa-jvK"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnits" id="nwb-tQ-9Vq"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showEquipmentTypes" id="EKH-vj-NkS"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSelectedMaterialUnits" id="FE4-xp-aKR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2080,6 +2081,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="a8t-Pd-Dxa"/>
-        <segue reference="nwb-tQ-9Vq"/>
+        <segue reference="FE4-xp-aKR"/>
     </inferredMetricsTieBreakers>
 </document>

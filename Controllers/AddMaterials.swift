@@ -33,7 +33,7 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
     materialsView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
-    materialsView.creationView.unitButton.addTarget(self, action: #selector(showUnits), for: .touchUpInside)
+    materialsView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
     materialsView.addInterventionViewController = self
   }
 
@@ -97,6 +97,11 @@ extension AddInterventionViewController {
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
+
+    materialsView.searchBar.text = nil
+    materialsView.searchBar.endEditing(true)
+    materialsView.isSearching = false
+    materialsView.tableView.reloadData()
   }
 
   @objc func updateMaterialQuantity(sender: UITextField) {
@@ -106,7 +111,14 @@ extension AddInterventionViewController {
     selectedMaterials[1][indexPath!.row].setValue(sender.text?.floatValue, forKey: "quantity")
   }
 
-  @objc private func showUnits() {
+  @objc func showSelectedMaterialUnits(sender: UIButton) {
+    let cell = sender.superview?.superview as! SelectedMaterialCell
+
+    selectedRow = selectedMaterialsTableView.indexPath(for: cell)!.row
+    self.performSegue(withIdentifier: "showSelectedMaterialUnits", sender: self)
+  }
+
+  @objc private func showMaterialUnits() {
     self.performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
 
