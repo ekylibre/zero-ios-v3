@@ -241,7 +241,8 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
 
     do {
       materials = try managedContext.fetch(materialsFetchRequest)
-      materials = materials.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased() })
+      materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -281,7 +282,8 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
     createMaterial(name: creationView.nameTextField.text!, unit: creationView.unitButton.titleLabel!.text!)
     creationView.nameTextField.text = ""
     creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
-    materials = materials.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased() })
+    materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     tableView.reloadData()
     dimView.isHidden = true
   }

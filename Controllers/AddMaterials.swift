@@ -93,6 +93,10 @@ extension AddInterventionViewController {
   @objc private func closeSelectionView() {
     materialsView.isHidden = true
     dimView.isHidden = true
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
   }
 
   @objc func updateMaterialQuantity(sender: UITextField) {
