@@ -62,8 +62,8 @@ extension AddInterventionViewController {
   }
 
   func refreshWeather() {
-    temperatureTextField.text = String(weather.temperature)
-    windSpeedTextField.text = String(weather.windSpeed)
+    temperatureTextField.text = (weather.temperature as NSNumber?)?.stringValue
+    windSpeedTextField.text = (weather.windSpeed as NSNumber?)?.stringValue
     for weatherButton in weatherButtons {
       if weather.weatherDescription == weatherButton.titleLabel?.text {
         weatherButton.layer.borderColor = AppColor.BarColors.Green.cgColor

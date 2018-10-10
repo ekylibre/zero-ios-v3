@@ -236,10 +236,13 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   private func organizeCropsBySelectedPlot(_ crops: [Crops]) {
     var cropsFromSamePlot = [Crops]()
-    var name = crops.first?.plotName
+    var name: String!
 
     for crop in crops {
       if crop.isSelected == true {
+        if name == nil {
+          name = crop.plotName
+        }
         if crop.plotName != name {
           name = crop.plotName
           self.crops.append(cropsFromSamePlot)
@@ -248,7 +251,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         cropsFromSamePlot.append(crop)
       }
     }
-    self.crops.append(cropsFromSamePlot)
+    if cropsFromSamePlot.count > 0 {
+      self.crops.append(cropsFromSamePlot)
+    }
   }
 
   private func createCropViews() {
