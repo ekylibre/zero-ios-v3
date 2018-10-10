@@ -446,7 +446,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print(error)
-        print(result!.data!.createArticle!.errors!)
+      } else if let resultError = result!.data!.createArticle!.errors {
+        print(resultError)
       } else {
         id = Int32(result!.data!.createArticle!.article!.id)!
       }
@@ -473,7 +474,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print(error)
-        print(result!.data!.createArticle!.errors!)
+      } else if let resultError = result!.data!.createArticle!.errors {
+        print(resultError)
       } else {
         id = Int32(result!.data!.createArticle!.article!.id)!
       }

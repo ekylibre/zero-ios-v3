@@ -252,7 +252,8 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print(error)
-        print(result!.data!.createEquipment!.errors!)
+      } else if let resultError = result!.data!.createEquipment!.errors {
+        print(resultError)
       } else {
         id = Int32(result!.data!.createEquipment!.equipment!.id)!
       }
