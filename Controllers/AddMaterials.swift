@@ -64,7 +64,6 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.reloadData()
   }
 
-
   // MARK: - Actions
 
   @IBAction private func tapMaterialsView() {

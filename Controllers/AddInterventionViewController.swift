@@ -403,7 +403,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       cell.nameLabel.text = equipment.name
       cell.typeLabel.text = equipment.type?.localized
-      cell.typeImageView.image = defineEquipmentImage(equipmentName: equipment.type!)
+      cell.typeImageView.image = defineEquipmentImage(type: equipment.type!)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -414,7 +414,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedEquipment.name
       cell.typeLabel.text = selectedEquipment.type?.localized
-      cell.typeImageView.image = defineEquipmentImage(equipmentName: selectedEquipment.type!)
+      cell.typeImageView.image = defineEquipmentImage(type: selectedEquipment.type!)
       return cell
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
@@ -613,9 +613,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       interventionMaterial.interventions = intervention
       interventionMaterial.materials = selectedMaterials[0][index] as? Materials
-      print("index: \(index)")
-      print("qauntity: \(interventionMaterial.quantity)")
-      print("unit:", interventionMaterial.unit)
     }
 
     do {

@@ -40,13 +40,13 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     types = types.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <
-        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
     return types
   }
 
-  func defineEquipmentImage(equipmentName: String) -> UIImage? {
-    let assetName = equipmentName.lowercased().replacingOccurrences(of: "_", with: "-")
+  func defineEquipmentImage(type: String) -> UIImage? {
+    let assetName = type.lowercased().replacingOccurrences(of: "_", with: "-")
 
     return UIImage(named: assetName)
   }

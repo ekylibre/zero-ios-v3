@@ -51,7 +51,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     unitButton.setTitleColor(UIColor.black, for: .normal)
     unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     unitButton.contentHorizontalAlignment = .leading
-    unitButton.titleEdgeInsets = UIEdgeInsets.init(top: 13, left: 8, bottom: 0, right: 0)
+    unitButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
     unitButton.translatesAutoresizingMaskIntoConstraints = false
     return unitButton
   }()
