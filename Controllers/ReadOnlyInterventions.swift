@@ -76,6 +76,9 @@ extension AddInterventionViewController {
     if interventionState == Intervention.State.Validated.rawValue {
       warningView.isHidden = false
       warningMessage.text = "you_are_in_consult_mode".localized
+      notesTextField.placeholder = currentIntervention.infos
+      interventionLogo.isHidden = false
+      interventionLogo.image = UIImage(named: "read-only")
       cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
       interventionType = currentIntervention?.type
       updateWorkingPeriod()

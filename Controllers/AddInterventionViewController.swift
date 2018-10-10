@@ -13,15 +13,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Outlets
 
-  @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
 
-  // Validated Intervention message
+  // Validated Intervention
   @IBOutlet weak var warningView: UIView!
   @IBOutlet weak var warningMessage: UILabel!
+
+  // Crops View
+  @IBOutlet weak var totalLabel: UILabel!
+  @IBOutlet weak var interventionLogo: UIImageView!
 
   // Working Period
   @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
@@ -102,6 +105,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var showerRain: UIButton!
   @IBOutlet weak var snow: UIButton!
   @IBOutlet weak var thunderstorm: UIButton!
+
+  // Notes
+  @IBOutlet weak var notesTextField: UITextField!
 
   // MARK: - Properties
 
@@ -369,6 +375,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       doersTableView.isUserInteractionEnabled = false
       temperatureTextField.isUserInteractionEnabled = false
       windSpeedTextField.isUserInteractionEnabled = false
+      notesTextField.isUserInteractionEnabled = false
       for weatherButton in weatherButtons {
         weatherButton.isUserInteractionEnabled = false
       }
@@ -550,7 +557,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     currentIntervention.type = interventionType
     currentIntervention.status = Intervention.Status.OutOfSync.rawValue
-    currentIntervention.infos = "Infos"
+    currentIntervention.infos = notesTextField.text
     if interventionType == "IRRIGATION".localized {
       let waterVolume = irrigationValueTextField.text!.floatValue
       currentIntervention.waterQuantity = waterVolume
