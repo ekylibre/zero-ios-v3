@@ -76,6 +76,7 @@ extension AddInterventionViewController {
     if interventionState == Intervention.State.Validated.rawValue {
       warningView.isHidden = false
       warningMessage.text = "you_are_in_consult_mode".localized
+      cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
       interventionType = currentIntervention?.type
       updateWorkingPeriod()
       loadCropsInReadOnlyMode()

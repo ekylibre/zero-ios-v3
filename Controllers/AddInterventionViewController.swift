@@ -262,7 +262,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let typeLabel = UILabel()
 
     if interventionType != nil {
-      typeLabel.text = interventionType
+      typeLabel.text = interventionType.localized
     }
     typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
     typeLabel.textColor = UIColor.white
@@ -363,6 +363,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func disableUserInteraction() {
     if interventionState == Intervention.State.Validated.rawValue {
+      cropsView.tableView.isUserInteractionEnabled = false
       selectedInputsTableView.isUserInteractionEnabled = false
       selectedEquipmentsTableView.isUserInteractionEnabled = false
       doersTableView.isUserInteractionEnabled = false

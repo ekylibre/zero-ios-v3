@@ -295,18 +295,20 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
-    let cell = sender.superview?.superview as! PlotCell
-    let indexPath = tableView.indexPath(for: cell)!
-    let crops = self.crops[indexPath.row]
+    if interventionState != Intervention.State.Validated.rawValue {
+      let cell = sender.superview?.superview as! PlotCell
+      let indexPath = tableView.indexPath(for: cell)!
+      let crops = self.crops[indexPath.row]
 
-    if !sender.isSelected {
-      sender.isSelected = true
-      selectPlot(crops, indexPath)
-    } else {
-      sender.isSelected = false
-      deselectPlot(crops, cell)
+      if !sender.isSelected {
+        sender.isSelected = true
+        selectPlot(crops, indexPath)
+      } else {
+        sender.isSelected = false
+        deselectPlot(crops, cell)
+      }
+      updateSelectedCropsLabel()
     }
-    updateSelectedCropsLabel()
   }
 
   private func selectPlot(_ crops: [Crops], _ indexPath: IndexPath) {
@@ -341,21 +343,23 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   @objc func tapCropView(sender: UIGestureRecognizer) {
-    let cell = sender.view?.superview?.superview as! PlotCell
-    let plotIndex = tableView.indexPath(for: cell)!.row
-    let view = sender.view as! CropView
-    let cropIndex = cropViews[plotIndex].firstIndex(of: view)!
-    let crops = self.crops[plotIndex]
-    let crop = crops[cropIndex]
+    if interventionState != Intervention.State.Validated.rawValue {
+      let cell = sender.view?.superview?.superview as! PlotCell
+      let plotIndex = tableView.indexPath(for: cell)!.row
+      let view = sender.view as! CropView
+      let cropIndex = cropViews[plotIndex].firstIndex(of: view)!
+      let crops = self.crops[plotIndex]
+      let crop = crops[cropIndex]
 
-    if view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") {
-      view.checkboxImage.image = #imageLiteral(resourceName: "check-box")
-      selectCrop(crop, cell)
-    } else {
-      view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
-      deselectCrop(crop, crops, cell)
+      if view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") {
+        view.checkboxImage.image = #imageLiteral(resourceName: "check-box")
+        selectCrop(crop, cell)
+      } else {
+        view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+        deselectCrop(crop, crops, cell)
+      }
+      updateSelectedCropsLabel()
     }
-    updateSelectedCropsLabel()
   }
 
   private func selectCrop(_ crop: Crops, _ cell: PlotCell) {
