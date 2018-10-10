@@ -107,8 +107,8 @@ extension AddInterventionViewController: DoerCellDelegate {
     entity.row = 0
 
     do {
-      try managedContext.save()
       entity.ekyID = pushPerson(first: entityFirstName.text ?? "", last: entityLastName.text ?? "")
+      try managedContext.save()
       entities.append(entity)
       closeEntitiesCreationView(self)
     } catch let error as NSError {

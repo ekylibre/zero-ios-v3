@@ -225,10 +225,10 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipment.setValue(0, forKey: "row")
 
     do {
-      try managedContext.save()
       let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;              #warning("Wrong type passed")
       let ekyID = pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
       equipment.setValue(ekyID, forKey: "ekyID")
+      try managedContext.save()
       equipments.append(equipment)
       closeEquipmentsCreationView(self)
     } catch let error as NSError {
