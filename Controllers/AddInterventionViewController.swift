@@ -109,6 +109,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // Notes
   @IBOutlet weak var notesTextField: UITextField!
 
+  // Bottom view
+  @IBOutlet weak var bottomBarView: UIView!
+  @IBOutlet weak var bottomView: UIView!
+
   // MARK: - Properties
 
   var interventionState: Intervention.State.RawValue!
@@ -261,22 +265,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
 
+    initializeBarButtonItems()
+
     setupViewsAccordingInterventionType()
-
-    // Adds type label on the navigation bar
-    let navigationItem = UINavigationItem(title: "")
-    let typeLabel = UILabel()
-
-    if interventionType != nil {
-      typeLabel.text = interventionType.localized
-    }
-    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
-    typeLabel.textColor = UIColor.white
-
-    let leftItem = UIBarButtonItem.init(customView: typeLabel)
-
-    navigationItem.leftBarButtonItem = leftItem
-    navigationBar.setItems([navigationItem], animated: false)
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -341,6 +332,36 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     self.present(inputsView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
+  // MARK: Bar button
+
+  func initializeBarButtonItems() {
+    var barButtonItems = [UIBarButtonItem]()
+    let navigationItem = UINavigationItem(title: "")
+    let typeLabel = UILabel()
+
+    if interventionType != nil {
+      typeLabel.text = interventionType.localized
+    }
+    typeLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+    typeLabel.textColor = .white
+    let typeItem = UIBarButtonItem.init(customView: typeLabel)
+
+    if interventionState == Intervention.State.Validated.rawValue {
+      let backButton = UIButton()
+
+      backButton.setTitle("Back", for: .normal)
+      backButton.setTitleColor(.white, for: .normal)
+      backButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+      backButton.addTarget(self, action: #selector(goBackToInterventionViewController), for: .touchUpInside)
+      let backItem = UIBarButtonItem.init(customView: backButton)
+
+      barButtonItems.append(backItem)
+    }
+    barButtonItems.append(typeItem)
+    navigationItem.leftBarButtonItems = barButtonItems
+    navigationBar.setItems([navigationItem], animated: true)
+  }
+
   // MARK: - Table view data source
 
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -382,6 +403,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func displayInputQuantityInReadOnlyMode(quantity: String, unit: String, cell: SelectedInputCell) {
+    if interventionState == Intervention.State.Validated.rawValue {
+      cell.inputQuantity.placeholder = quantity
+      cell.unitMeasureButton.setTitle(unit, for: .normal)
+      cell.unitMeasureButton.setTitleColor(.lightGray, for: .normal)
+    }
+  }
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var equipment: NSManagedObject?
     var equipmentType: String?
@@ -403,23 +432,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let interventionSeed = selectedInput as! InterventionSeeds
           cell.inputName.text = interventionSeed.seeds?.specie
           cell.inputLabel.text = interventionSeed.seeds?.variety
-          cell.inputQuantity.text = (interventionSeed.quantity as NSNumber).stringValue
-          cell.unitMeasureButton.setTitle(interventionSeed.unit, for: .normal)
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
+          displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber).stringValue,
+                                             unit: interventionSeed.unit!, cell: cell)
         case is InterventionPhytosanitaries:
           let interventionPhyto = selectedInput as! InterventionPhytosanitaries
           cell.inputName.text = interventionPhyto.phytos?.name
           cell.inputLabel.text = interventionPhyto.phytos?.firmName
-          cell.inputQuantity.text = (interventionPhyto.quantity as NSNumber).stringValue
-          cell.unitMeasureButton.setTitle(interventionPhyto.unit, for: .normal)
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
+          displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber).stringValue,
+                                             unit: interventionPhyto.unit!, cell: cell)
         case is InterventionFertilizers:
           let interventionFertilizer = selectedInput as! InterventionFertilizers
           cell.inputName.text = interventionFertilizer.fertilizers?.name
           cell.inputLabel.text = interventionFertilizer.fertilizers?.nature
-          cell.inputQuantity.text = (interventionFertilizer.quantity as NSNumber).stringValue
-          cell.unitMeasureButton.setTitle(interventionFertilizer.unit, for: .normal)
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
+          displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber).stringValue,
+                                             unit: interventionFertilizer.unit!, cell: cell)
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
@@ -787,6 +816,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func writeValueBack(value: String) {
     inputsView.seedView.specieButton.setTitle(value, for: .normal)
+  }
+
+  @objc func goBackToInterventionViewController() {
+    performSegue(withIdentifier: "goBackToInterventionViewController", sender: self)
   }
 
   // MARK: - Search Bar Delegate

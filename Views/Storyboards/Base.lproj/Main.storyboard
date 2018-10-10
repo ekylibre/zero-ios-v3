@@ -1737,6 +1737,8 @@
                         <outlet property="addEntitiesButton" destination="yGb-zU-Lzj" id="4LP-bc-YKZ"/>
                         <outlet property="addEquipmentButton" destination="5AO-Jj-0ZP" id="lX4-Wo-L1c"/>
                         <outlet property="addInputsButton" destination="xR1-hG-glp" id="pRW-RT-UWb"/>
+                        <outlet property="bottomBarView" destination="96m-Su-72M" id="9Xk-yb-6PX"/>
+                        <outlet property="bottomView" destination="dVv-q0-QD8" id="4e6-Qc-lI7"/>
                         <outlet property="brokenClouds" destination="ca3-oq-1ls" id="Wau-QD-H2E"/>
                         <outlet property="clearSky" destination="8jz-fe-slq" id="pMJ-I2-u0I"/>
                         <outlet property="collapseButton" destination="fJR-CJ-tlU" id="eiF-In-vl8"/>
@@ -1812,6 +1814,7 @@
                         <outlet property="workingPeriodGestureRecognizer" destination="dX6-ef-4AZ" id="XN7-Fo-aSy"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecieList" id="uas-Qa-jvK"/>
+                        <segue destination="Ym6-0E-qVT" kind="showDetail" identifier="goBackToInterventionViewController" id="kep-BY-hpD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2060,8 +2063,8 @@
         <image name="thunderstorm" width="285" height="285"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aDw-i0-Y4L"/>
         <segue reference="a8t-Pd-Dxa"/>
         <segue reference="sUz-8n-dYb"/>
+        <segue reference="kep-BY-hpD"/>
     </inferredMetricsTieBreakers>
 </document>
