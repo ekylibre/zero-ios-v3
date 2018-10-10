@@ -130,8 +130,9 @@ extension AddInterventionViewController: DoerCellDelegate {
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if error != nil {
-        print(error!)
+      if let error = error {
+        print(error)
+        print(result!.data!.createPerson!.errors!)
       } else {
         id = Int32(result!.data!.createPerson!.person!.id)!
       }

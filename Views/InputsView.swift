@@ -374,8 +374,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      let ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: variety, specie: specie, type: ArticleTypeEnum.seed)
-      seed.setValue(ekyID, forKey: "ekyID")
+      seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: SpecieEnum.alliumAscalonicum.rawValue, specie: specie, type: ArticleTypeEnum.seed); #warning("wrong specie passed")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -400,8 +399,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      let ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
-      phyto.setValue(ekyID, forKey: "ekyID")
+      phyto.ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -424,8 +422,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     do {
       try managedContext.save()
-      let ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
-      fertilizer.setValue(ekyID, forKey: "ekyID")
+      fertilizer.ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -447,8 +444,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if error != nil {
-        print(error!)
+      if let error = error {
+        print(error)
+        print(result!.data!.createArticle!.errors!)
       } else {
         id = Int32(result!.data!.createArticle!.article!.id)!
       }
@@ -473,8 +471,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if error != nil {
-        print(error!)
+      if let error = error {
+        print(error)
+        print(result!.data!.createArticle!.errors!)
       } else {
         id = Int32(result!.data!.createArticle!.article!.id)!
       }
