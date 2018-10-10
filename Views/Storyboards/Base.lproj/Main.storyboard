@@ -1802,6 +1802,7 @@
                         <outlet property="materialsExpandImage" destination="A3m-nu-nvW" id="OMz-cX-Y2g"/>
                         <outlet property="materialsHeightConstraint" destination="23Y-SE-qQA" id="W2B-iD-gaV"/>
                         <outlet property="materialsTableViewHeightConstraint" destination="pjX-kZ-6rA" id="0Mk-ic-jO8"/>
+                        <outlet property="materialsTapGesture" destination="w2b-V9-NuM" id="vKk-jV-W6q"/>
                         <outlet property="mist" destination="8Tz-Cl-TTF" id="c5b-on-l8U"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>

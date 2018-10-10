@@ -99,7 +99,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       materialImage.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: materialImage.trailingAnchor, constant: 10),
-      deleteButton.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
+      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       deleteButton.widthAnchor.constraint(equalToConstant: 20),

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, WriteValueBackDelegate, XMLParserDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate {
 
   // MARK: - Outlets
 
@@ -35,6 +35,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // Materials
   @IBOutlet weak var materialsHeightConstraint: NSLayoutConstraint!
+  @IBOutlet var materialsTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var materialsAddButton: UIButton!
   @IBOutlet weak var materialsCountLabel: UILabel!
   @IBOutlet weak var materialsExpandImage: UIImageView!
@@ -106,7 +107,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cropsView: CropsView!
   var inputsView: InputsView!
   var materialsView: MaterialsView!
-  var selectedMaterials = [Materials]()
+  var selectedMaterials = [[NSManagedObject]]()
   var interventionEquipments = [NSManagedObject]()
   var equipmentsTableViewTopAnchor: NSLayoutConstraint!
   var equipments = [Equipments]()
@@ -243,6 +244,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
+    selectedMaterials.append([Materials]())
+    selectedMaterials.append([InterventionMaterials]())
     setupMaterialsView()
     setupIrrigation()
 
@@ -329,7 +332,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       return selectedInputs.count
     case selectedMaterialsTableView:
-      return selectedMaterials.count
+      return selectedMaterials[0].count
     case equipmentsTableView:
       return searchedEquipments.count
     case selectedEquipmentsTableView:
@@ -382,11 +385,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return cell
     case selectedMaterialsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
-      let selectedMaterial = selectedMaterials[indexPath.row]
+      let selectedMaterial = selectedMaterials[0][indexPath.row] as! Materials
 
       cell.nameLabel.text = selectedMaterial.name
+      cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(selectedMaterial.unit?.localized, for: .normal)
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
+      cell.selectionStyle = .none
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
@@ -461,7 +466,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       }
       closeEntitiesSelectionView(self)
     default:
-      print("Nothing to do")
+      return
     }
   }
 
@@ -599,14 +604,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    for (index, selectedMaterial) in selectedMaterials.enumerated() {
-      let interventionMaterial = InterventionMaterials(context: managedContext)
-      let cell = selectedMaterialsTableView.cellForRow(at: IndexPath(row: index, section: 0)) as! SelectedMaterialCell
+    for case let interventionMaterial as InterventionMaterials in selectedMaterials[1] {
+      let index = selectedMaterials[1].firstIndex(of: interventionMaterial)!
 
       interventionMaterial.interventions = intervention
-      interventionMaterial.materials = selectedMaterial
-      interventionMaterial.quantity = cell.quantityTextField.text?.floatValue ?? 0
-      interventionMaterial.unit = cell.unitButton.title(for: .normal)
+      interventionMaterial.materials = selectedMaterials[0][index] as? Materials
+      print("index: \(index)")
+      print("qauntity: \(interventionMaterial.quantity)")
+      print("unit:", interventionMaterial.unit)
     }
 
     do {
@@ -865,6 +870,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return false
     }
     return false
+  }
+
+  // MARK: - Gesture recognizer
+
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    switch gestureRecognizer {
+    case materialsTapGesture:
+      if selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView)) {
+        return false
+      }
+      return true
+    default:
+      fatalError("gestureRecognizer switch error: case not found")
+    }
   }
 
   // MARK: - Actions

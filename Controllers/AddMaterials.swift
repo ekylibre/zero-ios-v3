@@ -24,6 +24,7 @@ extension AddInterventionViewController {
       materialsView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
+    materialsTapGesture.delegate = self
     selectedMaterialsTableView.layer.borderWidth  = 0.5
     selectedMaterialsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedMaterialsTableView.layer.cornerRadius = 5
@@ -39,14 +40,23 @@ extension AddInterventionViewController {
   // MARK: - Selection
 
   func selectMaterial(_ material: Materials) {
-    selectedMaterials.append(material)
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionMaterial = InterventionMaterials(context: managedContext)
+
+    interventionMaterial.unit = material.unit
+    selectedMaterials[0].append(material)
+    selectedMaterials[1].append(interventionMaterial)
     closeSelectionView()
     updateView()
   }
 
   private func updateView() {
-    let shouldExpand = selectedMaterials.count > 0
-    let tableViewHeight = (selectedMaterials.count > 4) ? 4 * 80 : selectedMaterials.count * 80
+    let shouldExpand = selectedMaterials[0].count > 0
+    let tableViewHeight = (selectedMaterials[0].count > 4) ? 4 * 80 : selectedMaterials[0].count * 80
 
     materialsExpandImage.isHidden = !shouldExpand
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
@@ -59,9 +69,9 @@ extension AddInterventionViewController {
 
   @IBAction private func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedMaterials.count > 4) ? 4 * 80 : selectedMaterials.count * 80
+    let tableViewHeight = (selectedMaterials[0].count > 4) ? 4 * 80 : selectedMaterials[0].count * 80
 
-    if selectedMaterials.count == 0 {
+    if selectedMaterials[0].count == 0 {
       return
     }
 
@@ -85,6 +95,13 @@ extension AddInterventionViewController {
     dimView.isHidden = true
   }
 
+  @objc func updateMaterialQuantity(sender: UITextField) {
+    let cell = sender.superview?.superview as! SelectedMaterialCell
+    let indexPath = selectedMaterialsTableView.indexPath(for: cell)
+
+    selectedMaterials[1][indexPath!.row].setValue(sender.text?.floatValue, forKey: "quantity")
+  }
+
   @objc private func showUnits() {
     self.performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
@@ -102,7 +119,22 @@ extension AddInterventionViewController {
   }
 
   private func deleteMaterial(_ index: Int)  {
-    selectedMaterials.remove(at: index)
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionMaterial = selectedMaterials[1][index] as! InterventionMaterials
+
+    do {
+      managedContext.delete(interventionMaterial)
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+
+    selectedMaterials[0].remove(at: index)
+    selectedMaterials[1].remove(at: index)
     updateView()
     materialsView.tableView.reloadData()
   }

@@ -214,7 +214,7 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialCell", for: indexPath) as! MaterialCell
     let fromMaterials = isSearching ? filteredMaterials : materials
-    let isSelected = addInterventionViewController!.selectedMaterials.contains(fromMaterials[indexPath.row])
+    let isSelected = addInterventionViewController!.selectedMaterials[0].contains(fromMaterials[indexPath.row])
 
     cell.nameLabel.text = fromMaterials[indexPath.row].name
     cell.isUserInteractionEnabled = !isSelected
