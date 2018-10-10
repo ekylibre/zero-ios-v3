@@ -159,6 +159,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
     cell.selectionStyle = UITableViewCell.SelectionStyle.none
+    if interventionState == Intervention.State.Validated.rawValue {
+      cell.checkboxButton.imageView?.image = #imageLiteral(resourceName: "check-box")
+    }
     return cell
   }
 
@@ -169,6 +172,19 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       surfaceArea += crop.surfaceArea
     }
     return surfaceArea
+  }
+
+  func showPlotIfReadOnly() {
+    if interventionState == Intervention.State.Validated.rawValue {
+      for index in 0..<selectedCropsCount {
+        let indexPath = IndexPath.init(row: index, section: 0)
+
+        selectedIndexPath = indexPath
+        if !indexPaths.contains(selectedIndexPath!) {
+          indexPaths += [selectedIndexPath!]
+        }
+      }
+    }
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -208,12 +224,14 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
+
       if interventionState == Intervention.State.Validated.rawValue {
         organizeCropsBySelectedPlot(crops)
       } else {
-      organizeCropsByPlot(crops)
+        organizeCropsByPlot(crops)
       }
       createCropViews()
+      showPlotIfReadOnly()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -266,6 +284,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         frame = CGRect(x: 15, y: 60 + index * 60, width: 0, height: 60)
         view = CropView(frame: frame, crop)
         view.gesture.addTarget(self, action: #selector(tapCropView))
+        initCropsViewAsReadOnly(view: view)
         cropViews.append(view)
       }
       self.cropViews.append(cropViews)
@@ -311,6 +330,13 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         crops[index].isSelected = false
       }
       index += 1
+    }
+  }
+
+  func initCropsViewAsReadOnly(view: CropView) {
+    if interventionState == Intervention.State.Validated.rawValue {
+      view.checkboxImage.image = #imageLiteral(resourceName: "check-box")
+      updateSelectedCropsLabel()
     }
   }
 

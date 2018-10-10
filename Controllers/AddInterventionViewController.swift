@@ -234,12 +234,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     inputsView.addInterventionViewController = self
     view.addSubview(inputsView)
 
-    cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
-    cropsView.interventionState = interventionState
-    cropsView.fetchCrops()
-    view.addSubview(cropsView)
-    cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
-
     setupIrrigation()
 
     initializeWeatherButtons()
@@ -249,7 +243,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
 
-    loadInterventionData()
+    cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    cropsView.interventionState = interventionState
+    loadInterventionInReadOnlyMode()
+    cropsView.fetchCrops()
+    view.addSubview(cropsView)
+    cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+
+    if interventionState == Intervention.State.Validated.rawValue {
+      totalLabel.text = cropsView.selectedCropsLabel.text
+      totalLabel.textColor = AppColor.TextColors.DarkGray
+    }
 
     setupViewsAccordingInterventionType()
 
@@ -275,30 +279,30 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue.localized:
+    case Intervention.InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
-    case Intervention.InterventionType.CropProtection.rawValue.localized:
+    case Intervention.InterventionType.CropProtection.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-    case Intervention.InterventionType.Fertilization.rawValue.localized:
+    case Intervention.InterventionType.Fertilization.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-    case Intervention.InterventionType.GroundWork.rawValue.localized:
+    case Intervention.InterventionType.GroundWork.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Harvest.rawValue.localized:
+    case Intervention.InterventionType.Harvest.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue.localized:
+    case Intervention.InterventionType.Implantation.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
     default:
@@ -463,7 +467,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       fatalError("Switch error")
     }
   }
-
 
   // Expand/collapse cell when tapped
   var selectedIndexPath: IndexPath?
