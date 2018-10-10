@@ -26,11 +26,27 @@ extension AddInterventionViewController {
     workingPeriodGestureRecognizer.isEnabled = false
   }
 
-  func loadCropsInReadOnlyMode() {
-    for target in currentIntervention?.targets?.allObjects as! [Targets] {
-      target.crops?.isSelected = true
-      cropsView.selectedCropsCount += 1
-      cropsView.selectedSurfaceArea += (target.crops?.surfaceArea)!
+  func loadSelectedTargets() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", currentIntervention)
+
+    targetsFetchRequest.predicate = predicate
+
+    do {
+      let targets = try managedContext.fetch(targetsFetchRequest)
+
+      for target in targets {
+        target.crops?.isSelected = true
+        cropsView.selectedCropsCount += 1
+        cropsView.selectedSurfaceArea += (target.crops?.surfaceArea)!
+      }
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
 
@@ -84,7 +100,7 @@ extension AddInterventionViewController {
       cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
       interventionType = currentIntervention?.type
       updateWorkingPeriod()
-      loadCropsInReadOnlyMode()
+      loadSelectedTargets()
       loadInputsInReadOnlyMode()
       loadIrrigationInReadOnlyMode()
       loadEquipmentsInReadOnlyMode()

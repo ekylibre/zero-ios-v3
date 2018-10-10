@@ -257,6 +257,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.interventionState = interventionState
     loadInterventionInReadOnlyMode()
     cropsView.fetchCrops()
+    print("\nFetched crop")
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
