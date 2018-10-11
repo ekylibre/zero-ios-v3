@@ -96,6 +96,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     initialiseInterventionButtons()
 
+    fetchInterventions()
+
     // Load table view
     tableView.dataSource = self
     tableView.delegate = self
@@ -272,7 +274,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     cell.cropsLabel.text = updateCropsLabel(targets)
     cell.infosLabel.text = intervention.value(forKey: "infos") as? String
-    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKey: "executionDate") as! Date)
+    if workingPeriod != nil {
+      cell.dateLabel.text = transformDate(date: workingPeriod?.value(forKey: "executionDate") as! Date)
+    }
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
@@ -301,10 +305,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
+  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject? {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return NSManagedObject()
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -320,7 +324,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       print("Could not fetch. \(error), \(error.userInfo)")
     }
 
-    return workingPeriods.first!
+    if workingPeriods.count > 0 {
+      return workingPeriods.first!
+    }
+    return nil
   }
 
   func updateCropsLabel(_ targets: [Targets]?) -> String? {

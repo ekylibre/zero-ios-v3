@@ -114,29 +114,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
-  let solidUnitMeasure = [
-    "gram",
-    "gram_per_hectare",
-    "gram_per_square_meter",
-    "kilogram",
-    "kilogram_per_hectare",
-    "kilogram_per_square_meter",
-    "quintal",
-    "quintal_per_hectare",
-    "quintal_per_square_meter",
-    "ton",
-    "ton_per_hectare",
-    "ton_per_square_meter"]
-  let liquidUnitMeasure = [
-    "liter",
-    "liter_per_hectare",
-    "liter_per_square_meter",
-    "hectoliter",
-    "hectoliter_per_hectare",
-    "hectoliter_per_square_meter",
-    "cubic_meter",
-    "cubic_meter_per_hectare",
-    "cubic_meter_per_square_meter"]
+  let massUnitMeasure = [
+    "GRAM",
+    "GRAM_PER_HECTARE",
+    "GRAM_PER_SQUARE_METER",
+    "KILOGRAM",
+    "KILOGRAM_PER_HECTARE",
+    "KILOGRAM_PER_SQUARE_METER",
+    "QUINTAL",
+    "QUINTAL_PER_HECTARE",
+    "QUINTAL_PER_SQUARE_METER",
+    "TON",
+    "TON_PER_HECTARE",
+    "TON_PER_SQUARE_METER"]
+  let volumeUnitMeasure = [
+    "LITER",
+    "LITER_PER_HECTARE",
+    "LITER_SQUARE_METER",
+    "HECTOLITER",
+    "HECTOLITER_PER_HECTARE",
+    "HECTOLITER_PER_SQUARE_METER",
+    "CUBIC_METER",
+    "CUBIC_METER_PER_HECTARE",
+    "CUBIC_METER_PER_SQUARE_METER"]
   var apolloQuery = ApolloQuery()
 
   override func viewDidLoad() {
