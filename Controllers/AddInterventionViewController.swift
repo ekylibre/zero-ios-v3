@@ -369,17 +369,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
           cell.inputName.text = seed.specie
           cell.inputLabel.text = seed.variety
-          cell.inputImage.image = UIImage(named: "seed")
+          cell.inputImageView.image = UIImage(named: "seed")
         case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
-          cell.inputImage.image = UIImage(named: "phytosanitary")
+          cell.inputImageView.image = UIImage(named: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
           cell.inputName.text = fertilizer.name
           cell.inputLabel.text = fertilizer.nature
-          cell.inputImage.image = UIImage(named: "fertilizer")
+          cell.inputImageView.image = UIImage(named: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
@@ -396,14 +396,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       cell.selectionStyle = .none
-      return cell
-    case equipmentsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
-      let equipment = searchedEquipments[indexPath.row]
-
-      cell.nameLabel.text = equipment.name
-      cell.typeLabel.text = equipment.type?.localized
-      cell.typeImageView.image = defineEquipmentImage(type: equipment.type!)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -450,14 +442,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedIndexPath = indexPath
 
     switch tableView {
-    case equipmentsTableView:
-      let cell = equipmentsTableView.cellForRow(at: selectedIndexPath!) as! EquipmentCell
-
-        selectedEquipments.append(searchedEquipments[indexPath.row])
-        selectedEquipmentsTableView.reloadData()
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.LightGray
-      closeEquipmentsSelectionView(self)
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 

@@ -1,41 +1,41 @@
 //
-//  MaterialsView.swift
+//  EquipmentsView.swift
 //  Clic&Farm-iOS
 //
-//  Created by Guillaume Roux on 26/09/2018.
+//  Created by Guillaume Roux on 11/10/2018.
 //  Copyright © 2018 Ekylibre. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
+class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Properties
 
-  lazy var creationView: MaterialCreationView = {
-    let creationView = MaterialCreationView(frame: CGRect.zero)
+  lazy var creationView: EquipmentCreationView = {
+    let creationView = EquipmentCreationView(frame: CGRect.zero)
     creationView.translatesAutoresizingMaskIntoConstraints = false
     return creationView
   }()
 
-  var materials = [Materials]()
-  var filteredMaterials = [Materials]()
+  var equipments = [Equipments]()
+  var filteredEquipments = [Equipments]()
 
   // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
-    fetchMaterials()
+    fetchEquipments()
     tableView.reloadData()
   }
 
   private func setupView() {
-    titleLabel.text = "selecting_materials".localized
-    createButton.setTitle("create_new_material".localized.uppercased(), for: .normal)
+    titleLabel.text = "selecting_equipments".localized
+    createButton.setTitle("create_new_equipment".localized.uppercased(), for: .normal)
     searchBar.delegate = self
-    tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
+    tableView.register(EquipmentCell.self, forCellReuseIdentifier: "EquipmentCell")
     tableView.rowHeight = 50
     tableView.delegate = self
     tableView.dataSource = self
@@ -75,8 +75,8 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    filteredMaterials = searchText.isEmpty ? materials : materials.filter({(material: Materials) -> Bool in
-      let name = material.name!
+    filteredEquipments = searchText.isEmpty ? equipments : equipments.filter({(equipment: Equipments) -> Bool in
+      let name = equipment.name!
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
     isSearching = !searchText.isEmpty
@@ -97,24 +97,24 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return isSearching ? filteredMaterials.count : materials.count
+    return isSearching ? filteredEquipments.count : equipments.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialCell", for: indexPath) as! MaterialCell
-    let fromMaterials = isSearching ? filteredMaterials : materials
-    let isSelected = addInterventionViewController!.selectedMaterials[0].contains(fromMaterials[indexPath.row])
+    let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
+    let fromEquipments = isSearching ? filteredEquipments : equipments
+    let isSelected = addInterventionViewController!.selectedMaterials[0].contains(fromEquipments[indexPath.row])
 
-    cell.nameLabel.text = fromMaterials[indexPath.row].name
+    cell.nameLabel.text = fromEquipments[indexPath.row].name
     cell.isUserInteractionEnabled = !isSelected
     cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let fromMaterials = isSearching ? filteredMaterials : materials
+    let fromEquipments = isSearching ? filteredEquipments : equipments
 
-    addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row])
+    addInterventionViewController?.selectMaterial(fromEquipments[indexPath.row])
     searchBar.text = nil
     searchBar.endEditing(true)
     isSearching = false
@@ -123,34 +123,34 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
 
   // MARK: - Core Data
 
-  private func fetchMaterials() {
+  private func fetchEquipments() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let materialsFetchRequest: NSFetchRequest<Materials> = Materials.fetchRequest()
+    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
 
     do {
-      materials = try managedContext.fetch(materialsFetchRequest)
-      materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      equipments = try managedContext.fetch(equipmentsFetchRequest)
+      equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
-  private func createMaterial(name: String, unit: String) {
+  private func createEquipment(name: String, number: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let material = Materials(context: managedContext)
+    let equipment = Equipments(context: managedContext)
 
-    material.name = name
-    material.unit = unit
-    materials.append(material)
+    equipment.name = name
+    equipment.number = number
+    equipments.append(equipment)
 
     do {
       try managedContext.save()
@@ -171,10 +171,10 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   @objc private func validateCreation() {
-    createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue ?? "METER")
+    createEquipment(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue ?? "METER")
     creationView.nameTextField.text = ""
-    creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
-    materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    creationView.typeButton.setTitle("METER".localized.lowercased(), for: .normal)
+    equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     tableView.reloadData()
     dimView.isHidden = true

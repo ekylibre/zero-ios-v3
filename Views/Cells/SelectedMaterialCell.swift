@@ -14,11 +14,11 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   var indexPath: IndexPath!
 
-  lazy var materialImage: UIImageView = {
-    let materialImage = UIImageView(frame: CGRect.zero)
-    materialImage.image = UIImage(named: "material")
-    materialImage.translatesAutoresizingMaskIntoConstraints = false
-    return materialImage
+  lazy var materialImageView: UIImageView = {
+    let materialImageView = UIImageView(frame: CGRect.zero)
+    materialImageView.image = UIImage(named: "material")
+    materialImageView.translatesAutoresizingMaskIntoConstraints = false
+    return materialImageView
   }()
 
   lazy var nameLabel: UILabel = {
@@ -82,7 +82,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupCell() {
     self.backgroundColor = AppColor.CellColors.LightGray
-    contentView.addSubview(materialImage)
+    contentView.addSubview(materialImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(deleteButton)
     contentView.addSubview(quantityLabel)
@@ -93,12 +93,12 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      materialImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      materialImage.heightAnchor.constraint(equalToConstant: 24),
-      materialImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-      materialImage.widthAnchor.constraint(equalToConstant: 24),
-      nameLabel.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
-      nameLabel.leadingAnchor.constraint(equalTo: materialImage.trailingAnchor, constant: 10),
+      materialImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      materialImageView.heightAnchor.constraint(equalToConstant: 24),
+      materialImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      materialImageView.widthAnchor.constraint(equalToConstant: 24),
+      nameLabel.centerYAnchor.constraint(equalTo: materialImageView.centerYAnchor),
+      nameLabel.leadingAnchor.constraint(equalTo: materialImageView.trailingAnchor, constant: 10),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),

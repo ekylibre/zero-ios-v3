@@ -74,6 +74,7 @@ class SelectionView: UIView {
     return dimView
   }()
 
+  var addInterventionViewController: AddInterventionViewController?
   var isSearching: Bool = false
   var tableViewTopAnchor: NSLayoutConstraint!
 

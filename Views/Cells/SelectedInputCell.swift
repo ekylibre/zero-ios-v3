@@ -22,11 +22,11 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   var indexPath: IndexPath!
   var type = ""
 
-  lazy var inputImage: UIImageView = {
-    let inputImage = UIImageView(frame: CGRect.zero)
+  lazy var inputImageView: UIImageView = {
+    let inputImageView = UIImageView(frame: CGRect.zero)
 
-    inputImage.translatesAutoresizingMaskIntoConstraints = false
-    return inputImage
+    inputImageView.translatesAutoresizingMaskIntoConstraints = false
+    return inputImageView
   }()
 
   lazy var inputLabel: UILabel = {
@@ -107,13 +107,13 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return unitMeasureButton
   }()
 
-  lazy var warningImage: UIImageView = {
-    let warningImage = UIImageView(frame: CGRect.zero)
+  lazy var warningImageView: UIImageView = {
+    let warningImageView = UIImageView(frame: CGRect.zero)
 
-    warningImage.isHidden = true
-    warningImage.image = UIImage(named: "filled-circle")
-    warningImage.translatesAutoresizingMaskIntoConstraints = false
-    return warningImage
+    warningImageView.isHidden = true
+    warningImageView.image = UIImage(named: "filled-circle")
+    warningImageView.translatesAutoresizingMaskIntoConstraints = false
+    return warningImageView
   }()
 
   lazy var warningLabel: UILabel = {
@@ -135,7 +135,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   private func setupCell() {
-    contentView.addSubview(inputImage)
+    contentView.addSubview(inputImageView)
     contentView.addSubview(inputLabel)
     contentView.addSubview(inputName)
     contentView.addSubview(inputQuantity)
@@ -143,18 +143,18 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(removeCell)
     contentView.addSubview(surfaceQuantity)
     contentView.addSubview(unitMeasureButton)
-    contentView.addSubview(warningImage)
+    contentView.addSubview(warningImageView)
     contentView.addSubview(warningLabel)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      inputImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-      inputImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      inputImage.heightAnchor.constraint(equalToConstant: 30),
-      inputImage.widthAnchor.constraint(equalToConstant: 30),
-      inputName.leftAnchor.constraint(equalTo: inputImage.rightAnchor, constant: 10),
+      inputImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+      inputImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      inputImageView.heightAnchor.constraint(equalToConstant: 30),
+      inputImageView.widthAnchor.constraint(equalToConstant: 30),
+      inputName.leftAnchor.constraint(equalTo: inputImageView.rightAnchor, constant: 10),
       inputLabel.leftAnchor.constraint(equalTo: inputName.rightAnchor, constant: 5),
 
       quantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 20),
@@ -177,24 +177,24 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       unitMeasureButton.heightAnchor.constraint(equalToConstant: 30),
       unitMeasureButton.widthAnchor.constraint(equalToConstant: 60),
 
-      warningImage.heightAnchor.constraint(equalToConstant: 10),
-      warningImage.widthAnchor.constraint(equalToConstant: 10),
-      warningImage.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
-      warningLabel.leadingAnchor.constraint(equalTo: warningImage.trailingAnchor, constant: 3),
+      warningImageView.heightAnchor.constraint(equalToConstant: 10),
+      warningImageView.widthAnchor.constraint(equalToConstant: 10),
+      warningImageView.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
+      warningLabel.leadingAnchor.constraint(equalTo: warningImageView.trailingAnchor, constant: 3),
       surfaceQuantity.leadingAnchor.constraint(equalTo: inputQuantity.leadingAnchor, constant: 0),
       ]
     )
 
-    if warningImage.isHidden {
+    if warningImageView.isHidden {
       NSLayoutConstraint.activate([
         surfaceQuantity.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 1)
         ]
       )
     } else {
       NSLayoutConstraint.activate([
-        warningImage.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 5),
+        warningImageView.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 5),
         warningLabel.topAnchor.constraint(equalTo: inputQuantity.bottomAnchor, constant: 2),
-        surfaceQuantity.topAnchor.constraint(equalTo: warningImage.bottomAnchor, constant: 1)
+        surfaceQuantity.topAnchor.constraint(equalTo: warningImageView.bottomAnchor, constant: 1)
         ]
       )
     }

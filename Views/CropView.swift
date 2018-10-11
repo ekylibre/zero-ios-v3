@@ -22,10 +22,10 @@ class CropView: UIView {
     return cropImageView
   }()
 
-  lazy var checkboxImage: UIImageView = {
-    let checkboxImage = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-    checkboxImage.image = UIImage(named: "check-box-blank")
-    return checkboxImage
+  lazy var checkboxImageView: UIImageView = {
+    let checkboxImageView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+    checkboxImageView.image = UIImage(named: "check-box-blank")
+    return checkboxImageView
   }()
 
   lazy var nameLabel: UILabel = {
@@ -67,7 +67,7 @@ class CropView: UIView {
     self.layer.borderColor = UIColor.lightGray.cgColor
     self.layer.borderWidth = 0.5
     self.addSubview(cropImageView)
-    self.addSubview(checkboxImage)
+    self.addSubview(checkboxImageView)
     self.addSubview(nameLabel)
     self.addSubview(surfaceAreaLabel)
     self.addGestureRecognizer(gesture)
