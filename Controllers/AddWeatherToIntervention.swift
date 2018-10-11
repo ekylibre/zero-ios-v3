@@ -20,6 +20,7 @@ extension AddInterventionViewController {
       weatherButtons[index].layer.borderColor = UIColor.lightGray.cgColor
       weatherButtons[index].layer.borderWidth = 2
       weatherButtons[index].layer.cornerRadius = 5
+      weatherButtons[index].tag = index
     }
   }
 
@@ -50,6 +51,8 @@ extension AddInterventionViewController {
 
 
   @IBAction func selectWeather(_ sender: UIButton) {
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+
     if weatherIsSelected && sender.layer.borderColor == UIColor.lightGray.cgColor {
       for weather in weatherButtons {
         if weather.layer.borderColor == AppColor.BarColors.Green.cgColor {
@@ -57,13 +60,13 @@ extension AddInterventionViewController {
         }
       }
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather.weatherDescription = sender.titleLabel?.text
+      weather.weatherDescription = weatherDescriptions[sender.tag]
     } else if weatherIsSelected {
       sender.layer.borderColor = UIColor.lightGray.cgColor
       weatherIsSelected = false
     } else {
       sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather.weatherDescription = sender.titleLabel?.text
+      weather.weatherDescription = weatherDescriptions[sender.tag]
       weatherIsSelected = true
     }
   }
