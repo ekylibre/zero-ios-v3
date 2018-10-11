@@ -144,7 +144,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     }
   }
 
-
   @IBAction func createNewEquipement(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
