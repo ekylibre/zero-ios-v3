@@ -112,7 +112,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func initialiseInterventionButtons() {
     for buttonCount in 0...6 {
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
-      let image = UIImage(named: interventionTypes[buttonCount].lowercased())
+      let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
 
       interventionButton.backgroundColor = UIColor.white
       interventionButton.setBackgroundImage(image, for: .normal)

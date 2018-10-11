@@ -9,79 +9,9 @@
 import UIKit
 import CoreData
 
-class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
+class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Properties
-
-  public var titleLabel: UILabel = {
-    let titleLabel = UILabel(frame: CGRect.zero)
-    titleLabel.text = "selecting_materials".localized
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 19)
-    titleLabel.textColor = AppColor.TextColors.White
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    return titleLabel
-  }()
-
-  lazy var headerView: UIView = {
-    let headerView = UIView(frame: CGRect.zero)
-    headerView.backgroundColor = AppColor.BarColors.Green
-    headerView.addSubview(titleLabel)
-    headerView.translatesAutoresizingMaskIntoConstraints = false
-    return headerView
-  }()
-
-  lazy var exitButton: UIButton = {
-    let exitButton = UIButton(frame: CGRect.zero)
-    exitButton.setImage(UIImage(named: "exit"), for: .normal)
-    exitButton.translatesAutoresizingMaskIntoConstraints = false
-    return exitButton
-  }()
-
-  lazy var searchBar: UISearchBar = {
-    let searchBar = UISearchBar(frame: CGRect.zero)
-    searchBar.searchBarStyle = .minimal
-    searchBar.autocapitalizationType = .none
-    searchBar.delegate = self
-    searchBar.translatesAutoresizingMaskIntoConstraints = false
-    return searchBar
-  }()
-
-  lazy var createButton: UIButton = {
-    let createButton = UIButton(frame: CGRect.zero)
-    createButton.setTitle("create_new_material".localized.uppercased(), for: .normal)
-    createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
-    createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-    createButton.translatesAutoresizingMaskIntoConstraints = false
-    return createButton
-  }()
-
-  lazy var tableView: UITableView = {
-    let tableView = UITableView(frame: CGRect.zero)
-    tableView.separatorInset = UIEdgeInsets.zero
-    let frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1 / UIScreen.main.scale)
-    let line = UIView(frame: frame)
-    line.backgroundColor = tableView.separatorColor
-    tableView.tableHeaderView = line
-    tableView.tableFooterView = UIView()
-    tableView.bounces = false
-    tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
-    tableView.rowHeight = 50
-    tableView.delegate = self
-    tableView.dataSource = self
-    tableView.translatesAutoresizingMaskIntoConstraints = false
-    return tableView
-  }()
-
-  var tableViewTopAnchor: NSLayoutConstraint!
-
-  lazy var dimView: UIView = {
-    let dimView = UIView(frame: CGRect.zero)
-    dimView.backgroundColor = UIColor.black
-    dimView.alpha = 0.6
-    dimView.isHidden = true
-    dimView.translatesAutoresizingMaskIntoConstraints = false
-    return dimView
-  }()
 
   lazy var creationView: MaterialCreationView = {
     let creationView = MaterialCreationView(frame: CGRect.zero)
@@ -91,7 +21,6 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
 
   var addInterventionViewController: AddInterventionViewController?
   var materials = [Materials]()
-  var isSearching: Bool = false
   var filteredMaterials = [Materials]()
 
   // MARK: - Initialization
@@ -104,64 +33,25 @@ class MaterialsView: UIView, UISearchBarDelegate, UITableViewDataSource, UITable
   }
 
   private func setupView() {
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.addSubview(headerView)
-    self.addSubview(exitButton)
-    self.addSubview(searchBar)
-    self.addSubview(createButton)
-    self.addSubview(tableView)
-    self.addSubview(dimView)
-    self.addSubview(creationView)
-    setupLayout()
+    titleLabel.text = "selecting_materials".localized
+    createButton.setTitle("create_new_material".localized.uppercased(), for: .normal)
+    searchBar.delegate = self
+    tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
+    tableView.rowHeight = 50
+    tableView.delegate = self
+    tableView.dataSource = self
+    setupCreationView()
     setupActions()
   }
 
-  private func setupLayout() {
-    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
+  private func setupCreationView() {
+    self.addSubview(creationView)
 
     NSLayoutConstraint.activate([
-      titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      headerView.topAnchor.constraint(equalTo: self.topAnchor),
-      headerView.heightAnchor.constraint(equalToConstant: 60),
-      headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      exitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      exitButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      exitButton.widthAnchor.constraint(equalToConstant: 20),
-      exitButton.heightAnchor.constraint(equalToConstant: 20),
-      searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
-      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
-      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      tableViewTopAnchor,
-      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
-      ])
-
-    bindFrameToSuperViewBounds(dimView, height: 0)
-    bindFrameToSuperViewBounds(creationView, height: 250)
-  }
-
-  private func bindFrameToSuperViewBounds(_ view: UIView, height: CGFloat) {
-    let customHeightAnchor: NSLayoutConstraint
-
-    if height > 0 {
-      customHeightAnchor = view.heightAnchor.constraint(equalToConstant: height)
-    } else {
-      customHeightAnchor = view.heightAnchor.constraint(equalTo: view.superview!.heightAnchor)
-    }
-
-    NSLayoutConstraint.activate([
-      customHeightAnchor,
-      view.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      view.widthAnchor.constraint(equalTo: self.widthAnchor),
-      view.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      creationView.heightAnchor.constraint(equalToConstant: 250),
+      creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
+      creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
       ])
   }
 
