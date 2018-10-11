@@ -107,8 +107,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var doers = [Entities]()
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
-  var solidUnitPicker = UIPickerView()
-  var liquidUnitPicker = UIPickerView()
+  var massUnitPicker = UIPickerView()
+  var volumeUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
   var weather: Weather!
@@ -130,7 +130,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   let volumeUnitMeasure = [
     "LITER",
     "LITER_PER_HECTARE",
-    "LITER_SQUARE_METER",
+    "LITER_PER_SQUARE_METER",
     "HECTOLITER",
     "HECTOLITER_PER_HECTARE",
     "HECTOLITER_PER_SQUARE_METER",
@@ -380,16 +380,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         switch selectedInput {
         case is InterventionSeeds:
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
+          cell.type = "Seed"
           cell.inputName.text = seed.specie
           cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+          cell.type = "Phyto"
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+          cell.type = "Fertilizer"
           cell.inputName.text = fertilizer.name
           cell.inputLabel.text = fertilizer.nature
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
