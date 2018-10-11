@@ -415,6 +415,8 @@
 "last_name" = "Nom de famille";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"person_name_not_available" = "Ce nom est déjà utilisé. Veuillez en choisir un autre";
+"person_name_is_empty" = "Le prénom de la personne ne peut être vide";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
 "my_cultures" = "Mes cultures";
 "unknown_login_failure" = "Désolé, une erreur inconnue s\'est produite, veuillez contacter le support.";
