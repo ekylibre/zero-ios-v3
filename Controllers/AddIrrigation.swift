@@ -14,7 +14,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   func setupIrrigation() {
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    let units = ["m³", "l", "hl"]
+    let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
 
     irrigationValueTextField.layer.borderWidth = 0.5
     irrigationValueTextField.layer.borderColor = UIColor.lightGray.cgColor
@@ -43,7 +43,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
     let volume = Float(volumeString) ?? 0
 
-    self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
+    self.irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
     irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
     updateInfoLabel(volume, unit)
     irrigationPickerView.isHidden = true

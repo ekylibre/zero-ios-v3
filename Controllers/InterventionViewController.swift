@@ -103,7 +103,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
     initializeApolloClient()
-    synchronise(self)
+    if Connectivity.isConnectedToInternet() {
+      synchronise(self)
+    } else {
+      fetchInterventions()
+    }
   }
 
   func initialiseInterventionButtons() {

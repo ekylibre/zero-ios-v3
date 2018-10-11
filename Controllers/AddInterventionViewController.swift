@@ -566,7 +566,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"
     newIntervention.farmID = appDelegate.farmID
-    if interventionType == "irrigation" {
+    if interventionType == "IRRIGATION" {
       let waterVolume = irrigationValueTextField.text!.floatValue
       newIntervention.waterQuantity = waterVolume
       switch irrigationUnitButton.titleLabel?.text {

@@ -18,7 +18,7 @@ class ApolloQuery {
 
   // MARK: - Queries: Farms
 
-  func queryFarms(endResult: @escaping ((_ success: Bool) -> ())) {
+  func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
     let apollo = appDelegate.apollo!
     let query = FarmQuery()
 
@@ -1125,6 +1125,7 @@ class ApolloQuery {
       return 0
     }
 
+    print("\nIrrigation: \(String(describing: intervention.waterUnit))")
     var id: Int32 = 0
     let apollo = appDelegate.apollo
     let mutation = PushInterMutation(
@@ -1132,8 +1133,8 @@ class ApolloQuery {
       procedure: InterventionTypeEnum(rawValue: intervention.type!.uppercased())!,
       cropList: defineTargetAttributesFrom(intervention: intervention),
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
-      waterQuantity: intervention.type == "irrigation" ? Int(intervention.waterQuantity) : nil,
-      waterUnit: intervention.type == "irrigation" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!.uppercased()) : nil,
+      waterQuantity: intervention.type == "IRRIGATION" ? Int(intervention.waterQuantity) : nil,
+      waterUnit: intervention.type == "IRRIGATION" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!.uppercased()) : nil,
       inputs: defineInputsAttributesFrom(intervention: intervention),
       outputs: defineHarvestAttributesFrom(intervention: intervention),
       globalOutputs: false,
