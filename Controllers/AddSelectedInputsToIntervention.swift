@@ -126,12 +126,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let surfaceArea = cropsView.selectedSurfaceArea
     var efficiency: Float = 0
 
-    if (unit.contains("/")) {
+    if unit.contains("/") {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
       switch surfaceUnit {
       case "ha":
         efficiency = quantity * surfaceArea
-      case "m2":
+      case "m²":
         efficiency = quantity * (surfaceArea * 10000)
       default:
         return

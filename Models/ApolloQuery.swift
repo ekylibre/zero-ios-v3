@@ -1125,7 +1125,6 @@ class ApolloQuery {
       return 0
     }
 
-    print("\nIrrigation: \(String(describing: intervention.waterUnit))")
     var id: Int32 = 0
     let apollo = appDelegate.apollo
     let mutation = PushInterMutation(
