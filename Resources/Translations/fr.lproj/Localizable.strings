@@ -388,31 +388,6 @@
 "material" = "Materiel";
 "phytosanitary" = "Phytosanitaire";
 
-// Unit
-
-"meter" = "m";
-"gram" = "g";
-"gram_per_square_meter" = "g/m²";
-"gram_per_hectare" = "g/ha";
-"kilogram" = "kg";
-"kilogram_per_square_meter" = "kg/m²";
-"kilogram_per_hectare" = "kg/ha";
-"quintal" = "q";
-"quintal_per_quare_meter" = "g/m²";
-"quintal_per_hectare" = "g/ha";
-"ton" = "t";
-"ton_per_square_meter" = "t/m²";
-"ton_per_hectare" = "t/ha";
-"liter" = "l";
-"liter_per_square_meter" = "l/m²";
-"liter_per_hectare" = "l/ha";
-"cubic_meter" = "m³";
-"cubic_meter_per_square_meter" = "m³/m²";
-"cubic_meter_per_hectare" = "m³/ha";
-"hectoliter" = "hl";
-"hectoliter_per_square_meter" = "hl/m²";
-"hectoliter_per_hectare" = "hl/ha";
-
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
 "number" = "Nombre";

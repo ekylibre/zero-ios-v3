@@ -121,12 +121,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     present(alert, animated: true)
   }
 
-  func forTrailingZero(temp: Float) -> String {
-    let withoutTrailing = String(format: "%g", temp)
-
-    return withoutTrailing
-  }
-
   func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let surfaceArea = cropsView.selectedSurfaceArea
@@ -142,12 +136,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       default:
         return
       }
-      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %d %@", efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "Soit %.1f %@", efficiency, (unit.components(separatedBy: "/")[0]))
     } else {
       efficiency = quantity / surfaceArea
-      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %d %@ par hectare", efficiencyWithoutTrailing, unit)
+      cell.surfaceQuantity.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }

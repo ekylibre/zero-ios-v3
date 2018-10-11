@@ -407,7 +407,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       seed.referenceID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
-      seed.unit = "kilogram_per_hectare"
+      seed.unit = "KILOGRAM_PER_HECTARE"
       seed.used = false
       seeds.append(seed)
     }
@@ -437,7 +437,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
       phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
       phyto.firmName = registeredPhyto.firmName
-      phyto.unit = "liter_per_hectare"
+      phyto.unit = "LITER_PER_HECTARE"
       phyto.used = false
       phytos.append(phyto)
     }
@@ -470,7 +470,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
       fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
       fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
-      fertilizer.unit = "kilogram_per_hectare"
+      fertilizer.unit = "KILOGRAM_PER_HECTARE"
       fertilizer.used = false
       fertilizers.append(fertilizer)
     }
@@ -493,7 +493,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.registered = false
     seed.specie = specie
     seed.variety = variety
-    seed.unit = "kilogram_per_hectare"
+    seed.unit = "KILOGRAM_PER_HECTARE"
     seed.used = false
     seeds.append(seed)
     pushInput(unit: ArticleUnitEnum.liter, name: seed.variety!, type: ArticleTypeEnum.seed, managedContext: managedContext, input: seed)
@@ -512,7 +512,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.firmName = firmName
     phyto.maaID = maaID
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
-    phyto.unit = "liter_per_hectare"
+    phyto.unit = "LITER_PER_HECTARE"
     phyto.used = false
     phytos.append(phyto)
 
@@ -534,7 +534,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.registered = false
     fertilizer.name = name
     fertilizer.nature = nature
-    fertilizer.unit = "kilogram_per_hectare"
+    fertilizer.unit = "KILOGRAM_PER_HECTARE"
     fertilizer.used = false
     fertilizers.append(fertilizer)
 
