@@ -349,8 +349,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     if interventionState == Intervention.State.Validated.rawValue {
       let backButton = UIButton()
+      let buttonImage = UIImage(named: "exit-arrow")?.withRenderingMode(.alwaysTemplate)
 
-      backButton.setImage(UIImage(named: "exit-arrow"), for: .normal)
+      backButton.setImage(buttonImage, for: .normal)
+      backButton.tintColor = .white
       backButton.addTarget(self, action: #selector(goBackToInterventionViewController), for: .touchUpInside)
       let backItem = UIBarButtonItem.init(customView: backButton)
 
