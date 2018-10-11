@@ -26,7 +26,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   var userDatabase = UsersDatabase()
   var apolloQuery = ApolloQuery()
-  var interventions = [NSManagedObject]() {
+  var interventions = [Interventions]() {
     didSet {
       tableView.reloadData()
     }
@@ -154,9 +154,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
+      sortInterventionByDate()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+  }
+
+  func sortInterventionByDate() {
+    interventions = interventions.sorted(by: {
+      let result: Bool!
+
+      if ($0.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil {
+        result = ($0.workingPeriods?.anyObject() as! WorkingPeriods).executionDate! >
+          ($1.workingPeriods?.anyObject() as! WorkingPeriods).executionDate!
+        return result
+      }
+      return true
+    })
   }
 
   // MARK: - Apollo
@@ -371,16 +385,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-    let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
-    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
+    let intervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
 
-    intervention.setValue(type, forKey: "type")
-    intervention.setValue(infos, forKey: "infos")
-    intervention.setValue(status, forKey: "status")
-    workingPeriod.setValue(intervention, forKey: "interventions")
-    workingPeriod.setValue(executionDate, forKey: "executionDate")
+    intervention.type = type
+    intervention.infos = infos
+    intervention.status = status
+    workingPeriod.interventions = intervention
+    workingPeriod.executionDate = executionDate
 
     do {
       try managedContext.save()
