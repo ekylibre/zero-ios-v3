@@ -219,9 +219,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
-      /*let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
-      let unit: String = inFieldReentryDelay > 1 ? "heures" : "heure"*/
-
       cell.inFieldReentryDelayLabel.text = "\(inFieldReentryDelay) " + unit
       cell.starImageView.isHidden = isRegistered
       return cell
@@ -229,15 +226,15 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
       let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
-
       let name = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
+
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = name?.localized
       cell.natureLabel.text = nature?.localized
-      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
       cell.starImageView.isHidden = isRegistered
       return cell
     default:

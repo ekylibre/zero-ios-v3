@@ -28,7 +28,7 @@ class Intervention {
     case Synchronised = 1
     case Validated = 2
   }
-  
+
   var type: InterventionType
   var crops: String
   var infos: String
