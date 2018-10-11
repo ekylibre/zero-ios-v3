@@ -76,6 +76,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return bottomView
   }()
 
+  var currentIntervention: Interventions?
   var interventionState: Intervention.State.RawValue!
   var crops = [[Crops]]()
   var cropViews = [[CropView]]()
@@ -226,7 +227,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       let crops = try managedContext.fetch(cropsFetchRequest)
 
       if interventionState == Intervention.State.Validated.rawValue {
-        organizeCropsBySelectedPlot(crops)
+        loadSelectedTargets()
+        //organizeCropsBySelectedPlot(crops)
       } else {
         organizeCropsByPlot(crops)
       }
@@ -250,6 +252,43 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       cropsFromSamePlot.append(crop)
     }
     self.crops.append(cropsFromSamePlot)
+  }
+
+
+  private func loadSelectedTargets() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", currentIntervention!)
+
+    targetsFetchRequest.predicate = predicate
+
+    do {
+      let targets = try managedContext.fetch(targetsFetchRequest)
+
+      var cropsFromSamePlot = [Crops]()
+      var name: String!
+      for target in targets {
+        if name == nil {
+          name = target.crops?.plotName
+        }
+        if target.crops?.plotName != name {
+          name = target.crops?.plotName
+          self.crops.append(cropsFromSamePlot)
+          cropsFromSamePlot = [Crops]()
+        }
+        selectedCropsCount += 1
+        selectedSurfaceArea += (target.crops?.surfaceArea)!
+        target.crops?.isSelected = true
+        cropsFromSamePlot.append(target.crops!)
+      }
+      self.crops.append(cropsFromSamePlot)
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
+    }
   }
 
   private func organizeCropsBySelectedPlot(_ crops: [Crops]) {

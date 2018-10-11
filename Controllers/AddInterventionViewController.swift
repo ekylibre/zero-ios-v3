@@ -254,10 +254,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.keyboardType = .decimalPad
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    cropsView.currentIntervention = currentIntervention
     cropsView.interventionState = interventionState
     loadInterventionInReadOnlyMode()
     cropsView.fetchCrops()
-    print("\nFetched crop")
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
@@ -350,9 +350,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if interventionState == Intervention.State.Validated.rawValue {
       let backButton = UIButton()
 
-      backButton.setTitle("Back", for: .normal)
-      backButton.setTitleColor(.white, for: .normal)
-      backButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+      backButton.setImage(UIImage(named: "exit-arrow"), for: .normal)
       backButton.addTarget(self, action: #selector(goBackToInterventionViewController), for: .touchUpInside)
       let backItem = UIBarButtonItem.init(customView: backButton)
 
