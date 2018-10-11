@@ -27,6 +27,8 @@ class ApolloQuery {
         print("Error: \(error)")
         endResult(false)
         return
+      } else if let error = result?.errors {
+        print("Error: \(error)")
       }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
@@ -99,32 +101,6 @@ class ApolloQuery {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
-
-  /*func saveFarmNameAndID(name: String?, id: String?) {
-   let managedContext = appDelegate.persistentContainer.viewContext
-   let farm = Farms(context: managedContext)
-
-   farm.id = id
-   farm.name = name
-   print("\nFarm: \(farm)")
-
-   do {
-   try managedContext.save()
-   } catch let error as NSError {
-   print("Could not save. \(error), \(error.userInfo)")
-   }
-   }
-
-   func defineFarmNameAndID(completion: @escaping (_ success: Bool) -> Void) {
-   appDelegate.apollo?.fetch(query: ProfileQuery()) { (result, error) in
-   guard let farms = result?.data?.farms else { print("Could not retrieve profile"); return }
-
-   for farm in farms {
-   self.saveFarmNameAndID(name: farm.label, id: farm.id)
-   }
-   completion(true)
-   }
-   }*/
 
   // MARK: - Crops
 
@@ -832,7 +808,7 @@ class ApolloQuery {
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
-      fatalError((fetchedInput.article?.type.rawValue)! + ": Unknown value of TypeEnum")
+      print("Unknown value of TypeEnum")
     }
 
     do {
@@ -885,6 +861,7 @@ class ApolloQuery {
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
+    intervention.status = (fetchedIntervention.validatedAt == nil ? Intervention.Status.Synchronised : Intervention.Status.Validated).rawValue
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
@@ -1170,7 +1147,10 @@ class ApolloQuery {
 
     group.enter()
     apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if error != nil || result?.data?.createIntervention?.errors != nil {
+      if let error = error {
+        print("Error: \(error)")
+      } else if let error = result?.data?.createIntervention?.errors {
+        print("Error: \(error)")
       } else {
         id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
       }

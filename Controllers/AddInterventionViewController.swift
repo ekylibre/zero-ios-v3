@@ -595,8 +595,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
-    let id = apolloQuery.pushIntervention(intervention: newIntervention)
-    newIntervention.ekyID = id
 
     do {
       try managedContext.save()
@@ -1032,7 +1030,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       dateFormatter.locale = Locale(identifier: "fr_FR")
       dateFormatter.dateFormat = "d MMMM"
       let selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
-
 
       selectDateButton.setTitle(selectedDate, for: .normal)
       selectDateView.isHidden = true

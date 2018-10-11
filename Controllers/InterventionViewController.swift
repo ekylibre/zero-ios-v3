@@ -96,14 +96,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     initialiseInterventionButtons()
 
-    fetchInterventions()
-
     // Load table view
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
-
     refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
+
+    initializeApolloClient()
+    synchronise(self)
   }
 
   func initialiseInterventionButtons() {
@@ -135,13 +135,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-
-    initializeApolloClient()
-    apolloQuery.queryFarms { (success) in
-      if success {
-        self.fetchInterventions()
-      }
-    }
   }
 
   private func fetchInterventions() {
@@ -461,13 +454,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     apolloQuery.queryFarms { (success) in
       if success {
+        self.pushInterventionIfNeeded()
         self.fetchInterventions()
-
-        for intervention in self.interventions {
-          if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
-            intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
-          }
-        }
 
         do {
           try managedContext.save()
@@ -482,6 +470,32 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()
+    }
+  }
+
+  func pushInterventionIfNeeded() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let predicate = NSPredicate(format: "ekyID == %d", 0)
+
+    interventionsFetchRequest.predicate = predicate
+
+    do {
+      let interventions = try managedContext.fetch(interventionsFetchRequest)
+
+      for intervention in interventions {
+        intervention.ekyID = apolloQuery.pushIntervention(intervention: intervention)
+        if intervention.ekyID != 0 {
+          intervention.status = Intervention.Status.Synchronised.rawValue
+        }
+        try managedContext.save()
+      }
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
 
