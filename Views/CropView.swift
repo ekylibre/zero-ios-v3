@@ -14,7 +14,7 @@ class CropView: UIView {
 
   lazy var cropImageView: UIImageView = {
     let cropImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-    let cropImage = #imageLiteral(resourceName: "crop")
+    let cropImage = #imageLiteral(resourceName: "plots")
     let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
     cropImageView.image = tintedImage
     cropImageView.tintColor = UIColor.darkGray

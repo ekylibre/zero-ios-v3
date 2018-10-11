@@ -16,7 +16,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var materialImage: UIImageView = {
     let materialImage = UIImageView(frame: CGRect.zero)
-    materialImage.image = UIImage(named: "materials")
+    materialImage.image = UIImage(named: "material")
     materialImage.translatesAutoresizingMaskIntoConstraints = false
     return materialImage
   }()

@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "soil_loosener.png",
+      "filename" : "soil_loosener_1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "soil_loosener_2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "soil_loosener_3x.png",
       "scale" : "3x"
     }
   ],
