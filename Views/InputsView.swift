@@ -69,20 +69,20 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return dimView
   }()
 
-  lazy var seedView: CreateSeedView = {
-    let seedView = CreateSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  lazy var seedView: SeedCreationView = {
+    let seedView = SeedCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     seedView.translatesAutoresizingMaskIntoConstraints = false
     return seedView
   }()
 
-  lazy var phytoView: CreatePhytoView = {
-    let phytoView = CreatePhytoView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  lazy var phytoView: PhytoCreationView = {
+    let phytoView = PhytoCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     phytoView.translatesAutoresizingMaskIntoConstraints = false
     return phytoView
   }()
 
-  lazy var fertilizerView: CreateFertilizerView = {
-    let fertilizerView = CreateFertilizerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  lazy var fertilizerView: FertilizerCreationView = {
+    let fertilizerView = FertilizerCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fertilizerView.translatesAutoresizingMaskIntoConstraints = false
     return fertilizerView
   }()

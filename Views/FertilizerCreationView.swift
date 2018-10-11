@@ -1,5 +1,5 @@
 //
-//  CreateFertilizerView.swift
+//  FertilizerCreationView.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 22/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateFertilizerView: UIView, UITextFieldDelegate {
+class FertilizerCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 

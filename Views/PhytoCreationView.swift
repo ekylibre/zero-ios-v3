@@ -1,5 +1,5 @@
 //
-//  CreatePhytoView.swift
+//  PhytoCreationView.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 22/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreatePhytoView: UIView, UITextFieldDelegate {
+class PhytoCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 

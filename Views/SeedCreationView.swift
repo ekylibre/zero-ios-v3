@@ -1,5 +1,5 @@
 //
-//  CreateSeedView.swift
+//  SeedCreationView.swift
 //  Clic&Farm-iOS
 //
 //  Created by Guillaume Roux on 21/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateSeedView: UIView, UITextFieldDelegate {
+class SeedCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 

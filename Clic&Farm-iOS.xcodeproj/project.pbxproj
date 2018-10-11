@@ -32,9 +32,9 @@
 		6B11EEE22139635400E2DEC4 /* EntityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED72139635400E2DEC4 /* EntityCell.swift */; };
 		6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED92139635400E2DEC4 /* PlotCell.swift */; };
 		6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */; };
-		6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
-		6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
-		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
+		6B11EEEA2139641A00E2DEC4 /* FertilizerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* FertilizerCreationView.swift */; };
+		6B11EEEB2139641A00E2DEC4 /* PhytoCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* PhytoCreationView.swift */; };
+		6B11EEEC2139641A00E2DEC4 /* SeedCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* SeedCreationView.swift */; };
 		6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */; };
 		6B77C3D42141297500520840 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77C3D32141297500520840 /* AddIrrigation.swift */; };
 		6B834B3F2165000100BADA79 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B834B3E2165000100BADA79 /* AddSelectedInputsToIntervention.swift */; };
@@ -89,9 +89,9 @@
 		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		044B4D46213816C0001A5D3D /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
 		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
-		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
-		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
-		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
+		0478F232213447D9001EAE6E /* FertilizerCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCreationView.swift; sourceTree = "<group>"; };
+		0478F234213447DD001EAE6E /* PhytoCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCreationView.swift; sourceTree = "<group>"; };
+		0478F236213447E1001EAE6E /* SeedCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCreationView.swift; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
 		6B11EED02139635400E2DEC4 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
@@ -205,16 +205,16 @@
 			children = (
 				6B11EECE2139635400E2DEC4 /* Cells */,
 				6B11EEE52139636200E2DEC4 /* Storyboards */,
-				0478F232213447D9001EAE6E /* CreateFertilizerView.swift */,
-				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
-				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
 				044B4D5F2138173E001A5D3D /* CropsView.swift */,
 				6B85D043214A9225009EAF24 /* CropView.swift */,
 				6BA5D7862149391C0054F969 /* CustomPickerView.swift */,
+				0478F232213447D9001EAE6E /* FertilizerCreationView.swift */,
 				04162E5D212C434100EF4318 /* InputsView.swift */,
 				6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */,
 				6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */,
+				0478F234213447DD001EAE6E /* PhytoCreationView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
+				0478F236213447E1001EAE6E /* SeedCreationView.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 			);
 			path = Views;
@@ -448,10 +448,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B87EBFC215BCE99004B3DE5 /* AddWeatherToIntervention.swift in Sources */,
-				6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */,
+				6B11EEEA2139641A00E2DEC4 /* FertilizerCreationView.swift in Sources */,
 				6B834B41216508C600BADA79 /* Localizable.swift in Sources */,
-				6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */,
-				6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */,
+				6B11EEEB2139641A00E2DEC4 /* PhytoCreationView.swift in Sources */,
+				6B11EEEC2139641A00E2DEC4 /* SeedCreationView.swift in Sources */,
 				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */,
