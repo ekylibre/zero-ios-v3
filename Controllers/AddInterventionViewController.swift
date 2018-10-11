@@ -369,17 +369,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
           cell.inputName.text = seed.specie
           cell.inputLabel.text = seed.variety
-          cell.inputImage.image = #imageLiteral(resourceName: "seed")
+          cell.inputImage.image = UIImage(named: "seed")
         case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
-          cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
+          cell.inputImage.image = UIImage(named: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
           cell.inputName.text = fertilizer.name
           cell.inputLabel.text = fertilizer.nature
-          cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
+          cell.inputImage.image = UIImage(named: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }
@@ -422,7 +422,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       entity = searchedEntities[indexPath.row]
       cell.firstName.text = entity?.value(forKey: "firstName") as? String
       cell.lastName.text = entity?.value(forKey: "lastName") as? String
-      cell.logo.image = #imageLiteral(resourceName: "entity-logo")
+      cell.logo.image = UIImage(named: "person")
       return cell
     case doersTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
@@ -435,7 +435,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
       cell.firstName.text = doer?.value(forKey: "firstName") as? String
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
-      cell.logo.image = #imageLiteral(resourceName: "entity-logo")
+      cell.logo.image = UIImage(named: "person")
       return cell
     default:
       fatalError("Switch error")

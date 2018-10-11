@@ -30,7 +30,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var deleteButton: UIButton = {
     let deleteButton = UIButton(frame: CGRect.zero)
-    deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
+    deleteButton.setImage(UIImage(named: "delete"), for: .normal)
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
   }()

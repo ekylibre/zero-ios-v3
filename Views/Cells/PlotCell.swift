@@ -12,8 +12,8 @@ class PlotCell: UITableViewCell {
 
   lazy var checkboxButton: UIButton = {
     let checkboxButton = UIButton(frame: CGRect.zero)
-    checkboxButton.setImage(#imageLiteral(resourceName: "check-box-blank"), for: .normal)
-    checkboxButton.setImage(#imageLiteral(resourceName: "check-box"), for: .selected)
+    checkboxButton.setImage(UIImage(named: "check-box-blank"), for: .normal)
+    checkboxButton.setImage(UIImage(named: "check-box"), for: .selected)
     checkboxButton.translatesAutoresizingMaskIntoConstraints = false
     return checkboxButton
   }()
@@ -34,7 +34,7 @@ class PlotCell: UITableViewCell {
 
   lazy var expandCollapseImageView: UIImageView = {
     let expandCollapseImageView = UIImageView(frame: CGRect.zero)
-    expandCollapseImageView.image = #imageLiteral(resourceName: "expand-more")
+    expandCollapseImageView.image = UIImage(named: "expand-more")
     expandCollapseImageView.translatesAutoresizingMaskIntoConstraints = false
     return expandCollapseImageView
   }()

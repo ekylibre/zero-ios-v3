@@ -74,7 +74,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var removeCell: UIButton = {
     let removeCell = UIButton(frame: CGRect.zero)
 
-    removeCell.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
+    removeCell.setImage(UIImage(named: "delete"), for: .normal)
     removeCell.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
     removeCell.translatesAutoresizingMaskIntoConstraints = false
     return removeCell
@@ -111,7 +111,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let warningImage = UIImageView(frame: CGRect.zero)
 
     warningImage.isHidden = true
-    warningImage.image = #imageLiteral(resourceName: "filled-circle")
+    warningImage.image = UIImage(named: "filled-circle")
     warningImage.translatesAutoresizingMaskIntoConstraints = false
     return warningImage
   }()

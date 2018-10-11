@@ -333,7 +333,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for view in cell.subviews[1...crops.count] {
       let checkboxImage = view.subviews[1] as! UIImageView
 
-      checkboxImage.image = #imageLiteral(resourceName: "check-box")
+      checkboxImage.image = UIImage(named: "check-box")
     }
 
     for crop in crops {
@@ -345,10 +345,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for (index, view) in cell.subviews[1...crops.count].enumerated() {
       let checkboxImage = view.subviews[1] as! UIImageView
 
-      if checkboxImage.image == #imageLiteral(resourceName: "check-box") {
+      if checkboxImage.image == UIImage(named: "check-box") {
         cropsCount -= 1
         totalSurfaceArea -= crops[index].surfaceArea
-        checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+        checkboxImage.image = UIImage(named: "check-box-blank")
 
         if let index = selectedCrops.index(of: crops[index]) {
           selectedCrops.remove(at: index)
@@ -375,11 +375,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     let checkboxImage = view.subviews[1] as! UIImageView
 
-    if checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") {
-      checkboxImage.image = #imageLiteral(resourceName: "check-box")
+    if checkboxImage.image == UIImage(named: "check-box-blank") {
+      checkboxImage.image = UIImage(named: "check-box")
       selectCrop(crop, cell)
     } else {
-      checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+      checkboxImage.image = UIImage(named: "check-box-blank")
       deselectCrop(crop, crops, cell)
     }
     updateSelectedCropsLabel()
@@ -402,9 +402,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for (index, view) in cell.subviews[1...crops.count].enumerated() {
       let checkboxImage = view.subviews[1] as! UIImageView
 
-      if checkboxImage.image == #imageLiteral(resourceName: "check-box") {
+      if checkboxImage.image == UIImage(named: "check-box") {
         break
-      } else if checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") && index == crops.count - 1 {
+      } else if checkboxImage.image == UIImage(named: "check-box-blank") && index == crops.count - 1 {
         cell.checkboxButton.isSelected = false
       }
     }

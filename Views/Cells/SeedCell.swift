@@ -27,7 +27,7 @@ class SeedCell: UITableViewCell {
 
   lazy var starImageView: UIImageView = {
     let starImageView = UIImageView(frame: CGRect.zero)
-    let starImage = #imageLiteral(resourceName: "star")
+    let starImage = UIImage(named: "star")!
     let tintedImage = starImage.withRenderingMode(.alwaysTemplate)
     starImageView.image = tintedImage
     starImageView.tintColor = AppColor.BarColors.Green

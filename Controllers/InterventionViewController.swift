@@ -29,8 +29,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
+  let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
+                           "CARE", "FERTILIZATION", "CROP_PROTECTION"]
   var interventionButtons: [UIButton] = []
-
   let dimView = UIView()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -109,24 +110,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func initialiseInterventionButtons() {
-    let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
-    let interventionNames: [String] = [
-      "IMPLANTATION".localized,
-      "GROUND_WORK".localized,
-      "IRRIGATION".localized,
-      "HARVEST".localized,
-      "CARE".localized,
-      "FERTILIZATION".localized,
-      "CROP_PROTECTION".localized
-    ]
-
     for buttonCount in 0...6 {
-
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
+      let image = UIImage(named: interventionTypes[buttonCount].lowercased())
 
       interventionButton.backgroundColor = UIColor.white
-      interventionButton.setBackgroundImage(interventionImages[buttonCount], for: .normal)
-      interventionButton.setTitle(interventionNames[buttonCount], for: .normal)
+      interventionButton.setBackgroundImage(image, for: .normal)
+      interventionButton.setTitle(interventionTypes[buttonCount].localized, for: .normal)
       interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false

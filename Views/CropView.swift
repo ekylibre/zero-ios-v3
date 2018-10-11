@@ -14,7 +14,7 @@ class CropView: UIView {
 
   lazy var cropImageView: UIImageView = {
     let cropImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-    let cropImage = #imageLiteral(resourceName: "plots")
+    let cropImage = UIImage(named: "plots")!
     let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
     cropImageView.image = tintedImage
     cropImageView.tintColor = UIColor.darkGray
@@ -24,7 +24,7 @@ class CropView: UIView {
 
   lazy var checkboxImage: UIImageView = {
     let checkboxImage = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-    checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+    checkboxImage.image = UIImage(named: "check-box-blank")
     return checkboxImage
   }()
 
