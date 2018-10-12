@@ -26,20 +26,19 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(false)
-    performSegue(withIdentifier: "ShowInterventionVC", sender: self)
-    /*struct staticIndex {
-     static var firstLaunch = false
-     }
-     if !staticIndex.firstLaunch {
-     authentificationService = AuthentificationService(username: "", password: "")
-     if entityIsEmpty(entity: "Users") {
-     authentificationService?.logout()
-     }
-     self.authentifyUser()
-     staticIndex.firstLaunch = true
-     }*/
+    struct staticIndex {
+      static var firstLaunch = false
+    }
+    if !staticIndex.firstLaunch {
+      authentificationService = AuthentificationService(username: "", password: "")
+      if entityIsEmpty(entity: "Users") {
+        authentificationService?.logout()
+      }
+      self.authentifyUser()
+      staticIndex.firstLaunch = true
+    }
   }
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
