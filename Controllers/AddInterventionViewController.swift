@@ -34,6 +34,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // Materials
   @IBOutlet var materialsTapGesture: UITapGestureRecognizer!
+  @IBOutlet weak var materialsView: UIView!
   @IBOutlet weak var materialsHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var materialsAddButton: UIButton!
   @IBOutlet weak var materialsCountLabel: UILabel!
@@ -238,6 +239,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
     case Intervention.InterventionType.Care.rawValue:
+      materialsView.isHidden = false
+      materialsSeparatorView.isHidden = false
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
     case Intervention.InterventionType.CropProtection.rawValue:
