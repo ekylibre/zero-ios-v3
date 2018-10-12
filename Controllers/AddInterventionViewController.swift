@@ -241,31 +241,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case Intervention.InterventionType.Care.rawValue:
       materialsView.isHidden = false
       materialsSeparatorView.isHidden = false
-      irrigationView.isHidden = true
-      irrigationSeparatorView.isHidden = true
     case Intervention.InterventionType.CropProtection.rawValue:
-      irrigationView.isHidden = true
-      irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
     case Intervention.InterventionType.Fertilization.rawValue:
-      irrigationView.isHidden = true
-      irrigationSeparatorView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
     case Intervention.InterventionType.GroundWork.rawValue:
-      irrigationView.isHidden = true
-      irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
     case Intervention.InterventionType.Harvest.rawValue:
-      irrigationView.isHidden = true
-      irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue:
-      irrigationView.isHidden = true
-      irrigationSeparatorView.isHidden = true
+    case Intervention.InterventionType.Irrigation.rawValue:
+      irrigationView.isHidden = false
+      irrigationSeparatorView.isHidden = false
     default:
       return
     }
