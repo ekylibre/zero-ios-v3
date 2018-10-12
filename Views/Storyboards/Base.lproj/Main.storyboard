@@ -2007,6 +2007,7 @@
         <image name="thunderstorm" width="285" height="285"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="aDw-i0-Y4L"/>
         <segue reference="a8t-Pd-Dxa"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -104,6 +104,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     initializeApolloClient()
     if Connectivity.isConnectedToInternet() {
+      fetchInterventions()
       synchronise(self)
     } else {
       fetchInterventions()
@@ -428,12 +429,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
-
     if sender.source is AddInterventionViewController {
-      if let senderVC = sender.source as? AddInterventionViewController {
-        interventions.append(senderVC.newIntervention)
-      }
-      tableView.reloadData()
+      fetchInterventions()
     }
   }
 
