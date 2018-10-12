@@ -286,6 +286,7 @@
 
 // App strings
 "app_name" = "Clic&Farm";
+"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account …";
 "nav_button" = "Nav button";
 "prompt_email" = "Email";
 "prompt_password" = "Password";
@@ -294,6 +295,8 @@
 "cancel" = "Cancel";
 "validate" = "Validate";
 "delete" = "Delete";
+"no" = "No";
+"yes" = "Yes";
 
 "starting_intervention_text" = "Start recording intervention";
 "finishing_intervention_text" = "Register done intervention";
@@ -321,8 +324,6 @@
 "duration" = "Duration";
 
 "add_input" = "+ Add an input";
-"default_input_name" = "Blé dur";
-"default_input_name_more" = "Tablur";
 "quantity" = "Quantity";
 "default_quantity_value" = "0";
 "default_unit" = "kg";
@@ -380,9 +381,7 @@
 "stock_place" = "Storage";
 "number" = "Number";
 "name" = "Name";
-"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account …";
-"no" = "No";
-"yes" = "Yes";
+
 "sync_failure" = "Sync failure…";
 "network_failure" = "Network error, try again later.";
 "login_failure" = "Unknown E-mail or invalid password. Try again.";
@@ -433,7 +432,7 @@
 "km_per_hour" = "km/h";
 "ok" = "Ok";
 "crop_list" = "Liste des cultures";
-"waiting_for_gps" = "Recherche d'une position GPS...";
+"waiting_for_gps" = "Recherche d'une position GPS…";
 "brand" = "Marque";
 "mmaid_number" = "N° AMM";
 "reentry_delay" = "Délai de ré-entrée";
