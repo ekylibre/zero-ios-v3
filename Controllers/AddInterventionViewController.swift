@@ -15,7 +15,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
-  @IBOutlet weak var equipmentsTableView: UITableView!
   @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
   @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
@@ -34,33 +33,26 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationSeparatorView: UIView!
 
   // Materials
-  @IBOutlet weak var materialsHeightConstraint: NSLayoutConstraint!
   @IBOutlet var materialsTapGesture: UITapGestureRecognizer!
+  @IBOutlet weak var materialsHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var materialsAddButton: UIButton!
   @IBOutlet weak var materialsCountLabel: UILabel!
-  @IBOutlet weak var materialsExpandImage: UIImageView!
+  @IBOutlet weak var materialsExpandImageView: UIImageView!
   @IBOutlet weak var selectedMaterialsTableView: UITableView!
   @IBOutlet weak var materialsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var materialsSeparatorView: UIView!
 
-  // Equipment
-  @IBOutlet weak var equipmentDarkLayer: UIView!
-  @IBOutlet weak var equipmentName: UITextField!
-  @IBOutlet weak var equipmentNumber: UITextField!
-  @IBOutlet weak var equipmentType: UILabel!
-  @IBOutlet weak var equipmentHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var equipmentTableViewHeightConstraint: NSLayoutConstraint!
+  // Equipments
+  @IBOutlet var equipmentsTapGesture: UITapGestureRecognizer!
+  @IBOutlet weak var equipmentsHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var equipmentsAddButton: UIButton!
+  @IBOutlet weak var equipmentsCountLabel: UILabel!
+  @IBOutlet weak var equipmentsExpandImageView: UIImageView!
+  @IBOutlet weak var selectedEquipmentsTableView: UITableView!
+  @IBOutlet weak var equipmentsTableViewHeightConstraint: NSLayoutConstraint!
 
   @IBOutlet weak var navigationBar: UINavigationBar!
-  @IBOutlet weak var collapseButton: UIButton!
   @IBOutlet weak var saveInterventionButton: UIButton!
-  @IBOutlet weak var selectEquipmentsView: UIView!
-  @IBOutlet weak var createEquipmentsView: UIView!
-  @IBOutlet weak var selectedEquipmentsTableView: UITableView!
-  @IBOutlet weak var addEquipmentButton: UIButton!
-  @IBOutlet weak var equipmentNumberLabel: UILabel!
-  @IBOutlet weak var searchEquipment: UISearchBar!
-  @IBOutlet weak var equipmentTypeButton: UIButton!
-  @IBOutlet weak var createEquipment: UIView!
   @IBOutlet weak var createEntity: UIView!
   @IBOutlet weak var entityFirstName: UITextField!
   @IBOutlet weak var entityLastName: UITextField!
@@ -108,15 +100,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
   var inputsView: InputsView!
-  var materialsView: MaterialsView!
+  var materialsSelectionView: MaterialsView!
+  var equipmentsSelectionView: EquipmentsView!
   var selectedMaterials = [[NSManagedObject]]()
   var interventionEquipments = [NSManagedObject]()
-  var equipmentsTableViewTopAnchor: NSLayoutConstraint!
-  var equipments = [Equipments]()
   var selectedEquipments = [Equipments]()
-  var searchedEquipments = [Equipments]()
   var sortedEquipmentTypes: [String]!
-  var selectedEquipmentType: String!
   var entities = [NSManagedObject]()
   var entitiesTableViewTopAnchor: NSLayoutConstraint!
   var searchedEntities = [NSManagedObject]()
@@ -132,6 +121,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var weather: Weather!
   let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
   let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
+
+  // MARK: - Initialization
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -182,22 +173,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
-    let equipmentTypes = defineEquipmentTypes()
-    equipmentTypeButton.setTitle(equipmentTypes[0].localized, for: .normal)
-    selectedEquipmentType = equipmentTypes[0]
-
-    fetchEquipments()
     fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
 
     initUnitMeasurePickerView()
-
-    selectedEquipmentsTableView.layer.borderWidth  = 0.5
-    selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedEquipmentsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedEquipmentsTableView.layer.cornerRadius = 4
-    selectedEquipmentsTableView.dataSource = self
-    selectedEquipmentsTableView.delegate = self
-    selectedEquipmentsTableView.bounces = false
 
     saveInterventionButton.layer.cornerRadius = 3
 
@@ -210,18 +188,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     selectedInputsTableView.layer.cornerRadius = 4
 
-    equipmentsTableView.dataSource = self
-    equipmentsTableView.delegate = self
-    equipmentsTableView.bounces = false
-
-    searchEquipment.delegate = self
-    searchEquipment.autocapitalizationType = .none
-
     searchEntity.delegate = self
     searchEntity.autocapitalizationType = .none
-
-    equipmentsTableViewTopAnchor = equipmentsTableView.topAnchor.constraint(equalTo: searchEquipment.bottomAnchor, constant: 40.5)
-    NSLayoutConstraint.activate([equipmentsTableViewTopAnchor])
 
     entitiesTableView.dataSource = self
     entitiesTableView.delegate = self
@@ -248,8 +216,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     selectedMaterials.append([Materials]())
     selectedMaterials.append([InterventionMaterials]())
-    setupMaterialsView()
     setupIrrigation()
+    setupMaterialsView()
+    setupEquipmentsView()
 
     initializeWeatherButtons()
     initWeather()
@@ -335,8 +304,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return selectedInputs.count
     case selectedMaterialsTableView:
       return selectedMaterials[0].count
-    case equipmentsTableView:
-      return searchedEquipments.count
     case selectedEquipmentsTableView:
       return selectedEquipments.count
     case entitiesTableView:
@@ -401,11 +368,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
       let selectedEquipment = selectedEquipments[indexPath.row]
 
-      cell.cellDelegate = self
-      cell.indexPath = indexPath
-      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedEquipment.name
-      cell.typeLabel.text = selectedEquipment.type?.localized
+      cell.infosLabel.text = String(format: "%@ #%@", selectedEquipment.type!.localized, selectedEquipment.number ?? "error")
       cell.typeImageView.image = defineEquipmentImage(type: selectedEquipment.type!)
       return cell
     case entitiesTableView:
@@ -475,10 +439,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
                               tableView: UITableView) {
     tableViewHeightConstraint.constant = tableView.contentSize.height
     viewHeightConstraint.constant = tableViewHeightConstraint.constant + 100
-  }
-
-  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
-    self.performSegue(withIdentifier: "showEquipmentTypes", sender: self)
   }
 
   // MARK: - Core Data
@@ -615,8 +575,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     for selectedEquipment in selectedEquipments {
       let interventionEquipment = InterventionEquipments(context: managedContext)
 
-      interventionEquipment.equipments = selectedEquipment
       interventionEquipment.interventions = intervention
+      interventionEquipment.equipments = selectedEquipment
     }
 
     do {
@@ -749,13 +709,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case 0:
       inputsView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
-      materialsView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
+      materialsSelectionView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
     case 2:
       selectedMaterials[1][selectedRow].setValue(value, forKey: "unit")
       selectedMaterialsTableView.reloadData()
     case 3:
-      selectedEquipmentType = value
-      equipmentTypeButton.setTitle(selectedEquipmentType.localized, for: .normal)
+      equipmentsSelectionView.creationView.typeButton.setTitle(value.localized, for: .normal)
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }
@@ -768,12 +727,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let entityName: String = filterEntity.value(forKey: "firstName") as! String
       return entityName.range(of: searchText) != nil
     })
-    searchedEquipments = searchText.isEmpty ? equipments : equipments.filter({(filterEquipment: NSManagedObject) -> Bool in
-      let equipmentName: String = filterEquipment.value(forKey: "name") as! String
-      return equipmentName.range(of: searchText) != nil
-    })
     entitiesTableView.reloadData()
-    equipmentsTableView.reloadData()
   }
 
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -781,9 +735,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case searchEntity:
       entitiesTableViewTopAnchor.constant = 15
       createEntity.isHidden = true
-    case searchEquipment:
-      equipmentsTableViewTopAnchor.constant = 15
-      createEquipment.isHidden = true
     default:
       return
     }
@@ -795,10 +746,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       searchBar.endEditing(true)
       entitiesTableViewTopAnchor.constant = 40.5
       createEntity.isHidden = false
-    case searchEquipment:
-      searchBar.endEditing(true)
-      equipmentsTableViewTopAnchor.constant = 40.5
-      createEquipment.isHidden = false
     default:
       return
     }
@@ -873,10 +820,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     switch gestureRecognizer {
     case materialsTapGesture:
-      if selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView)) {
-        return false
-      }
-      return true
+      return !selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView))
+    case equipmentsTapGesture:
+      return !selectedEquipmentsTableView.bounds.contains(touch.location(in: selectedEquipmentsTableView))
     default:
       fatalError("gestureRecognizer switch error: case not found")
     }
@@ -976,24 +922,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     dismiss(animated: true, completion: nil)
   }
 
-  @IBAction func selectMaterials(_ sender: Any) {
-    dimView.isHidden = false
-    materialsView.isHidden = false
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
-  }
-
-
   func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
                           numberLabel: UILabel, addEntityButton: UIButton) {
     if entities.count > 0 && constraint.constant == 70 {
       addEntityButton.isHidden = true
       numberLabel.isHidden = false
       switch entities {
-      case selectedEquipments:
-        numberLabel.text = (entities.count == 1 ? "equipment".localized : String(format: "equipments".localized, entities.count))
       case doers:
         numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
       case selectedInputs:

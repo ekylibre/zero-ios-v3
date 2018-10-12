@@ -13,15 +13,15 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupMaterialsView() {
-    materialsView = MaterialsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    materialsView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(materialsView)
+    materialsSelectionView = MaterialsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    materialsSelectionView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(materialsSelectionView)
 
     NSLayoutConstraint.activate([
-      materialsView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-      materialsView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -30),
-      materialsView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-      materialsView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
+      materialsSelectionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+      materialsSelectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -30),
+      materialsSelectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+      materialsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
     materialsTapGesture.delegate = self
@@ -32,9 +32,9 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
-    materialsView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
-    materialsView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
-    materialsView.addInterventionViewController = self
+    materialsSelectionView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
+    materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
+    materialsSelectionView.addInterventionViewController = self
   }
 
   // MARK: - Selection
@@ -58,13 +58,22 @@ extension AddInterventionViewController {
     let shouldExpand = selectedMaterials[0].count > 0
     let tableViewHeight = (selectedMaterials[0].count > 4) ? 4 * 80 : selectedMaterials[0].count * 80
 
-    materialsExpandImage.isHidden = !shouldExpand
+    materialsExpandImageView.isHidden = !shouldExpand
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     selectedMaterialsTableView.reloadData()
   }
 
   // MARK: - Actions
+
+  @IBAction private func openMaterialsSelectionView(_ sender: Any) {
+    dimView.isHidden = false
+    materialsSelectionView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
 
   @IBAction private func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
@@ -78,7 +87,7 @@ extension AddInterventionViewController {
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     materialsAddButton.isHidden = !shouldExpand
     materialsCountLabel.isHidden = shouldExpand
-    materialsExpandImage.transform = materialsExpandImage.transform.rotated(by: CGFloat.pi)
+    materialsExpandImageView.transform = materialsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
   private func updateCountLabel() {
@@ -90,17 +99,17 @@ extension AddInterventionViewController {
   }
 
   @objc private func closeSelectionView() {
-    materialsView.isHidden = true
+    materialsSelectionView.isHidden = true
     dimView.isHidden = true
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
 
-    materialsView.searchBar.text = nil
-    materialsView.searchBar.endEditing(true)
-    materialsView.isSearching = false
-    materialsView.tableView.reloadData()
+    materialsSelectionView.searchBar.text = nil
+    materialsSelectionView.searchBar.endEditing(true)
+    materialsSelectionView.isSearching = false
+    materialsSelectionView.tableView.reloadData()
   }
 
   @objc func updateMaterialQuantity(sender: UITextField) {
@@ -151,6 +160,6 @@ extension AddInterventionViewController {
     selectedMaterials[0].remove(at: index)
     selectedMaterials[1].remove(at: index)
     updateView()
-    materialsView.tableView.reloadData()
+    materialsSelectionView.tableView.reloadData()
   }
 }

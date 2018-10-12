@@ -47,7 +47,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     self.addSubview(creationView)
 
     NSLayoutConstraint.activate([
-      creationView.heightAnchor.constraint(equalToConstant: 250),
+      creationView.heightAnchor.constraint(equalToConstant: 350),
       creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
       creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
       creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
@@ -114,7 +114,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let fromEquipments = isSearching ? filteredEquipments : equipments
 
-    addInterventionViewController?.selectMaterial(fromEquipments[indexPath.row])
+    addInterventionViewController?.selectEquipment(fromEquipments[indexPath.row])
     searchBar.text = nil
     searchBar.endEditing(true)
     isSearching = false
@@ -171,7 +171,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   @objc private func validateCreation() {
-    createEquipment(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue ?? "METER")
+    createEquipment(name: creationView.nameTextField.text!, number: creationView.numberTextField.text!)
     creationView.nameTextField.text = ""
     creationView.typeButton.setTitle("METER".localized.lowercased(), for: .normal)
     equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)

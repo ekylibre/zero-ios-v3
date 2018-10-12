@@ -9,7 +9,122 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: SelectedEquipmentCellDelegate {
+extension AddInterventionViewController {
+
+  // MARK: - Initialization
+
+  func setupEquipmentsView() {
+    equipmentsSelectionView = EquipmentsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    equipmentsSelectionView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(equipmentsSelectionView)
+
+    NSLayoutConstraint.activate([
+      equipmentsSelectionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+      equipmentsSelectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -30),
+      equipmentsSelectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+      equipmentsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
+      ])
+
+    equipmentsTapGesture.delegate = self
+    selectedEquipmentsTableView.layer.borderWidth  = 0.5
+    selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedEquipmentsTableView.layer.cornerRadius = 5
+    selectedEquipmentsTableView.bounces = false
+    selectedEquipmentsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
+    selectedEquipmentsTableView.dataSource = self
+    selectedEquipmentsTableView.delegate = self
+    equipmentsSelectionView.exitButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)
+    equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes), for: .touchUpInside)
+    equipmentsSelectionView.addInterventionViewController = self
+  }
+
+  // MARK: - Selection
+
+  func selectEquipment(_ equipment: Equipments) {
+    selectedEquipments.append(equipment)
+    closeEquipmentsSelectionView()
+    updateView()
+  }
+
+  private func updateView() {
+    let shouldExpand = selectedEquipments.count > 0
+    let tableViewHeight = (selectedEquipments.count > 7) ? 7 * 80 : selectedEquipments.count * 80
+
+    equipmentsExpandImageView.isHidden = !shouldExpand
+    equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    equipmentsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    selectedEquipmentsTableView.reloadData()
+  }
+
+  // MARK: - Actions
+
+  @IBAction private func openEquipmentsSelectionView(_ sender: Any) {
+    dimView.isHidden = false
+    equipmentsSelectionView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
+  }
+
+  @IBAction private func tapEquipmentsView() {
+    let shouldExpand = (equipmentsHeightConstraint.constant == 70)
+    let tableViewHeight = (selectedEquipments.count > 7) ? 7 * 80 : selectedEquipments.count * 80
+
+    if selectedEquipments.count == 0 {
+      return
+    }
+
+    updateCountLabel()
+    equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    equipmentsAddButton.isHidden = !shouldExpand
+    equipmentsCountLabel.isHidden = shouldExpand
+    equipmentsExpandImageView.transform = equipmentsExpandImageView.transform.rotated(by: CGFloat.pi)
+  }
+
+  private func updateCountLabel() {
+    if selectedEquipments.count == 1 {
+      equipmentsCountLabel.text = "equipment".localized
+    } else {
+      equipmentsCountLabel.text = String(format: "equipments".localized, selectedEquipments.count)
+    }
+  }
+
+  @objc private func closeEquipmentsSelectionView() {
+    equipmentsSelectionView.isHidden = true
+    dimView.isHidden = true
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
+
+    equipmentsSelectionView.searchBar.text = nil
+    equipmentsSelectionView.searchBar.endEditing(true)
+    equipmentsSelectionView.isSearching = false
+    equipmentsSelectionView.tableView.reloadData()
+  }
+
+  @objc private func showEquipmentTypes() {
+    self.performSegue(withIdentifier: "showEquipmentTypes", sender: self)
+  }
+
+  @objc func tapEquipmentsDeleteButton(sender: UIButton) {
+    let cell = sender.superview?.superview as! SelectedMaterialCell
+    let indexPath = selectedMaterialsTableView.indexPath(for: cell)!
+    let alert = UIAlertController(title: nil, message: "delete_equipment_prompt".localized, preferredStyle: .alert)
+
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
+      self.deleteEquipment(indexPath.row)
+    }))
+    self.present(alert, animated: true)
+  }
+
+  private func deleteEquipment(_ index: Int)  {
+    selectedEquipments.remove(at: index)
+    updateView()
+    equipmentsSelectionView.tableView.reloadData()
+  }
 
   // MARK: - Initialization
 
@@ -49,149 +164,5 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     let assetName = type.lowercased().replacingOccurrences(of: "_", with: "-")
 
     return UIImage(named: assetName)
-  }
-
-  // MARK: - Actions
-
-  @IBAction func collapseEquipmentView(_ send: Any) {
-    if equipmentHeightConstraint.constant != 70 {
-      UIView.animate(withDuration: 0.5, animations: {
-        self.selectedEquipmentsTableView.isHidden = true
-        self.equipmentHeightConstraint.constant = 70
-        self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        self.view.layoutIfNeeded()
-      })
-    } else {
-      UIView.animate(withDuration: 0.5, animations: {
-        self.selectedEquipmentsTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.equipmentHeightConstraint,
-          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
-          tableView: self.selectedEquipmentsTableView)
-        self.collapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-        self.view.layoutIfNeeded()
-      })
-    }
-    showEntitiesNumber(
-      entities: selectedEquipments,
-      constraint: equipmentHeightConstraint,
-      numberLabel: equipmentNumberLabel,
-      addEntityButton: addEquipmentButton)
-  }
-
-
-  @IBAction func openEquipmentsSelectionView(_ sender: Any) {
-    dimView.isHidden = false
-    selectEquipmentsView.isHidden = false
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-      self.view.layoutIfNeeded()
-    })
-  }
-
-  @IBAction func closeEquipmentsSelectionView(_ sender: Any) {
-    dimView.isHidden = true
-    selectEquipmentsView.isHidden = true
-
-    if selectedEquipments.count > 0 {
-      UIView.animate(withDuration: 0.5, animations: {
-        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.collapseButton.isHidden = false
-        self.selectedEquipmentsTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.equipmentHeightConstraint,
-          tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
-          tableView: self.selectedEquipmentsTableView)
-        self.collapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-        self.view.layoutIfNeeded()
-      })
-    }
-    searchedEquipments = equipments
-    selectedEquipmentsTableView.reloadData()
-  }
-
-  @IBAction func openEquipmentsCreationView(_ sender: Any) {
-    equipmentDarkLayer.isHidden = false
-    createEquipmentsView.isHidden = false
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-      self.view.layoutIfNeeded()
-    })
-  }
-
-  @IBAction func closeEquipmentsCreationView(_ sender: Any) {
-    equipmentName.text = nil
-    equipmentNumber.text = nil
-    equipmentDarkLayer.isHidden = true
-    createEquipmentsView.isHidden = true
-    fetchEquipments()
-    equipmentsTableView.reloadData()
-  }
-
-  func fetchEquipments() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
-
-    do {
-      equipments = try managedContext.fetch(equipmentsFetchRequest)
-      searchedEquipments = equipments
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-  }
-
-
-  @IBAction func createNewEquipement(_ sender: Any) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let equipment = Equipments(context: managedContext)
-
-    equipment.name = equipmentName.text
-    equipment.number = equipmentNumber.text
-    equipment.type = selectedEquipmentType
-
-    do {
-      try managedContext.save()
-      equipments.append(equipment)
-      closeEquipmentsCreationView(self)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  func removeEquipmentCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(
-      title: "",
-      message: "delete_equipment_prompt".localized,
-      preferredStyle: .alert
-    )
-
-    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
-      self.selectedEquipments.remove(at: indexPath.row)
-      self.selectedEquipmentsTableView.reloadData()
-
-      if self.selectedEquipments.count == 0 {
-        self.selectedEquipmentsTableView.isHidden = true
-        self.collapseButton.isHidden = true
-        self.equipmentHeightConstraint.constant = 70
-      } else {
-        UIView.animate(withDuration: 0.5, animations: {
-          self.resizeViewAndTableView(
-            viewHeightConstraint: self.equipmentHeightConstraint,
-            tableViewHeightConstraint: self.equipmentTableViewHeightConstraint,
-            tableView: self.selectedEquipmentsTableView)
-          self.view.layoutIfNeeded()
-        })
-      }
-    }))
-    self.present(alert, animated: true)
   }
 }

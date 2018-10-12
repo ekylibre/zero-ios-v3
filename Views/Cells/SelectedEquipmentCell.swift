@@ -1,14 +1,14 @@
 //
-//  EquipmentCell.swift
+//  SelectedEquipmentCell.swift
 //  Clic&Farm-iOS
 //
-//  Created by Guillaume Roux on 31/07/2018.
+//  Created by Guillaume Roux on 11/10/2018.
 //  Copyright © 2018 Ekylibre. All rights reserved.
 //
 
 import UIKit
 
-class EquipmentCell: UITableViewCell {
+class SelectedEquipmentCell: UITableViewCell {
 
   // MARK: - Properties
 
@@ -41,6 +41,7 @@ class EquipmentCell: UITableViewCell {
   }
 
   private func setupCell() {
+    self.backgroundColor = AppColor.CellColors.LightGray
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(infosLabel)
