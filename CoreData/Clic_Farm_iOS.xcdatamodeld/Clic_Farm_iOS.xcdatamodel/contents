@@ -24,8 +24,6 @@
     </entity>
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="equipmentID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,8 +46,6 @@
         <relationship name="interventionFertilizers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionFertilizers" inverseName="fertilizers" inverseEntity="InterventionFertilizers" syncable="YES"/>
     </entity>
     <entity name="InterventionEquipments" representedClassName="InterventionEquipments" syncable="YES" codeGenerationType="class">
-        <attribute name="equimentID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="interventionID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="equipments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipments" inverseName="interventionEquipments" inverseEntity="Equipments" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionEquipments" inverseEntity="Interventions" syncable="YES"/>
     </entity>
@@ -157,9 +153,9 @@
         <element name="Crops" positionX="414" positionY="269" width="128" height="135"/>
         <element name="Doers" positionX="-135" positionY="-432" width="128" height="105"/>
         <element name="Entities" positionX="-351" positionY="-459" width="128" height="135"/>
-        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="150"/>
+        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="120"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="255"/>
-        <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="105"/>
+        <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="75"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="120"/>
         <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>
