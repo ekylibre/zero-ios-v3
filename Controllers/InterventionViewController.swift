@@ -211,9 +211,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.syncImage.backgroundColor = UIColor.purple
     }
 
+    let executionDate = workingPeriod?.value(forKey: "executionDate") as? Date
+
     cell.cropsLabel.text = updateCropsLabel(targets)
     cell.infosLabel.text = intervention.value(forKey: "infos") as? String
-    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKey: "executionDate") as! Date)
+    if executionDate != nil {
+      cell.dateLabel.text = transformDate(date: executionDate!)
+    }
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
@@ -245,10 +249,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return targets
   }
 
-  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
+  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject? {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return NSManagedObject()
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -264,7 +268,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       print("Could not fetch. \(error), \(error.userInfo)")
     }
 
-    return workingPeriods.first!
+    if workingPeriods.first != nil {
+      return workingPeriods.first!
+    } else {
+      return nil
+    }
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
@@ -337,10 +345,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
-
-    if sender.source is AddInterventionViewController {
-      if let senderVC = sender.source as? AddInterventionViewController {
+  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
+    if segue.source is AddInterventionViewController {
+      if let senderVC = segue.source as? AddInterventionViewController {
         interventions.append(senderVC.newIntervention)
       }
       tableView.reloadData()
@@ -405,7 +412,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
     hideInterventionAdd()
-    performSegue(withIdentifier: "addIntervention", sender: sender)
+    performSegue(withIdentifier: "ShowAddInterventionVC", sender: sender)
   }
 
   @objc func hideInterventionAdd() {

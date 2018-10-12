@@ -302,7 +302,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func showList() {
-    self.performSegue(withIdentifier: "showSpecieList", sender: self)
+    self.performSegue(withIdentifier: "ShowSpecieList", sender: self)
   }
 
   @objc func showAlert() {
@@ -504,40 +504,43 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Core Data
 
-  func createIntervention() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
+  @IBAction func createIntervention() {
+    if checkErrorsInFunctionOfIntervention() {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return
+      }
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    newIntervention = Interventions(context: managedContext)
-    let workingPeriod = WorkingPeriods(context: managedContext)
+      let managedContext = appDelegate.persistentContainer.viewContext
+      newIntervention = Interventions(context: managedContext)
+      let workingPeriod = WorkingPeriods(context: managedContext)
 
-    newIntervention.type = interventionType
-    newIntervention.status = Intervention.Status.OutOfSync.rawValue
-    newIntervention.infos = "Infos"
-    if interventionType == "IRRIGATION".localized {
-      let waterVolume = irrigationValueTextField.text!.floatValue
-      newIntervention.waterQuantity = waterVolume
-      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
-    }
-    workingPeriod.interventions = newIntervention
-    workingPeriod.executionDate = selectDateView.datePicker.date
-    let duration = durationTextField.text!.floatValue
-    workingPeriod.hourDuration = duration
-    createTargets(intervention: newIntervention)
-    createEquipments(intervention: newIntervention)
-    createDoers(intervention: newIntervention)
-    saveInterventionInputs(intervention: newIntervention)
-    resetInputsAttributes(entity: "Seeds")
-    resetInputsAttributes(entity: "Phytos")
-    resetInputsAttributes(entity: "Fertilizers")
-    saveWeather(intervention: newIntervention)
+      newIntervention.type = interventionType
+      newIntervention.status = Intervention.Status.OutOfSync.rawValue
+      newIntervention.infos = "Infos"
+      if interventionType == "IRRIGATION".localized {
+        let waterVolume = irrigationValueTextField.text!.floatValue
+        newIntervention.waterQuantity = waterVolume
+        newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+      }
+      workingPeriod.interventions = newIntervention
+      workingPeriod.executionDate = selectDateView.datePicker.date
+      let duration = durationTextField.text!.floatValue
+      workingPeriod.hourDuration = duration
+      createTargets(intervention: newIntervention)
+      createEquipments(intervention: newIntervention)
+      createDoers(intervention: newIntervention)
+      saveInterventionInputs(intervention: newIntervention)
+      resetInputsAttributes(entity: "Seeds")
+      resetInputsAttributes(entity: "Phytos")
+      resetInputsAttributes(entity: "Fertilizers")
+      saveWeather(intervention: newIntervention)
 
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
+      do {
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+      performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
     }
   }
 
@@ -692,19 +695,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Navigation
 
+  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
+
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
     switch segue.identifier {
-    case "showSpecieList":
+    case "ShowSpecieList":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.cellsStrings = loadSpecies()
     default:
-      guard let button = sender as? UIButton, button == saveInterventionButton else {
-        return
-      }
-
-      createIntervention()
+      return
     }
   }
 

@@ -24,6 +24,22 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   // MARK: - Initialization
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(false)
+    performSegue(withIdentifier: "ShowInterventionVC", sender: self)
+    /*struct staticIndex {
+     static var firstLaunch = false
+     }
+     if !staticIndex.firstLaunch {
+     authentificationService = AuthentificationService(username: "", password: "")
+     if entityIsEmpty(entity: "Users") {
+     authentificationService?.logout()
+     }
+     self.authentifyUser()
+     staticIndex.firstLaunch = true
+     }*/
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
@@ -34,18 +50,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     textView.text = "welcome_text".localized
     forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
     forgottenPassword.underline()
-
-    struct staticIndex {
-      static var firstLaunch = false
-    }
-    if !staticIndex.firstLaunch {
-      authentificationService = AuthentificationService(username: "", password: "")
-      if entityIsEmpty(entity: "Users") {
-        authentificationService?.logout()
-      }
-      self.authentifyUser()
-      staticIndex.firstLaunch = true
-    }
   }
 
   // MARK: - Navigation
@@ -53,7 +57,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
-        performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
+        performSegue(withIdentifier: "ShowNoInternetVC", sender: self)
       } else {
         let alert = UIAlertController(
           title: nil,
@@ -65,7 +69,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-      performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+      performSegue(withIdentifier: "ShowInterventionVC", sender: self)
     }
   }
 
@@ -98,7 +102,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.checkLoggedStatus(token: token)
       }
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-        performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+        performSegue(withIdentifier: "ShowInterventionVC", sender: self)
       }
     } else if buttonIsPressed && tfUsername.text!.count > 0 {
       authentificationService?.addNewUser(userName: tfUsername.text!)

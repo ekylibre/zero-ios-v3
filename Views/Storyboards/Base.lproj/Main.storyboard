@@ -191,11 +191,11 @@
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
-                        <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="addIntervention" id="74J-jI-YTr"/>
-                        <segue destination="krK-gd-8UN" kind="presentation" identifier="SegueLogOut" id="a8t-Pd-Dxa"/>
+                        <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="ShowAddInterventionVC" id="IIb-81-RCP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1rQ-td-wpq" userLabel="Exit" sceneMemberID="exit"/>
                 <swipeGestureRecognizer direction="down" id="BzD-f5-fbo">
                     <connections>
                         <action selector="synchronise:" destination="Ym6-0E-qVT" id="HrX-lr-Yxj"/>
@@ -1096,7 +1096,7 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="dWO-RQ-fIk" kind="unwind" unwindAction="unwindFromAddVC:" id="emv-yu-bDt"/>
+                                            <action selector="createIntervention" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="caj-kW-sQr"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1761,11 +1761,11 @@
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecieList" id="uas-Qa-jvK"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="ShowSpecieList" id="uas-Qa-jvK"/>
+                        <segue destination="1rQ-td-wpq" kind="unwind" identifier="unwindToInterventionVC" unwindAction="unwindToInterventionVCWithSegue:" id="DXp-2Y-Sxs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="dWO-RQ-fIk" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="ODW-0c-5qL">
                     <connections>
                         <action selector="selectCrops:" destination="pQK-Bk-vqJ" id="5dY-lb-6L7"/>
@@ -1943,8 +1943,8 @@
                         <outlet property="textView" destination="tcH-Tp-UHn" id="mTh-dn-lHz"/>
                         <outlet property="tfPassword" destination="ScR-OF-ai0" id="mBJ-fl-emB"/>
                         <outlet property="tfUsername" destination="vfb-X0-1tk" id="j9I-cx-eB1"/>
-                        <segue destination="Ym6-0E-qVT" kind="presentation" identifier="SegueFromLogScreenToConnected" id="aDw-i0-Y4L"/>
-                        <segue destination="CoO-3Z-MeU" kind="show" identifier="SegueNoInternetOnFirstConnection" id="16Z-w0-5gb"/>
+                        <segue destination="CoO-3Z-MeU" kind="show" identifier="ShowNoInternetVC" id="Adv-hH-Opk"/>
+                        <segue destination="Ym6-0E-qVT" kind="presentation" identifier="ShowInterventionVC" animates="NO" id="KZa-bZ-hB6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gp1-Vr-Vkq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2006,7 +2006,4 @@
         <image name="snow" width="16" height="16"/>
         <image name="thunderstorm" width="285" height="285"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="a8t-Pd-Dxa"/>
-    </inferredMetricsTieBreakers>
 </document>
