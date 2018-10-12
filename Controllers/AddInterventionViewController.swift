@@ -25,12 +25,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // Irrigation
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
   @IBOutlet weak var irrigationLabel: UILabel!
+  @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
   @IBOutlet weak var irrigationValueTextField: UITextField!
   @IBOutlet weak var irrigationUnitButton: UIButton!
   @IBOutlet weak var irrigationInfoLabel: UILabel!
   @IBOutlet weak var irrigationSeparatorView: UIView!
+
+  // Inputs
+  @IBOutlet weak var inputsView: UIView!
+  @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var addInputsButton: UIButton!
+  @IBOutlet weak var inputsCollapseButton: UIButton!
+  @IBOutlet weak var inputsNumber: UILabel!
+  @IBOutlet weak var selectedInputsTableView: UITableView!
+  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsSeparatorView: UIView!
 
   // Materials
   @IBOutlet var materialsTapGesture: UITapGestureRecognizer!
@@ -69,14 +79,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var doersNumber: UILabel!
   @IBOutlet weak var addEntitiesButton: UIButton!
   @IBOutlet weak var searchEntity: UISearchBar!
-  @IBOutlet weak var inputsSelectionView: UIView!
-  @IBOutlet weak var inputsCollapseButton: UIButton!
-  @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var addInputsButton: UIButton!
-  @IBOutlet weak var inputsNumber: UILabel!
-  @IBOutlet weak var selectedInputsTableView: UITableView!
-  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var inputsSeparatorView: UIView!
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
@@ -100,7 +102,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
-  var inputsView: InputsView!
+  var inputsSelectionView: InputsView!
   var materialsSelectionView: MaterialsView!
   var equipmentsSelectionView: EquipmentsView!
   var selectedMaterials = [[NSManagedObject]]()
@@ -207,9 +209,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     doersTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     doersTableView.layer.cornerRadius = 4
 
-    inputsView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    inputsView.addInterventionViewController = self
-    view.addSubview(inputsView)
+    inputsSelectionView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    inputsSelectionView.addInterventionViewController = self
+    view.addSubview(inputsSelectionView)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     view.addSubview(cropsView)
@@ -242,14 +244,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       materialsView.isHidden = false
       materialsSeparatorView.isHidden = false
     case Intervention.InterventionType.CropProtection.rawValue:
-      inputsView.segmentedControl.selectedSegmentIndex = 1
-      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 1
+      inputsSelectionView.createButton.setTitle("create_new_phyto".localized.uppercased(), for: .normal)
     case Intervention.InterventionType.Fertilization.rawValue:
-      inputsView.segmentedControl.selectedSegmentIndex = 2
-      inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
+      inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
     case Intervention.InterventionType.GroundWork.rawValue:
-      inputsSelectionView.isHidden = true
-      inputsSeparatorView.isHidden = true
+      inputsView.isHidden = true
+      inputsView.isHidden = true
     case Intervention.InterventionType.Harvest.rawValue:
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
@@ -264,14 +266,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    // Changes inputsView frame and position
+    // Changes inputsSelectionView frame and position
     let guide = self.view.safeAreaLayoutGuide
     let height = guide.layoutFrame.size.height
-    inputsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
-    inputsView.center.x = self.view.center.x
-    inputsView.frame.origin.y = navigationBar.frame.origin.y + 15
-    inputsView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
-    inputsView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+    inputsSelectionView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
+    inputsSelectionView.center.x = self.view.center.x
+    inputsSelectionView.frame.origin.y = navigationBar.frame.origin.y + 15
+    inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
+    inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
 
     cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
     cropsView.center.x = self.view.center.x
@@ -283,7 +285,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func showAlert() {
-    self.present(inputsView.fertilizerView.natureAlertController, animated: true, completion: nil)
+    self.present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
   // MARK: - Table view data source
@@ -700,7 +702,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tag {
     case 0:
-      inputsView.seedView.specieButton.setTitle(value.localized, for: .normal)
+      inputsSelectionView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
       materialsSelectionView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
     case 2:
@@ -904,7 +906,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func selectInput(_ sender: Any) {
     dimView.isHidden = false
-    inputsView.isHidden = false
+    inputsSelectionView.isHidden = false
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black

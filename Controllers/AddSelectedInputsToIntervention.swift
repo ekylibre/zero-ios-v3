@@ -45,7 +45,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func closeInputsSelectionView() {
     dimView.isHidden = true
-    inputsView.isHidden = true
+    inputsSelectionView.isHidden = true
 
     if selectedInputs.count > 0 {
       UIView.animate(withDuration: 0.5, animations: {

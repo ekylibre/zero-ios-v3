@@ -1448,8 +1448,8 @@
                         <outlet property="inputsCollapseButton" destination="ogm-Z1-SSR" id="zt1-rj-NOy"/>
                         <outlet property="inputsHeightConstraint" destination="0oM-1M-kPB" id="GpI-j6-Loh"/>
                         <outlet property="inputsNumber" destination="Rof-yp-WzL" id="2T8-pe-K1y"/>
-                        <outlet property="inputsSelectionView" destination="e04-dp-jck" id="Vi8-9W-myT"/>
                         <outlet property="inputsSeparatorView" destination="cL0-7p-xry" id="gVI-bW-lIa"/>
+                        <outlet property="inputsView" destination="e04-dp-jck" id="lvU-Ww-H9y"/>
                         <outlet property="irrigationExpandCollapseImage" destination="lZ2-DO-10N" id="5a4-GZ-1gz"/>
                         <outlet property="irrigationHeightConstraint" destination="HQz-9h-D9H" id="8BB-hv-NcG"/>
                         <outlet property="irrigationInfoLabel" destination="gTq-na-vs2" id="RZG-49-hJU"/>
