@@ -1020,7 +1020,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         return
       }
     } else if interventionState == Intervention.State.Validated.rawValue {
-      numberLabel.isHidden = false
+      addEntityButton.isHidden = true
+      numberLabel.isHidden = (constraint.constant != 70)
       numberLabel.text = "none".localized
     } else {
       numberLabel.isHidden = true
