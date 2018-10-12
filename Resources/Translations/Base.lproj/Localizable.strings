@@ -319,9 +319,6 @@
 
 "starting_date" = "Starting the";
 "duration" = "Duration";
-"default_working_period_main_line" = "Today • 7 h";
-"default_working_period_duration" = "7";
-"default_working_period_date" = "Today";
 
 "add_input" = "+ Add an input";
 "default_input_name" = "Blé dur";
@@ -431,12 +428,21 @@
 "no_internet_try_later" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
 "you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
-"non_authorized_mix" = "Mélange non autorisé";
 "nature" = "Nature";
 "celsius" = "°C";
 "km_per_hour" = "km/h";
 "ok" = "Ok";
 "crop_list" = "Liste des cultures";
+"waiting_for_gps" = "Recherche d'une position GPS...";
+"brand" = "Marque";
+"mmaid_number" = "N° AMM";
+"reentry_delay" = "Délai de ré-entrée";
+"in_hours" = "En heures";
+"variety" = "Variété";
+"provided_by_collector" = "Fourni par le collecteur";
+"invalid_dose" = "Dose invalide";
+"approximate_amount" = "Quantité approximative";
+"unauthorized_mixing" = "Mélange non autorisé";
 
 "locale" = "en_EN";
 
