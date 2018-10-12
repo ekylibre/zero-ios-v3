@@ -184,6 +184,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     tableView.reloadData()
     dimView.isHidden = true
+    addInterventionViewController!.selectedValue = firstEquipmentType
     creationView.typeImageView.image = UIImage(named: imageName)
     creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     creationView.nameTextField.text = ""
