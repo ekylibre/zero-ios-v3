@@ -18,7 +18,7 @@ extension AddInterventionViewController {
 
     for index in 0..<weatherButtons.count {
       weatherButtons[index].layer.borderColor = UIColor.lightGray.cgColor
-      weatherButtons[index].layer.borderWidth = 2
+      weatherButtons[index].layer.borderWidth = 1
       weatherButtons[index].layer.cornerRadius = 5
       weatherButtons[index].tag = index
     }
@@ -43,31 +43,32 @@ extension AddInterventionViewController {
   @IBAction func collapseOrExpandWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
-    weatherViewHeightConstraint.constant = shouldExpand ? 300 : 70
+    weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
     weatherCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     hideWeatherItems(!shouldExpand)
   }
 
+  func resetSelectedWeather() {
+    for weather in weatherButtons {
+      weather.layer.borderWidth = 1
+      weather.layer.borderColor = UIColor.lightGray.cgColor
+    }
+  }
 
   @IBAction func selectWeather(_ sender: UIButton) {
     let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
 
-    if weatherIsSelected && sender.layer.borderColor == UIColor.lightGray.cgColor {
-      for weather in weatherButtons {
-        if weather.layer.borderColor == AppColor.BarColors.Green.cgColor {
-          weather.layer.borderColor = UIColor.lightGray.cgColor
-        }
-      }
-      sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather.weatherDescription = weatherDescriptions[sender.tag]
-    } else if weatherIsSelected {
-      sender.layer.borderColor = UIColor.lightGray.cgColor
-      weatherIsSelected = false
-    } else {
-      sender.layer.borderColor = AppColor.BarColors.Green.cgColor
-      weather.weatherDescription = weatherDescriptions[sender.tag]
+    if sender.layer.borderColor == UIColor.lightGray.cgColor {
+      resetSelectedWeather()
       weatherIsSelected = true
+      weather.weatherDescription = weatherDescriptions[sender.tag]
+      sender.layer.borderColor = AppColor.BarColors.Green.cgColor
+      sender.layer.borderWidth = 3
+    } else {
+      resetSelectedWeather()
+      weatherIsSelected = false
+      weather.weatherDescription = nil
     }
   }
 
