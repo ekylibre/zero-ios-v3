@@ -171,7 +171,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   @objc private func validateCreation() {
-    createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue ?? "METER")
+    createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue)
     creationView.nameTextField.text = ""
     creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
     materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)

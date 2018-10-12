@@ -82,6 +82,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupCell() {
     self.backgroundColor = AppColor.CellColors.LightGray
+    self.selectionStyle = .none
     contentView.addSubview(materialImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(deleteButton)

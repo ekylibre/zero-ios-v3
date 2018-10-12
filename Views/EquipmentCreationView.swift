@@ -21,7 +21,8 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   }()
 
   lazy var typeImageView: UIImageView = {
-    let typeImageView = UIImageView(frame: CGRect.zero)
+    let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
+    let typeImageView = UIImageView(image: UIImage(named: imageName))
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()
@@ -37,7 +38,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var typeButton: UIButton = {
     let typeButton = UIButton(frame: CGRect.zero)
-    typeButton.setTitle("METER".localized.lowercased(), for: .normal)
+    typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     typeButton.setTitleColor(UIColor.black, for: .normal)
     typeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     typeButton.contentHorizontalAlignment = .leading
@@ -96,9 +97,12 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
+  var firstEquipmentType: String
+
   // MARK: - Initialization
 
-  override init(frame: CGRect) {
+  init(firstType: String, frame: CGRect) {
+    firstEquipmentType = firstType
     super.init(frame: frame)
     setupView()
   }
@@ -125,9 +129,9 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       typeImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-      typeImageView.heightAnchor.constraint(equalToConstant: 30),
+      typeImageView.heightAnchor.constraint(equalToConstant: 50),
       typeImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      typeImageView.widthAnchor.constraint(equalToConstant: 30),
+      typeImageView.widthAnchor.constraint(equalToConstant: 50),
       typeLabel.topAnchor.constraint(equalTo: typeImageView.bottomAnchor, constant: 10),
       typeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor),
@@ -167,8 +171,12 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   @objc private func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
+      let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
+
+      typeImageView.image = UIImage(named: imageName)
+      typeButton.setTitle(firstEquipmentType.localized, for: .normal)
       nameTextField.text = ""
-      typeButton.setTitle("METER".localized.lowercased(), for: .normal)
+      numberTextField.text = ""
     }
     self.isHidden = true
   }

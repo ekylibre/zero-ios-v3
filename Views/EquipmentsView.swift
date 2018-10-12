@@ -14,17 +14,19 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   // MARK: - Properties
 
   lazy var creationView: EquipmentCreationView = {
-    let creationView = EquipmentCreationView(frame: CGRect.zero)
+    let creationView = EquipmentCreationView(firstType: firstEquipmentType, frame: CGRect.zero)
     creationView.translatesAutoresizingMaskIntoConstraints = false
     return creationView
   }()
 
   var equipments = [Equipments]()
   var filteredEquipments = [Equipments]()
+  var firstEquipmentType: String
 
   // MARK: - Initialization
 
-  override init(frame: CGRect) {
+  init(firstType: String, frame: CGRect) {
+    self.firstEquipmentType = firstType
     super.init(frame: frame)
     setupView()
     fetchEquipments()
@@ -36,7 +38,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     createButton.setTitle("create_new_equipment".localized.uppercased(), for: .normal)
     searchBar.delegate = self
     tableView.register(EquipmentCell.self, forCellReuseIdentifier: "EquipmentCell")
-    tableView.rowHeight = 50
+    tableView.rowHeight = 60
     tableView.delegate = self
     tableView.dataSource = self
     setupCreationView()
@@ -102,10 +104,13 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
-    let fromEquipments = isSearching ? filteredEquipments : equipments
-    let isSelected = addInterventionViewController!.selectedMaterials[0].contains(fromEquipments[indexPath.row])
+    let equipment = isSearching ? filteredEquipments[indexPath.row] : equipments[indexPath.row]
+    let isSelected = addInterventionViewController!.selectedEquipments.contains(equipment)
+    let imageName = equipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
-    cell.nameLabel.text = fromEquipments[indexPath.row].name
+    cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+    cell.nameLabel.text = equipment.name
+    cell.infosLabel.text = equipment.type?.localized
     cell.isUserInteractionEnabled = !isSelected
     cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
@@ -148,6 +153,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipments(context: managedContext)
 
+    equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
     equipment.number = number
     equipments.append(equipment)
@@ -171,13 +177,17 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   @objc private func validateCreation() {
+    let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
+
     createEquipment(name: creationView.nameTextField.text!, number: creationView.numberTextField.text!)
-    creationView.nameTextField.text = ""
-    creationView.typeButton.setTitle("METER".localized.lowercased(), for: .normal)
     equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     tableView.reloadData()
     dimView.isHidden = true
+    creationView.typeImageView.image = UIImage(named: imageName)
+    creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
+    creationView.nameTextField.text = ""
+    creationView.numberTextField.text = ""
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -67,6 +67,7 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   @IBAction private func openMaterialsSelectionView(_ sender: Any) {
+    selectedValue = "METER"
     dimView.isHidden = false
     materialsSelectionView.isHidden = false
 
@@ -91,10 +92,10 @@ extension AddInterventionViewController {
   }
 
   private func updateCountLabel() {
-    if selectedMaterials.count == 1 {
+    if selectedMaterials[0].count == 1 {
       materialsCountLabel.text = "material".localized
     } else {
-      materialsCountLabel.text = String(format: "materials".localized, selectedMaterials.count)
+      materialsCountLabel.text = String(format: "materials".localized, selectedMaterials[0].count)
     }
   }
 

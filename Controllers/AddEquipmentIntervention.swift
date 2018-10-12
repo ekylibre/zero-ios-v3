@@ -14,7 +14,8 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupEquipmentsView() {
-    equipmentsSelectionView = EquipmentsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+    equipmentsSelectionView = EquipmentsView(firstType: getFirstEquipmentType(),frame: frame)
     equipmentsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(equipmentsSelectionView)
 
@@ -30,12 +31,49 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedEquipmentsTableView.layer.cornerRadius = 5
     selectedEquipmentsTableView.bounces = false
-    selectedEquipmentsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
+    selectedEquipmentsTableView.register(SelectedEquipmentCell.self, forCellReuseIdentifier: "SelectedEquipmentCell")
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
     equipmentsSelectionView.exitButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)
     equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes), for: .touchUpInside)
     equipmentsSelectionView.addInterventionViewController = self
+  }
+
+  func loadEquipmentTypes() -> [String] {
+    var equipmentTypes = [String]()
+
+    if let asset = NSDataAsset(name: "equipment-types") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredEquipments = jsonResult as? [[String: Any]]
+
+        for registeredEquipment in registeredEquipments! {
+          let type = registeredEquipment["nature"] as! String
+          equipmentTypes.append(type.uppercased())
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("equipment-types.json not found")
+    }
+    return equipmentTypes
+  }
+
+  func getFirstEquipmentType() -> String {
+    let sortedEquipmentTypes = equipmentTypes.sorted(by: {
+      $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        <
+      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    })
+
+    return sortedEquipmentTypes.first!
+  }
+
+  func defineEquipmentImage(type: String) -> UIImage? {
+    let assetName = type.lowercased().replacingOccurrences(of: "_", with: "-")
+
+    return UIImage(named: assetName)
   }
 
   // MARK: - Selection
@@ -59,6 +97,7 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   @IBAction private func openEquipmentsSelectionView(_ sender: Any) {
+    selectedValue = getFirstEquipmentType()
     dimView.isHidden = false
     equipmentsSelectionView.isHidden = false
 
@@ -124,45 +163,5 @@ extension AddInterventionViewController {
     selectedEquipments.remove(at: index)
     updateView()
     equipmentsSelectionView.tableView.reloadData()
-  }
-
-  // MARK: - Initialization
-
-  func loadEquipmentTypes() -> [String] {
-    var equipmentType = [String]()
-
-    if let asset = NSDataAsset(name: "equipment-types") {
-      do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredEquipments = jsonResult as? [[String: Any]]
-
-        for registeredEquipment in registeredEquipments! {
-          let type = registeredEquipment["nature"] as! String
-          equipmentType.append(type.uppercased())
-        }
-      } catch {
-        print("Lexicon error")
-      }
-    } else {
-      print("equipment-types.json not found")
-    }
-    return equipmentType.sorted()
-  }
-
-  func defineEquipmentTypes() -> [String] {
-    var types = loadEquipmentTypes()
-
-    types = types.sorted(by: {
-      $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        <
-      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-    })
-    return types
-  }
-
-  func defineEquipmentImage(type: String) -> UIImage? {
-    let assetName = type.lowercased().replacingOccurrences(of: "_", with: "-")
-
-    return UIImage(named: assetName)
   }
 }

@@ -14,6 +14,8 @@ class EquipmentCell: UITableViewCell {
 
   lazy var typeImageView: UIImageView = {
     let typeImageView = UIImageView(frame: CGRect.zero)
+    typeImageView.tintColor = UIColor.darkGray
+    typeImageView.backgroundColor = UIColor.lightGray
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()
@@ -50,7 +52,7 @@ class EquipmentCell: UITableViewCell {
   private func setupLayout() {
     NSLayoutConstraint.activate([
       typeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      typeImageView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -30),
+      typeImageView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -25),
       typeImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),

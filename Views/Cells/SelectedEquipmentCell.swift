@@ -14,6 +14,8 @@ class SelectedEquipmentCell: UITableViewCell {
 
   lazy var typeImageView: UIImageView = {
     let typeImageView = UIImageView(frame: CGRect.zero)
+    typeImageView.tintColor = UIColor.darkGray
+    typeImageView.backgroundColor = UIColor.lightGray
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()
@@ -42,6 +44,7 @@ class SelectedEquipmentCell: UITableViewCell {
 
   private func setupCell() {
     self.backgroundColor = AppColor.CellColors.LightGray
+    self.selectionStyle = .none
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(infosLabel)

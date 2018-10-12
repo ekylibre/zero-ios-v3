@@ -105,7 +105,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedMaterials = [[NSManagedObject]]()
   var interventionEquipments = [NSManagedObject]()
   var selectedEquipments = [Equipments]()
-  var sortedEquipmentTypes: [String]!
+  var equipmentTypes: [String]!
   var entities = [NSManagedObject]()
   var entitiesTableViewTopAnchor: NSLayoutConstraint!
   var searchedEntities = [NSManagedObject]()
@@ -218,6 +218,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedMaterials.append([InterventionMaterials]())
     setupIrrigation()
     setupMaterialsView()
+    equipmentTypes = loadEquipmentTypes()
     setupEquipmentsView()
 
     initializeWeatherButtons()
@@ -362,7 +363,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      cell.selectionStyle = .none
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -669,7 +669,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.rawStrings = loadEquipmentTypes()
+      destVC.rawStrings = equipmentTypes
       destVC.tag = 3
     default:
       guard let button = sender as? UIButton, button == saveInterventionButton else {
@@ -714,6 +714,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       selectedMaterials[1][selectedRow].setValue(value, forKey: "unit")
       selectedMaterialsTableView.reloadData()
     case 3:
+      let imageName = value.lowercased().replacingOccurrences(of: "_", with: "-")
+
+      equipmentsSelectionView.creationView.typeImageView.image = UIImage(named: imageName)
       equipmentsSelectionView.creationView.typeButton.setTitle(value.localized, for: .normal)
     default:
       fatalError("writeValueBack: Unknown value for tag")
