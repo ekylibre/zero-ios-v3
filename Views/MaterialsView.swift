@@ -66,10 +66,6 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
 
   // MARK: - Search bar
 
-  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-    isSearching = true
-  }
-
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     isSearching = false
   }
