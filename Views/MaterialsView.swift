@@ -167,18 +167,48 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   @objc private func cancelCreation() {
+    creationView.nameTextField.resignFirstResponder()
+    creationView.isHidden = true
     dimView.isHidden = true
+    creationView.nameTextField.text = ""
+    creationView.errorLabel.isHidden = true
+    creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
   }
 
   @objc private func validateCreation() {
+    if !checkName() {
+      return
+    }
+
+    creationView.nameTextField.resignFirstResponder()
     createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue)
     materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     tableView.reloadData()
+    creationView.isHidden = true
     dimView.isHidden = true
     addInterventionViewController!.selectedValue = "METER"
     creationView.nameTextField.text = ""
+    creationView.errorLabel.isHidden = true
     creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
+  }
+
+  private func checkName() -> Bool {
+    let materialsWithSameName = materials.filter({(material: Materials) -> Bool in
+      let name = material.name!
+      return name.range(of: creationView.nameTextField.text!, options: .caseInsensitive) != nil
+    })
+
+    if creationView.nameTextField.text!.isEmpty {
+      creationView.errorLabel.text = "material_name_is_empty".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    } else if materialsWithSameName.count > 0 {
+      creationView.errorLabel.text = "material_name_not_available".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    }
+    return true
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

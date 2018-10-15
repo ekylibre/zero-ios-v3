@@ -36,6 +36,14 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     return nameTextField
   }()
 
+  lazy var errorLabel: UILabel = {
+    let errorLabel = UILabel(frame: CGRect.zero)
+    errorLabel.font = UIFont.systemFont(ofSize: 13)
+    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return errorLabel
+  }()
+
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
     unitLabel.text = "chose_unit".localized
@@ -88,12 +96,12 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     self.isHidden = true
     self.addSubview(titleLabel)
     self.addSubview(nameTextField)
+    self.addSubview(errorLabel)
     self.addSubview(unitLabel)
     self.addSubview(unitButton)
     self.addSubview(cancelButton)
     self.addSubview(createButton)
     setupLayout()
-    setupActions()
   }
 
   private func setupLayout() {
@@ -103,6 +111,9 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
       nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       unitLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
       unitLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
@@ -115,11 +126,6 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
       ])
   }
 
-  private func setupActions() {
-    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-  }
-
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -129,16 +135,5 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
-  }
-
-  // MARK: - Actions
-
-  @objc private func closeView(sender: UIButton) {
-    nameTextField.resignFirstResponder()
-    if sender == cancelButton {
-      nameTextField.text = ""
-      unitButton.setTitle("METER".localized.lowercased(), for: .normal)
-    }
-    self.isHidden = true
   }
 }
