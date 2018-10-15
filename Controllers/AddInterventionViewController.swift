@@ -351,9 +351,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedMaterialsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
       let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
+      let quantity = selectedMaterials[1][indexPath.row].value(forKey: "quantity") as! Float
       let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
 
       cell.nameLabel.text = name
+      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
