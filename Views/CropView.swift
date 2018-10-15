@@ -25,6 +25,7 @@ class CropView: UIView {
   lazy var checkboxImageView: UIImageView = {
     let checkboxImageView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
     checkboxImageView.image = UIImage(named: "unchecked-checkbox")
+    checkboxImageView.highlightedImage = UIImage(named: "checked-checkbox")
     return checkboxImageView
   }()
 
