@@ -626,6 +626,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
     updateEquipments(intervention: currentIntervention)
     updatePersons(intervention: currentIntervention)
+    updateInputs(intervention: currentIntervention)
   }
 
   func updateEquipments(intervention: Interventions) {
@@ -683,6 +684,49 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func deleteInput(intervention: Interventions, input: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: input)
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    inputsFetchRequest.predicate = predicate
+    do {
+      let inputs = try managedContext.fetch(inputsFetchRequest)
+
+      for input in inputs {
+        managedContext.delete(input as! NSManagedObject)
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateInputs(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    deleteInput(intervention: intervention, input: "InterventionSeeds")
+    deleteInput(intervention: intervention, input: "InterventionPhytosanitaries")
+    deleteInput(intervention: intervention, input: "InterventionFertilizers")
+
+    for selectedInput in selectedInputs {
+      selectedInput.setValue(intervention, forKey: "interventions")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
