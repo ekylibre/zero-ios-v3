@@ -624,6 +624,66 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       currentIntervention.waterQuantity = waterVolume
       currentIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
     }
+    updateEquipments(intervention: currentIntervention)
+    updatePersons(intervention: currentIntervention)
+  }
+
+  func updateEquipments(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<InterventionEquipments> = InterventionEquipments.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    equipmentsFetchRequest.predicate = predicate
+    do {
+      let interventionEquipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      for interventionEquipment in interventionEquipments {
+        managedContext.delete(interventionEquipment)
+      }
+      for selectedEquipment in selectedEquipments {
+        let equipment = InterventionEquipments(context: managedContext)
+
+        equipment.interventions = intervention
+        equipment.equipments = selectedEquipment.equipments
+
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updatePersons(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let personsFetchRequest: NSFetchRequest<Doers> = Doers.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    personsFetchRequest.predicate = predicate
+    do {
+      let persons = try managedContext.fetch(personsFetchRequest)
+
+      for person in persons {
+        managedContext.delete(person)
+      }
+      for selectedPerson in doers {
+        let person = Doers(context: managedContext)
+
+        person.interventions = intervention
+        person.isDriver = selectedPerson.isDriver
+        person.entities = selectedPerson.entities
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
   }
 
   func resetInputsAttributes(entity: String) {
