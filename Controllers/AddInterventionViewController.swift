@@ -62,23 +62,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedEquipmentsTableView: UITableView!
   @IBOutlet weak var equipmentsTableViewHeightConstraint: NSLayoutConstraint!
 
+  // Persons
+  @IBOutlet var personsTapGesture: UITapGestureRecognizer!
+  @IBOutlet weak var personsHeightConstraint: UIView!
+  @IBOutlet weak var personsAddButton: UIButton!
+  @IBOutlet weak var personsCountLabel: UILabel!
+  @IBOutlet weak var personsExpandImageView: UIImageView!
+  @IBOutlet weak var selectedPersonsTableView: UITableView!
+  @IBOutlet weak var personsTableViewHeightConstraint: NSLayoutConstraint!
+
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var saveInterventionButton: UIButton!
-  @IBOutlet weak var createEntity: UIView!
-  @IBOutlet weak var entityFirstName: UITextField!
-  @IBOutlet weak var entityLastName: UITextField!
-  @IBOutlet weak var selectEntitiesView: UIView!
-  @IBOutlet weak var createEntitiesView: UIView!
-  @IBOutlet weak var entitiesTableView: UITableView!
-  @IBOutlet weak var entityRole: UITextField!
-  @IBOutlet weak var entityDarkLayer: UIView!
-  @IBOutlet weak var doersTableView: UITableView!
-  @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var doersTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var doersCollapsedButton: UIButton!
-  @IBOutlet weak var doersNumber: UILabel!
-  @IBOutlet weak var addEntitiesButton: UIButton!
-  @IBOutlet weak var searchEntity: UISearchBar!
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
