@@ -16,9 +16,9 @@ class ApolloQuery {
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-  // MARK: - Queries: Farms
+  // MARK: - Update
 
-  func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
+  func defineLastSynchronisationDate() -> String? {
     let dateFormatter = DateFormatter()
 
     dateFormatter.timeZone = TimeZone(identifier: "UTC")
@@ -29,8 +29,14 @@ class ApolloQuery {
     if date != nil {
       lastSyncDate = dateFormatter.string(from: date!)
     }
+    return lastSyncDate
+  }
+
+  // MARK: - Queries: Farms
+
+  func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
     let apollo = appDelegate.apollo!
-    let query = FarmQuery(modifiedSince: lastSyncDate)
+    let query = FarmQuery(modifiedSince: defineLastSynchronisationDate())
 
     apollo.fetch(query: query) { result, error in
       if let error = error {
@@ -283,18 +289,7 @@ class ApolloQuery {
       return
     }
 
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
-    var lastSyncDate: String?
-
-    if date != nil {
-      lastSyncDate = dateFormatter.string(from: date!)
-    }
-
-    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: lastSyncDate)) { (result, error) in
+    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
       guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
 
       for farm in farms {
@@ -358,18 +353,7 @@ class ApolloQuery {
       return
     }
 
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
-    var lastSyncDate: String?
-
-    if date != nil {
-      lastSyncDate = dateFormatter.string(from: date!)
-    }
-
-    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: lastSyncDate)) { (result, error) in
+    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
       guard let farms = result?.data?.farms else {
         print("Could not retrieve farms.")
         completion(false)
@@ -435,18 +419,7 @@ class ApolloQuery {
       return
     }
 
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
-    var lastSyncDate: String?
-
-    if date != nil {
-      lastSyncDate = dateFormatter.string(from: date!)
-    }
-
-    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: lastSyncDate)) { (result, error) in
+    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
       guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
 
       for farm in farms {
@@ -967,19 +940,9 @@ class ApolloQuery {
     }
 
     let group = DispatchGroup()
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
-    var lastSyncDate: String?
-
-    if date != nil {
-      lastSyncDate = dateFormatter.string(from: date!)
-    }
 
     group.enter()
-    appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: lastSyncDate)) { (result, error) in
+    appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
       guard let farms = result?.data?.farms else {
         print("Could not retrieve interventions")
         group.leave()
