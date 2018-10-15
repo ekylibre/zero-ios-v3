@@ -33,13 +33,15 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadIrrigationInReadOnlyMode() {
+  func loadIrrigation() {
     if interventionType == Intervention.InterventionType.Irrigation.rawValue {
       irrigationValueTextField.text = String(currentIntervention.waterQuantity)
       irrigationUnitButton.setTitle(currentIntervention.waterUnit, for: .normal)
       updateIrrigation(self)
-      irrigationExpandCollapseImage.isHidden = true
-      irrigationGestureRecognizer.isEnabled = false
+      if interventionState == Intervention.State.Validated.rawValue {
+        irrigationExpandCollapseImage.isHidden = true
+        irrigationGestureRecognizer.isEnabled = false
+      }
       tapIrrigationView(self)
     }
   }
@@ -83,7 +85,7 @@ extension AddInterventionViewController {
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     loadInputs()
-    loadIrrigationInReadOnlyMode()
+    loadIrrigation()
     loadEquipments()
     loadPersons()
     weather = currentIntervention?.weather
@@ -103,6 +105,7 @@ extension AddInterventionViewController {
     loadWorkingPeriod()
     weather = currentIntervention?.weather
     loadInputs()
+    loadIrrigation()
     loadEquipments()
     loadPersons()
     loadWeatherInEditableMode()
