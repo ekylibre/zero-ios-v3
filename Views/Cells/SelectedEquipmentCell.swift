@@ -27,6 +27,13 @@ class SelectedEquipmentCell: UITableViewCell {
     return nameLabel
   }()
 
+  lazy var deleteButton: UIButton = {
+    let deleteButton = UIButton(frame: CGRect.zero)
+    deleteButton.setImage(UIImage(named: "delete"), for: .normal)
+    deleteButton.translatesAutoresizingMaskIntoConstraints = false
+    return deleteButton
+  }()
+
   lazy var infosLabel: UILabel = {
     let infosLabel = UILabel(frame: CGRect.zero)
     infosLabel.font = UIFont.systemFont(ofSize: 14)
@@ -47,6 +54,7 @@ class SelectedEquipmentCell: UITableViewCell {
     self.selectionStyle = .none
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
+    contentView.addSubview(deleteButton)
     contentView.addSubview(infosLabel)
     setupLayout()
   }
@@ -60,6 +68,10 @@ class SelectedEquipmentCell: UITableViewCell {
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
       nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      deleteButton.heightAnchor.constraint(equalToConstant: 20),
+      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.widthAnchor.constraint(equalToConstant: 20),
       infosLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
       infosLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)

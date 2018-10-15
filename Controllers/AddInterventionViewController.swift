@@ -369,6 +369,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       cell.nameLabel.text = selectedEquipment.name
       cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
+      cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
       return cell
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
