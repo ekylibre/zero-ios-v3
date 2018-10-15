@@ -29,7 +29,9 @@ class SelectedEquipmentCell: UITableViewCell {
 
   lazy var deleteButton: UIButton = {
     let deleteButton = UIButton(frame: CGRect.zero)
-    deleteButton.setImage(UIImage(named: "delete"), for: .normal)
+    let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
+    deleteButton.setImage(tintedImage, for: .normal)
+    deleteButton.tintColor = UIColor.red
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
   }()

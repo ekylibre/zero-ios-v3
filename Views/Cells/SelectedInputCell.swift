@@ -73,8 +73,9 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var removeCell: UIButton = {
     let removeCell = UIButton(frame: CGRect.zero)
-
-    removeCell.setImage(UIImage(named: "delete"), for: .normal)
+    let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
+    removeCell.setImage(tintedImage, for: .normal)
+    removeCell.tintColor = UIColor.red
     removeCell.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
     removeCell.translatesAutoresizingMaskIntoConstraints = false
     return removeCell
