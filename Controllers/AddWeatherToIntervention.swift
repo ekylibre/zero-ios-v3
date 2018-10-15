@@ -61,9 +61,23 @@ extension AddInterventionViewController {
     }
   }
 
-  func refreshWeather() {
+  func loadWeatherInEditableMode() {
+    temperatureTextField.text = (weather.temperature as NSNumber?)?.stringValue
+    windSpeedTextField.text = (weather.windSpeed as NSNumber?)?.stringValue
+
+    for weatherButton in weatherButtons {
+      if weather.weatherDescription == weatherButton.titleLabel?.text {
+        weatherButton.layer.borderColor = AppColor.BarColors.Green.cgColor
+        weatherIsSelected = true
+      }
+    }
+    saveCurrentWeather(self)
+  }
+
+  func loadWeatherInReadOnlyMode() {
     temperatureTextField.placeholder = (weather.temperature as NSNumber?)?.stringValue
     windSpeedTextField.placeholder = (weather.windSpeed as NSNumber?)?.stringValue
+
     for weatherButton in weatherButtons {
       if weather.weatherDescription == weatherButton.titleLabel?.text {
         weatherButton.layer.borderColor = AppColor.BarColors.Green.cgColor

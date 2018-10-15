@@ -228,7 +228,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
       if interventionState == Intervention.State.Validated.rawValue {
         loadSelectedTargets()
-        //organizeCropsBySelectedPlot(crops)
       } else {
         organizeCropsByPlot(crops)
       }
@@ -288,28 +287,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       self.crops.append(cropsFromSamePlot)
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
-    }
-  }
-
-  private func organizeCropsBySelectedPlot(_ crops: [Crops]) {
-    var cropsFromSamePlot = [Crops]()
-    var name: String!
-
-    for crop in crops {
-      if crop.isSelected == true {
-        if name == nil {
-          name = crop.plotName
-        }
-        if crop.plotName != name {
-          name = crop.plotName
-          self.crops.append(cropsFromSamePlot)
-          cropsFromSamePlot = [Crops]()
-        }
-        cropsFromSamePlot.append(crop)
-      }
-    }
-    if cropsFromSamePlot.count > 0 {
-      self.crops.append(cropsFromSamePlot)
     }
   }
 
