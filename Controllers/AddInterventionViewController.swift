@@ -364,10 +364,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
       let selectedEquipment = selectedEquipments[indexPath.row]
+      let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
+      cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       cell.nameLabel.text = selectedEquipment.name
-      cell.infosLabel.text = String(format: "%@ #%@", selectedEquipment.type!.localized, selectedEquipment.number ?? "error")
-      cell.typeImageView.image = defineEquipmentImage(type: selectedEquipment.type!)
+      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
       return cell
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
@@ -393,6 +394,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       fatalError("Switch error")
     }
+  }
+
+  private func getSelectedEquipmentInfos(_ equipment: Equipments) -> String {
+    let type = equipment.type!.localized
+    guard let number = equipment.number else {
+      return type
+    }
+
+    return String(format: "%@ #%@", type, number)
   }
 
   // Expand/collapse cell when tapped
@@ -425,6 +435,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 110
     case selectedMaterialsTableView:
       return 80
+    case selectedEquipmentsTableView:
+      return 55
     case doersTableView:
       return 75
     default:

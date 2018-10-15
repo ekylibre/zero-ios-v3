@@ -70,12 +70,6 @@ extension AddInterventionViewController {
     return sortedEquipmentTypes.first!
   }
 
-  func defineEquipmentImage(type: String) -> UIImage? {
-    let assetName = type.lowercased().replacingOccurrences(of: "_", with: "-")
-
-    return UIImage(named: assetName)
-  }
-
   // MARK: - Selection
 
   func selectEquipment(_ equipment: Equipments) {
@@ -86,7 +80,7 @@ extension AddInterventionViewController {
 
   private func updateView() {
     let shouldExpand = selectedEquipments.count > 0
-    let tableViewHeight = (selectedEquipments.count > 7) ? 7 * 80 : selectedEquipments.count * 80
+    let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 
     equipmentsExpandImageView.isHidden = !shouldExpand
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
@@ -108,7 +102,7 @@ extension AddInterventionViewController {
 
   @IBAction private func tapEquipmentsView() {
     let shouldExpand = (equipmentsHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedEquipments.count > 7) ? 7 * 80 : selectedEquipments.count * 80
+    let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 
     if selectedEquipments.count == 0 {
       return

@@ -38,7 +38,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     createButton.setTitle("create_new_equipment".localized.uppercased(), for: .normal)
     searchBar.delegate = self
     tableView.register(EquipmentCell.self, forCellReuseIdentifier: "EquipmentCell")
-    tableView.rowHeight = 60
+    tableView.rowHeight = 65
     tableView.delegate = self
     tableView.dataSource = self
     setupCreationView()
@@ -110,10 +110,19 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
     cell.nameLabel.text = equipment.name
-    cell.infosLabel.text = equipment.type?.localized
+    cell.infosLabel.text = getEquipmentInfos(equipment)
     cell.isUserInteractionEnabled = !isSelected
     cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
+  }
+
+  private func getEquipmentInfos(_ equipment: Equipments) -> String {
+    let type = equipment.type!.localized
+    guard let number = equipment.number else {
+      return type
+    }
+
+    return String(format: "%@ #%@", type, number)
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -155,7 +164,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
-    equipment.number = number
+    equipment.number = number.isEmpty ? nil : number
     equipments.append(equipment)
 
     do {

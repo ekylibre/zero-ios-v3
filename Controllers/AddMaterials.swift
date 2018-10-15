@@ -56,7 +56,7 @@ extension AddInterventionViewController {
 
   private func updateView() {
     let shouldExpand = selectedMaterials[0].count > 0
-    let tableViewHeight = (selectedMaterials[0].count > 4) ? 4 * 80 : selectedMaterials[0].count * 80
+    let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
     materialsExpandImageView.isHidden = !shouldExpand
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
@@ -78,7 +78,7 @@ extension AddInterventionViewController {
 
   @IBAction private func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedMaterials[0].count > 4) ? 4 * 80 : selectedMaterials[0].count * 80
+    let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
     if selectedMaterials[0].count == 0 {
       return
