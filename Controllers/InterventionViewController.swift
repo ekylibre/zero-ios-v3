@@ -211,9 +211,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.syncImage.backgroundColor = UIColor.purple
     }
 
+    let date = workingPeriod?.value(forKey: "executionDate") as? Date
     cell.cropsLabel.text = updateCropsLabel(targets)
     cell.infosLabel.text = intervention.value(forKey: "infos") as? String
-    cell.dateLabel.text = transformDate(date: workingPeriod.value(forKey: "executionDate") as! Date)
+
+    if date != nil {
+      cell.dateLabel.text = transformDate(date: date!)
+    }
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
@@ -249,10 +253,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return targets
   }
 
-  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject {
+  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject? {
 
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return NSManagedObject()
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -268,7 +272,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       print("Could not fetch. \(error), \(error.userInfo)")
     }
 
-    return workingPeriods.first!
+    if workingPeriods.count > 0 {
+      return workingPeriods.first
+    }
+    return nil
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {

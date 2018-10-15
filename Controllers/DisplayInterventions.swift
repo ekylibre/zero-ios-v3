@@ -14,17 +14,17 @@ extension AddInterventionViewController {
   func loadWorkingPeriod() {
     let dateFormatter = DateFormatter()
     let selectedDate: String
-    let workingPeriods = currentIntervention.workingPeriods?.allObjects as! [WorkingPeriods]
-    let date = workingPeriods.first?.executionDate
-    let duration = workingPeriods.first?.hourDuration
+    let workingPeriods = currentIntervention.workingPeriods
+    let date = workingPeriods?.executionDate
+    let duration = workingPeriods?.hourDuration
 
     dateFormatter.locale = Locale(identifier: "locale".localized)
     dateFormatter.dateFormat = "d MMM"
-    selectedDate = dateFormatter.string(from: date!)
-    selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", selectedDate, duration!)
-    selectDateButton.setTitle(selectedDate, for: .normal)
-    durationTextField.text = (duration as NSNumber?)?.stringValue
-    if date != nil {
+    if date != nil && duration != nil {
+      selectedDate = dateFormatter.string(from: date!)
+      selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", selectedDate, duration!)
+      selectDateButton.setTitle(selectedDate, for: .normal)
+      durationTextField.text = (duration as NSNumber?)?.stringValue
       selectDateView.datePicker.date = date!
     }
     if interventionState == Intervention.State.Validated.rawValue {

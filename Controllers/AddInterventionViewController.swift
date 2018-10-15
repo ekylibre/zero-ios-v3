@@ -586,7 +586,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
 
     currentIntervention.type = interventionType
-    currentIntervention.status = Intervention.Status.OutOfSync.rawValue
+    currentIntervention.status = Intervention.State.Created.rawValue
     currentIntervention.infos = notesTextField.text
     if interventionType == "IRRIGATION" {
       let waterVolume = irrigationValueTextField.text!.floatValue
@@ -610,6 +610,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateIntervention() {
+    let duration = durationTextField.text!.floatValue
+
+    currentIntervention.workingPeriods?.executionDate = selectDateView.datePicker.date
+    currentIntervention.workingPeriods?.hourDuration = duration
+    currentIntervention.infos = notesTextField.text
+    if interventionType == "IRRIGATION" {
+      let waterVolume = irrigationValueTextField.text!.floatValue
+      currentIntervention.waterQuantity = waterVolume
+      currentIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
     }
   }
 
@@ -789,6 +802,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if interventionState == Intervention.State.New.rawValue {
         createIntervention()
+      } else if interventionState == Intervention.State.Created.rawValue {
+        updateIntervention()
       }
     }
   }
