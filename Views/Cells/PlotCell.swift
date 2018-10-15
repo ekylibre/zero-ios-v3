@@ -64,9 +64,9 @@ class PlotCell: UITableViewCell {
       surfaceAreaLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: expandCollapseImageView.leadingAnchor, constant: -25),
       expandCollapseImageView.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
-      expandCollapseImageView.heightAnchor.constraint(equalToConstant: 24),
+      expandCollapseImageView.heightAnchor.constraint(equalToConstant: 16),
       expandCollapseImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 24)
+      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 16)
       ])
   }
 

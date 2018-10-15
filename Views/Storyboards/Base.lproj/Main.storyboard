@@ -375,10 +375,10 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-less" translatesAutoresizingMaskIntoConstraints="NO" id="lZ2-DO-10N">
-                                                        <rect key="frame" x="331" y="23.5" width="24" height="24"/>
+                                                        <rect key="frame" x="339" y="27.5" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="24" id="0OK-MH-qbz"/>
-                                                            <constraint firstAttribute="width" constant="24" id="NWl-Ab-Grp"/>
+                                                            <constraint firstAttribute="height" constant="16" id="0OK-MH-qbz"/>
+                                                            <constraint firstAttribute="width" constant="16" id="NWl-Ab-Grp"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Volume" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-KQ-zI8">
@@ -564,10 +564,10 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-less" translatesAutoresizingMaskIntoConstraints="NO" id="A3m-nu-nvW">
-                                                        <rect key="frame" x="331" y="23.5" width="24" height="24"/>
+                                                        <rect key="frame" x="339" y="27.5" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="24" id="7Dn-vx-2cU"/>
-                                                            <constraint firstAttribute="height" constant="24" id="lWN-0S-xA9"/>
+                                                            <constraint firstAttribute="width" constant="16" id="7Dn-vx-2cU"/>
+                                                            <constraint firstAttribute="height" constant="16" id="lWN-0S-xA9"/>
                                                         </constraints>
                                                     </imageView>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-TZ-qGY">
@@ -633,10 +633,10 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-less" translatesAutoresizingMaskIntoConstraints="NO" id="gpT-xG-nNl">
-                                                        <rect key="frame" x="331" y="23.5" width="24" height="24"/>
+                                                        <rect key="frame" x="339" y="27.5" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="24" id="3vY-pb-6yW"/>
-                                                            <constraint firstAttribute="width" constant="24" id="4c1-OT-swH"/>
+                                                            <constraint firstAttribute="height" constant="16" id="3vY-pb-6yW"/>
+                                                            <constraint firstAttribute="width" constant="16" id="4c1-OT-swH"/>
                                                         </constraints>
                                                     </imageView>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S1G-aq-VJB">
@@ -1737,8 +1737,8 @@
         <image name="clic&amp;farm-logo" width="1300" height="1150"/>
         <image name="delete" width="50" height="50"/>
         <image name="exit" width="50" height="50"/>
-        <image name="expand-less" width="24" height="24"/>
-        <image name="expand-more" width="24" height="24"/>
+        <image name="expand-less" width="32" height="32"/>
+        <image name="expand-more" width="32" height="32"/>
         <image name="few-clouds" width="100" height="100"/>
         <image name="light-rain" width="100" height="100"/>
         <image name="mist" width="100" height="100"/>
