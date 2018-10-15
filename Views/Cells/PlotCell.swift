@@ -12,8 +12,8 @@ class PlotCell: UITableViewCell {
 
   lazy var checkboxButton: UIButton = {
     let checkboxButton = UIButton(frame: CGRect.zero)
-    checkboxButton.setImage(UIImage(named: "check-box-blank"), for: .normal)
-    checkboxButton.setImage(UIImage(named: "check-box"), for: .selected)
+    checkboxButton.setImage(UIImage(named: "unchecked-checkbox"), for: .normal)
+    checkboxButton.setImage(UIImage(named: "checked-checkbox"), for: .selected)
     checkboxButton.translatesAutoresizingMaskIntoConstraints = false
     return checkboxButton
   }()
