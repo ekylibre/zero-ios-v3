@@ -895,6 +895,29 @@ class ApolloQuery {
     return true
   }
 
+  func updateInterventionStatus(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let predicate = NSPredicate(format: "ekyID == %@", fetchedIntervention.id)
+
+    interventionFetchRequest.predicate = predicate
+
+    do {
+      let intervention = try managedContext.fetch(interventionFetchRequest)
+
+      if intervention.count > 0 {
+        intervention.first?.status = (fetchedIntervention.validatedAt == nil ? Intervention.Status.Synchronised : Intervention.Status.Validated).rawValue
+        try managedContext.save()
+      }
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
   func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -916,6 +939,7 @@ class ApolloQuery {
           if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
           }
+          self.updateInterventionStatus(fetchedIntervention: intervention)
         }
       }
       group.leave()
