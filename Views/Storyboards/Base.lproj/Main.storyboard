@@ -681,19 +681,19 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-Ro-sdH" userLabel="Persons View">
                                                 <rect key="frame" x="0.0" y="282" width="375" height="70"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Persons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAh-c6-yzZ">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Persons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAh-c6-yzZ">
                                                         <rect key="frame" x="20" y="25" width="66.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <color key="textColor" red="0.070588235294117646" green="0.41568627450980389" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yGb-zU-Lzj">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yGb-zU-Lzj">
                                                         <rect key="frame" x="101.5" y="20.5" width="45" height="30"/>
                                                         <state key="normal" title="+ ADD">
                                                             <color key="titleColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                     </button>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Doers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orv-Jv-Mfq">
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orv-Jv-Mfq">
                                                         <rect key="frame" x="101.5" y="26.5" width="100" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -726,6 +726,7 @@
                                                     <constraint firstItem="orv-Jv-Mfq" firstAttribute="centerY" secondItem="IAh-c6-yzZ" secondAttribute="centerY" id="YQP-0c-1vo"/>
                                                     <constraint firstItem="yGb-zU-Lzj" firstAttribute="centerY" secondItem="IAh-c6-yzZ" secondAttribute="centerY" id="d1w-Id-9Lx"/>
                                                     <constraint firstItem="orv-Jv-Mfq" firstAttribute="leading" secondItem="IAh-c6-yzZ" secondAttribute="trailing" constant="15" id="dIN-99-OpS"/>
+                                                    <constraint firstItem="IAh-c6-yzZ" firstAttribute="leading" secondItem="iGS-Ro-sdH" secondAttribute="leading" constant="20" id="lZX-1N-d4s"/>
                                                     <constraint firstItem="IAh-c6-yzZ" firstAttribute="top" secondItem="iGS-Ro-sdH" secondAttribute="top" constant="25" id="rf7-Vn-KS1"/>
                                                     <constraint firstAttribute="trailing" secondItem="kwc-yl-NBR" secondAttribute="trailing" constant="20" id="tTc-VZ-f6I"/>
                                                     <constraint firstAttribute="trailing" secondItem="b7I-Kf-0GJ" secondAttribute="trailing" constant="20" id="vg3-iR-5BS"/>

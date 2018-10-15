@@ -100,9 +100,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var inputsSelectionView: InputsView!
   var materialsSelectionView: MaterialsView!
   var equipmentsSelectionView: EquipmentsView!
+  var personsSelectionView: PersonsView!
   var selectedMaterials = [[NSManagedObject]]()
   var interventionEquipments = [NSManagedObject]()
   var selectedEquipments = [Equipments]()
+  var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
   var entities = [NSManagedObject]()
   var entitiesTableViewTopAnchor: NSLayoutConstraint!
@@ -185,24 +187,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
     selectedInputsTableView.layer.cornerRadius = 4
-
-    searchEntity.delegate = self
-    searchEntity.autocapitalizationType = .none
-
-    entitiesTableView.dataSource = self
-    entitiesTableView.delegate = self
-    entitiesTableView.bounces = false
-
-    entitiesTableViewTopAnchor = entitiesTableView.topAnchor.constraint(equalTo: searchEntity.bottomAnchor, constant: 40.5)
-    NSLayoutConstraint.activate([entitiesTableViewTopAnchor])
-
-    doersTableView.dataSource = self
-    doersTableView.delegate = self
-    doersTableView.bounces = false
-    doersTableView.layer.borderWidth  = 0.5
-    doersTableView.layer.borderColor = UIColor.lightGray.cgColor
-    doersTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    doersTableView.layer.cornerRadius = 4
 
     inputsSelectionView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     inputsSelectionView.addInterventionViewController = self
@@ -297,10 +281,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return selectedMaterials[0].count
     case selectedEquipmentsTableView:
       return selectedEquipments.count
-    case entitiesTableView:
-      return searchedEntities.count
-    case doersTableView:
-      return doers.count
+    case selectedPersonsTableView:
+      return selectedPersons[0].count
     default:
       return 1
     }
@@ -366,15 +348,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
       cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
       return cell
-    case entitiesTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
-
-      entity = searchedEntities[indexPath.row]
-      cell.firstName.text = entity?.value(forKey: "firstName") as? String
-      cell.lastName.text = entity?.value(forKey: "lastName") as? String
-      cell.logo.image = UIImage(named: "person")
-      return cell
-    case doersTableView:
+    case selectedPersonsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
 
       doer = doers[indexPath.row]
@@ -405,26 +379,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedIndexPath: IndexPath?
   var indexPaths: [IndexPath] = []
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    selectedIndexPath = indexPath
-
-    switch tableView {
-    case entitiesTableView:
-      let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
-
-      if cell.isAvaible {
-        doers.append(entities[indexPath.row])
-        doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
-        doersTableView.reloadData()
-        cell.isAvaible = false
-        cell.backgroundColor = AppColor.CellColors.LightGray
-      }
-      closeEntitiesSelectionView(self)
-    default:
-      return
-    }
-  }
-
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
     case selectedInputsTableView:
@@ -433,7 +387,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 80
     case selectedEquipmentsTableView:
       return 55
-    case doersTableView:
+    case selectedPersonsTableView:
       return 75
     default:
       return 60
@@ -725,37 +679,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       equipmentsSelectionView.creationView.typeButton.setTitle(value.localized, for: .normal)
     default:
       fatalError("writeValueBack: Unknown value for tag")
-    }
-  }
-
-  // MARK: - Search Bar Delegate
-
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    searchedEntities = searchText.isEmpty ? entities : entities.filter({(filterEntity: NSManagedObject) -> Bool in
-      let entityName: String = filterEntity.value(forKey: "firstName") as! String
-      return entityName.range(of: searchText) != nil
-    })
-    entitiesTableView.reloadData()
-  }
-
-  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-    switch searchBar {
-    case searchEntity:
-      entitiesTableViewTopAnchor.constant = 15
-      createEntity.isHidden = true
-    default:
-      return
-    }
-  }
-
-  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    switch searchBar {
-    case searchEntity:
-      searchBar.endEditing(true)
-      entitiesTableViewTopAnchor.constant = 40.5
-      createEntity.isHidden = false
-    default:
-      return
     }
   }
 
