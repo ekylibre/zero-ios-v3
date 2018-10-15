@@ -173,22 +173,56 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   @objc private func cancelCreation() {
+    let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
+
+    creationView.nameTextField.resignFirstResponder()
+    creationView.isHidden = true
     dimView.isHidden = true
+    creationView.typeImageView.image = UIImage(named: imageName)
+    creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
+    creationView.nameTextField.text = ""
+    creationView.errorLabel.isHidden = true
+    creationView.numberTextField.text = ""
   }
 
   @objc private func validateCreation() {
     let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
 
+    if !checkEquipmentName() {
+      return
+    }
+
+    creationView.nameTextField.resignFirstResponder()
     createEquipment(name: creationView.nameTextField.text!, number: creationView.numberTextField.text!)
     equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
     tableView.reloadData()
+    creationView.isHidden = true
     dimView.isHidden = true
     addInterventionViewController!.selectedValue = firstEquipmentType
     creationView.typeImageView.image = UIImage(named: imageName)
     creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     creationView.nameTextField.text = ""
+    creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
+  }
+
+  private func checkEquipmentName() -> Bool {
+    let equipmentsWithSameName = equipments.filter({(equipment: Equipments) -> Bool in
+      let name = equipment.name!
+      return name.range(of: creationView.nameTextField.text!, options: .caseInsensitive) != nil
+    })
+
+    if creationView.nameTextField.text!.isEmpty {
+      creationView.errorLabel.text = "equipment_name_is_empty".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    } else if equipmentsWithSameName.count > 0 {
+      creationView.errorLabel.text = "equipment_name_not_available".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    }
+    return true
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

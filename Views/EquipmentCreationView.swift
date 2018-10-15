@@ -63,6 +63,14 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     return nameTextField
   }()
 
+  lazy var errorLabel: UILabel = {
+    let errorLabel = UILabel(frame: CGRect.zero)
+    errorLabel.font = UIFont.systemFont(ofSize: 13)
+    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return errorLabel
+  }()
+
   lazy var numberTextField: UITextField = {
     let numberTextField = UITextField(frame: CGRect.zero)
     numberTextField.placeholder = "number".localized
@@ -117,11 +125,11 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     self.addSubview(typeLabel)
     self.addSubview(typeButton)
     self.addSubview(nameTextField)
+    self.addSubview(errorLabel)
     self.addSubview(numberTextField)
     self.addSubview(cancelButton)
     self.addSubview(createButton)
     setupLayout()
-    setupActions()
   }
 
   private func setupLayout() {
@@ -140,6 +148,9 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 35),
       nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       numberTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
       numberTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       numberTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
@@ -148,11 +159,6 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
       ])
-  }
-
-  private func setupActions() {
-    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -164,20 +170,5 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
-  }
-
-  // MARK: - Actions
-
-  @objc private func closeView(sender: UIButton) {
-    nameTextField.resignFirstResponder()
-    if sender == cancelButton {
-      let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
-
-      typeImageView.image = UIImage(named: imageName)
-      typeButton.setTitle(firstEquipmentType.localized, for: .normal)
-      nameTextField.text = ""
-      numberTextField.text = ""
-    }
-    self.isHidden = true
   }
 }

@@ -176,7 +176,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   @objc private func validateCreation() {
-    if !checkName() {
+    if !checkMaterialName() {
       return
     }
 
@@ -193,7 +193,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
   }
 
-  private func checkName() -> Bool {
+  private func checkMaterialName() -> Bool {
     let materialsWithSameName = materials.filter({(material: Materials) -> Bool in
       let name = material.name!
       return name.range(of: creationView.nameTextField.text!, options: .caseInsensitive) != nil
