@@ -275,11 +275,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     switch intervention.value(forKey: "status") as! Int16 {
     case Intervention.Status.OutOfSync.rawValue:
-      cell.syncImage.backgroundColor = UIColor.orange
+      let image = UIImage(named: "out-of-sync")?.withRenderingMode(.alwaysTemplate)
+
+      cell.syncImage.image = image
+      cell.syncImage.tintColor = UIColor.orange
     case Intervention.Status.Synchronised.rawValue:
-      cell.syncImage.backgroundColor = UIColor.yellow
+      let image = UIImage(named: "synchronised")?.withRenderingMode(.alwaysTemplate)
+
+      cell.syncImage.image = image
+      cell.syncImage.tintColor = UIColor.green
     case Intervention.Status.Validated.rawValue:
-      cell.syncImage.backgroundColor = UIColor.green
+      let image = UIImage(named: "validated")?.withRenderingMode(.alwaysTemplate)
+
+      cell.syncImage.image = image
+      cell.syncImage.tintColor = UIColor.green
     default:
       cell.syncImage.backgroundColor = UIColor.purple
     }
