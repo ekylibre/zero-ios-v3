@@ -261,7 +261,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    if interventionState == Intervention.State.Validated.rawValue {
+    if interventionState == Intervention.State.Validated.rawValue || interventionState == Intervention.State.Created.rawValue {
       totalLabel.text = cropsView.selectedCropsLabel.text
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }

@@ -353,7 +353,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         let intervention = interventions[(indexPath?.row)!]
 
         destVC.currentIntervention = intervention
-        destVC.interventionState = intervention.status
+        destVC.interventionState = Intervention.State.Created.rawValue
       }
     }
   }
