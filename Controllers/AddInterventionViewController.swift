@@ -701,7 +701,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
     switch segue.identifier {
-    case "ShowSpecieList":
+    case "showSpecieList":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.cellsStrings = loadSpecies()
