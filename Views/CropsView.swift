@@ -322,20 +322,17 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         self.crops.append(cropsFromSamePlot)
         cropsFromSamePlot = [Crops]()
       }
-      if targets != nil {
-        for target in targets! {
-          if crop == target.crops {
-            selectedCropsCount += 1
-            selectedSurfaceArea += crop.surfaceArea
-            crop.isSelected = true
-            break
-          }
+      for target in targets! {
+        if crop == target.crops {
+          selectedCropsCount += 1
+          selectedSurfaceArea += crop.surfaceArea
+          crop.isSelected = true
+          break
         }
       }
       cropsFromSamePlot.append(crop)
     }
     self.crops.append(cropsFromSamePlot)
-    updateSelectedCropsLabel()
   }
 
   private func createCropViews() {
@@ -382,6 +379,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for (index, crop) in crops.enumerated() {
       cropViews[indexPath.row][index].checkboxImage.image = #imageLiteral(resourceName: "check-box")
       crop.isSelected = true
+      print("\nSelectPlot: \(crop)")
     }
   }
 
@@ -436,6 +434,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     selectedCropsCount += 1
     selectedSurfaceArea += crop.surfaceArea
     crop.isSelected = true
+    print("\nSelect crop: \(crop)")
   }
 
   private func deselectCrop(_ crop: Crops, _ crops: [Crops], _ cell: PlotCell) {

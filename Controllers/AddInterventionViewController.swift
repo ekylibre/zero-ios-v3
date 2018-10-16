@@ -258,8 +258,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.interventionState = interventionState
     loadInterventionInAppropriateMode()
     cropsView.fetchCrops()
-    view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+    view.addSubview(cropsView)
 
     if interventionState == Intervention.State.Validated.rawValue || interventionState == Intervention.State.Created.rawValue {
       totalLabel.text = cropsView.selectedCropsLabel.text
@@ -617,6 +617,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func updateIntervention() {
+    print("\nUpdating intervention")
     let duration = durationTextField.text!.floatValue
 
     currentIntervention.workingPeriods?.executionDate = selectDateView.datePicker.date
@@ -630,6 +631,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     updateEquipments(intervention: currentIntervention)
     updatePersons(intervention: currentIntervention)
     updateInputs(intervention: currentIntervention)
+    updateTargets(intervention: currentIntervention)
   }
 
   func updateEquipments(intervention: Interventions) {
@@ -802,6 +804,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func createTargets(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let selectedCrops = fetchSelectedCrops()
+
+    for selectedCrop in selectedCrops {
+      let target = Targets(context: managedContext)
+
+      target.interventions = intervention
+      target.crops = selectedCrop
+      target.workAreaPercentage = 100
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateTargets(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
