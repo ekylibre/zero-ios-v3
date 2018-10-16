@@ -412,7 +412,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
     hideInterventionAdd()
-    performSegue(withIdentifier: "ShowAddInterventionVC", sender: sender)
+    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
   }
 
   @objc func hideInterventionAdd() {

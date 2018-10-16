@@ -302,7 +302,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func showList() {
-    self.performSegue(withIdentifier: "ShowSpecieList", sender: self)
+    self.performSegue(withIdentifier: "showSpecieList", sender: self)
   }
 
   @objc func showAlert() {
@@ -505,43 +505,44 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // MARK: - Core Data
 
   @IBAction func createIntervention() {
-    if checkErrorsInFunctionOfIntervention() {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return
-      }
-
-      let managedContext = appDelegate.persistentContainer.viewContext
-      newIntervention = Interventions(context: managedContext)
-      let workingPeriod = WorkingPeriods(context: managedContext)
-
-      newIntervention.type = interventionType
-      newIntervention.status = Intervention.Status.OutOfSync.rawValue
-      newIntervention.infos = "Infos"
-      if interventionType == "IRRIGATION".localized {
-        let waterVolume = irrigationValueTextField.text!.floatValue
-        newIntervention.waterQuantity = waterVolume
-        newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
-      }
-      workingPeriod.interventions = newIntervention
-      workingPeriod.executionDate = selectDateView.datePicker.date
-      let duration = durationTextField.text!.floatValue
-      workingPeriod.hourDuration = duration
-      createTargets(intervention: newIntervention)
-      createEquipments(intervention: newIntervention)
-      createDoers(intervention: newIntervention)
-      saveInterventionInputs(intervention: newIntervention)
-      resetInputsAttributes(entity: "Seeds")
-      resetInputsAttributes(entity: "Phytos")
-      resetInputsAttributes(entity: "Fertilizers")
-      saveWeather(intervention: newIntervention)
-
-      do {
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-      performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
+    if !checkErrorsInFunctionOfIntervention() {
+      return
     }
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    newIntervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
+
+    newIntervention.type = interventionType
+    newIntervention.status = Intervention.Status.OutOfSync.rawValue
+    newIntervention.infos = "Infos"
+    if interventionType == "IRRIGATION".localized {
+      let waterVolume = irrigationValueTextField.text!.floatValue
+      newIntervention.waterQuantity = waterVolume
+      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+    }
+    workingPeriod.interventions = newIntervention
+    workingPeriod.executionDate = selectDateView.datePicker.date
+    let duration = durationTextField.text!.floatValue
+    workingPeriod.hourDuration = duration
+    createTargets(intervention: newIntervention)
+    createEquipments(intervention: newIntervention)
+    createDoers(intervention: newIntervention)
+    saveInterventionInputs(intervention: newIntervention)
+    resetInputsAttributes(entity: "Seeds")
+    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Fertilizers")
+    saveWeather(intervention: newIntervention)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
   func resetInputsAttributes(entity: String) {

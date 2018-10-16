@@ -191,7 +191,7 @@
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
-                        <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="ShowAddInterventionVC" id="IIb-81-RCP"/>
+                        <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1761,7 +1761,7 @@
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
                         <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="ShowSpecieList" id="uas-Qa-jvK"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecieList" id="uas-Qa-jvK"/>
                         <segue destination="1rQ-td-wpq" kind="unwind" identifier="unwindToInterventionVC" unwindAction="unwindToInterventionVCWithSegue:" id="DXp-2Y-Sxs"/>
                     </connections>
                 </viewController>
@@ -1943,8 +1943,8 @@
                         <outlet property="textView" destination="tcH-Tp-UHn" id="mTh-dn-lHz"/>
                         <outlet property="tfPassword" destination="ScR-OF-ai0" id="mBJ-fl-emB"/>
                         <outlet property="tfUsername" destination="vfb-X0-1tk" id="j9I-cx-eB1"/>
-                        <segue destination="CoO-3Z-MeU" kind="show" identifier="ShowNoInternetVC" id="Adv-hH-Opk"/>
-                        <segue destination="Ym6-0E-qVT" kind="presentation" identifier="ShowInterventionVC" animates="NO" id="KZa-bZ-hB6"/>
+                        <segue destination="CoO-3Z-MeU" kind="show" identifier="showNoInternetVC" id="Adv-hH-Opk"/>
+                        <segue destination="Ym6-0E-qVT" kind="presentation" identifier="showInterventionVC" animates="NO" id="KZa-bZ-hB6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gp1-Vr-Vkq" userLabel="First Responder" sceneMemberID="firstResponder"/>

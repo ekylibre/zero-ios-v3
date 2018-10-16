@@ -13,9 +13,7 @@ extension AddInterventionViewController {
   func implantationErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
-    if cropsView.selectedCrops.count == 0 {
-      alert.message = "you_have_to_select_a_crop".localized
-    } else if selectedInputs.count == 0 {
+    if selectedInputs.count == 0 {
       alert.message = "you_must_select_seed".localized
     } else {
       for selectedInput in selectedInputs {
@@ -35,9 +33,7 @@ extension AddInterventionViewController {
   func cropProtectionErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
-    if cropsView.selectedCrops.count == 0 {
-      alert.message = "you_have_to_select_a_crop".localized
-    } else if selectedInputs.count == 0 {
+    if selectedInputs.count == 0 {
       alert.message = "you_have_to_enter_phyto".localized
     } else {
       for selectedInput in selectedInputs {
@@ -57,9 +53,7 @@ extension AddInterventionViewController {
   func fertilizationErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
-    if cropsView.selectedCrops.count == 0 {
-      alert.message = "you_have_to_select_a_crop".localized
-    } else if selectedInputs.count == 0 {
+    if selectedInputs.count == 0 {
       alert.message = "you_must_select_a_fertilizer".localized
     } else {
       for selectedInput in selectedInputs {
@@ -105,15 +99,14 @@ extension AddInterventionViewController {
   }
 
   func checkErrorsInFunctionOfIntervention() -> Bool {
+    if !cropErrorHandler() {
+      return false
+    }
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue.localized:
-      return cropErrorHandler()
     case Intervention.InterventionType.CropProtection.rawValue.localized:
       return cropProtectionErrorHandler()
     case Intervention.InterventionType.Fertilization.rawValue.localized:
       return fertilizationErrorHandler()
-    case Intervention.InterventionType.GroundWork.rawValue.localized:
-      return cropErrorHandler()
     case Intervention.InterventionType.Harvest.rawValue.localized:
       return true
     case Intervention.InterventionType.Implantation.rawValue.localized:
