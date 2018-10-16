@@ -1,5 +1,5 @@
 //
-//  AddWeatherToIntervention.swift
+//  DetailedInterventionViewController+Weather.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 07/09/2018.

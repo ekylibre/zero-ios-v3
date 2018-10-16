@@ -1,5 +1,5 @@
 //
-//  AddEquipmentIntervention.swift
+//  DetailedInterventionViewController+Equipments.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 08/08/2018.

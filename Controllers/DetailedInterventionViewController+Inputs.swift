@@ -1,5 +1,5 @@
 //
-//  AddSelectedInputsToIntervention.swift
+//  DetailedInterventionViewController+Inputs.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 23/08/2018.

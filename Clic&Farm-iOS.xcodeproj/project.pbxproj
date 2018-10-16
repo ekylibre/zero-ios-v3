@@ -40,8 +40,8 @@
 		6B4738162174D2760007DA88 /* PersonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4738152174D2760007DA88 /* PersonsView.swift */; };
 		6B4738182174D2FD0007DA88 /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4738172174D2FD0007DA88 /* PersonCreationView.swift */; };
 		6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */; };
-		6B77C3D42141297500520840 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77C3D32141297500520840 /* AddIrrigation.swift */; };
-		6B834B3F2165000100BADA79 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B834B3E2165000100BADA79 /* AddSelectedInputsToIntervention.swift */; };
+		6B77C3D42141297500520840 /* DetailedInterventionViewController+Irrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77C3D32141297500520840 /* DetailedInterventionViewController+Irrigation.swift */; };
+		6B834B3F2165000100BADA79 /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B834B3E2165000100BADA79 /* DetailedInterventionViewController+Inputs.swift */; };
 		6B834B41216508C600BADA79 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B834B40216508C600BADA79 /* Localizable.swift */; };
 		6B849C3C216F5DA6009B0DAB /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B849C3B216F5DA6009B0DAB /* SelectionView.swift */; };
 		6B849C3E216F7A8F009B0DAB /* EquipmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B849C3D216F7A8F009B0DAB /* EquipmentsView.swift */; };
@@ -50,14 +50,14 @@
 		6B85D044214A9225009EAF24 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D043214A9225009EAF24 /* CropView.swift */; };
 		6B87EBF7215B8ADF004B3DE5 /* MaterialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */; };
 		6B87EBF9215B8C28004B3DE5 /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */; };
-		6B87EBFC215BCE99004B3DE5 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041855772142A20F0077A715 /* AddWeatherToIntervention.swift */; };
-		6B9820DA21621FBE0076FD85 /* AddMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9820D921621FBE0076FD85 /* AddMaterials.swift */; };
+		6B87EBFC215BCE99004B3DE5 /* DetailedInterventionViewController+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041855772142A20F0077A715 /* DetailedInterventionViewController+Weather.swift */; };
+		6B9820DA21621FBE0076FD85 /* DetailedInterventionViewController+Materials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9820D921621FBE0076FD85 /* DetailedInterventionViewController+Materials.swift */; };
 		6B982874216B86760032DE3E /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B982873216B86760032DE3E /* SelectedMaterialCell.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA37142213963230086DF9B /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713F213963230086DF9B /* oauthInfo.plist */; };
 		6BA5D77E2149349A0054F969 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D778214934990054F969 /* LoginScreen.swift */; };
 		6BA5D7802149349A0054F969 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77A214934990054F969 /* AddInterventionViewController.swift */; };
-		6BA5D7832149349A0054F969 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77D2149349A0054F969 /* AddEquipmentIntervention.swift */; };
+		6BA5D7832149349A0054F969 /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77D2149349A0054F969 /* DetailedInterventionViewController+Equipments.swift */; };
 		6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D7862149391C0054F969 /* CustomPickerView.swift */; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
@@ -90,7 +90,7 @@
 		041322442147B2A700E55D19 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
-		041855772142A20F0077A715 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
+		041855772142A20F0077A715 /* DetailedInterventionViewController+Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Weather.swift"; sourceTree = "<group>"; };
 		041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -116,8 +116,8 @@
 		6B4738152174D2760007DA88 /* PersonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsView.swift; sourceTree = "<group>"; };
 		6B4738172174D2FD0007DA88 /* PersonCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCreationView.swift; sourceTree = "<group>"; };
 		6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCreationView.swift; sourceTree = "<group>"; };
-		6B77C3D32141297500520840 /* AddIrrigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
-		6B834B3E2165000100BADA79 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
+		6B77C3D32141297500520840 /* DetailedInterventionViewController+Irrigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Irrigation.swift"; sourceTree = "<group>"; };
+		6B834B3E2165000100BADA79 /* DetailedInterventionViewController+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Inputs.swift"; sourceTree = "<group>"; };
 		6B834B40216508C600BADA79 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		6B849C3B216F5DA6009B0DAB /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		6B849C3D216F7A8F009B0DAB /* EquipmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentsView.swift; sourceTree = "<group>"; };
@@ -126,14 +126,14 @@
 		6B85D043214A9225009EAF24 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 		6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsView.swift; sourceTree = "<group>"; };
 		6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCell.swift; sourceTree = "<group>"; };
-		6B9820D921621FBE0076FD85 /* AddMaterials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMaterials.swift; sourceTree = "<group>"; };
+		6B9820D921621FBE0076FD85 /* DetailedInterventionViewController+Materials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Materials.swift"; sourceTree = "<group>"; };
 		6B982873216B86760032DE3E /* SelectedMaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMaterialCell.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BA5D778214934990054F969 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		6BA5D77A214934990054F969 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
-		6BA5D77D2149349A0054F969 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
+		6BA5D77D2149349A0054F969 /* DetailedInterventionViewController+Equipments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Equipments.swift"; sourceTree = "<group>"; };
 		6BA5D7862149391C0054F969 /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
 		6BB2253E211849090036E167 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -196,14 +196,14 @@
 		047BF0B02105D1D2009F3945 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6BA5D77D2149349A0054F969 /* AddEquipmentIntervention.swift */,
 				6BA5D77A214934990054F969 /* AddInterventionViewController.swift */,
-				6B47380F2174CB1E0007DA88 /* DetailedInterventionViewController+Persons.swift */,
-				6B77C3D32141297500520840 /* AddIrrigation.swift */,
-				6B9820D921621FBE0076FD85 /* AddMaterials.swift */,
-				6B834B3E2165000100BADA79 /* AddSelectedInputsToIntervention.swift */,
-				041855772142A20F0077A715 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
+				6BA5D77D2149349A0054F969 /* DetailedInterventionViewController+Equipments.swift */,
+				6B834B3E2165000100BADA79 /* DetailedInterventionViewController+Inputs.swift */,
+				6B77C3D32141297500520840 /* DetailedInterventionViewController+Irrigation.swift */,
+				6B9820D921621FBE0076FD85 /* DetailedInterventionViewController+Materials.swift */,
+				6B47380F2174CB1E0007DA88 /* DetailedInterventionViewController+Persons.swift */,
+				041855772142A20F0077A715 /* DetailedInterventionViewController+Weather.swift */,
 				0410EF0521550C1C003DA2D1 /* HandleKeyboard.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
@@ -468,7 +468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B87EBFC215BCE99004B3DE5 /* AddWeatherToIntervention.swift in Sources */,
+				6B87EBFC215BCE99004B3DE5 /* DetailedInterventionViewController+Weather.swift in Sources */,
 				6B11EEEA2139641A00E2DEC4 /* FertilizerCreationView.swift in Sources */,
 				6B834B41216508C600BADA79 /* Localizable.swift in Sources */,
 				6B11EEEB2139641A00E2DEC4 /* PhytoCreationView.swift in Sources */,
@@ -476,7 +476,7 @@
 				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,
 				6BEA65DF2105CD820072840F /* InterventionViewController.swift in Sources */,
 				6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */,
-				6BA5D7832149349A0054F969 /* AddEquipmentIntervention.swift in Sources */,
+				6BA5D7832149349A0054F969 /* DetailedInterventionViewController+Equipments.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
 				6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */,
 				6B849C3E216F7A8F009B0DAB /* EquipmentsView.swift in Sources */,
@@ -493,8 +493,8 @@
 				6B4738102174CB1E0007DA88 /* DetailedInterventionViewController+Persons.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */,
-				6B9820DA21621FBE0076FD85 /* AddMaterials.swift in Sources */,
-				6B77C3D42141297500520840 /* AddIrrigation.swift in Sources */,
+				6B9820DA21621FBE0076FD85 /* DetailedInterventionViewController+Materials.swift in Sources */,
+				6B77C3D42141297500520840 /* DetailedInterventionViewController+Irrigation.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				0417A58221538B5B009529D5 /* UIApplication+StatusBar.swift in Sources */,
 				6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */,
@@ -514,7 +514,7 @@
 				044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */,
 				6B85D044214A9225009EAF24 /* CropView.swift in Sources */,
 				6B4738142174D1C30007DA88 /* SelectedPersonCell.swift in Sources */,
-				6B834B3F2165000100BADA79 /* AddSelectedInputsToIntervention.swift in Sources */,
+				6B834B3F2165000100BADA79 /* DetailedInterventionViewController+Inputs.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				6B87EBF9215B8C28004B3DE5 /* MaterialCell.swift in Sources */,
 				6BA5D7802149349A0054F969 /* AddInterventionViewController.swift in Sources */,
