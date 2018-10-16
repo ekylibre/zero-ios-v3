@@ -26,10 +26,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var irrigationLabel: UILabel!
-  @IBOutlet weak var irrigationExpandCollapseImage: UIImageView!
-  @IBOutlet weak var irrigationValueTextField: UITextField!
+  @IBOutlet weak var irrigationExpandImageView: UIImageView!
+  @IBOutlet weak var irrigationVolumeTextField: UITextField!
   @IBOutlet weak var irrigationUnitButton: UIButton!
-  @IBOutlet weak var irrigationInfoLabel: UILabel!
+  @IBOutlet weak var irrigationErrorLabel: UILabel!
   @IBOutlet weak var irrigationSeparatorView: UIView!
 
   // Inputs
@@ -405,7 +405,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.status = Intervention.Status.OutOfSync.rawValue
     newIntervention.infos = "Infos"
     if interventionType == "IRRIGATION".localized {
-      let waterVolume = irrigationValueTextField.text!.floatValue
+      let waterVolume = irrigationVolumeTextField.text!.floatValue
       newIntervention.waterQuantity = waterVolume
       newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
     }

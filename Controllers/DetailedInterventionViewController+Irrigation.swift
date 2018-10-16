@@ -16,10 +16,10 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     let units = ["m³", "l", "hl"]
 
-    irrigationValueTextField.layer.borderWidth = 0.5
-    irrigationValueTextField.layer.borderColor = UIColor.lightGray.cgColor
-    irrigationValueTextField.layer.cornerRadius = 5
-    irrigationValueTextField.clipsToBounds = false
+    irrigationVolumeTextField.layer.borderWidth = 0.5
+    irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
+    irrigationVolumeTextField.layer.cornerRadius = 5
+    irrigationVolumeTextField.clipsToBounds = false
     irrigationUnitButton.layer.borderWidth = 0.5
     irrigationUnitButton.layer.borderColor = UIColor.lightGray.cgColor
     irrigationUnitButton.layer.cornerRadius = 5
@@ -30,7 +30,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   }
 
   private func setupActions() {
-    irrigationValueTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
+    irrigationVolumeTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
   }
 
   // MARK: - Picker view
@@ -40,7 +40,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       return
     }
 
-    let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let volumeString = irrigationVolumeTextField.text!.replacingOccurrences(of: ",", with: ".")
     let volume = Float(volumeString) ?? 0
 
     self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
@@ -57,13 +57,13 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
     irrigationHeightConstraint.constant = shouldExapand ? 140 : 70
     irrigationLabel.isHidden = shouldExapand
-    irrigationValueTextField.isHidden = !shouldExapand
+    irrigationVolumeTextField.isHidden = !shouldExapand
     irrigationUnitButton.isHidden = !shouldExapand
-    irrigationExpandCollapseImage.transform = irrigationExpandCollapseImage.transform.rotated(by: CGFloat.pi)
+    irrigationExpandImageView.transform = irrigationExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
   @objc public func updateIrrigation(_ sender: Any) {
-    let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+    let volumeString = irrigationVolumeTextField.text!.replacingOccurrences(of: ",", with: ".")
     let volume = Float(volumeString) ?? 0
     let unit = irrigationUnitButton.titleLabel!.text!
 
@@ -73,16 +73,16 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   private func updateInfoLabel(_ volume: Double, _ unit: String) {
     if volume == 0 {
-      irrigationInfoLabel.text = "Le volume ne peut être nul"
-      irrigationInfoLabel.textColor = AppColor.TextColors.Red
+      irrigationErrorLabel.text = "Le volume ne peut être nul"
+      irrigationErrorLabel.textColor = AppColor.TextColors.Red
     } else if totalLabel.text == "+ SÉLECTIONNER" {
-      irrigationInfoLabel.text = "Aucune culture sélectionnée"
-      irrigationInfoLabel.textColor = AppColor.TextColors.Red
+      irrigationErrorLabel.text = "Aucune culture sélectionnée"
+      irrigationErrorLabel.textColor = AppColor.TextColors.Red
     } else {
       let efficiency = Double(volume) / cropsView.totalSurfaceArea
 
-      irrigationInfoLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
-      irrigationInfoLabel.textColor = AppColor.TextColors.DarkGray
+      irrigationErrorLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
+      irrigationErrorLabel.textColor = AppColor.TextColors.DarkGray
     }
   }
 
