@@ -752,7 +752,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJi-KE-5Mc">
                                                         <rect key="frame" x="20" y="25" width="69.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                        <color key="textColor" red="0.094117647058823528" green="0.38823529411764707" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="textColor" red="0.070588235289999995" green="0.41568627450000001" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not filled in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXL-bz-O2x">
@@ -1010,7 +1010,7 @@
                                 <rect key="frame" x="0.0" y="563" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qD8-2V-ooz">
-                                        <rect key="frame" x="8" y="16" width="59" height="30"/>
+                                        <rect key="frame" x="28" y="16" width="59" height="30"/>
                                         <state key="normal" title="CANCEL">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -1037,7 +1037,7 @@
                                     <constraint firstItem="mBB-VD-0Gd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="96m-Su-72M" secondAttribute="leading" constant="20" symbolic="YES" id="XmN-x9-4z0"/>
                                     <constraint firstAttribute="trailing" secondItem="mBB-VD-0Gd" secondAttribute="trailing" constant="20" id="bBj-3w-hYp"/>
                                     <constraint firstAttribute="height" constant="60" id="exT-5i-tUN"/>
-                                    <constraint firstItem="qD8-2V-ooz" firstAttribute="leading" secondItem="96m-Su-72M" secondAttribute="leadingMargin" id="vzf-Vn-WPh"/>
+                                    <constraint firstItem="qD8-2V-ooz" firstAttribute="leading" secondItem="96m-Su-72M" secondAttribute="leadingMargin" constant="20" id="vzf-Vn-WPh"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-q0-QD8" userLabel="Bottom View">
@@ -1401,6 +1401,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vxv-f7-ZrT"/>
-        <segue reference="EKH-vj-NkS"/>
+        <segue reference="uas-Qa-jvK"/>
     </inferredMetricsTieBreakers>
 </document>

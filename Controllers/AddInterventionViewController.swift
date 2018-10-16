@@ -13,8 +13,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Outlets
 
-  @IBOutlet weak var totalLabel: UILabel!
+  @IBOutlet weak var navigationBar: UINavigationBar!
+  @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var dimView: UIView!
+  @IBOutlet weak var totalLabel: UILabel!
 
   // Working period
   @IBOutlet weak var workingPeriodHeightConstraint: NSLayoutConstraint!
@@ -73,8 +75,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedPersonsTableView: UITableView!
   @IBOutlet weak var personsTableViewHeightConstraint: NSLayoutConstraint!
 
-  @IBOutlet weak var navigationBar: UINavigationBar!
-  @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
