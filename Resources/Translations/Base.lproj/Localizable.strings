@@ -353,7 +353,7 @@
 "selecting_crops" = "Select a crop";
 "selecting_materials" = "Select a material";
 "selecting_equipments" = "Select a equipment";
-"selecting_people" = "Select a person";
+"selecting_persons" = "Select a person";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
 "delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
@@ -389,10 +389,10 @@
 "authentificating" = "Authentificating, please wait…";
 "create" = "Create";
 "volume" = "Volume";
-"volume_cannot_be_null" = "Le volume ne peut être nul";
-"finish" = "Terminer";
+"volume_cannot_be_null" = "Volume cannot be zero";
+"finish" = "Finish";
 "pause" = "Pause";
-"speed" = "Vitesse";
+"speed" = "Speed";
 "working_width" = "Largeur de\ntravail";
 "worked_area" = "Surface\ntravaillée";
 "preparation" = "Préparation";
@@ -414,9 +414,10 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
-"title" = "Titre";
-"first_name" = "Prénom";
-"last_name" = "Nom de famille";
+"title" = "Title";
+"first_name" = "First name";
+"last_name" = "Last name";
+"driver" = "Driver";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
@@ -442,6 +443,8 @@
 "invalid_dose" = "Dose invalide";
 "approximate_amount" = "Quantité approximative";
 "unauthorized_mixing" = "Mélange non autorisé";
+"gps_is_off" = "Le GPS de votre smartphone est éteint.";
+"waiting_gps_signal" = "En attente d'un signal GPS…";
 
 "locale" = "en_EN";
 
