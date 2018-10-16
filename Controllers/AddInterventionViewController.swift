@@ -64,7 +64,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // Persons
   @IBOutlet var personsTapGesture: UITapGestureRecognizer!
-  @IBOutlet weak var personsHeightConstraint: UIView!
+  @IBOutlet weak var personsHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var personsAddButton: UIButton!
   @IBOutlet weak var personsCountLabel: UILabel!
   @IBOutlet weak var personsExpandImageView: UIImageView!
@@ -73,7 +73,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var saveInterventionButton: UIButton!
-  @IBOutlet weak var doersTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
@@ -106,10 +105,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedEquipments = [Equipments]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
-  var entities = [NSManagedObject]()
-  var entitiesTableViewTopAnchor: NSLayoutConstraint!
-  var searchedEntities = [NSManagedObject]()
-  var doers = [NSManagedObject]()
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
   var solidUnitPicker = UIPickerView()
@@ -173,8 +168,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
-    fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
-
     initUnitMeasurePickerView()
 
     saveInterventionButton.layer.cornerRadius = 3
@@ -202,6 +195,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupMaterialsView()
     equipmentTypes = loadEquipmentTypes()
     setupEquipmentsView()
+    selectedPersons.append([Persons]())
+    selectedPersons.append([InterventionPersons]())
+    setupPersonsView()
 
     initializeWeatherButtons()
     initWeather()
@@ -289,9 +285,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var entity: NSManagedObject?
-    var doer: NSManagedObject?
-
     switch tableView {
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
@@ -349,17 +342,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
       return cell
     case selectedPersonsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath) as! SelectedPersonCell
+      let selectedPerson = selectedPersons[0][indexPath.row]
 
-      doer = doers[indexPath.row]
-      cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-      cell.cellDelegate = self
-      cell.indexPath = indexPath
-      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
-      cell.firstName.text = doer?.value(forKey: "firstName") as? String
-      cell.lastName.text = doer?.value(forKey: "lastName") as? String
-      cell.logo.image = UIImage(named: "person")
+      cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
+      cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
+      cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
+      //cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+      //cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
       return cell
     default:
       fatalError("Switch error")
@@ -388,7 +378,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedEquipmentsTableView:
       return 55
     case selectedPersonsTableView:
-      return 75
+      return 65
     default:
       return 60
     }
@@ -426,7 +416,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createMaterials(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
-    createDoers(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
@@ -536,30 +525,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       interventionEquipment.interventions = intervention
       interventionEquipment.equipments = selectedEquipment
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  func createDoers(intervention: NSManagedObject) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let doersEntity = NSEntityDescription.entity(forEntityName: "Doers", in: managedContext)!
-
-    for entity in doers {
-      let doer = NSManagedObject(entity: doersEntity, insertInto: managedContext)
-      let isDriver = entity.value(forKey: "isDriver")
-
-      doer.setValue(intervention, forKey: "interventions")
-      doer.setValue(UUID(), forKey: "uuid")
-      doer.setValue(isDriver, forKey: "isDriver")
     }
 
     do {
@@ -754,6 +719,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return !selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView))
     case equipmentsTapGesture:
       return !selectedEquipmentsTableView.bounds.contains(touch.location(in: selectedEquipmentsTableView))
+    case personsTapGesture:
+      return !selectedPersonsTableView.bounds.contains(touch.location(in: selectedPersonsTableView))
     default:
       fatalError("gestureRecognizer switch error: case not found")
     }
@@ -859,8 +826,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       addEntityButton.isHidden = true
       numberLabel.isHidden = false
       switch entities {
-      case doers:
-        numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
       case selectedInputs:
         numberLabel.text = (entities.count == 1 ? "input".localized : String(format: "inputs".localized, entities.count))
       default:
