@@ -262,14 +262,14 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWi-dt-aMV" userLabel="Working Period View">
                                                 <rect key="frame" x="0.0" y="70.5" width="375" height="70"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Working time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tS7-0f-DOT">
-                                                        <rect key="frame" x="20" y="25" width="108.5" height="20.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Working period" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tS7-0f-DOT">
+                                                        <rect key="frame" x="20" y="25" width="125" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <color key="textColor" red="0.070588235294117646" green="0.41568627450980394" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="today • 7h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAO-eJ-lrk">
-                                                        <rect key="frame" x="143.5" y="26.5" width="70.5" height="18"/>
+                                                        <rect key="frame" x="160" y="26.5" width="70.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1078,11 +1078,8 @@
                         <outlet property="addInputsButton" destination="xR1-hG-glp" id="pRW-RT-UWb"/>
                         <outlet property="brokenClouds" destination="ca3-oq-1ls" id="Wau-QD-H2E"/>
                         <outlet property="clearSky" destination="8jz-fe-slq" id="pMJ-I2-u0I"/>
-                        <outlet property="collapseWorkingPeriodImage" destination="4VE-aQ-Xe3" id="mTX-34-7jk"/>
                         <outlet property="currentWeatherLabel" destination="UXL-bz-O2x" id="J7m-Rj-5XB"/>
                         <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
-                        <outlet property="durationTextField" destination="3Fz-6d-VQ1" id="PdX-mb-CjQ"/>
-                        <outlet property="durationUnitLabel" destination="3cP-JT-NmL" id="bQ3-Fs-C6i"/>
                         <outlet property="equipmentsAddButton" destination="5AO-Jj-0ZP" id="qfE-7r-xtB"/>
                         <outlet property="equipmentsCountLabel" destination="lB9-6U-iCz" id="oP5-yt-cDO"/>
                         <outlet property="equipmentsExpandImageView" destination="gpT-xG-nNl" id="b65-Rs-A0j"/>
@@ -1098,7 +1095,6 @@
                         <outlet property="irrigationErrorLabel" destination="gTq-na-vs2" id="ih9-3K-4Y0"/>
                         <outlet property="irrigationExpandImageView" destination="lZ2-DO-10N" id="5We-3u-Mku"/>
                         <outlet property="irrigationHeightConstraint" destination="HQz-9h-D9H" id="8BB-hv-NcG"/>
-                        <outlet property="irrigationLabel" destination="sKN-nM-sDX" id="HVG-sh-vQj"/>
                         <outlet property="irrigationSeparatorView" destination="N2X-Sp-MVE" id="FwI-ME-czH"/>
                         <outlet property="irrigationUnitButton" destination="28Q-Cd-Lyq" id="ePr-r8-wKk"/>
                         <outlet property="irrigationView" destination="dFL-Ez-GIj" id="ZYv-Z5-sbA"/>
@@ -1121,10 +1117,10 @@
                         <outlet property="personsTableViewHeightConstraint" destination="mfR-vs-HG6" id="It4-rf-zCA"/>
                         <outlet property="personsTapGesture" destination="VsL-Ke-7tF" id="438-IC-giE"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
-                        <outlet property="selectDateButton" destination="MxI-Pz-rtl" id="Ae2-lV-8uB"/>
                         <outlet property="selectedEquipmentsTableView" destination="S1G-aq-VJB" id="oOf-I6-SXw"/>
                         <outlet property="selectedInputsTableView" destination="6C4-57-Ghw" id="xOS-xe-Tgz"/>
                         <outlet property="selectedInputsTableViewHeightConstraint" destination="Bbt-1y-Pg7" id="HoL-WX-Zuz"/>
+                        <outlet property="selectedIrrigationLabel" destination="sKN-nM-sDX" id="ypK-gf-POF"/>
                         <outlet property="selectedMaterialsTableView" destination="Cgb-TZ-qGY" id="X9E-rY-7pJ"/>
                         <outlet property="selectedPersonsTableView" destination="b7I-Kf-0GJ" id="teB-QZ-HHI"/>
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
@@ -1136,7 +1132,11 @@
                         <outlet property="weatherCollapseButton" destination="wzQ-CL-iF5" id="Zq7-jm-i6J"/>
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
-                        <outlet property="workingPeriodHeight" destination="SgJ-VT-4sX" id="nwY-Ix-00h"/>
+                        <outlet property="workingPeriodDateButton" destination="MxI-Pz-rtl" id="uEf-co-lnM"/>
+                        <outlet property="workingPeriodDurationTextField" destination="3Fz-6d-VQ1" id="yUk-43-7bF"/>
+                        <outlet property="workingPeriodExpandImageView" destination="4VE-aQ-Xe3" id="6ZL-V9-PS5"/>
+                        <outlet property="workingPeriodHeightConstraint" destination="SgJ-VT-4sX" id="nGu-Ch-Qwr"/>
+                        <outlet property="workingPeriodUnitLabel" destination="3cP-JT-NmL" id="5Ut-GC-xSX"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecies" id="uas-Qa-jvK"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnits" id="nwb-tQ-9Vq"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showEquipmentTypes" id="EKH-vj-NkS"/>

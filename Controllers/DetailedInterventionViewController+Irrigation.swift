@@ -44,7 +44,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let volume = Float(volumeString) ?? 0
 
     self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
-    irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+    selectedIrrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
     updateInfoLabel(Double(volume), unit)
     irrigationPickerView.isHidden = true
     dimView.isHidden = true
@@ -56,7 +56,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let shouldExapand: Bool = (irrigationHeightConstraint.constant == 70)
 
     irrigationHeightConstraint.constant = shouldExapand ? 140 : 70
-    irrigationLabel.isHidden = shouldExapand
+    selectedIrrigationLabel.isHidden = shouldExapand
     irrigationVolumeTextField.isHidden = !shouldExapand
     irrigationUnitButton.isHidden = !shouldExapand
     irrigationExpandImageView.transform = irrigationExpandImageView.transform.rotated(by: CGFloat.pi)
@@ -67,7 +67,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let volume = Float(volumeString) ?? 0
     let unit = irrigationUnitButton.titleLabel!.text!
 
-    irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+    selectedIrrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
     updateInfoLabel(Double(volume), unit)
   }
 

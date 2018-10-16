@@ -15,17 +15,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var dimView: UIView!
-  @IBOutlet weak var workingPeriodHeight: NSLayoutConstraint!
+
+  // Working period
+  @IBOutlet weak var workingPeriodHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
-  @IBOutlet weak var collapseWorkingPeriodImage: UIImageView!
-  @IBOutlet weak var selectDateButton: UIButton!
-  @IBOutlet weak var durationTextField: UITextField!
-  @IBOutlet weak var durationUnitLabel: UILabel!
+  @IBOutlet weak var workingPeriodExpandImageView: UIImageView!
+  @IBOutlet weak var workingPeriodDateButton: UIButton!
+  @IBOutlet weak var workingPeriodDurationTextField: UITextField!
+  @IBOutlet weak var workingPeriodUnitLabel: UILabel!
 
   // Irrigation
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var irrigationLabel: UILabel!
+  @IBOutlet weak var selectedIrrigationLabel: UILabel!
   @IBOutlet weak var irrigationExpandImageView: UIImageView!
   @IBOutlet weak var irrigationVolumeTextField: UITextField!
   @IBOutlet weak var irrigationUnitButton: UIButton!
@@ -141,17 +143,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
 
-    selectDateButton.setTitle(currentDateString, for: .normal)
-    selectDateButton.layer.borderWidth = 0.5
-    selectDateButton.layer.borderColor = UIColor.lightGray.cgColor
-    selectDateButton.layer.cornerRadius = 5
-    selectDateButton.clipsToBounds = true
+    workingPeriodDateButton.setTitle(currentDateString, for: .normal)
+    workingPeriodDateButton.layer.borderWidth = 0.5
+    workingPeriodDateButton.layer.borderColor = UIColor.lightGray.cgColor
+    workingPeriodDateButton.layer.cornerRadius = 5
+    workingPeriodDateButton.clipsToBounds = true
 
-    durationTextField.layer.cornerRadius = 5
-    durationTextField.layer.borderWidth = 0.5
-    durationTextField.layer.borderColor = UIColor.lightGray.cgColor
-    durationTextField.clipsToBounds = true
-    durationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
+    workingPeriodDurationTextField.layer.cornerRadius = 5
+    workingPeriodDurationTextField.layer.borderWidth = 0.5
+    workingPeriodDurationTextField.layer.borderColor = UIColor.lightGray.cgColor
+    workingPeriodDurationTextField.clipsToBounds = true
+    workingPeriodDurationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -411,7 +413,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
     workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
-    let duration = durationTextField.text!.floatValue
+    let duration = workingPeriodDurationTextField.text!.floatValue
     workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)
     createMaterials(intervention: newIntervention)
@@ -758,19 +760,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func selectWorkingPeriod(_ sender: Any) {
-    let shouldExpand = (workingPeriodHeight.constant == 70)
+    let shouldExpand = (workingPeriodHeightConstraint.constant == 70)
 
     if shouldExpand {
-      let dateString = selectDateButton.titleLabel!.text!
-      let duration = durationTextField.text!.floatValue
+      let dateString = workingPeriodDateButton.titleLabel!.text!
+      let duration = workingPeriodDurationTextField.text!.floatValue
 
       selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", dateString, duration)
     }
 
-    workingPeriodHeight.constant = shouldExpand ? 155 : 70
+    workingPeriodHeightConstraint.constant = shouldExpand ? 155 : 70
     selectedWorkingPeriodLabel.isHidden = shouldExpand
-    selectDateButton.isHidden = !shouldExpand
-    collapseWorkingPeriodImage.transform = collapseWorkingPeriodImage.transform.rotated(by: CGFloat.pi)
+    workingPeriodDateButton.isHidden = !shouldExpand
+    workingPeriodExpandImageView.transform = workingPeriodExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
   @IBAction func selectDate(_ sender: Any) {
@@ -789,7 +791,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     dateFormatter.locale = Locale(identifier: "locale".localized)
     dateFormatter.dateFormat = "d MMM"
     selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
-    selectDateButton.setTitle(selectedDate, for: .normal)
+    workingPeriodDateButton.setTitle(selectedDate, for: .normal)
     selectDateView.isHidden = true
     dimView.isHidden = true
 
@@ -799,9 +801,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func updateDurationUnit() {
-    let duration = durationTextField.text!.floatValue
+    let duration = workingPeriodDurationTextField.text!.floatValue
 
-    durationUnitLabel.text = (duration <= 1) ? "hour".localized : "hours".localized
+    workingPeriodUnitLabel.text = (duration <= 1) ? "hour".localized : "hours".localized
   }
 
   @IBAction func selectInput(_ sender: Any) {
