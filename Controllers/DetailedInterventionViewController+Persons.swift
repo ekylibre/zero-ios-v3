@@ -113,6 +113,13 @@ extension AddInterventionViewController {
     personsSelectionView.tableView.reloadData()
   }
 
+  @objc func updateIsDriver(sender: UISwitch) {
+    let cell = sender.superview?.superview as! SelectedPersonCell
+    let indexPath = selectedPersonsTableView.indexPath(for: cell)
+
+    selectedPersons[1][indexPath!.row].setValue(sender.isOn, forKey: "isDriver")
+  }
+
   @objc func tapPersonsDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedPersonCell
     let indexPath = selectedPersonsTableView.indexPath(for: cell)!

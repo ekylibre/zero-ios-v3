@@ -325,11 +325,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
 
       cell.nameLabel.text = name
+      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
-      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
@@ -338,8 +338,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       cell.nameLabel.text = selectedEquipment.name
-      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
       cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
+      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
       return cell
     case selectedPersonsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath) as! SelectedPersonCell
@@ -348,8 +348,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
       cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
       cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
-      //cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-      //cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
+      cell.driverSwitch.isOn = selectedPersons[1][indexPath.row].value(forKey: "isDriver") as! Bool
+      cell.driverSwitch.addTarget(self, action: #selector(updateIsDriver), for: .valueChanged)
       return cell
     default:
       fatalError("Switch error")
