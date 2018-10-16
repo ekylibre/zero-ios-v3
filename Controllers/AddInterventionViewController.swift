@@ -433,6 +433,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let interventionSeed = selectedInput as! InterventionSeeds
           cell.inputName.text = interventionSeed.seeds?.specie
           cell.inputLabel.text = interventionSeed.seeds?.variety
+          cell.inputQuantity.text = String(interventionSeed.quantity)
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
           displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber).stringValue,
                                              unit: interventionSeed.unit!, cell: cell)
@@ -440,6 +441,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let interventionPhyto = selectedInput as! InterventionPhytosanitaries
           cell.inputName.text = interventionPhyto.phytos?.name
           cell.inputLabel.text = interventionPhyto.phytos?.firmName
+          cell.inputQuantity.text = String(interventionPhyto.quantity)
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
           displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber).stringValue,
                                              unit: interventionPhyto.unit!, cell: cell)
@@ -447,6 +449,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let interventionFertilizer = selectedInput as! InterventionFertilizers
           cell.inputName.text = interventionFertilizer.fertilizers?.name
           cell.inputLabel.text = interventionFertilizer.fertilizers?.nature
+          cell.inputQuantity.text = String(interventionFertilizer.quantity)
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
           displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber).stringValue,
                                              unit: interventionFertilizer.unit!, cell: cell)
@@ -687,16 +690,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func deleteInput(intervention: Interventions, input: String) {
+  func deleteInput(intervention: Interventions, inputName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: input)
+    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: inputName)
     let predicate = NSPredicate(format: "interventions == %@", intervention)
 
     inputsFetchRequest.predicate = predicate
+
     do {
       let inputs = try managedContext.fetch(inputsFetchRequest)
 
@@ -704,7 +708,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         managedContext.delete(input as! NSManagedObject)
       }
     } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+      print("Could not delete. \(error), \(error.userInfo)")
     }
   }
 
@@ -715,15 +719,41 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    deleteInput(intervention: intervention, input: "InterventionSeeds")
-    deleteInput(intervention: intervention, input: "InterventionPhytosanitaries")
-    deleteInput(intervention: intervention, input: "InterventionFertilizers")
-
-    for selectedInput in selectedInputs {
-      selectedInput.setValue(intervention, forKey: "interventions")
-    }
+    deleteInput(intervention: intervention, inputName: "InterventionSeeds")
+    deleteInput(intervention: intervention, inputName: "InterventionPhytosanitaries")
+    deleteInput(intervention: intervention, inputName: "InterventionFertilizers")
 
     do {
+      for selectedInput in selectedInputs {
+        switch selectedInput {
+        case is InterventionSeeds:
+          let selectedSeed = selectedInput as! InterventionSeeds
+          let interventionSeed = InterventionSeeds(context: managedContext)
+
+          interventionSeed.interventions = intervention
+          interventionSeed.seeds = selectedSeed.seeds
+          interventionSeed.quantity = selectedSeed.quantity
+          interventionSeed.unit = selectedSeed.unit
+        case is InterventionPhytosanitaries:
+          let selectedPhyto = selectedInput as! InterventionPhytosanitaries
+          let interventionPhyto = InterventionPhytosanitaries(context: managedContext)
+
+          interventionPhyto.interventions = intervention
+          interventionPhyto.phytos = selectedPhyto.phytos
+          interventionPhyto.quantity = selectedPhyto.quantity
+          interventionPhyto.unit = selectedPhyto.unit
+        case is InterventionFertilizers:
+          let selectedFertilizer = selectedInput as! InterventionFertilizers
+          let interventionFertilizer = InterventionFertilizers(context: managedContext)
+
+          interventionFertilizer.interventions = intervention
+          interventionFertilizer.fertilizers = selectedFertilizer.fertilizers
+          interventionFertilizer.quantity = selectedFertilizer.quantity
+          interventionFertilizer.unit = selectedFertilizer.unit
+        default:
+          return
+        }
+      }
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
