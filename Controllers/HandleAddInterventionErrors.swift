@@ -82,13 +82,7 @@ extension AddInterventionViewController {
   }
 
   func irrigationErrorHandler() -> Bool {
-    if cropsView.selectedCrops.count == 0 {
-      let alert = UIAlertController(title: "", message: "you_have_to_select_a_crop".localized, preferredStyle: .alert)
-
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
-      present(alert, animated: true)
-      return false
-    } else if irrigationValueTextField.text?.floatValue == 0 {
+    if irrigationValueTextField.text?.floatValue == 0 {
       let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
