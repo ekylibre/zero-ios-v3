@@ -1145,14 +1145,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="dWO-RQ-fIk" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="ODW-0c-5qL">
+                <tapGestureRecognizer id="ODW-0c-5qL" userLabel="Crops Tap Gesture">
                     <connections>
                         <action selector="selectCrops:" destination="pQK-Bk-vqJ" id="5dY-lb-6L7"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="dX6-ef-4AZ">
+                <tapGestureRecognizer id="dX6-ef-4AZ" userLabel="Working Period Tap Gesture">
                     <connections>
-                        <action selector="selectWorkingPeriod:" destination="pQK-Bk-vqJ" id="fCm-L6-SAd"/>
+                        <action selector="tapWorkingPeriodView:" destination="pQK-Bk-vqJ" id="IZ6-gn-juI"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="2TT-lW-pd5" userLabel="Irrigation Tap Gesture">

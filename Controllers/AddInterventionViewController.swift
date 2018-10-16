@@ -128,33 +128,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
-    // Working period
-    selectDateView = SelectDateView(frame: CGRect(x: 0, y: 0, width: 350, height: 250))
-    selectDateView.center.x = self.view.center.x
-    selectDateView.center.y = self.view.center.y
-    view.addSubview(selectDateView)
-
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.locale = Locale(identifier: "locale".localized)
-    dateFormatter.dateFormat = "d MMM"
-    let currentDateString = dateFormatter.string(from: Date())
-    let validateButton = selectDateView.subviews.last as! UIButton
-
-    validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
-
-    workingPeriodDateButton.setTitle(currentDateString, for: .normal)
-    workingPeriodDateButton.layer.borderWidth = 0.5
-    workingPeriodDateButton.layer.borderColor = UIColor.lightGray.cgColor
-    workingPeriodDateButton.layer.cornerRadius = 5
-    workingPeriodDateButton.clipsToBounds = true
-
-    workingPeriodDurationTextField.layer.cornerRadius = 5
-    workingPeriodDurationTextField.layer.borderWidth = 0.5
-    workingPeriodDurationTextField.layer.borderColor = UIColor.lightGray.cgColor
-    workingPeriodDurationTextField.clipsToBounds = true
-    workingPeriodDurationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
-
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
     let typeLabel = UILabel()
@@ -193,7 +166,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     selectedMaterials.append([Materials]())
     selectedMaterials.append([InterventionMaterials]())
-    setupIrrigation()
+    setupWorkingPeriodView()
+    setupIrrigationView()
     setupMaterialsView()
     equipmentTypes = loadEquipmentTypes()
     setupEquipmentsView()
@@ -759,53 +733,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
   }
 
-  @IBAction func selectWorkingPeriod(_ sender: Any) {
-    let shouldExpand = (workingPeriodHeightConstraint.constant == 70)
-
-    if shouldExpand {
-      let dateString = workingPeriodDateButton.titleLabel!.text!
-      let duration = workingPeriodDurationTextField.text!.floatValue
-
-      selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", dateString, duration)
-    }
-
-    workingPeriodHeightConstraint.constant = shouldExpand ? 155 : 70
-    selectedWorkingPeriodLabel.isHidden = shouldExpand
-    workingPeriodDateButton.isHidden = !shouldExpand
-    workingPeriodExpandImageView.transform = workingPeriodExpandImageView.transform.rotated(by: CGFloat.pi)
-  }
-
-  @IBAction func selectDate(_ sender: Any) {
-    dimView.isHidden = false
-    selectDateView.isHidden = false
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
-  }
-
-  @objc func validateDate() {
-    let dateFormatter = DateFormatter()
-    let selectedDate: String
-
-    dateFormatter.locale = Locale(identifier: "locale".localized)
-    dateFormatter.dateFormat = "d MMM"
-    selectedDate = dateFormatter.string(from: selectDateView.datePicker.date)
-    workingPeriodDateButton.setTitle(selectedDate, for: .normal)
-    selectDateView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-  }
-
-  @objc func updateDurationUnit() {
-    let duration = workingPeriodDurationTextField.text!.floatValue
-
-    workingPeriodUnitLabel.text = (duration <= 1) ? "hour".localized : "hours".localized
-  }
-
   @IBAction func selectInput(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
@@ -839,4 +766,3 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
-
