@@ -31,7 +31,6 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
-
   func hideWeatherItems(_ state: Bool) {
     for index in 0..<weatherButtons.count {
       weatherButtons[index].isHidden = state
@@ -50,9 +49,9 @@ extension AddInterventionViewController {
   }
 
   func resetSelectedWeather() {
-    for weather in weatherButtons {
-      weather.layer.borderWidth = 1
-      weather.layer.borderColor = UIColor.lightGray.cgColor
+    for weatherButton in weatherButtons {
+      weatherButton.layer.borderWidth = 1
+      weatherButton.layer.borderColor = UIColor.lightGray.cgColor
     }
   }
 
