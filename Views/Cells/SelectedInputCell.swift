@@ -95,7 +95,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   lazy var unitMeasureButton: UIButton = {
     let unitMeasureButton = UIButton(frame: CGRect.zero)
 
-    unitMeasureButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+    unitMeasureButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
     unitMeasureButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     unitMeasureButton.backgroundColor = AppColor.ThemeColors.White
     unitMeasureButton.layer.borderColor = UIColor.lightGray.cgColor

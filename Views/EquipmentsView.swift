@@ -58,6 +58,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   private func setupActions() {
     createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
+    creationView.nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
     creationView.cancelButton.addTarget(self, action: #selector(cancelCreation), for: .touchUpInside)
     creationView.createButton.addTarget(self, action: #selector(validateCreation), for: .touchUpInside)
   }
@@ -228,6 +229,12 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       return false
     }
     return true
+  }
+
+  @objc private func nameDidChange(_ textfield: UITextField) {
+    if !creationView.errorLabel.isHidden {
+      creationView.errorLabel.isHidden = true
+    }
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

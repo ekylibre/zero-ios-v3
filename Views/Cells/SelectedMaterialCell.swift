@@ -64,7 +64,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
   lazy var unitButton: UIButton = {
     let unitButton = UIButton(frame: CGRect.zero)
     unitButton.setTitle("unit", for: .normal)
-    unitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+    unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
     unitButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     unitButton.backgroundColor = AppColor.ThemeColors.White
     unitButton.layer.borderWidth = 0.5
