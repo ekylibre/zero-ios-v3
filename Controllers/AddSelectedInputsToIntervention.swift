@@ -145,10 +145,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       default:
         return
       }
-      cell.surfaceQuantity.text = String(format: "Soit %.1f %@", efficiency, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "input_quantity".localized, efficiency, (unit.components(separatedBy: "/")[0]))
     } else {
       efficiency = quantity / surfaceArea
-      cell.surfaceQuantity.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
+      cell.surfaceQuantity.text = String(format: "input_quantity_per_surface".localized, efficiency, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }

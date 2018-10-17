@@ -432,3 +432,6 @@
 "today_last_synchronization" = "Last synchronization %@:%@";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
+
+"input_quantity" = "Or %.1f %@";
+"input_quantity_per_surface" = "Or %.1f %@ per hectare";
