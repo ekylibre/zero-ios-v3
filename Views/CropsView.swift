@@ -241,7 +241,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       createCropViews()
       showPlotIfReadOnly()
     } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+      print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
 
@@ -296,25 +296,28 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     self.crops.append(cropsFromSamePlot)
   }
 
-  private func loadAllTargetAndSelectThem(_ crops: [Crops]) {
+  private func checkIfTargetMatch() -> [Targets]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+      return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
     let predicate = NSPredicate(format: "interventions == %@", currentIntervention!)
-    var targets: [Targets]?
-    var cropsFromSamePlot = [Crops]()
-    var name = crops.first?.plotName
 
     targetsFetchRequest.predicate = predicate
-
     do {
-      targets = try managedContext.fetch(targetsFetchRequest)
+      return try managedContext.fetch(targetsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
     }
+    return nil
+  }
+
+  private func loadAllTargetAndSelectThem(_ crops: [Crops]) {
+    let targets = checkIfTargetMatch()
+    var cropsFromSamePlot = [Crops]()
+    var name = crops.first?.plotName
 
     for crop in crops {
       if crop.plotName != name {
@@ -327,7 +330,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
           selectedCropsCount += 1
           selectedSurfaceArea += crop.surfaceArea
           crop.isSelected = true
-          print("\nCrop set to selected: \(crop)")
           break
         }
       }
@@ -340,12 +342,24 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var frame: CGRect
     var cropViews = [CropView]()
     var view: CropView
+    let targets = checkIfTargetMatch()
 
     for crops in self.crops {
       for (index, crop) in crops.enumerated() {
         frame = CGRect(x: 15, y: 60 + index * 60, width: 0, height: 60)
         view = CropView(frame: frame, crop)
         view.gesture.addTarget(self, action: #selector(tapCropView))
+        if targets != nil {
+          var matched = false
+          for target in targets! {
+            if view.crop == target.crops {
+              matched = true
+            }
+          }
+          if !matched {
+            view.crop.isSelected = false
+          }
+        }
         initCropsViewInAppropriateMode(view: view)
         cropViews.append(view)
       }
@@ -380,7 +394,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for (index, crop) in crops.enumerated() {
       cropViews[indexPath.row][index].checkboxImage.image = #imageLiteral(resourceName: "check-box")
       crop.isSelected = true
-      print("\nSelectPlot: \(crop)")
     }
   }
 
@@ -435,7 +448,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     selectedCropsCount += 1
     selectedSurfaceArea += crop.surfaceArea
     crop.isSelected = true
-    print("\nSelect crop: \(crop)")
   }
 
   private func deselectCrop(_ crop: Crops, _ crops: [Crops], _ cell: PlotCell) {
