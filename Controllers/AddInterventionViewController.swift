@@ -141,8 +141,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
   var weather: Weather!
-  let solidUnitMeasure = ["g", "g/ha", "g/m2", "kg", "kg/ha", "kg/m2", "q", "q/ha", "q/m2", "t", "t/ha", "t/m2"]
-  let liquidUnitMeasure = ["l", "l/ha", "l/m2", "hl", "hl/ha", "hl/m2", "m3","m3/ha", "m3/m2"]
+  let massUnitMeasure = [
+    "GRAM",
+    "GRAM_PER_HECTARE",
+    "GRAM_PER_SQUARE_METER",
+    "KILOGRAM",
+    "KILOGRAM_PER_HECTARE",
+    "KILOGRAM_PER_SQUARE_METER",
+    "QUINTAL",
+    "QUINTAL_PER_HECTARE",
+    "QUINTAL_PER_SQUARE_METER",
+    "TON",
+    "TON_PER_HECTARE",
+    "TON_PER_SQUARE_METER"]
+  let volumeUnitMeasure = [
+    "LITER",
+    "LITER_PER_HECTARE",
+    "LITER_PER_SQUARE_METER",
+    "HECTOLITER",
+    "HECTOLITER_PER_HECTARE",
+    "HECTOLITER_PER_SQUARE_METER",
+    "CUBIC_METER",
+    "CUBIC_METER_PER_HECTARE",
+    "CUBIC_METER_PER_SQUARE_METER"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -433,25 +454,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let interventionSeed = selectedInput as! InterventionSeeds
           cell.inputName.text = interventionSeed.seeds?.specie
           cell.inputLabel.text = interventionSeed.seeds?.variety
-          cell.inputQuantity.text = String(interventionSeed.quantity)
+          cell.inputQuantity.text = (interventionSeed.quantity as NSNumber?)?.stringValue
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
-          displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber).stringValue,
+          displayInputQuantityInReadOnlyMode(quantity: ((interventionSeed.quantity as NSNumber?)?.stringValue)!,
                                              unit: interventionSeed.unit!, cell: cell)
         case is InterventionPhytosanitaries:
           let interventionPhyto = selectedInput as! InterventionPhytosanitaries
           cell.inputName.text = interventionPhyto.phytos?.name
           cell.inputLabel.text = interventionPhyto.phytos?.firmName
-          cell.inputQuantity.text = String(interventionPhyto.quantity)
+          cell.inputQuantity.text = (interventionPhyto.quantity as NSNumber?)?.stringValue
           cell.inputImage.image = #imageLiteral(resourceName: "phytosanitary")
-          displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber).stringValue,
+          displayInputQuantityInReadOnlyMode(quantity: ((interventionPhyto.quantity as NSNumber?)?.stringValue)!,
                                              unit: interventionPhyto.unit!, cell: cell)
         case is InterventionFertilizers:
           let interventionFertilizer = selectedInput as! InterventionFertilizers
           cell.inputName.text = interventionFertilizer.fertilizers?.name
           cell.inputLabel.text = interventionFertilizer.fertilizers?.nature
-          cell.inputQuantity.text = String(interventionFertilizer.quantity)
+          cell.inputQuantity.text = (interventionFertilizer.quantity as NSNumber?)?.stringValue
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
-          displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber).stringValue,
+          displayInputQuantityInReadOnlyMode(quantity: ((interventionFertilizer.quantity as NSNumber?)?.stringValue)!,
                                              unit: interventionFertilizer.unit!, cell: cell)
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")

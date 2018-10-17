@@ -36,33 +36,32 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
 
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     if pickerView == liquidUnitPicker {
-      return liquidUnitMeasure.count
+      return volumeUnitMeasure.count
     } else {
-      return solidUnitMeasure.count
+      return massUnitMeasure.count
     }
   }
 
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     if pickerView == liquidUnitPicker {
-      return liquidUnitMeasure[row]
+      return volumeUnitMeasure[row]
     } else {
-      return solidUnitMeasure[row]
+      return massUnitMeasure[row]
     }
   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     dimView.isHidden = true
-
     let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputCell
 
     if pickerView == liquidUnitPicker {
       liquidUnitPicker.isHidden = true
-      selectedInputs[cellIndexPath.row].setValue(liquidUnitMeasure[row], forKey: "unit")
-      cell.unitMeasureButton.setTitle(liquidUnitMeasure[row], for: .normal)
+      selectedInputs[cellIndexPath.row].setValue(volumeUnitMeasure[row], forKey: "unit")
+      cell.unitMeasureButton.setTitle(volumeUnitMeasure[row], for: .normal)
     } else {
       solidUnitPicker.isHidden = true
-      selectedInputs[cellIndexPath.row].setValue(solidUnitMeasure[row], forKey: "unit")
-      cell.unitMeasureButton.setTitle(solidUnitMeasure[row], for: .normal)
+      selectedInputs[cellIndexPath.row].setValue(massUnitMeasure[row], forKey: "unit")
+      cell.unitMeasureButton.setTitle(massUnitMeasure[row], for: .normal)
     }
     //updateInputQuantity(indexPath: cellIndexPath)
   }

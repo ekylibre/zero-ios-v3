@@ -93,8 +93,8 @@ extension AddInterventionViewController {
       let currentWind = String(format: "wind".localized, wind!)
       currentWeatherLabel.text = currentTemperature + currentWind
     }
-    weather.temperature = (temperatureTextField.placeholder! as NSString).doubleValue
-    weather.windSpeed = (windSpeedTextField.placeholder! as NSString).doubleValue
+    weather.temperature = (temperatureTextField.placeholder! as NSString).doubleValue as NSNumber
+    weather.windSpeed = (windSpeedTextField.placeholder! as NSString).doubleValue as NSNumber
   }
 
   @objc func saveCurrentWeather(_ sender: Any) {
@@ -107,8 +107,8 @@ extension AddInterventionViewController {
       let currentWind = String(format: "wind".localized, wind!)
       currentWeatherLabel.text = currentTemperature + currentWind
     }
-    weather.temperature = (temperatureTextField.text! as NSString).doubleValue
-    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
+    weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
+    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
   }
 
   func initWeather() {

@@ -42,8 +42,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.hideKeyboardWhenTappedAround()
     super.moveViewWhenKeyboardAppears()
 
-    checkLocalData()
-
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
@@ -108,6 +106,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     self.tableView.delegate = self
 
     tableView.bounces = false
+
+    initializeApolloClient()
+    if Connectivity.isConnectedToInternet() {
+      fetchInterventions()
+      synchronise(self)
+    } else {
+      fetchInterventions()
+    }
   }
 
   func initialiseInterventionButtons() {
@@ -377,34 +383,41 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Actions
 
   @IBAction func synchronise(_ sender: Any) {
-    let date = Date()
-    let calendar = Calendar.current
-    let hour = calendar.component(.hour, from: date)
-    let minute = calendar.component(.minute, from: date)
-
-    synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
-    UserDefaults.standard.set(date, forKey: "lastSyncDate")
-    UserDefaults.standard.synchronize()
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
+    let date = Date()
+    let calendar = Calendar.current
+    let hour = calendar.component(.hour, from: date)
+    let minute = calendar.component(.minute, from: date)
 
-    for intervention in interventions {
-      if intervention.value(forKey: "status") as? Int16 == Intervention.Status.OutOfSync.rawValue {
-        intervention.setValue(Intervention.Status.Synchronised.rawValue, forKey: "status")
+    queryFarms { (success) in
+      if success {
+        self.fetchInterventions()
+
+        do {
+          try managedContext.save()
+        } catch let error as NSError {
+          print("Could not save. \(error), \(error.userInfo)")
+        }
+        self.synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
+        UserDefaults.standard.set(date, forKey: "lastSyncDate")
+        UserDefaults.standard.synchronize()
+
+        for intervention in self.interventions {
+          if intervention.ekyID != 0 && intervention.status == Intervention.State.Created.rawValue {
+            print("Updating intervention: \(intervention)")
+            self.pushUpdatedIntervention(intervention: intervention)
+            break
+          }
+        }
+      } else {
+        self.synchroLabel.text = "sync_failure".localized
       }
+      self.tableView.reloadData()
     }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-
-    tableView.reloadData()
   }
 
   @objc func action(sender: UIButton) {
