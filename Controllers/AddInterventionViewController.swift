@@ -245,6 +245,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.keyboardType = .decimalPad
 
     setupViewsAccordingInterventionType()
+
+    print("SelectedDate: \(selectDateView.datePicker.date)")
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -584,6 +586,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  func fetchSelectedCrops() -> [Crops] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [Crops]()
+    }
+
+    var crops: [Crops]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let predicate = NSPredicate(format: "isSelected == true")
+    //cropsFetchRequest.predicate = predicate
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return crops
   }
 
   func createTargets(intervention: NSManagedObject) {

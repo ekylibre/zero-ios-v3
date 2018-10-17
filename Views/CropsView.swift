@@ -299,6 +299,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     crop.name = name
     crop.surfaceArea = surfaceArea
     crop.startDate = startDate
+    crop.stopDate = startDate + 360000
 
     do {
       try managedContext.save()

@@ -92,8 +92,37 @@ extension AddInterventionViewController {
     return true
   }
 
+  func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
+    let selectedCrops = fetchSelectedCrops()
+
+    if selectedCrops.count > 0 {
+      var startDate = selectedCrops.first?.startDate
+      var stopDate = selectedCrops.first?.stopDate
+
+      for selectedCrop in selectedCrops {
+        startDate = (selectedCrop.startDate! > startDate! ? selectedCrop.startDate! : startDate)
+        stopDate = (selectedCrop.stopDate! > stopDate! ? selectedCrop.stopDate! : stopDate)
+      }
+      if selectedDate < startDate! || selectedDate > stopDate! {
+        let message = (selectedDate < startDate! ? String(format: "started_must_be_on_or_after".localized, startDate! as CVarArg) :
+          String(format: "started_must_be_on_or_before".localized, stopDate! as CVarArg))
+        let alert = UIAlertController(
+          title: "working_periods_is_invalid".localized,
+          message: message,
+          preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+        return false
+      }
+    }
+    return true
+  }
+
   func checkErrorsInFunctionOfIntervention() -> Bool {
     if !cropErrorHandler() {
+      return false
+    } else if !checkIfSelectedDateMatchProductionPeriod(selectedDate: selectDateView.datePicker.date) {
       return false
     }
     switch interventionType {
