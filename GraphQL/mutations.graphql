@@ -83,7 +83,9 @@ mutation pushEquipment(
   $farmId: ID!,
   $type: EquipmentTypeEnum!,
   $name: String!,
-  $number: String
+  $number: String,
+  $indicator1: String,
+  $indicator2: String
 ) {
   createEquipment(
     input: {
@@ -92,6 +94,8 @@ mutation pushEquipment(
         type: $type
         name: $name
         number: $number
+        field1Value: $indicator1
+        field2Value: $indicator2
       }
     }
   ) {
@@ -150,6 +154,27 @@ mutation pushPerson(
   }
 }
 
+mutation pushStorage(
+  $farmId: ID!,
+  $type: StorageTypeEnum,
+  $name: String!,
+) {
+  createStorage(
+    input: {
+      storage: {
+        farmID: $farmId
+        type: $type
+        name: $name
+      }
+    }
+  ) {
+    errors,
+    storage {
+      id
+    }
+  }
+}
+
 mutation deleteInter(
   $id: ID!,
   $farmId: ID!
@@ -159,8 +184,7 @@ mutation deleteInter(
       id: $id
       farmID: $farmId
     }
-  )
-  {
+  ) {
     errors,
     message
   }
