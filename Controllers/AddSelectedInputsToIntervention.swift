@@ -132,7 +132,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let surfaceArea = cropsView.totalSurfaceArea
+    let surfaceArea = cropsView.selectedSurfaceArea
     var efficiency: Float = 0
 
     if (unit.contains("/")) {
@@ -140,7 +140,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       switch surfaceUnit {
       case "ha":
         efficiency = quantity * surfaceArea
-      case "m2":
+      case "m²":
         efficiency = quantity * (surfaceArea * 10000)
       default:
         return

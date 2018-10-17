@@ -27,7 +27,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
 
     tfUsername.delegate = self
     tfPassword.delegate = self

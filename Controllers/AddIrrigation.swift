@@ -53,12 +53,12 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   // MARK: - Actions
 
   @IBAction func tapIrrigationView(_ sender: Any) {
-    let shouldExapand: Bool = (irrigationHeightConstraint.constant == 70)
+    let shouldExpand: Bool = (irrigationHeightConstraint.constant == 70)
 
-    irrigationHeightConstraint.constant = shouldExapand ? 140 : 70
-    irrigationLabel.isHidden = shouldExapand
-    irrigationValueTextField.isHidden = !shouldExapand
-    irrigationUnitButton.isHidden = !shouldExapand
+    irrigationHeightConstraint.constant = shouldExpand ? 140 : 70
+    irrigationLabel.isHidden = shouldExpand
+    irrigationValueTextField.isHidden = !shouldExpand
+    irrigationUnitButton.isHidden = !shouldExpand
     irrigationExpandCollapseImage.transform = irrigationExpandCollapseImage.transform.rotated(by: CGFloat.pi)
   }
 
@@ -79,7 +79,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       irrigationInfoLabel.text = "Aucune culture sélectionnée"
       irrigationInfoLabel.textColor = AppColor.TextColors.Red
     } else {
-      let efficiency = volume / cropsView.totalSurfaceArea
+      let efficiency = volume / cropsView.selectedSurfaceArea
 
       irrigationInfoLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
       irrigationInfoLabel.textColor = AppColor.TextColors.DarkGray
