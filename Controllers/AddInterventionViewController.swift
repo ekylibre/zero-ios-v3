@@ -782,7 +782,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    //textField.text = textField.text!.replacingOccurrences(of: ",", with: ".")
     let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
     var invalidCharacters: CharacterSet!
 
