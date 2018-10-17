@@ -168,8 +168,9 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     creationView.isHidden = true
     dimView.isHidden = true
     creationView.firstNameTextField.text = ""
-    creationView.errorLabel.isHidden = true
+    creationView.firstNameErrorLabel.isHidden = true
     creationView.lastNameTextField.text = ""
+    creationView.lastNameErrorLabel.isHidden = true
   }
 
   @objc private func validateCreation() {
@@ -185,14 +186,19 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     creationView.isHidden = true
     dimView.isHidden = true
     creationView.firstNameTextField.text = ""
-    creationView.errorLabel.isHidden = true
+    creationView.firstNameErrorLabel.isHidden = true
     creationView.lastNameTextField.text = ""
+    creationView.lastNameErrorLabel.isHidden = true
   }
 
   private func checkPersonName() -> Bool {
-    if creationView.lastNameTextField.text!.isEmpty {
-      creationView.errorLabel.text = "person_name_is_empty".localized
-      creationView.errorLabel.isHidden = false
+    if creationView.firstNameTextField.text!.isEmpty {
+      creationView.firstNameErrorLabel.text = "person_first_name_is_empty".localized
+      creationView.firstNameErrorLabel.isHidden = false
+      return false
+    } else if creationView.lastNameTextField.text!.isEmpty {
+      creationView.lastNameErrorLabel.text = "person_last_name_is_empty".localized
+      creationView.lastNameErrorLabel.isHidden = false
       return false
     }
     return true

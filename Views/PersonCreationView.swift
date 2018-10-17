@@ -21,43 +21,51 @@ class PersonCreationView: UIView, UITextFieldDelegate {
   }()
 
   lazy var firstNameTextField: UITextField = {
-    let nameTextField = UITextField(frame: CGRect.zero)
-    nameTextField.placeholder = "first_name".localized
-    nameTextField.autocorrectionType = .no
-    nameTextField.delegate = self
-    nameTextField.borderStyle = .none
-    nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
-    nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
-    nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-    nameTextField.layer.shadowOpacity = 1
-    nameTextField.layer.shadowRadius = 0
-    nameTextField.translatesAutoresizingMaskIntoConstraints = false
-    return nameTextField
+    let firstNameTextField = UITextField(frame: CGRect.zero)
+    firstNameTextField.placeholder = "first_name".localized
+    firstNameTextField.autocorrectionType = .no
+    firstNameTextField.delegate = self
+    firstNameTextField.borderStyle = .none
+    firstNameTextField.layer.backgroundColor = UIColor.white.cgColor
+    firstNameTextField.layer.masksToBounds = false
+    firstNameTextField.layer.shadowColor = UIColor.darkGray.cgColor
+    firstNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    firstNameTextField.layer.shadowOpacity = 1
+    firstNameTextField.layer.shadowRadius = 0
+    firstNameTextField.translatesAutoresizingMaskIntoConstraints = false
+    return firstNameTextField
   }()
 
-  lazy var errorLabel: UILabel = {
-    let errorLabel = UILabel(frame: CGRect.zero)
-    errorLabel.font = UIFont.systemFont(ofSize: 13)
-    errorLabel.textColor = AppColor.TextColors.Red
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    return errorLabel
+  lazy var firstNameErrorLabel: UILabel = {
+    let firstNameErrorLabel = UILabel(frame: CGRect.zero)
+    firstNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
+    firstNameErrorLabel.textColor = AppColor.TextColors.Red
+    firstNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return firstNameErrorLabel
   }()
 
   lazy var lastNameTextField: UITextField = {
-    let nameTextField = UITextField(frame: CGRect.zero)
-    nameTextField.placeholder = "last_name".localized
-    nameTextField.autocorrectionType = .no
-    nameTextField.delegate = self
-    nameTextField.borderStyle = .none
-    nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
-    nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
-    nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-    nameTextField.layer.shadowOpacity = 1
-    nameTextField.layer.shadowRadius = 0
-    nameTextField.translatesAutoresizingMaskIntoConstraints = false
-    return nameTextField
+    let lastNameTextField = UITextField(frame: CGRect.zero)
+    lastNameTextField.placeholder = "last_name".localized
+    lastNameTextField.autocorrectionType = .no
+    lastNameTextField.delegate = self
+    lastNameTextField.borderStyle = .none
+    lastNameTextField.layer.backgroundColor = UIColor.white.cgColor
+    lastNameTextField.layer.masksToBounds = false
+    lastNameTextField.layer.shadowColor = UIColor.darkGray.cgColor
+    lastNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    lastNameTextField.layer.shadowOpacity = 1
+    lastNameTextField.layer.shadowRadius = 0
+    lastNameTextField.translatesAutoresizingMaskIntoConstraints = false
+    return lastNameTextField
+  }()
+
+  lazy var lastNameErrorLabel: UILabel = {
+    let lastNameErrorLabel = UILabel(frame: CGRect.zero)
+    lastNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
+    lastNameErrorLabel.textColor = AppColor.TextColors.Red
+    lastNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return lastNameErrorLabel
   }()
 
   lazy var cancelButton: UIButton = {
@@ -92,8 +100,9 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     self.isHidden = true
     self.addSubview(titleLabel)
     self.addSubview(firstNameTextField)
-    self.addSubview(errorLabel)
+    self.addSubview(firstNameErrorLabel)
     self.addSubview(lastNameTextField)
+    self.addSubview(lastNameErrorLabel)
     self.addSubview(cancelButton)
     self.addSubview(createButton)
     setupLayout()
@@ -106,12 +115,15 @@ class PersonCreationView: UIView, UITextFieldDelegate {
       firstNameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
       firstNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       firstNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      errorLabel.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 5),
-      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firstNameErrorLabel.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 5),
+      firstNameErrorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firstNameErrorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 35),
       lastNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       lastNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firstNameErrorLabel.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 5),
+      firstNameErrorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firstNameErrorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
