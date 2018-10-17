@@ -35,7 +35,7 @@ class CropView: UIView {
     let calendar = Calendar.current
     let year = calendar.component(.year, from: crop.startDate!)
     nameLabel.textColor = UIColor.black
-    nameLabel.text = crop.species! + " | \(year)"
+    nameLabel.text = crop.species!.localized + " | \(year)"
     nameLabel.font = UIFont.systemFont(ofSize: 13.0)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
