@@ -408,9 +408,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
         for intervention in self.interventions {
           if intervention.ekyID != 0 && intervention.status == Intervention.State.Created.rawValue {
-            print("Updating intervention: \(intervention)")
             self.pushUpdatedIntervention(intervention: intervention)
-            break
           }
         }
       } else {

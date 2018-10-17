@@ -1224,14 +1224,11 @@ extension InterventionViewController {
       referenceId: referenceID,
       type: type)
     let inputAttributes = InterventionInputAttributes(
-      marketingAuthorizationNumber: maa,
+      marketingAuthorizationNumber: nil,
       article: article,
       quantity: quantity,
       unit: ArticleAllUnitEnum(rawValue: unit)!,
       unitPrice: nil)
-
-    print("\nArticle: \(article)")
-    print("\nMAA: \(String(describing: maa))")
     return inputAttributes
   }
 
@@ -1287,7 +1284,7 @@ extension InterventionViewController {
         } else {
           id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity as! Double, unit: fertilizer.unit!.uppercased(), maa: nil))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity as! Double, unit: fertilizer.unit!.uppercased(), maa: "0"))
       case is InterventionMaterials:
         let material = input as! InterventionMaterials
         var id: String? = nil
@@ -1305,7 +1302,6 @@ extension InterventionViewController {
         print("No type")
       }
     }
-    print("InputsAttributes: \(inputsAttributes)")
     return inputsAttributes
   }
 
@@ -1367,7 +1363,7 @@ extension InterventionViewController {
 
     weather.temperature = intervention.weather?.temperature as? Double
     weather.windSpeed = intervention.weather?.windSpeed as? Double
-    weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
+    weather.description = (intervention.weather?.weatherDescription?.uppercased()).map { WeatherEnum(rawValue: $0) }
     return weather
   }
 
@@ -1397,10 +1393,8 @@ extension InterventionViewController {
 
     group.enter()
     apollo?.perform(mutation: updateMutation, queue: DispatchQueue.global(), resultHandler: { (error, result) in
-      if let error = error {
-        print("Error: \(error)")
-      } else {
-        print("Result error: \(String(describing: result))")
+      if let error = error?.errors {
+        print("Error: \(String(describing: error))")
       }
       group.leave()
     })
