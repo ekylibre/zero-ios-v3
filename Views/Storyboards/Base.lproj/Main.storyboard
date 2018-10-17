@@ -219,7 +219,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGp-gL-8mm">
                                 <rect key="frame" x="0.0" y="64" width="375" height="499"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
+                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="633.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-fY-myQ" userLabel="Plots View">
@@ -1073,7 +1073,7 @@
                                     <constraint firstItem="bh9-Fk-VZ0" firstAttribute="leading" secondItem="fGp-gL-8mm" secondAttribute="leading" id="JJf-W1-Crt"/>
                                     <constraint firstItem="bh9-Fk-VZ0" firstAttribute="centerX" secondItem="fGp-gL-8mm" secondAttribute="centerX" id="ToD-vD-C04"/>
                                     <constraint firstAttribute="trailing" secondItem="bh9-Fk-VZ0" secondAttribute="trailing" id="hGs-YQ-DfV"/>
-                                    <constraint firstAttribute="bottom" secondItem="bh9-Fk-VZ0" secondAttribute="bottom" constant="-307" id="qpf-bM-q5d"/>
+                                    <constraint firstAttribute="bottom" secondItem="bh9-Fk-VZ0" secondAttribute="bottom" constant="100" id="qpf-bM-q5d"/>
                                     <constraint firstItem="bh9-Fk-VZ0" firstAttribute="top" secondItem="fGp-gL-8mm" secondAttribute="top" id="xw4-Y4-Wgp"/>
                                 </constraints>
                             </scrollView>

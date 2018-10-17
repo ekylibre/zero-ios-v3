@@ -41,7 +41,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
 
     checkLocalData()
 

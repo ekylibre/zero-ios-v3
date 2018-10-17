@@ -120,7 +120,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
