@@ -23,10 +23,11 @@ class Intervention {
     case Irrigation = "Irrigation"
   }
 
-  enum Status: Int16 {
-    case OutOfSync = 0
-    case Synchronised = 1
+  enum Status: Int {
+    case Created = 0
+    case Synced = 1
     case Validated = 2
+    case Deleted = 3
   }
 
   var type: InterventionType

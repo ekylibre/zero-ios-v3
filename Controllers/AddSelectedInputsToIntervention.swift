@@ -121,40 +121,32 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     present(alert, animated: true)
   }
 
-  func forTrailingZero(temp: Double) -> String {
-    let withoutTrailing = String(format: "%g", temp)
-
-    return withoutTrailing
-  }
-
-  func defineQuantityInFunctionOfSurface(unit: String, quantity: Double, indexPath: IndexPath) {
+  func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let surfaceArea = cropsView.totalSurfaceArea
-    var efficiency: Double = 0
+    let surfaceArea = cropsView.selectedSurfaceArea
+    var efficiency: Float = 0
 
     if (unit.contains("/")) {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
       switch surfaceUnit {
       case "ha":
-        efficiency = Double(quantity) * surfaceArea
+        efficiency = quantity * surfaceArea
       case "m2":
-        efficiency = Double(quantity) * (surfaceArea * 10000)
+        efficiency = quantity * (surfaceArea * 10000)
       default:
         return
       }
-      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %d %@", efficiencyWithoutTrailing, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "input_quantity".localized, efficiency, (unit.components(separatedBy: "/")[0]))
     } else {
-      efficiency = Double(quantity) / surfaceArea
-      let efficiencyWithoutTrailing = forTrailingZero(temp: efficiency)
-      cell.surfaceQuantity.text = String(format: "Soit %d %@ par hectare", efficiencyWithoutTrailing, unit)
+      efficiency = quantity / surfaceArea
+      cell.surfaceQuantity.text = String(format: "input_quantity_per_surface".localized, efficiency, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
 
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let quantity = cell.inputQuantity.text!.floatValue
     let unit = cell.unitMeasureButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false

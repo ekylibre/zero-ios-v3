@@ -514,7 +514,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
 
     newIntervention.type = interventionType
-    newIntervention.status = Intervention.Status.OutOfSync.rawValue
+    newIntervention.status = Int32(Intervention.Status.Created.rawValue)
     newIntervention.infos = "Infos"
     if interventionType == "IRRIGATION".localized {
       let waterVolume = irrigationValueTextField.text!.floatValue
@@ -589,12 +589,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let targetsEntity = NSEntityDescription.entity(forEntityName: "Targets", in: managedContext)!
+    let selectedCrops = fetchSelectedCrops()
 
-    for selectedCrop in cropsView.selectedCrops {
+    for crop in selectedCrops {
       let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
 
       target.setValue(intervention, forKey: "interventions")
-      target.setValue(selectedCrop, forKey: "crops")
+      target.setValue(crop, forKey: "crops")
       target.setValue(100, forKey: "workAreaPercentage")
     }
 
@@ -603,6 +604,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  private func fetchSelectedCrops() -> [Crops] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [Crops]()
+    }
+
+    var crops: [Crops]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let predicate = NSPredicate(format: "isSelected == %@", NSNumber(value: true))
+    cropsFetchRequest.predicate = predicate
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return crops
   }
 
   func createEquipments(intervention: NSManagedObject) {
