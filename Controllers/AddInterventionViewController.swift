@@ -597,8 +597,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
     let predicate = NSPredicate(format: "isSelected == true")
-    //cropsFetchRequest.predicate = predicate
 
+    cropsFetchRequest.predicate = predicate
     do {
       crops = try managedContext.fetch(cropsFetchRequest)
     } catch let error as NSError {
@@ -717,6 +717,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Navigation
 
+  // INFO: Needed to perform the unwind segue
   @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
