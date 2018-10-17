@@ -342,7 +342,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var frame: CGRect
     var cropViews = [CropView]()
     var view: CropView
-    let targets = checkIfTargetMatch()
+    var targets: [Targets]?
+
+    if interventionState != Intervention.State.New.rawValue {
+      targets = checkIfTargetMatch()
+    }
 
     for crops in self.crops {
       for (index, crop) in crops.enumerated() {
