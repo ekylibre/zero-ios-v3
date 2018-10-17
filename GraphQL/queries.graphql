@@ -1,8 +1,4 @@
 query Profile {
-  profile {
-    firstName
-    lastName
-  }
   farms {
     label
     id
@@ -10,10 +6,18 @@ query Profile {
   }
 }
 
-query Intervention {
+query DeletedInterventions ($modifiedSince: Date){
+  farms {
+    deletedInterventions (modifiedSince: $modifiedSince) {
+      id
+    }
+  }
+}
+
+query Intervention ($modifiedSince: Date){
   farms {
     id
-    interventions {
+    interventions (modifiedSince: $modifiedSince) {
       id
       type
       validatedAt
@@ -52,7 +56,6 @@ query Intervention {
         unit
       }
       operators {
-        id
         role
         person {
           id
@@ -77,11 +80,11 @@ query Intervention {
   }
 }
 
-query Farm {
+query Farm ($modifiedSince: Date){
   farms {
     id
     label
-    articles {
+    articles (modifiedSince: $modifiedSince) {
       id
       type
       name
@@ -91,44 +94,37 @@ query Farm {
       variety
       marketingAuthorizationNumber
     }
-    storages {
+    storages (modifiedSince: $modifiedSince) {
       id
       name
       type
     }
-    plots {
-      uuid
-      name
-      surfaceArea
-    }
-    crops {
+    crops (modifiedSince: $modifiedSince) {
       uuid
       name
       species
       #productionNature {
-      #name
-      #specie
+      #  name
       #}
       productionMode
       provisionalYield
       startDate
       stopDate
       surfaceArea
-      #plot {
-      #uuid
-      #}
       #shape
+      #centroid
     }
-    people {
+    people (modifiedSince: $modifiedSince) {
       id
       firstName
       lastName
     }
-    equipments {
+    equipments (modifiedSince: $modifiedSince) {
       id
       name
       type
       number
+      indicators
     }
   }
 }
