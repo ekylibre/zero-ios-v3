@@ -249,36 +249,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    switch segmentedControl.selectedSegmentIndex {
-    case 0:
-      let fromSeeds = isSearching ? filteredInputs : seeds
+    let inputs: [Int: [NSManagedObject]] = [0: seeds, 1: phytos, 2: fertilizers]
+    let fromInputs = isSearching ? filteredInputs : inputs[segmentedControl.selectedSegmentIndex]!
 
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
-      let selectedSeed = addInterventionViewController?.createSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
-      if selectedSeed != nil {
-        addInterventionViewController?.selectedInputs.append(selectedSeed!)
-      }
-    case 1:
-      let fromPhytos = isSearching ? filteredInputs : phytos
-
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
-      let selectedPhyto = addInterventionViewController?.createSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
-      if selectedPhyto != nil {
-        addInterventionViewController?.selectedInputs.append(selectedPhyto!)
-      }
-    case 2:
-      let fromFertilizers = isSearching ? filteredInputs : fertilizers
-
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
-      let selectedFertilizer = addInterventionViewController?.createSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
-      if selectedFertilizer != nil {
-        addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
-      }
-    default:
-      print("Error")
-    }
-    addInterventionViewController?.selectedInputsTableView.reloadData()
-    addInterventionViewController?.closeInputsSelectionView()
+    fromInputs[indexPath.row].setValue(true, forKey: "used")
+    tableView.reloadData()
+    addInterventionViewController?.selectInput(fromInputs[indexPath.row])
   }
 
   // MARK: - Search bar
@@ -354,7 +330,126 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         return $0.name! < $1.name!
       }
     }
-    tableView.reloadData()
+  }
+
+  private func loadRegisteredInputs() {
+    let assets = openAssets()
+    let decoder = JSONDecoder()
+
+    do {
+      let registeredSeeds = try decoder.decode([RegisteredSeed].self, from: assets[0].data)
+      let registeredPhytos = try decoder.decode([RegisteredPhyto].self, from: assets[1].data)
+      let registeredFertilizers = try decoder.decode([RegisteredFertilizer].self, from: assets[2].data)
+
+      saveSeeds(registeredSeeds)
+      savePhytos(registeredPhytos)
+      saveFertilizers(registeredFertilizers)
+    } catch let jsonError {
+      print(jsonError)
+    }
+  }
+
+  private func openAssets() -> [NSDataAsset] {
+    var assets = [NSDataAsset]()
+    let assetNames = ["seeds", "phytosanitary-products", "fertilizers"]
+
+    for assetName in assetNames {
+      if let asset = NSDataAsset(name: assetName) {
+        assets.append(asset)
+      } else {
+        fatalError(assetName + " not found")
+      }
+    }
+    return assets
+  }
+
+  func saveSeeds(_ registeredSeeds: [RegisteredSeed]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for registeredSeed in registeredSeeds {
+      let seed = Seeds(context: managedContext)
+
+      seed.registered = true
+      seed.ekyID = Int32(registeredSeed.id)
+      seed.specie = registeredSeed.specie
+      seed.variety = registeredSeed.variety
+      seed.unit = "KILOGRAM_PER_HECTARE"
+      seed.used = false
+      seeds.append(seed)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for registeredPhyto in registeredPhytos {
+      let phyto = Phytos(context: managedContext)
+
+      phyto.registered = true
+      phyto.ekyID = Int32(registeredPhyto.id)
+      phyto.name = registeredPhyto.name
+      phyto.nature = registeredPhyto.nature
+      phyto.maaID = registeredPhyto.maaid
+      phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
+      phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
+      phyto.firmName = registeredPhyto.firmName
+      phyto.unit = "LITER_PER_HECTARE"
+      phyto.used = false
+      phytos.append(phyto)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func saveFertilizers(_ registeredFertilizers: [RegisteredFertilizer]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for registeredFertilizer in registeredFertilizers {
+      let fertilizer = Fertilizers(context: managedContext)
+
+      fertilizer.registered = true
+      fertilizer.ekyID = Int32(registeredFertilizer.id)
+      fertilizer.name = registeredFertilizer.name
+      fertilizer.variant = registeredFertilizer.variant
+      fertilizer.variety = registeredFertilizer.variety
+      fertilizer.derivativeOf = registeredFertilizer.derivativeOf
+      fertilizer.nature = registeredFertilizer.nature
+      fertilizer.nitrogenConcentration = registeredFertilizer.nitrogenConcentration
+      fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
+      fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
+      fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
+      fertilizer.unit = "KILOGRAM_PER_HECTARE"
+      fertilizer.used = false
+      fertilizers.append(fertilizer)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   private func createSeed(variety: String, specie: String) {
@@ -368,7 +463,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.registered = false
     seed.specie = specie
     seed.variety = variety
-    seed.unit = "kg/ha"
+    seed.unit = "KILOGRAM_PER_HECTARE"
     seed.used = false
     seeds.append(seed)
 
@@ -393,7 +488,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.firmName = firmName
     phyto.maaID = maaID
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
-    phyto.unit = "l/ha"
+    phyto.unit = "LITER_PER_HECTARE"
     phyto.used = false
     phytos.append(phyto)
 
@@ -416,7 +511,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.registered = false
     fertilizer.name = name
     fertilizer.nature = nature
-    fertilizer.unit = "kg/ha"
+    fertilizer.unit = "KILOGRAM_PER_HECTARE"
     fertilizer.used = false
     fertilizers.append(fertilizer)
 
