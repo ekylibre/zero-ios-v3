@@ -286,7 +286,7 @@
 
 // App strings
 "app_name" = "Clic&Farm";
-"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account …";
+"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account…";
 "nav_button" = "Nav button";
 "prompt_email" = "Email";
 "prompt_password" = "Password";
