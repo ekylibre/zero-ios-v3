@@ -782,13 +782,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let containsADot = textField.text?.contains(".")
+    //textField.text = textField.text!.replacingOccurrences(of: ",", with: ".")
+    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
     var invalidCharacters: CharacterSet!
 
-    if containsADot! {
+    if containsADot || textField.text?.count == 0 {
       invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
     } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
     }
 
     switch textField {
