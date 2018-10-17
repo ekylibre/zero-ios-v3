@@ -638,7 +638,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func updateIntervention() {
-    print("\nUpdating intervention")
     let duration = durationTextField.text!.floatValue
 
     currentIntervention.workingPeriods?.executionDate = selectDateView.datePicker.date
@@ -649,10 +648,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       currentIntervention.waterQuantity = waterVolume
       currentIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
     }
+    updateTargets(intervention: currentIntervention)
     updateEquipments(intervention: currentIntervention)
     updatePersons(intervention: currentIntervention)
     updateInputs(intervention: currentIntervention)
-    updateTargets(intervention: currentIntervention)
   }
 
   func updateEquipments(intervention: Interventions) {
@@ -681,6 +680,28 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateTargets(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    targetsFetchRequest.predicate = predicate
+    do {
+      let targets = try managedContext.fetch(targetsFetchRequest)
+
+      for target in targets {
+        managedContext.delete(target)
+      }
+      createTargets(intervention: intervention)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
@@ -847,29 +868,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func updateTargets(intervention: Interventions) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedCrops = fetchSelectedCrops()
-
-    for selectedCrop in selectedCrops {
-      let target = Targets(context: managedContext)
-
-      target.interventions = intervention
-      target.crops = selectedCrop
-      target.workAreaPercentage = 100
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
   private func fetchSelectedCrops() -> [Crops] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return [Crops]()
@@ -879,8 +877,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
     let predicate = NSPredicate(format: "isSelected == %@", NSNumber(value: true))
-    cropsFetchRequest.predicate = predicate
 
+    cropsFetchRequest.predicate = predicate
     do {
       crops = try managedContext.fetch(cropsFetchRequest)
     } catch let error as NSError {

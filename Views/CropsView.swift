@@ -327,6 +327,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
           selectedCropsCount += 1
           selectedSurfaceArea += crop.surfaceArea
           crop.isSelected = true
+          print("\nCrop set to selected: \(crop)")
           break
         }
       }
