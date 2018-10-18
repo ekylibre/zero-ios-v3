@@ -14,6 +14,7 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupEquipmentsView() {
+    equipmentTypes = loadEquipmentTypes()
     equipmentsSelectionView = EquipmentsView(firstType: getFirstEquipmentType(),frame: CGRect.zero)
     equipmentsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(equipmentsSelectionView)
@@ -38,7 +39,7 @@ extension AddInterventionViewController {
     equipmentsSelectionView.addInterventionViewController = self
   }
 
-  func loadEquipmentTypes() -> [String] {
+  private func loadEquipmentTypes() -> [String] {
     var equipmentTypes = [String]()
 
     if let asset = NSDataAsset(name: "equipment-types") {
@@ -59,7 +60,7 @@ extension AddInterventionViewController {
     return equipmentTypes
   }
 
-  func getFirstEquipmentType() -> String {
+  private func getFirstEquipmentType() -> String {
     let sortedEquipmentTypes = equipmentTypes.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <

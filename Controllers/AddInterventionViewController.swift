@@ -152,16 +152,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
 
-    selectedMaterials.append([Materials]())
-    selectedMaterials.append([InterventionMaterials]())
     setupWorkingPeriodView()
     setupIrrigationView()
     setupInputsView()
     setupMaterialsView()
-    equipmentTypes = loadEquipmentTypes()
     setupEquipmentsView()
-    selectedPersons.append([Persons]())
-    selectedPersons.append([InterventionPersons]())
     setupPersonsView()
 
     initializeWeatherButtons()
