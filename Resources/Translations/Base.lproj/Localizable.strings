@@ -12,35 +12,63 @@
 "ALLIUM_PORRUM" = "Allium porrum";
 "ALLIUM_SATIVUM" = "Cultivated garlic";
 "ALLIUM_SCHOENOPRASUM" = "Chives";
+"ANETHUM_GRAVEOLENS" = "ANETHUM_GRAVEOLENS";
 "ANTHRISCUS_CEREFOLIUM" = "Garden Chervil";
 "APIUM_GRAVEOLENS" = "Wild Celery";
+"ARTEMISIA_DRACUNCULUS" = "ARTEMISIA_DRACUNCULUS";
 "AVENA_SATIVA" = "Oat";
 "BETA_VULGARIS" = "Beet";
+"BETA_VULGARIS_CICLA" = "BETA_VULGARIS_CICLA";
 "BRASSICA_NAPUS" = "Rapeseed";
+"BRASSICA_NAPUS_ANNUA" = "BRASSICA_NAPUS_ANNUA";
+"BRASSICA_NAPUS_NAPUS" = "BRASSICA_NAPUS_NAPUS";
+"BRASSICA_NAPUS_RAPIFERA" = "BRASSICA_NAPUS_RAPIFERA";
 "BRASSICA_OLERACEA" = "Cabbage";
+"BRASSICA_OLERACEA_BOTRYTIS" = "BRASSICA_OLERACEA_BOTRYTIS";
+"BRASSICA_OLERACEA_CAPITATA" = "BRASSICA_OLERACEA_CAPITATA";
+"BRASSICA_OLERACEA_ITALICA" = "BRASSICA_OLERACEA_ITALICA";
 "BRASSICA_RAPA" = "Brassica rapa";
+"BRASSICA_RAPA_RAPA" = "BRASSICA_RAPA_RAPA";
 "CANNABIS_SATIVA" = "Hemp";
+"CAPSICUM" = "CAPSICUM";
 "CAPSICUM_ANNUUM" = "Bell Pepper";
+"CHAMAEMELUM" = "CHAMAEMELUM";
 "CICER_ARIETINUM" = "Chickpea";
+"CICHORIUM" = "CICHORIUM";
 "CICHORIUM_ENDIVIA" = "Endive chicory";
 "CICHORIUM_INTYBUS" = "Chicory Intybus";
 "CITRULLUS_LANATUS" = "Watermelon Common";
 "CITRUS_MEDICA" = "Citron";
 "CITRUS_RETICULATA" = "Tangerine";
 "CITRUS_SINENSIS" = "Orange";
+"CORIANDRUM_SATIVUM" = "CORIANDRUM_SATIVUM";
 "CORYLUS_AVELLANA" = "Common hazel";
 "CUCUMIS_MELO" = "Cantaloup";
 "CUCUMIS_SATIVUS" = "Cucumber";
+"CUCUMIS_SATIVUS_GHERKIN" = "CUCUMIS_SATIVUS_GHERKIN";
 "CUCURBITA_MAXIMA" = "Winter squash";
+"CUCURBITA_MAXIMA_POTIMARRON" = "CUCURBITA_MAXIMA_POTIMARRON";
+"CUCURBITA_MOSCHATA" = "CUCURBITA_MOSCHATA";
+"CUCURBITA_MOSCHATA_BUTTERNUT" = "CUCURBITA_MOSCHATA_BUTTERNUT";
 "CUCURBITA_PEPO" = "Field Pumpkin";
+"CUCURBITA_PEPO_PEPO" = "CUCURBITA_PEPO_PEPO";
 "CYDONIA_OBLONGA" = "Quince";
 "CYNARA_SCOLYMUS" = "Globe artichoke";
+"DACTYLIS" = "DACTYLIS";
 "DAUCUS_CAROTA" = "Carrot";
+"ERUCA_VESICARIA" = "ERUCA_VESICARIA";
+"FAGOPYRUM_ESCULENTUM" = "FAGOPYRUM_ESCULENTUM";
+"FOENICULUM" = "FOENICULUM";
 "FOENICULUM_VULGARE" = "Sweet Fennel";
 "FORTUNELLA_MARGARITA" = "Oval kumquat";
+"FRAGARIA" = "FRAGARIA";
 "GLYCINE_MAX" = "Soy bean";
 "HELIANTHUS_ANNUUS" = "Annual sunflower";
+"HELIANTHUS_TUBEROSUS" = "HELIANTHUS_TUBEROSUS";
+"HORDEUM_DISTICHUM" = "HORDEUM_DISTICHUM";
+"HORDEUM_HEXASTICHUM" = "HORDEUM_HEXASTICHUM";
 "HORDEUM_VULGARE" = "Common Barley";
+"HUMULUS_LUPULUS" = "HUMULUS_LUPULUS";
 "JUGLANS_REGIA" = "Common walnut";
 "LACTUCA_SATIVA" = "Lettuce";
 "LENS_CULINARIS" = "Lens culinaris";
@@ -48,15 +76,23 @@
 "LOLIUM_MULTIFLORUM" = "Ryegrass multiflorum";
 "LOLIUM_PERENNE" = "Ryegrass perenne";
 "LOTUS_CORNICULATUS" = "Lotus corniculatus";
+"LUPINUS" = "LUPINUS";
 "MALUS_PUMILA" = "Apple-tree";
 "MEDICAGO_SATIVA" = "Lucerne";
+"MELILOTUS" = "MELILOTUS";
+"NICOTIANA_TABACUM" = "NICOTIANA_TABACUM";
+"OCIMUM_BASILICUM" = "OCIMUM_BASILICUM";
 "OLEA_EUROPAEA" = "Olive tree";
 "ONOBRYCHIS_VICIIFOLIA" = "Common sainfoin";
 "ORYZA_SATIVA" = "Cultivated rice";
+"PASTINACA_SATIVA" = "PASTINACA_SATIVA";
 "PETROSELINUM_CRISPUM" = "Common Parsley";
 "PHASEOLUS_VULGARIS" = "Bean";
+"PIMPINELLA_ANISUM" = "PIMPINELLA_ANISUM";
 "PISUM_SATIVUM" = "Pea";
+"PLANT" = "PLANT";
 "POA_TRIVIALIS" = "Rough bluegrass";
+"POACEAE" = "POACEAE";
 "PRUNUS_ARMENIACA" = "Apricot tree";
 "PRUNUS_AVIUM" = "Wild cherry tree";
 "PRUNUS_CERASIFERA" = "Cherry plum tree";
@@ -70,11 +106,15 @@
 "RIBES_NIGRUM" = "Blackcurrant";
 "RIBES_RUBRUM" = "Redcurrant";
 "RUBUS_IDAEUS" = "Red raspberry";
+"SECALE_CEREALE" = "SECALE_CEREALE";
 "SOLANUM_LYCOPERSICUM" = "Tomato";
 "SOLANUM_MELONGENA" = "Eggplant";
 "SOLANUM_TORVUM" = "Devil’s Fig";
 "SOLANUM_TUBEROSUM" = "Potato";
+"SORGHUM" = "SORGHUM";
 "SPINACIA_OLERACEA" = "Spinach";
+"TRAGOPOGON" = "TRAGOPOGON";
+"TRIFOLIUM" = "TRIFOLIUM";
 "TRIFOLIUM_ALEXANDRINUM" = "Trifolium alexandrinum";
 "TRIFOLIUM_INCARNATUM" = "Trifolium incarnatum";
 "TRIFOLIUM_PRATENSE" = "Trifolium pratense";
@@ -82,6 +122,7 @@
 "TRITICOSECALE" = "Triticale";
 "TRITICUM_AESTIVUM" = "Common wheat";
 "TRITICUM_DURUM" = "Durum wheat";
+"TRITICUM_SPELTA" = "TRITICUM_SPELTA";
 "VALERIANELLA_LOCUSTA" = "Corn salad";
 "VICIA_FABA" = "Horsebean";
 "VICIA_SATIVA" = "Vicia sativa";
@@ -89,6 +130,7 @@
 "VITIS" = "Vitis";
 "VITIS_VINIFERA" = "Common grape vine";
 "ZEA_MAYS" = "Corn";
+"ZEA_MAYS_SACCHARATA" = "ZEA_MAYS_SACCHARATA";
 
 // Procedures
 "IRRIGATION" = "Irrigation";
@@ -258,6 +300,18 @@
 "METER" = "Meter";
 "UNITY" = "Unity";
 "THOUSAND" = "Thousand";
+"FRENCH_HORSEPOWER" = "French horsepower";
+
+// Equipment indicators
+"plowshare_count" = "Number of plowshares";
+"motor_power" = "Motor power";
+"application_width" = "Application width";
+"rows_count" = "Number of rows";
+"nominal_storable_net_volume" = "Net storage volume";
+"nominal_storable_net_mass" = "Net storage mass";
+"diameter" = "Diameter";
+"width" = "Width";
+"length" = "Length";
 
 // Output types
 "STRAW" = "Straw";
@@ -276,6 +330,7 @@
 
 // App strings
 "app_name" = "Clic&Farm";
+"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account…";
 "nav_button" = "Nav button";
 "prompt_email" = "Email";
 "prompt_password" = "Password";
@@ -284,6 +339,8 @@
 "cancel" = "Cancel";
 "validate" = "Validate";
 "delete" = "Delete";
+"no" = "No";
+"yes" = "Yes";
 
 "starting_intervention_text" = "Start recording intervention";
 "finishing_intervention_text" = "Register done intervention";
@@ -309,13 +366,8 @@
 
 "starting_date" = "Starting the";
 "duration" = "Duration";
-"default_working_period_main_line" = "Today • 7 h";
-"default_working_period_duration" = "7";
-"default_working_period_date" = "Today";
 
 "add_input" = "+ Add an input";
-"default_input_name" = "Blé dur";
-"default_input_name_more" = "Tablur";
 "quantity" = "Quantity";
 "default_quantity_value" = "0";
 "default_unit" = "kg";
@@ -327,13 +379,18 @@
 "phytos" = "Phytos";
 "all" = "All";
 
-"create_seed_title" = "Create new seed";
-"create_phyto_title" = "Create new phyto";
-"create_ferti_title" = "Create new fertilizer";
-"create_storage_title" = "Create new storage";
-"create_material_title" = "Create new material";
-"create_equipment_title" = "Create new equipment";
-"create_person_title" = "Create new person";
+"add" = "+ Add";
+"add_equipment" = "+ Add equipment";
+"add_material" = "+ Add material";
+"add_person" = "+ Add person";
+"add_load" = "+ Add load";
+"select_crops" = "+ Select";
+"no_crop_selected" = "No crop selected";
+
+"selecting_crops" = "Select a crop";
+"selecting_materials" = "Select a material";
+"selecting_equipments" = "Select a equipment";
+"selecting_persons" = "Select a person";
 
 "create_new_seed" = "+ Create new seed";
 "create_new_phyto" = "+ Create new phyto";
@@ -342,24 +399,33 @@
 "create_new_equipment" = "+ Create new equipment";
 "create_new_person" = "+ Create new person";
 
-"selecting_crops" = "Select a crop";
-"selecting_materials" = "Select a material";
-"selecting_equipments" = "Select a equipment";
-"selecting_people" = "Select a person";
+"create_seed_title" = "Create new seed";
+"create_phyto_title" = "Create new phyto";
+"create_ferti_title" = "Create new fertilizer";
+"create_storage_title" = "Create new storage";
+"create_material_title" = "Create new material";
+"create_equipment_title" = "Create new equipment";
+"create_person_title" = "Create new person";
+
+"seed_variety_is_empty" = "La variété de la semence ne peut être vide";
+"phyto_name_is_empty" = "Le nom du phyto ne peut être vide";
+"ferti_name_is_empty" = "Le nom du fertilisant ne peut être vide";
+"material_name_is_empty" = "Le nom du matériau ne peut être vide";
+"equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"person_first_name_is_empty" = "Le prénom de l'opérateur ne peut être vide";
+"person_last_name_is_empty" = "Le nom de famille de l'opérateur ne peut être vide";
+
+"seed_variety_not_available" = "Cette variété de semence est déjà utilisée. Veuillez en choisir un autre";
+"phyto_name_not_available" = "Ce nom de phyto est déjà utilisé. Veuillez en choisir un autre";
+"ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
+"material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
+"equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
 "delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
 "delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
 "delete_material_prompt" = "Are you sure you want to remove the material?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
-
-"add" = "+ Add";
-"add_equipment" = "+ Add equipment";
-"add_material" = "+ Add material";
-"add_person" = "+ Add person";
-"add_load" = "+ Add load";
-"select_crops" = "+ Select";
-"no_crop_selected" = "No crop selected";
 
 "chose_specie" = "Specie";
 "chose_nature" = "Nature";
@@ -376,9 +442,7 @@
 "stock_place" = "Storage";
 "number" = "Number";
 "name" = "Name";
-"welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account …";
-"no" = "No";
-"yes" = "Yes";
+
 "sync_failure" = "Sync failure…";
 "network_failure" = "Network error, try again later.";
 "login_failure" = "Unknown E-mail or invalid password. Try again.";
@@ -386,10 +450,10 @@
 "authentificating" = "Authentificating, please wait…";
 "create" = "Create";
 "volume" = "Volume";
-"volume_cannot_be_null" = "Volume cannot be null";
-"finish" = "Terminer";
+"volume_cannot_be_null" = "Volume cannot be zero";
+"finish" = "Finish";
 "pause" = "Pause";
-"speed" = "Vitesse";
+"speed" = "Speed";
 "working_width" = "Largeur de\ntravail";
 "worked_area" = "Surface\ntravaillée";
 "preparation" = "Préparation";
@@ -411,11 +475,10 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
-"title" = "Titre";
-"first_name" = "Prénom";
-"last_name" = "Nom de famille";
-"equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
-"equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"title" = "Title";
+"first_name" = "First name";
+"last_name" = "Last name";
+"driver" = "Driver";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
 "my_cultures" = "Mes cultures";
 "unknown_login_failure" = "Désolé, une erreur inconnue s\'est produite, veuillez contacter le support.";
@@ -424,12 +487,23 @@
 "no_internet_try_later" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
 "you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
-"non_authorized_mix" = "Mélange non autorisé";
 "nature" = "Nature";
 "celsius" = "°C";
 "km_per_hour" = "km/h";
 "ok" = "Ok";
 "crop_list" = "Liste des cultures";
+"waiting_for_gps" = "Recherche d'une position GPS…";
+"brand" = "Marque";
+"mmaid_number" = "N° AMM";
+"reentry_delay" = "Délai de ré-entrée";
+"in_hours" = "En heures";
+"variety" = "Variété";
+"provided_by_collector" = "Fourni par le collecteur";
+"invalid_dose" = "Dose invalide";
+"approximate_amount" = "Quantité approximative";
+"unauthorized_mixing" = "Mélange non autorisé";
+"gps_is_off" = "Le GPS de votre smartphone est éteint.";
+"waiting_gps_signal" = "En attente d'un signal GPS…";
 
 "locale" = "en_EN";
 

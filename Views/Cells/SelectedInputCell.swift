@@ -122,7 +122,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "non_authorized_mix".localized
+    warningLabel.text = "unauthorized_mixing".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
   }()
