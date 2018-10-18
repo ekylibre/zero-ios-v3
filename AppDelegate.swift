@@ -95,4 +95,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     }
   }
+
+  func entityIsEmpty(entity: String) -> Bool {
+    let context = persistentContainer.viewContext
+    let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+
+    request.returnsObjectsAsFaults = false
+    do {
+      let result = try context.fetch(request)
+      if result.count == 0 {
+        return true
+      }
+    } catch {
+      print("Fetch failed")
+    }
+    return false
+  }
 }

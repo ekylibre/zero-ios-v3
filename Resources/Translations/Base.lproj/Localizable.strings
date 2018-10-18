@@ -247,7 +247,7 @@
 "KILOGRAM" = "kg";
 "KILOGRAM_PER_HECTARE" = "kg/ha";
 "KILOGRAM_PER_SQUARE_METER" = "kg/m²";
-"QUINTAL" = "quintal";
+"QUINTAL" = "q";
 "QUINTAL_PER_HECTARE" = "q/ha";
 "QUINTAL_PER_SQUARE_METER" = "q/m²";
 "TON" = "ton";
@@ -268,6 +268,8 @@
 "HEAP" = "Heap";
 "SILO" = "Silo";
 "BUILDING" = "Building";
+
+// Fetilizer nature
 
 "organic" = "Organic";
 "mineral" = "Mineral";
@@ -369,6 +371,7 @@
 "wind" = "Wind";
 "wind" = " wind: %@ km/h";
 "wind_speed" = "Wind speed";
+
 "quantity_cannot_be_null" = "Quantity cannot be null";
 "stock_place" = "Storage";
 "number" = "Number";

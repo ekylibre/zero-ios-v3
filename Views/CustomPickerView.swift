@@ -63,7 +63,7 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
   // MARK: - Delegate
 
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    return values[row]
+    return values[row].localized
   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

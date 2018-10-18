@@ -269,6 +269,8 @@
 "SILO" = "Silo";
 "BUILDING" = "Bâtiment";
 
+// Fetilizer nature
+
 "organic" = "Organique";
 "mineral" = "Minéral";
 
@@ -369,6 +371,7 @@
 "wind" = "Vent";
 "wind" = " vent: %@ km/h";
 "wind_speed" = "Vitesse du vent";
+
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
 "number" = "Nombre";

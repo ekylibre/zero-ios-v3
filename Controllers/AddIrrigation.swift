@@ -40,14 +40,33 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       return
     }
 
-    let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
-    let volume = Float(volumeString) ?? 0
+    switch pickerView {
+    case harvestNaturePickerView:
+      harvestType.setTitle(unit.localized, for: .normal)
+      harvestNaturePickerView.isHidden = true
+      dimView.isHidden = true
+    case harvestUnitPickerView:
+      harvests[cellIndexPath.row].unit = unit
+      harvestUnitPickerView.isHidden = true
+      dimView.isHidden = true
+      harvestTableView.reloadData()
+    case storagesPickerView:
+      harvests[cellIndexPath.row].storages = searchStorage(name: unit)
+      storagesPickerView.isHidden = true
+      dimView.isHidden = true
+      harvestTableView.reloadData()
+    case irrigationPickerView:
+      let volumeString = irrigationValueTextField.text!.replacingOccurrences(of: ",", with: ".")
+      let volume = Float(volumeString) ?? 0
 
-    self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
-    irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
-    updateInfoLabel(volume, unit)
-    irrigationPickerView.isHidden = true
-    dimView.isHidden = true
+      self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
+      irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+      updateInfoLabel(volume, unit)
+      irrigationPickerView.isHidden = true
+      dimView.isHidden = true
+    default:
+      return
+    }
   }
 
   // MARK: - Actions

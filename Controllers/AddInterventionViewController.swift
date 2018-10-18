@@ -39,12 +39,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var equipmentName: UITextField!
   @IBOutlet weak var equipmentNumber: UITextField!
   @IBOutlet weak var equipmentType: UILabel!
+  @IBOutlet weak var equipmentNameWarning: UILabel!
   @IBOutlet weak var selectedEquipmentsTableView: UITableView!
   @IBOutlet weak var addEquipmentButton: UIButton!
   @IBOutlet weak var equipmentNumberLabel: UILabel!
   @IBOutlet weak var searchEquipment: UISearchBar!
   @IBOutlet weak var equipmentTypeTableView: UITableView!
   @IBOutlet weak var equipmentTypeButton: UIButton!
+  @IBOutlet weak var equipmentTypeImage: UIImageView!
   @IBOutlet weak var createEquipment: UIView!
   @IBOutlet weak var createEntity: UIView!
   @IBOutlet weak var entityFirstName: UITextField!
@@ -53,6 +55,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var createEntitiesView: UIView!
   @IBOutlet weak var entitiesTableView: UITableView!
   @IBOutlet weak var entityRole: UITextField!
+  @IBOutlet weak var entityNameWarning: UILabel!
   @IBOutlet weak var entityDarkLayer: UIView!
   @IBOutlet weak var doersTableView: UITableView!
   @IBOutlet weak var doersHeightConstraint: NSLayoutConstraint!
@@ -86,6 +89,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var snow: UIButton!
   @IBOutlet weak var thunderstorm: UIButton!
 
+  // Harvest
+  @IBOutlet weak var harvestView: UIView!
+  @IBOutlet weak var harvestTableView: UITableView!
+  @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestNature: UILabel!
+  @IBOutlet weak var harvestType: UIButton!
+
   // MARK: - Properties
 
   var newIntervention: Interventions!
@@ -113,6 +124,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var pickerValue: String?
   var cellIndexPath: IndexPath!
   var weatherIsSelected: Bool = false
+  var harvests = [Harvests]()
+  var harvestNaturePickerView: CustomPickerView!
+  var harvestUnitPickerView: CustomPickerView!
+  var storagesPickerView: CustomPickerView!
+  var storages = [Storages]()
   var weatherButtons = [UIButton]()
   var weather: Weather!
   let massUnitMeasure = [
@@ -191,6 +207,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     sortedEquipmentTypes = equipmentTypes.sorted()
     selectedEquipmentType = sortedEquipmentTypes[0]
     equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
+    equipmentTypeImage.image = defineEquipmentImage(equipmentName: selectedEquipmentType)
 
     fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
     fetchEntity(entityName: "Entities", searchedEntity: &searchedEntities, entity: &entities)
@@ -266,41 +283,62 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
 
-    setupViewsAccordingInterventionType()
-  }
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
 
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.view.endEditing(true)
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
+
+    harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    harvestType.layer.borderWidth = 1
+    harvestType.layer.cornerRadius = 5
+    initHarvestView()
+
+    setupViewsAccordingInterventionType()
   }
 
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue:
+    case Intervention.InterventionType.Care.rawValue.localized:
+      interventionType = Intervention.InterventionType.Care.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
-    case Intervention.InterventionType.CropProtection.rawValue:
+      harvestView.isHidden = true
+    case Intervention.InterventionType.CropProtection.rawValue.localized:
+      interventionType = Intervention.InterventionType.CropProtection.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
+      harvestView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
     case Intervention.InterventionType.Fertilization.rawValue:
+      interventionType = Intervention.InterventionType.Fertilization.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
+      harvestView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-    case Intervention.InterventionType.GroundWork.rawValue:
+    case Intervention.InterventionType.GroundWork.rawValue.localized:
+      interventionType = Intervention.InterventionType.GroundWork.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Harvest.rawValue:
+      harvestView.isHidden = true
+    case Intervention.InterventionType.Harvest.rawValue.localized:
+      interventionType = Intervention.InterventionType.Harvest.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue:
+    case Intervention.InterventionType.Implantation.rawValue.localized:
+      interventionType = Intervention.InterventionType.Implantation.rawValue
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
+      harvestView.isHidden = true
+    case Intervention.InterventionType.Irrigation.rawValue.localized:
+      interventionType = Intervention.InterventionType.Irrigation.rawValue
+      harvestView.isHidden = true
     default:
       return
     }
@@ -352,6 +390,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return doers.count
     case selectedInputsTableView:
       return selectedInputs.count
+    case harvestTableView:
+      return harvests.count
     default:
       return 1
     }
@@ -406,7 +446,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
 
       equipment = searchedEquipments[indexPath.row]
+      let number = equipment?.value(forKey: "number") as? String
+
       cell.nameLabel.text = equipment?.value(forKey: "name") as? String
+      cell.numberLabel.text = number != "" ? "#\(number!)" : ""
       cell.typeLabel.text = equipment?.value(forKey: "type") as? String
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
@@ -414,10 +457,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
 
       selectedEquipment = selectedEquipments[indexPath.row]
+      let number = selectedEquipment?.value(forKey: "number") as? String
+
       cell.cellDelegate = self
       cell.indexPath = indexPath
       cell.backgroundColor = AppColor.ThemeColors.DarkWhite
       cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
+      cell.numberLabel.text = number != "" ? "#\(number!)" : ""
       cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
       return cell
@@ -448,8 +494,37 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.lastName.text = doer?.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
       return cell
+    case harvestTableView:
+      let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
+      let harvest = harvests[indexPath.row]
+      let unit = harvest.unit
+
+      cell.addInterventionController = self
+      cell.cellDelegate = self
+      cell.indexPath = indexPath
+      cell.unit.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+      cell.unit.layer.borderWidth = 1
+      cell.unit.layer.cornerRadius = 5
+      cell.unit.setTitle(unit?.localized, for: .normal)
+      cell.storage.backgroundColor = AppColor.ThemeColors.White
+      cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+      cell.storage.layer.borderWidth = 1
+      cell.storage.layer.cornerRadius = 5
+      cell.storage.setTitle(harvests[indexPath.row].storages?.name ?? "---", for: .normal)
+      cell.quantity.keyboardType = .decimalPad
+      cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+      cell.quantity.layer.borderWidth = 1
+      cell.quantity.layer.cornerRadius = 5
+      cell.quantity.text = String(harvest.quantity)
+      cell.quantity.delegate = cell
+      cell.number.layer.borderColor =  AppColor.CellColors.LightGray.cgColor
+      cell.number.layer.borderWidth = 1
+      cell.number.layer.cornerRadius = 5
+      cell.number.text = harvest.number
+      cell.number.delegate = cell
+      return cell
     default:
-      fatalError("Switch error")
+      fatalError("Unknown tableView: \(tableView)")
     }
   }
 
@@ -477,6 +552,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       equipmentTypeTableView.reloadData()
       equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
       equipmentTypeTableView.isHidden = true
+      equipmentTypeImage.image = defineEquipmentImage(equipmentName: selectedEquipmentType)
     case entitiesTableView:
       let cell = entitiesTableView.cellForRow(at: selectedIndexPath!) as! EntityCell
 
@@ -499,6 +575,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 75
     case selectedInputsTableView:
       return 110
+    case harvestTableView:
+      return 150
     default:
       return 60
     }
@@ -510,6 +588,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 75
     case selectedInputsTableView:
       return 110
+    case harvestTableView:
+      return 150
     default:
       return 60
     }
@@ -519,14 +599,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
                               tableView: UITableView) {
     tableViewHeightConstraint.constant = tableView.contentSize.height
     viewHeightConstraint.constant = tableViewHeightConstraint.constant + 100
-  }
-
-  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
-    equipmentTypeTableView.isHidden = false
-    equipmentTypeTableView.layer.shadowColor = UIColor.black.cgColor
-    equipmentTypeTableView.layer.shadowOpacity = 1
-    equipmentTypeTableView.layer.shadowOffset = CGSize(width: -1, height: 1)
-    equipmentTypeTableView.layer.shadowRadius = 10
   }
 
   // MARK: - Core Data
@@ -555,6 +627,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createTargets(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     createDoers(intervention: newIntervention)
+    saveHarvest(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
@@ -652,6 +725,32 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return crops
   }
 
+  func saveHarvest(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for harvestEntity in harvests {
+      let harvest = Harvests(context: managedContext)
+      let type = harvestType.titleLabel?.text
+
+      harvest.interventions = intervention
+      harvest.type = type
+      harvest.number = harvestEntity.number
+      harvest.quantity = harvestEntity.quantity
+      harvest.unit = harvestEntity.unit
+      harvest.storages = harvestEntity.storages
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
   func createEquipments(intervention: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -662,14 +761,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for selectedEquipment in selectedEquipments {
       let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
-      let name = selectedEquipment.value(forKeyPath: "name") as! String
-      let type = selectedEquipment.value(forKey: "type") as! String
-      let equipmentUuid = selectedEquipment.value(forKey: "uuid") as! UUID
 
       equipment.setValue(intervention, forKey: "interventions")
-      equipment.setValue(name, forKey: "name")
-      equipment.setValue(type, forKey: "type")
-      equipment.setValue(equipmentUuid, forKey: "equipment")
+      equipment.setValue(selectedEquipment, forKey: "equipments")
     }
 
     do {
@@ -692,7 +786,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let isDriver = entity.value(forKey: "isDriver")
 
       doer.setValue(intervention, forKey: "interventions")
-      doer.setValue(UUID(), forKey: "uuid")
+      doer.setValue(entity, forKey: "entities")
       doer.setValue(isDriver, forKey: "isDriver")
     }
 
@@ -1004,4 +1098,3 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 }
-
