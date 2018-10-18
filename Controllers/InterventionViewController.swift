@@ -24,14 +24,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
-  var interventions = [NSManagedObject]() {
+  var interventions = [Interventions]() {
     didSet {
       tableView.reloadData()
     }
   }
 
-  var interventionButtons: [UIButton] = []
-
+  let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
+                           "CARE", "FERTILIZATION", "CROP_PROTECTION"]
+  var interventionButtons = [UIButton]()
   let dimView = UIView()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -85,7 +86,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let dateString = dateFormatter.string(from: date)
 
       if calendar.isDateInToday(date) {
-        synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
+        synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
       } else {
         synchroLabel.text = "last_synchronization".localized + dateString
       }
@@ -112,23 +113,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func initialiseInterventionButtons() {
     let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
-    let interventionNames: [String] = [
-      "IMPLANTATION".localized,
-      "GROUND_WORK".localized,
-      "IRRIGATION".localized,
-      "HARVEST".localized,
-      "CARE".localized,
-      "FERTILIZATION".localized,
-      "CROP_PROTECTION".localized
-    ]
 
     for buttonCount in 0...6 {
-
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
 
       interventionButton.backgroundColor = UIColor.white
       interventionButton.setBackgroundImage(interventionImages[buttonCount], for: .normal)
-      interventionButton.setTitle(interventionNames[buttonCount], for: .normal)
+      interventionButton.setTitle(interventionTypes[buttonCount].localized, for: .normal)
       interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false
@@ -176,99 +167,65 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
-    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
-
     let intervention = interventions[indexPath.row]
-    let targets = fetchTargets(of: intervention)
-    let workingPeriod = fetchWorkingPeriod(of: intervention)
-    let type = intervention.value(forKey: "type") as? String
+    let targets = fetchTargets(intervention)
+    let workingPeriod = fetchWorkingPeriod(intervention)
+    let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+    let stateColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.yellow, 2: UIColor.green]
 
-    cell.typeLabel.text = type?.localized
-    switch type {
-    case Intervention.InterventionType.Care.rawValue:
-      cell.typeImageView.image = UIImage(named: "care")!
-    case Intervention.InterventionType.CropProtection.rawValue:
-      cell.typeImageView.image = UIImage(named: "crop-protection")!
-    case Intervention.InterventionType.Fertilization.rawValue:
-      cell.typeImageView.image = UIImage(named: "fertilization")!
-    case Intervention.InterventionType.GroundWork.rawValue:
-      cell.typeImageView.image = UIImage(named: "ground-work")!
-    case Intervention.InterventionType.Harvest.rawValue:
-      cell.typeImageView.image = UIImage(named: "harvest")!
-    case Intervention.InterventionType.Implantation.rawValue:
-      cell.typeImageView.image = UIImage(named: "implantation")!
-    case Intervention.InterventionType.Irrigation.rawValue:
-      cell.typeImageView.image = UIImage(named: "irrigation")!
-    default:
-      cell.typeLabel.text = "error".localized
-    }
-
-    switch intervention.value(forKey: "status") as! Int {
-    case Intervention.Status.Created.rawValue:
-      cell.syncImage.backgroundColor = UIColor.orange
-    case Intervention.Status.Synced.rawValue:
-      cell.syncImage.backgroundColor = UIColor.yellow
-    case Intervention.Status.Validated.rawValue:
-      cell.syncImage.backgroundColor = UIColor.green
-    default:
-      cell.syncImage.backgroundColor = UIColor.purple
-    }
-
-    let executionDate = workingPeriod?.value(forKey: "executionDate") as? Date
-
-    cell.cropsLabel.text = updateCropsLabel(targets)
-    cell.infosLabel.text = intervention.value(forKey: "infos") as? String
-    if executionDate != nil {
-      cell.dateLabel.text = transformDate(date: executionDate!)
-    }
+    cell.typeLabel.text = intervention.type?.localized
+    cell.typeImageView.image = UIImage(named: assetName)
+    cell.syncImage.backgroundColor = stateColors[intervention.status]
+    cell.cropsLabel.text = updateCropsLabel(targets!)
+    cell.infosLabel.text = intervention.infos
+    cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
     cell.cropsLabel.sizeToFit()
     cell.infosLabel.sizeToFit()
+    cell.selectionStyle = .none
 
     return cell
   }
 
-  func fetchTargets(of intervention: NSManagedObject) -> [NSManagedObject] {
-
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [NSManagedObject]()
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Targets")
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
-    targetsFetchRequest.predicate = predicate
-
-    var targets: [NSManagedObject]!
-
-    do {
-      targets = try managedContext.fetch(targetsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    return targets
-  }
-
-  func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject? {
+  func fetchTargets(_ intervention: Interventions) -> [Targets]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
-    var workingPeriods: [NSManagedObject]!
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
+    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
     let predicate = NSPredicate(format: "interventions == %@", intervention)
+    targetsFetchRequest.predicate = predicate
 
-    workingPeriodsFetchRequest.predicate = predicate
     do {
-      workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+      let targets = try managedContext.fetch(targetsFetchRequest)
+      return targets
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return workingPeriods.first
+    return nil
+  }
+
+  func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriods> = WorkingPeriods.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    workingPeriodsFetchRequest.predicate = predicate
+
+    do {
+      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+      return workingPeriods.first
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
@@ -306,22 +263,19 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsEntity = NSEntityDescription.entity(forEntityName: "Interventions", in: managedContext)!
-    let workingPeriodsEntity = NSEntityDescription.entity(forEntityName: "WorkingPeriods", in: managedContext)!
-    let intervention = NSManagedObject(entity: interventionsEntity, insertInto: managedContext)
-    let workingPeriod = NSManagedObject(entity: workingPeriodsEntity, insertInto: managedContext)
+    let intervention = Interventions(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
 
-    intervention.setValue(type, forKey: "type")
-    intervention.setValue(infos, forKey: "infos")
-    intervention.setValue(status, forKey: "status")
-    workingPeriod.setValue(intervention, forKey: "interventions")
-    workingPeriod.setValue(executionDate, forKey: "executionDate")
+    intervention.type = type
+    intervention.infos = infos
+    intervention.status = status
+    workingPeriod.interventions = intervention
+    workingPeriod.executionDate = executionDate
 
     do {
       try managedContext.save()
@@ -335,10 +289,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
+    let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
 
-    if let type = (sender as? UIButton)?.titleLabel?.text {
-      destVC.interventionType = type
-    }
+    destVC.interventionType = interventionTypes[index]
   }
 
   @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
@@ -363,10 +316,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let date3 = makeDate(year: 2018, month: 7, day: 23, hour: 9, minute: 5, second: 0)
     let date4 = makeDate(year: 2017, month: 7, day: 5, hour: 9, minute: 5, second: 0)
 
-    createIntervention(type: Intervention.InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
-    createIntervention(type: Intervention.InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
-    createIntervention(type: Intervention.InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
-    createIntervention(type: Intervention.InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
+    createIntervention(type: InterventionType.Care.rawValue, infos: "Volume 50mL", status: 0, executionDate: date1)
+    createIntervention(type: InterventionType.CropProtection.rawValue, infos: "Kuhn Prolander", status: 0, executionDate: date2)
+    createIntervention(type: InterventionType.Fertilization.rawValue, infos: "PRIORI GOLD", status: 1, executionDate: date3)
+    createIntervention(type: InterventionType.GroundWork.rawValue, infos: "oui", status: 2, executionDate: date4)
   }
 
   // MARK: - Actions
@@ -377,7 +330,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
+    synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
     UserDefaults.standard.set(date, forKey: "lastSyncDate")
     UserDefaults.standard.synchronize()
 
@@ -388,8 +341,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for intervention in interventions {
-      if intervention.value(forKey: "status") as? Int == Intervention.Status.Created.rawValue {
-        intervention.setValue(Intervention.Status.Synced.rawValue, forKey: "status")
+      if intervention.status == InterventionState.Created.rawValue {
+        intervention.status = InterventionState.Synced.rawValue
       }
     }
 

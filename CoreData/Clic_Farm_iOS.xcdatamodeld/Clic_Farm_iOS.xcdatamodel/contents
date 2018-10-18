@@ -91,7 +91,7 @@
     <entity name="Interventions" representedClassName="Interventions" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="infos" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="waterQuantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="waterUnit" optional="YES" attributeType="String" syncable="YES"/>
@@ -178,15 +178,17 @@
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="150"/>
         <element name="Farms" positionX="-245.3203125" positionY="388.06640625" width="128" height="75"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="270"/>
+        <element name="Harvests" positionX="160" positionY="192" width="128" height="150"/>
         <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="118"/>
         <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="120"/>
         <element name="InterventionPhytosanitaries" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="285"/>
         <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="103"/>
         <element name="Materials" positionX="990" positionY="-139" width="128" height="135"/>
         <element name="Phytos" positionX="-578" positionY="-106" width="128" height="270"/>
         <element name="Seeds" positionX="153" positionY="-859" width="128" height="210"/>
+        <element name="Storages" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Targets" positionX="421" positionY="-36" width="128" height="118"/>
         <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
         <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>

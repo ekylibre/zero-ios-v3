@@ -145,6 +145,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(unitMeasureButton)
     contentView.addSubview(warningImage)
     contentView.addSubview(warningLabel)
+    self.selectionStyle = .none
     setupLayout()
   }
 

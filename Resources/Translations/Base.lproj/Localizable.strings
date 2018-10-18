@@ -508,7 +508,7 @@
 "locale" = "en_EN";
 
 // Synchronization
-"today_last_synchronization" = "Last synchronization %@:%@";
+"today_last_synchronization" = "Last synchronization %02d:%02d";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
 
