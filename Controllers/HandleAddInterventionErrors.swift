@@ -70,6 +70,26 @@ extension AddInterventionViewController {
     return true
   }
 
+  func harvestErrorHandler() -> Bool {
+    let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+
+    if harvests.count == 0 {
+      alert.message = "you_must_create_a_harvest_load".localized
+    } else {
+      for harvest in harvests {
+        if harvest.quantity == 0 {
+          alert.message = "you_must_enter_harvest_quantity".localized
+        }
+      }
+    }
+    if alert.message != "" {
+      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      present(alert, animated: true)
+      return false
+    }
+    return true
+  }
+
   func cropErrorHandler() -> Bool {
     let selectedCrops = fetchSelectedCrops()
 
@@ -128,15 +148,15 @@ extension AddInterventionViewController {
       return false
     }
     switch interventionType {
-    case Intervention.InterventionType.CropProtection.rawValue.localized:
+    case Intervention.InterventionType.CropProtection.rawValue:
       return cropProtectionErrorHandler()
-    case Intervention.InterventionType.Fertilization.rawValue.localized:
+    case Intervention.InterventionType.Fertilization.rawValue:
       return fertilizationErrorHandler()
-    case Intervention.InterventionType.Harvest.rawValue.localized:
-      return true
-    case Intervention.InterventionType.Implantation.rawValue.localized:
+    case Intervention.InterventionType.Harvest.rawValue:
+      return harvestErrorHandler()
+    case Intervention.InterventionType.Implantation.rawValue:
       return implantationErrorHandler()
-    case Intervention.InterventionType.Irrigation.rawValue.localized:
+    case Intervention.InterventionType.Irrigation.rawValue:
       return irrigationErrorHandler()
     default:
       return true
