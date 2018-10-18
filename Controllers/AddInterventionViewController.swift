@@ -603,7 +603,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Core Data
 
-  func createIntervention() {
+  @IBAction func createIntervention() {
+    if !checkErrorsAccordingInterventionType() {
+      return
+    }
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -639,6 +642,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+    performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
   func resetInputsAttributes(entity: String) {
@@ -682,6 +686,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func fetchSelectedCrops() -> [Crops] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [Crops]()
+    }
+
+    var crops: [Crops]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let predicate = NSPredicate(format: "isSelected == true")
+
+    cropsFetchRequest.predicate = predicate
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return crops
+  }
+
   func createTargets(intervention: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -704,25 +727,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  private func fetchSelectedCrops() -> [Crops] {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
-    }
-
-    var crops: [Crops]!
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-    let predicate = NSPredicate(format: "isSelected == %@", NSNumber(value: true))
-    cropsFetchRequest.predicate = predicate
-
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return crops
   }
 
   func saveHarvest(intervention: Interventions) {
@@ -833,6 +837,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Navigation
 
+  // INFO: Needed to perform the unwind segue
+  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
+
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
     switch segue.identifier {
@@ -841,11 +848,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.delegate = self
       destVC.cellsStrings = loadSpecies()
     default:
-      guard let button = sender as? UIButton, button == saveInterventionButton else {
-        return
-      }
-
-      createIntervention()
+      return
     }
   }
 

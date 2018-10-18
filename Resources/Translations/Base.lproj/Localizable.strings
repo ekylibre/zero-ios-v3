@@ -514,3 +514,5 @@
 
 "input_quantity" = "Or %.1f %@";
 "input_quantity_per_surface" = "Or %.1f %@ per hectare";
+
+"forgotten_password" = "Forgotten password?";

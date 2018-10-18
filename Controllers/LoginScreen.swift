@@ -52,7 +52,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
-        performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
+        performSegue(withIdentifier: "showNoInternetVC", sender: self)
       } else {
         let alert = UIAlertController(
           title: nil,
@@ -64,7 +64,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-      performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+      performSegue(withIdentifier: "showInterventionVC", sender: self)
     }
   }
 
@@ -97,7 +97,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.checkLoggedStatus(token: token)
       }
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-        performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+        performSegue(withIdentifier: "showInterventionVC", sender: self)
       }
     } else if buttonIsPressed && tfUsername.text!.count > 0 {
       authentificationService?.addNewUser(userName: tfUsername.text!)

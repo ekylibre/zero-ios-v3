@@ -121,7 +121,7 @@ extension InterventionViewController {
       newCrop.provisionalYield = crop.provisionalYield
       newCrop.species = crop.species.rawValue
       newCrop.startDate = dateFormatter.date(from: crop.startDate!)
-      newCrop.startDate = dateFormatter.date(from: crop.stopDate!)
+      newCrop.stopDate = dateFormatter.date(from: crop.stopDate!)
       let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
       let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
@@ -179,7 +179,7 @@ extension InterventionViewController {
     local.provisionalYield = updated.provisionalYield
     local.species = updated.species.rawValue
     local.startDate = dateFormatter.date(from: updated.startDate!)
-    local.startDate = dateFormatter.date(from: updated.stopDate!)
+    local.stopDate = dateFormatter.date(from: updated.stopDate!)
     let splitString = updated.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     local.surfaceArea = surfaceArea
@@ -207,7 +207,7 @@ extension InterventionViewController {
     crop.provisionalYield = new.provisionalYield
     crop.species = new.species.rawValue
     crop.startDate = dateFormatter.date(from: new.startDate!)
-    crop.startDate = dateFormatter.date(from: new.stopDate!)
+    crop.stopDate = dateFormatter.date(from: new.stopDate!)
     let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     crop.surfaceArea = surfaceArea
