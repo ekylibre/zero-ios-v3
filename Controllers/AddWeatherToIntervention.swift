@@ -13,7 +13,6 @@ extension AddInterventionViewController {
 
   // MARK: - Initialization
 
-
   func initializeWeatherButtons() {
     weatherButtons = [brokenClouds, clearSky, fewClouds, lightRain, mist, showerRain, snow, thunderstorm]
 

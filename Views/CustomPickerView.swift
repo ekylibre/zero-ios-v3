@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol CustomPickerViewProtocol {
   func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?)
 }

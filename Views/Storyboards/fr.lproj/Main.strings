@@ -86,7 +86,7 @@
 /* Class = "UILabel"; text = "km/h"; ObjectID = "W1a-qv-ooU"; */
 "W1a-qv-ooU.text" = "km/h";
 
-/* Class = "UIButton"; normalTitle = "ALREADY DONE"; ObjectID = "XRU-Wr-aoY"; */
+/* Class = "UIButton"; normalTitle = "REGISTER AN INTERVENTION"; ObjectID = "XRU-Wr-aoY"; */
 "XRU-Wr-aoY.normalTitle" = "ENREGISTRER UNE INTERVENTION";
 
 /* Class = "UIButton"; normalTitle = "Login"; ObjectID = "aQf-3V-e73"; */
