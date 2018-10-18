@@ -74,6 +74,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var negativeTemperature: UIButton!
   @IBOutlet weak var temperatureTextField: UITextField!
   @IBOutlet weak var windSpeedTextField: UITextField!
   @IBOutlet weak var brokenClouds: UIButton!
@@ -259,6 +260,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     initializeWeatherButtons()
     initWeather()
+    setupWeatherActions()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
     windSpeedTextField.delegate = self
@@ -826,13 +828,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let containsADot = textField.text?.contains(".")
+    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
     var invalidCharacters: CharacterSet!
 
-    if containsADot! {
+    if containsADot || textField.text?.count == 0 {
       invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
     } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
     }
 
     switch textField {
