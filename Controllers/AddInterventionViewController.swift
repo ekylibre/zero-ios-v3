@@ -604,7 +604,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // MARK: - Core Data
 
   @IBAction func createIntervention() {
-    if !checkErrorsInFunctionOfIntervention() {
+    if !checkErrorsAccordingInterventionType() {
       return
     }
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
