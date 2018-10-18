@@ -192,13 +192,10 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
   }
 
   private func checkPersonName() -> Bool {
-    if creationView.firstNameTextField.text!.isEmpty {
-      creationView.firstNameErrorLabel.text = "person_first_name_is_empty".localized
-      creationView.firstNameErrorLabel.isHidden = false
-      return false
-    } else if creationView.lastNameTextField.text!.isEmpty {
-      creationView.lastNameErrorLabel.text = "person_last_name_is_empty".localized
-      creationView.lastNameErrorLabel.isHidden = false
+    creationView.firstNameErrorLabel.isHidden = !creationView.firstNameTextField.text!.isEmpty
+    creationView.lastNameErrorLabel.isHidden = !creationView.lastNameTextField.text!.isEmpty
+
+    if (creationView.firstNameTextField.text!.isEmpty) || (creationView.lastNameTextField.text!.isEmpty) {
       return false
     }
     return true

@@ -38,8 +38,10 @@ class PersonCreationView: UIView, UITextFieldDelegate {
 
   lazy var firstNameErrorLabel: UILabel = {
     let firstNameErrorLabel = UILabel(frame: CGRect.zero)
+    firstNameErrorLabel.text = "person_first_name_is_empty".localized
     firstNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
     firstNameErrorLabel.textColor = AppColor.TextColors.Red
+    firstNameErrorLabel.isHidden = true
     firstNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
     return firstNameErrorLabel
   }()
@@ -62,8 +64,10 @@ class PersonCreationView: UIView, UITextFieldDelegate {
 
   lazy var lastNameErrorLabel: UILabel = {
     let lastNameErrorLabel = UILabel(frame: CGRect.zero)
+    lastNameErrorLabel.text = "person_last_name_is_empty".localized
     lastNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
     lastNameErrorLabel.textColor = AppColor.TextColors.Red
+    lastNameErrorLabel.isHidden = true
     lastNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
     return lastNameErrorLabel
   }()
@@ -121,9 +125,9 @@ class PersonCreationView: UIView, UITextFieldDelegate {
       lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 35),
       lastNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       lastNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      firstNameErrorLabel.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 5),
-      firstNameErrorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      firstNameErrorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      lastNameErrorLabel.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 5),
+      lastNameErrorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      lastNameErrorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
