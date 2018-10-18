@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Apollo
 import CoreData
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -41,7 +42,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
+
+    checkLocalData()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -292,10 +294,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     destVC.interventionType = interventionTypes[index]
   }
 
-  @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
-
-    if sender.source is AddInterventionViewController {
-      if let senderVC = sender.source as? AddInterventionViewController {
+  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
+    if segue.source is AddInterventionViewController {
+      if let senderVC = segue.source as? AddInterventionViewController {
         interventions.append(senderVC.newIntervention)
       }
       tableView.reloadData()
@@ -356,7 +357,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
     hideInterventionAdd()
-    performSegue(withIdentifier: "addIntervention", sender: sender)
+    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
   }
 
   @objc func hideInterventionAdd() {
