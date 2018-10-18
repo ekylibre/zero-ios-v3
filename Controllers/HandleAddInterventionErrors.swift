@@ -141,7 +141,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func checkErrorsInFunctionOfIntervention() -> Bool {
+  func checkErrorsAccordingInterventionType() -> Bool {
     if !cropErrorHandler() {
       return false
     } else if !checkIfSelectedDateMatchProductionPeriod(selectedDate: selectDateView.datePicker.date) {

@@ -253,29 +253,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject? {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
+    var workingPeriods: [NSManagedObject]!
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
     let predicate = NSPredicate(format: "interventions == %@", intervention)
+
     workingPeriodsFetchRequest.predicate = predicate
-
-    var workingPeriods: [NSManagedObject]!
-
     do {
       workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    if workingPeriods.first != nil {
-      return workingPeriods.first!
-    } else {
-      return nil
-    }
+    return workingPeriods.first
   }
 
   func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
