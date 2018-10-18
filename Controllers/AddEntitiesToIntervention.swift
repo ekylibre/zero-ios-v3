@@ -92,48 +92,55 @@ extension AddInterventionViewController: DoerCellDelegate {
     entitiesTableView.reloadData()
   }
 
-  func checkIfEntityIsAvaible() -> Bool {
-    if entityFirstName.text == "" {
-      entityNameWarning.isHidden = false
-      entityNameWarning.textColor = AppColor.TextColors.Red
-      entityNameWarning.text = "person_name_is_empty".localized
-      return false
+  @IBAction func createNewEntity(_ sender: Any) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
     }
-    for entity in entities {
-      if entityFirstName.text == entity.value(forKey: "firstName") as? String {
-        entityNameWarning.isHidden = false
-        entityNameWarning.textColor = AppColor.TextColors.Red
-        entityNameWarning.text = "person_name_not_available".localized
-        return false
-      }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entity = Entities(context: managedContext)
+
+    entity.isDriver = false
+    entity.firstName = entityFirstName.text
+    entity.lastName = entityLastName.text
+    entity.role = entityRole.text
+    entity.row = 0
+
+    do {
+      entity.ekyID = pushPerson(first: entityFirstName.text ?? "", last: entityLastName.text ?? "")
+      try managedContext.save()
+      entities.append(entity)
+      closeEntitiesCreationView(self)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
-    return true
   }
 
-  @IBAction func createNewEntity(_ sender: Any) {
-    if checkIfEntityIsAvaible() {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return
-      }
-
-      let managedContext = appDelegate.persistentContainer.viewContext
-      let entitiesTable = NSEntityDescription.entity(forEntityName: "Entities", in: managedContext)!
-      let entity = NSManagedObject(entity: entitiesTable, insertInto: managedContext)
-
-      entity.setValue(false, forKey: "isDriver")
-      entity.setValue(entityFirstName.text, forKeyPath: "firstName")
-      entity.setValue(entityLastName.text, forKeyPath: "lastName")
-      entity.setValue(entityRole.text, forKeyPath: "role")
-      entity.setValue(0, forKey: "row")
-
-      do {
-        try managedContext.save()
-        entities.append(entity)
-        closeEntitiesCreationView(self)
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
+  private func pushPerson(first: String, last: String) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
     }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushPersonMutation(farmId: farmID, firstName: first, lastName: last)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print(error)
+      } else if let resultError = result!.data!.createPerson!.errors {
+        print(resultError)
+      } else {
+        id = Int32(result!.data!.createPerson!.person!.id)!
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
   }
 
   func removeDoerCell(_ indexPath: IndexPath) {
@@ -168,6 +175,6 @@ extension AddInterventionViewController: DoerCellDelegate {
         })
       }
     }))
-    present(alert, animated: true)
+    self.present(alert, animated: true)
   }
 }

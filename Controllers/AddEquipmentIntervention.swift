@@ -193,9 +193,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
   }
 
   @IBAction func openEquipmentsCreationView(_ sender: Any) {
-    selectedEquipmentType = sortedEquipmentTypes[0]
-    equipmentTypeButton.setTitle(selectedEquipmentType, for: .normal)
-    equipmentTypeImage.image = defineEquipmentImage(equipmentName: selectedEquipmentType)
     equipmentDarkLayer.isHidden = false
     createEquipmentsView.isHidden = false
     UIView.animate(withDuration: 0.5, animations: {
@@ -208,68 +205,62 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipmentName.text = nil
     equipmentNumber.text = nil
     equipmentDarkLayer.isHidden = true
-    equipmentNameWarning.isHidden = true
     createEquipmentsView.isHidden = true
     fetchEntity(entityName: "Equipments", searchedEntity: &searchedEquipments, entity: &equipments)
     equipmentsTableView.reloadData()
   }
 
-  func checkIfEquipmentIsAvaible() -> Bool {
-    if equipmentName.text == "" {
-      equipmentNameWarning.isHidden = false
-      equipmentNameWarning.textColor = AppColor.TextColors.Red
-      equipmentNameWarning.text = "equipment_name_is_empty".localized
-      return false
-    }
-    for equipment in equipments {
-      if equipmentName.text == equipment.value(forKey: "name") as? String {
-        equipmentNameWarning.isHidden = false
-        equipmentNameWarning.textColor = AppColor.TextColors.Red
-        equipmentNameWarning.text = "equipment_name_not_available".localized
-        return false
-      }
-    }
-    return true
-  }
-
-  @objc func hideWarningMessage(_ sender: Any) {
-    equipmentNameWarning.isHidden = true
-    entityNameWarning.isHidden = true
-  }
-
   @IBAction func createNewEquipement(_ sender: Any) {
-    if checkIfEquipmentIsAvaible() {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return
-      }
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
+    let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
 
-      let managedContext = appDelegate.persistentContainer.viewContext
-      let equipmentsEntity = NSEntityDescription.entity(forEntityName: "Equipments", in: managedContext)!
-      let equipment = NSManagedObject(entity: equipmentsEntity, insertInto: managedContext)
+    equipment.setValue(equipmentName.text, forKeyPath: "name")
+    equipment.setValue(equipmentNumber.text, forKeyPath: "number")
+    equipment.setValue(selectedEquipmentType, forKeyPath: "type")
+    equipment.setValue(UUID(), forKey: "uuid")
+    equipment.setValue(0, forKey: "row")
 
-      equipment.setValue(equipmentName.text, forKeyPath: "name")
-      equipment.setValue(equipmentNumber.text, forKeyPath: "number")
-      equipment.setValue(selectedEquipmentType, forKeyPath: "type")
-      equipment.setValue(UUID(), forKey: "uuid")
-      equipment.setValue(0, forKey: "row")
-
-      do {
-        try managedContext.save()
-        equipments.append(equipment)
-        closeEquipmentsCreationView(self)
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
+    do {
+      let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;              #warning("Wrong type passed")
+      let ekyID = pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
+      equipment.setValue(ekyID, forKey: "ekyID")
+      try managedContext.save()
+      equipments.append(equipment)
+      closeEquipmentsCreationView(self)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
-  @IBAction func equipmentTypeSelection(_ sender: UIButton) {
-    if selectedEquipmentType == sortedEquipmentTypes[0] {
-      equipmentTypeTableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
-    } else {
-    equipmentTypeTableView.scrollToRow(at: IndexPath.init(row: (selectedIndexPath?.row)!, section: 0), at: .top, animated: false)
+  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
     }
-    equipmentTypeTableView.isHidden = false
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushEquipmentMutation(farmId: farmID, type: type, name: name, number: number)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print(error)
+      } else if let resultError = result!.data!.createEquipment!.errors {
+        print(resultError)
+      } else {
+        id = Int32(result!.data!.createEquipment!.equipment!.id)!
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
   }
 
   func removeEquipmentCell(_ indexPath: IndexPath) {
@@ -304,6 +295,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
         })
       }
     }))
-    present(alert, animated: true)
+    self.present(alert, animated: true)
   }
 }

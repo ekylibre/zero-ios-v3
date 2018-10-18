@@ -368,7 +368,9 @@
 "chose_unit" = "Unit";
 
 "temperature" = "Temperature";
+"temp" = "Temp.: %@ °C |";
 "wind" = "Wind";
+"wind" = " wind: %@ km/h";
 "wind_speed" = "Wind speed";
 
 "quantity_cannot_be_null" = "Quantity cannot be null";
@@ -385,7 +387,7 @@
 "authentificating" = "Authentificating, please wait…";
 "create" = "Create";
 "volume" = "Volume";
-"volume_cannot_be_null" = "Le volume ne peut être nul";
+"volume_cannot_be_null" = "Volume cannot be null";
 "finish" = "Terminer";
 "pause" = "Pause";
 "speed" = "Vitesse";
@@ -438,3 +440,6 @@
 "today_last_synchronization" = "Last synchronization %@:%@";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
+
+"input_quantity" = "Or %.1f %@";
+"input_quantity_per_surface" = "Or %.1f %@ per hectare";
