@@ -514,6 +514,18 @@
             "deprecationReason": null
           },
           {
+            "name": "referenceId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": true,
+            "deprecationReason": "referenceId is deprecated, please use referenceID instead"
+          },
+          {
             "name": "species",
             "description": null,
             "args": [],

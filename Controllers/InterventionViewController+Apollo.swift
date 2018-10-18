@@ -1,8 +1,8 @@
 //
-//  ApolloQuery.swift
+//  InterventionViewController+Apollo.swift
 //  Clic&Farm-iOS
 //
-//  Created by Jonathan DE HAAY on 17/09/2018.
+//  Created by Guillaume Roux on 19/09/2018.
 //  Copyright © 2018 Ekylibre. All rights reserved.
 //
 
@@ -10,29 +10,33 @@ import UIKit
 import Apollo
 import CoreData
 
-class ApolloQuery {
+extension InterventionViewController {
 
-  // MARK: - Properties
+  // MARK: - Initialization
 
-  let appDelegate = UIApplication.shared.delegate as! AppDelegate
+  func checkLocalData() {
+    initializeApolloClient()
 
-  // MARK: - Update
-
-  func defineLastSynchronisationDate() -> String? {
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
-    var lastSyncDate: String?
-
-    if date != nil {
-      lastSyncDate = dateFormatter.string(from: date!)
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    if !UserDefaults.standard.bool(forKey: "hasBeenLaunchedBefore") {
+      loadRegisteredInputs()
     }
-    return lastSyncDate
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
-  // MARK: - Queries: Farms
+  private func initializeApolloClient() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
+    let configuation = URLSessionConfiguration.default
+    let authService = AuthentificationService(username: "", password: "")
+    let token = authService.oauth2.accessToken!
+
+    configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
+    appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+  }
 
   func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
     let apollo = appDelegate.apollo!
@@ -95,6 +99,8 @@ class ApolloQuery {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
+
+  // MARK: - Farms
 
   private func saveFarms(_ farms: [FarmQuery.Data.Farm]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -200,6 +206,7 @@ class ApolloQuery {
     let splitString = updated.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     local.surfaceArea = surfaceArea
+
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -235,6 +242,226 @@ class ApolloQuery {
     }
   }
 
+  // MARK: - Articles
+
+  private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for article in articles {
+      switch article.type.rawValue {
+      case "SEED":
+        saveSeed(managedContext, article)
+      case "CHEMICAL":
+        savePhyto(managedContext, article)
+      case "FERTILIZER":
+        saveFertilizer(managedContext, article)
+      case "MATERIAL":
+        saveMaterial(managedContext, article)
+      default:
+        fatalError(article.type.rawValue + ": Unknown value of TypeEnum")
+      }
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func saveSeed(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var seeds: [Seeds]
+      let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      seedsFetchRequest.predicate = predicate
+
+      do {
+        seeds = try managedContext.fetch(seedsFetchRequest)
+        seeds.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let seed = Seeds(context: managedContext)
+
+      seed.registered = false
+      seed.ekyID = Int32(article.id)!
+      seed.variety = (article.variety == nil) ? article.name : article.variety
+      seed.specie = article.species?.rawValue
+      seed.unit = article.unit.rawValue
+      seed.used = false
+    }
+  }
+
+  private func savePhyto(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var phytos: [Phytos]
+      let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      phytosFetchRequest.predicate = predicate
+
+      do {
+        phytos = try managedContext.fetch(phytosFetchRequest)
+        phytos.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let phyto = Phytos(context: managedContext)
+
+      phyto.registered = false
+      phyto.ekyID = Int32(article.id)!
+      phyto.name = article.name
+      phyto.unit = article.unit.rawValue
+      phyto.used = false
+    }
+  }
+
+  private func saveFertilizer(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    if article.referenceId != nil {
+      var fertilizers: [Fertilizers]
+      let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      fertilizersFetchRequest.predicate = predicate
+
+      do {
+        fertilizers = try managedContext.fetch(fertilizersFetchRequest)
+        fertilizers.first?.ekyID = Int32(article.id)!
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
+    } else {
+      let fertilizer = Fertilizers(context: managedContext)
+
+      fertilizer.registered = false
+      fertilizer.ekyID = Int32(article.id)!
+      fertilizer.name = article.name
+      fertilizer.unit = article.unit.rawValue
+      fertilizer.used = false
+    }
+  }
+
+  private func saveMaterial(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
+    let material = Materials(context: managedContext)
+
+    material.name = article.name
+    material.ekyID = Int32(article.id)!
+    material.unit = article.unit.rawValue
+  }
+
+  private func checkArticlesData(articles : [FarmQuery.Data.Farm.Article]) {
+    let types = ["SEED": "Seeds", "CHEMICAL": "Phytos", "FERTILIZER": "Fertilizers", "MATERIAL": "Materials"]
+
+    for article in articles {
+      let type = types[article.type.rawValue]!
+      let localArticle = fetchArticle(type: type, ekyID: article.id)
+
+      if let localArticle = localArticle {
+        updateArticle(local: localArticle, updated: article)
+      } else {
+        insertArticle(type, article)
+      }
+    }
+  }
+
+  private func fetchArticle(type: String, ekyID: String) -> NSManagedObject? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    var articles = [NSManagedObject]()
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let articlesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: type)
+    let predicate = NSPredicate(format: "ekyID == %@", ekyID)
+    articlesFetchRequest.predicate = predicate
+
+    do {
+      articles = try managedContext.fetch(articlesFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return articles.first
+  }
+
+  private func updateArticle(local: NSManagedObject, updated: FarmQuery.Data.Farm.Article) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    if local is Seeds {
+      return
+    } else {
+      local.setValue(updated.name, forKey: "name")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func insertArticle(_ type: String, _ new: FarmQuery.Data.Farm.Article) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let articleEntity = NSEntityDescription.entity(forEntityName: type, in: managedContext)!
+    let article = NSManagedObject(entity: articleEntity, insertInto: managedContext)
+    let variety = (new.variety == nil) ? new.name : new.variety
+
+    if new.type.rawValue != "MATERIAL" {
+      article.setValue((new.referenceId != nil), forKey: "registered")
+    }
+    
+    article.setValue(Int(new.id), forKey: "ekyID")
+    article.setValue(new.unit.rawValue, forKey: "unit")
+    article.setValue(false, forKey: "used")
+
+    if new.referenceId != nil {
+      article.setValue(Int(new.referenceId!), forKey: "referenceID")
+    }
+
+    if new.type.rawValue == "SEED" {
+      article.setValue(new.species?.rawValue, forKey: "specie")
+      article.setValue(variety, forKey: "variety")
+    } else if new.type.rawValue == "CHEMICAL"{
+      article.setValue(new.name, forKey: "name")
+      article.setValue(new.marketingAuthorizationNumber, forKey: "maaID")
+    } else {
+      article.setValue(new.name, forKey: "name")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  // MARK: - Update
+
+  func defineLastSynchronisationDate() -> String? {
+    let dateFormatter = DateFormatter()
+
+    dateFormatter.timeZone = TimeZone(identifier: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
+    var lastSyncDate: String?
+
+    if date != nil {
+      lastSyncDate = dateFormatter.string(from: date!)
+    }
+    return lastSyncDate
+  }
 
   // MARK: Equipments
 
@@ -275,7 +502,6 @@ class ApolloQuery {
     equipment.name = fetchedEquipment.name
     equipment.number = fetchedEquipment.number
     equipment.ekyID = (fetchedEquipment.id as NSString).intValue
-    equipment.row = 0
 
     do {
       try managedContext.save()
@@ -338,8 +564,6 @@ class ApolloQuery {
     person.firstName = fetchedPerson.firstName
     person.lastName = fetchedPerson.lastName
     person.ekyID = (fetchedPerson.id as NSString).intValue
-    person.isDriver = false
-    person.row = 0
 
     do {
       try managedContext.save()
@@ -877,7 +1101,7 @@ class ApolloQuery {
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
-    intervention.status = (fetchedIntervention.validatedAt == nil ? Intervention.Status.Synchronised : Intervention.Status.Validated).rawValue
+    intervention.status = Int16((fetchedIntervention.validatedAt == nil ? Intervention.Status.Synced : Intervention.Status.Validated).rawValue)
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
@@ -926,7 +1150,7 @@ class ApolloQuery {
       let intervention = try managedContext.fetch(interventionFetchRequest)
 
       if intervention.count > 0 {
-        intervention.first?.status = (fetchedIntervention.validatedAt == nil ? Intervention.Status.Synchronised : Intervention.Status.Validated).rawValue
+        intervention.first?.status = Int16((fetchedIntervention.validatedAt == nil ? Intervention.Status.Synced : Intervention.Status.Validated).rawValue)
         try managedContext.save()
       }
     } catch let error as NSError {

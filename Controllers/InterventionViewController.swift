@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Apollo
 import CoreData
 import Apollo
 
@@ -24,8 +25,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
+  let appDelegate = UIApplication.shared.delegate as! AppDelegate
   var userDatabase = UsersDatabase()
-  var apolloQuery = ApolloQuery()
   var interventions = [Interventions]() {
     didSet {
       tableView.reloadData()
@@ -43,7 +44,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -102,7 +102,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     tableView.refreshControl = refreshControl
     refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
-    initializeApolloClient()
+    checkLocalData()
     if Connectivity.isConnectedToInternet() {
       fetchInterventions()
       synchronise(self)
@@ -181,18 +181,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       return authService.oauth2.accessToken!
     }
   }
-
-  func initializeApolloClient() {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
-    let configuation = URLSessionConfiguration.default
-    let authService = AuthentificationService(username: "", password: "")
-    let token = checkIfTokenIsValid(authService: authService)
-
-    configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
-    appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
-  }
-
+  
   func fetchFarmNameAndId() -> String? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
@@ -252,9 +241,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let intervention = interventions[indexPath.row]
     let targets = fetchTargets(of: intervention)
     let workingPeriod = fetchWorkingPeriod(of: intervention)
+    let type = intervention.value(forKey: "type") as? String
 
-    cell.typeLabel.text = (intervention.value(forKey: "type") as? String)?.localized
-    switch intervention.value(forKey: "type") as! String {
+    cell.typeLabel.text = type?.localized
+    switch type {
     case Intervention.InterventionType.Care.rawValue:
       cell.typeImageView.image = UIImage(named: "care")!
     case Intervention.InterventionType.CropProtection.rawValue:
@@ -273,18 +263,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.typeLabel.text = "error".localized
     }
 
-    switch intervention.value(forKey: "status") as! Int16 {
-    case Intervention.Status.OutOfSync.rawValue:
+    switch intervention.status {
+    case Int16(Intervention.Status.Created.rawValue):
       let image = UIImage(named: "out-of-sync")?.withRenderingMode(.alwaysTemplate)
 
       cell.syncImage.image = image
       cell.syncImage.tintColor = UIColor.orange
-    case Intervention.Status.Synchronised.rawValue:
+    case Int16(Intervention.Status.Synced.rawValue):
       let image = UIImage(named: "synchronised")?.withRenderingMode(.alwaysTemplate)
 
       cell.syncImage.image = image
       cell.syncImage.tintColor = UIColor.green
-    case Intervention.Status.Validated.rawValue:
+    case Int16(Intervention.Status.Validated.rawValue):
       let image = UIImage(named: "validated")?.withRenderingMode(.alwaysTemplate)
 
       cell.syncImage.image = image
@@ -293,10 +283,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       cell.syncImage.backgroundColor = UIColor.purple
     }
 
+    let executionDate = workingPeriod?.value(forKey: "executionDate") as? Date
+
     cell.cropsLabel.text = updateCropsLabel(targets)
     cell.infosLabel.text = intervention.value(forKey: "infos") as? String
-    if workingPeriod != nil {
-      cell.dateLabel.text = transformDate(date: workingPeriod?.value(forKey: "executionDate") as! Date)
+    if executionDate != nil {
+      cell.dateLabel.text = transformDate(date: executionDate!)
     }
 
     // Resize labels according to their text
@@ -327,18 +319,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func fetchWorkingPeriod(of intervention: NSManagedObject) -> NSManagedObject? {
-
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
+    var workingPeriods: [NSManagedObject]!
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriodsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WorkingPeriods")
     let predicate = NSPredicate(format: "interventions == %@", intervention)
+
     workingPeriodsFetchRequest.predicate = predicate
-
-    var workingPeriods: [NSManagedObject]!
-
     do {
       workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
     } catch let error as NSError {
@@ -462,7 +452,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    apolloQuery.queryFarms { (success) in
+    queryFarms { (success) in
       if success {
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
@@ -498,9 +488,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
       for intervention in interventions {
-        intervention.ekyID = apolloQuery.pushIntervention(intervention: intervention)
+        intervention.ekyID = pushIntervention(intervention: intervention)
         if intervention.ekyID != 0 {
-          intervention.status = Intervention.Status.Synchronised.rawValue
+          intervention.status = Int16(Intervention.Status.Synced.rawValue)
         }
         try managedContext.save()
       }
@@ -511,7 +501,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @objc func action(sender: UIButton) {
     hideInterventionAdd()
-    performSegue(withIdentifier: "addIntervention", sender: sender)
+    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
   }
 
   @objc func hideInterventionAdd() {

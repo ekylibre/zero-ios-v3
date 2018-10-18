@@ -117,19 +117,45 @@ extension AddInterventionViewController: DoerCellDelegate {
     let managedContext = appDelegate.persistentContainer.viewContext
     let entity = Entities(context: managedContext)
 
-    entity.isDriver = false
     entity.firstName = entityFirstName.text
     entity.lastName = entityLastName.text
     entity.role = entityRole.text
-    entity.row = 0
 
     do {
+      entity.ekyID = pushPerson(first: entityFirstName.text ?? "", last: entityLastName.text ?? "")
       try managedContext.save()
       entities.append(entity)
       closeEntitiesCreationView(self)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  private func pushPerson(first: String, last: String) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushPersonMutation(farmId: farmID, firstName: first, lastName: last)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print(error)
+      } else if let resultError = result!.data!.createPerson!.errors {
+        print(resultError)
+      } else {
+        id = Int32(result!.data!.createPerson!.person!.id)!
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
   }
 
   func removeDoerCell(_ indexPath: IndexPath) {

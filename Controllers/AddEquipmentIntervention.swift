@@ -39,7 +39,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     types = types.sorted()
     for type in types {
-       translatedTypes.append(type.localized)
+      translatedTypes.append(type.localized)
     }
     return translatedTypes
   }
@@ -221,9 +221,11 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     equipment.name = equipmentName.text
     equipment.number = equipmentNumber.text
     equipment.type = selectedEquipmentType
-    equipment.row = 0
 
     do {
+      let type = EquipmentTypeEnum(rawValue: "AIRPLANTER")!;              #warning("Wrong type passed")
+      let ekyID = pushEquipment(type: type, name: equipmentName.text ?? "", number: equipmentNumber.text)
+      equipment.setValue(ekyID, forKey: "ekyID")
       try managedContext.save()
       equipments.append(equipment)
       closeEquipmentsCreationView(self)
@@ -247,6 +249,33 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+  }
+
+  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushEquipmentMutation(farmId: farmID, type: type, name: name, number: number)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print(error)
+      } else if let resultError = result!.data!.createEquipment!.errors {
+        print(resultError)
+      } else {
+        id = Int32(result!.data!.createEquipment!.equipment!.id)!
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
   }
 
   func removeEquipmentCell(_ indexPath: IndexPath) {

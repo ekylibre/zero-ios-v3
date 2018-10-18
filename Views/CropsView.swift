@@ -339,7 +339,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     } else {
       let cropString = selectedCropsCount < 2 ? "crop".localized : "crops".localized
 
-      selectedCropsLabel.text = String(format: cropString, selectedCropsCount) + String(format: " • %.1f ha", selectedSurfaceArea)
+      selectedCropsLabel.text = String(format: cropString, selectedCropsCount) +
+        String(format: " • %.1f ha", selectedSurfaceArea)
     }
   }
 }

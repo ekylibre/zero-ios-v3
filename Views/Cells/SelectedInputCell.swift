@@ -122,7 +122,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "non_authorized_mix".localized
+    warningLabel.text = "unauthorized_mixing".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
   }()
@@ -204,13 +204,13 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let containsADot = textField.text?.contains(".")
+    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
     var invalidCharacters: CharacterSet!
 
-    if containsADot! {
+    if containsADot || textField.text?.count == 0 {
       invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
     } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.").inverted
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
     }
     return string.rangeOfCharacter(
       from: invalidCharacters,

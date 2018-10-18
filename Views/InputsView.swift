@@ -100,10 +100,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
-    if !fetchInputs() {
-      loadRegisteredInputs()
-      tableView.reloadData()
-    }
+    fetchInputs()
   }
 
   private func setupView() {
@@ -200,11 +197,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fromSeeds = isSearching ? filteredInputs : seeds
       let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
       let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
+      let isRegistered = fromSeeds[indexPath.row].value(forKey: "registered") as! Bool
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
       cell.specieLabel.text = specie?.localized
+      cell.starImageView.isHidden = isRegistered
       return cell
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
@@ -228,12 +227,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
       let name = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
+      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
 
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = name?.localized
       cell.natureLabel.text = nature?.localized
-      let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
       cell.starImageView.isHidden = isRegistered
       return cell
     default:
@@ -250,36 +249,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    switch segmentedControl.selectedSegmentIndex {
-    case 0:
-      let fromSeeds = isSearching ? filteredInputs : seeds
+    let inputs: [Int: [NSManagedObject]] = [0: seeds, 1: phytos, 2: fertilizers]
+    let fromInputs = isSearching ? filteredInputs : inputs[segmentedControl.selectedSegmentIndex]!
 
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : seeds[indexPath.row].setValue(true, forKey: "used")
-      let selectedSeed = addInterventionViewController?.createSelectedInput(input: fromSeeds[indexPath.row], entityName: "InterventionSeeds", relationShip: "seeds")
-      if selectedSeed != nil {
-        addInterventionViewController?.selectedInputs.append(selectedSeed!)
-      }
-    case 1:
-      let fromPhytos = isSearching ? filteredInputs : phytos
-
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : phytos[indexPath.row].setValue(true, forKey: "used")
-      let selectedPhyto = addInterventionViewController?.createSelectedInput(input: fromPhytos[indexPath.row], entityName: "InterventionPhytosanitaries", relationShip: "phytos")
-      if selectedPhyto != nil {
-        addInterventionViewController?.selectedInputs.append(selectedPhyto!)
-      }
-    case 2:
-      let fromFertilizers = isSearching ? filteredInputs : fertilizers
-
-      isSearching ? filteredInputs[indexPath.row].setValue(true, forKey: "used") : fertilizers[indexPath.row].setValue(true, forKey: "used")
-      let selectedFertilizer = addInterventionViewController?.createSelectedInput(input: fromFertilizers[indexPath.row], entityName: "InterventionFertilizers", relationShip: "fertilizers")
-      if selectedFertilizer != nil {
-        addInterventionViewController?.selectedInputs.append(selectedFertilizer!)
-      }
-    default:
-      print("Error")
-    }
-    addInterventionViewController?.selectedInputsTableView.reloadData()
-    addInterventionViewController?.closeInputsSelectionView()
+    fromInputs[indexPath.row].setValue(true, forKey: "used")
+    tableView.reloadData()
+    addInterventionViewController?.selectInput(fromInputs[indexPath.row])
   }
 
   // MARK: - Search bar
@@ -313,9 +288,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Core Data
 
-  private func fetchInputs() -> Bool {
+  private func fetchInputs() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return false
+      return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
@@ -330,12 +305,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-
-    if seeds.count < 1 || phytos.count < 1 || fertilizers.count < 1 {
-      return false
-    }
     sortInputs()
-    return true
   }
 
   private func sortInputs() {
@@ -496,7 +466,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.unit = "KILOGRAM_PER_HECTARE"
     seed.used = false
     seeds.append(seed)
-    pushInput(unit: ArticleUnitEnum.liter, name: seed.variety!, type: ArticleTypeEnum.seed, managedContext: managedContext, input: seed)
+
+    do {
+      seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: SpecieEnum.alliumAscalonicum.rawValue, specie: specie, type: ArticleTypeEnum.seed); #warning("wrong specie passed")
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   private func createPhyto(name: String, firmName: String, _ maaID: String, _ inFieldReentryDelay: Int) {
@@ -517,6 +493,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phytos.append(phyto)
 
     do {
+      phyto.ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -539,10 +516,68 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizers.append(fertilizer)
 
     do {
+      fertilizer.ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  // MARK: - GraphQL
+
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print(error)
+      } else if let resultError = result!.data!.createArticle!.errors {
+        print(resultError)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
+                                       specie: SpecieEnum(rawValue: specie), variety: variety)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print(error)
+      } else if let resultError = result!.data!.createArticle!.errors {
+        print(resultError)
+      } else {
+        id = Int32(result!.data!.createArticle!.article!.id)!
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
   }
 
   // MARK: - Actions
@@ -606,7 +641,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return
     }
     sortInputs()
-    tableView.reloadData()
     dimView.isHidden = true
   }
 

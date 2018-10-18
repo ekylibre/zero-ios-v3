@@ -18,64 +18,73 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   @IBAction func collapseInputsView(_ sender: Any) {
-    if inputsHeightConstraint.constant != 70 {
-      UIView.animate(withDuration: 0.5, animations: {
-        self.selectedInputsTableView.isHidden = true
-        self.inputsHeightConstraint.constant = 70
-        self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        self.view.layoutIfNeeded()
-      })
+    let shouldExpand = (inputsHeightConstraint.constant == 70)
+
+    selectedInputsTableView.isHidden = !shouldExpand
+    inputsCollapseButton.imageView!.transform = inputsCollapseButton.imageView!.transform.rotated(by: CGFloat.pi)
+    view.layoutIfNeeded()
+
+    if shouldExpand {
+      resizeViewAndTableView(viewHeightConstraint: self.inputsHeightConstraint,
+        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+        tableView: self.selectedInputsTableView)
     } else {
-      UIView.animate(withDuration: 0.5, animations: {
-        self.selectedInputsTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.inputsHeightConstraint,
-          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-          tableView: self.selectedInputsTableView)
-        self.inputsCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-        self.view.layoutIfNeeded()
-      })
+      inputsHeightConstraint.constant = 70
     }
-    showEntitiesNumber(
-      entities: selectedInputs,
-      constraint: inputsHeightConstraint,
-      numberLabel: inputsNumber,
-      addEntityButton: addInputsButton)
+    showEntitiesNumber(entities: selectedInputs, constraint: inputsHeightConstraint,
+      numberLabel: inputsNumber, addEntityButton: addInputsButton)
   }
 
   func closeInputsSelectionView() {
-    dimView.isHidden = true
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
+
     inputsView.isHidden = true
+    dimView.isHidden = true
 
     if selectedInputs.count > 0 {
-      UIView.animate(withDuration: 0.5, animations: {
-        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-        self.inputsCollapseButton.isHidden = false
-        self.selectedInputsTableView.isHidden = false
-        self.resizeViewAndTableView(
-          viewHeightConstraint: self.inputsHeightConstraint,
-          tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-          tableView: self.selectedInputsTableView)
-        self.inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi - 3.14159)
-        self.view.layoutIfNeeded()
-      })
+      inputsCollapseButton.isHidden = false
+      selectedInputsTableView.isHidden = false
+      resizeViewAndTableView(
+        viewHeightConstraint: self.inputsHeightConstraint,
+        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+        tableView: self.selectedInputsTableView)
+      inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+      view.layoutIfNeeded()
     }
     selectedInputsTableView.reloadData()
   }
 
-  func createSelectedInput(input: NSManagedObject, entityName: String, relationShip: String) -> NSManagedObject? {
+  func selectInput(_ input: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
+      return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedInputs = NSEntityDescription.entity(forEntityName: entityName, in: managedContext)!
-    let selectedInput = NSManagedObject(entity: selectedInputs, insertInto: managedContext)
-    let unit = input.value(forKey: "unit")
 
-    selectedInput.setValue(unit, forKey: "unit")
-    selectedInput.setValue(input, forKey: relationShip)
-    return selectedInput
+    switch input {
+    case let seed as Seeds:
+      let selectedSeed = InterventionSeeds(context: managedContext)
+      selectedSeed.unit = seed.unit
+      selectedSeed.seeds = seed
+      selectedInputs.append(selectedSeed)
+    case let phyto as Phytos:
+      let selectedPhyto = InterventionPhytosanitaries(context: managedContext)
+      selectedPhyto.unit = phyto.unit
+      selectedPhyto.phytos = phyto
+      selectedInputs.append(selectedPhyto)
+    case let fertilizer as Fertilizers:
+      let selectedFertilizer = InterventionFertilizers(context: managedContext)
+      selectedFertilizer.unit = fertilizer.unit
+      selectedFertilizer.fertilizers = fertilizer
+      selectedInputs.append(selectedFertilizer)
+    default:
+      fatalError("Input type not found")
+    }
+
+    selectedInputsTableView.reloadData()
+    closeInputsSelectionView()
   }
 
   func resetInputsUsedAttribute(index: Int) {
@@ -136,29 +145,29 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       default:
         return
       }
-      cell.surfaceQuantity.text = String(format: "Soit %.1f %@", efficiency, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "input_quantity".localized, efficiency, (unit.components(separatedBy: "/")[0]))
     } else {
       efficiency = quantity / surfaceArea
-      cell.surfaceQuantity.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
+      cell.surfaceQuantity.text = String(format: "input_quantity_per_surface".localized, efficiency, unit)
     }
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
 
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = (cell.inputQuantity.text! as NSString).doubleValue
+    let quantity = Float(cell.inputQuantity.text!)
     let unit = cell.unitMeasureButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false
-    if quantity == 0 {
+    if quantity == 0 || quantity == nil {
       let error = (cell.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
       cell.surfaceQuantity.text = error
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
-    } else if totalLabel.text == "select_crops".localized {
+    } else if totalLabel.text == "select_crops".localized.uppercased() {
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
-      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: Float(quantity), indexPath: indexPath)
+      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }
   }
 
