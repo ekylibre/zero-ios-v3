@@ -10,7 +10,7 @@ import UIKit
 import OAuth2
 import CoreData
 
-class LoginScreen: UsersDatabase, UITextFieldDelegate {
+class LoginScreen: UIViewController, UITextFieldDelegate {
 
   // MARK: - Properties
 
@@ -28,6 +28,10 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    
     tfUsername.delegate = self
     tfPassword.delegate = self
     textView.text = "welcome_text".localized
@@ -39,7 +43,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
-      if entityIsEmpty(entity: "Users") {
+      if appDelegate.entityIsEmpty(entity: "Users") {
         authentificationService?.logout()
       }
       self.authentifyUser()
@@ -88,7 +92,11 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   // MARK: - Actions
 
   func authentifyUser() {
-    if !entityIsEmpty(entity: "Users") {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    if !appDelegate.entityIsEmpty(entity: "Users") {
       authentificationService?.authorize(presenting: self)
       var token = authentificationService?.oauth2.accessToken
 

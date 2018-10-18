@@ -30,7 +30,6 @@
 		044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D46213816C0001A5D3D /* ListProtocol.swift */; };
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
-		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
 		0480CA5621650DDB0039FCB9 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5321650DDB0039FCB9 /* String+FloatValue.swift */; };
 		0480CA5721650DDB0039FCB9 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5421650DDB0039FCB9 /* UIApplication+StatusBar.swift */; };
 		0480CA5821650DDB0039FCB9 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5521650DDB0039FCB9 /* Localizable.swift */; };
@@ -109,7 +108,6 @@
 		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		047B57CF2108618200C48F68 /* AuthentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
-		047BF0C621060AE4009F3945 /* UsersDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDatabase.swift; sourceTree = "<group>"; };
 		0480CA5321650DDB0039FCB9 /* String+FloatValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FloatValue.swift"; sourceTree = "<group>"; };
 		0480CA5421650DDB0039FCB9 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
 		0480CA5521650DDB0039FCB9 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				6B81CD572166597D00D2DCF7 /* InterventionState.swift */,
 				6BA3FEDB216653490070DA35 /* InterventionType.swift */,
-				047BF0C621060AE4009F3945 /* UsersDatabase.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -532,7 +529,6 @@
 				041855782142A20F0077A715 /* AddWeatherToIntervention.swift in Sources */,
 				043D4494214A9D0200B5FD59 /* AddIrrigation.swift in Sources */,
 				0412B7892126B62500976DB6 /* AddEntitiesToIntervention.swift in Sources */,
-				047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */,
 				6BEA65DD2105CD820072840F /* LoginScreen.swift in Sources */,
 				041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
