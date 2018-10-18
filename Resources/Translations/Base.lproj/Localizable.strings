@@ -335,13 +335,18 @@
 "phytos" = "Phytos";
 "all" = "All";
 
-"create_seed_title" = "Create new seed";
-"create_phyto_title" = "Create new phyto";
-"create_ferti_title" = "Create new fertilizer";
-"create_storage_title" = "Create new storage";
-"create_material_title" = "Create new material";
-"create_equipment_title" = "Create new equipment";
-"create_person_title" = "Create new person";
+"add" = "+ Add";
+"add_equipment" = "+ Add equipment";
+"add_material" = "+ Add material";
+"add_person" = "+ Add person";
+"add_load" = "+ Add load";
+"select_crops" = "+ Select";
+"no_crop_selected" = "No crop selected";
+
+"selecting_crops" = "Select a crop";
+"selecting_materials" = "Select a material";
+"selecting_equipments" = "Select a equipment";
+"selecting_persons" = "Select a person";
 
 "create_new_seed" = "+ Create new seed";
 "create_new_phyto" = "+ Create new phyto";
@@ -350,24 +355,33 @@
 "create_new_equipment" = "+ Create new equipment";
 "create_new_person" = "+ Create new person";
 
-"selecting_crops" = "Select a crop";
-"selecting_materials" = "Select a material";
-"selecting_equipments" = "Select a equipment";
-"selecting_persons" = "Select a person";
+"create_seed_title" = "Create new seed";
+"create_phyto_title" = "Create new phyto";
+"create_ferti_title" = "Create new fertilizer";
+"create_storage_title" = "Create new storage";
+"create_material_title" = "Create new material";
+"create_equipment_title" = "Create new equipment";
+"create_person_title" = "Create new person";
+
+"seed_variety_is_empty" = "La variété de la semence ne peut être vide";
+"phyto_name_is_empty" = "Le nom du phyto ne peut être vide";
+"ferti_name_is_empty" = "Le nom du fertilisant ne peut être vide";
+"material_name_is_empty" = "Le nom du matériau ne peut être vide";
+"equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"person_first_name_is_empty" = "Le prénom de l'opérateur ne peut être vide";
+"person_last_name_is_empty" = "Le nom de famille de l'opérateur ne peut être vide";
+
+"seed_variety_not_available" = "Cette variété de semence est déjà utilisée. Veuillez en choisir un autre";
+"phyto_name_not_available" = "Ce nom de phyto est déjà utilisé. Veuillez en choisir un autre";
+"ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
+"material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
+"equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
 "delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
 "delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
 "delete_material_prompt" = "Are you sure you want to remove the material?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
-
-"add" = "+ Add";
-"add_equipment" = "+ Add equipment";
-"add_material" = "+ Add material";
-"add_person" = "+ Add person";
-"add_load" = "+ Add load";
-"select_crops" = "+ Select";
-"no_crop_selected" = "No crop selected";
 
 "chose_specie" = "Specie";
 "chose_nature" = "Nature";
@@ -420,8 +434,6 @@
 "first_name" = "First name";
 "last_name" = "Last name";
 "driver" = "Driver";
-"equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
-"equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
 "my_cultures" = "Mes cultures";
 "unknown_login_failure" = "Désolé, une erreur inconnue s\'est produite, veuillez contacter le support.";
