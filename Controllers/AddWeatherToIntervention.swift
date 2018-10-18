@@ -17,11 +17,19 @@ extension AddInterventionViewController {
     weatherButtons = [brokenClouds, clearSky, fewClouds, lightRain, mist, showerRain, snow, thunderstorm]
 
     for index in 0..<weatherButtons.count {
+      let image = weatherButtons[index].imageView?.image?.withRenderingMode(.alwaysTemplate)
+
+      weatherButtons[index].imageView?.tintColor = AppColor.TextColors.Blue
+      weatherButtons[index].imageView?.image = image
       weatherButtons[index].layer.borderColor = UIColor.lightGray.cgColor
       weatherButtons[index].layer.borderWidth = 1
       weatherButtons[index].layer.cornerRadius = 5
       weatherButtons[index].tag = index
     }
+    negativeTemperature.backgroundColor = AppColor.ThemeColors.DarkWhite
+    negativeTemperature.layer.borderColor = UIColor.lightGray.cgColor
+    negativeTemperature.layer.borderWidth = 1
+    negativeTemperature.layer.cornerRadius = 4
   }
 
   func setupWeatherActions() {
@@ -31,12 +39,31 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
+  @IBAction func setTemperatureToNegative(_ sender: UIButton) {
+    let temperature = temperatureTextField.text!
+
+    if temperature.count > 0 {
+      let index = temperature.index(temperature.startIndex, offsetBy: 1)
+      let firstCharacter = temperature[..<index]
+
+      if firstCharacter == "-" {
+        negativeTemperature.setTitle("+", for: .normal)
+        temperatureTextField.text = String(temperature[index...])
+      } else if temperatureTextField.text != "0" {
+        negativeTemperature.setTitle("-", for: .normal)
+        temperatureTextField.text = "-" + temperature
+      }
+      saveCurrentWeather(self)
+    }
+  }
+
   func hideWeatherItems(_ state: Bool) {
     for index in 0..<weatherButtons.count {
       weatherButtons[index].isHidden = state
     }
     windSpeedTextField.isHidden = state
     temperatureTextField.isHidden = state
+    negativeTemperature.isHidden = state
   }
 
   @IBAction func collapseOrExpandWeatherView(_ sender: Any) {
@@ -72,6 +99,9 @@ extension AddInterventionViewController {
   }
 
   @objc func saveCurrentWeather(_ sender: Any) {
+    if negativeTemperature.titleLabel?.text == "-" && !temperatureTextField.text!.contains("-") {
+      temperatureTextField.text = "-" + temperatureTextField.text!
+    }
     if temperatureTextField.text == "" && windSpeedTextField.text == "" {
       currentWeatherLabel.text = "not_filled_in".localized
     } else {

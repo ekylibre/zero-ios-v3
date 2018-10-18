@@ -74,6 +74,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var negativeTemperature: UIButton!
   @IBOutlet weak var temperatureTextField: UITextField!
   @IBOutlet weak var windSpeedTextField: UITextField!
   @IBOutlet weak var brokenClouds: UIButton!
