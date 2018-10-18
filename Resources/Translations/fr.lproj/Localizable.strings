@@ -269,6 +269,8 @@
 "SILO" = "Silo";
 "BUILDING" = "Bâtiment";
 
+// Fetilizer nature
+
 "organic" = "Organique";
 "mineral" = "Minéral";
 
@@ -365,8 +367,11 @@
 "chose_unit" = "Unité";
 
 "temperature" = "Température";
+"temp" = "Temp.: %@ °C |";
 "wind" = "Vent";
+"wind" = " vent: %@ km/h";
 "wind_speed" = "Vitesse du vent";
+
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
 "number" = "Nombre";
@@ -432,3 +437,6 @@
 "today_last_synchronization" = "Dernière synchronisation %@:%@";
 "last_synchronization" = "Dernière synchronisation %@";
 "no_synchronization_listed" = "Aucune synchonisation répertoriée";
+
+"input_quantity" = "Soit %.1f %@";
+"input_quantity_per_surface" = "Soit %.1f %@ par hectare";

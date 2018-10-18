@@ -71,7 +71,9 @@ extension AddInterventionViewController {
   }
 
   func cropErrorHandler() -> Bool {
-    if cropsView.selectedCrops.count == 0 {
+    let selectedCrops = fetchSelectedCrops()
+
+    if selectedCrops.count == 0 {
       let alert = UIAlertController(title: "", message: "you_have_to_select_a_crop".localized, preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))

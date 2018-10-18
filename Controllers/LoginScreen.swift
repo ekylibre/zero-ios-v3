@@ -24,8 +24,16 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
 
   // MARK: - Initialization
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(false)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    super.hideKeyboardWhenTappedAround()
+
+    tfUsername.delegate = self
+    tfPassword.delegate = self
+    textView.text = "welcome_text".localized
+    forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
+    forgottenPassword.underline()
+
     struct staticIndex {
       static var firstLaunch = false
     }
@@ -37,18 +45,6 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
       self.authentifyUser()
       staticIndex.firstLaunch = true
     }
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
-
-    tfUsername.delegate = self
-    tfPassword.delegate = self
-    textView.text = "welcome_text".localized
-    forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
-    forgottenPassword.underline()
   }
 
   // MARK: - Navigation
