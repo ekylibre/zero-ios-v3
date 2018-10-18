@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Clic&Farm-iOS
 
@@ -12,35 +12,63 @@
 "ALLIUM_PORRUM" = "Poireau";
 "ALLIUM_SATIVUM" = "Ail cultivé";
 "ALLIUM_SCHOENOPRASUM" = "Ciboulette";
+"ANETHUM_GRAVEOLENS" = "Aneth";
 "ANTHRISCUS_CEREFOLIUM" = "Cerfeuil";
 "APIUM_GRAVEOLENS" = "Céleri";
+"ARTEMISIA_DRACUNCULUS" = "Estragon";
 "AVENA_SATIVA" = "Avoine cultivée";
 "BETA_VULGARIS" = "Betterave commune";
+"BETA_VULGARIS_CICLA" = "Bette";
 "BRASSICA_NAPUS" = "Colza";
+"BRASSICA_NAPUS_ANNUA" = "Colza de printemps";
+"BRASSICA_NAPUS_NAPUS" = "Colza d'hiver";
+"BRASSICA_NAPUS_RAPIFERA" = "Rutabage";
 "BRASSICA_OLERACEA" = "Chou";
+"BRASSICA_OLERACEA_BOTRYTIS" = "Chou-fleur";
+"BRASSICA_OLERACEA_CAPITATA" = "Chou cabus";
+"BRASSICA_OLERACEA_ITALICA" = "Brocoli";
 "BRASSICA_RAPA" = "Brassica rapa";
+"BRASSICA_RAPA_RAPA" = "Navet";
 "CANNABIS_SATIVA" = "Chanvre";
+"CAPSICUM" = "Piment";
 "CAPSICUM_ANNUUM" = "Poivron";
+"CHAMAEMELUM" = "Camomille";
 "CICER_ARIETINUM" = "Pois chiche";
+"CICHORIUM" = "Chicorée";
 "CICHORIUM_ENDIVIA" = "Chicorée endive";
 "CICHORIUM_INTYBUS" = "Chicorée sauvage";
 "CITRULLUS_LANATUS" = "Pastèque commune";
 "CITRUS_MEDICA" = "Cédratier";
 "CITRUS_RETICULATA" = "Mandarinier";
 "CITRUS_SINENSIS" = "Orange";
+"CORIANDRUM_SATIVUM" = "Coriandre";
 "CORYLUS_AVELLANA" = "Noisetier commun";
 "CUCUMIS_MELO" = "Melon";
 "CUCUMIS_SATIVUS" = "Concombre";
+"CUCUMIS_SATIVUS_GHERKIN" = "Cornichon";
 "CUCURBITA_MAXIMA" = "Potiron";
+"CUCURBITA_MAXIMA_POTIMARRON" = "Potimarron";
+"CUCURBITA_MOSCHATA" = "Courge musquée";
+"CUCURBITA_MOSCHATA_BUTTERNUT" = "Courge butternut";
 "CUCURBITA_PEPO" = "Citrouille";
+"CUCURBITA_PEPO_PEPO" = "Courgette";
 "CYDONIA_OBLONGA" = "Cognassier";
 "CYNARA_SCOLYMUS" = "Artichaut";
+"DACTYLIS" = "Dactyle";
 "DAUCUS_CAROTA" = "Carotte commune";
+"ERUCA_VESICARIA" = "Roquette";
+"FAGOPYRUM_ESCULENTUM" = "Blé noir";
+"FOENICULUM" = "Fenouil";
 "FOENICULUM_VULGARE" = "Fenouil doux";
 "FORTUNELLA_MARGARITA" = "Kumquat ovale";
+"FRAGARIA" = "Fraisier";
 "GLYCINE_MAX" = "Soja";
 "HELIANTHUS_ANNUUS" = "Tournesol annuel";
+"HELIANTHUS_TUBEROSUS" = "Topinambour";
+"HORDEUM_DISTICHUM" = "Orge à 2 rangs";
+"HORDEUM_HEXASTICHUM" = "Orge à 6 rangs";
 "HORDEUM_VULGARE" = "Orge commune";
+"HUMULUS_LUPULUS" = "Houblon";
 "JUGLANS_REGIA" = "Noyer commun";
 "LACTUCA_SATIVA" = "Laitue cultivée";
 "LENS_CULINARIS" = "Lentille cultivée";
@@ -48,15 +76,23 @@
 "LOLIUM_MULTIFLORUM" = "Ray grass Italien";
 "LOLIUM_PERENNE" = "Ray grass Anglais";
 "LOTUS_CORNICULATUS" = "Lotier corniculé";
+"LUPINUS" = "Lupin";
 "MALUS_PUMILA" = "Pommier commun";
 "MEDICAGO_SATIVA" = "Luzerne cultivée";
+"MELILOTUS" = "Mélilot";
+"NICOTIANA_TABACUM" = "Tabac";
+"OCIMUM_BASILICUM" = "Basilic";
 "OLEA_EUROPAEA" = "Olivier";
 "ONOBRYCHIS_VICIIFOLIA" = "Sainfoin commun";
 "ORYZA_SATIVA" = "Riz cultivé";
+"PASTINACA_SATIVA" = "Panais";
 "PETROSELINUM_CRISPUM" = "Persil commun";
 "PHASEOLUS_VULGARIS" = "Haricot commun";
+"PIMPINELLA_ANISUM" = "Anis";
 "PISUM_SATIVUM" = "Pois commun";
+"PLANT" = "Plante";
 "POA_TRIVIALIS" = "Pâturin commun";
+"POACEAE" = "Graminée";
 "PRUNUS_ARMENIACA" = "Abricotier";
 "PRUNUS_AVIUM" = "Merisier";
 "PRUNUS_CERASIFERA" = "Prunier-cerise (Myrobolan)";
@@ -70,11 +106,15 @@
 "RIBES_NIGRUM" = "Cassissier";
 "RIBES_RUBRUM" = "Groseiller à grappes";
 "RUBUS_IDAEUS" = "Framboisier";
+"SECALE_CEREALE" = "Seigle";
 "SOLANUM_LYCOPERSICUM" = "Tomate";
 "SOLANUM_MELONGENA" = "Aubergine";
 "SOLANUM_TORVUM" = "Aubergine pois";
 "SOLANUM_TUBEROSUM" = "Pomme de terre";
+"SORGHUM" = "Sorgho";
 "SPINACIA_OLERACEA" = "Épinard";
+"TRAGOPOGON" = "Salsifis";
+"TRIFOLIUM" = "Trèfle";
 "TRIFOLIUM_ALEXANDRINUM" = "Trèfle d’Alexandrie";
 "TRIFOLIUM_INCARNATUM" = "Trèfle incarnat";
 "TRIFOLIUM_PRATENSE" = "Trèfle violet";
@@ -82,6 +122,7 @@
 "TRITICOSECALE" = "Triticale";
 "TRITICUM_AESTIVUM" = "Blé tendre";
 "TRITICUM_DURUM" = "Blé dur";
+"TRITICUM_SPELTA" = "Épeautre";
 "VALERIANELLA_LOCUSTA" = "Mâche";
 "VICIA_FABA" = "Fève ou féverole";
 "VICIA_SATIVA" = "Vesce cultivée";
@@ -89,6 +130,7 @@
 "VITIS" = "Vigne";
 "VITIS_VINIFERA" = "Cépage Vitis vinifera";
 "ZEA_MAYS" = "Maïs";
+"ZEA_MAYS_SACCHARATA" = "Maïs doux";
 
 // Procedures
 "IRRIGATION" = "Irrigation";
