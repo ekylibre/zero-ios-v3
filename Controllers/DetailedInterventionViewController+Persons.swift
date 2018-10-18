@@ -14,8 +14,7 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupPersonsView() {
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    personsSelectionView = PersonsView(frame: frame)
+    personsSelectionView = PersonsView(frame: CGRect.zero)
     personsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(personsSelectionView)
 

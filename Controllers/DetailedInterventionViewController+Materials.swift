@@ -13,7 +13,7 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupMaterialsView() {
-    materialsSelectionView = MaterialsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    materialsSelectionView = MaterialsView(frame: CGRect.zero)
     materialsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(materialsSelectionView)
 

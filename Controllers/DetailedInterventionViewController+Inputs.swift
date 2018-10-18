@@ -11,6 +11,66 @@ import CoreData
 
 extension AddInterventionViewController: SelectedInputCellDelegate {
 
+  // MARK: - Initialization
+
+  func setupInputsView() {
+    species = loadSpecies()
+    inputsSelectionView = InputsView(firstSpecie: getFirstSpecie(),frame: CGRect.zero)
+    inputsSelectionView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(inputsSelectionView)
+
+    NSLayoutConstraint.activate([
+      inputsSelectionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+      inputsSelectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -30),
+      inputsSelectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+      inputsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
+      ])
+
+    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
+    selectedInputsTableView.bounces = false
+    selectedInputsTableView.layer.borderWidth  = 0.5
+    selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
+    selectedInputsTableView.layer.cornerRadius = 4
+    inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
+    inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+    inputsSelectionView.addInterventionViewController = self
+  }
+
+  private func loadSpecies() -> [String] {
+    var species = [String]()
+
+    if let asset = NSDataAsset(name: "species") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredSpecies = jsonResult as? [[String: Any]]
+
+        for registeredSpecie in registeredSpecies! {
+          let specie = registeredSpecie["name"] as! String
+          species.append(specie.uppercased())
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("species.json not found")
+    }
+
+    return species.sorted()
+  }
+
+  private func getFirstSpecie() -> String {
+    let sortedSpecies = species.sorted(by: {
+      $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        <
+      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    })
+
+    return sortedSpecies.first!
+  }
+
   // MARK: - Actions
 
   func saveSelectedRow(_ indexPath: IndexPath) {

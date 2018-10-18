@@ -98,6 +98,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
+  var species: [String]!
   var inputsSelectionView: InputsView!
   var materialsSelectionView: MaterialsView!
   var equipmentsSelectionView: EquipmentsView!
@@ -147,19 +148,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     saveInterventionButton.layer.cornerRadius = 3
 
-    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
-    selectedInputsTableView.delegate = self
-    selectedInputsTableView.dataSource = self
-    selectedInputsTableView.bounces = false
-    selectedInputsTableView.layer.borderWidth  = 0.5
-    selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedInputsTableView.layer.cornerRadius = 4
-
-    inputsSelectionView = InputsView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    inputsSelectionView.addInterventionViewController = self
-    view.addSubview(inputsSelectionView)
-
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     view.addSubview(cropsView)
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
@@ -168,6 +156,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     selectedMaterials.append([InterventionMaterials]())
     setupWorkingPeriodView()
     setupIrrigationView()
+    setupInputsView()
     setupMaterialsView()
     equipmentTypes = loadEquipmentTypes()
     setupEquipmentsView()
@@ -220,11 +209,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     // Changes inputsSelectionView frame and position
     let guide = self.view.safeAreaLayoutGuide
     let height = guide.layoutFrame.size.height
-    inputsSelectionView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
-    inputsSelectionView.center.x = self.view.center.x
-    inputsSelectionView.frame.origin.y = navigationBar.frame.origin.y + 15
-    inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
-    inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
 
     cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
     cropsView.center.x = self.view.center.x
@@ -552,7 +536,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showSpecies":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
-      destVC.rawStrings = loadSpecies()
+      destVC.rawStrings = species
       destVC.tag = 0
     case "showMaterialUnits":
       let destVC = segue.destination as! ListTableViewController
@@ -578,28 +562,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       createIntervention()
     }
-  }
-
-  private func loadSpecies() -> [String] {
-    var species = [String]()
-
-    if let asset = NSDataAsset(name: "species") {
-      do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredSpecies = jsonResult as? [[String: Any]]
-
-        for registeredSpecie in registeredSpecies! {
-          let specie = registeredSpecie["name"] as! String
-          species.append(specie.uppercased())
-        }
-      } catch {
-        print("Lexicon error")
-      }
-    } else {
-      print("species.json not found")
-    }
-
-    return species.sorted()
   }
 
   func writeValueBack(tag: Int, value: String) {

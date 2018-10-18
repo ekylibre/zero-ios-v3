@@ -31,7 +31,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   lazy var specieButton: UIButton = {
     let specieButton = UIButton(frame: CGRect.zero)
-    specieButton.setTitle("PRUNUS_ARMENIACA".localized, for: .normal)
+    specieButton.setTitle(firstSpecie.localized, for: .normal)
     specieButton.setTitleColor(UIColor.black, for: .normal)
     specieButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     specieButton.contentHorizontalAlignment = .leading
@@ -74,9 +74,12 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
+  var firstSpecie: String
+
   // MARK: - Initialization
 
-  override init(frame: CGRect) {
+  init(firstSpecie: String, frame: CGRect) {
+    self.firstSpecie = firstSpecie
     super.init(frame: frame)
     setupView()
   }
@@ -136,7 +139,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
   @objc func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
     if sender == cancelButton {
-      specieButton.setTitle("PRUNUS_ARMENIACA".localized, for: .normal)
+      specieButton.setTitle(firstSpecie.localized, for: .normal)
       varietyTextField.text = ""
     }
     self.isHidden = true

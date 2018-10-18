@@ -14,8 +14,7 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupEquipmentsView() {
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    equipmentsSelectionView = EquipmentsView(firstType: getFirstEquipmentType(),frame: frame)
+    equipmentsSelectionView = EquipmentsView(firstType: getFirstEquipmentType(),frame: CGRect.zero)
     equipmentsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(equipmentsSelectionView)
 
