@@ -55,7 +55,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
   }
 
   private func setupActions() {
-    createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
+    createButton.addTarget(self, action: #selector(openCreationView), for: .touchUpInside)
     creationView.firstNameTextField.addTarget(self, action: #selector(firstNameDidChange), for: .editingChanged)
     creationView.lastNameTextField.addTarget(self, action: #selector(lastNameDidChange), for: .editingChanged)
     creationView.cancelButton.addTarget(self, action: #selector(cancelCreation), for: .touchUpInside)
@@ -160,7 +160,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
   // MARK: - Actions
 
-  @objc private func tapCreateButton() {
+  @objc private func openCreationView() {
     dimView.isHidden = false
     creationView.isHidden = false
   }
