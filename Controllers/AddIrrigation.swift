@@ -45,7 +45,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
     self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
     irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
-    updateInfoLabel(Double(volume), unit)
+    updateInfoLabel(volume, unit)
     irrigationPickerView.isHidden = true
     dimView.isHidden = true
   }
@@ -53,12 +53,12 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   // MARK: - Actions
 
   @IBAction func tapIrrigationView(_ sender: Any) {
-    let shouldExapand: Bool = (irrigationHeightConstraint.constant == 70)
+    let shouldExpand: Bool = (irrigationHeightConstraint.constant == 70)
 
-    irrigationHeightConstraint.constant = shouldExapand ? 140 : 70
-    irrigationLabel.isHidden = shouldExapand
-    irrigationValueTextField.isHidden = !shouldExapand
-    irrigationUnitButton.isHidden = !shouldExapand
+    irrigationHeightConstraint.constant = shouldExpand ? 140 : 70
+    irrigationLabel.isHidden = shouldExpand
+    irrigationValueTextField.isHidden = !shouldExpand
+    irrigationUnitButton.isHidden = !shouldExpand
     irrigationExpandCollapseImage.transform = irrigationExpandCollapseImage.transform.rotated(by: CGFloat.pi)
   }
 
@@ -68,10 +68,10 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let unit = irrigationUnitButton.titleLabel!.text!
 
     irrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
-    updateInfoLabel(Double(volume), unit)
+    updateInfoLabel(volume, unit)
   }
 
-  private func updateInfoLabel(_ volume: Double, _ unit: String) {
+  private func updateInfoLabel(_ volume: Float, _ unit: String) {
     if volume == 0 {
       irrigationInfoLabel.text = "Le volume ne peut être nul"
       irrigationInfoLabel.textColor = AppColor.TextColors.Red
@@ -79,7 +79,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       irrigationInfoLabel.text = "Aucune culture sélectionnée"
       irrigationInfoLabel.textColor = AppColor.TextColors.Red
     } else {
-      let efficiency = Double(volume) / cropsView.totalSurfaceArea
+      let efficiency = volume / cropsView.selectedSurfaceArea
 
       irrigationInfoLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
       irrigationInfoLabel.textColor = AppColor.TextColors.DarkGray

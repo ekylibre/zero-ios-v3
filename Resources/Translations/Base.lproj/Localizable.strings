@@ -375,7 +375,9 @@
 "chose_unit" = "Unit";
 
 "temperature" = "Temperature";
+"temp" = "Temp.: %@ °C |";
 "wind" = "Wind";
+"wind" = " wind: %@ km/h";
 "wind_speed" = "Wind speed";
 "quantity_cannot_be_null" = "Quantity cannot be null";
 "stock_place" = "Storage";
@@ -452,3 +454,6 @@
 "today_last_synchronization" = "Last synchronization %@:%@";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
+
+"input_quantity" = "Or %.1f %@";
+"input_quantity_per_surface" = "Or %.1f %@ per hectare";
