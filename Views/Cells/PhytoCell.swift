@@ -27,7 +27,7 @@ class PhytoCell: UITableViewCell {
 
   lazy var maaLabel: UILabel = {
     let maaLabel = UILabel(frame: CGRect.zero)
-    maaLabel.text = "maa_number".localized
+    maaLabel.text = "mmaid_number".localized
     maaLabel.font = UIFont.italicSystemFont(ofSize: 14)
     maaLabel.textColor = AppColor.TextColors.DarkGray
     maaLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ class PhytoCell: UITableViewCell {
 
   lazy var reentryLabel: UILabel = {
     let reentryLabel = UILabel(frame: CGRect.zero)
-    reentryLabel.text = "re_entry_delay".localized
+    reentryLabel.text = "reentry_delay".localized
     reentryLabel.font = UIFont.italicSystemFont(ofSize: 14)
     reentryLabel.textColor = AppColor.TextColors.DarkGray
     reentryLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +81,7 @@ class PhytoCell: UITableViewCell {
     contentView.addSubview(reentryLabel)
     contentView.addSubview(inFieldReentryDelayLabel)
     contentView.addSubview(starImageView)
+    self.selectionStyle = .none
     setupLayout()
   }
 

@@ -35,7 +35,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     specieButton.setTitleColor(UIColor.black, for: .normal)
     specieButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     specieButton.contentHorizontalAlignment = .leading
-    specieButton.titleEdgeInsets = UIEdgeInsets.init(top: 13, left: 8, bottom: 0, right: 0)
+    specieButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
     specieButton.translatesAutoresizingMaskIntoConstraints = false
     return specieButton
   }()

@@ -45,6 +45,7 @@ class FertilizerCell: UITableViewCell {
     contentView.addSubview(nameLabel)
     contentView.addSubview(natureLabel)
     contentView.addSubview(starImageView)
+    self.selectionStyle = .none
     setupLayout()
   }
 
