@@ -59,7 +59,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       let volume = irrigationVolumeTextField.text!.floatValue
 
       self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
-      selectedIrrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+      selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit)
       updateInfoLabel(volume, unit)
       irrigationPickerView.isHidden = true
       dimView.isHidden = true
@@ -84,16 +84,16 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let volume = irrigationVolumeTextField.text!.floatValue
     let unit = irrigationUnitButton.titleLabel!.text!
 
-    selectedIrrigationLabel.text = String(format: "Volume • %g %@", volume, unit)
+    selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit)
     updateInfoLabel(volume, unit)
   }
 
   private func updateInfoLabel(_ volume: Float, _ unit: String) {
     if volume == 0 {
-      irrigationErrorLabel.text = "Le volume ne peut être nul"
+      irrigationErrorLabel.text = "volume_cannot_be_null".localized
       irrigationErrorLabel.textColor = AppColor.TextColors.Red
-    } else if totalLabel.text == "+ SÉLECTIONNER" {
-      irrigationErrorLabel.text = "Aucune culture sélectionnée"
+    } else if totalLabel.text == "select_crops".localized {
+      irrigationErrorLabel.text = "no_crop_selected".localized
       irrigationErrorLabel.textColor = AppColor.TextColors.Red
     } else {
       let efficiency = volume / cropsView.selectedSurfaceArea
