@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "plow_1x.png",
+      "filename" : "plow@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "plow_2x.png",
+      "filename" : "plow@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "plow_3x.png",
+      "filename" : "plow@3x.png",
       "scale" : "3x"
     }
   ],

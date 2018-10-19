@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "vibrocultivator_1x.png",
+      "filename" : "vibrocultivator@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "vibrocultivator_2x.png",
+      "filename" : "vibrocultivator@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "vibrocultivator_3x.png",
+      "filename" : "vibrocultivator@3x.png",
       "scale" : "3x"
     }
   ],

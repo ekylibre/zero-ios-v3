@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "implanter_1x.png",
+      "filename" : "implanter@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "implanter_2x.png",
+      "filename" : "implanter@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "implanter_3x.png",
+      "filename" : "implanter@3x.png",
       "scale" : "3x"
     }
   ],
