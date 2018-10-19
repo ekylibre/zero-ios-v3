@@ -220,13 +220,11 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func checkEquipmentName() -> Bool {
-    let equipmentsWithSameName = equipments.filter { $0.name == creationView.nameTextField.text! }
-
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "equipment_name_is_empty".localized
       creationView.errorLabel.isHidden = false
       return false
-    } else if equipmentsWithSameName.count > 0 {
+    } else if equipments.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
       creationView.errorLabel.text = "equipment_name_not_available".localized
       creationView.errorLabel.isHidden = false
       return false

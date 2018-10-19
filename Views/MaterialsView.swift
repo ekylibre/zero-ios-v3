@@ -197,13 +197,11 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   private func checkMaterialName() -> Bool {
-    let materialsWithSameName = materials.filter { $0.name == creationView.nameTextField.text! }
-
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "material_name_is_empty".localized
       creationView.errorLabel.isHidden = false
       return false
-    } else if materialsWithSameName.count > 0 {
+    } else if materials.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
       creationView.errorLabel.text = "material_name_not_available".localized
       creationView.errorLabel.isHidden = false
       return false
