@@ -269,7 +269,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
     for (index, crop) in crops.enumerated() {
-      cropViews[indexPath.row][index].checkboxImage.image = #imageLiteral(resourceName: "check-box")
+      cropViews[indexPath.row][index].checkboxImageView.isHighlighted = true
       crop.isSelected = true
     }
   }
@@ -278,8 +278,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var index: Int = 0
 
     for case let view as CropView in cell.contentView.subviews {
-      if view.checkboxImage.image == #imageLiteral(resourceName: "check-box") {
-        view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+      if view.checkboxImageView.isHighlighted {
+        view.checkboxImageView.isHighlighted = false
         selectedCropsCount -= 1
         selectedSurfaceArea -= crops[index].surfaceArea
         crops[index].isSelected = false
@@ -296,11 +296,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let crops = self.crops[plotIndex]
     let crop = crops[cropIndex]
 
-    if view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") {
-      view.checkboxImage.image = #imageLiteral(resourceName: "check-box")
+    if !view.checkboxImageView.isHighlighted {
+      view.checkboxImageView.isHighlighted = true
       selectCrop(crop, cell)
     } else {
-      view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+      view.checkboxImageView.isHighlighted = false
       deselectCrop(crop, crops, cell)
     }
     updateSelectedCropsLabel()
@@ -320,9 +320,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var index: Int = 1
 
     for case let view as CropView in cell.contentView.subviews {
-      if view.checkboxImage.image == #imageLiteral(resourceName: "check-box") {
+      if view.checkboxImageView.isHighlighted {
         break
-      } else if (view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank")) && (index == crops.count) {
+      } else if (!view.checkboxImageView.isHighlighted) && (index == crops.count) {
         cell.checkboxButton.isSelected = false
       }
       index += 1

@@ -112,13 +112,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func initialiseInterventionButtons() {
-    let interventionImages: [UIImage] =  [#imageLiteral(resourceName: "implantation"), #imageLiteral(resourceName: "ground-work"), #imageLiteral(resourceName: "irrigation"), #imageLiteral(resourceName: "harvest"), #imageLiteral(resourceName: "care"), #imageLiteral(resourceName: "fertilization"), #imageLiteral(resourceName: "crop-protection")]
-
     for buttonCount in 0...6 {
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
+      let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
 
       interventionButton.backgroundColor = UIColor.white
-      interventionButton.setBackgroundImage(interventionImages[buttonCount], for: .normal)
+      interventionButton.setBackgroundImage(image, for: .normal)
       interventionButton.setTitle(interventionTypes[buttonCount].localized, for: .normal)
       interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3

@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "round_baler.png",
+      "filename" : "round_baler@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "round_baler@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "round_baler@3x.png",
       "scale" : "3x"
     }
   ],

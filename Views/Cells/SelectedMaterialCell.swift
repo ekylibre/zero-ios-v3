@@ -14,11 +14,11 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   var indexPath: IndexPath!
 
-  lazy var materialImage: UIImageView = {
-    let materialImage = UIImageView(frame: CGRect.zero)
-    materialImage.image = UIImage(named: "materials")
-    materialImage.translatesAutoresizingMaskIntoConstraints = false
-    return materialImage
+  lazy var materialImageView: UIImageView = {
+    let materialImageView = UIImageView(frame: CGRect.zero)
+    materialImageView.image = UIImage(named: "material")
+    materialImageView.translatesAutoresizingMaskIntoConstraints = false
+    return materialImageView
   }()
 
   lazy var nameLabel: UILabel = {
@@ -30,7 +30,9 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var deleteButton: UIButton = {
     let deleteButton = UIButton(frame: CGRect.zero)
-    deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
+    let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
+    deleteButton.setImage(tintedImage, for: .normal)
+    deleteButton.tintColor = UIColor.red
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
   }()
@@ -62,7 +64,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
   lazy var unitButton: UIButton = {
     let unitButton = UIButton(frame: CGRect.zero)
     unitButton.setTitle("unit", for: .normal)
-    unitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+    unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
     unitButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
     unitButton.backgroundColor = AppColor.ThemeColors.White
     unitButton.layer.borderWidth = 0.5
@@ -82,7 +84,8 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupCell() {
     self.backgroundColor = AppColor.CellColors.LightGray
-    contentView.addSubview(materialImage)
+    self.selectionStyle = .none
+    contentView.addSubview(materialImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(deleteButton)
     contentView.addSubview(quantityLabel)
@@ -93,12 +96,12 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      materialImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      materialImage.heightAnchor.constraint(equalToConstant: 24),
-      materialImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-      materialImage.widthAnchor.constraint(equalToConstant: 24),
-      nameLabel.centerYAnchor.constraint(equalTo: materialImage.centerYAnchor),
-      nameLabel.leadingAnchor.constraint(equalTo: materialImage.trailingAnchor, constant: 10),
+      materialImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      materialImageView.heightAnchor.constraint(equalToConstant: 24),
+      materialImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      materialImageView.widthAnchor.constraint(equalToConstant: 24),
+      nameLabel.centerYAnchor.constraint(equalTo: materialImageView.centerYAnchor),
+      nameLabel.leadingAnchor.constraint(equalTo: materialImageView.trailingAnchor, constant: 10),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),

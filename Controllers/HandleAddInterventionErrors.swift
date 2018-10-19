@@ -104,7 +104,7 @@ extension AddInterventionViewController {
   }
 
   func irrigationErrorHandler() -> Bool {
-    if irrigationValueTextField.text?.floatValue == 0 {
+    if irrigationVolumeTextField.text?.floatValue == 0 {
       let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
