@@ -9,7 +9,7 @@
 import UIKit
 import Apollo
 import CoreData
-
+/*
 extension InterventionViewController {
 
   func checkLocalData() {
@@ -1401,3 +1401,4 @@ extension InterventionViewController {
     group.wait()
   }
 }
+*/

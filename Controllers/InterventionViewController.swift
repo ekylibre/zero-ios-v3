@@ -107,7 +107,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     tableView.bounces = false
 
-    initializeApolloClient()
+    //initializeApolloClient()
     if Connectivity.isConnectedToInternet() {
       fetchInterventions()
       synchronise(self)
@@ -393,7 +393,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    queryFarms { (success) in
+    /*queryFarms { (success) in
       if success {
         self.fetchInterventions()
 
@@ -408,14 +408,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
         for intervention in self.interventions {
           if intervention.ekyID != 0 && intervention.status == Intervention.State.Created.rawValue {
-            self.pushUpdatedIntervention(intervention: intervention)
+            /self.pushUpdatedIntervention(intervention: intervention)
           }
         }
       } else {
         self.synchroLabel.text = "sync_failure".localized
       }
       self.tableView.reloadData()
-    }
+    }*/
   }
 
   @objc func action(sender: UIButton) {

@@ -16,7 +16,6 @@
 		040D85A1216BA1ED008E1628 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D85A0216BA1ED008E1628 /* InterventionViewController+Lexicon.swift */; };
 		040D85A3216BA253008E1628 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040D85A2216BA253008E1628 /* Apollo.framework */; };
 		040D85A6216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D85A5216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift */; };
-		040F887721771900009ABB09 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F887621771900009ABB09 /* API.swift */; };
 		0410EF0621550C1C003DA2D1 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410EF0521550C1C003DA2D1 /* HandleKeyboard.swift */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
@@ -30,6 +29,7 @@
 		044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D44213816B9001A5D3D /* ListTableViewController.swift */; };
 		044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D46213816C0001A5D3D /* ListProtocol.swift */; };
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
+		04730CD92179FF9A008C925F /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04730CD82179FF9A008C925F /* oauthInfo.plist */; };
 		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
 		047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BF0C621060AE4009F3945 /* UsersDatabase.swift */; };
 		6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
@@ -50,7 +50,6 @@
 		6B85D044214A9225009EAF24 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D043214A9225009EAF24 /* CropView.swift */; };
 		6B87EBFC215BCE99004B3DE5 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041855772142A20F0077A715 /* AddWeatherToIntervention.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
-		6BA37142213963230086DF9B /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713F213963230086DF9B /* oauthInfo.plist */; };
 		6BA5D77E2149349A0054F969 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D778214934990054F969 /* LoginScreen.swift */; };
 		6BA5D7802149349A0054F969 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77A214934990054F969 /* AddInterventionViewController.swift */; };
 		6BA5D7822149349A0054F969 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77C214934990054F969 /* AddEntitiesToIntervention.swift */; };
@@ -87,7 +86,6 @@
 		040D85A0216BA1ED008E1628 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
 		040D85A2216BA253008E1628 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		040D85A5216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+isFirstLaunch.swift"; sourceTree = "<group>"; };
-		040F887621771900009ABB09 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		0410EF0521550C1C003DA2D1 /* HandleKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		04131399213FFC3E005437F0 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
@@ -104,6 +102,7 @@
 		044B4D44213816B9001A5D3D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		044B4D46213816C0001A5D3D /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
 		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
+		04730CD82179FF9A008C925F /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
 		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
@@ -123,7 +122,6 @@
 		6B834B3E2165000100BADA79 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
 		6B85D043214A9225009EAF24 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		6BA5D778214934990054F969 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		6BA5D77A214934990054F969 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		6BA5D77C214934990054F969 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 		040D8595216B9EC1008E1628 /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
-				040F887621771900009ABB09 /* API.swift */,
 				040D859A216B9F4E008E1628 /* mutations.graphql */,
 				040D8598216B9F1B008E1628 /* queries.graphql */,
 				040D859C216BA061008E1628 /* schema.json */,
@@ -292,7 +289,7 @@
 				041313AC21401483005437F0 /* Translations */,
 				6BA3713E213963230086DF9B /* Assets.xcassets */,
 				041D0944216CE7CE00B8B7FD /* Info.plist */,
-				6BA3713F213963230086DF9B /* oauthInfo.plist */,
+				04730CD82179FF9A008C925F /* oauthInfo.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -436,8 +433,8 @@
 				040D859B216B9F4E008E1628 /* mutations.graphql in Resources */,
 				040D859D216BA061008E1628 /* schema.json in Resources */,
 				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
+				04730CD92179FF9A008C925F /* oauthInfo.plist in Resources */,
 				040D8599216B9F1B008E1628 /* queries.graphql in Resources */,
-				6BA37142213963230086DF9B /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +522,6 @@
 				047BF0C721060AE4009F3945 /* UsersDatabase.swift in Sources */,
 				041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
-				040F887721771900009ABB09 /* API.swift in Sources */,
 				6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */,
 				044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */,
 				040D8594216B5453008E1628 /* DefineInterventionsDisplayMode.swift in Sources */,
