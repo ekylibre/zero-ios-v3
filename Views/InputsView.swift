@@ -13,9 +13,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Properties
 
-  var addInterventionViewController: AddInterventionViewController?
-  var isSearching: Bool = false
-
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: ["seeds".localized, "phytos".localized, "fertilizers".localized])
     segmentedControl.selectedSegmentIndex = 0
@@ -90,9 +87,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return fertilizerView
   }()
 
+  var addInterventionViewController: AddInterventionViewController?
   var seeds = [Seeds]()
   var phytos = [Phytos]()
   var fertilizers = [Fertilizers]()
+  var isSearching: Bool = false
   var filteredInputs = [NSManagedObject]()
 
   // MARK: - Initialization
@@ -134,8 +133,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       tableViewTopAnchor,
       tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
-      tableView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
@@ -621,7 +620,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       createSeed(variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
-      seedView.specieButton.setTitle("Abricotier", for: .normal)
+      seedView.specieButton.setTitle("PRUNUS_ARMENIACA".localized, for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
       let maaID = phytoView.maaTextField.text!.isEmpty ? "0" : phytoView.maaTextField.text!
