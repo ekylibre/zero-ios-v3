@@ -9,5 +9,5 @@
 import UIKit
 
 protocol WriteValueBackDelegate {
-  func writeValueBack(value: String)
+  func writeValueBack(tag: Int, value: String)
 }

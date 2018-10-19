@@ -13,31 +13,17 @@
 		041248082179C05900A78D08 /* InterventionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248072179C05900A78D08 /* InterventionType.swift */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
-		04149EC421510C80007B5441 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04149EC321510C7F007B5441 /* API.swift */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		0417A58821539CB5009529D5 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0417A58721539CB5009529D5 /* CustomPickerView.swift */; };
+		04269C4E2179D49D00E0160C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04269C4D2179D49D00E0160C /* API.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
 		0480CA4D216508AB0039FCB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0480CA4B216508AA0039FCB9 /* Main.storyboard */; };
 		0480CA51216508AF0039FCB9 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0480CA4F216508AF0039FCB9 /* Main.strings */; };
-		048D2ACE2178C85C002EDF62 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ABD2178C85B002EDF62 /* HandleAddInterventionErrors.swift */; };
-		048D2ACF2178C85C002EDF62 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ABE2178C85B002EDF62 /* ListTableViewController.swift */; };
-		048D2AD02178C85C002EDF62 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ABF2178C85B002EDF62 /* InterventionViewController.swift */; };
-		048D2AD12178C85C002EDF62 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC02178C85B002EDF62 /* LoginScreen.swift */; };
-		048D2AD22178C85C002EDF62 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC12178C85B002EDF62 /* UnitMeasurePickerView.swift */; };
-		048D2AD32178C85C002EDF62 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC22178C85B002EDF62 /* InterventionViewController+Lexicon.swift */; };
-		048D2AD42178C85C002EDF62 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC32178C85B002EDF62 /* HandleKeyboard.swift */; };
-		048D2AD52178C85C002EDF62 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC42178C85B002EDF62 /* AddEquipmentIntervention.swift */; };
-		048D2AD62178C85C002EDF62 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC52178C85B002EDF62 /* AddIrrigation.swift */; };
-		048D2AD72178C85C002EDF62 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC62178C85B002EDF62 /* AddWeatherToIntervention.swift */; };
-		048D2AD82178C85C002EDF62 /* InterventionViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC72178C85C002EDF62 /* InterventionViewController+Apollo.swift */; };
-		048D2AD92178C85C002EDF62 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC82178C85C002EDF62 /* AddSelectedInputsToIntervention.swift */; };
-		048D2ADA2178C85C002EDF62 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AC92178C85C002EDF62 /* AddEntitiesToIntervention.swift */; };
-		048D2ADB2178C85C002EDF62 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ACA2178C85C002EDF62 /* AuthentificationService.swift */; };
-		048D2ADC2178C85C002EDF62 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ACB2178C85C002EDF62 /* ListProtocol.swift */; };
-		048D2ADD2178C85C002EDF62 /* AddHarvest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ACC2178C85C002EDF62 /* AddHarvest.swift */; };
-		048D2ADE2178C85C002EDF62 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ACD2178C85C002EDF62 /* AddInterventionViewController.swift */; };
+		0480CA5721650DDB0039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		0480CA5821650DDB0039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		0480CA5A21650DF20039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		048D2AE92178C89F002EDF62 /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ADF2178C89F002EDF62 /* SeedCell.swift */; };
 		048D2AEA2178C89F002EDF62 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE02178C89F002EDF62 /* SelectedInputCell.swift */; };
 		048D2AEB2178C89F002EDF62 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE12178C89F002EDF62 /* PhytoCell.swift */; };
@@ -53,19 +39,57 @@
 		048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */; };
 		048D2AFA2178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */; };
 		04A3BCBE2178DA3D00C01690 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
+		04A7079F2179D25200876779 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */; };
+		04A707A02179D25200876779 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078E2179D25100876779 /* AddIrrigation.swift */; };
+		04A707A12179D25200876779 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078F2179D25100876779 /* InterventionViewController.swift */; };
+		04A707A22179D25200876779 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707902179D25100876779 /* HandleKeyboard.swift */; };
+		04A707A32179D25200876779 /* AddMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707912179D25100876779 /* AddMaterials.swift */; };
+		04A707A42179D25200876779 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707922179D25100876779 /* AuthentificationService.swift */; };
+		04A707A52179D25200876779 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707932179D25100876779 /* InterventionViewController+Lexicon.swift */; };
+		04A707A62179D25200876779 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707942179D25100876779 /* ListProtocol.swift */; };
+		04A707A72179D25200876779 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707952179D25100876779 /* AddInterventionViewController.swift */; };
+		04A707A82179D25200876779 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707962179D25100876779 /* AddEntitiesToIntervention.swift */; };
+		04A707A92179D25200876779 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707972179D25100876779 /* HandleAddInterventionErrors.swift */; };
+		04A707AA2179D25200876779 /* InterventionViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707982179D25100876779 /* InterventionViewController+Apollo.swift */; };
+		04A707AB2179D25200876779 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707992179D25100876779 /* AddSelectedInputsToIntervention.swift */; };
+		04A707AC2179D25200876779 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079A2179D25100876779 /* ListTableViewController.swift */; };
+		04A707AD2179D25200876779 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079B2179D25100876779 /* LoginScreen.swift */; };
+		04A707AE2179D25200876779 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079C2179D25100876779 /* UnitMeasurePickerView.swift */; };
+		04A707AF2179D25200876779 /* AddHarvest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079D2179D25200876779 /* AddHarvest.swift */; };
+		04A707B02179D25200876779 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079E2179D25200876779 /* AddEquipmentIntervention.swift */; };
+		04AF8C03216F9B6E00496BC2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		04F9B70D21591E2B00086731 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9B70C21591E2B00086731 /* CropView.swift */; };
+		6B0B14002152523F001A3366 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B11EEDB2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B11EEDD2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B11EEDE2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B11EEDF2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B11EEE12139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B11EEE22139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */; };
 		6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
 		6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
 		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
-		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
+		6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */; };
+		6B87EBF7215B8ADF004B3DE5 /* MaterialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */; };
+		6B87EBF9215B8C28004B3DE5 /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */; };
+		6B8EE4E82178C92A0035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B8EE4EA2178D8E00035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
+		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
+		6B8EE4ED2178D9340035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B982874216B86760032DE3E /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B982873216B86760032DE3E /* SelectedMaterialCell.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA37142213963230086DF9B /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713F213963230086DF9B /* oauthInfo.plist */; };
+		6BA3FEDC216653490070DA35 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
+		6BEA65DD2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6BEA65DF2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65EA2105CD900072840F /* RoundedButton.swift */; };
 /* End PBXBuildFile section */
@@ -92,10 +116,10 @@
 		04131399213FFC3E005437F0 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		04149EC321510C7F007B5441 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		0417A58721539CB5009529D5 /* CustomPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPickerView.swift; path = Views/CustomPickerView.swift; sourceTree = SOURCE_ROOT; };
+		04269C4D2179D49D00E0160C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
 		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
@@ -103,23 +127,6 @@
 		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
 		0480CA4C216508AA0039FCB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		0480CA50216508AF0039FCB9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Main.strings; sourceTree = "<group>"; };
-		048D2ABD2178C85B002EDF62 /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
-		048D2ABE2178C85B002EDF62 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
-		048D2ABF2178C85B002EDF62 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
-		048D2AC02178C85B002EDF62 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
-		048D2AC12178C85B002EDF62 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
-		048D2AC22178C85B002EDF62 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
-		048D2AC32178C85B002EDF62 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
-		048D2AC42178C85B002EDF62 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
-		048D2AC52178C85B002EDF62 /* AddIrrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
-		048D2AC62178C85B002EDF62 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
-		048D2AC72178C85C002EDF62 /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
-		048D2AC82178C85C002EDF62 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
-		048D2AC92178C85C002EDF62 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
-		048D2ACA2178C85C002EDF62 /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
-		048D2ACB2178C85C002EDF62 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
-		048D2ACC2178C85C002EDF62 /* AddHarvest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHarvest.swift; sourceTree = "<group>"; };
-		048D2ACD2178C85C002EDF62 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		048D2ADF2178C89F002EDF62 /* SeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCell.swift; sourceTree = "<group>"; };
 		048D2AE02178C89F002EDF62 /* SelectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
 		048D2AE12178C89F002EDF62 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
@@ -136,11 +143,33 @@
 		048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+isFirstLaunch.swift"; sourceTree = "<group>"; };
 		04A3BCBB2178D9F500C01690 /* IQKeyboardManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManager.framework; path = Carthage/Build/iOS/IQKeyboardManager.framework; sourceTree = "<group>"; };
 		04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
+		04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
+		04A7078E2179D25100876779 /* AddIrrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
+		04A7078F2179D25100876779 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
+		04A707902179D25100876779 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
+		04A707912179D25100876779 /* AddMaterials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMaterials.swift; sourceTree = "<group>"; };
+		04A707922179D25100876779 /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
+		04A707932179D25100876779 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
+		04A707942179D25100876779 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
+		04A707952179D25100876779 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
+		04A707962179D25100876779 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
+		04A707972179D25100876779 /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
+		04A707982179D25100876779 /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
+		04A707992179D25100876779 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
+		04A7079A2179D25100876779 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		04A7079B2179D25100876779 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		04A7079C2179D25100876779 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
+		04A7079D2179D25200876779 /* AddHarvest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHarvest.swift; sourceTree = "<group>"; };
+		04A7079E2179D25200876779 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
 		04F9B70C21591E2B00086731 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
+		6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCreationView.swift; sourceTree = "<group>"; };
+		6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsView.swift; sourceTree = "<group>"; };
+		6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCell.swift; sourceTree = "<group>"; };
+		6B982873216B86760032DE3E /* SelectedMaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMaterialCell.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -209,23 +238,24 @@
 		047BF0B02105D1D2009F3945 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				048D2AC92178C85C002EDF62 /* AddEntitiesToIntervention.swift */,
-				048D2AC42178C85B002EDF62 /* AddEquipmentIntervention.swift */,
-				048D2ACC2178C85C002EDF62 /* AddHarvest.swift */,
-				048D2ACD2178C85C002EDF62 /* AddInterventionViewController.swift */,
-				048D2AC52178C85B002EDF62 /* AddIrrigation.swift */,
-				048D2AC82178C85C002EDF62 /* AddSelectedInputsToIntervention.swift */,
-				048D2AC62178C85B002EDF62 /* AddWeatherToIntervention.swift */,
-				048D2ACA2178C85C002EDF62 /* AuthentificationService.swift */,
-				048D2ABD2178C85B002EDF62 /* HandleAddInterventionErrors.swift */,
-				048D2AC32178C85B002EDF62 /* HandleKeyboard.swift */,
-				048D2ABF2178C85B002EDF62 /* InterventionViewController.swift */,
-				048D2AC72178C85C002EDF62 /* InterventionViewController+Apollo.swift */,
-				048D2AC22178C85B002EDF62 /* InterventionViewController+Lexicon.swift */,
-				048D2ACB2178C85C002EDF62 /* ListProtocol.swift */,
-				048D2ABE2178C85B002EDF62 /* ListTableViewController.swift */,
-				048D2AC02178C85B002EDF62 /* LoginScreen.swift */,
-				048D2AC12178C85B002EDF62 /* UnitMeasurePickerView.swift */,
+				04A707962179D25100876779 /* AddEntitiesToIntervention.swift */,
+				04A7079E2179D25200876779 /* AddEquipmentIntervention.swift */,
+				04A7079D2179D25200876779 /* AddHarvest.swift */,
+				04A707952179D25100876779 /* AddInterventionViewController.swift */,
+				04A7078E2179D25100876779 /* AddIrrigation.swift */,
+				04A707912179D25100876779 /* AddMaterials.swift */,
+				04A707992179D25100876779 /* AddSelectedInputsToIntervention.swift */,
+				04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */,
+				04A707922179D25100876779 /* AuthentificationService.swift */,
+				04A707972179D25100876779 /* HandleAddInterventionErrors.swift */,
+				04A707902179D25100876779 /* HandleKeyboard.swift */,
+				04A7078F2179D25100876779 /* InterventionViewController.swift */,
+				04A707982179D25100876779 /* InterventionViewController+Apollo.swift */,
+				04A707932179D25100876779 /* InterventionViewController+Lexicon.swift */,
+				04A707942179D25100876779 /* ListProtocol.swift */,
+				04A7079A2179D25100876779 /* ListTableViewController.swift */,
+				04A7079B2179D25100876779 /* LoginScreen.swift */,
+				04A7079C2179D25100876779 /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -242,6 +272,8 @@
 				044B4D5F2138173E001A5D3D /* CropsView.swift */,
 				0417A58721539CB5009529D5 /* CustomPickerView.swift */,
 				04162E5D212C434100EF4318 /* InputsView.swift */,
+				6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */,
+				6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */,
 				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
 				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
 			);
@@ -303,10 +335,12 @@
 				048D2AE62178C89F002EDF62 /* HarvestCell.swift */,
 				048D2AE52178C89F002EDF62 /* InterventionCell.swift */,
 				048D2AE72178C89F002EDF62 /* ListCell.swift */,
+				6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */,
 				048D2AE12178C89F002EDF62 /* PhytoCell.swift */,
 				048D2AE82178C89F002EDF62 /* PlotCell.swift */,
 				048D2ADF2178C89F002EDF62 /* SeedCell.swift */,
 				048D2AE02178C89F002EDF62 /* SelectedInputCell.swift */,
+				6B982873216B86760032DE3E /* SelectedMaterialCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -324,7 +358,7 @@
 		6B4CA89B214F9B560052073D /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
-				04149EC321510C7F007B5441 /* API.swift */,
+				04269C4D2179D49D00E0160C /* API.swift */,
 				6B4CA89D214F9B560052073D /* mutations.graphql */,
 				6B4CA89C214F9B560052073D /* queries.graphql */,
 				0410A5FB2166192700529DA1 /* schema.json */,
@@ -524,53 +558,80 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B8EE4ED2178D9340035094C /* (null) in Sources */,
+				04A707B02179D25200876779 /* AddEquipmentIntervention.swift in Sources */,
+				6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */,
+				6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				6B8EE4EA2178D8E00035094C /* (null) in Sources */,
+				6B8EE4E82178C92A0035094C /* (null) in Sources */,
 				6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */,
-				048D2ADD2178C85C002EDF62 /* AddHarvest.swift in Sources */,
 				048D2AE92178C89F002EDF62 /* SeedCell.swift in Sources */,
 				048D2AED2178C89F002EDF62 /* FertilizerCell.swift in Sources */,
+				04A707A42179D25200876779 /* AuthentificationService.swift in Sources */,
 				6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */,
+				04A707A82179D25200876779 /* AddEntitiesToIntervention.swift in Sources */,
 				048D2AEA2178C89F002EDF62 /* SelectedInputCell.swift in Sources */,
 				6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */,
 				048D2AF22178C89F002EDF62 /* PlotCell.swift in Sources */,
-				048D2ADB2178C85C002EDF62 /* AuthentificationService.swift in Sources */,
 				041248062179C05400A78D08 /* InterventionState.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
-				048D2ACE2178C85C002EDF62 /* HandleAddInterventionErrors.swift in Sources */,
-				048D2AD42178C85C002EDF62 /* HandleKeyboard.swift in Sources */,
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
 				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				04269C4E2179D49D00E0160C /* API.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				048D2AF02178C89F002EDF62 /* HarvestCell.swift in Sources */,
-				048D2AD22178C85C002EDF62 /* UnitMeasurePickerView.swift in Sources */,
+				04A707A32179D25200876779 /* AddMaterials.swift in Sources */,
 				048D2AEC2178C89F002EDF62 /* EntityCell.swift in Sources */,
-				048D2AD52178C85C002EDF62 /* AddEquipmentIntervention.swift in Sources */,
+				04A707A22179D25200876779 /* HandleKeyboard.swift in Sources */,
 				041248082179C05900A78D08 /* InterventionType.swift in Sources */,
+				04A707A02179D25200876779 /* AddIrrigation.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				048D2AFA2178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift in Sources */,
-				048D2ADA2178C85C002EDF62 /* AddEntitiesToIntervention.swift in Sources */,
-				04149EC421510C80007B5441 /* API.swift in Sources */,
+				04A707A62179D25200876779 /* ListProtocol.swift in Sources */,
+				04A7079F2179D25200876779 /* AddWeatherToIntervention.swift in Sources */,
 				048D2AF12178C89F002EDF62 /* ListCell.swift in Sources */,
+				04A707A12179D25200876779 /* InterventionViewController.swift in Sources */,
+				04A707AE2179D25200876779 /* UnitMeasurePickerView.swift in Sources */,
 				048D2AEF2178C89F002EDF62 /* InterventionCell.swift in Sources */,
-				048D2AD72178C85C002EDF62 /* AddWeatherToIntervention.swift in Sources */,
 				0417A58821539CB5009529D5 /* CustomPickerView.swift in Sources */,
-				048D2AD82178C85C002EDF62 /* InterventionViewController+Apollo.swift in Sources */,
 				048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */,
 				048D2AEE2178C89F002EDF62 /* EquipmentCell.swift in Sources */,
-				048D2ACF2178C85C002EDF62 /* ListTableViewController.swift in Sources */,
-				048D2AD62178C85C002EDF62 /* AddIrrigation.swift in Sources */,
+				04A707A72179D25200876779 /* AddInterventionViewController.swift in Sources */,
 				048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */,
 				048D2AEB2178C89F002EDF62 /* PhytoCell.swift in Sources */,
+				6B0B14002152523F001A3366 /* (null) in Sources */,
+				6BEA65DF2105CD820072840F /* (null) in Sources */,
+				6B11EEDD2139635400E2DEC4 /* (null) in Sources */,
+				0480CA5821650DDB0039FCB9 /* (null) in Sources */,
+				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
+				6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */,
+				6B11EEE22139635400E2DEC4 /* (null) in Sources */,
+				0480CA5721650DDB0039FCB9 /* (null) in Sources */,
+				6B11EEDB2139635400E2DEC4 /* (null) in Sources */,
+				04A707AF2179D25200876779 /* AddHarvest.swift in Sources */,
+				04A707AD2179D25200876779 /* LoginScreen.swift in Sources */,
+				6B11EEDE2139635400E2DEC4 /* (null) in Sources */,
+				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
+				6B982874216B86760032DE3E /* SelectedMaterialCell.swift in Sources */,
+				6B87EBF7215B8ADF004B3DE5 /* MaterialsView.swift in Sources */,
+				04AF8C03216F9B6E00496BC2 /* (null) in Sources */,
+				0480CA5A21650DF20039FCB9 /* (null) in Sources */,
+				04A707AC2179D25200876779 /* ListTableViewController.swift in Sources */,
+				04A707A92179D25200876779 /* HandleAddInterventionErrors.swift in Sources */,
+				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
+				6B11EEDF2139635400E2DEC4 /* (null) in Sources */,
+				6BA3FEDC216653490070DA35 /* (null) in Sources */,
+				04A707AB2179D25200876779 /* AddSelectedInputsToIntervention.swift in Sources */,
+				6BEA65DD2105CD820072840F /* (null) in Sources */,
+				04A707AA2179D25200876779 /* InterventionViewController+Apollo.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
-				048D2ADC2178C85C002EDF62 /* ListProtocol.swift in Sources */,
-				048D2ADE2178C85C002EDF62 /* AddInterventionViewController.swift in Sources */,
+				04A707A52179D25200876779 /* InterventionViewController+Lexicon.swift in Sources */,
 				048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */,
-				048D2AD12178C85C002EDF62 /* LoginScreen.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
-				048D2AD02178C85C002EDF62 /* InterventionViewController.swift in Sources */,
 				04F9B70D21591E2B00086731 /* CropView.swift in Sources */,
+				6B87EBF9215B8C28004B3DE5 /* MaterialCell.swift in Sources */,
+				6B11EEE12139635400E2DEC4 /* (null) in Sources */,
 				0413139A213FFC3E005437F0 /* Decodables.swift in Sources */,
-				048D2AD92178C85C002EDF62 /* AddSelectedInputsToIntervention.swift in Sources */,
-				048D2AD32178C85C002EDF62 /* InterventionViewController+Lexicon.swift in Sources */,
 				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
