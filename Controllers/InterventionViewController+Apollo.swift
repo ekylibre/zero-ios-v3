@@ -1101,7 +1101,7 @@ extension InterventionViewController {
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
-    intervention.status = Int16((fetchedIntervention.validatedAt == nil ? Intervention.Status.Synced : Intervention.Status.Validated).rawValue)
+    intervention.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
@@ -1150,7 +1150,7 @@ extension InterventionViewController {
       let intervention = try managedContext.fetch(interventionFetchRequest)
 
       if intervention.count > 0 {
-        intervention.first?.status = Int16((fetchedIntervention.validatedAt == nil ? Intervention.Status.Synced : Intervention.Status.Validated).rawValue)
+        intervention.first?.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
         try managedContext.save()
       }
     } catch let error as NSError {

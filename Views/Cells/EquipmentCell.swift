@@ -10,7 +10,6 @@ import UIKit
 
 class EquipmentCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
-  @IBOutlet weak var numberLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var typeImageView: UIImageView!
 

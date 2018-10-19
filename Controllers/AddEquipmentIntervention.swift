@@ -287,12 +287,6 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
-      let row = self.selectedEquipments[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.equipmentsTableView.cellForRow(at: indexTab as IndexPath) as! EquipmentCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.White
       self.selectedEquipments.remove(at: indexPath.row)
       self.selectedEquipmentsTableView.reloadData()
 

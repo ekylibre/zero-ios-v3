@@ -14,7 +14,6 @@ extension AddInterventionViewController: DoerCellDelegate {
   // MARK: - Actions
 
   func updateDriverStatus(_ indexPath: IndexPath, driver: UISwitch) {
-    doers[indexPath.row].setValue(driver.isOn, forKey: "isDriver")
   }
 
   @IBAction func collapseDoersView(_ sender: Any) {
@@ -167,12 +166,6 @@ extension AddInterventionViewController: DoerCellDelegate {
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
-      let row = self.doers[indexPath.row].value(forKey: "row") as! Int
-      let indexTab = NSIndexPath(row: row, section: 0)
-      let cell = self.entitiesTableView.cellForRow(at: indexTab as IndexPath) as! EntityCell
-
-      cell.isAvaible = true
-      cell.backgroundColor = AppColor.CellColors.White
       self.doers.remove(at: indexPath.row)
       self.doersTableView.reloadData()
 

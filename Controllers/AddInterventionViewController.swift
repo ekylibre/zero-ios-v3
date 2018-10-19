@@ -299,45 +299,38 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   private func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case Intervention.InterventionType.Care.rawValue.localized:
-      interventionType = Intervention.InterventionType.Care.rawValue
+    case InterventionType.Care.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
-    case Intervention.InterventionType.CropProtection.rawValue.localized:
-      interventionType = Intervention.InterventionType.CropProtection.rawValue
+    case InterventionType.CropProtection.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 1
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU PHYTO", for: .normal)
-    case Intervention.InterventionType.Fertilization.rawValue:
-      interventionType = Intervention.InterventionType.Fertilization.rawValue
+    case InterventionType.Fertilization.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
       inputsView.segmentedControl.selectedSegmentIndex = 2
       inputsView.createButton.setTitle("+ CRÉER UN NOUVEAU FERTILISANT", for: .normal)
-    case Intervention.InterventionType.GroundWork.rawValue.localized:
-      interventionType = Intervention.InterventionType.GroundWork.rawValue
+    case InterventionType.GroundWork.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
       harvestView.isHidden = true
-    case Intervention.InterventionType.Harvest.rawValue.localized:
-      interventionType = Intervention.InterventionType.Harvest.rawValue
+    case InterventionType.Harvest.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       inputsSelectionView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case Intervention.InterventionType.Implantation.rawValue.localized:
-      interventionType = Intervention.InterventionType.Implantation.rawValue
+    case InterventionType.Implantation.rawValue:
       irrigationView.isHidden = true
       irrigationSeparatorView.isHidden = true
       harvestView.isHidden = true
-    case Intervention.InterventionType.Irrigation.rawValue.localized:
-      interventionType = Intervention.InterventionType.Irrigation.rawValue
+    case InterventionType.Irrigation.rawValue:
       harvestView.isHidden = true
     default:
       return
@@ -398,16 +391,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var equipment: NSManagedObject?
-    var selectedEquipment: NSManagedObject?
-    var equipmentType: String?
-    var entity: NSManagedObject?
-    var doer: NSManagedObject?
-
     switch tableView {
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
+      cell.selectionStyle = .none
       if selectedInputs.count > indexPath.row {
         let selectedInput = selectedInputs[indexPath.row]
         let unit = selectedInput.value(forKey: "unit") as? String
@@ -423,7 +411,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
 
           cell.type = "Seed"
-          cell.inputName.text = seed.specie
+          cell.inputName.text = seed.specie?.localized
           cell.inputLabel.text = seed.variety
           cell.inputImage.image = #imageLiteral(resourceName: "seed")
         case is InterventionPhytosanitaries:
@@ -437,8 +425,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
 
           cell.type = "Fertilizer"
-          cell.inputName.text = fertilizer.name
-          cell.inputLabel.text = fertilizer.nature
+          cell.inputName.text = fertilizer.name?.localized
+          cell.inputLabel.text = fertilizer.nature?.localized
           cell.inputImage.image = #imageLiteral(resourceName: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
@@ -447,55 +435,53 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return cell
     case equipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
+      let equipment = searchedEquipments[indexPath.row]
 
-      equipment = searchedEquipments[indexPath.row]
-      let number = equipment?.value(forKey: "number") as? String
-
-      cell.nameLabel.text = equipment?.value(forKey: "name") as? String
-      cell.numberLabel.text = number != "" ? "#\(number!)" : ""
-      cell.typeLabel.text = equipment?.value(forKey: "type") as? String
+      cell.nameLabel.text = equipment.name
+      cell.typeLabel.text = equipment.type
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
+      cell.selectionStyle = .none
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
-
-      selectedEquipment = selectedEquipments[indexPath.row]
-      let number = selectedEquipment?.value(forKey: "number") as? String
+      let selectedEquipment = selectedEquipments[indexPath.row]
 
       cell.cellDelegate = self
       cell.indexPath = indexPath
-      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.nameLabel.text = selectedEquipment?.value(forKey: "name") as? String
-      cell.numberLabel.text = number != "" ? "#\(number!)" : ""
-      cell.typeLabel.text = selectedEquipment?.value(forKey: "type") as? String
+      cell.nameLabel.text = selectedEquipment.name
+      cell.numberLabel.text = selectedEquipment.number != "" ? "#\(selectedEquipment.number!)" : ""
+      cell.typeLabel.text = selectedEquipment.type
       cell.typeImageView.image = defineEquipmentImage(equipmentName: cell.typeLabel.text!)
+      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      cell.selectionStyle = .none
       return cell
     case equipmentTypeTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentTypesCell", for: indexPath) as! EquipmentTypesCell
+      let equipmentType = sortedEquipmentTypes[indexPath.row]
 
-      equipmentType = sortedEquipmentTypes[indexPath.row]
       cell.nameLabel.text = equipmentType
       return cell
     case entitiesTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "EntityCell", for: indexPath) as! EntityCell
+      let entity = searchedEntities[indexPath.row]
 
-      entity = searchedEntities[indexPath.row]
-      cell.firstName.text = entity?.value(forKey: "firstName") as? String
-      cell.lastName.text = entity?.value(forKey: "lastName") as? String
+      cell.firstName.text = entity.value(forKey: "firstName") as? String
+      cell.lastName.text = entity.value(forKey: "lastName") as? String
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
+      cell.selectionStyle = .none
       return cell
     case doersTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "DoerCell", for: indexPath) as! DoerCell
+      let doer = doers[indexPath.row]
 
-      doer = doers[indexPath.row]
       cell.driver.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
       cell.cellDelegate = self
       cell.indexPath = indexPath
-      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
-      cell.driver.isOn = (doer?.value(forKey: "isDriver") as? Bool)!
-      cell.firstName.text = doer?.value(forKey: "firstName") as? String
-      cell.lastName.text = doer?.value(forKey: "lastName") as? String
+      cell.firstName.text = doer.firstName
+      cell.lastName.text = doer.lastName
       cell.logo.image = #imageLiteral(resourceName: "entity-logo")
+      cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+      cell.selectionStyle = .none
       return cell
     case harvestTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
@@ -544,7 +530,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if cell.isAvaible {
         selectedEquipments.append(searchedEquipments[indexPath.row])
-        selectedEquipments[selectedEquipments.count - 1].setValue(indexPath.row, forKey: "row")
         selectedEquipmentsTableView.reloadData()
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.LightGray
@@ -561,7 +546,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       if cell.isAvaible {
         doers.append(entities[indexPath.row])
-        doers[doers.count - 1].setValue(indexPath.row, forKey: "row")
         doersTableView.reloadData()
         cell.isAvaible = false
         cell.backgroundColor = AppColor.CellColors.LightGray
@@ -578,6 +562,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 75
     case selectedInputsTableView:
       return 110
+    case equipmentsTableView:
+      return 70
+    case selectedEquipmentsTableView:
+      return 70
     case harvestTableView:
       return 150
     default:
@@ -591,6 +579,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return 75
     case selectedInputsTableView:
       return 110
+    case equipmentsTableView:
+      return 70
+    case selectedEquipmentsTableView:
+      return 70
     case harvestTableView:
       return 150
     default:
@@ -619,7 +611,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
 
     newIntervention.type = interventionType
-    newIntervention.status = Int16(Intervention.Status.Created.rawValue)
+    newIntervention.status = InterventionState.Created.rawValue
     newIntervention.infos = "Infos"
     newIntervention.farmID = appDelegate.farmID
     if interventionType == "IRRIGATION" {
@@ -797,10 +789,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for entity in doers {
       let doer = Doers(context: managedContext)
-      let isDriver = entity.value(forKey: "isDriver")
 
       doer.interventions = intervention
-      doer.isDriver = isDriver as! Bool
       doer.entities = entity
     }
 

@@ -148,15 +148,15 @@ extension AddInterventionViewController {
       return false
     }
     switch interventionType {
-    case Intervention.InterventionType.CropProtection.rawValue:
+    case InterventionType.CropProtection.rawValue:
       return cropProtectionErrorHandler()
-    case Intervention.InterventionType.Fertilization.rawValue:
+    case InterventionType.Fertilization.rawValue:
       return fertilizationErrorHandler()
-    case Intervention.InterventionType.Harvest.rawValue:
+    case InterventionType.Harvest.rawValue:
       return harvestErrorHandler()
-    case Intervention.InterventionType.Implantation.rawValue:
+    case InterventionType.Implantation.rawValue:
       return implantationErrorHandler()
-    case Intervention.InterventionType.Irrigation.rawValue:
+    case InterventionType.Irrigation.rawValue:
       return irrigationErrorHandler()
     default:
       return true
