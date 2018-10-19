@@ -28,6 +28,7 @@ class CropView: UIView {
     checkboxImageView.image = UIImage(named: "unchecked-checkbox")
     checkboxImageView.highlightedImage = UIImage(named: "checked-checkbox")
     checkboxImageView.isHighlighted = false
+    checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
     return checkboxImageView
   }()
 
