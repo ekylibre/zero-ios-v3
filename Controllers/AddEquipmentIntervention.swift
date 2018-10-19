@@ -214,7 +214,7 @@ extension AddInterventionViewController: SelectedEquipmentCellDelegate {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-    
+
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipments(context: managedContext)
 
