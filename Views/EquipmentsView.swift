@@ -220,10 +220,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func checkEquipmentName() -> Bool {
-    let equipmentsWithSameName = equipments.filter({(equipment: Equipments) -> Bool in
-      let name = equipment.name!
-      return name.range(of: creationView.nameTextField.text!, options: .caseInsensitive) != nil
-    })
+    let equipmentsWithSameName = equipments.filter { $0.name == creationView.nameTextField.text! }
 
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "equipment_name_is_empty".localized
