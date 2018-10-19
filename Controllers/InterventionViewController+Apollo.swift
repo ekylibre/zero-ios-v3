@@ -1416,7 +1416,9 @@ extension InterventionViewController {
       } else if let error = result?.data?.createIntervention?.errors {
         print("Error: \(error)")
       } else {
-        id = ((result?.data?.createIntervention?.intervention?.id as NSString?)?.intValue)!
+        if result?.data?.createIntervention?.intervention?.id != nil {
+          id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
+        }
       }
       group.leave()
     })

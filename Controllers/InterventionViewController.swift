@@ -362,8 +362,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     destVC.interventionType = interventionTypes[index]
   }
 
-  @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
-    if sender.source is AddInterventionViewController {
+  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
+    if segue.source is AddInterventionViewController {
       fetchInterventions()
     }
   }
