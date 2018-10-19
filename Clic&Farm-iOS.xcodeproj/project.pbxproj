@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		040AA0ED21469B4200D75A2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040AA0EF21469B4200D75A2D /* Main.storyboard */; };
-		040D8594216B5453008E1628 /* DisplayInterventions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D8593216B5453008E1628 /* DisplayInterventions.swift */; };
+		040D8594216B5453008E1628 /* DefineInterventionsDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D8593216B5453008E1628 /* DefineInterventionsDisplayMode.swift */; };
 		040D8599216B9F1B008E1628 /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 040D8598216B9F1B008E1628 /* queries.graphql */; };
 		040D859B216B9F4E008E1628 /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 040D859A216B9F4E008E1628 /* mutations.graphql */; };
 		040D859D216BA061008E1628 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 040D859C216BA061008E1628 /* schema.json */; };
@@ -79,7 +79,7 @@
 
 /* Begin PBXFileReference section */
 		040AA0F021469B5100D75A2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		040D8593216B5453008E1628 /* DisplayInterventions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInterventions.swift; sourceTree = "<group>"; };
+		040D8593216B5453008E1628 /* DefineInterventionsDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineInterventionsDisplayMode.swift; sourceTree = "<group>"; };
 		040D8598216B9F1B008E1628 /* queries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		040D859A216B9F4E008E1628 /* mutations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		040D859C216BA061008E1628 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
@@ -210,6 +210,7 @@
 				6B834B3E2165000100BADA79 /* AddSelectedInputsToIntervention.swift */,
 				041855772142A20F0077A715 /* AddWeatherToIntervention.swift */,
 				047B57CF2108618200C48F68 /* AuthentificationService.swift */,
+				040D8593216B5453008E1628 /* DefineInterventionsDisplayMode.swift */,
 				0410EF0521550C1C003DA2D1 /* HandleKeyboard.swift */,
 				6BEA65DC2105CD820072840F /* InterventionViewController.swift */,
 				040D859E216BA0B2008E1628 /* InterventionViewController+Apollo.swift */,
@@ -217,7 +218,6 @@
 				044B4D46213816C0001A5D3D /* ListProtocol.swift */,
 				044B4D44213816B9001A5D3D /* ListTableViewController.swift */,
 				6BA5D778214934990054F969 /* LoginScreen.swift */,
-				040D8593216B5453008E1628 /* DisplayInterventions.swift */,
 				041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
@@ -528,7 +528,7 @@
 				040F887721771900009ABB09 /* API.swift in Sources */,
 				6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */,
 				044B4D47213816C0001A5D3D /* ListProtocol.swift in Sources */,
-				040D8594216B5453008E1628 /* DisplayInterventions.swift in Sources */,
+				040D8594216B5453008E1628 /* DefineInterventionsDisplayMode.swift in Sources */,
 				6B85D044214A9225009EAF24 /* CropView.swift in Sources */,
 				6B834B3F2165000100BADA79 /* AddSelectedInputsToIntervention.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,

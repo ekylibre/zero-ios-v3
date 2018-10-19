@@ -410,21 +410,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func disableUserInteraction() {
-    if interventionState == Intervention.State.Validated.rawValue {
-      cropsView.tableView.isUserInteractionEnabled = false
-      selectedInputsTableView.isUserInteractionEnabled = false
-      selectedEquipmentsTableView.isUserInteractionEnabled = false
-      doersTableView.isUserInteractionEnabled = false
-      temperatureTextField.isUserInteractionEnabled = false
-      windSpeedTextField.isUserInteractionEnabled = false
-      notesTextField.isUserInteractionEnabled = false
-      for weatherButton in weatherButtons {
-        weatherButton.isUserInteractionEnabled = false
-      }
-    }
-  }
-
   func displayInputQuantityInReadOnlyMode(quantity: String, unit: String, cell: SelectedInputCell) {
     if interventionState == Intervention.State.Validated.rawValue {
       cell.inputQuantity.placeholder = quantity

@@ -1,5 +1,5 @@
 //
-//  DisplayInterventions.swift
+//  DefineInterventionsDisplayMode.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 08/10/2018.
@@ -10,6 +10,21 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController {
+
+  func disableUserInteraction() {
+    if interventionState == Intervention.State.Validated.rawValue {
+      cropsView.tableView.isUserInteractionEnabled = false
+      selectedInputsTableView.isUserInteractionEnabled = false
+      selectedEquipmentsTableView.isUserInteractionEnabled = false
+      doersTableView.isUserInteractionEnabled = false
+      temperatureTextField.isUserInteractionEnabled = false
+      windSpeedTextField.isUserInteractionEnabled = false
+      notesTextField.isUserInteractionEnabled = false
+      for weatherButton in weatherButtons {
+        weatherButton.isUserInteractionEnabled = false
+      }
+    }
+  }
 
   func loadWorkingPeriod() {
     let dateFormatter = DateFormatter()
