@@ -50,6 +50,7 @@ class PlotCell: UITableViewCell {
     contentView.addSubview(nameLabel)
     contentView.addSubview(surfaceAreaLabel)
     contentView.addSubview(expandCollapseImageView)
+    self.selectionStyle = .none
     setupLayout()
   }
 

@@ -10,7 +10,7 @@ import UIKit
 import OAuth2
 import CoreData
 
-class LoginScreen: UsersDatabase, UITextFieldDelegate {
+class LoginScreen: UIViewController, UITextFieldDelegate {
 
   // MARK: - Properties
 
@@ -27,8 +27,11 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-    super.moveViewWhenKeyboardAppears()
 
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    
     tfUsername.delegate = self
     tfPassword.delegate = self
     textView.text = "welcome_text".localized
@@ -40,7 +43,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
-      if entityIsEmpty(entity: "Users") {
+      if appDelegate.entityIsEmpty(entity: "Users") {
         authentificationService?.logout()
       }
       self.authentifyUser()
@@ -53,7 +56,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
-        performSegue(withIdentifier: "SegueNoInternetOnFirstConnection", sender: self)
+        performSegue(withIdentifier: "showNoInternetVC", sender: self)
       } else {
         let alert = UIAlertController(
           title: nil,
@@ -65,7 +68,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-      performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+      performSegue(withIdentifier: "showInterventionVC", sender: self)
     }
   }
 
@@ -89,7 +92,11 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
   // MARK: - Actions
 
   func authentifyUser() {
-    if !entityIsEmpty(entity: "Users") {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    if !appDelegate.entityIsEmpty(entity: "Users") {
       authentificationService?.authorize(presenting: self)
       var token = authentificationService?.oauth2.accessToken
 
@@ -98,7 +105,7 @@ class LoginScreen: UsersDatabase, UITextFieldDelegate {
         self.checkLoggedStatus(token: token)
       }
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-        performSegue(withIdentifier: "SegueFromLogScreenToConnected", sender: self)
+        performSegue(withIdentifier: "showInterventionVC", sender: self)
       }
     } else if buttonIsPressed && tfUsername.text!.count > 0 {
       authentificationService?.addNewUser(userName: tfUsername.text!)

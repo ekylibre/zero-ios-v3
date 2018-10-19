@@ -5,14 +5,14 @@
 /* Class = "UILabel"; text = "Infos Label"; ObjectID = "342-8b-SlZ"; */
 "342-8b-SlZ.text" = "Infos Label";
 
-/* Class = "UITextField"; text = "7.0"; ObjectID = "3Fz-6d-VQ1"; */
-"3Fz-6d-VQ1.text" = "7,0";
+/* Class = "UITextField"; text = "7"; ObjectID = "3Fz-6d-VQ1"; */
+"3Fz-6d-VQ1.text" = "7";
 
 /* Class = "UITextField"; placeholder = "Number"; ObjectID = "3ay-Ie-glI"; */
 "3ay-Ie-glI.placeholder" = "Numéro";
 
-/* Class = "UILabel"; text = "hours"; ObjectID = "3cP-JT-NmL"; */
-"3cP-JT-NmL.text" = "heures";
+/* Class = "UILabel"; text = "Hours"; ObjectID = "3cP-JT-NmL"; */
+"3cP-JT-NmL.text" = "Heures";
 
 /* Class = "UIButton"; normalTitle = "+ ADD"; ObjectID = "5AO-Jj-0ZP"; */
 "5AO-Jj-0ZP.normalTitle" = "+ AJOUTER";
@@ -172,3 +172,25 @@
 
 /* Class = "UIButton"; normalTitle = "+ ADD"; ObjectID = "yGb-zU-Lzj"; */
 "yGb-zU-Lzj.normalTitle" = "+ AJOUTER";
+
+/* Class = "UILabel"; text = "Harvest"; ObjectID = "bWF-bA-PFJ"; */
+"bWF-bA-PFJ.text" = "Récolte";
+
+/* Class = "UIButton"; text = "+ ADD A LOAD"; ObjectID = "G1D-nr-BV3"; */
+"G1D-nr-BV3.normalTitle" = "+ AJOUTER UN CHARGEMENT";
+
+/* Class = "UILabel"; text = "Nature"; ObjectID = "mNi-kd-EFz"; */
+"mNi-kd-EFz.text" = "Nature";
+
+
+/* Class = "UIButton"; normalTitle = "Straw"; ObjectID = "yGb-zU-Lzj"; */
+"vEX-tE-fGs.normalTitle" = "Paille";
+
+/* Class = "UILabel"; text = "Quantity"; ObjectID = "ZjH-1x-xh7"; */
+"ZjH-1x-xh7.text" = "Quantité";
+
+/* Class = "UILabel"; text = "Storage"; ObjectID = "8zl-tA-sjx"; */
+"8zl-tA-sjx.text" = "Stockage";
+
+/* Class = "UILabel"; text = "Number"; ObjectID = "k4t-Fe-Hr6"; */
+"k4t-Fe-Hr6.text" = "Numéro";

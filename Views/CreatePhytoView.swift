@@ -39,7 +39,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var firmNameTextField: UITextField = {
     let firmNameTextField = UITextField(frame: CGRect.zero)
-    firmNameTextField.placeholder = "firmName".localized
+    firmNameTextField.placeholder = "brand".localized
     firmNameTextField.autocorrectionType = .no
     firmNameTextField.delegate = self
     firmNameTextField.tag = 11
@@ -57,7 +57,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   lazy var maaTextField: UITextField = {
     let maaTextField = UITextField(frame: CGRect.zero)
     maaTextField.keyboardType = .numberPad
-    maaTextField.placeholder = "maa_number".localized
+    maaTextField.placeholder = "mmaid_number".localized
     maaTextField.autocorrectionType = .no
     maaTextField.delegate = self
     maaTextField.tag = 12
@@ -75,7 +75,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
   lazy var reentryDelayTextField: UITextField = {
     let reentryDelayTextField = UITextField(frame: CGRect.zero)
     reentryDelayTextField.keyboardType = .numberPad
-    reentryDelayTextField.placeholder = "re_entry_delay".localized
+    reentryDelayTextField.placeholder = "reentry_delay".localized
     reentryDelayTextField.autocorrectionType = .no
     reentryDelayTextField.delegate = self
     reentryDelayTextField.tag = 13
@@ -92,7 +92,7 @@ class CreatePhytoView: UIView, UITextFieldDelegate {
 
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
-    unitLabel.text = "en heures"
+    unitLabel.text = "in_hours".localized.lowercased()
     unitLabel.font = UIFont.systemFont(ofSize: 14)
     unitLabel.textColor = UIColor.lightGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false
