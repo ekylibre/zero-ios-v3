@@ -98,7 +98,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     } else {
       let efficiency = volume / cropsView.selectedSurfaceArea
 
-      irrigationErrorLabel.text = String(format: "Soit %.1f %@ par hectare", efficiency, unit)
+      irrigationErrorLabel.text = String(format: "input_quantity_per_surface", efficiency, unit)
       irrigationErrorLabel.textColor = AppColor.TextColors.DarkGray
     }
   }
