@@ -123,7 +123,7 @@ extension AddInterventionViewController {
 
       for selectedCrop in selectedCrops {
         startDate = (selectedCrop.startDate! > startDate! ? selectedCrop.startDate! : startDate)
-        stopDate = (selectedCrop.stopDate! > stopDate! ? selectedCrop.stopDate! : stopDate)
+        stopDate = (selectedCrop.stopDate! < stopDate! ? selectedCrop.stopDate! : stopDate)
       }
       if selectedDate < startDate! || selectedDate > stopDate! {
         let message = (selectedDate < startDate! ? String(format: "started_must_be_on_or_after".localized, startDate! as CVarArg) :
