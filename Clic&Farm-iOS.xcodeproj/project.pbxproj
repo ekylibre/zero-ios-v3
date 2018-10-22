@@ -15,51 +15,68 @@
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
 		04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
-		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
-		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
-		0417A58821539CB5009529D5 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0417A58721539CB5009529D5 /* CustomPickerView.swift */; };
 		04269C4E2179D49D00E0160C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04269C4D2179D49D00E0160C /* API.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
-		044B4D602138173E001A5D3D /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
-		0480CA4D216508AB0039FCB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0480CA4B216508AA0039FCB9 /* Main.storyboard */; };
-		0480CA51216508AF0039FCB9 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0480CA4F216508AF0039FCB9 /* Main.strings */; };
 		0480CA5721650DDB0039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		0480CA5821650DDB0039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		0480CA5A21650DF20039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		048D2AE92178C89F002EDF62 /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2ADF2178C89F002EDF62 /* SeedCell.swift */; };
-		048D2AEA2178C89F002EDF62 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE02178C89F002EDF62 /* SelectedInputCell.swift */; };
-		048D2AEB2178C89F002EDF62 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE12178C89F002EDF62 /* PhytoCell.swift */; };
-		048D2AEC2178C89F002EDF62 /* EntityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE22178C89F002EDF62 /* EntityCell.swift */; };
-		048D2AED2178C89F002EDF62 /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE32178C89F002EDF62 /* FertilizerCell.swift */; };
-		048D2AEE2178C89F002EDF62 /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE42178C89F002EDF62 /* EquipmentCell.swift */; };
-		048D2AEF2178C89F002EDF62 /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE52178C89F002EDF62 /* InterventionCell.swift */; };
-		048D2AF02178C89F002EDF62 /* HarvestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE62178C89F002EDF62 /* HarvestCell.swift */; };
-		048D2AF12178C89F002EDF62 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE72178C89F002EDF62 /* ListCell.swift */; };
-		048D2AF22178C89F002EDF62 /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AE82178C89F002EDF62 /* PlotCell.swift */; };
 		048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF32178C8D6002EDF62 /* Localizable.swift */; };
 		048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */; };
 		048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */; };
 		048D2AFA2178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */; };
-		04A7079F2179D25200876779 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */; };
-		04A707A02179D25200876779 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078E2179D25100876779 /* AddIrrigation.swift */; };
-		04A707A12179D25200876779 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078F2179D25100876779 /* InterventionViewController.swift */; };
-		04A707A22179D25200876779 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707902179D25100876779 /* HandleKeyboard.swift */; };
-		04A707A32179D25200876779 /* AddMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707912179D25100876779 /* AddMaterials.swift */; };
-		04A707A42179D25200876779 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707922179D25100876779 /* AuthentificationService.swift */; };
-		04A707A52179D25200876779 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707932179D25100876779 /* InterventionViewController+Lexicon.swift */; };
-		04A707A62179D25200876779 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707942179D25100876779 /* ListProtocol.swift */; };
-		04A707A72179D25200876779 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707952179D25100876779 /* AddInterventionViewController.swift */; };
-		04A707A82179D25200876779 /* AddEntitiesToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707962179D25100876779 /* AddEntitiesToIntervention.swift */; };
-		04A707A92179D25200876779 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707972179D25100876779 /* HandleAddInterventionErrors.swift */; };
-		04A707AA2179D25200876779 /* InterventionViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707982179D25100876779 /* InterventionViewController+Apollo.swift */; };
-		04A707AB2179D25200876779 /* AddSelectedInputsToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A707992179D25100876779 /* AddSelectedInputsToIntervention.swift */; };
-		04A707AC2179D25200876779 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079A2179D25100876779 /* ListTableViewController.swift */; };
-		04A707AD2179D25200876779 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079B2179D25100876779 /* LoginScreen.swift */; };
-		04A707AE2179D25200876779 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079C2179D25100876779 /* UnitMeasurePickerView.swift */; };
-		04A707AF2179D25200876779 /* AddHarvest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079D2179D25200876779 /* AddHarvest.swift */; };
-		04A707B02179D25200876779 /* AddEquipmentIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7079E2179D25200876779 /* AddEquipmentIntervention.swift */; };
+		04998B79217DB8DE000A5D2F /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B54217DB8DD000A5D2F /* InputsView.swift */; };
+		04998B7A217DB8DF000A5D2F /* FertilizerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B55217DB8DD000A5D2F /* FertilizerCreationView.swift */; };
+		04998B7B217DB8DF000A5D2F /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B56217DB8DD000A5D2F /* RoundedButton.swift */; };
+		04998B7C217DB8DF000A5D2F /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B57217DB8DD000A5D2F /* SelectionView.swift */; };
+		04998B7D217DB8DF000A5D2F /* PersonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B58217DB8DD000A5D2F /* PersonsView.swift */; };
+		04998B7E217DB8DF000A5D2F /* MaterialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B59217DB8DD000A5D2F /* MaterialsView.swift */; };
+		04998B7F217DB8DF000A5D2F /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5A217DB8DD000A5D2F /* CropView.swift */; };
+		04998B80217DB8DF000A5D2F /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */; };
+		04998B81217DB8DF000A5D2F /* EquipmentCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */; };
+		04998B82217DB8DF000A5D2F /* PhytoCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5D217DB8DE000A5D2F /* PhytoCreationView.swift */; };
+		04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5E217DB8DE000A5D2F /* SeedCreationView.swift */; };
+		04998B84217DB8DF000A5D2F /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5F217DB8DE000A5D2F /* MaterialCreationView.swift */; };
+		04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B60217DB8DE000A5D2F /* CropsView.swift */; };
+		04998B86217DB8DF000A5D2F /* EquipmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B61217DB8DE000A5D2F /* EquipmentsView.swift */; };
+		04998B87217DB8DF000A5D2F /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B62217DB8DE000A5D2F /* SelectDateView.swift */; };
+		04998B88217DB8DF000A5D2F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */; };
+		04998B89217DB8DF000A5D2F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
+		04998B8A217DB8DF000A5D2F /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998B67217DB8DE000A5D2F /* Main.strings */; };
+		04998B8B217DB8DF000A5D2F /* HarvestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6A217DB8DE000A5D2F /* HarvestCell.swift */; };
+		04998B8C217DB8DF000A5D2F /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6B217DB8DE000A5D2F /* PhytoCell.swift */; };
+		04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6C217DB8DE000A5D2F /* PersonCell.swift */; };
+		04998B8E217DB8DF000A5D2F /* SelectedPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */; };
+		04998B8F217DB8DF000A5D2F /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6E217DB8DE000A5D2F /* SelectedMaterialCell.swift */; };
+		04998B90217DB8DF000A5D2F /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */; };
+		04998B91217DB8DF000A5D2F /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B70217DB8DE000A5D2F /* ListCell.swift */; };
+		04998B92217DB8DF000A5D2F /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B71217DB8DE000A5D2F /* MaterialCell.swift */; };
+		04998B93217DB8DF000A5D2F /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B72217DB8DE000A5D2F /* SeedCell.swift */; };
+		04998B94217DB8DF000A5D2F /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B73217DB8DE000A5D2F /* InterventionCell.swift */; };
+		04998B95217DB8DF000A5D2F /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B74217DB8DE000A5D2F /* FertilizerCell.swift */; };
+		04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B75217DB8DE000A5D2F /* EquipmentCell.swift */; };
+		04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B76217DB8DE000A5D2F /* PlotCell.swift */; };
+		04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */; };
+		04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B78217DB8DE000A5D2F /* PersonCreationView.swift */; };
 		04AF8C03216F9B6E00496BC2 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		04F9B70D21591E2B00086731 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9B70C21591E2B00086731 /* CropView.swift */; };
+		04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */; };
+		04DC9FE5217DB88D00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */; };
+		04DC9FE6217DB88D00CB94C3 /* DetailedInterventionViewController+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD2217DB88B00CB94C3 /* DetailedInterventionViewController+Weather.swift */; };
+		04DC9FE7217DB88D00CB94C3 /* DetailedInterventionViewController+Irrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD3217DB88B00CB94C3 /* DetailedInterventionViewController+Irrigation.swift */; };
+		04DC9FE8217DB88D00CB94C3 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD4217DB88B00CB94C3 /* HandleAddInterventionErrors.swift */; };
+		04DC9FE9217DB88D00CB94C3 /* DetailedInterventionViewController+Materials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD5217DB88B00CB94C3 /* DetailedInterventionViewController+Materials.swift */; };
+		04DC9FEA217DB88D00CB94C3 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD6217DB88B00CB94C3 /* AddInterventionViewController.swift */; };
+		04DC9FEB217DB88D00CB94C3 /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD7217DB88B00CB94C3 /* DetailedInterventionViewController+Equipments.swift */; };
+		04DC9FEC217DB88D00CB94C3 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD8217DB88B00CB94C3 /* AuthentificationService.swift */; };
+		04DC9FED217DB88D00CB94C3 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD9217DB88B00CB94C3 /* InterventionViewController.swift */; };
+		04DC9FEE217DB88D00CB94C3 /* InterventionViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDA217DB88C00CB94C3 /* InterventionViewController+Apollo.swift */; };
+		04DC9FEF217DB88D00CB94C3 /* AddHarvest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDB217DB88C00CB94C3 /* AddHarvest.swift */; };
+		04DC9FF0217DB88D00CB94C3 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDC217DB88C00CB94C3 /* HandleKeyboard.swift */; };
+		04DC9FF1217DB88D00CB94C3 /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDD217DB88C00CB94C3 /* DetailedInterventionViewController+Inputs.swift */; };
+		04DC9FF2217DB88D00CB94C3 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDE217DB88C00CB94C3 /* InterventionViewController+Lexicon.swift */; };
+		04DC9FF3217DB88D00CB94C3 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDF217DB88C00CB94C3 /* LoginScreen.swift */; };
+		04DC9FF4217DB88D00CB94C3 /* DetailedInterventionViewController+Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE0217DB88C00CB94C3 /* DetailedInterventionViewController+Persons.swift */; };
+		04DC9FF6217DB88D00CB94C3 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */; };
+		04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */; };
 		6B0B14002152523F001A3366 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEDB2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEDD2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -67,22 +84,14 @@
 		6B11EEDF2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEE12139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEE22139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */; };
-		6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* CreateFertilizerView.swift */; };
-		6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* CreatePhytoView.swift */; };
-		6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* CreateSeedView.swift */; };
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
-		6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */; };
-		6B87EBF7215B8ADF004B3DE5 /* MaterialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */; };
-		6B87EBF9215B8C28004B3DE5 /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */; };
 		6B8EE4E82178C92A0035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B8EE4EA2178D8E00035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6B8EE4ED2178D9340035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B982874216B86760032DE3E /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B982873216B86760032DE3E /* SelectedMaterialCell.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA3FEDC216653490070DA35 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
@@ -91,7 +100,13 @@
 		6BEA65DD2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BEA65DF2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
-		6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65EA2105CD900072840F /* RoundedButton.swift */; };
+		6BFEE70B2179D0C7001F7955 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
+		6BFEE71A2179D0C7001F7955 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6BFEE71F2179D0C7001F7955 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6BFEE7212179D0C7001F7955 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
+		6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
+		6BFEE7432179D0C7001F7955 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
+		6BFEE7442179D0C7001F7955 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,60 +132,69 @@
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
-		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
-		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
-		0417A58721539CB5009529D5 /* CustomPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPickerView.swift; path = Views/CustomPickerView.swift; sourceTree = SOURCE_ROOT; };
 		04269C4D2179D49D00E0160C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
-		044B4D5F2138173E001A5D3D /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
-		0478F232213447D9001EAE6E /* CreateFertilizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFertilizerView.swift; sourceTree = "<group>"; };
-		0478F234213447DD001EAE6E /* CreatePhytoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePhytoView.swift; sourceTree = "<group>"; };
-		0478F236213447E1001EAE6E /* CreateSeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSeedView.swift; sourceTree = "<group>"; };
-		0480CA4C216508AA0039FCB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		0480CA50216508AF0039FCB9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Main.strings; sourceTree = "<group>"; };
-		048D2ADF2178C89F002EDF62 /* SeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCell.swift; sourceTree = "<group>"; };
-		048D2AE02178C89F002EDF62 /* SelectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
-		048D2AE12178C89F002EDF62 /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
-		048D2AE22178C89F002EDF62 /* EntityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityCell.swift; sourceTree = "<group>"; };
-		048D2AE32178C89F002EDF62 /* FertilizerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCell.swift; sourceTree = "<group>"; };
-		048D2AE42178C89F002EDF62 /* EquipmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentCell.swift; sourceTree = "<group>"; };
-		048D2AE52178C89F002EDF62 /* InterventionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionCell.swift; sourceTree = "<group>"; };
-		048D2AE62178C89F002EDF62 /* HarvestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestCell.swift; sourceTree = "<group>"; };
-		048D2AE72178C89F002EDF62 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		048D2AE82178C89F002EDF62 /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		048D2AF32178C8D6002EDF62 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FloatValue.swift"; sourceTree = "<group>"; };
 		048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
 		048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+isFirstLaunch.swift"; sourceTree = "<group>"; };
+		04998B54217DB8DD000A5D2F /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
+		04998B55217DB8DD000A5D2F /* FertilizerCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCreationView.swift; sourceTree = "<group>"; };
+		04998B56217DB8DD000A5D2F /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		04998B57217DB8DD000A5D2F /* SelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
+		04998B58217DB8DD000A5D2F /* PersonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonsView.swift; sourceTree = "<group>"; };
+		04998B59217DB8DD000A5D2F /* MaterialsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialsView.swift; sourceTree = "<group>"; };
+		04998B5A217DB8DD000A5D2F /* CropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
+		04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
+		04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentCreationView.swift; sourceTree = "<group>"; };
+		04998B5D217DB8DE000A5D2F /* PhytoCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCreationView.swift; sourceTree = "<group>"; };
+		04998B5E217DB8DE000A5D2F /* SeedCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCreationView.swift; sourceTree = "<group>"; };
+		04998B5F217DB8DE000A5D2F /* MaterialCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialCreationView.swift; sourceTree = "<group>"; };
+		04998B60217DB8DE000A5D2F /* CropsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropsView.swift; sourceTree = "<group>"; };
+		04998B61217DB8DE000A5D2F /* EquipmentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentsView.swift; sourceTree = "<group>"; };
+		04998B62217DB8DE000A5D2F /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
+		04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		04998B66217DB8DE000A5D2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04998B68217DB8DE000A5D2F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		04998B6A217DB8DE000A5D2F /* HarvestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestCell.swift; sourceTree = "<group>"; };
+		04998B6B217DB8DE000A5D2F /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
+		04998B6C217DB8DE000A5D2F /* PersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPersonCell.swift; sourceTree = "<group>"; };
+		04998B6E217DB8DE000A5D2F /* SelectedMaterialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedMaterialCell.swift; sourceTree = "<group>"; };
+		04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedInputCell.swift; sourceTree = "<group>"; };
+		04998B70217DB8DE000A5D2F /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		04998B71217DB8DE000A5D2F /* MaterialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialCell.swift; sourceTree = "<group>"; };
+		04998B72217DB8DE000A5D2F /* SeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedCell.swift; sourceTree = "<group>"; };
+		04998B73217DB8DE000A5D2F /* InterventionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionCell.swift; sourceTree = "<group>"; };
+		04998B74217DB8DE000A5D2F /* FertilizerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FertilizerCell.swift; sourceTree = "<group>"; };
+		04998B75217DB8DE000A5D2F /* EquipmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentCell.swift; sourceTree = "<group>"; };
+		04998B76217DB8DE000A5D2F /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
+		04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedEquipmentCell.swift; sourceTree = "<group>"; };
+		04998B78217DB8DE000A5D2F /* PersonCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCreationView.swift; sourceTree = "<group>"; };
 		04A3BCBB2178D9F500C01690 /* IQKeyboardManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManager.framework; path = Carthage/Build/iOS/IQKeyboardManager.framework; sourceTree = "<group>"; };
 		04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
-		04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWeatherToIntervention.swift; sourceTree = "<group>"; };
-		04A7078E2179D25100876779 /* AddIrrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIrrigation.swift; sourceTree = "<group>"; };
-		04A7078F2179D25100876779 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
-		04A707902179D25100876779 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
-		04A707912179D25100876779 /* AddMaterials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMaterials.swift; sourceTree = "<group>"; };
-		04A707922179D25100876779 /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
-		04A707932179D25100876779 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
-		04A707942179D25100876779 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
-		04A707952179D25100876779 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
-		04A707962179D25100876779 /* AddEntitiesToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEntitiesToIntervention.swift; sourceTree = "<group>"; };
-		04A707972179D25100876779 /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
-		04A707982179D25100876779 /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
-		04A707992179D25100876779 /* AddSelectedInputsToIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSelectedInputsToIntervention.swift; sourceTree = "<group>"; };
-		04A7079A2179D25100876779 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
-		04A7079B2179D25100876779 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
-		04A7079C2179D25100876779 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
-		04A7079D2179D25200876779 /* AddHarvest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHarvest.swift; sourceTree = "<group>"; };
-		04A7079E2179D25200876779 /* AddEquipmentIntervention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEquipmentIntervention.swift; sourceTree = "<group>"; };
-		04F9B70C21591E2B00086731 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
-		6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
+		04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
+		04DC9FD2217DB88B00CB94C3 /* DetailedInterventionViewController+Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Weather.swift"; sourceTree = "<group>"; };
+		04DC9FD3217DB88B00CB94C3 /* DetailedInterventionViewController+Irrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Irrigation.swift"; sourceTree = "<group>"; };
+		04DC9FD4217DB88B00CB94C3 /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
+		04DC9FD5217DB88B00CB94C3 /* DetailedInterventionViewController+Materials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Materials.swift"; sourceTree = "<group>"; };
+		04DC9FD6217DB88B00CB94C3 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
+		04DC9FD7217DB88B00CB94C3 /* DetailedInterventionViewController+Equipments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Equipments.swift"; sourceTree = "<group>"; };
+		04DC9FD8217DB88B00CB94C3 /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
+		04DC9FD9217DB88B00CB94C3 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
+		04DC9FDA217DB88C00CB94C3 /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
+		04DC9FDB217DB88C00CB94C3 /* AddHarvest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHarvest.swift; sourceTree = "<group>"; };
+		04DC9FDC217DB88C00CB94C3 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
+		04DC9FDD217DB88C00CB94C3 /* DetailedInterventionViewController+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Inputs.swift"; sourceTree = "<group>"; };
+		04DC9FDE217DB88C00CB94C3 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
+		04DC9FDF217DB88C00CB94C3 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		04DC9FE0217DB88C00CB94C3 /* DetailedInterventionViewController+Persons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Persons.swift"; sourceTree = "<group>"; };
+		04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
+		04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
-		6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCreationView.swift; sourceTree = "<group>"; };
-		6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsView.swift; sourceTree = "<group>"; };
-		6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCell.swift; sourceTree = "<group>"; };
-		6B982873216B86760032DE3E /* SelectedMaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMaterialCell.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
@@ -180,7 +204,6 @@
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
 		6BEA658A2105C5EF0072840F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
-		6BEA65EA2105CD900072840F /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,24 +261,25 @@
 		047BF0B02105D1D2009F3945 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				04A707962179D25100876779 /* AddEntitiesToIntervention.swift */,
-				04A7079E2179D25200876779 /* AddEquipmentIntervention.swift */,
-				04A7079D2179D25200876779 /* AddHarvest.swift */,
-				04A707952179D25100876779 /* AddInterventionViewController.swift */,
-				04A7078E2179D25100876779 /* AddIrrigation.swift */,
-				04A707912179D25100876779 /* AddMaterials.swift */,
-				04A707992179D25100876779 /* AddSelectedInputsToIntervention.swift */,
-				04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */,
-				04A707922179D25100876779 /* AuthentificationService.swift */,
-				04A707972179D25100876779 /* HandleAddInterventionErrors.swift */,
-				04A707902179D25100876779 /* HandleKeyboard.swift */,
-				04A7078F2179D25100876779 /* InterventionViewController.swift */,
-				04A707982179D25100876779 /* InterventionViewController+Apollo.swift */,
-				04A707932179D25100876779 /* InterventionViewController+Lexicon.swift */,
-				04A707942179D25100876779 /* ListProtocol.swift */,
-				04A7079A2179D25100876779 /* ListTableViewController.swift */,
-				04A7079B2179D25100876779 /* LoginScreen.swift */,
-				04A7079C2179D25100876779 /* UnitMeasurePickerView.swift */,
+				04DC9FDB217DB88C00CB94C3 /* AddHarvest.swift */,
+				04DC9FD6217DB88B00CB94C3 /* AddInterventionViewController.swift */,
+				04DC9FD8217DB88B00CB94C3 /* AuthentificationService.swift */,
+				04DC9FD7217DB88B00CB94C3 /* DetailedInterventionViewController+Equipments.swift */,
+				04DC9FDD217DB88C00CB94C3 /* DetailedInterventionViewController+Inputs.swift */,
+				04DC9FD3217DB88B00CB94C3 /* DetailedInterventionViewController+Irrigation.swift */,
+				04DC9FD5217DB88B00CB94C3 /* DetailedInterventionViewController+Materials.swift */,
+				04DC9FE0217DB88C00CB94C3 /* DetailedInterventionViewController+Persons.swift */,
+				04DC9FD2217DB88B00CB94C3 /* DetailedInterventionViewController+Weather.swift */,
+				04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */,
+				04DC9FD4217DB88B00CB94C3 /* HandleAddInterventionErrors.swift */,
+				04DC9FDC217DB88C00CB94C3 /* HandleKeyboard.swift */,
+				04DC9FD9217DB88B00CB94C3 /* InterventionViewController.swift */,
+				04DC9FDA217DB88C00CB94C3 /* InterventionViewController+Apollo.swift */,
+				04DC9FDE217DB88C00CB94C3 /* InterventionViewController+Lexicon.swift */,
+				04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */,
+				04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */,
+				04DC9FDF217DB88C00CB94C3 /* LoginScreen.swift */,
+				04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -263,19 +287,24 @@
 		047BF0B12105D1F9009F3945 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6B11EECE2139635400E2DEC4 /* Cells */,
-				6B11EEE52139636200E2DEC4 /* Storyboards */,
-				0478F232213447D9001EAE6E /* CreateFertilizerView.swift */,
-				0478F234213447DD001EAE6E /* CreatePhytoView.swift */,
-				0478F236213447E1001EAE6E /* CreateSeedView.swift */,
-				04F9B70C21591E2B00086731 /* CropView.swift */,
-				044B4D5F2138173E001A5D3D /* CropsView.swift */,
-				0417A58721539CB5009529D5 /* CustomPickerView.swift */,
-				04162E5D212C434100EF4318 /* InputsView.swift */,
-				6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */,
-				6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */,
-				6BEA65EA2105CD900072840F /* RoundedButton.swift */,
-				04162E5F212C434A00EF4318 /* SelectDateView.swift */,
+				04998B69217DB8DE000A5D2F /* Cells */,
+				04998B63217DB8DE000A5D2F /* Storyboards */,
+				04998B60217DB8DE000A5D2F /* CropsView.swift */,
+				04998B5A217DB8DD000A5D2F /* CropView.swift */,
+				04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */,
+				04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */,
+				04998B61217DB8DE000A5D2F /* EquipmentsView.swift */,
+				04998B55217DB8DD000A5D2F /* FertilizerCreationView.swift */,
+				04998B54217DB8DD000A5D2F /* InputsView.swift */,
+				04998B5F217DB8DE000A5D2F /* MaterialCreationView.swift */,
+				04998B59217DB8DD000A5D2F /* MaterialsView.swift */,
+				04998B78217DB8DE000A5D2F /* PersonCreationView.swift */,
+				04998B58217DB8DD000A5D2F /* PersonsView.swift */,
+				04998B5D217DB8DE000A5D2F /* PhytoCreationView.swift */,
+				04998B56217DB8DD000A5D2F /* RoundedButton.swift */,
+				04998B5E217DB8DE000A5D2F /* SeedCreationView.swift */,
+				04998B62217DB8DE000A5D2F /* SelectDateView.swift */,
+				04998B57217DB8DD000A5D2F /* SelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -310,49 +339,35 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
-		0480CA4A216508AA0039FCB9 /* Base.lproj */ = {
+		04998B63217DB8DE000A5D2F /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				0480CA4B216508AA0039FCB9 /* Main.storyboard */,
-			);
-			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		0480CA4E216508AF0039FCB9 /* fr.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				0480CA4F216508AF0039FCB9 /* Main.strings */,
-			);
-			path = fr.lproj;
-			sourceTree = "<group>";
-		};
-		6B11EECE2139635400E2DEC4 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				048D2AE22178C89F002EDF62 /* EntityCell.swift */,
-				048D2AE42178C89F002EDF62 /* EquipmentCell.swift */,
-				048D2AE32178C89F002EDF62 /* FertilizerCell.swift */,
-				048D2AE62178C89F002EDF62 /* HarvestCell.swift */,
-				048D2AE52178C89F002EDF62 /* InterventionCell.swift */,
-				048D2AE72178C89F002EDF62 /* ListCell.swift */,
-				6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */,
-				048D2AE12178C89F002EDF62 /* PhytoCell.swift */,
-				048D2AE82178C89F002EDF62 /* PlotCell.swift */,
-				048D2ADF2178C89F002EDF62 /* SeedCell.swift */,
-				048D2AE02178C89F002EDF62 /* SelectedInputCell.swift */,
-				6B982873216B86760032DE3E /* SelectedMaterialCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		6B11EEE52139636200E2DEC4 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				0480CA4A216508AA0039FCB9 /* Base.lproj */,
-				0480CA4E216508AF0039FCB9 /* fr.lproj */,
-				6B11EEE62139636200E2DEC4 /* LaunchScreen.storyboard */,
+				04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */,
+				04998B65217DB8DE000A5D2F /* Main.storyboard */,
+				04998B67217DB8DE000A5D2F /* Main.strings */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		04998B69217DB8DE000A5D2F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				04998B75217DB8DE000A5D2F /* EquipmentCell.swift */,
+				04998B74217DB8DE000A5D2F /* FertilizerCell.swift */,
+				04998B6A217DB8DE000A5D2F /* HarvestCell.swift */,
+				04998B73217DB8DE000A5D2F /* InterventionCell.swift */,
+				04998B70217DB8DE000A5D2F /* ListCell.swift */,
+				04998B71217DB8DE000A5D2F /* MaterialCell.swift */,
+				04998B6C217DB8DE000A5D2F /* PersonCell.swift */,
+				04998B6B217DB8DE000A5D2F /* PhytoCell.swift */,
+				04998B76217DB8DE000A5D2F /* PlotCell.swift */,
+				04998B72217DB8DE000A5D2F /* SeedCell.swift */,
+				04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */,
+				04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */,
+				04998B6E217DB8DE000A5D2F /* SelectedMaterialCell.swift */,
+				04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		6B4CA89B214F9B560052073D /* GraphQL */ = {
@@ -499,14 +514,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04998B8A217DB8DF000A5D2F /* Main.strings in Resources */,
 				041313B321401483005437F0 /* Localizable.strings in Resources */,
 				0410A5FC2166192700529DA1 /* schema.json in Resources */,
 				6BA37141213963230086DF9B /* Assets.xcassets in Resources */,
+				04998B89217DB8DF000A5D2F /* Main.storyboard in Resources */,
 				6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */,
-				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
-				0480CA4D216508AB0039FCB9 /* Main.storyboard in Resources */,
+				04998B88217DB8DF000A5D2F /* LaunchScreen.storyboard in Resources */,
 				6B4CA89F214F9B560052073D /* queries.graphql in Resources */,
-				0480CA51216508AF0039FCB9 /* Main.strings in Resources */,
 				04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -559,80 +574,92 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B8EE4ED2178D9340035094C /* (null) in Sources */,
-				04A707B02179D25200876779 /* AddEquipmentIntervention.swift in Sources */,
+				04998B90217DB8DF000A5D2F /* SelectedInputCell.swift in Sources */,
+				04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */,
+				04DC9FE6217DB88D00CB94C3 /* DetailedInterventionViewController+Weather.swift in Sources */,
 				6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */,
+				04998B81217DB8DF000A5D2F /* EquipmentCreationView.swift in Sources */,
+				04998B8C217DB8DF000A5D2F /* PhytoCell.swift in Sources */,
 				6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				04998B7D217DB8DF000A5D2F /* PersonsView.swift in Sources */,
 				6B8EE4EA2178D8E00035094C /* (null) in Sources */,
+				04998B93217DB8DF000A5D2F /* SeedCell.swift in Sources */,
 				6B8EE4E82178C92A0035094C /* (null) in Sources */,
-				6B11EEEA2139641A00E2DEC4 /* CreateFertilizerView.swift in Sources */,
-				048D2AE92178C89F002EDF62 /* SeedCell.swift in Sources */,
-				048D2AED2178C89F002EDF62 /* FertilizerCell.swift in Sources */,
-				04A707A42179D25200876779 /* AuthentificationService.swift in Sources */,
-				6B11EEEB2139641A00E2DEC4 /* CreatePhytoView.swift in Sources */,
-				04A707A82179D25200876779 /* AddEntitiesToIntervention.swift in Sources */,
-				048D2AEA2178C89F002EDF62 /* SelectedInputCell.swift in Sources */,
-				6B11EEEC2139641A00E2DEC4 /* CreateSeedView.swift in Sources */,
-				048D2AF22178C89F002EDF62 /* PlotCell.swift in Sources */,
+				04DC9FF1217DB88D00CB94C3 /* DetailedInterventionViewController+Inputs.swift in Sources */,
 				041248062179C05400A78D08 /* InterventionState.swift in Sources */,
-				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
-				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
 				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				04DC9FEB217DB88D00CB94C3 /* DetailedInterventionViewController+Equipments.swift in Sources */,
+				04998B91217DB8DF000A5D2F /* ListCell.swift in Sources */,
 				04269C4E2179D49D00E0160C /* API.swift in Sources */,
+				04998B8F217DB8DF000A5D2F /* SelectedMaterialCell.swift in Sources */,
+				04998B7E217DB8DF000A5D2F /* MaterialsView.swift in Sources */,
 				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
-				048D2AF02178C89F002EDF62 /* HarvestCell.swift in Sources */,
-				04A707A32179D25200876779 /* AddMaterials.swift in Sources */,
-				048D2AEC2178C89F002EDF62 /* EntityCell.swift in Sources */,
-				04A707A22179D25200876779 /* HandleKeyboard.swift in Sources */,
+				04998B82217DB8DF000A5D2F /* PhytoCreationView.swift in Sources */,
+				04DC9FF2217DB88D00CB94C3 /* InterventionViewController+Lexicon.swift in Sources */,
+				04998B86217DB8DF000A5D2F /* EquipmentsView.swift in Sources */,
 				041248082179C05900A78D08 /* InterventionType.swift in Sources */,
-				04A707A02179D25200876779 /* AddIrrigation.swift in Sources */,
-				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
 				048D2AFA2178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift in Sources */,
-				04A707A62179D25200876779 /* ListProtocol.swift in Sources */,
-				04A7079F2179D25200876779 /* AddWeatherToIntervention.swift in Sources */,
-				048D2AF12178C89F002EDF62 /* ListCell.swift in Sources */,
-				04A707A12179D25200876779 /* InterventionViewController.swift in Sources */,
-				04A707AE2179D25200876779 /* UnitMeasurePickerView.swift in Sources */,
-				048D2AEF2178C89F002EDF62 /* InterventionCell.swift in Sources */,
-				0417A58821539CB5009529D5 /* CustomPickerView.swift in Sources */,
+				04998B80217DB8DF000A5D2F /* CustomPickerView.swift in Sources */,
+				04998B8B217DB8DF000A5D2F /* HarvestCell.swift in Sources */,
+				04DC9FF3217DB88D00CB94C3 /* LoginScreen.swift in Sources */,
 				048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */,
-				048D2AEE2178C89F002EDF62 /* EquipmentCell.swift in Sources */,
-				04A707A72179D25200876779 /* AddInterventionViewController.swift in Sources */,
 				048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */,
-				048D2AEB2178C89F002EDF62 /* PhytoCell.swift in Sources */,
 				6B0B14002152523F001A3366 /* (null) in Sources */,
+				04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */,
 				6BEA65DF2105CD820072840F /* (null) in Sources */,
 				6B11EEDD2139635400E2DEC4 /* (null) in Sources */,
 				0480CA5821650DDB0039FCB9 /* (null) in Sources */,
-				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
-				6B6D7F92215E76220021FF07 /* MaterialCreationView.swift in Sources */,
+				04DC9FE5217DB88D00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */,
 				6B11EEE22139635400E2DEC4 /* (null) in Sources */,
 				0480CA5721650DDB0039FCB9 /* (null) in Sources */,
 				6B11EEDB2139635400E2DEC4 /* (null) in Sources */,
-				04A707AF2179D25200876779 /* AddHarvest.swift in Sources */,
-				04A707AD2179D25200876779 /* LoginScreen.swift in Sources */,
 				6B11EEDE2139635400E2DEC4 /* (null) in Sources */,
-				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
-				6B982874216B86760032DE3E /* SelectedMaterialCell.swift in Sources */,
-				6B87EBF7215B8ADF004B3DE5 /* MaterialsView.swift in Sources */,
+				04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */,
 				04AF8C03216F9B6E00496BC2 /* (null) in Sources */,
 				0480CA5A21650DF20039FCB9 /* (null) in Sources */,
-				04A707AC2179D25200876779 /* ListTableViewController.swift in Sources */,
-				04A707A92179D25200876779 /* HandleAddInterventionErrors.swift in Sources */,
-				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
+				04DC9FEE217DB88D00CB94C3 /* InterventionViewController+Apollo.swift in Sources */,
+				04998B7A217DB8DF000A5D2F /* FertilizerCreationView.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* (null) in Sources */,
+				04DC9FE9217DB88D00CB94C3 /* DetailedInterventionViewController+Materials.swift in Sources */,
 				6BA3FEDC216653490070DA35 /* (null) in Sources */,
-				04A707AB2179D25200876779 /* AddSelectedInputsToIntervention.swift in Sources */,
 				6BEA65DD2105CD820072840F /* (null) in Sources */,
-				04A707AA2179D25200876779 /* InterventionViewController+Apollo.swift in Sources */,
+				04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
-				04A707A52179D25200876779 /* InterventionViewController+Lexicon.swift in Sources */,
+				04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */,
+				04998B92217DB8DF000A5D2F /* MaterialCell.swift in Sources */,
 				048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */,
+				04998B94217DB8DF000A5D2F /* InterventionCell.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
-				04F9B70D21591E2B00086731 /* CropView.swift in Sources */,
-				6B87EBF9215B8C28004B3DE5 /* MaterialCell.swift in Sources */,
+				04998B7B217DB8DF000A5D2F /* RoundedButton.swift in Sources */,
+				04DC9FE8217DB88D00CB94C3 /* HandleAddInterventionErrors.swift in Sources */,
 				6B11EEE12139635400E2DEC4 /* (null) in Sources */,
 				0413139A213FFC3E005437F0 /* Decodables.swift in Sources */,
-				6BEA65EB2105CD900072840F /* RoundedButton.swift in Sources */,
+				6BFEE70B2179D0C7001F7955 /* AppDelegate.swift in Sources */,
+				04998B7F217DB8DF000A5D2F /* CropView.swift in Sources */,
+				04DC9FF6217DB88D00CB94C3 /* ListProtocol.swift in Sources */,
+				04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */,
+				04DC9FEC217DB88D00CB94C3 /* AuthentificationService.swift in Sources */,
+				6BFEE71A2179D0C7001F7955 /* (null) in Sources */,
+				6BFEE71F2179D0C7001F7955 /* (null) in Sources */,
+				04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */,
+				04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */,
+				6BFEE7212179D0C7001F7955 /* Connectivity.swift in Sources */,
+				04998B8E217DB8DF000A5D2F /* SelectedPersonCell.swift in Sources */,
+				6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */,
+				04998B87217DB8DF000A5D2F /* SelectDateView.swift in Sources */,
+				04DC9FE7217DB88D00CB94C3 /* DetailedInterventionViewController+Irrigation.swift in Sources */,
+				04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */,
+				04998B95217DB8DF000A5D2F /* FertilizerCell.swift in Sources */,
+				04998B7C217DB8DF000A5D2F /* SelectionView.swift in Sources */,
+				04DC9FF4217DB88D00CB94C3 /* DetailedInterventionViewController+Persons.swift in Sources */,
+				04DC9FEA217DB88D00CB94C3 /* AddInterventionViewController.swift in Sources */,
+				04DC9FF0217DB88D00CB94C3 /* HandleKeyboard.swift in Sources */,
+				6BFEE7432179D0C7001F7955 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				6BFEE7442179D0C7001F7955 /* ColorConstants.swift in Sources */,
+				04998B79217DB8DE000A5D2F /* InputsView.swift in Sources */,
+				04DC9FED217DB88D00CB94C3 /* InterventionViewController.swift in Sources */,
+				04DC9FEF217DB88D00CB94C3 /* AddHarvest.swift in Sources */,
+				04998B84217DB8DF000A5D2F /* MaterialCreationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,18 +691,18 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		0480CA4B216508AA0039FCB9 /* Main.storyboard */ = {
+		04998B65217DB8DE000A5D2F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				0480CA4C216508AA0039FCB9 /* Base */,
+				04998B66217DB8DE000A5D2F /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		0480CA4F216508AF0039FCB9 /* Main.strings */ = {
+		04998B67217DB8DE000A5D2F /* Main.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				0480CA50216508AF0039FCB9 /* fr */,
+				04998B68217DB8DE000A5D2F /* fr */,
 			);
 			name = Main.strings;
 			sourceTree = "<group>";

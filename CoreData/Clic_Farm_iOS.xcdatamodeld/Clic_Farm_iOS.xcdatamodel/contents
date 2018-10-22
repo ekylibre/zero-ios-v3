@@ -12,20 +12,6 @@
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="crops" inverseEntity="Targets" syncable="YES"/>
     </entity>
-    <entity name="Doers" representedClassName="Doers" syncable="YES" codeGenerationType="class">
-        <attribute name="isDriver" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="entities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entities" inverseName="doers" inverseEntity="Entities" syncable="YES"/>
-        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="doers" inverseEntity="Interventions" syncable="YES"/>
-    </entity>
-    <entity name="Entities" representedClassName="Entities" syncable="YES" codeGenerationType="class">
-        <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="personID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="entities" inverseEntity="Doers" syncable="YES"/>
-    </entity>
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="equipmentID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -82,6 +68,11 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionMaterials" inverseEntity="Interventions" syncable="YES"/>
         <relationship name="materials" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Materials" inverseName="interventionMaterials" inverseEntity="Materials" syncable="YES"/>
     </entity>
+    <entity name="InterventionPersons" representedClassName="InterventionPersons" syncable="YES" codeGenerationType="class">
+        <attribute name="isDriver" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionPersons" inverseEntity="Interventions" syncable="YES"/>
+        <relationship name="persons" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Persons" inverseName="interventionPersons" inverseEntity="Persons" syncable="YES"/>
+    </entity>
     <entity name="InterventionPhytosanitaries" representedClassName="InterventionPhytosanitaries" syncable="YES" codeGenerationType="class">
         <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
@@ -98,11 +89,11 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="waterQuantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="waterUnit" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="doers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Doers" inverseName="interventions" inverseEntity="Doers" syncable="YES"/>
         <relationship name="harvests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Harvests" inverseName="interventions" inverseEntity="Harvests" syncable="YES"/>
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipments" inverseName="interventions" inverseEntity="InterventionEquipments" syncable="YES"/>
         <relationship name="interventionFertilizers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionFertilizers" inverseName="interventions" inverseEntity="InterventionFertilizers" syncable="YES"/>
         <relationship name="interventionMaterials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionMaterials" inverseName="interventions" inverseEntity="InterventionMaterials" syncable="YES"/>
+        <relationship name="interventionPersons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPersons" inverseName="interventions" inverseEntity="InterventionPersons" syncable="YES"/>
         <relationship name="interventionPhytosanitaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPhytosanitaries" inverseName="interventions" inverseEntity="InterventionPhytosanitaries" syncable="YES"/>
         <relationship name="interventionSeeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionSeeds" inverseName="interventions" inverseEntity="InterventionSeeds" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="interventions" inverseEntity="Targets" syncable="YES"/>
@@ -122,6 +113,14 @@
         <attribute name="referenceID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventionMaterials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionMaterials" inverseName="materials" inverseEntity="InterventionMaterials" syncable="YES"/>
+    </entity>
+    <entity name="Persons" representedClassName="Persons" syncable="YES" codeGenerationType="class">
+        <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="interventionPersons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPersons" inverseName="persons" inverseEntity="InterventionPersons" syncable="YES"/>
     </entity>
     <entity name="Phytos" representedClassName="Phytos" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -174,26 +173,26 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crops" positionX="973.49609375" positionY="142.78125" width="128" height="195"/>
-        <element name="Doers" positionX="-245" positionY="-387" width="128" height="88"/>
-        <element name="Entities" positionX="-461" positionY="-576" width="128" height="150"/>
-        <element name="Equipments" positionX="-860.93359375" positionY="-353.2890625" width="128" height="150"/>
-        <element name="Farms" positionX="171.9375" positionY="458.03515625" width="128" height="75"/>
-        <element name="Fertilizers" positionX="698.671875" positionY="-517.89453125" width="128" height="315"/>
-        <element name="Harvests" positionX="440.734375" positionY="-461.35546875" width="128" height="150"/>
-        <element name="InterventionEquipments" positionX="148.6875" positionY="184.3984375" width="128" height="75"/>
-        <element name="InterventionFertilizers" positionX="495.1875" positionY="-178.2578125" width="128" height="105"/>
-        <element name="InterventionMaterials" positionX="-514.30859375" positionY="-32.35546875" width="128" height="120"/>
+        <element name="Crops" positionX="414" positionY="269" width="128" height="135"/>
+        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="120"/>
+        <element name="Farms" positionX="-245.3203125" positionY="388.06640625" width="128" height="75"/>
+        <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="255"/>
+        <element name="Harvests" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="75"/>
+        <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
+        <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="120"/>
+        <element name="InterventionPersons" positionX="-135" positionY="-432" width="128" height="90"/>
         <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>
-        <element name="Interventions" positionX="130.25390625" positionY="-243.984375" width="210.39453125" height="330"/>
-        <element name="InterventionSeeds" positionX="-308.328125" positionY="117.0859375" width="128" height="105"/>
-        <element name="Materials" positionX="-825.2265625" positionY="22.87109375" width="128" height="135"/>
-        <element name="Phytos" positionX="1142.34765625" positionY="-214.15234375" width="128" height="225"/>
-        <element name="Seeds" positionX="-671.421875" positionY="266.7109375" width="128" height="165"/>
-        <element name="Storages" positionX="849.25390625" positionY="-164.640625" width="128" height="105"/>
-        <element name="Targets" positionX="680.625" positionY="122.57421875" width="128" height="90"/>
-        <element name="Users" positionX="172.30078125" positionY="368.75" width="128" height="60"/>
-        <element name="Weather" positionX="-157.04296875" positionY="286.2265625" width="128" height="120"/>
-        <element name="WorkingPeriods" positionX="490.2265625" positionY="284.9375" width="128" height="90"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
+        <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="135"/>
+        <element name="Materials" positionX="990" positionY="-139" width="128" height="120"/>
+        <element name="Persons" positionX="-351" positionY="-459" width="128" height="135"/>
+        <element name="Phytos" positionX="-578" positionY="-106" width="128" height="210"/>
+        <element name="Seeds" positionX="153" positionY="-859" width="128" height="165"/>
+        <element name="Storages" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Targets" positionX="421" positionY="-36" width="128" height="90"/>
+        <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
+        <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
+        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="90"/>
     </elements>
 </model>

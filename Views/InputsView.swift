@@ -69,20 +69,20 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return dimView
   }()
 
-  lazy var seedView: CreateSeedView = {
-    let seedView = CreateSeedView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  lazy var seedView: SeedCreationView = {
+    let seedView = SeedCreationView(firstSpecie: firstSpecie, frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     seedView.translatesAutoresizingMaskIntoConstraints = false
     return seedView
   }()
 
-  lazy var phytoView: CreatePhytoView = {
-    let phytoView = CreatePhytoView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  lazy var phytoView: PhytoCreationView = {
+    let phytoView = PhytoCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     phytoView.translatesAutoresizingMaskIntoConstraints = false
     return phytoView
   }()
 
-  lazy var fertilizerView: CreateFertilizerView = {
-    let fertilizerView = CreateFertilizerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  lazy var fertilizerView: FertilizerCreationView = {
+    let fertilizerView = FertilizerCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     fertilizerView.translatesAutoresizingMaskIntoConstraints = false
     return fertilizerView
   }()
@@ -93,10 +93,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var fertilizers = [Fertilizers]()
   var isSearching: Bool = false
   var filteredInputs = [NSManagedObject]()
+  var firstSpecie: String
 
   // MARK: - Initialization
 
-  override init(frame: CGRect) {
+  init(firstSpecie: String, frame: CGRect) {
+    self.firstSpecie = firstSpecie
     super.init(frame: frame)
     setupView()
     fetchInputs()
@@ -257,10 +259,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   // MARK: - Search bar
-
-  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-    isSearching = true
-  }
 
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     isSearching = false
@@ -620,7 +618,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       createSeed(variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
-      seedView.specieButton.setTitle("PRUNUS_ARMENIACA".localized, for: .normal)
+      seedView.specieButton.setTitle(firstSpecie.localized, for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
       let maaID = phytoView.maaTextField.text!.isEmpty ? "0" : phytoView.maaTextField.text!

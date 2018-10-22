@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "seedbed_preparator.png",
+      "filename" : "seedbed_preparator@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "seedbed_preparator@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "seedbed_preparator@3x.png",
       "scale" : "3x"
     }
   ],

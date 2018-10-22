@@ -45,7 +45,7 @@
 "HRC-pY-jcH.text" = "Type Label";
 
 /* Class = "UILabel"; text = "People"; ObjectID = "IAh-c6-yzZ"; */
-"IAh-c6-yzZ.text" = "Personnes";
+"IAh-c6-yzZ.text" = "Opérateurs";
 
 /* Class = "UILabel"; text = "Date Label"; ObjectID = "Ii2-La-EhX"; */
 "Ii2-La-EhX.text" = "Date Label";
@@ -62,17 +62,11 @@
 /* Class = "UILabel"; text = "REGISTER AN INTERVENTION"; ObjectID = "NNw-dJ-5Yi"; */
 "NNw-dJ-5Yi.text" = "ENREGISTRER UNE INTERVENTION";
 
-/* Class = "UILabel"; text = "Creating a person"; ObjectID = "Rzr-1A-DPD"; */
-"Rzr-1A-DPD.text" = "Creation d'une personne";
-
 /* Class = "UILabel"; text = "Crops"; ObjectID = "SLR-hS-kBq"; */
 "SLR-hS-kBq.text" = "Cultures";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "ScR-OF-ai0"; */
 "ScR-OF-ai0.placeholder" = "Mot de passe";
-
-/* Class = "UILabel"; text = "Select a person"; ObjectID = "SrW-ud-Ehh"; */
-"SrW-ud-Ehh.text" = "Sélectionnez une personne";
 
 /* Class = "UILabel"; text = "Type"; ObjectID = "Tur-MK-R4c"; */
 "Tur-MK-R4c.text" = "Type";
@@ -127,9 +121,6 @@
 
 /* Class = "UILabel"; text = "Type Label"; ObjectID = "qg1-zw-twO"; */
 "qg1-zw-twO.text" = "Type Label";
-
-/* Class = "UITextField"; placeholder = "First name"; ObjectID = "rRC-EH-Dse"; */
-"rRC-EH-Dse.placeholder" = "Prénom";
 
 /* Class = "UILabel"; text = "Clic&Farm"; ObjectID = "rcy-Q6-0lU"; */
 "rcy-Q6-0lU.text" = "Clic&Farm";

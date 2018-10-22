@@ -41,6 +41,7 @@ class SelectDateView: UIView {
     self.layer.cornerRadius = 3
     self.clipsToBounds = true
     self.isHidden = true
+    self.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(datePicker)
     self.addSubview(validateButton)
     setupLayout()

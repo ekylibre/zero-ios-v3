@@ -536,15 +536,15 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+    let personsFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
+    let predicate = NSPredicate(format: "ekyID == %d", personID)
 
+    personsFetchRequest.predicate = predicate
     do {
-      let entities = try managedContext.fetch(entitiesFetchRequest)
+      let persons = try managedContext.fetch(personsFetchRequest)
 
-      for entity in entities {
-        if personID == entity.ekyID {
-          return false
-        }
+      if persons.count > 0 {
+        return false
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -552,13 +552,13 @@ extension InterventionViewController {
     return true
   }
 
-  private func savePeople(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
+  private func savePersons(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let person = Entities(context: managedContext)
+    let person = Persons(context: managedContext)
 
     person.farmID = farmID
     person.firstName = fetchedPerson.firstName
@@ -587,7 +587,7 @@ extension InterventionViewController {
       for farm in farms {
         for person in farm.people {
           if self.checkIfNewPerson(personID: (person.id as NSString).intValue) {
-            self.savePeople(fetchedPerson: person, farmID: farm.id)
+            self.savePersons(fetchedPerson: person, farmID: farm.id)
           }
         }
       }
@@ -793,13 +793,13 @@ extension InterventionViewController {
 
   // MARK: Doers
 
-  private func returnPersonIfSame(personID: Int32?) -> Entities? {
+  private func returnPersonIfSame(personID: Int32?) -> Persons? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+    let entitiesFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -815,23 +815,23 @@ extension InterventionViewController {
     return nil
   }
 
-  private func saveDoersToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> Doers {
+  private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> InterventionPersons {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return Doers()
+      return InterventionPersons()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let doers = Doers(context: managedContext)
-    let doer = returnPersonIfSame(personID: (fetchedOperator.person?.id as NSString?)?.intValue)
+    let interventionPersons = InterventionPersons(context: managedContext)
+    let person = returnPersonIfSame(personID: (fetchedOperator.person?.id as NSString?)?.intValue)
 
-    if doer != nil {
+    if person != nil {
       if fetchedOperator.role?.rawValue == "OPERATOR" {
-        doers.isDriver = false
+        interventionPersons.isDriver = false
       } else {
-        doers.isDriver = true
+        interventionPersons.isDriver = true
       }
-      doer?.addToDoers(doers)
-      doers.interventions = intervention
+      person?.addToInterventionPersons(interventionPersons)
+      interventionPersons.interventions = intervention
     }
 
     do {
@@ -839,7 +839,7 @@ extension InterventionViewController {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-    return doers
+    return interventionPersons
   }
 
   // MARK: Harvests
@@ -1069,7 +1069,7 @@ extension InterventionViewController {
       intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
     }
     for fetchedOperator in fetchedIntervention.operators! {
-      intervention.addToDoers(saveDoersToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
+      intervention.addToInterventionPersons(saveInterventionPersonsToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
     }
     for fetchedTarget in fetchedIntervention.targets {
       intervention.addToTargets(saveTargetToIntervention(fetchedTarget: fetchedTarget, intervention: intervention))
@@ -1360,12 +1360,12 @@ extension InterventionViewController {
   }
 
   func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
-    let doers = intervention.doers
+    let interventionPersons = intervention.interventionPersons
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
-    for doer in doers! {
-      let personID = (doer as! Doers).entities?.ekyID
-      let role = (doer as! Doers).isDriver
+    for interventionPerson in interventionPersons! {
+      let personID = (interventionPerson as! InterventionPersons).persons?.ekyID
+      let role = (interventionPerson as! InterventionPersons).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
         personId: (personID as NSNumber?)?.stringValue,
         role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
