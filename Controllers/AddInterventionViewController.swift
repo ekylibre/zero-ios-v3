@@ -654,7 +654,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
-  
+
   func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -882,7 +882,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func selectInput(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
-    
+
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })

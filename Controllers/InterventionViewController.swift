@@ -9,7 +9,6 @@
 import UIKit
 import Apollo
 import CoreData
-import Apollo
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -165,15 +164,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Apollo
 
-  func checkIfTokenIsValid(authService: AuthentificationService) -> String {
-    if authService.oauth2.hasUnexpiredAccessToken() {
-      return authService.oauth2.accessToken!
-    } else {
-      authService.authorize(presenting: self)
-      return authService.oauth2.accessToken!
-    }
-  }
-  
   func fetchFarmNameAndId() -> String? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
