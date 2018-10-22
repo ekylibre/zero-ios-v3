@@ -56,7 +56,7 @@ extension InterventionViewController {
       seed.ekyID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie
       seed.variety = registeredSeed.variety
-      seed.unit = "kg/ha"
+      seed.unit = "KILOGRAM_PER_HECTARE"
       seed.used = false
     }
 
@@ -85,7 +85,7 @@ extension InterventionViewController {
       phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
       phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
       phyto.firmName = registeredPhyto.firmName
-      phyto.unit = "l/ha"
+      phyto.unit = "LITER_PER_HECTARE"
       phyto.used = false
     }
 
@@ -117,7 +117,7 @@ extension InterventionViewController {
       fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
       fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
       fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
-      fertilizer.unit = "kg/ha"
+      fertilizer.unit = "KILOGRAM_PER_HECTARE"
       fertilizer.used = false
     }
 

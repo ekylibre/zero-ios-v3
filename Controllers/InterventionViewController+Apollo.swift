@@ -463,23 +463,24 @@ extension InterventionViewController {
     return lastSyncDate
   }
 
-  // MARK: Equipments
+  // MARK: - Queries: Equipments
 
-  private func checkIfNewEquipment(equipmentID: Int32) -> Bool {
+  private func checkIfNewEntity(entityID: Int32, entityName: String) -> Bool {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return true
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+    let entityFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let predicate = NSPredicate(format: "ekyID == %d", entityID)
+
+    entityFetchRequest.predicate = predicate
 
     do {
-      let equipments = try managedContext.fetch(equipmentsFetchRequest)
+      let entities = try managedContext.fetch(entityFetchRequest)
 
-      for equipment in equipments {
-        if equipmentID == equipment.ekyID {
-          return false
-        }
+      if entities.count > 0 {
+        return false
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -520,7 +521,7 @@ extension InterventionViewController {
 
       for farm in farms {
         for equipment in farm.equipments {
-          if self.checkIfNewEquipment(equipmentID: (equipment.id as NSString).intValue) {
+          if self.checkIfNewEntity(entityID: (equipment.id as NSString).intValue, entityName: "Equipments") {
             self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
           }
         }
@@ -528,29 +529,7 @@ extension InterventionViewController {
     }
   }
 
-  // MARK: People
-
-  private func checkIfNewPerson(personID: Int32) -> Bool {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return true
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let personsFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
-    let predicate = NSPredicate(format: "ekyID == %d", personID)
-
-    personsFetchRequest.predicate = predicate
-    do {
-      let persons = try managedContext.fetch(personsFetchRequest)
-
-      if persons.count > 0 {
-        return false
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return true
-  }
+  // MARK: Persons
 
   private func savePersons(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -586,7 +565,7 @@ extension InterventionViewController {
 
       for farm in farms {
         for person in farm.people {
-          if self.checkIfNewPerson(personID: (person.id as NSString).intValue) {
+          if self.checkIfNewEntity(entityID: (person.id as NSString).intValue, entityName: "Persons") {
             self.savePersons(fetchedPerson: person, farmID: farm.id)
           }
         }
@@ -596,28 +575,6 @@ extension InterventionViewController {
   }
 
   // MARK: Storages
-
-  private func checkifNewStorage(storageID: Int32) -> Bool {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return true
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
-
-    do {
-      let storages = try managedContext.fetch(storagesFetchRequest)
-
-      for storage in storages {
-        if storageID == storage.storageID {
-          return false
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return true
-  }
 
   private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -648,7 +605,7 @@ extension InterventionViewController {
 
       for farm in farms {
         for storage in farm.storages {
-          if self.checkifNewStorage(storageID: (storage.id as NSString).intValue) {
+          if self.checkIfNewEntity(entityID: (storage.id as NSString).intValue, entityName: "Storages") {
             self.saveStorage(fetchedStorage: storage, farmID: farm.id)
           }
         }
@@ -706,21 +663,20 @@ extension InterventionViewController {
 
   // MARK: Intervention Equipments
 
-  private func returnEquipmentIfSame(equipmentID: Int32?) -> Equipments? {
+  private func returnEntityIfSame(entityName: String, predicate: NSPredicate) -> NSManagedObject? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+    let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
 
+    entitiesFetchRequest.predicate = predicate
     do {
-      let equipments = try managedContext.fetch(equipmentsFetchRequest)
+      let entities = try managedContext.fetch(entitiesFetchRequest)
 
-      for equipment in equipments {
-        if equipmentID == equipment.ekyID {
-          return equipment
-        }
+      if entities.count > 0 {
+        return entities.first as? NSManagedObject
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -735,10 +691,11 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipments(context: managedContext)
-    let equipment = returnEquipmentIfSame(equipmentID: (fetchedEquipment.equipment?.id as NSString?)?.intValue)
+    let predicate = NSPredicate(format: "ekyID == %@", (fetchedEquipment.equipment?.id)!)
+    let equipment = returnEntityIfSame(entityName: "Equipments", predicate: predicate)
 
     if equipment != nil {
-      equipment?.addToInterventionEquipments(interventionEquipment)
+      (equipment as! Equipments).addToInterventionEquipments(interventionEquipment)
       interventionEquipment.interventions = intervention
     }
 
@@ -752,28 +709,6 @@ extension InterventionViewController {
 
   // MARK: Targets
 
-  private func returnCropIfSame(cropUUID: UUID?) -> Crops? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-
-    do {
-      let crops = try managedContext.fetch(cropsFetchRequest)
-
-      for crop in crops {
-        if cropUUID == crop.uuid && crop.uuid != nil {
-          return crop
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
   private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Interventions) -> Targets {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return Targets()
@@ -781,39 +716,18 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let target = Targets(context: managedContext)
-    let crop = returnCropIfSame(cropUUID: UUID(uuidString: fetchedTarget.crop.uuid))
+    let predicate = NSPredicate(format: "uuid == %@", fetchedTarget.crop.uuid)
+    let crop = returnEntityIfSame(entityName: "Crops", predicate: predicate)
 
     if crop != nil {
       target.workAreaPercentage = Int16(fetchedTarget.workingPercentage)
-      target.crops = crop
+      target.crops = crop as? Crops
       target.interventions = intervention
     }
     return target
   }
 
   // MARK: Doers
-
-  private func returnPersonIfSame(personID: Int32?) -> Persons? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
-
-    do {
-      let entities = try managedContext.fetch(entitiesFetchRequest)
-
-      for entity in entities {
-        if personID == entity.ekyID {
-          return entity
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
 
   private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> InterventionPersons {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -822,7 +736,8 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPersons = InterventionPersons(context: managedContext)
-    let person = returnPersonIfSame(personID: (fetchedOperator.person?.id as NSString?)?.intValue)
+    let predicate = NSPredicate(format: "ekyID == %@", (fetchedOperator.person?.id)!)
+    let person = returnEntityIfSame(entityName: "Persons", predicate: predicate)
 
     if person != nil {
       if fetchedOperator.role?.rawValue == "OPERATOR" {
@@ -830,7 +745,7 @@ extension InterventionViewController {
       } else {
         interventionPersons.isDriver = true
       }
-      person?.addToInterventionPersons(interventionPersons)
+      (person as! Persons).addToInterventionPersons(interventionPersons)
       interventionPersons.interventions = intervention
     }
 
@@ -895,10 +810,11 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
-    let storage = returnStorageIfSame(storageID: (fetchedLoad.storage?.id as NSString?)?.intValue)
+    let predicate = NSPredicate(format: "storageID == %@", (fetchedLoad.storage?.id)!)
+    let storage = returnEntityIfSame(entityName: "Storages", predicate: predicate)
 
-    storage?.addToHarvests(harvest)
-    harvest.storages = storage
+    (storage as! Storages).addToHarvests(harvest)
+    harvest.storages = storage as? Storages
     harvest.interventions = intervention
     harvest.type = nature
     harvest.number = fetchedLoad.number
@@ -915,136 +831,51 @@ extension InterventionViewController {
 
   // MARK: Inputs
 
-  private func returnSeedIfSame(seedID: Int32?) -> Seeds? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
-
-    do {
-      let seeds = try managedContext.fetch(seedsFetchRequest)
-
-      for seed in seeds {
-        if seedID == seed.ekyID {
-          return seed
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  private func returnFertilizerIfSame(fertilizerID: Int32?) -> Fertilizers? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
-
-    do {
-      let fertilizers = try managedContext.fetch(fertilizersFetchRequest)
-
-      for fertilizer in fertilizers {
-        if fertilizerID == fertilizer.ekyID {
-          return fertilizer
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  private func returnPhytoIfSame(phytoID: Int32?) -> Phytos? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
-
-    do {
-      let phytos = try managedContext.fetch(phytosFetchRequest)
-
-      for phyto in phytos {
-        if phytoID == phyto.ekyID {
-          return phyto
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  private func returnMaterialIfSame(materialID: Int32?) -> Materials? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let materialsFetchRequest: NSFetchRequest<Materials> = Materials.fetchRequest()
-
-    do {
-      let materials = try managedContext.fetch(materialsFetchRequest)
-
-      for material in materials {
-        if materialID == material.ekyID {
-          return material
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
   private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Interventions) -> Interventions {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return intervention
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
+    let id = (fetchedInput.article?.id as NSString?)?.intValue
+    let predicate: NSPredicate!
 
+    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %d", id!))
     switch fetchedInput.article?.type.rawValue {
     case "SEED":
       let interventionSeed = InterventionSeeds(context: managedContext)
-      let seed = returnSeedIfSame(seedID: (fetchedInput.article?.id as NSString?)?.intValue)
+      let seed = returnEntityIfSame(entityName: "Seeds", predicate: predicate)
 
       interventionSeed.unit = fetchedInput.unit.rawValue
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
-      interventionSeed.seeds = seed
+      interventionSeed.seeds = seed as? Seeds
       interventionSeed.interventions = intervention
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
       let interventionFertilizer = InterventionFertilizers(context: managedContext)
-      let fertilizer = returnFertilizerIfSame(fertilizerID: (fetchedInput.article?.id as NSString?)?.intValue)
+      let fertilizer = returnEntityIfSame(entityName: "Fertilizers", predicate: predicate)
 
       interventionFertilizer.unit = fetchedInput.unit.rawValue
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
-      interventionFertilizer.fertilizers = fertilizer
+      interventionFertilizer.fertilizers = fertilizer as? Fertilizers
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
       let interventionPhyto = InterventionPhytosanitaries(context: managedContext)
-      let phyto = returnPhytoIfSame(phytoID: (fetchedInput.article?.id as NSString?)?.intValue)
+      let phyto = returnEntityIfSame(entityName: "Phytos", predicate: predicate)
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
-      interventionPhyto.phytos = phyto
+      interventionPhyto.phytos = phyto as? Phytos
       interventionPhyto.interventions = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
       let interventionMaterial = InterventionMaterials(context: managedContext)
-      let material = returnMaterialIfSame(materialID: (fetchedInput.article?.id as NSString?)?.intValue)
+      let material = returnEntityIfSame(entityName: "Materials", predicate: predicate)
 
       interventionMaterial.unit = fetchedInput.unit.rawValue
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
-      interventionMaterial.materials = material
+      interventionMaterial.materials = material as? Materials
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
@@ -1113,28 +944,6 @@ extension InterventionViewController {
     }
   }
 
-  private func checkIfNewIntervention(interventionID: Int32) -> Bool {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return true
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
-
-    do {
-      let interventions = try managedContext.fetch(interventionsFetchRequest)
-
-      for intervention in interventions {
-        if interventionID == intervention.ekyID {
-          return false
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return true
-  }
-
   func updateInterventionStatus(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -1176,7 +985,7 @@ extension InterventionViewController {
 
       for farm in farms {
         for intervention in farm.interventions {
-          if self.checkIfNewIntervention(interventionID: (intervention.id as NSString).intValue) {
+          if self.checkIfNewEntity(entityID: (intervention.id as NSString).intValue, entityName: "Interventions") {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
           }
           self.updateInterventionStatus(fetchedIntervention: intervention)
