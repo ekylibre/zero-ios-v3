@@ -110,6 +110,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } else {
       fetchInterventions()
     }
+
+    displayFarmName()
   }
 
   func initialiseInterventionButtons() {
@@ -192,24 +194,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  /*func displayFarmName() {
-   let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-   let farmLabel = UILabel(frame: firstFrame)
+  func displayFarmName() {
+    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+    let farmLabel = UILabel(frame: firstFrame)
 
-   if userDatabase.entityIsEmpty(entity: "Farms") {
-   apolloQuery.defineFarmNameAndID { (success) -> Void in
-   if success {
-   farmLabel.text = self.fetchFarmNameAndId()
-   farmLabel.textColor = UIColor.white
-   self.navigationBar.addSubview(farmLabel)
-   }
-   }
-   } else {
-   farmLabel.text = fetchFarmNameAndId()
-   farmLabel.textColor = UIColor.white
-   navigationBar.addSubview(farmLabel)
-   }
-   }*/
+    farmLabel.text = fetchFarmNameAndId()
+    farmLabel.textColor = UIColor.white
+    farmLabel.font = UIFont.boldSystemFont(ofSize: 18)
+    navigationBar.addSubview(farmLabel)
+  }
 
   // MARK: - Table view data source
   

@@ -468,6 +468,7 @@
 "speed" = "Speed";
 "working_width" = "Largeur de\ntravail";
 "worked_area" = "Surface\ntravaillée";
+"surface_area" = "%.1f ha worked";
 "preparation" = "Préparation";
 "mooving" = "Déplacement";
 "intervention" = "Intervention";

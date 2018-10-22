@@ -341,15 +341,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
-      //cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      //cell.selectionStyle = .none
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
       let selectedEquipment = selectedEquipments[indexPath.row]
       let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
-      //cell.selectionStyle = .none
       cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       cell.nameLabel.text = selectedEquipment.name
       cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
@@ -393,6 +390,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.number.layer.cornerRadius = 5
       cell.number.text = harvest.number
       cell.number.delegate = cell
+      cell.selectionStyle = .none
       return cell
     default:
       fatalError("Unknown tableView: \(tableView)")
