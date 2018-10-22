@@ -476,10 +476,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       switch irrigationUnitButton.titleLabel?.text {
       case "m³":
         newIntervention.waterUnit = "CUBIC_METER"
-      case "l":
-        newIntervention.waterUnit = "LITER"
       case "hl":
         newIntervention.waterUnit = "HECTOLITER"
+      case "l":
+        newIntervention.waterUnit = "LITER"
       default:
         newIntervention.waterUnit = ""
       }

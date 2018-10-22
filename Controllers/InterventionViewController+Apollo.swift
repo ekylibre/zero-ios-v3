@@ -1085,7 +1085,7 @@ extension InterventionViewController {
         } else {
           id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity!, unit: seed.unit!.uppercased()))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity!, unit: seed.unit!))
       case is InterventionPhytosanitaries:
         let phyto = input as! InterventionPhytosanitaries
         var id: String? = nil
@@ -1098,7 +1098,7 @@ extension InterventionViewController {
         } else {
           id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!.uppercased()))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!))
       case is InterventionFertilizers:
         let fertilizer = input as! InterventionFertilizers
         var id: String? = nil
@@ -1111,7 +1111,7 @@ extension InterventionViewController {
         } else {
           id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity!, unit: fertilizer.unit!.uppercased()))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity!, unit: fertilizer.unit!))
       case is InterventionMaterials:
         let material = input as! InterventionMaterials
         var id: String? = nil
@@ -1124,7 +1124,7 @@ extension InterventionViewController {
         } else {
           id = (material.materials?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!.uppercased()))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!))
       default:
         print("No type")
       }
@@ -1199,14 +1199,16 @@ extension InterventionViewController {
     }
 
     var id: Int32 = 0
+    let group = DispatchGroup()
     let apollo = appDelegate.apollo
+    let _ = apollo?.clearCache()
     let mutation = PushInterMutation(
       farmId: intervention.farmID!,
-      procedure: InterventionTypeEnum(rawValue: intervention.type!.uppercased())!,
+      procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
       cropList: defineTargetAttributesFrom(intervention: intervention),
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
       waterQuantity: intervention.type == "IRRIGATION" ? Int(intervention.waterQuantity) : nil,
-      waterUnit: intervention.type == "IRRIGATION" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!.uppercased()) : nil,
+      waterUnit: intervention.type == "IRRIGATION" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!) : nil,
       inputs: defineInputsAttributesFrom(intervention: intervention),
       outputs: defineHarvestAttributesFrom(intervention: intervention),
       globalOutputs: false,
@@ -1214,9 +1216,6 @@ extension InterventionViewController {
       operators: defineOperatorAttributesFrom(intervention: intervention),
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
-
-    let group = DispatchGroup()
-    let _ = apollo?.clearCache()
 
     group.enter()
     apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
