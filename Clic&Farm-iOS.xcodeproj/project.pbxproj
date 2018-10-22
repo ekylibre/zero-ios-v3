@@ -94,19 +94,12 @@
 		6B8EE4ED2178D9340035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA3FEDC216653490070DA35 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 		6BEA65DD2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BEA65DF2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
-		6BFEE70B2179D0C7001F7955 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BFEE71A2179D0C7001F7955 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BFEE71F2179D0C7001F7955 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6BFEE7212179D0C7001F7955 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
-		6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
-		6BFEE7432179D0C7001F7955 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
-		6BFEE7442179D0C7001F7955 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -475,7 +468,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Ekylibre;
 				TargetAttributes = {
 					6BEA656C2105C5EE0072840F = {
@@ -587,13 +580,11 @@
 				6B8EE4E82178C92A0035094C /* (null) in Sources */,
 				04DC9FF1217DB88D00CB94C3 /* DetailedInterventionViewController+Inputs.swift in Sources */,
 				041248062179C05400A78D08 /* InterventionState.swift in Sources */,
-				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				04DC9FEB217DB88D00CB94C3 /* DetailedInterventionViewController+Equipments.swift in Sources */,
 				04998B91217DB8DF000A5D2F /* ListCell.swift in Sources */,
 				04269C4E2179D49D00E0160C /* API.swift in Sources */,
 				04998B8F217DB8DF000A5D2F /* SelectedMaterialCell.swift in Sources */,
 				04998B7E217DB8DF000A5D2F /* MaterialsView.swift in Sources */,
-				6BEA65E52105CD8B0072840F /* Connectivity.swift in Sources */,
 				04998B82217DB8DF000A5D2F /* PhytoCreationView.swift in Sources */,
 				04DC9FF2217DB88D00CB94C3 /* InterventionViewController+Lexicon.swift in Sources */,
 				04998B86217DB8DF000A5D2F /* EquipmentsView.swift in Sources */,
@@ -634,7 +625,6 @@
 				04DC9FE8217DB88D00CB94C3 /* HandleAddInterventionErrors.swift in Sources */,
 				6B11EEE12139635400E2DEC4 /* (null) in Sources */,
 				0413139A213FFC3E005437F0 /* Decodables.swift in Sources */,
-				6BFEE70B2179D0C7001F7955 /* AppDelegate.swift in Sources */,
 				04998B7F217DB8DF000A5D2F /* CropView.swift in Sources */,
 				04DC9FF6217DB88D00CB94C3 /* ListProtocol.swift in Sources */,
 				04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */,
@@ -643,9 +633,7 @@
 				6BFEE71F2179D0C7001F7955 /* (null) in Sources */,
 				04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */,
 				04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */,
-				6BFEE7212179D0C7001F7955 /* Connectivity.swift in Sources */,
 				04998B8E217DB8DF000A5D2F /* SelectedPersonCell.swift in Sources */,
-				6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */,
 				04998B87217DB8DF000A5D2F /* SelectDateView.swift in Sources */,
 				04DC9FE7217DB88D00CB94C3 /* DetailedInterventionViewController+Irrigation.swift in Sources */,
 				04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */,
@@ -654,8 +642,6 @@
 				04DC9FF4217DB88D00CB94C3 /* DetailedInterventionViewController+Persons.swift in Sources */,
 				04DC9FEA217DB88D00CB94C3 /* AddInterventionViewController.swift in Sources */,
 				04DC9FF0217DB88D00CB94C3 /* HandleKeyboard.swift in Sources */,
-				6BFEE7432179D0C7001F7955 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
-				6BFEE7442179D0C7001F7955 /* ColorConstants.swift in Sources */,
 				04998B79217DB8DE000A5D2F /* InputsView.swift in Sources */,
 				04DC9FED217DB88D00CB94C3 /* InterventionViewController.swift in Sources */,
 				04DC9FEF217DB88D00CB94C3 /* AddHarvest.swift in Sources */,
