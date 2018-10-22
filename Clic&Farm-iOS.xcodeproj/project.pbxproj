@@ -13,6 +13,8 @@
 		041248082179C05900A78D08 /* InterventionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248072179C05900A78D08 /* InterventionType.swift */; };
 		0413139A213FFC3E005437F0 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
+		04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
+		04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		0417A58821539CB5009529D5 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0417A58721539CB5009529D5 /* CustomPickerView.swift */; };
@@ -38,7 +40,6 @@
 		048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */; };
 		048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */; };
 		048D2AFA2178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */; };
-		04A3BCBE2178DA3D00C01690 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
 		04A7079F2179D25200876779 /* AddWeatherToIntervention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078D2179D25100876779 /* AddWeatherToIntervention.swift */; };
 		04A707A02179D25200876779 /* AddIrrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078E2179D25100876779 /* AddIrrigation.swift */; };
 		04A707A12179D25200876779 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7078F2179D25100876779 /* InterventionViewController.swift */; };
@@ -83,7 +84,6 @@
 		6B8EE4ED2178D9340035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B982874216B86760032DE3E /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B982873216B86760032DE3E /* SelectedMaterialCell.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
-		6BA37142213963230086DF9B /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713F213963230086DF9B /* oauthInfo.plist */; };
 		6BA3FEDC216653490070DA35 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
@@ -116,6 +116,7 @@
 		04131399213FFC3E005437F0 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		04162E5D212C434100EF4318 /* InputsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputsView.swift; sourceTree = "<group>"; };
 		04162E5F212C434A00EF4318 /* SelectDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		0417A58721539CB5009529D5 /* CustomPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPickerView.swift; path = Views/CustomPickerView.swift; sourceTree = SOURCE_ROOT; };
@@ -171,7 +172,6 @@
 		6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialCell.swift; sourceTree = "<group>"; };
 		6B982873216B86760032DE3E /* SelectedMaterialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMaterialCell.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6BA3713F213963230086DF9B /* oauthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
 		6BB2253E211849090036E167 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 			files = (
 				0411295A2110937300AE884D /* OAuth2.framework in Frameworks */,
 				6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */,
-				04A3BCBE2178DA3D00C01690 /* IQKeyboardManagerSwift.framework in Frameworks */,
+				04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +371,7 @@
 			children = (
 				6BA3713E213963230086DF9B /* Assets.xcassets */,
 				6BA37140213963230086DF9B /* Info.plist */,
-				6BA3713F213963230086DF9B /* oauthInfo.plist */,
+				04134B28217DB36A009E32C2 /* oauthInfo.plist */,
 				041313AC21401483005437F0 /* Translations */,
 			);
 			path = Resources;
@@ -506,8 +506,8 @@
 				6B11EEE82139636300E2DEC4 /* LaunchScreen.storyboard in Resources */,
 				0480CA4D216508AB0039FCB9 /* Main.storyboard in Resources */,
 				6B4CA89F214F9B560052073D /* queries.graphql in Resources */,
-				6BA37142213963230086DF9B /* oauthInfo.plist in Resources */,
 				0480CA51216508AF0039FCB9 /* Main.strings in Resources */,
+				04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
