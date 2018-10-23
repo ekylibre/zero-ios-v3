@@ -1301,7 +1301,7 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbF-nF-QUt" userLabel="Dim View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbF-nF-QUt" userLabel="Dim View">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50476241440000003" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>

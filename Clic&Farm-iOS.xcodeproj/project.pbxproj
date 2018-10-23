@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040AA0ED21469B4200D75A2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040AA0EF21469B4200D75A2D /* Main.storyboard */; };
 		040D8594216B5453008E1628 /* DefineInterventionsDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D8593216B5453008E1628 /* DefineInterventionsDisplayMode.swift */; };
 		040D8599216B9F1B008E1628 /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 040D8598216B9F1B008E1628 /* queries.graphql */; };
 		040D859B216B9F4E008E1628 /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 040D859A216B9F4E008E1628 /* mutations.graphql */; };
@@ -17,11 +16,8 @@
 		040D85A6216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D85A5216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift */; };
 		0410EF0621550C1C003DA2D1 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410EF0521550C1C003DA2D1 /* HandleKeyboard.swift */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
-		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
-		04139CB021411D6F0067DEA9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		04162E5E212C434200EF4318 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
-		0417A58221538B5B009529D5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		0418AE3A2167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0418AE392167A23F00E4A7B7 /* IQKeyboardManagerSwift.framework */; };
 		041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
@@ -32,8 +28,9 @@
 		045F03C4217F0D7200CCE5B3 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F03C3217F0D7200CCE5B3 /* InterventionViewController+Lexicon.swift */; };
 		045F03C5217F1BBB00CCE5B3 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04730CD82179FF9A008C925F /* oauthInfo.plist */; };
 		045F03C7217F1BDB00CCE5B3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F03C6217F1BDB00CCE5B3 /* API.swift */; };
-		047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
-		047BF0C721060AE4009F3945 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		045F03C8217F20AD00CCE5B3 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D043214A9225009EAF24 /* CropView.swift */; };
+		045F03C9217F20D100CCE5B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040AA0EF21469B4200D75A2D /* Main.storyboard */; };
+		045F03CA217F20D900CCE5B3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
 		6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */; };
 		6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED22139635400E2DEC4 /* ListCell.swift */; };
@@ -41,23 +38,17 @@
 		6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED42139635400E2DEC4 /* InterventionCell.swift */; };
 		6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED52139635400E2DEC4 /* FertilizerCell.swift */; };
 		6B11EEE12139635400E2DEC4 /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED62139635400E2DEC4 /* EquipmentCell.swift */; };
-		6B11EEE22139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED92139635400E2DEC4 /* PlotCell.swift */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
-		6BA5D7802149349A0054F969 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77A214934990054F969 /* AddInterventionViewController.swift */; };
-		6BA5D7822149349A0054F969 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BA5D7832149349A0054F969 /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77D2149349A0054F969 /* DetailedInterventionViewController+Equipments.swift */; };
 		6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D7862149391C0054F969 /* CustomPickerView.swift */; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
-		6BB46F3E2163A392005763A2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
-		6BFEE70B2179D0C7001F7955 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BFEE70E2179D0C7001F7955 /* DetailedInterventionViewController+Harvests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043D4491214A9CFB00B5FD59 /* DetailedInterventionViewController+Harvests.swift */; };
 		6BFEE70F2179D0C7001F7955 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77A214934990054F969 /* AddInterventionViewController.swift */; };
 		6BFEE7102179D0C7001F7955 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047B57CF2108618200C48F68 /* AuthentificationService.swift */; };
-		6BFEE7112179D0C7001F7955 /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D77D2149349A0054F969 /* DetailedInterventionViewController+Equipments.swift */; };
 		6BFEE7122179D0C7001F7955 /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5301D2179CF4D0074ADF0 /* DetailedInterventionViewController+Inputs.swift */; };
 		6BFEE7132179D0C7001F7955 /* DetailedInterventionViewController+Irrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5301B2179CF4D0074ADF0 /* DetailedInterventionViewController+Irrigation.swift */; };
 		6BFEE7142179D0C7001F7955 /* DetailedInterventionViewController+Materials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5301C2179CF4D0074ADF0 /* DetailedInterventionViewController+Materials.swift */; };
@@ -66,34 +57,19 @@
 		6BFEE7172179D0C7001F7955 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC201002175EFDD00F59527 /* DetailedInterventionViewController+WorkingPeriod.swift */; };
 		6BFEE7182179D0C7001F7955 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AF8C02216F9B6E00496BC2 /* HandleAddInterventionErrors.swift */; };
 		6BFEE71A2179D0C7001F7955 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65DC2105CD820072840F /* InterventionViewController.swift */; };
-		6BFEE71D2179D0C7001F7955 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D46213816C0001A5D3D /* ListProtocol.swift */; };
-		6BFEE71E2179D0C7001F7955 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D44213816B9001A5D3D /* ListTableViewController.swift */; };
-		6BFEE7202179D0C7001F7955 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E2F5C2133F43A0019168E /* UnitMeasurePickerView.swift */; };
 		6BFEE7212179D0C7001F7955 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 		6BFEE7232179D0C7001F7955 /* InterventionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B81CD572166597D00D2DCF7 /* InterventionState.swift */; };
 		6BFEE7242179D0C7001F7955 /* InterventionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3FEDB216653490070DA35 /* InterventionType.swift */; };
-		6BFEE7252179D0C7001F7955 /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED62139635400E2DEC4 /* EquipmentCell.swift */; };
-		6BFEE7262179D0C7001F7955 /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED52139635400E2DEC4 /* FertilizerCell.swift */; };
 		6BFEE7272179D0C7001F7955 /* HarvestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043D4499214A9DD400B5FD59 /* HarvestCell.swift */; };
-		6BFEE7282179D0C7001F7955 /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED42139635400E2DEC4 /* InterventionCell.swift */; };
-		6BFEE7292179D0C7001F7955 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED22139635400E2DEC4 /* ListCell.swift */; };
 		6BFEE72A2179D0C7001F7955 /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF8215B8C28004B3DE5 /* MaterialCell.swift */; };
 		6BFEE72B2179D0C7001F7955 /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4738112174D0FC0007DA88 /* PersonCell.swift */; };
-		6BFEE72C2179D0C7001F7955 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED02139635400E2DEC4 /* PhytoCell.swift */; };
-		6BFEE72D2179D0C7001F7955 /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED92139635400E2DEC4 /* PlotCell.swift */; };
-		6BFEE72E2179D0C7001F7955 /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED32139635400E2DEC4 /* SeedCell.swift */; };
 		6BFEE72F2179D0C7001F7955 /* SelectedEquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B849C41216F98B5009B0DAB /* SelectedEquipmentCell.swift */; };
-		6BFEE7302179D0C7001F7955 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11EED12139635400E2DEC4 /* SelectedInputCell.swift */; };
 		6BFEE7312179D0C7001F7955 /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B982873216B86760032DE3E /* SelectedMaterialCell.swift */; };
 		6BFEE7322179D0C7001F7955 /* SelectedPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4738132174D1C30007DA88 /* SelectedPersonCell.swift */; };
-		6BFEE7332179D0C7001F7955 /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4D5F2138173E001A5D3D /* CropsView.swift */; };
-		6BFEE7342179D0C7001F7955 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D043214A9225009EAF24 /* CropView.swift */; };
-		6BFEE7352179D0C7001F7955 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5D7862149391C0054F969 /* CustomPickerView.swift */; };
 		6BFEE7362179D0C7001F7955 /* EquipmentCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B849C3F216F7E33009B0DAB /* EquipmentCreationView.swift */; };
 		6BFEE7372179D0C7001F7955 /* EquipmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B849C3D216F7A8F009B0DAB /* EquipmentsView.swift */; };
 		6BFEE7382179D0C7001F7955 /* FertilizerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F232213447D9001EAE6E /* FertilizerCreationView.swift */; };
-		6BFEE7392179D0C7001F7955 /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5D212C434100EF4318 /* InputsView.swift */; };
 		6BFEE73A2179D0C7001F7955 /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6D7F91215E76220021FF07 /* MaterialCreationView.swift */; };
 		6BFEE73B2179D0C7001F7955 /* MaterialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87EBF6215B8ADF004B3DE5 /* MaterialsView.swift */; };
 		6BFEE73C2179D0C7001F7955 /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4738172174D2FD0007DA88 /* PersonCreationView.swift */; };
@@ -101,15 +77,10 @@
 		6BFEE73E2179D0C7001F7955 /* PhytoCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F234213447DD001EAE6E /* PhytoCreationView.swift */; };
 		6BFEE73F2179D0C7001F7955 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65EA2105CD900072840F /* RoundedButton.swift */; };
 		6BFEE7402179D0C7001F7955 /* SeedCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478F236213447E1001EAE6E /* SeedCreationView.swift */; };
-		6BFEE7412179D0C7001F7955 /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162E5F212C434A00EF4318 /* SelectDateView.swift */; };
 		6BFEE7422179D0C7001F7955 /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B849C3B216F5DA6009B0DAB /* SelectionView.swift */; };
-		6BFEE7432179D0C7001F7955 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
-		6BFEE7442179D0C7001F7955 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
-		6BFEE7452179D0C7001F7955 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC805F1215A2D22002D504B /* UserDefaults+isFirstLaunch.swift */; };
 		6BFEE7462179D0C7001F7955 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5321650DDB0039FCB9 /* String+FloatValue.swift */; };
 		6BFEE7472179D0C7001F7955 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5421650DDB0039FCB9 /* UIApplication+StatusBar.swift */; };
 		6BFEE7482179D0C7001F7955 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480CA5521650DDB0039FCB9 /* Localizable.swift */; };
-		6BFEE74A2179DDA1001F7955 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFEE7492179DDA1001F7955 /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -538,9 +509,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045F03CA217F20D900CCE5B3 /* Localizable.strings in Resources */,
+				045F03C9217F20D100CCE5B3 /* Main.storyboard in Resources */,
 				045F03C5217F1BBB00CCE5B3 /* oauthInfo.plist in Resources */,
-				040AA0ED21469B4200D75A2D /* Main.storyboard in Resources */,
-				041313B321401483005437F0 /* Localizable.strings in Resources */,
 				6BA37141213963230086DF9B /* Assets.xcassets in Resources */,
 				040D859B216B9F4E008E1628 /* mutations.graphql in Resources */,
 				040D859D216BA061008E1628 /* schema.json in Resources */,
@@ -614,27 +585,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045F03C8217F20AD00CCE5B3 /* CropView.swift in Sources */,
 				044B4D45213816B9001A5D3D /* ListTableViewController.swift in Sources */,
 				6B11EEDD2139635400E2DEC4 /* ListCell.swift in Sources */,
 				6BA5D7832149349A0054F969 /* DetailedInterventionViewController+Equipments.swift in Sources */,
 				04162E5E212C434200EF4318 /* InputsView.swift in Sources */,
-				6B11EEE22139635400E2DEC4 /* (null) in Sources */,
 				6B11EEDB2139635400E2DEC4 /* PhytoCell.swift in Sources */,
-				6BA5D7822149349A0054F969 /* (null) in Sources */,
 				6B11EEDE2139635400E2DEC4 /* SeedCell.swift in Sources */,
 				04162E60212C434A00EF4318 /* SelectDateView.swift in Sources */,
-				6BB46F3E2163A392005763A2 /* (null) in Sources */,
 				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
-				047B57D02108618200C48F68 /* AuthentificationService.swift in Sources */,
 				6B11EEE02139635400E2DEC4 /* FertilizerCell.swift in Sources */,
 				044B4D602138173E001A5D3D /* CropsView.swift in Sources */,
-				0417A58221538B5B009529D5 /* (null) in Sources */,
 				6BA5D7872149391C0054F969 /* CustomPickerView.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* InterventionCell.swift in Sources */,
 				0410EF0621550C1C003DA2D1 /* HandleKeyboard.swift in Sources */,
 				6B11EEE42139635400E2DEC4 /* PlotCell.swift in Sources */,
 				040D859F216BA0B2008E1628 /* InterventionViewController+Apollo.swift in Sources */,
-				047BF0C721060AE4009F3945 /* (null) in Sources */,
 				041E2F5D2133F43A0019168E /* UnitMeasurePickerView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
 				6B11EEDC2139635400E2DEC4 /* SelectedInputCell.swift in Sources */,
@@ -642,16 +608,12 @@
 				040D8594216B5453008E1628 /* DefineInterventionsDisplayMode.swift in Sources */,
 				045F03C4217F0D7200CCE5B3 /* InterventionViewController+Lexicon.swift in Sources */,
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
-				04139CB021411D6F0067DEA9 /* (null) in Sources */,
-				6BA5D7802149349A0054F969 /* AddInterventionViewController.swift in Sources */,
 				040D85A6216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift in Sources */,
 				6B11EEE12139635400E2DEC4 /* EquipmentCell.swift in Sources */,
-				6BFEE70B2179D0C7001F7955 /* AppDelegate.swift in Sources */,
 				6BFEE70E2179D0C7001F7955 /* DetailedInterventionViewController+Harvests.swift in Sources */,
 				045F03C7217F1BDB00CCE5B3 /* API.swift in Sources */,
 				6BFEE70F2179D0C7001F7955 /* AddInterventionViewController.swift in Sources */,
 				6BFEE7102179D0C7001F7955 /* AuthentificationService.swift in Sources */,
-				6BFEE7112179D0C7001F7955 /* DetailedInterventionViewController+Equipments.swift in Sources */,
 				6BFEE7122179D0C7001F7955 /* DetailedInterventionViewController+Inputs.swift in Sources */,
 				045F03C2217F0D6B00CCE5B3 /* LoginScreen.swift in Sources */,
 				6BFEE7132179D0C7001F7955 /* DetailedInterventionViewController+Irrigation.swift in Sources */,
@@ -661,35 +623,19 @@
 				6BFEE7172179D0C7001F7955 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */,
 				6BFEE7182179D0C7001F7955 /* HandleAddInterventionErrors.swift in Sources */,
 				6BFEE71A2179D0C7001F7955 /* InterventionViewController.swift in Sources */,
-				6BFEE71D2179D0C7001F7955 /* ListProtocol.swift in Sources */,
-				6BFEE71E2179D0C7001F7955 /* ListTableViewController.swift in Sources */,
-				6BFEE7202179D0C7001F7955 /* UnitMeasurePickerView.swift in Sources */,
 				6BFEE7212179D0C7001F7955 /* Connectivity.swift in Sources */,
 				6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */,
 				6BFEE7232179D0C7001F7955 /* InterventionState.swift in Sources */,
 				6BFEE7242179D0C7001F7955 /* InterventionType.swift in Sources */,
-				6BFEE7252179D0C7001F7955 /* EquipmentCell.swift in Sources */,
-				6BFEE7262179D0C7001F7955 /* FertilizerCell.swift in Sources */,
 				6BFEE7272179D0C7001F7955 /* HarvestCell.swift in Sources */,
-				6BFEE74A2179DDA1001F7955 /* API.swift in Sources */,
-				6BFEE7282179D0C7001F7955 /* InterventionCell.swift in Sources */,
-				6BFEE7292179D0C7001F7955 /* ListCell.swift in Sources */,
 				6BFEE72A2179D0C7001F7955 /* MaterialCell.swift in Sources */,
 				6BFEE72B2179D0C7001F7955 /* PersonCell.swift in Sources */,
-				6BFEE72C2179D0C7001F7955 /* PhytoCell.swift in Sources */,
-				6BFEE72D2179D0C7001F7955 /* PlotCell.swift in Sources */,
-				6BFEE72E2179D0C7001F7955 /* SeedCell.swift in Sources */,
 				6BFEE72F2179D0C7001F7955 /* SelectedEquipmentCell.swift in Sources */,
-				6BFEE7302179D0C7001F7955 /* SelectedInputCell.swift in Sources */,
 				6BFEE7312179D0C7001F7955 /* SelectedMaterialCell.swift in Sources */,
 				6BFEE7322179D0C7001F7955 /* SelectedPersonCell.swift in Sources */,
-				6BFEE7332179D0C7001F7955 /* CropsView.swift in Sources */,
-				6BFEE7342179D0C7001F7955 /* CropView.swift in Sources */,
-				6BFEE7352179D0C7001F7955 /* CustomPickerView.swift in Sources */,
 				6BFEE7362179D0C7001F7955 /* EquipmentCreationView.swift in Sources */,
 				6BFEE7372179D0C7001F7955 /* EquipmentsView.swift in Sources */,
 				6BFEE7382179D0C7001F7955 /* FertilizerCreationView.swift in Sources */,
-				6BFEE7392179D0C7001F7955 /* InputsView.swift in Sources */,
 				6BFEE73A2179D0C7001F7955 /* MaterialCreationView.swift in Sources */,
 				6BFEE73B2179D0C7001F7955 /* MaterialsView.swift in Sources */,
 				6BFEE73C2179D0C7001F7955 /* PersonCreationView.swift in Sources */,
@@ -697,11 +643,7 @@
 				6BFEE73E2179D0C7001F7955 /* PhytoCreationView.swift in Sources */,
 				6BFEE73F2179D0C7001F7955 /* RoundedButton.swift in Sources */,
 				6BFEE7402179D0C7001F7955 /* SeedCreationView.swift in Sources */,
-				6BFEE7412179D0C7001F7955 /* SelectDateView.swift in Sources */,
 				6BFEE7422179D0C7001F7955 /* SelectionView.swift in Sources */,
-				6BFEE7432179D0C7001F7955 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
-				6BFEE7442179D0C7001F7955 /* ColorConstants.swift in Sources */,
-				6BFEE7452179D0C7001F7955 /* UserDefaults+isFirstLaunch.swift in Sources */,
 				6BFEE7462179D0C7001F7955 /* String+FloatValue.swift in Sources */,
 				6BFEE7472179D0C7001F7955 /* UIApplication+StatusBar.swift in Sources */,
 				6BFEE7482179D0C7001F7955 /* Localizable.swift in Sources */,
@@ -800,7 +742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -855,7 +797,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
