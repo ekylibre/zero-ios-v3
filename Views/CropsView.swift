@@ -236,7 +236,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
         loadAllTargetAndSelectThem(crops)
       } else {
-        organizeCropsByPlot(crops)
+        //organizeCropsByPlot(crops)
       }
       createCropViews()
       showPlotIfReadOnly()

@@ -205,7 +205,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupPersonsView()
 
     initializeWeatherButtons()
-    initWeather()
     setupWeatherActions()
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
@@ -226,6 +225,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     initializeBarButtonItems()
+
+    initWeather()
 
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad

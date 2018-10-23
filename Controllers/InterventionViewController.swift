@@ -354,7 +354,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } catch let error as NSError {
           print("Could not save. \(error), \(error.userInfo)")
         }
-        self.synchroLabel.text = String(format: "today_last_synchronization".localized, "\(hour)", "\(minute)")
+        self.synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
 

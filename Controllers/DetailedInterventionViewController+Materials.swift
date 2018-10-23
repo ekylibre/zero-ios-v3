@@ -68,6 +68,19 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
+  func refreshSelectedMaterials() {
+    if selectedMaterials[1].count > 0 {
+      selectedMaterialsTableView.isHidden = false
+      selectedMaterialsTableView.reloadData()
+      materialsExpandImageView.isHidden = false
+    }
+    showEntitiesNumber(
+      entities: selectedMaterials[1],
+      constraint: materialsHeightConstraint,
+      numberLabel: materialsCountLabel,
+      addEntityButton: materialsAddButton)
+  }
+
   @IBAction private func openMaterialsSelectionView(_ sender: Any) {
     selectedValue = "METER"
     dimView.isHidden = false

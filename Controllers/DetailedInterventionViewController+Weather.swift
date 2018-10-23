@@ -53,26 +53,33 @@ extension AddInterventionViewController {
   }
 
   func loadWeatherInReadOnlyMode() {
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+
     temperatureTextField.placeholder = (weather.temperature as NSNumber?)?.stringValue
     windSpeedTextField.placeholder = (weather.windSpeed as NSNumber?)?.stringValue
 
-    for weatherButton in weatherButtons {
-      if weather.weatherDescription == weatherButton.titleLabel?.text {
-        weatherButton.layer.borderColor = AppColor.BarColors.Green.cgColor
+    for index in 0..<weatherDescriptions.count {
+      if weather.weatherDescription?.uppercased() == weatherDescriptions[index] {
+        weatherButtons[index].layer.borderColor = AppColor.BarColors.Green.cgColor
+        weatherButtons[index].layer.borderWidth = 3
         weatherIsSelected = true
       }
     }
     if temperatureTextField.placeholder == "" && windSpeedTextField.placeholder == "" {
       currentWeatherLabel.text = "not_filled_in".localized
     } else {
-      let temperature = (temperatureTextField.placeholder != "" ? temperatureTextField.placeholder : "")
-      let wind = (windSpeedTextField.placeholder != "" ? windSpeedTextField.placeholder : "--")
+      let temperature = (temperatureTextField.placeholder != nil ? temperatureTextField.placeholder : "--")
+      let wind = (windSpeedTextField.placeholder != nil ? windSpeedTextField.placeholder : "--")
       let currentTemperature = String(format: "temp".localized, temperature!)
       let currentWind = String(format: "wind".localized, wind!)
       currentWeatherLabel.text = currentTemperature + currentWind
     }
-    weather.temperature = (temperatureTextField.placeholder! as NSString).doubleValue as NSNumber
-    weather.windSpeed = (windSpeedTextField.placeholder! as NSString).doubleValue as NSNumber
+    if temperatureTextField.placeholder != nil {
+      weather.temperature = (temperatureTextField.placeholder! as NSString).doubleValue as NSNumber
+    }
+    if windSpeedTextField.placeholder != nil {
+      weather.windSpeed = (windSpeedTextField.placeholder! as NSString).doubleValue as NSNumber
+    }
   }
 
   @IBAction func setTemperatureToNegative(_ sender: UIButton) {

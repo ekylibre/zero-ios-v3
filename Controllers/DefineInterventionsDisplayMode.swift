@@ -74,11 +74,18 @@ extension AddInterventionViewController {
     refreshSelectedInputs()
   }
 
+  func loadMaterials() {
+    for interventionMaterial in currentIntervention.interventionMaterials?.allObjects as! [InterventionMaterials] {
+      selectedMaterials[1].append(interventionMaterial)
+    }
+    refreshSelectedMaterials()
+  }
+
   func loadEquipments() {
     for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
       selectedEquipments.append(interventionEquipment)
     }
-    refreshSelectedEquipment()
+    refreshSelectedEquipments()
   }
 
   func loadPersons() {
@@ -102,6 +109,7 @@ extension AddInterventionViewController {
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     loadInputs()
+    loadMaterials()
     loadIrrigation()
     loadEquipments()
     loadPersons()
@@ -122,6 +130,7 @@ extension AddInterventionViewController {
     loadWorkingPeriod()
     weather = currentIntervention?.weather
     loadInputs()
+    loadMaterials()
     loadIrrigation()
     loadEquipments()
     loadPersons()
