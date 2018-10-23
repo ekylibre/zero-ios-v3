@@ -1363,6 +1363,7 @@
                         <outlet property="irrigationExpandImageView" destination="lZ2-DO-10N" id="5We-3u-Mku"/>
                         <outlet property="irrigationHeightConstraint" destination="HQz-9h-D9H" id="8BB-hv-NcG"/>
                         <outlet property="irrigationSeparatorView" destination="N2X-Sp-MVE" id="FwI-ME-czH"/>
+                        <outlet property="irrigationTapGesture" destination="2TT-lW-pd5" id="6LZ-gL-6Ld"/>
                         <outlet property="irrigationUnitButton" destination="28Q-Cd-Lyq" id="ePr-r8-wKk"/>
                         <outlet property="irrigationView" destination="dFL-Ez-GIj" id="ZYv-Z5-sbA"/>
                         <outlet property="irrigationVolumeTextField" destination="YLy-wG-9j5" id="xis-9I-5yy"/>
@@ -1407,6 +1408,7 @@
                         <outlet property="workingPeriodDurationTextField" destination="3Fz-6d-VQ1" id="yUk-43-7bF"/>
                         <outlet property="workingPeriodExpandImageView" destination="4VE-aQ-Xe3" id="6ZL-V9-PS5"/>
                         <outlet property="workingPeriodHeightConstraint" destination="SgJ-VT-4sX" id="nGu-Ch-Qwr"/>
+                        <outlet property="workingPeriodTapGesture" destination="dX6-ef-4AZ" id="koT-95-9LO"/>
                         <outlet property="workingPeriodUnitLabel" destination="3cP-JT-NmL" id="5Ut-GC-xSX"/>
                         <segue destination="Ym6-0E-qVT" kind="showDetail" identifier="goBackToInterventionViewController" id="kep-BY-hpD"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecies" id="uas-Qa-jvK"/>

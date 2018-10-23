@@ -44,7 +44,7 @@ extension AddInterventionViewController {
     }
     if interventionState == InterventionState.Validated.rawValue {
       workingPeriodExpandImageView.isHidden = true
-      //workingPeriodGestureRecognizer.isEnabled = false
+      workingPeriodTapGesture.isEnabled = false
     }
   }
 
@@ -55,7 +55,7 @@ extension AddInterventionViewController {
       updateIrrigation(self)
       if interventionState == InterventionState.Validated.rawValue {
         irrigationExpandImageView.isHidden = true
-        //irrigationGestureRecognizer.isEnabled = false
+        irrigationTapGesture.isEnabled = false
       }
       tapIrrigationView(self)
     }

@@ -100,6 +100,7 @@ extension AddInterventionViewController {
 
   func refreshSelectedEquipment() {
     if selectedEquipments.count > 0 {
+      selectedEquipmentsTableView.isHidden = false
       selectedEquipmentsTableView.reloadData()
       equipmentsExpandImageView.isHidden = false
     }

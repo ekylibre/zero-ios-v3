@@ -24,6 +24,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var warningMessage: UILabel!
 
   // Working period
+  @IBOutlet var workingPeriodTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var workingPeriodHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
   @IBOutlet weak var workingPeriodExpandImageView: UIImageView!
@@ -32,6 +33,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var workingPeriodUnitLabel: UILabel!
 
   // Irrigation
+  @IBOutlet var irrigationTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var selectedIrrigationLabel: UILabel!
@@ -128,7 +130,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var equipmentsSelectionView: EquipmentsView!
   var personsSelectionView: PersonsView!
   var selectedMaterials = [[NSManagedObject]]()
-  //var interventionEquipments = [NSManagedObject]()
   var selectedEquipments = [InterventionEquipments]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
@@ -474,8 +475,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedIndexPath: IndexPath?
   var indexPaths: [IndexPath] = []
 
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  func defineTableViewSize(_ tableView: UITableView) -> CGFloat {
     switch tableView {
+    case harvestTableView:
+      return 150
     case selectedInputsTableView:
       return 110
     case selectedMaterialsTableView:
@@ -487,6 +490,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return 60
     }
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return defineTableViewSize(tableView)
+  }
+
+  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    return defineTableViewSize(tableView)
   }
 
   func resizeViewAndTableView(viewHeightConstraint: NSLayoutConstraint, tableViewHeightConstraint: NSLayoutConstraint,
@@ -1097,6 +1108,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       switch entities {
       case selectedInputs:
         numberLabel.text = (entities.count == 1 ? "input".localized : String(format: "inputs".localized, entities.count))
+      case selectedMaterials[1]:
+        numberLabel.text = (entities.count == 1 ? "material".localized : String(format: "materials".localized, entities.count))
+      case selectedEquipments:
+        numberLabel.text = (entities.count == 1 ? "equipment".localized : String(format: "equipments".localized, entities.count))
+      case selectedPersons[1]:
+        numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
       default:
         return
       }
