@@ -1,136 +1,130 @@
 query Profile {
-farms {
-label
-id
-platform
-}
-}
-
-query DeletedInterventions (
-$modifiedSince: Date
-) {
-farms {
-deletedInterventions (modifiedSince: $modifiedSince) {
-id
-}
-}
+  farms {
+    label
+    id
+    platform
+  }
 }
 
-query Intervention (
-$modifiedSince: Date
-) {
-farms {
-id
-interventions (modifiedSince: $modifiedSince) {
-id
-type
-validatedAt
-waterQuantity
-waterUnit
-globalOutputs
-description
-weather {
-temperature
-windSpeed
-description
-}
-outputs {
-id
-nature
-approximative
-quantity
-unit
-loads {
-number
-quantity
-netQuantity
-unit
-storage {
-id
-}
-}
-}
-inputs {
-article {
-id
-referenceID
-type
-}
-quantity
-unit
-}
-operators {
-role
-person {
-id
-}
-}
-targets {
-crop {
-uuid
-}
-workingPercentage
-}
-tools {
-equipment {
-id
-}
-}
-workingDays {
-executionDate
-hourDuration
-}
-}
-}
+query DeletedInterventions ($modifiedSince: Date){
+  farms {
+    deletedInterventions (modifiedSince: $modifiedSince) {
+      id
+    }
+  }
 }
 
-query Farm (
-$modifiedSince: Date
-) {
-farms {
-id
-label
-articles (modifiedSince: $modifiedSince) {
-id
-type
-name
-referenceID
-unit
-species
-variety
-marketingAuthorizationNumber
+query Intervention ($modifiedSince: Date){
+  farms {
+    id
+    interventions (modifiedSince: $modifiedSince) {
+      id
+      type
+      validatedAt
+      waterQuantity
+      waterUnit
+      globalOutputs
+      description
+      weather {
+        temperature
+        windSpeed
+        description
+      }
+      outputs {
+        id
+        nature
+        approximative
+        quantity
+        unit
+        loads {
+          number
+          quantity
+          netQuantity
+          unit
+          storage {
+            id
+          }
+        }
+      }
+      inputs {
+        article {
+          id
+          referenceID
+          type
+        }
+        quantity
+        unit
+      }
+      operators {
+        role
+        person {
+          id
+        }
+      }
+      targets {
+        crop {
+          uuid
+        }
+        workingPercentage
+      }
+      tools {
+        equipment {
+          id
+        }
+      }
+      workingDays {
+        executionDate
+        hourDuration
+      }
+    }
+  }
 }
-storages (modifiedSince: $modifiedSince) {
-id
-name
-type
-}
-crops (modifiedSince: $modifiedSince) {
-uuid
-name
-species
-productionNature {
-name
-}
-productionMode
-provisionalYield
-startDate
-stopDate
-surfaceArea
-#shape
-#centroid
-}
-people (modifiedSince: $modifiedSince) {
-id
-firstName
-lastName
-}
-equipments (modifiedSince: $modifiedSince) {
-id
-name
-type
-number
-indicators
-}
-}
+
+query Farm ($modifiedSince: Date){
+  farms {
+    id
+    label
+    articles (modifiedSince: $modifiedSince) {
+      id
+      type
+      name
+      referenceID
+      unit
+      species
+      variety
+      marketingAuthorizationNumber
+    }
+    storages (modifiedSince: $modifiedSince) {
+      id
+      name
+      type
+    }
+    crops (modifiedSince: $modifiedSince) {
+      uuid
+      name
+      species
+      #productionNature {
+      #  name
+      #}
+      productionMode
+      provisionalYield
+      startDate
+      stopDate
+      surfaceArea
+      #shape
+      #centroid
+    }
+    people (modifiedSince: $modifiedSince) {
+      id
+      firstName
+      lastName
+    }
+    equipments (modifiedSince: $modifiedSince) {
+      id
+      name
+      type
+      number
+      indicators
+    }
+  }
 }

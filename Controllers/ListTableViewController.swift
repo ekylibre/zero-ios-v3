@@ -13,14 +13,24 @@ class ListTableViewController: UITableViewController {
   // MARK: - Properties
 
   var delegate: WriteValueBackDelegate?
-  var cellsStrings: [String]!
+  var rawStrings: [String]!
+  var tag: Int!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    sortByLocales()
     tableView.bounces = false
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
+  }
+
+  private func sortByLocales() {
+    rawStrings = rawStrings.sorted(by: {
+      $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        <
+      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    })
   }
 
   // MARK: - Table view
@@ -30,19 +40,19 @@ class ListTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return cellsStrings.count
+    return rawStrings.count
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
+    let rawString = rawStrings[indexPath.row]
 
-    cell.label.text = cellsStrings[indexPath.row]
+    cell.label.text = rawString.localized
     return cell
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let cell = tableView.cellForRow(at: indexPath) as! ListCell
-    delegate?.writeValueBack(value: cell.label.text!)
+    delegate?.writeValueBack(tag: tag, value: rawStrings[indexPath.row])
     self.dismiss(animated: true, completion: nil)
   }
 }

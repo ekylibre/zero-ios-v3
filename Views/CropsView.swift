@@ -77,7 +77,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }()
 
   var currentIntervention: Interventions?
-  var interventionState: Intervention.State.RawValue!
+  var interventionState: InterventionState.RawValue!
   var crops = [[Crops]]()
   var cropViews = [[CropView]]()
   var selectedCropsCount: Int = 0
@@ -88,10 +88,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
+    fetchCrops()
   }
 
   private func setupView() {
-    self.isHidden = true
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 3
     self.clipsToBounds = true
@@ -160,10 +160,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
     cell.selectionStyle = UITableViewCell.SelectionStyle.none
-    if interventionState == Intervention.State.Validated.rawValue || interventionState == Intervention.State.Created.rawValue {
+    if interventionState != nil {
       for crop in crops {
         if crop.isSelected == true {
-          cell.checkboxButton.imageView?.image = #imageLiteral(resourceName: "check-box")
+          //cell.checkboxButton.imageView?.image = #imageLiteral(resourceName: "check-box")
+          cell.checkboxButton.imageView?.image = UIImage(named: "checked-checkbox")
           break
         }
       }
@@ -181,7 +182,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func showPlotIfReadOnly() {
-    if interventionState == Intervention.State.Validated.rawValue {
+    if interventionState == InterventionState.Validated.rawValue {
       for index in 0..<selectedCropsCount {
         let indexPath = IndexPath.init(row: index, section: 0)
 
@@ -231,9 +232,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
 
-      if interventionState == Intervention.State.Validated.rawValue {
+      if interventionState == InterventionState.Validated.rawValue {
         loadSelectedTargets()
-      } else if interventionState == Intervention.State.Created.rawValue {
+      } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
         loadAllTargetAndSelectThem(crops)
       } else {
         organizeCropsByPlot(crops)
@@ -344,7 +345,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var view: CropView
     var targets: [Targets]?
 
-    if interventionState != Intervention.State.New.rawValue {
+    if interventionState != nil {
       targets = checkIfTargetMatch()
     }
 
@@ -375,7 +376,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
-    if interventionState != Intervention.State.Validated.rawValue {
+    if interventionState != InterventionState.Validated.rawValue {
       let cell = sender.superview?.superview as! PlotCell
       let indexPath = tableView.indexPath(for: cell)!
       let crops = self.crops[indexPath.row]
@@ -396,7 +397,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
     for (index, crop) in crops.enumerated() {
-      cropViews[indexPath.row][index].checkboxImage.image = #imageLiteral(resourceName: "check-box")
+      cropViews[indexPath.row][index].checkboxImageView.isHighlighted = true
       crop.isSelected = true
     }
   }
@@ -405,8 +406,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var index: Int = 0
 
     for case let view as CropView in cell.contentView.subviews {
-      if view.checkboxImage.image == #imageLiteral(resourceName: "check-box") {
-        view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+      if view.checkboxImageView.isHighlighted {
+        view.checkboxImageView.isHighlighted = false
         selectedCropsCount -= 1
         selectedSurfaceArea -= crops[index].surfaceArea
         crops[index].isSelected = false
@@ -416,16 +417,17 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func initCropsViewInAppropriateMode(view: CropView) {
-    if interventionState == Intervention.State.Validated.rawValue || interventionState == Intervention.State.Created.rawValue {
+    if interventionState != nil {
       if view.crop.isSelected == true {
-        view.checkboxImage.image = #imageLiteral(resourceName: "check-box")
+        //view.checkboxImageView.image = #imageLiteral(resourceName: "check-box")
+        view.checkboxImageView.image = UIImage(named: "checked-checkbox")
       }
       updateSelectedCropsLabel()
     }
   }
 
   @objc func tapCropView(sender: UIGestureRecognizer) {
-    if interventionState != Intervention.State.Validated.rawValue {
+    if interventionState != InterventionState.Validated.rawValue {
       let cell = sender.view?.superview?.superview as! PlotCell
       let plotIndex = tableView.indexPath(for: cell)!.row
       let view = sender.view as! CropView
@@ -433,14 +435,13 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       let crops = self.crops[plotIndex]
       let crop = crops[cropIndex]
 
-      if view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank") {
-        view.checkboxImage.image = #imageLiteral(resourceName: "check-box")
+      if !view.checkboxImageView.isHighlighted {
+        view.checkboxImageView.isHighlighted = true
         selectCrop(crop, cell)
       } else {
-        view.checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
+        view.checkboxImageView.isHighlighted = false
         deselectCrop(crop, crops, cell)
       }
-      updateSelectedCropsLabel()
     }
   }
 
@@ -458,9 +459,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var index: Int = 1
 
     for case let view as CropView in cell.contentView.subviews {
-      if view.checkboxImage.image == #imageLiteral(resourceName: "check-box") {
+      if view.checkboxImageView.isHighlighted {
         break
-      } else if (view.checkboxImage.image == #imageLiteral(resourceName: "check-box-blank")) && (index == crops.count) {
+      } else if (!view.checkboxImageView.isHighlighted) && (index == crops.count) {
         cell.checkboxButton.isSelected = false
       }
       index += 1

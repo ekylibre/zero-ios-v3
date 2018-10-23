@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import CoreData
 import Apollo
+import CoreData
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
 
+    IQKeyboardManager.shared.enable = true
+    IQKeyboardManager.shared.enableAutoToolbar = false
     return true
   }
 
@@ -91,5 +94,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
       }
     }
+  }
+
+  func entityIsEmpty(entity: String) -> Bool {
+    let context = persistentContainer.viewContext
+    let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+
+    request.returnsObjectsAsFaults = false
+    do {
+      let result = try context.fetch(request)
+      if result.count == 0 {
+        return true
+      }
+    } catch {
+      print("Fetch failed")
+    }
+    return false
   }
 }

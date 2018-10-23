@@ -44,9 +44,9 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
 
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     if pickerView == liquidUnitPicker {
-      return volumeUnitMeasure[row]
+      return volumeUnitMeasure[row].localized
     } else {
-      return massUnitMeasure[row]
+      return massUnitMeasure[row].localized
     }
   }
 
@@ -56,13 +56,14 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
 
     if pickerView == liquidUnitPicker {
       liquidUnitPicker.isHidden = true
-      selectedInputs[cellIndexPath.row].setValue(volumeUnitMeasure[row], forKey: "unit")
+      selectedInputs[cellIndexPath.row].setValue(volumeUnitMeasure[row].localized, forKey: "unit")
       cell.unitMeasureButton.setTitle(volumeUnitMeasure[row], for: .normal)
     } else {
       solidUnitPicker.isHidden = true
-      selectedInputs[cellIndexPath.row].setValue(massUnitMeasure[row], forKey: "unit")
+      selectedInputs[cellIndexPath.row].setValue(massUnitMeasure[row].localized, forKey: "unit")
       cell.unitMeasureButton.setTitle(massUnitMeasure[row], for: .normal)
     }
-    //updateInputQuantity(indexPath: cellIndexPath)
+    selectedInputsTableView.reloadData()
+    updateInputQuantity(indexPath: cellIndexPath)
   }
 }

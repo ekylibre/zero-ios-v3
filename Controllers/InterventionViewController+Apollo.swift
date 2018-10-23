@@ -9,7 +9,7 @@
 import UIKit
 import Apollo
 import CoreData
-/*
+
 extension InterventionViewController {
 
   func checkLocalData() {
@@ -22,7 +22,7 @@ extension InterventionViewController {
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
-  func initializeApolloClient() {
+  private func initializeApolloClient() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -146,7 +146,7 @@ extension InterventionViewController {
       newCrop.provisionalYield = crop.provisionalYield
       newCrop.species = crop.species.rawValue
       newCrop.startDate = dateFormatter.date(from: crop.startDate!)
-      newCrop.startDate = dateFormatter.date(from: crop.stopDate!)
+      newCrop.stopDate = dateFormatter.date(from: crop.stopDate!)
       let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
       let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
@@ -204,7 +204,7 @@ extension InterventionViewController {
     local.provisionalYield = updated.provisionalYield
     local.species = updated.species.rawValue
     local.startDate = dateFormatter.date(from: updated.startDate!)
-    local.startDate = dateFormatter.date(from: updated.stopDate!)
+    local.stopDate = dateFormatter.date(from: updated.stopDate!)
     let splitString = updated.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     local.surfaceArea = surfaceArea
@@ -232,7 +232,7 @@ extension InterventionViewController {
     crop.provisionalYield = new.provisionalYield
     crop.species = new.species.rawValue
     crop.startDate = dateFormatter.date(from: new.startDate!)
-    crop.startDate = dateFormatter.date(from: new.stopDate!)
+    crop.stopDate = dateFormatter.date(from: new.stopDate!)
     let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     crop.surfaceArea = surfaceArea
@@ -466,7 +466,7 @@ extension InterventionViewController {
       let intervention = try managedContext.fetch(interventionFetchRequest)
 
       if intervention.count > 0 {
-        intervention.first?.status = (fetchedIntervention.validatedAt == nil ? Intervention.Status.Synchronised : Intervention.Status.Validated).rawValue
+        intervention.first?.status = (fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue
         try managedContext.save()
       }
     } catch let error as NSError {
@@ -592,7 +592,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+    let entitiesFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -614,7 +614,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let person = Entities(context: managedContext)
+    let person = Persons(context: managedContext)
 
     person.farmID = farmID
     person.firstName = fetchedPerson.firstName
@@ -842,14 +842,14 @@ extension InterventionViewController {
     return target
   }
 
-  // MARK: Doers
-  private func returnPersonIfSame(personID: Int32?) -> Entities? {
+  // MARK: Persons
+  private func returnPersonIfSame(personID: Int32?) -> Persons? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest: NSFetchRequest<Entities> = Entities.fetchRequest()
+    let entitiesFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -865,13 +865,13 @@ extension InterventionViewController {
     return nil
   }
 
-  private func saveDoersToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> Doers {
+  private func saveDoersToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> InterventionPersons {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return Doers()
+      return InterventionPersons()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let doers = Doers(context: managedContext)
+    let doers = InterventionPersons(context: managedContext)
     let doer = returnPersonIfSame(personID: (fetchedOperator.person?.id as NSString?)?.intValue)
 
     if doer != nil {
@@ -880,7 +880,7 @@ extension InterventionViewController {
       } else {
         doers.isDriver = true
       }
-      doer?.addToDoers(doers)
+      doer?.addToInterventionPersons(doers)
       doers.interventions = intervention
     }
 
@@ -1116,7 +1116,7 @@ extension InterventionViewController {
       intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
     }
     for fetchedOperator in fetchedIntervention.operators! {
-      intervention.addToDoers(saveDoersToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
+      intervention.addToInterventionPersons(saveDoersToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
     }
     for fetchedTarget in fetchedIntervention.targets {
       intervention.addToTargets(saveTargetToIntervention(fetchedTarget: fetchedTarget, intervention: intervention))
@@ -1148,7 +1148,7 @@ extension InterventionViewController {
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
-    intervention.status = (fetchedIntervention.validatedAt == nil ? Intervention.Status.Synchronised : Intervention.Status.Validated).rawValue
+    intervention.status = (fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
@@ -1343,12 +1343,12 @@ extension InterventionViewController {
   }
 
   func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
-    let doers = intervention.doers
+    let doers = intervention.interventionPersons
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
     for doer in doers! {
-      let personID = (doer as! Doers).entities?.ekyID
-      let role = (doer as! Doers).isDriver
+      let personID = (doer as! InterventionPersons).persons?.ekyID
+      let role = (doer as! InterventionPersons).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
         personId: (personID as NSNumber?)?.stringValue,
         role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
@@ -1401,4 +1401,3 @@ extension InterventionViewController {
     group.wait()
   }
 }
-*/

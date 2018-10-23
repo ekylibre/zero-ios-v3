@@ -12,9 +12,8 @@ class PlotCell: UITableViewCell {
 
   lazy var checkboxButton: UIButton = {
     let checkboxButton = UIButton(frame: CGRect.zero)
-    checkboxButton.setImage(#imageLiteral(resourceName: "check-box-blank"), for: .normal)
-    checkboxButton.setImage(#imageLiteral(resourceName: "check-box"), for: .selected)
-    checkboxButton.isSelected = false
+    checkboxButton.setImage(UIImage(named: "unchecked-checkbox"), for: .normal)
+    checkboxButton.setImage(UIImage(named: "checked-checkbox"), for: .selected)
     checkboxButton.translatesAutoresizingMaskIntoConstraints = false
     return checkboxButton
   }()
@@ -35,7 +34,7 @@ class PlotCell: UITableViewCell {
 
   lazy var expandCollapseImageView: UIImageView = {
     let expandCollapseImageView = UIImageView(frame: CGRect.zero)
-    expandCollapseImageView.image = #imageLiteral(resourceName: "expand-more")
+    expandCollapseImageView.image = UIImage(named: "expand-more")
     expandCollapseImageView.translatesAutoresizingMaskIntoConstraints = false
     return expandCollapseImageView
   }()
@@ -51,6 +50,7 @@ class PlotCell: UITableViewCell {
     contentView.addSubview(nameLabel)
     contentView.addSubview(surfaceAreaLabel)
     contentView.addSubview(expandCollapseImageView)
+    self.selectionStyle = .none
     setupLayout()
   }
 
@@ -65,9 +65,9 @@ class PlotCell: UITableViewCell {
       surfaceAreaLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: expandCollapseImageView.leadingAnchor, constant: -25),
       expandCollapseImageView.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
-      expandCollapseImageView.heightAnchor.constraint(equalToConstant: 24),
+      expandCollapseImageView.heightAnchor.constraint(equalToConstant: 16),
       expandCollapseImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 24)
+      expandCollapseImageView.widthAnchor.constraint(equalToConstant: 16)
       ])
   }
 

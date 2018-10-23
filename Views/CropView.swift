@@ -15,7 +15,7 @@ class CropView: UIView {
 
   lazy var cropImageView: UIImageView = {
     let cropImageView = UIImageView(frame: CGRect.zero)
-    let cropImage = #imageLiteral(resourceName: "crop")
+    let cropImage = UIImage(named: "plots")!
     let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
     cropImageView.image = tintedImage
     cropImageView.tintColor = UIColor.darkGray
@@ -24,11 +24,13 @@ class CropView: UIView {
     return cropImageView
   }()
 
-  lazy var checkboxImage: UIImageView = {
-    let checkboxImage = UIImageView(frame: CGRect.zero)
-    checkboxImage.image = #imageLiteral(resourceName: "check-box-blank")
-    checkboxImage.translatesAutoresizingMaskIntoConstraints = false
-    return checkboxImage
+  lazy var checkboxImageView: UIImageView = {
+    let checkboxImageView = UIImageView(frame: CGRect.zero)
+    checkboxImageView.image = UIImage(named: "unchecked-checkbox")
+    checkboxImageView.highlightedImage = UIImage(named: "checked-checkbox")
+    checkboxImageView.isHighlighted = false
+    checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
+    return checkboxImageView
   }()
 
   lazy var nameLabel: UILabel = {
@@ -36,7 +38,7 @@ class CropView: UIView {
     let calendar = Calendar.current
     let year = calendar.component(.year, from: crop.startDate!)
     nameLabel.textColor = UIColor.black
-    nameLabel.text = crop.species! + " | \(year)"
+    nameLabel.text = crop.species!.localized + " | \(year)"
     nameLabel.font = UIFont.systemFont(ofSize: 13.0)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -72,7 +74,7 @@ class CropView: UIView {
     self.layer.borderColor = UIColor.lightGray.cgColor
     self.layer.borderWidth = 0.5
     self.addSubview(cropImageView)
-    self.addSubview(checkboxImage)
+    self.addSubview(checkboxImageView)
     self.addSubview(nameLabel)
     self.addSubview(surfaceAreaLabel)
     self.addGestureRecognizer(gesture)
@@ -85,10 +87,10 @@ class CropView: UIView {
       cropImageView.heightAnchor.constraint(equalTo: self.heightAnchor),
       cropImageView.leftAnchor.constraint(equalTo: self.leftAnchor),
       cropImageView.widthAnchor.constraint(equalTo: self.heightAnchor),
-      checkboxImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-      checkboxImage.heightAnchor.constraint(equalToConstant: 20),
-      checkboxImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
-      checkboxImage.widthAnchor.constraint(equalToConstant: 20),
+      checkboxImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+      checkboxImageView.heightAnchor.constraint(equalToConstant: 20),
+      checkboxImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
+      checkboxImageView.widthAnchor.constraint(equalToConstant: 20),
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       nameLabel.leftAnchor.constraint(equalTo: cropImageView.rightAnchor, constant: 10),
       nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),

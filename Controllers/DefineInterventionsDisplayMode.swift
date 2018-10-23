@@ -12,11 +12,11 @@ import CoreData
 extension AddInterventionViewController {
 
   func disableUserInteraction() {
-    if interventionState == Intervention.State.Validated.rawValue {
+    if interventionState == InterventionState.Validated.rawValue {
       cropsView.tableView.isUserInteractionEnabled = false
       selectedInputsTableView.isUserInteractionEnabled = false
       selectedEquipmentsTableView.isUserInteractionEnabled = false
-      doersTableView.isUserInteractionEnabled = false
+      selectedPersonsTableView.isUserInteractionEnabled = false
       temperatureTextField.isUserInteractionEnabled = false
       windSpeedTextField.isUserInteractionEnabled = false
       notesTextField.isUserInteractionEnabled = false
@@ -38,24 +38,24 @@ extension AddInterventionViewController {
     if date != nil && duration != nil {
       selectedDate = dateFormatter.string(from: date!)
       selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", selectedDate, duration!)
-      selectDateButton.setTitle(selectedDate, for: .normal)
-      durationTextField.text = (duration as NSNumber?)?.stringValue
+      workingPeriodDateButton.setTitle(selectedDate, for: .normal)
+      workingPeriodDurationTextField.text = (duration as NSNumber?)?.stringValue
       selectDateView.datePicker.date = date!
     }
-    if interventionState == Intervention.State.Validated.rawValue {
-      collapseWorkingPeriodImage.isHidden = true
-      workingPeriodGestureRecognizer.isEnabled = false
+    if interventionState == InterventionState.Validated.rawValue {
+      workingPeriodExpandImageView.isHidden = true
+      //workingPeriodGestureRecognizer.isEnabled = false
     }
   }
 
   func loadIrrigation() {
-    if interventionType == Intervention.InterventionType.Irrigation.rawValue {
-      irrigationValueTextField.text = String(currentIntervention.waterQuantity)
+    if interventionType == InterventionType.Irrigation.rawValue {
+      //irrigationValueTextField.text = String(currentIntervention.waterQuantity)
       irrigationUnitButton.setTitle(currentIntervention.waterUnit, for: .normal)
       updateIrrigation(self)
-      if interventionState == Intervention.State.Validated.rawValue {
-        irrigationExpandCollapseImage.isHidden = true
-        irrigationGestureRecognizer.isEnabled = false
+      if interventionState == InterventionState.Validated.rawValue {
+        //irrigationExpandCollapseImage.isHidden = true
+        //irrigationGestureRecognizer.isEnabled = false
       }
       tapIrrigationView(self)
     }
@@ -82,8 +82,8 @@ extension AddInterventionViewController {
   }
 
   func loadPersons() {
-    for doer in currentIntervention.doers?.allObjects as! [Doers] {
-      doers.append(doer)
+    for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPersons] {
+      selectedPersons[1].append(interventionPerson)
     }
     refreshSelectedPersons()
   }
@@ -127,9 +127,9 @@ extension AddInterventionViewController {
   }
 
   func loadInterventionInAppropriateMode() {
-    if interventionState == Intervention.State.Validated.rawValue {
+    if interventionState == InterventionState.Validated.rawValue {
       loadInterventionInReadOnlyMode()
-    } else if interventionState == Intervention.State.Created.rawValue {
+    } else if interventionState == InterventionState.Created.rawValue {
       loadInterventionInEditableMode()
     }
   }
