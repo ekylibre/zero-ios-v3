@@ -434,11 +434,7 @@
 
 "temperature" = "Température";
 "temp" = "Temp.: %@ °C |";
-<<<<<<< HEAD
 "wind_label" = "Vent";
-=======
-"wind" = "Vent";
->>>>>>> e9aaef3a850e7c8d074159e2b8f193fd245d2eed
 "wind" = " vent: %@ km/h";
 "wind_speed" = "Vitesse du vent";
 
@@ -490,12 +486,8 @@
 "no_parcells" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "no_internet_try_later" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
-<<<<<<< HEAD
 "you_are_in_consult_mode" = "Vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
 "non_authorized_mix" = "Mélange non autorisé";
-=======
-"you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
->>>>>>> e9aaef3a850e7c8d074159e2b8f193fd245d2eed
 "nature" = "Nature";
 "celsius" = "°C";
 "km_per_hour" = "km/h";

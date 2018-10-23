@@ -50,11 +50,11 @@ extension AddInterventionViewController {
 
   func loadIrrigation() {
     if interventionType == InterventionType.Irrigation.rawValue {
-      //irrigationValueTextField.text = String(currentIntervention.waterQuantity)
+      irrigationVolumeTextField.text = String(currentIntervention.waterQuantity)
       irrigationUnitButton.setTitle(currentIntervention.waterUnit, for: .normal)
       updateIrrigation(self)
       if interventionState == InterventionState.Validated.rawValue {
-        //irrigationExpandCollapseImage.isHidden = true
+        irrigationExpandImageView.isHidden = true
         //irrigationGestureRecognizer.isEnabled = false
       }
       tapIrrigationView(self)
@@ -89,6 +89,8 @@ extension AddInterventionViewController {
   }
 
   func loadInterventionInReadOnlyMode() {
+    dimView.isHidden = true
+    cropsView.isHidden = true
     warningView.isHidden = false
     warningMessage.text = "you_are_in_consult_mode".localized
     notesTextField.placeholder = (currentIntervention.infos == "" ? "Notes" : currentIntervention.infos)

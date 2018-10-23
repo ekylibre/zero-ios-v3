@@ -164,8 +164,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
       removeCell.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       removeCell.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
-      removeCell.heightAnchor.constraint(equalToConstant: 15),
-      removeCell.widthAnchor.constraint(equalToConstant: 15),
+      removeCell.heightAnchor.constraint(equalToConstant: 20),
+      removeCell.widthAnchor.constraint(equalToConstant: 20),
 
       inputName.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       inputQuantity.topAnchor.constraint(equalTo: inputName.bottomAnchor, constant: 12.5),
