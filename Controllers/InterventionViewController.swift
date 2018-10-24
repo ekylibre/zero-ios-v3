@@ -218,10 +218,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.syncImage.tintColor = stateTintColors[intervention.status]
     cell.cropsLabel.text = updateCropsLabel(targets!)
     cell.infosLabel.text = intervention.infos
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
     }
-    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
