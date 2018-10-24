@@ -112,6 +112,8 @@ extension AddInterventionViewController {
   }
 
   func loadInterventionInReadOnlyMode() {
+    totalLabel.text = cropsView.selectedCropsLabel.text
+    totalLabel.textColor = AppColor.TextColors.DarkGray
     dimView.isHidden = true
     cropsView.isHidden = true
     warningView.isHidden = false
@@ -135,6 +137,8 @@ extension AddInterventionViewController {
   }
 
   func loadInterventionInEditableMode() {
+    totalLabel.text = cropsView.selectedCropsLabel.text
+    totalLabel.textColor = AppColor.TextColors.DarkGray
     interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "edit")
     if currentIntervention.infos == "" {
@@ -157,7 +161,7 @@ extension AddInterventionViewController {
   func loadInterventionInAppropriateMode() {
     if interventionState == InterventionState.Validated.rawValue {
       loadInterventionInReadOnlyMode()
-    } else if interventionState == InterventionState.Created.rawValue {
+    } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
       loadInterventionInEditableMode()
     }
   }

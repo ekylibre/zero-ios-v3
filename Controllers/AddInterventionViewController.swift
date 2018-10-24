@@ -179,21 +179,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
-    // Adds type label on the navigation bar
-    let navigationItem = UINavigationItem(title: "")
-    let typeLabel = UILabel()
-
-    if interventionType != nil {
-      typeLabel.text = interventionType.localized
-    }
-    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
-    typeLabel.textColor = UIColor.white
-
-    let leftItem = UIBarButtonItem.init(customView: typeLabel)
-
-    navigationItem.leftBarButtonItem = leftItem
-    navigationBar.setItems([navigationItem], animated: false)
-
     initUnitMeasurePickerView()
 
     saveInterventionButton.layer.cornerRadius = 3
@@ -203,13 +188,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupMaterialsView()
     setupEquipmentsView()
     setupPersonsView()
-
-    initializeWeatherButtons()
-    setupWeatherActions()
-    temperatureTextField.delegate = self
-    temperatureTextField.keyboardType = .decimalPad
-    windSpeedTextField.delegate = self
-    windSpeedTextField.keyboardType = .decimalPad
+    initHarvestView()
+    initWeatherView()
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
@@ -219,24 +199,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
     view.addSubview(cropsView)
 
-    if interventionState == InterventionState.Validated.rawValue || interventionState == InterventionState.Created.rawValue {
-      totalLabel.text = cropsView.selectedCropsLabel.text
-      totalLabel.textColor = AppColor.TextColors.DarkGray
-    }
-
     initializeBarButtonItems()
 
-    initWeather()
-
-    temperatureTextField.delegate = self
-    temperatureTextField.keyboardType = .decimalPad
-
-    windSpeedTextField.delegate = self
-    windSpeedTextField.keyboardType = .decimalPad
-
-    initHarvestView()
-
     setupViewsAccordingInterventionType()
+
+    print("\nType: \(String(describing: interventionType))")
+    print("\nSate: \(String(describing: interventionState))")
+    print("\nCurrent inter: \(String(describing: currentIntervention))")
   }
 
   private func setupViewsAccordingInterventionType() {
@@ -1101,7 +1070,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @objc func validateCrops(_ sender: Any) {
     if checkCropsProduction() {
-      if cropsView.selectedCropsLabel.text == "Aucune sélection" {
+      if cropsView.selectedCropsLabel.text == "no_crop_selected".localized {
         totalLabel.text = "+ SÉLECTIONNER"
         totalLabel.textColor = AppColor.TextColors.Green
       } else {

@@ -13,6 +13,16 @@ extension AddInterventionViewController {
 
   // MARK: - Initialization
 
+  func initWeatherView() {
+    initializeWeatherButtons()
+    initWeather()
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
+    setupWeatherActions()
+  }
+
   func initializeWeatherButtons() {
     weatherButtons = [brokenClouds, clearSky, fewClouds, lightRain, mist, showerRain, snow, thunderstorm]
 

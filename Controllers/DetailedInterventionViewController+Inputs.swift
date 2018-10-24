@@ -237,8 +237,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       cell.surfaceQuantity.text = error
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else if totalLabel.text == "select_crops".localized.uppercased() {
+      print("Unchanged label: \(String(describing: cell.surfaceQuantity.text))")
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      print("Changed label: \(String(describing: cell.surfaceQuantity.text))")
     } else {
       defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }
