@@ -56,10 +56,10 @@ open class AuthentificationService {
 
   func addNewUser(userName: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let newUser = NSEntityDescription.entity(forEntityName: "Users", in: managedContext)!
-    let name = NSManagedObject(entity: newUser, insertInto: managedContext)
+    let name = Users(context: managedContext)
 
-    name.setValue(userName, forKey: "userName")
+    name.userName = userName
+
     do {
       try managedContext.save()
     } catch {

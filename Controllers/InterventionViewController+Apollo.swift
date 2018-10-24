@@ -12,6 +12,8 @@ import CoreData
 
 extension InterventionViewController {
 
+  // MARK: - Initialization
+
   func checkLocalData() {
     initializeApolloClient()
 
@@ -19,7 +21,6 @@ extension InterventionViewController {
     if !UserDefaults.standard.bool(forKey: "hasBeenLaunchedBefore") {
       loadRegisteredInputs()
     }
-    queryFarms()
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
@@ -37,26 +38,48 @@ extension InterventionViewController {
     appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
   }
 
-  private func queryFarms() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
+  func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
     let apollo = appDelegate.apollo!
-    let query = FarmQuery()
+    let query = FarmQuery(modifiedSince: defineLastSynchronisationDate())
 
     apollo.fetch(query: query) { result, error in
-      if let error = error { print("Error: \(error)"); return }
+      if let error = error {
+        print("Error: \(error)")
+        endResult(false)
+        return
+      } else if let error = result?.errors {
+        print("Error: \(error)")
+      }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
       if UserDefaults.isFirstLaunch() {
         self.saveFarms(farms)
         self.saveCrops(crops: farms.first!.crops)
-        self.saveArticles(articles: farms.first!.articles)
+        self.loadEquipments()
+        self.loadStorage()
+        self.loadPeople { (success) -> Void in
+          if success {
+            self.loadIntervention(onCompleted: { (success) -> Void in
+              endResult(success)
+            })
+          } else {
+            endResult(false)
+          }
+        }
       } else {
         self.registerFarmID()
         self.checkCropsData(crops: farms.first!.crops)
-        self.checkArticlesData(articles: farms.first!.articles)
+        self.loadEquipments()
+        self.loadStorage()
+        self.loadPeople { (success) -> Void in
+          if success {
+            self.loadIntervention(onCompleted: { (success) -> Void in
+              endResult(success)
+            })
+          } else {
+            endResult(false)
+          }
+        }
       }
     }
   }
@@ -422,5 +445,792 @@ extension InterventionViewController {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  // MARK: - Update
+
+  func defineLastSynchronisationDate() -> String? {
+    let dateFormatter = DateFormatter()
+
+    dateFormatter.timeZone = TimeZone(identifier: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
+    var lastSyncDate: String?
+
+    if date != nil {
+      lastSyncDate = dateFormatter.string(from: date!)
+    }
+    return lastSyncDate
+  }
+
+  // MARK: - Queries: Equipments
+
+  private func checkIfNewEntity(entityID: Int32, entityName: String) -> Bool {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return true
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entityFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let predicate = NSPredicate(format: "ekyID == %d", entityID)
+
+    entityFetchRequest.predicate = predicate
+
+    do {
+      let entities = try managedContext.fetch(entityFetchRequest)
+
+      if entities.count > 0 {
+        return false
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return true
+  }
+
+  private func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipment = Equipments(context: managedContext)
+    var type = fetchedEquipment.type?.rawValue
+
+    type = type?.lowercased()
+    equipment.farmID = farmID
+    equipment.type = type?.localized
+    equipment.name = fetchedEquipment.name
+    equipment.number = fetchedEquipment.number
+    equipment.ekyID = (fetchedEquipment.id as NSString).intValue
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func loadEquipments() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
+
+      for farm in farms {
+        for equipment in farm.equipments {
+          if self.checkIfNewEntity(entityID: (equipment.id as NSString).intValue, entityName: "Equipments") {
+            self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+          }
+        }
+      }
+    }
+  }
+
+  // MARK: Persons
+
+  private func savePersons(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let person = Persons(context: managedContext)
+
+    person.farmID = farmID
+    person.firstName = fetchedPerson.firstName
+    person.lastName = fetchedPerson.lastName
+    person.ekyID = (fetchedPerson.id as NSString).intValue
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func loadPeople(completion: @escaping (_ success: Bool) -> Void) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+      guard let farms = result?.data?.farms else {
+        print("Could not retrieve farms.")
+        completion(false)
+        return
+      }
+
+      for farm in farms {
+        for person in farm.people {
+          if self.checkIfNewEntity(entityID: (person.id as NSString).intValue, entityName: "Persons") {
+            self.savePersons(fetchedPerson: person, farmID: farm.id)
+          }
+        }
+      }
+    }
+    completion(true)
+  }
+
+  // MARK: Storages
+
+  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let manaedContext = appDelegate.persistentContainer.viewContext
+    let storage = Storages(context: manaedContext)
+
+    storage.storageID = (fetchedStorage.id as NSString).intValue
+    storage.name = fetchedStorage.name
+    storage.type = fetchedStorage.type.rawValue.lowercased().localized
+
+    do {
+      try manaedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func loadStorage() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
+
+      for farm in farms {
+        for storage in farm.storages {
+          if self.checkIfNewEntity(entityID: (storage.id as NSString).intValue, entityName: "Storages") {
+            self.saveStorage(fetchedStorage: storage, farmID: farm.id)
+          }
+        }
+      }
+    }
+  }
+
+  // MARK: Weather
+
+  private func saveWeatherInIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: NSManagedObject) -> NSManagedObject {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return NSManagedObject()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let weather = Weather(context: managedContext)
+
+    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased().localized
+    weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
+    weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
+    weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
+    weather.interventions = intervention as? Interventions
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return weather
+  }
+
+  // MARK: Working Periods
+
+  private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return WorkingPeriods()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let workingPeriod = WorkingPeriods(context: managedContext)
+    let dateFormatter = DateFormatter()
+
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    workingPeriod.executionDate = dateFormatter.date(from: fetchedDay.executionDate!)
+    workingPeriod.hourDuration = Float(fetchedDay.hourDuration!)
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return workingPeriod
+  }
+
+  // MARK: Intervention Equipments
+
+  private func returnEntityIfSame(entityName: String, predicate: NSPredicate) -> NSManagedObject? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+
+    entitiesFetchRequest.predicate = predicate
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      if entities.count > 0 {
+        return entities.first as? NSManagedObject
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Interventions) -> InterventionEquipments {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return InterventionEquipments()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionEquipment = InterventionEquipments(context: managedContext)
+    let predicate = NSPredicate(format: "ekyID == %@", (fetchedEquipment.equipment?.id)!)
+    let equipment = returnEntityIfSame(entityName: "Equipments", predicate: predicate)
+
+    if equipment != nil {
+      (equipment as! Equipments).addToInterventionEquipments(interventionEquipment)
+      interventionEquipment.interventions = intervention
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return interventionEquipment
+  }
+
+  // MARK: Targets
+
+  private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Interventions) -> Targets {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return Targets()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let target = Targets(context: managedContext)
+    let predicate = NSPredicate(format: "uuid == %@", fetchedTarget.crop.uuid)
+    let crop = returnEntityIfSame(entityName: "Crops", predicate: predicate)
+
+    if crop != nil {
+      target.workAreaPercentage = Int16(fetchedTarget.workingPercentage)
+      target.crops = crop as? Crops
+      target.interventions = intervention
+    }
+    return target
+  }
+
+  // MARK: Doers
+
+  private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> InterventionPersons {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return InterventionPersons()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionPersons = InterventionPersons(context: managedContext)
+    let predicate = NSPredicate(format: "ekyID == %@", (fetchedOperator.person?.id)!)
+    let person = returnEntityIfSame(entityName: "Persons", predicate: predicate)
+
+    if person != nil {
+      if fetchedOperator.role?.rawValue == "OPERATOR" {
+        interventionPersons.isDriver = false
+      } else {
+        interventionPersons.isDriver = true
+      }
+      (person as! Persons).addToInterventionPersons(interventionPersons)
+      interventionPersons.interventions = intervention
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return interventionPersons
+  }
+
+  // MARK: Harvests
+
+  private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Interventions) -> Harvests {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return Harvests()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvest = Harvests(context: managedContext)
+
+    harvest.quantity = fetchedOutput.quantity ?? 0
+    harvest.type = fetchedOutput.nature.rawValue.lowercased().localized
+    harvest.unit = fetchedOutput.unit?.rawValue.lowercased().localized
+    harvest.number = fetchedOutput.id
+    harvest.interventions = intervention
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return harvest
+  }
+
+  private func returnStorageIfSame(storageID: Int32?) -> Storages? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+
+    do {
+      let storages = try managedContext.fetch(storagesFetchRequest)
+
+      for storage in storages {
+        if storageID == storage.storageID {
+          return storage
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return Harvests()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvest = Harvests(context: managedContext)
+    let predicate = NSPredicate(format: "storageID == %@", (fetchedLoad.storage?.id)!)
+    let storage = returnEntityIfSame(entityName: "Storages", predicate: predicate)
+
+    (storage as! Storages).addToHarvests(harvest)
+    harvest.storages = storage as? Storages
+    harvest.interventions = intervention
+    harvest.type = nature
+    harvest.number = fetchedLoad.number
+    harvest.quantity = fetchedLoad.quantity
+    harvest.unit = fetchedLoad.unit?.rawValue.lowercased().localized
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return harvest
+  }
+
+  // MARK: Inputs
+
+  private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Interventions) -> Interventions {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return intervention
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let id = (fetchedInput.article?.id as NSString?)?.intValue
+    let predicate: NSPredicate!
+
+    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %d", id!))
+    switch fetchedInput.article?.type.rawValue {
+    case "SEED":
+      let interventionSeed = InterventionSeeds(context: managedContext)
+      let seed = returnEntityIfSame(entityName: "Seeds", predicate: predicate)
+
+      interventionSeed.unit = fetchedInput.unit.rawValue
+      interventionSeed.quantity = fetchedInput.quantity as NSNumber?
+      interventionSeed.seeds = seed as? Seeds
+      interventionSeed.interventions = intervention
+      intervention.addToInterventionSeeds(interventionSeed)
+    case "FERTILIZER":
+      let interventionFertilizer = InterventionFertilizers(context: managedContext)
+      let fertilizer = returnEntityIfSame(entityName: "Fertilizers", predicate: predicate)
+
+      interventionFertilizer.unit = fetchedInput.unit.rawValue
+      interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
+      interventionFertilizer.fertilizers = fertilizer as? Fertilizers
+      interventionFertilizer.interventions =  intervention
+      intervention.addToInterventionFertilizers(interventionFertilizer)
+    case "CHEMICAL":
+      let interventionPhyto = InterventionPhytosanitaries(context: managedContext)
+      let phyto = returnEntityIfSame(entityName: "Phytos", predicate: predicate)
+
+      interventionPhyto.unit = fetchedInput.unit.rawValue
+      interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
+      interventionPhyto.phytos = phyto as? Phytos
+      interventionPhyto.interventions = intervention
+      intervention.addToInterventionPhytosanitaries(interventionPhyto)
+    case "MATERIAL":
+      let interventionMaterial = InterventionMaterials(context: managedContext)
+      let material = returnEntityIfSame(entityName: "Materials", predicate: predicate)
+
+      interventionMaterial.unit = fetchedInput.unit.rawValue
+      interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
+      interventionMaterial.materials = material as? Materials
+      interventionMaterial.interventions = intervention
+      intervention.addToInterventionMaterials(interventionMaterial)
+    default:
+      print("Unknown value of TypeEnum")
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return intervention
+  }
+
+  // MARK: Intervention
+
+  private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions {
+    for workingDay in fetchedIntervention.workingDays {
+      intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
+    }
+    for fetchedEquipment in fetchedIntervention.tools! {
+      intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
+    }
+    for fetchedOperator in fetchedIntervention.operators! {
+      intervention.addToInterventionPersons(saveInterventionPersonsToIntervention(fetchedOperator: fetchedOperator, intervention: intervention))
+    }
+    for fetchedTarget in fetchedIntervention.targets {
+      intervention.addToTargets(saveTargetToIntervention(fetchedTarget: fetchedTarget, intervention: intervention))
+    }
+    for fetchedOutput in fetchedIntervention.outputs! {
+      if fetchedIntervention.globalOutputs! {
+        intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
+      } else {
+        for load in fetchedOutput.loads! {
+          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized))
+        }
+      }
+    }
+    return intervention
+  }
+
+  private func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    var intervention = Interventions(context: managedContext)
+
+    intervention.farmID = farmID
+    intervention.ekyID = (fetchedIntervention.id as NSString).intValue
+    intervention.type = fetchedIntervention.type.rawValue
+    intervention.infos = fetchedIntervention.description
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
+    intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
+    intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
+    intervention.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
+    for fetchedInput in fetchedIntervention.inputs! {
+      intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateInterventionStatus(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let predicate = NSPredicate(format: "ekyID == %@", fetchedIntervention.id)
+
+    interventionFetchRequest.predicate = predicate
+
+    do {
+      let intervention = try managedContext.fetch(interventionFetchRequest)
+
+      if intervention.count > 0 {
+        intervention.first?.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
+        try managedContext.save()
+      }
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let group = DispatchGroup()
+
+    group.enter()
+    appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+      guard let farms = result?.data?.farms else {
+        print("Could not retrieve interventions")
+        group.leave()
+        onCompleted(false)
+        return
+      }
+
+      for farm in farms {
+        for intervention in farm.interventions {
+          if self.checkIfNewEntity(entityID: (intervention.id as NSString).intValue, entityName: "Interventions") {
+            self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
+          }
+          self.updateInterventionStatus(fetchedIntervention: intervention)
+        }
+      }
+      group.leave()
+    }
+
+    group.notify(queue: DispatchQueue.main) {
+      let _ = appDelegate.apollo?.clearCache()
+      onCompleted(true)
+    }
+  }
+
+  // MARK: - Mutations: Interventions
+
+  func defineWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
+    let workingDays = intervention.workingPeriods
+    var workingDaysAttributes = [InterventionWorkingDayAttributes]()
+
+    for workingDay in workingDays! {
+      let executionDate = (workingDay as AnyObject).value(forKey: "executionDate")
+      let formatter = DateFormatter()
+
+      formatter.dateFormat = "yyyy-MM-dd"
+      let workingDayAttributes = InterventionWorkingDayAttributes(
+        executionDate: formatter.string(from: executionDate as! Date),
+        hourDuration: (workingDay as AnyObject).value(forKey: "hourDuration") as? Double)
+
+      workingDaysAttributes.append(workingDayAttributes)
+    }
+    return workingDaysAttributes
+  }
+
+  func defineTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
+    let targets = intervention.targets
+    var targetsAttributes = [InterventionTargetAttributes]()
+
+    for target in targets! {
+      let target = target as! Targets
+      let targetAttributes = InterventionTargetAttributes(
+        cropId: (target.crops?.uuid)?.uuidString,
+        workZone: nil,
+        workAreaPercentage: Int(target.workAreaPercentage))
+
+      targetsAttributes.append(targetAttributes)
+    }
+    return targetsAttributes
+  }
+
+  func initializeInputsArray(inputs: inout [NSManagedObject], entities: [Any]?) {
+    if entities != nil {
+      for entity in entities! {
+        inputs.append(entity as! NSManagedObject)
+      }
+    }
+  }
+
+  func appendInputAttributes(id: String?, referenceID: String?, type: ArticleTypeEnum?, quantity: NSNumber, unit: String) -> InterventionInputAttributes {
+    let article = InterventionArticleAttributes(
+      id: id,
+      referenceId: referenceID,
+      type: type)
+    let inputAttributes = InterventionInputAttributes(
+      marketingAuthorizationNumber: nil,
+      article: article,
+      quantity: Double(truncating: quantity),
+      unit: ArticleAllUnitEnum(rawValue: unit)!,
+      unitPrice: nil)
+
+    return inputAttributes
+  }
+
+  func defineInputsAttributesFrom(intervention: Interventions) -> [InterventionInputAttributes] {
+    let seeds = intervention.interventionSeeds?.allObjects
+    let phytos = intervention.interventionPhytosanitaries?.allObjects
+    let fertilizers = intervention.interventionFertilizers?.allObjects
+    let materials = intervention.interventionMaterials?.allObjects
+    var inputs = [NSManagedObject]()
+    var inputsAttributes = [InterventionInputAttributes]()
+
+    initializeInputsArray(inputs: &inputs, entities: seeds)
+    initializeInputsArray(inputs: &inputs, entities: phytos)
+    initializeInputsArray(inputs: &inputs, entities: fertilizers)
+    initializeInputsArray(inputs: &inputs, entities: materials)
+    for input in inputs {
+      switch input {
+      case is InterventionSeeds:
+        let seed = input as! InterventionSeeds
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if seed.seeds?.ekyID == 0 {
+          referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "SEED")
+        } else {
+          id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity!, unit: seed.unit!))
+      case is InterventionPhytosanitaries:
+        let phyto = input as! InterventionPhytosanitaries
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if phyto.phytos?.ekyID == 0 {
+          referenceId = (phyto.phytos?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "CHEMICAL")
+        } else {
+          id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!))
+      case is InterventionFertilizers:
+        let fertilizer = input as! InterventionFertilizers
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if fertilizer.fertilizers?.ekyID == 0 {
+          referenceId = (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "FERTILIZER")
+        } else {
+          id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity!, unit: fertilizer.unit!))
+      case is InterventionMaterials:
+        let material = input as! InterventionMaterials
+        var id: String? = nil
+        var referenceId: String? = nil
+        var type: ArticleTypeEnum? = nil
+
+        if material.materials?.ekyID == 0 {
+          referenceId = (material.materials?.referenceID as NSNumber?)?.stringValue
+          type = ArticleTypeEnum(rawValue: "MATERIAL")
+        } else {
+          id = (material.materials?.ekyID as NSNumber?)?.stringValue
+        }
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!))
+      default:
+        print("No type")
+      }
+    }
+    return inputsAttributes
+  }
+
+  func defineHarvestAttributesFrom(intervention: Interventions) -> [InterventionOutputAttributes] {
+    let harvests = intervention.harvests
+    var harvestsAttributes = [InterventionOutputAttributes]()
+    for harvest in harvests! {
+      let harvest = harvest as! Harvests
+      let loads = HarvestLoadAttributes(
+        quantity: harvest.quantity,
+        netQuantity: nil,
+        unit: HarvestLoadUnitEnum(rawValue: harvest.unit!),
+        number: harvest.number,
+        storageId: "\(String(describing: harvest.storages))")
+      let harvestAttributes = InterventionOutputAttributes(
+        quantity: nil,
+        nature: InterventionOutputTypeEnum(rawValue: harvest.type!.uppercased()),
+        unit: nil,
+        approximative: nil,
+        loads: [loads])
+
+      harvestsAttributes.append(harvestAttributes)
+    }
+    return harvestsAttributes
+  }
+
+  func defineEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
+    let equipments = intervention.interventionEquipments
+    var equipmentsAttributes = [InterventionToolAttributes]()
+
+    for equipment in equipments! {
+      let equipmentID = (equipment as! InterventionEquipments).equipments?.ekyID
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipmentID as NSNumber?)?.stringValue)
+
+      equipmentsAttributes.append(equipmentAttributes)
+    }
+    return equipmentsAttributes
+  }
+
+  func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
+    let interventionPersons = intervention.interventionPersons
+    var operatorsAttributes = [InterventionOperatorAttributes]()
+
+    for interventionPerson in interventionPersons! {
+      let personID = (interventionPerson as! InterventionPersons).persons?.ekyID
+      let role = (interventionPerson as! InterventionPersons).isDriver
+      let operatorAttributes = InterventionOperatorAttributes(
+        personId: (personID as NSNumber?)?.stringValue,
+        role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
+
+      operatorsAttributes.append(operatorAttributes)
+    }
+    return operatorsAttributes
+  }
+
+  func defineWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
+    var weather = WeatherAttributes()
+
+    weather.temperature = intervention.weather?.temperature as? Double
+    weather.windSpeed = intervention.weather?.windSpeed as? Double
+    weather.description = (intervention.weather?.weatherDescription).map { WeatherEnum(rawValue: $0) }
+    return weather
+  }
+
+  func pushIntervention(intervention: Interventions) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let group = DispatchGroup()
+    let apollo = appDelegate.apollo
+    let _ = apollo?.clearCache()
+    let mutation = PushInterMutation(
+      farmId: intervention.farmID!,
+      procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
+      cropList: defineTargetAttributesFrom(intervention: intervention),
+      workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
+      waterQuantity: intervention.type == "IRRIGATION" ? Int(intervention.waterQuantity) : nil,
+      waterUnit: intervention.type == "IRRIGATION" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!) : nil,
+      inputs: defineInputsAttributesFrom(intervention: intervention),
+      outputs: defineHarvestAttributesFrom(intervention: intervention),
+      globalOutputs: false,
+      tools: defineEquipmentAttributesFrom(intervention: intervention),
+      operators: defineOperatorAttributesFrom(intervention: intervention),
+      weather: defineWeatherAttributesFrom(intervention: intervention),
+      description: intervention.infos)
+
+    group.enter()
+    apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let error = result?.data?.createIntervention?.errors {
+        print("Error: \(error)")
+      } else {
+        if result?.data?.createIntervention?.intervention?.id != nil {
+          id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
   }
 }

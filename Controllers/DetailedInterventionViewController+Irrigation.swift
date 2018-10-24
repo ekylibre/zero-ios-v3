@@ -14,7 +14,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   func setupIrrigationView() {
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    let units = ["m³", "l", "hl"]
+    let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
 
     irrigationVolumeTextField.layer.borderWidth = 0.5
     irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
@@ -58,8 +58,8 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
 
-      self.irrigationUnitButton.setTitle(selectedValue, for: .normal)
-      selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit)
+      self.irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
+      selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
       updateInfoLabel(volume, unit)
       irrigationPickerView.isHidden = true
       dimView.isHidden = true
@@ -84,7 +84,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let volume = irrigationVolumeTextField.text!.floatValue
     let unit = irrigationUnitButton.titleLabel!.text!
 
-    selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit)
+    selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
     updateInfoLabel(volume, unit)
   }
 
@@ -98,7 +98,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     } else {
       let efficiency = volume / cropsView.selectedSurfaceArea
 
-      irrigationErrorLabel.text = String(format: "input_quantity_per_surface", efficiency, unit)
+      irrigationErrorLabel.text = String(format: "input_quantity_per_surface".localized, efficiency, unit.localized)
       irrigationErrorLabel.textColor = AppColor.TextColors.DarkGray
     }
   }

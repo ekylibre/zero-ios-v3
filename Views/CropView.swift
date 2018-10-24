@@ -46,7 +46,7 @@ class CropView: UIView {
   lazy var surfaceAreaLabel: UILabel = {
     let surfaceAreaLabel = UILabel(frame: CGRect.zero)
     surfaceAreaLabel.textColor = UIColor.darkGray
-    surfaceAreaLabel.text = String(format: "%.1f ha travaillés", crop.surfaceArea)
+    surfaceAreaLabel.text = String(format: "surface_area".localized, crop.surfaceArea)
     surfaceAreaLabel.font = UIFont.systemFont(ofSize: 13.0)
     surfaceAreaLabel.translatesAutoresizingMaskIntoConstraints = false
     return surfaceAreaLabel
@@ -96,7 +96,7 @@ class CropView: UIView {
       surfaceAreaLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
       surfaceAreaLabel.leftAnchor.constraint(equalTo: cropImageView.rightAnchor, constant: 10),
       surfaceAreaLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10)
-    ])
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {

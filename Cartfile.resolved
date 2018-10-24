@@ -1,5 +1,5 @@
 github "apollostack/apollo-ios" "0.9.3"
 github "daltoniam/Starscream" "3.0.5"
-github "hackiftekhar/IQKeyboardManager" "v6.1.1"
+github "hackiftekhar/IQKeyboardManager" "v6.2.0"
 github "p2/OAuth2" "4.0.1"
 github "stephencelis/SQLite.swift" "0.11.5"

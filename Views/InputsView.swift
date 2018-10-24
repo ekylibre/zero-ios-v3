@@ -371,7 +371,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.ekyID = Int32(registeredSeed.id)
+      seed.referenceID = Int32(registeredSeed.id)
       seed.specie = registeredSeed.specie.uppercased()
       seed.variety = registeredSeed.variety
       seed.unit = "KILOGRAM_PER_HECTARE"
@@ -397,7 +397,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.ekyID = Int32(registeredPhyto.id)
+      phyto.referenceID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
@@ -427,7 +427,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.ekyID = Int32(registeredFertilizer.id)
+      fertilizer.referenceID = Int32(registeredFertilizer.id)
       fertilizer.name = registeredFertilizer.name.uppercased()
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety
@@ -639,6 +639,32 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
     sortInputs()
     dimView.isHidden = true
+  }
+
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum, managedContext: NSManagedObjectContext, input: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    var ekyID: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        ekyID = Int32(result!.data!.createArticle!.article!.id)!
+        input.setValue(ekyID, forKey: "ekyID")
+
+        do {
+          try managedContext.save()
+        } catch let error as NSError {
+          print("Could not save. \(error), \(error.userInfo)")
+        }
+      }
+    }
   }
 
   @objc func hideDimView() {
