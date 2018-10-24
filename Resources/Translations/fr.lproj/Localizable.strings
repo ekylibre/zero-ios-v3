@@ -420,6 +420,7 @@
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"equipment_number_not_available" = "Ce numéro d'équipement est déjà utilisé. Veuillez en choisir un autre";
 
 "delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
 "delete_harvest_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";

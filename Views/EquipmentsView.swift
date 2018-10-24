@@ -209,7 +209,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   @objc private func validateCreation() {
     let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
 
-    if !checkEquipmentName() {
+    if !checkEquipmentName() || !checkEquipmentNumber() {
       return
     }
 
@@ -226,6 +226,21 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
+  }
+
+  private func checkEquipmentNumber() -> Bool {
+    let equipmentsWithSameNumber = equipments.filter({(equipment: Equipments) -> Bool in
+      let number = equipment.number
+
+      return number?.range(of: creationView.numberTextField.text!, options: .caseInsensitive) != nil
+    })
+
+    if equipmentsWithSameNumber.count > 0 {
+      creationView.errorLabel.text = "equipment_number_not_available".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    }
+    return true
   }
 
   private func checkEquipmentName() -> Bool {

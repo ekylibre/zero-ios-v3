@@ -1155,17 +1155,112 @@ extension InterventionViewController {
     return harvestsAttributes
   }
 
+  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushEquipmentMutation(farmId: farmID, type: type, name: name, number: number)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.data?.createEquipment?.errors {
+        print("Error: \(resultError)")
+      } else {
+        if result?.data?.createEquipment?.equipment?.id != nil {
+          id = Int32(result!.data!.createEquipment!.equipment!.id)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  func pushEquipmentIfNoEkyId(equipment: Equipments) -> Int32? {
+    if equipment.ekyID == 0 {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+      }
+
+      let managedContext = appDelegate.persistentContainer.viewContext
+
+      do {
+        let type = EquipmentTypeEnum(rawValue: equipment.type!)
+        equipment.ekyID = pushEquipment(type: type!, name: equipment.name!, number: equipment.number)
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    return equipment.ekyID
+  }
+
   func defineEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
     let equipments = intervention.interventionEquipments
     var equipmentsAttributes = [InterventionToolAttributes]()
 
     for equipment in equipments! {
-      let equipmentID = (equipment as! InterventionEquipments).equipments?.ekyID
-      let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipmentID as NSNumber?)?.stringValue)
+      let id = pushEquipmentIfNoEkyId(equipment: (equipment as! InterventionEquipments).equipments!)
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: (id as NSNumber?)?.stringValue)
 
       equipmentsAttributes.append(equipmentAttributes)
     }
     return equipmentsAttributes
+  }
+
+  private func pushPerson(firstName: String?, lastName: String) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushPersonMutation(farmId: farmID, firstName: firstName, lastName: lastName)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.data?.createPerson?.errors {
+        print("Error: \(resultError)")
+      } else {
+        if result?.data?.createPerson?.person?.id != nil {
+          id = Int32(result!.data!.createPerson!.person!.id)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  func pushPersonIfNoEkyId(person: Persons) -> Int32? {
+    if person.ekyID == 0 {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+      }
+
+      let managedContext = appDelegate.persistentContainer.viewContext
+
+      do {
+        person.ekyID = pushPerson(firstName: person.firstName, lastName: person.lastName!)
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    return person.ekyID
   }
 
   func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
@@ -1173,10 +1268,10 @@ extension InterventionViewController {
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
     for interventionPerson in interventionPersons! {
-      let personID = (interventionPerson as! InterventionPersons).persons?.ekyID
+      let id = pushPersonIfNoEkyId(person: (interventionPerson as! InterventionPersons).persons!)
       let role = (interventionPerson as! InterventionPersons).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
-        personId: (personID as NSNumber?)?.stringValue,
+        personId: (id as NSNumber?)?.stringValue,
         role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
 
       operatorsAttributes.append(operatorAttributes)
