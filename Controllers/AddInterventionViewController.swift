@@ -494,6 +494,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
 
+    currentIntervention = Interventions(context: managedContext)
     currentIntervention.type = interventionType
     currentIntervention.status = InterventionState.Created.rawValue
     currentIntervention.infos = notesTextField.text

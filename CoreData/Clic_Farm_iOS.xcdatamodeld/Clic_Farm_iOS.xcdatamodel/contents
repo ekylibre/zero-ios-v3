@@ -87,7 +87,7 @@
         <attribute name="output" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="waterQuantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="waterQuantity" optional="YES" attributeType="Float" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="waterUnit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="harvests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Harvests" inverseName="interventions" inverseEntity="Harvests" syncable="YES"/>
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipments" inverseName="interventions" inverseEntity="InterventionEquipments" syncable="YES"/>
@@ -184,7 +184,7 @@
         <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="120"/>
         <element name="InterventionPersons" positionX="-135" positionY="-432" width="128" height="90"/>
         <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="330"/>
         <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="105"/>
         <element name="Materials" positionX="990" positionY="-139" width="128" height="120"/>
         <element name="Persons" positionX="-351" positionY="-459" width="128" height="135"/>

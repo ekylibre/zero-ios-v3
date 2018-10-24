@@ -89,7 +89,9 @@ extension AddInterventionViewController {
       let interventionMaterials = try managedContext.fetch(interventionMaterialsFetchRequest)
 
       for interventionMaterial in interventionMaterials {
-        selectMaterial(interventionMaterial.materials!)
+        if interventionMaterial.materials != nil {
+          selectMaterial(interventionMaterial.materials!)
+        }
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")

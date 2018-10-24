@@ -50,8 +50,12 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   func loadWeatherInEditableMode() {
-    temperatureTextField.text = (weather.temperature as NSNumber?)?.stringValue
-    windSpeedTextField.text = (weather.windSpeed as NSNumber?)?.stringValue
+    if weather.temperature != nil {
+      temperatureTextField.text = (weather.temperature as NSNumber?)?.stringValue
+    }
+    if weather.windSpeed != nil {
+      windSpeedTextField.text = (weather.windSpeed as NSNumber?)?.stringValue
+    }
 
     for weatherButton in weatherButtons {
       if weather.weatherDescription == weatherButton.titleLabel?.text {
