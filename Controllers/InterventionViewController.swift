@@ -221,12 +221,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
     }
-    cell.cropsLabel.text = updateCropsLabel(targets)
-    cell.infosLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
-    if workingPeriod?.executionDate != nil {
-      cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
-    }
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
