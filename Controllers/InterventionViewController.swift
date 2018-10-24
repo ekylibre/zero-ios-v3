@@ -423,9 +423,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
-      print("Updating needed interventions: \(interventions)")
       for intervention in interventions {
-        print("\nTo update intervention: \(intervention)")
         pushUpdatedIntervention(intervention: intervention)
         try managedContext.save()
       }
@@ -448,7 +446,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
-      print("\nPushing needed intervention: \(interventions)")
       for intervention in interventions {
         intervention.ekyID = pushIntervention(intervention: intervention)
         if intervention.ekyID != 0 {

@@ -199,13 +199,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
     view.addSubview(cropsView)
 
+    if interventionState != nil {
+      totalLabel.text = cropsView.selectedCropsLabel.text
+      totalLabel.textColor = AppColor.TextColors.DarkGray
+    }
+
     initializeBarButtonItems()
 
     setupViewsAccordingInterventionType()
-
-    print("\nType: \(String(describing: interventionType))")
-    print("\nSate: \(String(describing: interventionState))")
-    print("\nCurrent inter: \(String(describing: currentIntervention))")
   }
 
   private func setupViewsAccordingInterventionType() {
@@ -527,8 +528,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
     saveWeather(intervention: currentIntervention)
-
-    print("\nCurrentIntervention: \(String(describing: currentIntervention))")
 
     do {
       try managedContext.save()
@@ -968,10 +967,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBAction func saveOrUpdateIntervention() {
     if interventionState == nil {
-      print("\nCreating intervention")
       createIntervention()
     } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
-      print("\nUpdating intervention")
       updateIntervention()
     }
   }

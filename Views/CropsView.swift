@@ -230,7 +230,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
 
-      print("\nFetching crops, interventionState: \(String(describing: interventionState))")
       if interventionState == InterventionState.Validated.rawValue {
         loadSelectedTargets()
       } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
@@ -285,19 +284,14 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var cropsFromSamePlot = [Crops]()
     var name = crops.first?.plotName
 
-    print("\nOrganizing crops by plot")
     for crop in crops {
       if crop.plotName != name {
-        print("\nPlotName: \(String(describing: crop.plotName)) != name: \(String(describing: name))")
         name = crop.plotName
-        print("\nAppending to crops: \(cropsFromSamePlot)")
         self.crops.append(cropsFromSamePlot)
         cropsFromSamePlot = [Crops]()
       }
-      print("\nAppending to cropsFromSamePlot: \(cropsFromSamePlot)")
       cropsFromSamePlot.append(crop)
     }
-    print("\nLast appending to crops: \(cropsFromSamePlot)")
     self.crops.append(cropsFromSamePlot)
   }
 
