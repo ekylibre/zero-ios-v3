@@ -175,8 +175,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
-      for entity in entities {
-        return entity.value(forKey: "name") as? String
+      if entities.count > 0 {
+        return entities[0].value(forKey: "name") as? String
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
