@@ -50,6 +50,7 @@ extension AddInterventionViewController {
     let interventionPerson = InterventionPersons(context: managedContext)
 
     interventionPerson.isDriver = false
+    interventionPerson.persons = person
     selectedPersons[0].append(person)
     selectedPersons[1].append(interventionPerson)
     closePersonsSelectionView()
@@ -69,6 +70,7 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   func refreshSelectedPersons() {
+    tapPersonsView()
     if selectedPersons[1].count > 0 {
       selectedPersonsTableView.reloadData()
       personsExpandImageView.isHidden = false
@@ -100,8 +102,11 @@ extension AddInterventionViewController {
 
     updateCountLabel()
     personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    personsAddButton.isHidden = !shouldExpand
+    if interventionState != InterventionState.Validated.rawValue {
+      personsAddButton.isHidden = (!shouldExpand)
+    }
     personsCountLabel.isHidden = shouldExpand
+    selectedPersonsTableView.isHidden = !shouldExpand
     personsExpandImageView.transform = personsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 

@@ -99,8 +99,8 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   func refreshSelectedEquipments() {
+    tapEquipmentsView()
     if selectedEquipments.count > 0 {
-      selectedEquipmentsTableView.isHidden = false
       selectedEquipmentsTableView.reloadData()
       equipmentsExpandImageView.isHidden = false
     }
@@ -132,8 +132,11 @@ extension AddInterventionViewController {
 
     updateCountLabel()
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    equipmentsAddButton.isHidden = !shouldExpand
+    if interventionState != InterventionState.Validated.rawValue {
+      equipmentsAddButton.isHidden = !shouldExpand
+    }
     equipmentsCountLabel.isHidden = shouldExpand
+    selectedEquipmentsTableView.isHidden = !shouldExpand
     equipmentsExpandImageView.transform = equipmentsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 

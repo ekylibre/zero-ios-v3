@@ -300,7 +300,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     var type = (sender as? UIButton)?.titleLabel?.text
 
     type = type?.uppercased().replacingOccurrences(of: " ", with: "_")
-    if segue.identifier == "addIntervention" && type != nil {
+    if segue.identifier == "showAddInterventionVC" && type != nil {
       destVC.interventionType = type
       destVC.interventionState = nil
       destVC.currentIntervention = nil

@@ -279,11 +279,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func showList() {
-    self.performSegue(withIdentifier: "showSpecies", sender: self)
+    performSegue(withIdentifier: "showSpecies", sender: self)
   }
 
   @objc func showAlert() {
-    self.present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
+    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
   // MARK: Bar button
@@ -544,6 +544,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
     saveWeather(intervention: currentIntervention)
+
+    print("\nCurrentIntervention: \(String(describing: currentIntervention))")
 
     do {
       try managedContext.save()
@@ -959,13 +961,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.rawStrings = equipmentTypes
       destVC.tag = 3
     default:
-      return
-    }
-
-    if interventionState == nil {
-      createIntervention()
-    } else if interventionState == InterventionState.Created.rawValue {
-      updateIntervention()
+      if interventionState == nil {
+        createIntervention()
+      } else if interventionState == InterventionState.Created.rawValue {
+        updateIntervention()
+      }
     }
   }
 

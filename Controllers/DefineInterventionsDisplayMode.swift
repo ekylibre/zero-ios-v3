@@ -14,7 +14,9 @@ extension AddInterventionViewController {
   func disableUserInteraction() {
     if interventionState == InterventionState.Validated.rawValue {
       cropsView.tableView.isUserInteractionEnabled = false
+      workingPeriodTapGesture.isEnabled = false
       selectedInputsTableView.isUserInteractionEnabled = false
+      irrigationTapGesture.isEnabled = false
       selectedEquipmentsTableView.isUserInteractionEnabled = false
       selectedPersonsTableView.isUserInteractionEnabled = false
       temperatureTextField.isUserInteractionEnabled = false
@@ -44,7 +46,6 @@ extension AddInterventionViewController {
     }
     if interventionState == InterventionState.Validated.rawValue {
       workingPeriodExpandImageView.isHidden = true
-      workingPeriodTapGesture.isEnabled = false
     }
   }
 
@@ -55,7 +56,6 @@ extension AddInterventionViewController {
       updateIrrigation(self)
       if interventionState == InterventionState.Validated.rawValue {
         irrigationExpandImageView.isHidden = true
-        irrigationTapGesture.isEnabled = false
       }
       tapIrrigationView(self)
     }
@@ -75,22 +75,38 @@ extension AddInterventionViewController {
   }
 
   func loadMaterials() {
-    for interventionMaterial in currentIntervention.interventionMaterials?.allObjects as! [InterventionMaterials] {
-      selectedMaterials[1].append(interventionMaterial)
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionMaterialsFetchRequest: NSFetchRequest<InterventionMaterials> = InterventionMaterials.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", currentIntervention)
+
+    interventionMaterialsFetchRequest.predicate = predicate
+
+    do {
+      let interventionMaterials = try managedContext.fetch(interventionMaterialsFetchRequest)
+
+      for interventionMaterial in interventionMaterials {
+        selectMaterial(interventionMaterial.materials!)
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
     }
     refreshSelectedMaterials()
   }
 
   func loadEquipments() {
     for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
-      selectedEquipments.append(interventionEquipment)
+      selectEquipment(interventionEquipment.equipments!)
     }
     refreshSelectedEquipments()
   }
 
   func loadPersons() {
     for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPersons] {
-      selectedPersons[1].append(interventionPerson)
+      selectPerson(interventionPerson.persons!)
     }
     refreshSelectedPersons()
   }
@@ -135,6 +151,7 @@ extension AddInterventionViewController {
     loadEquipments()
     loadPersons()
     loadWeatherInEditableMode()
+    dimView.isHidden = false
   }
 
   func loadInterventionInAppropriateMode() {

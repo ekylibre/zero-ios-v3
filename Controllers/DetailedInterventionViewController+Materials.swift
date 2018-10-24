@@ -49,6 +49,7 @@ extension AddInterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionMaterial = InterventionMaterials(context: managedContext)
 
+    interventionMaterial.materials = material
     interventionMaterial.unit = material.unit
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
@@ -69,8 +70,8 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   func refreshSelectedMaterials() {
+    tapMaterialsView()
     if selectedMaterials[1].count > 0 {
-      selectedMaterialsTableView.isHidden = false
       selectedMaterialsTableView.reloadData()
       materialsExpandImageView.isHidden = false
     }
@@ -101,8 +102,11 @@ extension AddInterventionViewController {
 
     updateCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    materialsAddButton.isHidden = !shouldExpand
+    if interventionState != InterventionState.Validated.rawValue {
+      materialsAddButton.isHidden = !shouldExpand
+    }
     materialsCountLabel.isHidden = shouldExpand
+    selectedMaterialsTableView.isHidden = !shouldExpand
     materialsExpandImageView.transform = materialsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
