@@ -218,7 +218,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.syncImage.tintColor = stateTintColors[intervention.status]
     cell.cropsLabel.text = updateCropsLabel(targets!)
     cell.infosLabel.text = intervention.infos
-    cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
+    if workingPeriod?.executionDate != nil {
+      cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
+    }
     cell.cropsLabel.text = updateCropsLabel(targets)
     cell.infosLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
@@ -386,6 +388,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     queryFarms { (success) in
       if success {
         self.pushInterventionIfNeeded()
+        self.updateInterventionIfNeeded()
         self.fetchInterventions()
 
         do {
@@ -404,6 +407,33 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
+  func updateInterventionIfNeeded() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let ekyIDPredicate = NSPredicate(format: "ekyID != %d", 0)
+    let statusPredicate = NSPredicate(format: "status == %d", InterventionState.Created.rawValue)
+    let predicates = NSCompoundPredicate(type: .and, subpredicates: [ekyIDPredicate, statusPredicate])
+
+    interventionsFetchRequest.predicate = predicates
+
+    do {
+      let interventions = try managedContext.fetch(interventionsFetchRequest)
+
+      print("Updating needed interventions: \(interventions)")
+      for intervention in interventions {
+        print("\nTo update intervention: \(intervention)")
+        pushUpdatedIntervention(intervention: intervention)
+        try managedContext.save()
+      }
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
+    }
+  }
+
   func pushInterventionIfNeeded() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -418,6 +448,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
+      print("\nPushing needed intervention: \(interventions)")
       for intervention in interventions {
         intervention.ekyID = pushIntervention(intervention: intervention)
         if intervention.ekyID != 0 {

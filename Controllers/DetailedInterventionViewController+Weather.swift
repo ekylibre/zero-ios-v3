@@ -50,18 +50,20 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   func loadWeatherInEditableMode() {
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+
+    for index in 0..<weatherDescriptions.count {
+      if weather.weatherDescription == weatherDescriptions[index] {
+        weatherButtons[index].layer.borderColor = AppColor.BarColors.Green.cgColor
+        weatherButtons[index].layer.borderWidth = 3
+        weatherIsSelected = true
+      }
+    }
     if weather.temperature != nil {
       temperatureTextField.text = (weather.temperature as NSNumber?)?.stringValue
     }
     if weather.windSpeed != nil {
       windSpeedTextField.text = (weather.windSpeed as NSNumber?)?.stringValue
-    }
-
-    for weatherButton in weatherButtons {
-      if weather.weatherDescription == weatherButton.titleLabel?.text {
-        weatherButton.layer.borderColor = AppColor.BarColors.Green.cgColor
-        weatherIsSelected = true
-      }
     }
     saveCurrentWeather(self)
   }

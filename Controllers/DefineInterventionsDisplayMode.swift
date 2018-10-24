@@ -52,7 +52,7 @@ extension AddInterventionViewController {
   func loadIrrigation() {
     if interventionType == InterventionType.Irrigation.rawValue {
       irrigationVolumeTextField.text = String(currentIntervention.waterQuantity)
-      irrigationUnitButton.setTitle(currentIntervention.waterUnit, for: .normal)
+      irrigationUnitButton.setTitle(currentIntervention.waterUnit?.localized, for: .normal)
       updateIrrigation(self)
       if interventionState == InterventionState.Validated.rawValue {
         irrigationExpandImageView.isHidden = true

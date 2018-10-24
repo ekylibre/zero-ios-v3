@@ -501,11 +501,9 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipments(context: managedContext)
-    var type = fetchedEquipment.type?.rawValue
 
-    type = type?.lowercased()
     equipment.farmID = farmID
-    equipment.type = type?.localized
+    equipment.type = fetchedEquipment.type?.rawValue
     equipment.name = fetchedEquipment.name
     equipment.number = fetchedEquipment.number
     equipment.ekyID = (fetchedEquipment.id as NSString).intValue
@@ -935,7 +933,7 @@ extension InterventionViewController {
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
-    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.localized
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
     intervention.status = (fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue
@@ -1234,5 +1232,40 @@ extension InterventionViewController {
     })
     group.wait()
     return id
+  }
+
+  func pushUpdatedIntervention(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let group = DispatchGroup()
+    let apollo = appDelegate.apollo
+    let _ = apollo?.clearCache()
+    let updateMutation = UpdateInterMutation(
+      interventionId: String(intervention.ekyID),
+      farmId: intervention.farmID!,
+      procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
+      cropList: defineTargetAttributesFrom(intervention: intervention),
+      workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
+      waterQuantity: intervention.type == "IRRIGATION" ? Int(intervention.waterQuantity) : nil,
+      waterUnit: intervention.type == "IRRIGATION" ? ArticleVolumeUnitEnum(rawValue: intervention.waterUnit!) : nil,
+      inputs: defineInputsAttributesFrom(intervention: intervention),
+      outputs: defineHarvestAttributesFrom(intervention: intervention),
+      tools: defineEquipmentAttributesFrom(intervention: intervention),
+      operators: defineOperatorAttributesFrom(intervention: intervention),
+      weather: defineWeatherAttributesFrom(intervention: intervention),
+      description: intervention.infos)
+
+    group.enter()
+    apollo?.perform(mutation: updateMutation, queue: DispatchQueue.global(), resultHandler: { (error, result) in
+      if let error = error?.errors {
+        print("Error: \(String(describing: error))")
+      } else {
+        intervention.status = InterventionState.Synced.rawValue
+      }
+      group.leave()
+    })
+    group.wait()
   }
 }

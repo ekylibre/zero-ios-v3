@@ -482,7 +482,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Core Data
 
-  @IBAction func createIntervention() {
+  func createIntervention() {
     if !checkErrorsAccordingInterventionType() {
       return
     }
@@ -522,7 +522,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createInterventionPersons(intervention: currentIntervention)
     saveInterventionInputs(intervention: currentIntervention)
     createMaterials(intervention: currentIntervention)
-    saveHarvest(intervention: currentIntervention)
+    createHarvest(intervention: currentIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
@@ -539,6 +539,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func updateIntervention() {
+    if !checkErrorsAccordingInterventionType() {
+      return
+    }
     let duration = workingPeriodDurationTextField.text!.floatValue
 
     currentIntervention.workingPeriods?.executionDate = selectDateView.datePicker.date
@@ -546,13 +549,26 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     currentIntervention.infos = notesTextField.text
     if interventionType == "IRRIGATION" {
       let waterVolume = irrigationVolumeTextField.text!.floatValue
+
       currentIntervention.waterQuantity = waterVolume
-      currentIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+      switch irrigationUnitButton.titleLabel?.text {
+      case "m³":
+        currentIntervention.waterUnit = "CUBIC_METER"
+      case "hl":
+        currentIntervention.waterUnit = "HECTOLITER"
+      case "l":
+        currentIntervention.waterUnit = "LITER"
+      default:
+        currentIntervention.waterUnit = ""
+      }
     }
     updateTargets(intervention: currentIntervention)
     updateEquipments(intervention: currentIntervention)
     updatePersons(intervention: currentIntervention)
     updateInputs(intervention: currentIntervention)
+    updateHarvest(intervention: currentIntervention)
+    currentIntervention.status = InterventionState.Created.rawValue
+    performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
   func updateEquipments(intervention: Interventions) {
@@ -632,6 +648,41 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateHarvest(intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvestsFetchRequest: NSFetchRequest<Harvests> = Harvests.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    harvestsFetchRequest.predicate = predicate
+
+
+    do {
+      let fetchedHarvests = try managedContext.fetch(harvestsFetchRequest)
+
+      for harvest in fetchedHarvests {
+        managedContext.delete(harvest)
+      }
+      for harvestEntity in harvests {
+        let harvest = Harvests(context: managedContext)
+        let type = harvestType.titleLabel?.text
+
+        harvest.interventions = intervention
+        harvest.type = type
+        harvest.number = harvestEntity.number
+        harvest.quantity = harvestEntity.quantity
+        harvest.unit = harvestEntity.unit
+        harvest.storages = harvestEntity.storages
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
@@ -810,7 +861,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveHarvest(intervention: Interventions) {
+  func createHarvest(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -915,6 +966,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Navigation
 
+  @IBAction func saveOrUpdateIntervention() {
+    if interventionState == nil {
+      print("\nCreating intervention")
+      createIntervention()
+    } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
+      print("\nUpdating intervention")
+      updateIntervention()
+    }
+  }
+
   // INFO: Needed to perform the unwind segue
   @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
 
@@ -944,11 +1005,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       destVC.rawStrings = equipmentTypes
       destVC.tag = 3
     default:
-      if interventionState == nil {
-        createIntervention()
-      } else if interventionState == InterventionState.Created.rawValue {
-        updateIntervention()
-      }
+      return
     }
   }
 
