@@ -24,16 +24,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Properties
 
+  let appDelegate = UIApplication.shared.delegate as! AppDelegate
   var interventions = [Interventions]() {
     didSet {
       tableView.reloadData()
     }
   }
 
+  let dimView = UIView()
+  let refreshControl = UIRefreshControl()
+  var interventionButtons = [UIButton]()
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
-  var interventionButtons = [UIButton]()
-  let dimView = UIView()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
@@ -42,8 +44,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
-
-    checkLocalData()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -94,29 +94,24 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       synchroLabel.text = "no_synchronization_listed".localized
     }
 
-    // Top label : name
-    //toolbar.frame = CGRect(x: 0, y: 623, width: 375, height: 100)
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-    let firstLabel = UILabel(frame: firstFrame)
-    firstLabel.text = "GAEC du Bois Joli"
-    firstLabel.textColor = UIColor.white
-    navigationBar.addSubview(firstLabel)
-
     initialiseInterventionButtons()
 
     // Load table view
-    self.tableView.dataSource = self
-    self.tableView.delegate = self
-
-    tableView.bounces = false
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.refreshControl = refreshControl
+    refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
     //initializeApolloClient()
+    checkLocalData()
     if Connectivity.isConnectedToInternet() {
       fetchInterventions()
       synchronise(self)
     } else {
       fetchInterventions()
     }
+
+    displayFarmName()
   }
 
   func initialiseInterventionButtons() {
@@ -135,12 +130,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    fetchInterventions()
-  }
-
   private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -151,9 +140,54 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
+      sortInterventionByDate()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
+  }
+
+  func sortInterventionByDate() {
+    interventions = interventions.sorted(by: {
+      let result: Bool!
+
+      if ($0.workingPeriods)?.executionDate != nil && ($1.workingPeriods)?.executionDate != nil {
+        result = ($0.workingPeriods)!.executionDate! > ($1.workingPeriods)!.executionDate!
+        return result
+      }
+      return true
+    })
+  }
+
+  // MARK: - Apollo
+
+  func fetchFarmNameAndId() -> String? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
+
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      if entities.count > 0 {
+        return entities[0].value(forKey: "name") as? String
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func displayFarmName() {
+    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+    let farmLabel = UILabel(frame: firstFrame)
+
+    farmLabel.text = fetchFarmNameAndId()
+    farmLabel.textColor = UIColor.white
+    farmLabel.font = UIFont.boldSystemFont(ofSize: 18)
+    navigationBar.addSubview(farmLabel)
   }
 
   // MARK: - Table view data source
@@ -175,15 +209,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let targets = fetchTargets(intervention)
     let workingPeriod = fetchWorkingPeriod(intervention)
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.yellow, 2: UIColor.green]
+    let stateImages: [Int16: UIImage] = [0: UIImage(named: "out-of-sync")!, 1: UIImage(named: "synchronised")!, 2: UIImage(named: "validated")!]
+    let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
 
     cell.typeLabel.text = intervention.type?.localized
     cell.typeImageView.image = UIImage(named: assetName)
-    cell.syncImage.backgroundColor = stateColors[intervention.status]
+    cell.syncImage.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
+    cell.syncImage.tintColor = stateTintColors[intervention.status]
     cell.cropsLabel.text = updateCropsLabel(targets!)
     cell.infosLabel.text = intervention.infos
     cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
+    cell.cropsLabel.text = updateCropsLabel(targets)
+    cell.infosLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
+    if workingPeriod?.executionDate != nil {
+      cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
+    }
 
     // Resize labels according to their text
     cell.typeLabel.sizeToFit()
@@ -236,17 +277,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func updateCropsLabel(_ targets: [NSManagedObject]) -> String {
-    var totalSurfaceArea: Double = 0
+  func updateCropsLabel(_ targets: [Targets]?) -> String? {
+    var totalSurfaceArea: Float = 0
 
-    for target in targets {
-      let crop = target.value(forKey: "crops") as! NSManagedObject
-      let surfaceArea = crop.value(forKey: "surfaceArea") as! Double
-      totalSurfaceArea += surfaceArea 
+    if targets != nil {
+      for target in targets! {
+        let crop = target.crops
+        totalSurfaceArea += crop?.surfaceArea ?? 0
+      }
+      let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
+      return String(format: cropString, targets!.count) + String(format: " • %.1f ha", totalSurfaceArea)
     }
-
-    let cropString = targets.count < 2 ? "crop".localized : "crops".localized
-    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
+    return nil
   }
 
   func transformDate(date: Date) -> String {
@@ -316,13 +358,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue) {
-
-    if sender.source is AddInterventionViewController {
-      if let senderVC = sender.source as? AddInterventionViewController {
-        interventions.append(senderVC.currentIntervention)
-      }
-      tableView.reloadData()
+  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
+    if segue.source is AddInterventionViewController {
+      fetchInterventions()
     }
   }
 
@@ -347,6 +385,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     queryFarms { (success) in
       if success {
+        self.pushInterventionIfNeeded()
         self.fetchInterventions()
 
         do {
@@ -357,16 +396,37 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         self.synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
-
-        for intervention in self.interventions {
-          if intervention.ekyID != 0 && intervention.status == InterventionState.Created.rawValue {
-            self.pushUpdatedIntervention(intervention: intervention)
-          }
-        }
       } else {
         self.synchroLabel.text = "sync_failure".localized
       }
+      self.refreshControl.endRefreshing()
       self.tableView.reloadData()
+    }
+  }
+
+  func pushInterventionIfNeeded() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let predicate = NSPredicate(format: "ekyID == %d", 0)
+
+    interventionsFetchRequest.predicate = predicate
+
+    do {
+      let interventions = try managedContext.fetch(interventionsFetchRequest)
+
+      for intervention in interventions {
+        intervention.ekyID = pushIntervention(intervention: intervention)
+        if intervention.ekyID != 0 {
+          intervention.status = Int16(InterventionState.Synced.rawValue)
+        }
+        try managedContext.save()
+      }
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
 

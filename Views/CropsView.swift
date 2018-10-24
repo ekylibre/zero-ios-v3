@@ -370,6 +370,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       self.cropViews.append(cropViews)
       cropViews = [CropView]()
     }
+    self.cropViews.append(cropViews)
   }
 
   // MARK: - Actions

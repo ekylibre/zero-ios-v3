@@ -644,6 +644,32 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     dimView.isHidden = true
   }
 
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum, managedContext: NSManagedObjectContext, input: NSManagedObject) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    var ekyID: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+
+    apollo.perform(mutation: mutation) { (result, error) in
+      if error != nil {
+        print(error!)
+      } else {
+        ekyID = Int32(result!.data!.createArticle!.article!.id)!
+        input.setValue(ekyID, forKey: "ekyID")
+
+        do {
+          try managedContext.save()
+        } catch let error as NSError {
+          print("Could not save. \(error), \(error.userInfo)")
+        }
+      }
+    }
+  }
+
   @objc func hideDimView() {
     dimView.isHidden = true
   }

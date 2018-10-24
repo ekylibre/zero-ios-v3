@@ -13,19 +13,19 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
   // MARK: - Initialization
 
   func initUnitMeasurePickerView() {
-    liquidUnitPicker.backgroundColor = AppColor.CellColors.White
-    liquidUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
-    liquidUnitPicker.delegate = self
-    liquidUnitPicker.dataSource = self
-    liquidUnitPicker.isHidden = true
-    view.addSubview(liquidUnitPicker)
+    volumeUnitPicker.backgroundColor = AppColor.CellColors.White
+    volumeUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
+    volumeUnitPicker.delegate = self
+    volumeUnitPicker.dataSource = self
+    volumeUnitPicker.isHidden = true
+    view.addSubview(volumeUnitPicker)
 
-    solidUnitPicker.backgroundColor = AppColor.CellColors.White
-    solidUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
-    solidUnitPicker.delegate = self
-    solidUnitPicker.dataSource = self
-    solidUnitPicker.isHidden = true
-    view.addSubview(solidUnitPicker)
+    massUnitPicker.backgroundColor = AppColor.CellColors.White
+    massUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
+    massUnitPicker.delegate = self
+    massUnitPicker.dataSource = self
+    massUnitPicker.isHidden = true
+    view.addSubview(massUnitPicker)
   }
 
   // MARK: Picker View Data Source
@@ -35,7 +35,7 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
   }
 
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    if pickerView == liquidUnitPicker {
+    if pickerView == volumeUnitPicker {
       return volumeUnitMeasure.count
     } else {
       return massUnitMeasure.count
@@ -43,7 +43,7 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
   }
 
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    if pickerView == liquidUnitPicker {
+    if pickerView == volumeUnitPicker {
       return volumeUnitMeasure[row].localized
     } else {
       return massUnitMeasure[row].localized
@@ -54,14 +54,14 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
     dimView.isHidden = true
     let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputCell
 
-    if pickerView == liquidUnitPicker {
-      liquidUnitPicker.isHidden = true
-      selectedInputs[cellIndexPath.row].setValue(volumeUnitMeasure[row].localized, forKey: "unit")
-      cell.unitMeasureButton.setTitle(volumeUnitMeasure[row], for: .normal)
+    if pickerView == volumeUnitPicker {
+      volumeUnitPicker.isHidden = true
+      selectedInputs[cellIndexPath.row].setValue(volumeUnitMeasure[row], forKey: "unit")
+      cell.unitMeasureButton.setTitle(volumeUnitMeasure[row].localized, for: .normal)
     } else {
-      solidUnitPicker.isHidden = true
-      selectedInputs[cellIndexPath.row].setValue(massUnitMeasure[row].localized, forKey: "unit")
-      cell.unitMeasureButton.setTitle(massUnitMeasure[row], for: .normal)
+      massUnitPicker.isHidden = true
+      selectedInputs[cellIndexPath.row].setValue(massUnitMeasure[row], forKey: "unit")
+      cell.unitMeasureButton.setTitle(massUnitMeasure[row].localized, for: .normal)
     }
     selectedInputsTableView.reloadData()
     updateInputQuantity(indexPath: cellIndexPath)

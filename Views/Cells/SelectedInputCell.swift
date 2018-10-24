@@ -87,7 +87,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     surfaceQuantity.isHidden = true
     surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = "Soit 0,0"
+    surfaceQuantity.text = ""
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
     return surfaceQuantity
   }()
@@ -230,9 +230,9 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   @objc func showUnitMeasure(sender: UIButton) {
     addInterventionViewController?.dimView.isHidden = false
     if type == "Phyto" {
-      addInterventionViewController?.liquidUnitPicker.isHidden = false
+      addInterventionViewController?.volumeUnitPicker.isHidden = false
     } else {
-      addInterventionViewController?.solidUnitPicker.isHidden = false
+      addInterventionViewController?.massUnitPicker.isHidden = false
     }
     cellDelegate?.saveSelectedRow(indexPath)
   }

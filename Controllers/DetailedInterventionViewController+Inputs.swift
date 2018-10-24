@@ -208,7 +208,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let surfaceArea = cropsView.selectedSurfaceArea
     var efficiency: Float = 0
 
-    if (unit.contains("/")) {
+    if unit.contains("/") {
       let surfaceUnit = unit.components(separatedBy: "/")[1]
       switch surfaceUnit {
       case "ha":
@@ -240,7 +240,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       cell.surfaceQuantity.text = "no_crop_selected".localized
       cell.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
-      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity ?? 0, indexPath: indexPath)
+      defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }
   }
 
