@@ -111,6 +111,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     displayFarmName()
+
+    initializeLogoutItem()
   }
 
   func initialiseInterventionButtons() {
@@ -185,13 +187,41 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func displayFarmName() {
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width / 2, height: navigationBar.frame.height)
     let farmLabel = UILabel(frame: firstFrame)
 
     farmLabel.text = fetchFarmNameAndId()
     farmLabel.textColor = UIColor.white
     farmLabel.font = UIFont.boldSystemFont(ofSize: 18)
     navigationBar.addSubview(farmLabel)
+  }
+
+  // MARK: - Logout
+
+  func initializeLogoutItem() {
+    let navigationItem = UINavigationItem(title: "")
+    let logoutButton = UIButton()
+
+    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
+    logoutButton.setImage(UIImage(named: "logout"), for: .normal)
+    let rightItem = UIBarButtonItem.init(customView: logoutButton)
+
+    navigationItem.rightBarButtonItem = rightItem
+    navigationBar.setItems([navigationItem], animated: true)
+  }
+
+  @objc func logoutFromFarm(_ sender: Any) {
+    let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
+
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
+      let authentificationService = AuthentificationService(username: "", password: "")
+
+      authentificationService.logout()
+      appDelegate.
+      self.performSegue(withIdentifier: "logoutSegue", sender: self)
+    }))
+    present(alert, animated: true)
   }
 
   // MARK: - Table view data source
@@ -335,10 +365,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destVC = segue.destination as! AddInterventionViewController
-    let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
+    switch segue.identifier {
+    case "showAddInterventionVC":
+      let destVC = segue.destination as! AddInterventionViewController
+      let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
 
-    destVC.interventionType = interventionTypes[index]
+      destVC.interventionType = interventionTypes[index]
+    default:
+      return
+    }
   }
 
   @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {

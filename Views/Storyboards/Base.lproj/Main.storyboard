@@ -193,6 +193,7 @@
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
+                        <segue destination="krK-gd-8UN" kind="presentation" identifier="logoutSegue" id="wcF-Wj-Rjo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1619,6 +1620,8 @@
         <image name="thunderstorm" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="KZa-bZ-hB6"/>
+        <segue reference="wcF-Wj-Rjo"/>
         <segue reference="FE4-xp-aKR"/>
     </inferredMetricsTieBreakers>
 </document>
