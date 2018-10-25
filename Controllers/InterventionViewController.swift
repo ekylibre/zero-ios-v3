@@ -110,7 +110,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       fetchInterventions()
     }
 
-    displayFarmName()
+    initializeLogoutItem()
   }
 
   func initialiseInterventionButtons() {
@@ -175,9 +175,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
-      if entities.count > 0 {
-        return entities[0].value(forKey: "name") as? String
-      }
+      return entities.first?.value(forKey: "name") as? String
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -185,13 +183,90 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func displayFarmName() {
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width / 2, height: navigationBar.frame.height)
     let farmLabel = UILabel(frame: firstFrame)
 
     farmLabel.text = fetchFarmNameAndId()
     farmLabel.textColor = UIColor.white
     farmLabel.font = UIFont.boldSystemFont(ofSize: 18)
     navigationBar.addSubview(farmLabel)
+  }
+
+  // MARK: - Logout
+
+  func initializeLogoutItem() {
+    let navigationItem = UINavigationItem(title: "")
+    let logoutButton = UIButton()
+    let image = UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate)
+
+    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
+    logoutButton.setImage(image, for: .normal)
+    logoutButton.imageView?.tintColor = .white
+    let rightItem = UIBarButtonItem.init(customView: logoutButton)
+
+    navigationItem.rightBarButtonItem = rightItem
+    navigationBar.setItems([navigationItem], animated: true)
+  }
+
+  func emptyCoreData(entityName: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let request = NSBatchDeleteRequest(fetchRequest: fetch)
+
+    do {
+      try managedContext.execute(request)
+    } catch let error as NSError {
+      print("Could not remove data. \(error), \(error.userInfo)")
+    }
+  }
+
+  func emptyAllCoreDate() {
+    let entitiesNames = [
+      "Crops",
+      "Equipments",
+      "Farms",
+      "Fertilizers",
+      "Harvests",
+      "InterventionEquipments",
+      "InterventionFertilizers",
+      "InterventionMaterials",
+      "InterventionPersons",
+      "InterventionPhytosanitaries",
+      "Interventions",
+      "InterventionSeeds",
+      "Materials",
+      "Persons",
+      "Phytos",
+      "Seeds",
+      "Storages",
+      "Users",
+      "Weather",
+      "WorkingPeriods"]
+
+    for entityName in entitiesNames {
+      emptyCoreData(entityName: entityName)
+    }
+  }
+
+  @objc func logoutFromFarm(_ sender: Any) {
+    let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
+
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
+      let authentificationService = AuthentificationService(username: "", password: "")
+
+      authentificationService.logout()
+      UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
+      UserDefaults.standard.set(0, forKey: "lastSyncDate")
+      UserDefaults.standard.synchronize()
+      self.emptyAllCoreDate()
+      self.performSegue(withIdentifier: "logoutSegue", sender: self)
+    }))
+    present(alert, animated: true)
   }
 
   // MARK: - Table view data source
@@ -335,10 +410,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destVC = segue.destination as! AddInterventionViewController
-    let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
+    switch segue.identifier {
+    case "showAddInterventionVC":
+      let destVC = segue.destination as! AddInterventionViewController
+      let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
 
-    destVC.interventionType = interventionTypes[index]
+      destVC.interventionType = interventionTypes[index]
+    default:
+      return
+    }
   }
 
   @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
@@ -368,6 +448,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     queryFarms { (success) in
       if success {
+        if self.navigationBar.items?.count == 1 {
+          self.displayFarmName()
+        }
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
 
