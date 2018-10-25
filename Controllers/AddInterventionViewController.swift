@@ -424,12 +424,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.quantity.layer.borderWidth = 1
       cell.quantity.layer.cornerRadius = 5
-      cell.quantity.text = String(harvest.quantity)
+      if interventionState == InterventionState.Validated.rawValue {
+        cell.quantity.placeholder = String(harvest.quantity)
+        cell.number.placeholder = harvest.number
+      } else {
+        cell.quantity.text = String(harvest.quantity)
+        cell.number.text = harvest.number
+      }
       cell.quantity.delegate = cell
       cell.number.layer.borderColor =  AppColor.CellColors.LightGray.cgColor
       cell.number.layer.borderWidth = 1
       cell.number.layer.cornerRadius = 5
-      cell.number.text = harvest.number
       cell.number.delegate = cell
       cell.selectionStyle = .none
       return cell
