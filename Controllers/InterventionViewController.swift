@@ -413,9 +413,36 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
+  func fetchCrops() -> [Crops] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return [Crops]()
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+
+    do {
+      let crops = try managedContext.fetch(cropsFetchRequest)
+
+      return crops
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return [Crops]()
+  }
+
   @objc func action(sender: UIButton) {
-    hideInterventionAdd()
-    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+    let crops = fetchCrops()
+
+    if crops.count ==  0 {
+      let alert = UIAlertController(title: "", message: "start_online_with_crops".localized, preferredStyle: .alert)
+
+      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      present(alert, animated: true)
+    } else {
+      hideInterventionAdd()
+      performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+    }
   }
 
   @objc func hideInterventionAdd() {
