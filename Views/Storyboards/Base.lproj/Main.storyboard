@@ -192,8 +192,8 @@
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="74J-jI-YTr"/>
-                        <segue destination="krK-gd-8UN" kind="presentation" identifier="SegueLogOut" id="a8t-Pd-Dxa"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="updateIntervention" id="sUz-8n-dYb"/>
+                        <segue destination="krK-gd-8UN" kind="presentation" identifier="logoutSegue" id="wcF-Wj-Rjo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1678,7 +1678,8 @@
         <image name="thunderstorm" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="a8t-Pd-Dxa"/>
+        <segue reference="KZa-bZ-hB6"/>
+        <segue reference="wcF-Wj-Rjo"/>
         <segue reference="FE4-xp-aKR"/>
         <segue reference="74J-jI-YTr"/>
         <segue reference="kep-BY-hpD"/>

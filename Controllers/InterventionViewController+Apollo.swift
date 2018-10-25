@@ -471,14 +471,13 @@ extension InterventionViewController {
 
   // MARK: - Queries: Equipments
 
-  private func checkIfNewEntity(entityID: Int32, entityName: String) -> Bool {
+  private func checkIfNewEntity(entityName: String, predicate: NSPredicate) -> Bool {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return true
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let entityFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let predicate = NSPredicate(format: "ekyID == %d", entityID)
 
     entityFetchRequest.predicate = predicate
 
@@ -525,7 +524,9 @@ extension InterventionViewController {
 
       for farm in farms {
         for equipment in farm.equipments {
-          if self.checkIfNewEntity(entityID: (equipment.id as NSString).intValue, entityName: "Equipments") {
+          let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
+
+          if self.checkIfNewEntity(entityName: "Equipments", predicate: predicate) {
             self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
           }
         }
@@ -569,7 +570,9 @@ extension InterventionViewController {
 
       for farm in farms {
         for person in farm.people {
-          if self.checkIfNewEntity(entityID: (person.id as NSString).intValue, entityName: "Persons") {
+          let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
+
+          if self.checkIfNewEntity(entityName: "Persons", predicate: predicate) {
             self.savePersons(fetchedPerson: person, farmID: farm.id)
           }
         }
@@ -609,7 +612,9 @@ extension InterventionViewController {
 
       for farm in farms {
         for storage in farm.storages {
-          if self.checkIfNewEntity(entityID: (storage.id as NSString).intValue, entityName: "Storages") {
+          let predicate = NSPredicate(format: "storageID == %d", (storage.id as NSString).intValue)
+
+          if self.checkIfNewEntity(entityName: "Storages", predicate: predicate) {
             self.saveStorage(fetchedStorage: storage, farmID: farm.id)
           }
         }
@@ -740,19 +745,23 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPersons = InterventionPersons(context: managedContext)
-    let predicate = NSPredicate(format: "ekyID == %@", (fetchedOperator.person?.id)!)
-    let person = returnEntityIfSame(entityName: "Persons", predicate: predicate)
+    let personID = fetchedOperator.person?.id
+    let person: Persons?
 
-    if person != nil {
-      if fetchedOperator.role?.rawValue == "OPERATOR" {
-        interventionPersons.isDriver = false
-      } else {
-        interventionPersons.isDriver = true
+    if personID != nil {
+      let predicate = NSPredicate(format: "ekyID == %@", personID!)
+
+      person = returnEntityIfSame(entityName: "Persons", predicate: predicate) as? Persons
+      if person != nil {
+        if fetchedOperator.role?.rawValue == "OPERATOR" {
+          interventionPersons.isDriver = false
+        } else {
+          interventionPersons.isDriver = true
+        }
+        person?.addToInterventionPersons(interventionPersons)
+        interventionPersons.interventions = intervention
       }
-      (person as! Persons).addToInterventionPersons(interventionPersons)
-      interventionPersons.interventions = intervention
     }
-
     do {
       try managedContext.save()
     } catch let error as NSError {
@@ -814,11 +823,15 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
-    let predicate = NSPredicate(format: "storageID == %@", (fetchedLoad.storage?.id)!)
-    let storage = returnEntityIfSame(entityName: "Storages", predicate: predicate)
+    let storageID = fetchedLoad.storage?.id
+    let storage: Storages?
 
-    (storage as! Storages).addToHarvests(harvest)
-    harvest.storages = storage as? Storages
+    if storageID != nil {
+      let predicate = NSPredicate(format: "storageID == %@", storageID!)
+      storage = returnEntityIfSame(entityName: "Storages", predicate: predicate) as? Storages
+      storage?.addToHarvests(harvest)
+      harvest.storages = storage
+    }
     harvest.interventions = intervention
     harvest.type = nature
     harvest.number = fetchedLoad.number
@@ -841,10 +854,10 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let id = (fetchedInput.article?.id as NSString?)?.intValue
+    let id = fetchedInput.article?.id
     let predicate: NSPredicate!
 
-    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %d", id!))
+    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %@", id!))
     switch fetchedInput.article?.type.rawValue {
     case "SEED":
       let interventionSeed = InterventionSeeds(context: managedContext)
@@ -989,7 +1002,9 @@ extension InterventionViewController {
 
       for farm in farms {
         for intervention in farm.interventions {
-          if self.checkIfNewEntity(entityID: (intervention.id as NSString).intValue, entityName: "Interventions") {
+          let predicate = NSPredicate(format: "ekyID == %d", (intervention.id as NSString).intValue)
+
+          if self.checkIfNewEntity(entityName: "Interventions", predicate: predicate) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
           }
           self.updateInterventionStatus(fetchedIntervention: intervention)
