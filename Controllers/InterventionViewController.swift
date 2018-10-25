@@ -210,6 +210,50 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     navigationBar.setItems([navigationItem], animated: true)
   }
 
+  func emptyCoreData(entityName: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let request = NSBatchDeleteRequest(fetchRequest: fetch)
+
+    do {
+      try managedContext.execute(request)
+    } catch let error as NSError {
+      print("Could not remove data. \(error), \(error.userInfo)")
+    }
+  }
+
+  func emptyAllCoreDate() {
+    let entitiesNames = [
+      "Crops",
+      "Equipments",
+      "Farms",
+      "Fertilizers",
+      "Harvests",
+      "InterventionEquipments",
+      "InterventionFertilizers",
+      "InterventionMaterials",
+      "InterventionPersons",
+      "InterventionPhytosanitaries",
+      "Interventions",
+      "InterventionSeeds",
+      "Materials",
+      "Persons",
+      "Phytos",
+      "Seeds",
+      "Storages",
+      "Users",
+      "Weather",
+      "WorkingPeriods"]
+
+    for entityName in entitiesNames {
+      emptyCoreData(entityName: entityName)
+    }
+  }
+
   @objc func logoutFromFarm(_ sender: Any) {
     let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
 
@@ -218,7 +262,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let authentificationService = AuthentificationService(username: "", password: "")
 
       authentificationService.logout()
-      appDelegate.
+      UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
+      UserDefaults.standard.set(0, forKey: "lastSyncDate")
+      UserDefaults.standard.synchronize()
+      self.emptyAllCoreDate()
       self.performSegue(withIdentifier: "logoutSegue", sender: self)
     }))
     present(alert, animated: true)
