@@ -277,6 +277,36 @@ extension InterventionViewController {
     return id
   }
 
+  func pushInputIfNoEkyID(input: NSManagedObject) -> Int32? {
+    if (input.value(forKey: "ekyID") as! Int32) == 0 {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+      }
+
+      let managedContext = appDelegate.persistentContainer.viewContext
+
+      do {
+        var inputID: Int32 = 0
+        switch input {
+        case is Phytos:
+          let phyto = input as! Phytos
+          inputID = pushInput(unit: ArticleUnitEnum.liter, name: phyto.name!, type: ArticleTypeEnum.chemical)
+        case is Fertilizers:
+          let fertilizer = input as! Fertilizers
+          inputID = pushInput(unit: ArticleUnitEnum.kilogram, name: fertilizer.name!, type: ArticleTypeEnum.fertilizer)
+        default:
+          return nil
+        }
+
+        input.setValue(inputID, forKey: "ekyID")
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    return input.value(forKey: "ekyID") as? Int32
+  }
+
   private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
@@ -290,7 +320,6 @@ extension InterventionViewController {
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
                                        specie: SpecieEnum(rawValue: specie), variety: variety)
 
-    print("\nUnit: \(unit)")
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
@@ -302,7 +331,6 @@ extension InterventionViewController {
           print("Data error: \(dataError)")
         } else {
           id = Int32(result!.data!.createArticle!.article!.id)!
-          print("\nPushed ID: \(id)")
         }
       }
       group.leave()
@@ -322,13 +350,11 @@ extension InterventionViewController {
       do {
         seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: seed.variety!,
                               specie: seed.specie!, type: ArticleTypeEnum.seed);
-        print("Push ID: \(seed.ekyID)")
         try managedContext.save()
       } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")
       }
     }
-    print("\nRetuned ID: \(seed.ekyID)")
     return seed.ekyID
   }
 
@@ -1184,12 +1210,10 @@ extension InterventionViewController {
         var type: ArticleTypeEnum? = nil
 
         if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID != 0 {
-          print("ID = 0 && refID == \(String(describing: seed.seeds?.referenceID))")
           referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "SEED")
         } else if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID == 0 {
           id = String(pushSeedIfNoEkyID(seed: seed.seeds!)!)
-          print("Push seed: \(String(describing: seed.seeds)), ekyID: \(String(describing: id))")
         } else {
           id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }
@@ -1200,9 +1224,11 @@ extension InterventionViewController {
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if phyto.phytos?.ekyID == 0 {
+        if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID != 0 {
           referenceId = (phyto.phytos?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "CHEMICAL")
+        } else if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID == 0 {
+          id = String(pushInputIfNoEkyID(input: phyto.phytos!)!)
         } else {
           id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
         }
@@ -1213,9 +1239,11 @@ extension InterventionViewController {
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if fertilizer.fertilizers?.ekyID == 0 {
+        if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID != 0 {
           referenceId = (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "FERTILIZER")
+        } else if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID == 0 {
+          id = String(pushInputIfNoEkyID(input: fertilizer.fertilizers!)!)
         } else {
           id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
         }

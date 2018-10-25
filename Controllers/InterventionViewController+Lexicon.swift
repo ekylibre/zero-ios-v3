@@ -91,7 +91,6 @@ extension InterventionViewController {
       phyto.used = false
     }
 
-
     do {
       try managedContext.save()
     } catch let error as NSError {

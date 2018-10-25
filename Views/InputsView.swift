@@ -374,7 +374,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phytos.append(phyto)
 
     do {
-      //phyto.ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -399,7 +398,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizers.append(fertilizer)
 
     do {
-      //fertilizer.ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
