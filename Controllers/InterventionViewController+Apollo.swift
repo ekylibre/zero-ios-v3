@@ -246,6 +246,92 @@ extension InterventionViewController {
 
   // MARK: - Articles
 
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        if let dataError = result?.data?.createArticle?.errors {
+          print("Data error: \(dataError)")
+        } else {
+          id = Int32(result!.data!.createArticle!.article!.id)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let group = DispatchGroup()
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let _ = apollo.clearCache()
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
+                                       specie: SpecieEnum(rawValue: specie), variety: variety)
+
+    print("\nUnit: \(unit)")
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        if let dataError = result?.data?.createArticle?.errors {
+          print("Data error: \(dataError)")
+        } else {
+          id = Int32(result!.data!.createArticle!.article!.id)!
+          print("\nPushed ID: \(id)")
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  func pushSeedIfNoEkyID(seed: Seeds) -> Int32? {
+    if seed.ekyID == 0 {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+      }
+
+      let managedContext = appDelegate.persistentContainer.viewContext
+
+      do {
+        seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: seed.variety!,
+                              specie: seed.specie!, type: ArticleTypeEnum.seed);
+        print("Push ID: \(seed.ekyID)")
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    print("\nRetuned ID: \(seed.ekyID)")
+    return seed.ekyID
+  }
+
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -1097,9 +1183,13 @@ extension InterventionViewController {
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if seed.seeds?.ekyID == 0 {
+        if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID != 0 {
+          print("ID = 0 && refID == \(String(describing: seed.seeds?.referenceID))")
           referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "SEED")
+        } else if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID == 0 {
+          id = String(pushSeedIfNoEkyID(seed: seed.seeds!)!)
+          print("Push seed: \(String(describing: seed.seeds)), ekyID: \(String(describing: id))")
         } else {
           id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }

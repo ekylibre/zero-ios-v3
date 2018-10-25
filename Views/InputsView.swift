@@ -339,6 +339,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let seed = Seeds(context: managedContext)
 
     seed.registered = false
+    seed.ekyID = 0
+    seed.referenceID = 0
     seed.specie = formattedSpecie
     seed.variety = variety
     seed.unit = "KILOGRAM_PER_HECTARE"
@@ -346,8 +348,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seeds.append(seed)
 
     do {
-      seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: SpecieEnum.alliumAscalonicum.rawValue,
-                            specie: formattedSpecie, type: ArticleTypeEnum.seed);
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -363,6 +363,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let phyto = Phytos(context: managedContext)
 
     phyto.registered = false
+    phyto.ekyID = 0
+    phyto.referenceID = 0
     phyto.name = name
     phyto.firmName = firmName
     phyto.maaID = maaID
@@ -372,7 +374,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phytos.append(phyto)
 
     do {
-      phyto.ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
+      //phyto.ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -388,6 +390,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let fertilizer = Fertilizers(context: managedContext)
 
     fertilizer.registered = false
+    fertilizer.ekyID = 0
+    fertilizer.referenceID = 0
     fertilizer.name = name
     fertilizer.nature = nature
     fertilizer.unit = "KILOGRAM_PER_HECTARE"
@@ -395,76 +399,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizers.append(fertilizer)
 
     do {
-      fertilizer.ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
+      //fertilizer.ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  // MARK: - GraphQL
-
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let group = DispatchGroup()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
-    let _ = apollo.clearCache()
-
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if let error = error {
-        print("Error: \(error)")
-      } else if let resultError = result?.errors {
-        print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createArticle!.article!.id)!
-        }
-      }
-      group.leave()
-    })
-    group.wait()
-    return id
-  }
-
-  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let _ = apollo.clearCache()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
-                                       specie: SpecieEnum(rawValue: specie), variety: variety)
-
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if let error = error {
-        print("Error: \(error)")
-      } else if let resultError = result?.errors {
-        print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createArticle!.article!.id)!
-        }
-      }
-      group.leave()
-    })
-    group.wait()
-    return id
   }
 
   // MARK: - Actions
@@ -530,39 +469,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     sortInputs()
     dimView.isHidden = true
   }
-
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum, managedContext: NSManagedObjectContext, input: NSManagedObject) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
-
-    apollo.perform(mutation: mutation) { (result, error) in
-      if let error = error {
-        print("Error: \(error)")
-      } else if let resultError = result?.errors {
-        print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          let ekyID = Int32(result!.data!.createArticle!.article!.id)!
-          input.setValue(ekyID, forKey: "ekyID")
-        }
-
-        do {
-          try managedContext.save()
-        } catch let error as NSError {
-          print("Could not save. \(error), \(error.userInfo)")
-        }
-      }
-    }
-  }
-
-  
 
   @objc func hideDimView() {
     dimView.isHidden = true
