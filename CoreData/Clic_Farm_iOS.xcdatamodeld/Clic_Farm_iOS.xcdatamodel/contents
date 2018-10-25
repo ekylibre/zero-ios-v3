@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
+        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productionMode" optional="YES" attributeType="String" syncable="YES"/>
@@ -173,7 +174,7 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crops" positionX="414" positionY="269" width="128" height="135"/>
+        <element name="Crops" positionX="414" positionY="269" width="128" height="210"/>
         <element name="Equipments" positionX="-659" positionY="-351" width="128" height="120"/>
         <element name="Farms" positionX="-245.3203125" positionY="388.06640625" width="128" height="75"/>
         <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="255"/>

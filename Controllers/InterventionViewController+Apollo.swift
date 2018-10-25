@@ -47,8 +47,10 @@ extension InterventionViewController {
         print("Error: \(error)")
         endResult(false)
         return
-      } else if let error = result?.errors {
-        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result Error: \(resultError)")
+        endResult(false)
+        return
       }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
@@ -290,7 +292,8 @@ extension InterventionViewController {
       let seed = Seeds(context: managedContext)
 
       seed.registered = false
-      seed.ekyID = Int32(article.id)!
+      seed.ekyID = 0
+      seed.referenceID = Int32(article.id)!
       seed.variety = (article.variety == nil) ? article.name : article.variety
       seed.specie = article.species?.rawValue
       seed.unit = article.unit.rawValue
@@ -315,7 +318,8 @@ extension InterventionViewController {
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = false
-      phyto.ekyID = Int32(article.id)!
+      phyto.ekyID = 0
+      phyto.referenceID = Int32(article.id)!
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
       phyto.used = false
@@ -339,7 +343,8 @@ extension InterventionViewController {
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = false
-      fertilizer.ekyID = Int32(article.id)!
+      fertilizer.ekyID = 0
+      fertilizer.referenceID = Int32(article.id)!
       fertilizer.name = article.name
       fertilizer.unit = article.unit.rawValue
       fertilizer.used = false
@@ -517,12 +522,16 @@ extension InterventionViewController {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
-
-      for farm in farms {
-        for equipment in farm.equipments {
-          if self.checkIfNewEntity(entityID: (equipment.id as NSString).intValue, entityName: "Equipments") {
-            self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        for farm in (result?.data?.farms)! {
+          for equipment in farm.equipments {
+            if self.checkIfNewEntity(entityID: (equipment.id as NSString).intValue, entityName: "Equipments") {
+              self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+            }
           }
         }
       }
@@ -557,16 +566,20 @@ extension InterventionViewController {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else {
-        print("Could not retrieve farms.")
+      if let error = error {
+        print("Error: \(error)")
         completion(false)
         return
-      }
-
-      for farm in farms {
-        for person in farm.people {
-          if self.checkIfNewEntity(entityID: (person.id as NSString).intValue, entityName: "Persons") {
-            self.savePersons(fetchedPerson: person, farmID: farm.id)
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+        completion(false)
+        return
+      } else {
+        for farm in (result?.data?.farms)! {
+          for person in farm.people {
+            if self.checkIfNewEntity(entityID: (person.id as NSString).intValue, entityName: "Persons") {
+              self.savePersons(fetchedPerson: person, farmID: farm.id)
+            }
           }
         }
       }
@@ -601,9 +614,12 @@ extension InterventionViewController {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
-
-      for farm in farms {
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        let farm = (result?.data?.farms.first)!
         for storage in farm.storages {
           if self.checkIfNewEntity(entityID: (storage.id as NSString).intValue, entityName: "Storages") {
             self.saveStorage(fetchedStorage: storage, farmID: farm.id)
@@ -976,14 +992,16 @@ extension InterventionViewController {
 
     group.enter()
     appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else {
-        print("Could not retrieve interventions")
-        group.leave()
+      if let error = error {
+        print("Error: \(error)")
         onCompleted(false)
         return
-      }
-
-      for farm in farms {
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+        onCompleted(false)
+        return
+      } else {
+        let farm = (result?.data?.farms.first)!
         for intervention in farm.interventions {
           if self.checkIfNewEntity(entityID: (intervention.id as NSString).intValue, entityName: "Interventions") {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
@@ -1221,11 +1239,15 @@ extension InterventionViewController {
     apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
-      } else if let error = result?.data?.createIntervention?.errors {
-        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
       } else {
-        if result?.data?.createIntervention?.intervention?.id != nil {
-          id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
+        if let dataError = result?.data?.createIntervention?.errors {
+          print("Data error: \(dataError)")
+        } else {
+          if result?.data?.createIntervention?.intervention?.id != nil {
+            id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
+          }
         }
       }
       group.leave()
