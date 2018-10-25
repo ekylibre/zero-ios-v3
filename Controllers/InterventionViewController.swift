@@ -110,8 +110,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       fetchInterventions()
     }
 
-    displayFarmName()
-
     initializeLogoutItem()
   }
 
@@ -177,9 +175,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
-      if entities.count > 0 {
-        return entities[0].value(forKey: "name") as? String
-      }
+      return entities.first?.value(forKey: "name") as? String
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -201,9 +197,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func initializeLogoutItem() {
     let navigationItem = UINavigationItem(title: "")
     let logoutButton = UIButton()
+    let image = UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate)
 
     logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
-    logoutButton.setImage(UIImage(named: "logout"), for: .normal)
+    logoutButton.setImage(image, for: .normal)
+    logoutButton.imageView?.tintColor = .white
     let rightItem = UIBarButtonItem.init(customView: logoutButton)
 
     navigationItem.rightBarButtonItem = rightItem
@@ -450,6 +448,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     queryFarms { (success) in
       if success {
+        if self.navigationBar.items?.count == 1 {
+          self.displayFarmName()
+        }
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
 
