@@ -53,8 +53,9 @@ extension InterventionViewController {
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.ekyID = Int32(registeredSeed.id)
-      seed.specie = registeredSeed.specie
+      seed.ekyID = 0
+      seed.referenceID = Int32(registeredSeed.id)
+      seed.specie = registeredSeed.specie.uppercased()
       seed.variety = registeredSeed.variety
       seed.unit = "KILOGRAM_PER_HECTARE"
       seed.used = false
@@ -78,7 +79,8 @@ extension InterventionViewController {
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.ekyID = Int32(registeredPhyto.id)
+      phyto.ekyID = 0
+      phyto.referenceID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
@@ -107,8 +109,9 @@ extension InterventionViewController {
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.ekyID = Int32(registeredFertilizer.id)
-      fertilizer.name = registeredFertilizer.name
+      fertilizer.ekyID = 0
+      fertilizer.referenceID = Int32(registeredFertilizer.id)
+      fertilizer.name = registeredFertilizer.name.uppercased()
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety
       fertilizer.derivativeOf = registeredFertilizer.derivativeOf

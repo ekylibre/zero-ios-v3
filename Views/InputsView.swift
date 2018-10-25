@@ -329,143 +329,25 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func loadRegisteredInputs() {
-    let assets = openAssets()
-    let decoder = JSONDecoder()
-
-    do {
-      let registeredSeeds = try decoder.decode([RegisteredSeed].self, from: assets[0].data)
-      let registeredPhytos = try decoder.decode([RegisteredPhyto].self, from: assets[1].data)
-      let registeredFertilizers = try decoder.decode([RegisteredFertilizer].self, from: assets[2].data)
-
-      saveSeeds(registeredSeeds)
-      savePhytos(registeredPhytos)
-      saveFertilizers(registeredFertilizers)
-    } catch let jsonError {
-      print(jsonError)
-    }
-  }
-
-  private func openAssets() -> [NSDataAsset] {
-    var assets = [NSDataAsset]()
-    let assetNames = ["seeds", "phytosanitary-products", "fertilizers"]
-
-    for assetName in assetNames {
-      if let asset = NSDataAsset(name: assetName) {
-        assets.append(asset)
-      } else {
-        fatalError(assetName + " not found")
-      }
-    }
-    return assets
-  }
-
-  func saveSeeds(_ registeredSeeds: [RegisteredSeed]) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for registeredSeed in registeredSeeds {
-      let seed = Seeds(context: managedContext)
-
-      seed.registered = true
-      seed.referenceID = Int32(registeredSeed.id)
-      seed.specie = registeredSeed.specie.uppercased()
-      seed.variety = registeredSeed.variety
-      seed.unit = "KILOGRAM_PER_HECTARE"
-      seed.used = false
-      seeds.append(seed)
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  private func savePhytos(_ registeredPhytos: [RegisteredPhyto]) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for registeredPhyto in registeredPhytos {
-      let phyto = Phytos(context: managedContext)
-
-      phyto.registered = true
-      phyto.referenceID = Int32(registeredPhyto.id)
-      phyto.name = registeredPhyto.name
-      phyto.nature = registeredPhyto.nature
-      phyto.maaID = registeredPhyto.maaid
-      phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
-      phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
-      phyto.firmName = registeredPhyto.firmName
-      phyto.unit = "LITER_PER_HECTARE"
-      phyto.used = false
-      phytos.append(phyto)
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
-  private func saveFertilizers(_ registeredFertilizers: [RegisteredFertilizer]) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for registeredFertilizer in registeredFertilizers {
-      let fertilizer = Fertilizers(context: managedContext)
-
-      fertilizer.registered = true
-      fertilizer.referenceID = Int32(registeredFertilizer.id)
-      fertilizer.name = registeredFertilizer.name.uppercased()
-      fertilizer.variant = registeredFertilizer.variant
-      fertilizer.variety = registeredFertilizer.variety
-      fertilizer.derivativeOf = registeredFertilizer.derivativeOf
-      fertilizer.nature = registeredFertilizer.nature
-      fertilizer.nitrogenConcentration = registeredFertilizer.nitrogenConcentration
-      fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
-      fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
-      fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
-      fertilizer.unit = "KILOGRAM_PER_HECTARE"
-      fertilizer.used = false
-      fertilizers.append(fertilizer)
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
   private func createSeed(variety: String, specie: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
+    let formattedSpecie = specie.uppercased().replacingOccurrences(of: " ", with: "_")
     let managedContext = appDelegate.persistentContainer.viewContext
     let seed = Seeds(context: managedContext)
 
     seed.registered = false
-    seed.specie = specie
+    seed.ekyID = 0
+    seed.referenceID = 0
+    seed.specie = formattedSpecie
     seed.variety = variety
     seed.unit = "KILOGRAM_PER_HECTARE"
     seed.used = false
     seeds.append(seed)
 
     do {
-      seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: SpecieEnum.alliumAscalonicum.rawValue, specie: specie, type: ArticleTypeEnum.seed); #warning("wrong specie passed")
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -481,6 +363,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let phyto = Phytos(context: managedContext)
 
     phyto.registered = false
+    phyto.ekyID = 0
+    phyto.referenceID = 0
     phyto.name = name
     phyto.firmName = firmName
     phyto.maaID = maaID
@@ -490,7 +374,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phytos.append(phyto)
 
     do {
-      phyto.ekyID = pushInput(unit: ArticleUnitEnum.liter, name: name, type: ArticleTypeEnum.chemical)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
@@ -506,6 +389,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let fertilizer = Fertilizers(context: managedContext)
 
     fertilizer.registered = false
+    fertilizer.ekyID = 0
+    fertilizer.referenceID = 0
     fertilizer.name = name
     fertilizer.nature = nature
     fertilizer.unit = "KILOGRAM_PER_HECTARE"
@@ -513,68 +398,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizers.append(fertilizer)
 
     do {
-      fertilizer.ekyID = pushInput(unit: ArticleUnitEnum.kilogram, name: name, type: ArticleTypeEnum.fertilizer)
       try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  // MARK: - GraphQL
-
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let group = DispatchGroup()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
-    let _ = apollo.clearCache()
-
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if let error = error {
-        print(error)
-      } else if let resultError = result!.data!.createArticle!.errors {
-        print(resultError)
-      } else {
-        id = Int32(result!.data!.createArticle!.article!.id)!
-      }
-      group.leave()
-    })
-    group.wait()
-    return id
-  }
-
-  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let group = DispatchGroup()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
-                                       specie: SpecieEnum(rawValue: specie), variety: variety)
-    let _ = apollo.clearCache()
-
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
-      if let error = error {
-        print(error)
-      } else if let resultError = result!.data!.createArticle!.errors {
-        print(resultError)
-      } else {
-        id = Int32(result!.data!.createArticle!.article!.id)!
-      }
-      group.leave()
-    })
-    group.wait()
-    return id
   }
 
   // MARK: - Actions
@@ -617,7 +444,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   @objc func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
-      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.specieButton.titleLabel!.text!)
+      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.rawSpecie)
       seedView.specieButton.setTitle(firstSpecie.localized, for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
@@ -639,32 +466,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
     sortInputs()
     dimView.isHidden = true
-  }
-
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum, managedContext: NSManagedObjectContext, input: NSManagedObject) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    var ekyID: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
-
-    apollo.perform(mutation: mutation) { (result, error) in
-      if error != nil {
-        print(error!)
-      } else {
-        ekyID = Int32(result!.data!.createArticle!.article!.id)!
-        input.setValue(ekyID, forKey: "ekyID")
-
-        do {
-          try managedContext.save()
-        } catch let error as NSError {
-          print("Could not save. \(error), \(error.userInfo)")
-        }
-      }
-    }
   }
 
   @objc func hideDimView() {
