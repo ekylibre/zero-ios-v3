@@ -12,6 +12,8 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 
+  var rawSpecie: String!
+
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "create_seed_title".localized
@@ -80,6 +82,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   init(firstSpecie: String, frame: CGRect) {
     self.firstSpecie = firstSpecie
+    self.rawSpecie = firstSpecie
     super.init(frame: frame)
     setupView()
   }

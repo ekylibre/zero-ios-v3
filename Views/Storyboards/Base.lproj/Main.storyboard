@@ -1332,6 +1332,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addALoad" destination="G1D-nr-BV3" id="X9H-y9-E0q"/>
                         <outlet property="addInputsButton" destination="xR1-hG-glp" id="pRW-RT-UWb"/>
                         <outlet property="bottomBarView" destination="96m-Su-72M" id="9Xk-yb-6PX"/>
                         <outlet property="bottomView" destination="dVv-q0-QD8" id="4e6-Qc-lI7"/>
@@ -1678,7 +1679,6 @@
         <image name="thunderstorm" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KZa-bZ-hB6"/>
         <segue reference="wcF-Wj-Rjo"/>
         <segue reference="FE4-xp-aKR"/>
         <segue reference="74J-jI-YTr"/>

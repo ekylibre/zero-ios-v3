@@ -30,9 +30,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
       return
     }
 
-    if appDelegate.entityIsEmpty(entity: "Harvests") {
-      createSampleStorage()
-    }
     harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
     harvestType.layer.borderWidth = 1
     harvestType.layer.cornerRadius = 5
@@ -125,13 +122,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return storagesNames
   }
 
-  func createSampleStorage() {
-    createStorage(name: "Silot 1", type: "silo")
-    createStorage(name: "Bati 42", type: "building")
-    createStorage(name: "bati simple", type: "building")
-    createStorage(name: "bati silo", type: "silo")
-  }
-
   func createHarvest() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -200,6 +190,17 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   @IBAction func addHarvest(_ sender: UIButton) {
     createHarvest()
+    harvestNature.isHidden = false
+    harvestType.isHidden = false
+    harvestTableView.isHidden = false
+    harvestTableView.reloadData()
+    if harvests.count < 4 {
+      harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
+      harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
+    }
+  }
+
+  func refreshHarvestView() {
     harvestNature.isHidden = false
     harvestType.isHidden = false
     harvestTableView.isHidden = false

@@ -51,8 +51,10 @@ extension InterventionViewController {
         print("Error: \(error)")
         endResult(false)
         return
-      } else if let error = result?.errors {
-        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result Error: \(resultError)")
+        endResult(false)
+        return
       }
 
       guard let farms = result?.data?.farms else { print("Could not retrieve farms"); return }
@@ -248,6 +250,118 @@ extension InterventionViewController {
 
   // MARK: - Articles
 
+  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+    let _ = apollo.clearCache()
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        if let dataError = result?.data?.createArticle?.errors {
+          print("Data error: \(dataError)")
+        } else {
+          id = Int32(result!.data!.createArticle!.article!.id)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  func pushInputIfNoEkyID(input: NSManagedObject) -> Int32? {
+    if (input.value(forKey: "ekyID") as! Int32) == 0 {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+      }
+
+      let managedContext = appDelegate.persistentContainer.viewContext
+
+      do {
+        var inputID: Int32 = 0
+        switch input {
+        case is Phytos:
+          let phyto = input as! Phytos
+          inputID = pushInput(unit: ArticleUnitEnum.liter, name: phyto.name!, type: ArticleTypeEnum.chemical)
+        case is Fertilizers:
+          let fertilizer = input as! Fertilizers
+          inputID = pushInput(unit: ArticleUnitEnum.kilogram, name: fertilizer.name!, type: ArticleTypeEnum.fertilizer)
+        default:
+          return nil
+        }
+
+        input.setValue(inputID, forKey: "ekyID")
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    return input.value(forKey: "ekyID") as? Int32
+  }
+
+  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let group = DispatchGroup()
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let _ = apollo.clearCache()
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
+                                       specie: SpecieEnum(rawValue: specie), variety: variety)
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        if let dataError = result?.data?.createArticle?.errors {
+          print("Data error: \(dataError)")
+        } else {
+          id = Int32(result!.data!.createArticle!.article!.id)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  func pushSeedIfNoEkyID(seed: Seeds) -> Int32? {
+    if seed.ekyID == 0 {
+      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+      }
+
+      let managedContext = appDelegate.persistentContainer.viewContext
+
+      do {
+        seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: seed.variety!,
+                              specie: seed.specie!, type: ArticleTypeEnum.seed);
+        try managedContext.save()
+      } catch let error as NSError {
+        print("Could not save. \(error), \(error.userInfo)")
+      }
+    }
+    return seed.ekyID
+  }
+
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -294,7 +408,8 @@ extension InterventionViewController {
       let seed = Seeds(context: managedContext)
 
       seed.registered = false
-      seed.ekyID = Int32(article.id)!
+      seed.ekyID = 0
+      seed.referenceID = Int32(article.id)!
       seed.variety = (article.variety == nil) ? article.name : article.variety
       seed.specie = article.species?.rawValue
       seed.unit = article.unit.rawValue
@@ -319,7 +434,8 @@ extension InterventionViewController {
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = false
-      phyto.ekyID = Int32(article.id)!
+      phyto.ekyID = 0
+      phyto.referenceID = Int32(article.id)!
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
       phyto.used = false
@@ -343,7 +459,8 @@ extension InterventionViewController {
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = false
-      fertilizer.ekyID = Int32(article.id)!
+      fertilizer.ekyID = 0
+      fertilizer.referenceID = Int32(article.id)!
       fertilizer.name = article.name
       fertilizer.unit = article.unit.rawValue
       fertilizer.used = false
@@ -520,14 +637,19 @@ extension InterventionViewController {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        for farm in (result?.data?.farms)! {
+          for equipment in farm.equipments {
 
-      for farm in farms {
-        for equipment in farm.equipments {
-          let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
+            let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
 
-          if self.checkIfNewEntity(entityName: "Equipments", predicate: predicate) {
-            self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+            if self.checkIfNewEntity(entityName: "Equipments", predicate: predicate) {
+              self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+            }
           }
         }
       }
@@ -562,18 +684,22 @@ extension InterventionViewController {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else {
-        print("Could not retrieve farms.")
+      if let error = error {
+        print("Error: \(error)")
         completion(false)
         return
-      }
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+        completion(false)
+        return
+      } else {
+        for farm in (result?.data?.farms)! {
+          for person in farm.people {
+            let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
 
-      for farm in farms {
-        for person in farm.people {
-          let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
-
-          if self.checkIfNewEntity(entityName: "Persons", predicate: predicate) {
-            self.savePersons(fetchedPerson: person, farmID: farm.id)
+            if self.checkIfNewEntity(entityName: "Persons", predicate: predicate) {
+              self.savePersons(fetchedPerson: person, farmID: farm.id)
+            }
           }
         }
       }
@@ -608,9 +734,12 @@ extension InterventionViewController {
     }
 
     appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else { print("Could not retrieve farms."); return }
-
-      for farm in farms {
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        let farm = (result?.data?.farms.first)!
         for storage in farm.storages {
           let predicate = NSPredicate(format: "storageID == %d", (storage.id as NSString).intValue)
 
@@ -993,14 +1122,16 @@ extension InterventionViewController {
 
     group.enter()
     appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
-      guard let farms = result?.data?.farms else {
-        print("Could not retrieve interventions")
-        group.leave()
+      if let error = error {
+        print("Error: \(error)")
         onCompleted(false)
         return
-      }
-
-      for farm in farms {
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+        onCompleted(false)
+        return
+      } else {
+        let farm = (result?.data?.farms.first)!
         for intervention in farm.interventions {
           let predicate = NSPredicate(format: "ekyID == %d", (intervention.id as NSString).intValue)
 
@@ -1094,9 +1225,11 @@ extension InterventionViewController {
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if seed.seeds?.ekyID == 0 {
+        if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID != 0 {
           referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "SEED")
+        } else if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID == 0 {
+          id = String(pushSeedIfNoEkyID(seed: seed.seeds!)!)
         } else {
           id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }
@@ -1107,9 +1240,11 @@ extension InterventionViewController {
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if phyto.phytos?.ekyID == 0 {
+        if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID != 0 {
           referenceId = (phyto.phytos?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "CHEMICAL")
+        } else if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID == 0 {
+          id = String(pushInputIfNoEkyID(input: phyto.phytos!)!)
         } else {
           id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
         }
@@ -1120,9 +1255,11 @@ extension InterventionViewController {
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if fertilizer.fertilizers?.ekyID == 0 {
+        if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID != 0 {
           referenceId = (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "FERTILIZER")
+        } else if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID == 0 {
+          id = String(pushInputIfNoEkyID(input: fertilizer.fertilizers!)!)
         } else {
           id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
         }
@@ -1331,11 +1468,15 @@ extension InterventionViewController {
     apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
-      } else if let error = result?.data?.createIntervention?.errors {
-        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
       } else {
-        if result?.data?.createIntervention?.intervention?.id != nil {
-          id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
+        if let dataError = result?.data?.createIntervention?.errors {
+          print("Data error: \(dataError)")
+        } else {
+          if result?.data?.createIntervention?.intervention?.id != nil {
+            id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
+          }
         }
       }
       group.leave()

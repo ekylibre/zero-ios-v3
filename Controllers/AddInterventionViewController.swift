@@ -113,6 +113,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var harvestNature: UILabel!
   @IBOutlet weak var harvestType: UIButton!
   @IBOutlet weak var harvestSeparatorView: UIView!
+  @IBOutlet weak var addALoad: UIButton!
 
   // MARK: - Properties
 
@@ -1015,6 +1016,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tag {
     case 0:
+      inputsSelectionView.seedView.rawSpecie = value
       inputsSelectionView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
       materialsSelectionView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)

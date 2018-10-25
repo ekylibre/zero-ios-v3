@@ -13,6 +13,8 @@ extension AddInterventionViewController {
 
   func disableUserInteraction() {
     if interventionState == InterventionState.Validated.rawValue {
+      harvestTableView.isUserInteractionEnabled = false
+      harvestType.isUserInteractionEnabled = false
       cropsView.tableView.isUserInteractionEnabled = false
       workingPeriodTapGesture.isEnabled = false
       selectedInputsTableView.isUserInteractionEnabled = false
@@ -99,6 +101,17 @@ extension AddInterventionViewController {
     refreshSelectedMaterials()
   }
 
+  func loadHarvest() {
+    for harvest in currentIntervention.harvests?.allObjects as! [Harvests] {
+      harvests.append(harvest)
+    }
+    addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
+    if harvests.count > 0 {
+      harvestType.setTitle(harvests.first?.type, for: .normal)
+      refreshHarvestView()
+    }
+  }
+
   func loadEquipments() {
     for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
       selectEquipment(interventionEquipment.equipments!)
@@ -108,7 +121,9 @@ extension AddInterventionViewController {
 
   func loadPersons() {
     for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPersons] {
-      selectPerson(interventionPerson.persons!)
+      if interventionPerson.persons != nil {
+        selectPerson(interventionPerson.persons!)
+      }
     }
     refreshSelectedPersons()
   }
@@ -131,6 +146,7 @@ extension AddInterventionViewController {
     loadIrrigation()
     loadEquipments()
     loadPersons()
+    loadHarvest()
     weather = currentIntervention?.weather
     loadWeatherInReadOnlyMode()
     disableUserInteraction()
