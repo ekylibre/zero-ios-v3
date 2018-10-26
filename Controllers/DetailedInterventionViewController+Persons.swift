@@ -41,7 +41,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectPerson(_ person: Persons) {
+  func selectPerson(_ person: Persons, _ isDriver: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -49,7 +49,7 @@ extension AddInterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPerson = InterventionPersons(context: managedContext)
 
-    interventionPerson.isDriver = false
+    interventionPerson.isDriver = isDriver
     interventionPerson.persons = person
     selectedPersons[0].append(person)
     selectedPersons[1].append(interventionPerson)

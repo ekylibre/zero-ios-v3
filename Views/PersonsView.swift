@@ -113,7 +113,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let person = isSearching ? filteredPersons[indexPath.row] : persons[indexPath.row]
 
-    addInterventionViewController?.selectPerson(person)
+    addInterventionViewController?.selectPerson(person, false)
     searchBar.text = nil
     searchBar.endEditing(true)
     isSearching = false

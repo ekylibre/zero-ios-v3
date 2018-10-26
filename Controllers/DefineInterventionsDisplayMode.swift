@@ -122,7 +122,7 @@ extension AddInterventionViewController {
   func loadPersons() {
     for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPersons] {
       if interventionPerson.persons != nil {
-        selectPerson(interventionPerson.persons!)
+        selectPerson(interventionPerson.persons!, interventionPerson.isDriver)
       }
     }
     refreshSelectedPersons()
