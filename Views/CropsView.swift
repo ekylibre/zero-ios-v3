@@ -90,7 +90,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func setupView() {
-    self.isHidden = true
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 3
     self.clipsToBounds = true
@@ -245,6 +244,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       self.cropViews.append(cropViews)
       cropViews = [CropView]()
     }
+    self.cropViews.append(cropViews)
   }
 
   // MARK: - Actions

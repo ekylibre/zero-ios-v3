@@ -1,9 +1,9 @@
 /*
-  Localizable.strings
-  Clic&Farm-iOS
+ Localizable.strings
+ Clic&Farm-iOS
 
-  Created by Jonathan DE HAAY on 05/09/2018.
-  Copyright © 2018 Ekylibre. All rights reserved.
+ Created by Jonathan DE HAAY on 05/09/2018.
+ Copyright © 2018 Ekylibre. All rights reserved.
 */
 
 // Vegetal species
@@ -438,6 +438,26 @@
 "wind" = " vent: %@ km/h";
 "wind_speed" = "Vitesse du vent";
 
+"not_filled_in" = "Non renseignée";
+"temp" = "Temp.: %@ °C |";
+"wind" = " vent: %@ km/h";
+"Broken_clouds" = "Nuages";
+"few_clouds" = "Passages-nuageux";
+"mist" = "Brouillard";
+"shower_rain" = "Pluie";
+"light_rain" = "Averses";
+"snow" = "Neige";
+"thunderstorm" = "Orage";
+"clear_sky" = "Soleil";
+
+// Article Type
+
+"seed" = "Semence";
+"fertilizer" = "Fertilisant";
+"chemical" = "Phytosanitaire";
+"material" = "Materiel";
+"phytosanitary" = "Phytosanitaire";
+
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
 "number" = "Numéro";
@@ -456,6 +476,7 @@
 "speed" = "Vitesse";
 "working_width" = "Largeur de\ntravail";
 "worked_area" = "Surface\ntravaillée";
+"surface_area" = "%.1f ha travaillés";
 "preparation" = "Préparation";
 "mooving" = "Déplacement";
 "intervention" = "Intervention";
@@ -511,6 +532,16 @@
 "today_last_synchronization" = "Dernière synchronisation %02d:%02d";
 "last_synchronization" = "Dernière synchronisation %@";
 "no_synchronization_listed" = "Aucune synchonisation répertoriée";
+
+// Errors
+
+"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
+
+// Working Periods
+
+"working_periods_is_invalid" = "Working periods is invalid";
+"started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
+"started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
 
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
