@@ -81,7 +81,7 @@ extension AddInterventionViewController {
         weatherIsSelected = true
       }
     }
-    if temperatureTextField.placeholder == "" && windSpeedTextField.placeholder == "" {
+    if temperatureTextField.placeholder == nil && windSpeedTextField.placeholder == nil {
       currentWeatherLabel.text = "not_filled_in".localized
     } else {
       let temperature = (temperatureTextField.placeholder != nil ? temperatureTextField.placeholder : "--")
@@ -178,9 +178,9 @@ extension AddInterventionViewController {
       let currentWind = String(format: "wind".localized, wind!)
 
       currentWeatherLabel.text = currentTemperature + currentWind
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
     }
-    weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
-    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
   }
 
   func initWeather() {
@@ -191,6 +191,8 @@ extension AddInterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
 
+    weather.windSpeed = nil
+    weather.temperature = nil
     self.weather = weather
   }
 }
