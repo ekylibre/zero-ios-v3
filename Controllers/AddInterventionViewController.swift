@@ -120,10 +120,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var equipmentTypes: [String]!
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
-  var solidUnitPicker = UIPickerView()
-  var liquidUnitPicker = UIPickerView()
+  var massUnitPicker = UIPickerView()
+  var volumeUnitPicker = UIPickerView()
   var pickerValue: String?
   var cellIndexPath: IndexPath!
+  var weather: Weather!
   var weatherIsSelected: Bool = false
   var harvests = [Harvests]()
   var harvestNaturePickerView: CustomPickerView!
@@ -131,7 +132,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var storagesPickerView: CustomPickerView!
   var storages = [Storages]()
   var weatherButtons = [UIButton]()
-  var weather: Weather!
   let massUnitMeasure = [
     "GRAM",
     "GRAM_PER_HECTARE",
@@ -148,7 +148,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   let volumeUnitMeasure = [
     "LITER",
     "LITER_PER_HECTARE",
-    "LITER_SQUARE_METER",
+    "LITER_PER_SQUARE_METER",
     "HECTOLITER",
     "HECTOLITER_PER_HECTARE",
     "HECTOLITER_PER_SQUARE_METER",
@@ -306,18 +306,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         case is InterventionSeeds:
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
 
+          cell.type = "Seed"
           cell.inputName.text = seed.specie?.localized
           cell.inputLabel.text = seed.variety
           cell.inputImageView.image = UIImage(named: "seed")
         case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
 
+          cell.type = "Phyto"
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
           cell.inputImageView.image = UIImage(named: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
 
+          cell.type = "Fertilizer"
           cell.inputName.text = fertilizer.name?.localized
           cell.inputLabel.text = fertilizer.nature?.localized
           cell.inputImageView.image = UIImage(named: "fertilizer")
@@ -387,6 +390,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.number.layer.cornerRadius = 5
       cell.number.text = harvest.number
       cell.number.delegate = cell
+      cell.selectionStyle = .none
       return cell
     default:
       fatalError("Unknown tableView: \(tableView)")
@@ -408,6 +412,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch tableView {
+    case harvestTableView:
+      return 150
+    case selectedInputsTableView:
+      return 110
+    case selectedMaterialsTableView:
+      return 80
+    case selectedEquipmentsTableView:
+      return 55
+    case selectedPersonsTableView:
+      return 65
+    default:
+      return 60
+    }
+  }
+
+  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch tableView {
+    case harvestTableView:
+      return 150
     case selectedInputsTableView:
       return 110
     case selectedMaterialsTableView:
@@ -438,30 +461,41 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    newIntervention = Interventions(context: managedContext)
     let workingPeriod = WorkingPeriods(context: managedContext)
+    let duration = workingPeriodDurationTextField.text!.floatValue
 
+    newIntervention = Interventions(context: managedContext)
     newIntervention.type = interventionType
     newIntervention.status = InterventionState.Created.rawValue
     newIntervention.infos = "Infos"
-    if interventionType == "IRRIGATION".localized {
+    newIntervention.farmID = appDelegate.farmID
+    if interventionType == "IRRIGATION" {
       let waterVolume = irrigationVolumeTextField.text!.floatValue
+
       newIntervention.waterQuantity = waterVolume
-      newIntervention.waterUnit = irrigationUnitButton.titleLabel!.text
+      switch irrigationUnitButton.titleLabel?.text {
+      case "m³":
+        newIntervention.waterUnit = "CUBIC_METER"
+      case "hl":
+        newIntervention.waterUnit = "HECTOLITER"
+      case "l":
+        newIntervention.waterUnit = "LITER"
+      default:
+        newIntervention.waterUnit = ""
+      }
     }
     workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
-    let duration = workingPeriodDurationTextField.text!.floatValue
     workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)
     createMaterials(intervention: newIntervention)
     createEquipments(intervention: newIntervention)
     saveHarvest(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
+    saveWeather(intervention: newIntervention)
     resetInputsAttributes(entity: "Seeds")
     resetInputsAttributes(entity: "Phytos")
     resetInputsAttributes(entity: "Fertilizers")
-    saveWeather(intervention: newIntervention)
 
     do {
       try managedContext.save()
@@ -531,21 +565,20 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return crops
   }
 
-  func createTargets(intervention: NSManagedObject) {
+  func createTargets(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsEntity = NSEntityDescription.entity(forEntityName: "Targets", in: managedContext)!
     let selectedCrops = fetchSelectedCrops()
 
     for crop in selectedCrops {
-      let target = NSManagedObject(entity: targetsEntity, insertInto: managedContext)
+      let target = Targets(context: managedContext)
 
-      target.setValue(intervention, forKey: "interventions")
-      target.setValue(crop, forKey: "crops")
-      target.setValue(100, forKey: "workAreaPercentage")
+      target.interventions = intervention
+      target.crops = crop
+      target.workAreaPercentage = 100
     }
 
     do {
@@ -622,6 +655,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+
+    do {
+      entity = try managedContext.fetch(entitiesFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    searchedEntity = entity
+  }
+
   func saveWeather(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -638,22 +687,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-
-    do {
-      entity = try managedContext.fetch(entitiesFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    searchedEntity = entity
   }
 
   // MARK: - Navigation
@@ -696,6 +729,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     switch tag {
     case 0:
+      inputsSelectionView.seedView.rawSpecie = value
       inputsSelectionView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
       materialsSelectionView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
@@ -747,7 +781,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     textField.resignFirstResponder()
     switch textField {
     case temperatureTextField:
-      weather.temperature = (temperatureTextField.text! as NSString).doubleValue
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -759,7 +793,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         currentWeatherLabel.text = currentTemp + currentWind
       }
     case windSpeedTextField:
-      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
       if temperatureTextField.text == "" && windSpeedTextField.text == "" {
         currentWeatherLabel.text = "not_filled_in".localized
       } else {
@@ -803,24 +837,47 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     })
   }
 
-  @objc func validateCrops(_ sender: Any) {
-    if cropsView.selectedCropsLabel.text == "no_crop_selected".localized {
-      totalLabel.text = "select_crops".localized.uppercased()
-      totalLabel.textColor = AppColor.TextColors.Green
-    } else {
-      totalLabel.text = cropsView.selectedCropsLabel.text
-      totalLabel.textColor = AppColor.TextColors.DarkGray
+  func checkCropsProduction() -> Bool {
+    if interventionType == "harvest" || interventionType == "implantation" {
+      let selectedCrops = fetchSelectedCrops()
+      let firstCrop = selectedCrops.first?.species
+
+      for selectedCrop in selectedCrops {
+        if selectedCrop.species != firstCrop {
+          let alert = UIAlertController(
+            title: "",
+            message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+            preferredStyle: .alert)
+
+          alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+          present(alert, animated: true)
+          return false
+        }
+      }
     }
-    totalLabel.sizeToFit()
-    updateIrrigation(self)
+    return true
+  }
 
-    cropsView.isHidden = true
-    dimView.isHidden = true
+  @objc func validateCrops(_ sender: Any) {
+    if checkCropsProduction() {
+      if cropsView.selectedCropsLabel.text == "Aucune sélection" {
+        totalLabel.text = "+ SÉLECTIONNER"
+        totalLabel.textColor = AppColor.TextColors.Green
+      } else {
+        totalLabel.text = cropsView.selectedCropsLabel.text
+        totalLabel.textColor = AppColor.TextColors.DarkGray
+      }
+      totalLabel.sizeToFit()
+      updateIrrigation(self)
 
-    updateAllInputQuantity()
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
+      cropsView.isHidden = true
+      dimView.isHidden = true
+
+      updateAllInputQuantity()
+      UIView.animate(withDuration: 0.5, animations: {
+        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+      })
+    }
   }
 
   @IBAction func selectInput(_ sender: Any) {

@@ -43,8 +43,8 @@ oauthInfo.plist
 # Assets
 Resources/Assets.xcassets/lexicon/
 
+# Node Modules
+node_modules
+
 # API auto-generated files
 GraphQL/API.swift
-
-# Node modules
-node_modules

@@ -53,7 +53,16 @@ extension AddInterventionViewController {
         negativeTemperature.setTitle("-", for: .normal)
         temperatureTextField.text = "-" + temperature
       }
-      saveCurrentWeather(self)
+    }
+  }
+
+  func checkTemperatureTextField() {
+    let temperature = temperatureTextField.text!
+
+    if temperature.count > 0 {
+      if negativeTemperature.titleLabel?.text == "-" && !temperature.contains("-") {
+        temperatureTextField.text = "-" + temperature
+      }
     }
   }
 
@@ -73,6 +82,7 @@ extension AddInterventionViewController {
     currentWeatherLabel.isHidden = shouldExpand
     weatherCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     hideWeatherItems(!shouldExpand)
+    saveCurrentWeather(self)
   }
 
   func resetSelectedWeather() {
@@ -99,9 +109,7 @@ extension AddInterventionViewController {
   }
 
   @objc func saveCurrentWeather(_ sender: Any) {
-    if negativeTemperature.titleLabel?.text == "-" && !temperatureTextField.text!.contains("-") {
-      temperatureTextField.text = "-" + temperatureTextField.text!
-    }
+    checkTemperatureTextField()
     if temperatureTextField.text == "" && windSpeedTextField.text == "" {
       currentWeatherLabel.text = "not_filled_in".localized
     } else {
@@ -112,8 +120,8 @@ extension AddInterventionViewController {
 
       currentWeatherLabel.text = currentTemperature + currentWind
     }
-    weather.temperature = (temperatureTextField.text! as NSString).doubleValue
-    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue
+    weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
+    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
   }
 
   func initWeather() {

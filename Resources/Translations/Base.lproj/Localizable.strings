@@ -1,9 +1,9 @@
 /* 
-  Localizable.strings
-  Clic&Farm-iOS
+ Localizable.strings
+ Clic&Farm-iOS
 
-  Created by Jonathan DE HAAY on 05/09/2018.
-  Copyright © 2018 Ekylibre. All rights reserved.
+ Created by Jonathan DE HAAY on 05/09/2018.
+ Copyright © 2018 Ekylibre. All rights reserved.
 */
 
 // Vegetal species
@@ -438,6 +438,18 @@
 "wind" = " wind: %@ km/h";
 "wind_speed" = "Wind speed";
 
+"not_filled_in" = "Not filled in";
+"temp" = "Temp.: %@ °C |";
+"wind" = " wind: %@ km/h";
+"Broken_clouds" = "Broken clouds";
+"few_clouds" = "Few clouds";
+"mist" = "Mist";
+"shower_rain" = "Shower rain";
+"light_rain" = "Light rain";
+"snow" = "Snow";
+"thunderstorm" = "Thunderstorm";
+"clear_sky" = "Clear sky";
+
 "quantity_cannot_be_null" = "Quantity cannot be null";
 "stock_place" = "Storage";
 "number" = "Number";
@@ -456,6 +468,7 @@
 "speed" = "Speed";
 "working_width" = "Largeur de\ntravail";
 "worked_area" = "Surface\ntravaillée";
+"surface_area" = "%.1f ha worked";
 "preparation" = "Préparation";
 "mooving" = "Déplacement";
 "intervention" = "Intervention";
@@ -511,6 +524,16 @@
 "today_last_synchronization" = "Last synchronization %02d:%02d";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
+
+// Errors
+
+"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
+
+// Working Periods
+
+"working_periods_is_invalid" = "Working periods is invalid";
+"started_must_be_on_or_after" = "Started must be on or after %@";
+"started_must_be_on_or_before" = "Started must be on or before %@";
 
 "input_quantity" = "Or %.1f %@";
 "input_quantity_per_surface" = "Or %.1f %@ per hectare";

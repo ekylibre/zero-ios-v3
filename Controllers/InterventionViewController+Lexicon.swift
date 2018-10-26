@@ -53,10 +53,11 @@ extension InterventionViewController {
       let seed = Seeds(context: managedContext)
 
       seed.registered = true
-      seed.ekyID = Int32(registeredSeed.id)
-      seed.specie = registeredSeed.specie
+      seed.ekyID = 0
+      seed.referenceID = Int32(registeredSeed.id)
+      seed.specie = registeredSeed.specie.uppercased()
       seed.variety = registeredSeed.variety
-      seed.unit = "kg/ha"
+      seed.unit = "KILOGRAM_PER_HECTARE"
       seed.used = false
     }
 
@@ -78,14 +79,15 @@ extension InterventionViewController {
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = true
-      phyto.ekyID = Int32(registeredPhyto.id)
+      phyto.ekyID = 0
+      phyto.referenceID = Int32(registeredPhyto.id)
       phyto.name = registeredPhyto.name
       phyto.nature = registeredPhyto.nature
       phyto.maaID = registeredPhyto.maaid
       phyto.mixCategoryCode = registeredPhyto.mixCategoryCode
       phyto.inFieldReentryDelay = Int32(registeredPhyto.inFieldReentryDelay)
       phyto.firmName = registeredPhyto.firmName
-      phyto.unit = "l/ha"
+      phyto.unit = "LITER_PER_HECTARE"
       phyto.used = false
     }
 
@@ -107,8 +109,9 @@ extension InterventionViewController {
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = true
-      fertilizer.ekyID = Int32(registeredFertilizer.id)
-      fertilizer.name = registeredFertilizer.name
+      fertilizer.ekyID = 0
+      fertilizer.referenceID = Int32(registeredFertilizer.id)
+      fertilizer.name = registeredFertilizer.name.uppercased()
       fertilizer.variant = registeredFertilizer.variant
       fertilizer.variety = registeredFertilizer.variety
       fertilizer.derivativeOf = registeredFertilizer.derivativeOf
@@ -117,7 +120,7 @@ extension InterventionViewController {
       fertilizer.phosphorusConcentration = registeredFertilizer.phosphorusConcentration as NSNumber?
       fertilizer.potassiumConcentration = registeredFertilizer.potassiumConcentration as NSNumber?
       fertilizer.sulfurTrioxydeConcentration = registeredFertilizer.sulfurTrioxydeConcentration as NSNumber?
-      fertilizer.unit = "kg/ha"
+      fertilizer.unit = "KILOGRAM_PER_HECTARE"
       fertilizer.used = false
     }
 
