@@ -20,16 +20,18 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func defineStorage(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-    dimView.isHidden = false
-    storagesPickerView.isHidden = false
-  }
-
-  func initHarvestView() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
+    if !appDelegate.entityIsEmpty(entity: "Storages") {
+      cellIndexPath = indexPath
+      dimView.isHidden = false
+      storagesPickerView.isHidden = false
+    }
+  }
+
+  func initHarvestView() {
     harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
     harvestType.layer.borderWidth = 1
     harvestType.layer.cornerRadius = 5
@@ -106,15 +108,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let predicate = NSPredicate(format: "name != nil")
     var storagesNames = [String]()
+
+    storagesFetchRequest.predicate = predicate
 
     do {
       let storages = try managedContext.fetch(storagesFetchRequest)
 
       for storage in storages {
-        if storage.name != nil {
-          storagesNames.append(storage.name!)
-        }
+        storagesNames.append(storage.name!)
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")

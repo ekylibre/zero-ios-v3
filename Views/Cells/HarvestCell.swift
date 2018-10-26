@@ -45,10 +45,6 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     addInterventionController?.harvests[indexPath.row].number = number.text!
   }
 
-  @IBAction func selectStorage(_ sender: Any) {
-    
-  }
-
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     switch textField {
