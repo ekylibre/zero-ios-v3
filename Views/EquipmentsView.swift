@@ -23,6 +23,56 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   var filteredEquipments = [Equipments]()
   var firstEquipmentType: String
 
+  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+    if let asset = NSDataAsset(name: "equipment-types") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredEquipments = jsonResult as? [[String: Any]]
+
+        for registeredEquipment in registeredEquipments! {
+          if equipmentNature == registeredEquipment["nature"] as! String {
+            var indicators = [String]()
+
+            if !(registeredEquipment["main_frozen_indicator_name"] is NSNull) {
+              indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String)
+            }
+            if !(registeredEquipment["other_frozen_indicator_name"] is NSNull) {
+              indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String)
+            }
+            return indicators
+          }
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("equipment-types.json not found")
+    }
+    return [String]()
+  }
+
+  func defineIndicatorsIfNeeded(_ equipmentNature: String) {
+    let indicators = loadEquipmentIndicators(equipmentNature)
+
+    switch indicators.count {
+    case 2:
+      creationView.heighConstraint.constant = 475
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.secondEquipmentParameter.placeholder = indicators[1].localized
+      creationView.firstEquipmentParameter.isHidden = false
+      creationView.secondEquipmentParameter.isHidden = false
+    case 1:
+      creationView.heighConstraint.constant = 400
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.firstEquipmentParameter.isHidden = false
+      creationView.secondEquipmentParameter.isHidden = true
+    default:
+      creationView.heighConstraint.constant = 350
+      creationView.firstEquipmentParameter.isHidden = true
+      creationView.secondEquipmentParameter.isHidden = true
+    }
+  }
+
   // MARK: - Initialization
 
   init(firstType: String, frame: CGRect) {
@@ -31,6 +81,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     setupView()
     fetchEquipments()
     tableView.reloadData()
+    defineIndicatorsIfNeeded(firstEquipmentType.lowercased())
   }
 
   private func setupView() {
@@ -49,7 +100,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     self.addSubview(creationView)
 
     NSLayoutConstraint.activate([
-      creationView.heightAnchor.constraint(equalToConstant: 350),
       creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
       creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
       creationView.rightAnchor.constraint(equalTo: self.rightAnchor),

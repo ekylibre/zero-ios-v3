@@ -12,6 +12,20 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 
+  lazy var heighConstraint: NSLayoutConstraint = {
+    let heightConstraint = NSLayoutConstraint(
+      item: self,
+      attribute: .height,
+      relatedBy: .equal,
+      toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1,
+      constant: 350)
+
+    heightConstraint.isActive = true
+    return heightConstraint
+  }()
+
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "create_equipment_title".localized
@@ -87,6 +101,56 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     return numberTextField
   }()
 
+  lazy var firstEquipmentParameter: UITextField = {
+    let firstEquipmentParameter = UITextField(frame: CGRect.zero)
+    firstEquipmentParameter.isHidden = true
+    firstEquipmentParameter.autocorrectionType = .no
+    firstEquipmentParameter.delegate = self
+    firstEquipmentParameter.borderStyle = .none
+    firstEquipmentParameter.layer.backgroundColor = UIColor.white.cgColor
+    firstEquipmentParameter.layer.masksToBounds = false
+    firstEquipmentParameter.layer.shadowColor = UIColor.darkGray.cgColor
+    firstEquipmentParameter.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    firstEquipmentParameter.layer.shadowOpacity = 1
+    firstEquipmentParameter.layer.shadowRadius = 0
+    firstEquipmentParameter.translatesAutoresizingMaskIntoConstraints = false
+    return firstEquipmentParameter
+  }()
+
+  lazy var firstParameterUnit: UILabel = {
+    let firstParameterUnit = UILabel(frame: CGRect.zero)
+    firstParameterUnit.isHidden = true
+    firstParameterUnit.font = UIFont.systemFont(ofSize: 12)
+    firstParameterUnit.textColor = UIColor.lightGray
+    firstParameterUnit.translatesAutoresizingMaskIntoConstraints = false
+    return firstParameterUnit
+  }()
+
+  lazy var secondEquipmentParameter: UITextField = {
+    let secondEquipmentParameter = UITextField(frame: CGRect.zero)
+    secondEquipmentParameter.isHidden = true
+    secondEquipmentParameter.autocorrectionType = .no
+    secondEquipmentParameter.delegate = self
+    secondEquipmentParameter.borderStyle = .none
+    secondEquipmentParameter.layer.backgroundColor = UIColor.white.cgColor
+    secondEquipmentParameter.layer.masksToBounds = false
+    secondEquipmentParameter.layer.shadowColor = UIColor.darkGray.cgColor
+    secondEquipmentParameter.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    secondEquipmentParameter.layer.shadowOpacity = 1
+    secondEquipmentParameter.layer.shadowRadius = 0
+    secondEquipmentParameter.translatesAutoresizingMaskIntoConstraints = false
+    return secondEquipmentParameter
+  }()
+
+  lazy var secondParameterUnit: UILabel = {
+    let secondParameterUnit = UILabel(frame: CGRect.zero)
+    secondParameterUnit.isHidden = true
+    secondParameterUnit.font = UIFont.systemFont(ofSize: 12)
+    secondParameterUnit.textColor = UIColor.lightGray
+    secondParameterUnit.translatesAutoresizingMaskIntoConstraints = false
+    return secondParameterUnit
+  }()
+
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
@@ -127,8 +191,13 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     self.addSubview(nameTextField)
     self.addSubview(errorLabel)
     self.addSubview(numberTextField)
+    self.addSubview(firstEquipmentParameter)
+    self.addSubview(firstParameterUnit)
+    self.addSubview(secondEquipmentParameter)
+    self.addSubview(secondParameterUnit)
     self.addSubview(cancelButton)
     self.addSubview(createButton)
+    self.addConstraint(heighConstraint)
     setupLayout()
   }
 
@@ -154,6 +223,16 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       numberTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
       numberTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       numberTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firstEquipmentParameter.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firstEquipmentParameter.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firstEquipmentParameter.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: 35),
+      firstParameterUnit.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firstParameterUnit.topAnchor.constraint(equalTo: firstEquipmentParameter.bottomAnchor, constant: 10),
+      secondEquipmentParameter.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      secondEquipmentParameter.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      secondEquipmentParameter.topAnchor.constraint(equalTo: firstParameterUnit.bottomAnchor, constant: 35),
+      secondParameterUnit.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      secondParameterUnit.topAnchor.constraint(equalTo: secondEquipmentParameter.bottomAnchor, constant: 10),
       cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
