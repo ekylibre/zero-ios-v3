@@ -33,12 +33,10 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
           if equipmentNature == registeredEquipment["nature"] as! String {
             var indicators = [String]()
 
-            if !(registeredEquipment["main_frozen_indicator_name"] is NSNull) {
-              indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String)
-            }
-            if !(registeredEquipment["other_frozen_indicator_name"] is NSNull) {
-              indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String)
-            }
+            !(registeredEquipment["main_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String) : nil
+            !(registeredEquipment["other_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String) : nil
             return indicators
           }
         }
