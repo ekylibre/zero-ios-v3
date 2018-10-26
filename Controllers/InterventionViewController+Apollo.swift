@@ -1113,6 +1113,19 @@ extension InterventionViewController {
     }
   }
 
+  func updateIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
+    let predicate = NSPredicate(format: "ekyID == %@", fetchedIntervention.id)
+    let intervention = returnEntityIfSame(entityName: "Interventions", predicate: predicate) as? Interventions
+    let dateFormatter = DateFormatter()
+
+    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    intervention?.workingPeriods?.executionDate = dateFormatter.date(from: (fetchedIntervention.workingDays.first?.executionDate)!)
+    intervention?.workingPeriods?.hourDuration = Float((fetchedIntervention.workingDays.first?.hourDuration)!)
+    intervention?.infos = fetchedIntervention.description
+    intervention?.type = fetchedIntervention.type.rawValue
+  }
+
   func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -1137,6 +1150,8 @@ extension InterventionViewController {
 
           if self.checkIfNewEntity(entityName: "Interventions", predicate: predicate) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
+          } else {
+            self.updateIntervention(fetchedIntervention: intervention)
           }
           self.updateInterventionStatus(fetchedIntervention: intervention)
         }
