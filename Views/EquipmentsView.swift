@@ -49,7 +49,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return [String]()
   }
 
-  func defineIndicatorsUnits(_ key: String) -> String {
+  func defineIndicatorsUnits(_ key: String) -> String? {
     let units = [
       "plowshare_count": "UNITY",
       "motor_power": "FRENCH_HORSEPOWER",
@@ -59,9 +59,9 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       "nominal_storable_net_mass": "KILOGRAM",
       "diameter": "METER",
       "width": "METER",
-      "lenght": "METER"]
+      "length": "METER"]
 
-    return units[key]!
+    return units[key]
   }
 
   func defineIndicatorsIfNeeded(_ equipmentNature: String) {
@@ -72,8 +72,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       creationView.heighConstraint.constant = 475
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0]).localized
-      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1]).localized
+      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
+      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1])?.localized
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = false
@@ -81,7 +81,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     case 1:
       creationView.heighConstraint.constant = 400
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0]).localized
+      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = true
