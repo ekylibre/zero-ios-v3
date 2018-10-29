@@ -103,6 +103,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var firstEquipmentParameter: UITextField = {
     let firstEquipmentParameter = UITextField(frame: CGRect.zero)
+    firstEquipmentParameter.text = ""
     firstEquipmentParameter.isHidden = true
     firstEquipmentParameter.autocorrectionType = .no
     firstEquipmentParameter.delegate = self
@@ -128,6 +129,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var secondEquipmentParameter: UITextField = {
     let secondEquipmentParameter = UITextField(frame: CGRect.zero)
+    secondEquipmentParameter.text = ""
     secondEquipmentParameter.isHidden = true
     secondEquipmentParameter.autocorrectionType = .no
     secondEquipmentParameter.delegate = self

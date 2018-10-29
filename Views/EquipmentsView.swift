@@ -269,6 +269,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.firstEquipmentParameter.text = ""
+    creationView.secondEquipmentParameter.text = ""
   }
 
   @objc private func validateCreation() {
@@ -291,6 +293,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.firstEquipmentParameter.text = ""
+    creationView.secondEquipmentParameter.text = ""
   }
 
   private func checkEquipmentName() -> Bool {
