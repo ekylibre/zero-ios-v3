@@ -15,15 +15,30 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   @IBOutlet weak var cropsTableView: UITableView!
 
-  var cropsByPlot: [[Crops]]!
+  var cropsByProduction = [[Crops]]()
 
   // MARK: - Initialization
 
   override func viewDidLoad() {
-    cropsTableView.register(CropCell.self, forCellReuseIdentifier: "CropCell")
+    fetchCrops()
+    sortProductions()
+    cropsTableView.register(ProductionCell.self, forCellReuseIdentifier: "ProductionCell")
+    cropsTableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
+    cropsTableView.separatorInset = UIEdgeInsets.zero
+    //cropsTableView.separatorColor = UIColor.red
+    cropsTableView.tableFooterView = UIView()
+    cropsTableView.bounces = false
     cropsTableView.rowHeight = 50
     cropsTableView.delegate = self
     cropsTableView.dataSource = self
+  }
+
+  private func sortProductions() {
+    cropsByProduction = cropsByProduction.sorted(by: {
+      $0.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        <
+      $1.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    })
   }
 
   // MARK: - Core Data
@@ -35,43 +50,69 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-    let sort = NSSortDescriptor(key: "plotName", ascending: true)
+    let sort = NSSortDescriptor(key: "productionID", ascending: true)
     cropsFetchRequest.sortDescriptors = [sort]
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
-      organizeCropsByPlot(crops)
+      organizeCropsByProduction(crops)
+      sortCropsByPlotName()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
-  private func organizeCropsByPlot(_ crops: [Crops]) {
-    var cropsFromSamePlot = [Crops]()
-    var name = crops.first?.plotName
+  private func organizeCropsByProduction(_ crops: [Crops]) {
+    var cropsFromSameProduction = [Crops]()
+    var productionID = crops.first?.productionID
 
     for crop in crops {
-      if crop.plotName != name {
-        name = crop.plotName
-        self.cropsByPlot.append(cropsFromSamePlot)
-        cropsFromSamePlot = [Crops]()
+      if crop.productionID != productionID {
+        productionID = crop.productionID
+        cropsByProduction.append(cropsFromSameProduction)
+        cropsFromSameProduction = [Crops]()
       }
-      cropsFromSamePlot.append(crop)
+      cropsFromSameProduction.append(crop)
     }
-    self.cropsByPlot.append(cropsFromSamePlot)
+    cropsByProduction.append(cropsFromSameProduction)
+  }
+
+  private func sortCropsByPlotName() {
+    for (index, crops) in cropsByProduction.enumerated() {
+      cropsByProduction[index] = crops.sorted(by: {
+        $0.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+          <
+        $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      })
+    }
   }
 
   // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return cropsByPlot.count
+    return cropsByProduction.count
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return cropsByPlot[section].count
+    return cropsByProduction[section].count
+  }
+
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let header = tableView.dequeueReusableCell(withIdentifier: "ProductionCell") as! ProductionCell
+    let specie = cropsByProduction[section].first?.species?.localized.uppercased()
+    let startDate = cropsByProduction[section].first?.startDate
+    let calendar = Calendar.current
+    let year = calendar.component(.year, from: startDate!)
+
+    header.nameLabel.text = String(format: "%@ %d", specie!, year)
+    return header.contentView
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialCell", for: indexPath) as! MaterialCell
+
+    cell.nameLabel.text = cropsByProduction[indexPath.section][indexPath.row].plotName
+    return cell
   }
 
   // MARK: - Actions

@@ -154,6 +154,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4VR-O2-NgE">
+                                <rect key="frame" x="117.5" y="27" width="140" height="30"/>
+                                <state key="normal" title="InterventionsByCrop">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="presentInterventionsByCrop:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="aWD-08-ly9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -169,8 +178,10 @@
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="top" secondItem="qI5-Ep-5Qd" secondAttribute="bottom" constant="8" id="Kes-6r-W2p"/>
                             <constraint firstItem="qI5-Ep-5Qd" firstAttribute="leading" secondItem="Bki-1z-HKT" secondAttribute="leadingMargin" id="S7J-Nq-Bd6"/>
                             <constraint firstItem="LDw-rB-9Pp" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="bottom" id="aBi-Qo-Toh"/>
+                            <constraint firstItem="4VR-O2-NgE" firstAttribute="centerY" secondItem="OwN-92-HaX" secondAttribute="centerY" id="bKU-4q-suD"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="leading" secondItem="BuB-B1-p77" secondAttribute="leading" id="c04-Fj-ikK"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="dzo-Zi-Noy"/>
+                            <constraint firstItem="4VR-O2-NgE" firstAttribute="centerX" secondItem="OwN-92-HaX" secondAttribute="centerX" id="jal-JE-v2v"/>
                             <constraint firstItem="BuB-B1-p77" firstAttribute="trailing" secondItem="LDw-rB-9Pp" secondAttribute="trailing" id="k4y-DG-Xag"/>
                             <constraint firstItem="LDw-rB-9Pp" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="bottom" id="l86-LM-TM9"/>
                             <constraint firstItem="qI5-Ep-5Qd" firstAttribute="top" secondItem="OwN-92-HaX" secondAttribute="bottom" constant="5" id="nAU-zd-KKi"/>
@@ -194,6 +205,7 @@
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
                         <segue destination="krK-gd-8UN" kind="presentation" identifier="logoutSegue" id="wcF-Wj-Rjo"/>
+                        <segue destination="6i8-BA-FKm" kind="show" identifier="showInterventionsByCrop" id="Og0-d3-16l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -232,18 +244,8 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qFt-k1-Es0">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="zce-0h-yuC">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zce-0h-yuC" id="XDF-Lb-baF">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <sections/>
                             </tableView>
                         </subviews>

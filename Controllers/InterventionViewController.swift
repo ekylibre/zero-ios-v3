@@ -269,6 +269,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     present(alert, animated: true)
   }
 
+  // MARK: - Interventions by crop
+
+  @IBAction func presentInterventionsByCrop(_ sender: Any) {
+    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
+  }
+
   // MARK: - Table view data source
   
   func numberOfSections(in tableView: UITableView) -> Int {
