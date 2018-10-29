@@ -234,6 +234,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
     equipment.number = number.isEmpty ? nil : number
+    equipment.indicatorOne = creationView.firstEquipmentParameter.text
+    equipment.indicatorTwo = creationView.secondEquipmentParameter.text
     equipments.append(equipment)
 
     do {
