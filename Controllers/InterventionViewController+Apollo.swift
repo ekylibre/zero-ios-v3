@@ -142,6 +142,7 @@ extension InterventionViewController {
 
       newCrop.uuid = UUID(uuidString: crop.uuid)
       newCrop.plotName = crop.name
+      newCrop.productionID = Int32(crop.productionNature.id)!
       newCrop.productionMode = crop.productionMode
       newCrop.provisionalYield = crop.provisionalYield
       newCrop.species = crop.species.rawValue
@@ -200,6 +201,7 @@ extension InterventionViewController {
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
     local.plotName = updated.name
+    local.productionID = Int32(updated.productionNature.id)!
     local.productionMode = updated.productionMode
     local.provisionalYield = updated.provisionalYield
     local.species = updated.species.rawValue
@@ -228,6 +230,7 @@ extension InterventionViewController {
 
     crop.uuid = UUID(uuidString: new.uuid)
     crop.plotName = new.name
+    crop.productionID = Int32(new.productionNature.id)!
     crop.productionMode = new.productionMode
     crop.provisionalYield = new.provisionalYield
     crop.species = new.species.rawValue
