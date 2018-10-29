@@ -104,9 +104,19 @@ extension AddInterventionViewController {
   }
 
   func irrigationErrorHandler() -> Bool {
-    if irrigationVolumeTextField.text?.floatValue == 0 {
-      let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
+    let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+    let errorMessage: [Int: String] = [0: "you_have_to_enter_seed_quantity", 1: "you_have_to_enter_a_product_quantity", 2: "you_have_to_enter_a_product_quantity"]
 
+    if irrigationVolumeTextField.text?.floatValue == 0 {
+      alert.message = "you_must_enter_a_water_volume".localized
+    } else if selectedInputs.count > 0 {
+      for selectedInput in selectedInputs {
+        if (selectedInput.value(forKey: "quantity") as? Double) == 0 {
+          alert.message = errorMessage[inputsSelectionView.segmentedControl.selectedSegmentIndex]?.localized
+        }
+      }
+    }
+    if alert.message != "" {
       alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
       present(alert, animated: true)
       return false

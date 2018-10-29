@@ -201,8 +201,15 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
     creationView.firstNameTextField.resignFirstResponder()
     createPerson(firstName: creationView.firstNameTextField.text!, lastName: creationView.lastNameTextField.text!)
-    persons = persons.sorted(by: { $0.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      < $1.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+    persons = persons.sorted(by: {
+      let nameOne = $0.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let nameTwo = $1.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+      if nameOne != nil && nameTwo != nil {
+        return nameOne! < nameTwo!
+      }
+      return true
+    })
     tableView.reloadData()
     creationView.isHidden = true
     dimView.isHidden = true
