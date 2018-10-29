@@ -132,8 +132,15 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
     do {
       persons = try managedContext.fetch(personsFetchRequest)
-      persons = persons.sorted(by: { $0.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        < $1.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+      persons = persons.sorted(by: {
+        let nameOne = $0.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let nameTwo = $1.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+        if nameOne != nil && nameTwo != nil {
+          return nameOne! < nameTwo!
+        }
+        return true
+      })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }

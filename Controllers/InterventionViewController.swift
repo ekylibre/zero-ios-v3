@@ -121,7 +121,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       interventionButton.backgroundColor = UIColor.white
       interventionButton.setBackgroundImage(image, for: .normal)
-      interventionButton.setTitle(interventionTypes[buttonCount].localized, for: .normal)
+      interventionButton.setTitle(interventionTypes[buttonCount], for: .normal)
       interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false
@@ -415,7 +415,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let destVC = segue.destination as! AddInterventionViewController
       var type = (sender as? UIButton)?.titleLabel?.text
 
-      type = type?.uppercased().replacingOccurrences(of: " ", with: "_")
       if type != nil {
         destVC.interventionType = type
         destVC.interventionState = nil

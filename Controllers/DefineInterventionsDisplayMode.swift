@@ -54,7 +54,6 @@ extension AddInterventionViewController {
   func loadIrrigation() {
     if interventionType == InterventionType.Irrigation.rawValue {
       irrigationVolumeTextField.text = String(currentIntervention.waterQuantity)
-      print("\nVolume : \(String(describing: currentIntervention.waterQuantity))")
       irrigationUnitButton.setTitle(currentIntervention.waterUnit?.localized, for: .normal)
       updateIrrigation(self)
       if interventionState == InterventionState.Validated.rawValue {
