@@ -109,11 +109,15 @@ extension AddInterventionViewController {
 
     if irrigationVolumeTextField.text?.floatValue == 0 {
       alert.message = "you_must_enter_a_water_volume".localized
-    } else if selectedInputs.count > 0 {
+    } else if selectedInputs.count == 1 {
       for selectedInput in selectedInputs {
         if (selectedInput.value(forKey: "quantity") as? Double) == 0 {
           alert.message = errorMessage[inputsSelectionView.segmentedControl.selectedSegmentIndex]?.localized
         }
+      }
+    } else {
+      if selectedInputs.count > 1 {
+        alert.message = "you_have_to_enter_inputs_quantities".localized
       }
     }
     if alert.message != "" {

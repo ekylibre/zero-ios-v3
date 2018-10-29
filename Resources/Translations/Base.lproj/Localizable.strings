@@ -481,6 +481,7 @@
 "you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
 "implantation_have_to_be_on_same_crop_nature" = "Vous ne pouvez pas semer sur des productions de natures différentes !";
 "you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
+"you_have_to_enter_inputs_quantities" = "Vous devez rentrer une quantité pour les intrants";
 "you_must_select_seed" = "Vous devez ajouter au moins une semence !";
 "you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
 "you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
