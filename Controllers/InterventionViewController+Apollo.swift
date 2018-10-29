@@ -617,7 +617,13 @@ extension InterventionViewController {
       returnIndicator.append(indicatorTwo!)
       return (returnIndicator)
     } else {
-      return [(indicator?.components(separatedBy: ":")[1])!]
+      let indicatorOne = indicator?.components(separatedBy: ":")
+
+      if indicatorOne!.count > 1 {
+        return [indicatorOne![1]]
+      } else {
+        return [String]()
+      }
     }
   }
 

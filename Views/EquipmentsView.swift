@@ -234,8 +234,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
     equipment.number = number.isEmpty ? nil : number
-    equipment.indicatorOne = creationView.firstEquipmentParameter.text
-    equipment.indicatorTwo = creationView.secondEquipmentParameter.text
+    equipment.indicatorOne = (creationView.firstEquipmentParameter.text != "" ? creationView.firstEquipmentParameter.text : nil)
+    equipment.indicatorTwo = (creationView.secondEquipmentParameter.text != "" ? creationView.secondEquipmentParameter.text : nil)
     equipments.append(equipment)
 
     do {
@@ -269,8 +269,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
-    creationView.firstEquipmentParameter.text = ""
-    creationView.secondEquipmentParameter.text = ""
+    creationView.firstEquipmentParameter.text = nil
+    creationView.secondEquipmentParameter.text = nil
   }
 
   @objc private func validateCreation() {
@@ -293,8 +293,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
-    creationView.firstEquipmentParameter.text = ""
-    creationView.secondEquipmentParameter.text = ""
+    creationView.firstEquipmentParameter.text = nil
+    creationView.secondEquipmentParameter.text = nil
   }
 
   private func checkEquipmentName() -> Bool {
