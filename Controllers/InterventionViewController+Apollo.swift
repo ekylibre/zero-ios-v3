@@ -1040,9 +1040,6 @@ extension InterventionViewController {
   // MARK: Intervention
 
   private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions {
-    for workingDay in fetchedIntervention.workingDays {
-      intervention.workingPeriods = saveWorkingDays(fetchedDay: workingDay)
-    }
     for fetchedEquipment in fetchedIntervention.tools! {
       intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
     }
@@ -1076,7 +1073,9 @@ extension InterventionViewController {
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
+    intervention.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!)
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.localized
+    (intervention.type == InterventionType.Irrigation.rawValue) ? intervention.waterQuantity = Float(fetchedIntervention.waterQuantity!) : nil
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
     intervention.status = (fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue
@@ -1199,12 +1198,7 @@ extension InterventionViewController {
     var intervention = returnEntityIfSame(entityName: "Interventions", predicate: predicate) as? Interventions
 
     if intervention != nil {
-      let dateFormatter = DateFormatter()
-
-      dateFormatter.locale = Locale(identifier: "fr_FR")
-      dateFormatter.dateFormat = "yyyy-MM-dd"
-      intervention?.workingPeriods?.executionDate = dateFormatter.date(from: (fetchedIntervention.workingDays.first?.executionDate)!)
-      intervention?.workingPeriods?.hourDuration = Float((fetchedIntervention.workingDays.first?.hourDuration)!)
+      intervention?.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!)
       intervention?.weather?.temperature = fetchedIntervention.weather?.temperature as NSNumber?
       intervention?.weather?.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
       intervention?.weather?.weatherDescription = (fetchedIntervention.weather?.description).map { $0.rawValue }
