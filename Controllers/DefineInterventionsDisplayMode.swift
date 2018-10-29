@@ -114,7 +114,9 @@ extension AddInterventionViewController {
 
   func loadEquipments() {
     for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
-      selectEquipment(interventionEquipment.equipments!)
+      if interventionEquipment.equipments != nil {
+        selectEquipment(interventionEquipment.equipments!)
+      }
     }
     refreshSelectedEquipments()
   }

@@ -504,8 +504,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       for intervention in interventions {
         pushUpdatedIntervention(intervention: intervention)
-        try managedContext.save()
       }
+      try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
     }
@@ -530,8 +530,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         if intervention.ekyID != 0 {
           intervention.status = Int16(InterventionState.Synced.rawValue)
         }
-        try managedContext.save()
       }
+      try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
     }

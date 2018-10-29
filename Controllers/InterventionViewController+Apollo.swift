@@ -61,6 +61,7 @@ extension InterventionViewController {
       if UserDefaults.isFirstLaunch() {
         self.saveFarms(farms)
         self.saveCrops(crops: farms.first!.crops)
+        self.saveArticles(articles: farms.first!.articles)
         self.loadEquipments()
         self.loadStorage()
         self.loadPeople { (success) -> Void in
@@ -75,6 +76,7 @@ extension InterventionViewController {
       } else {
         self.registerFarmID()
         self.checkCropsData(crops: farms.first!.crops)
+        self.checkArticlesData(articles: farms.first!.articles)
         self.loadEquipments()
         self.loadStorage()
         self.loadPeople { (success) -> Void in
@@ -395,7 +397,7 @@ extension InterventionViewController {
     if article.referenceId != nil {
       var seeds: [Seeds]
       let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      let predicate = NSPredicate(format: "referenceID == %@", article.referenceId!)
       seedsFetchRequest.predicate = predicate
 
       do {
@@ -408,8 +410,8 @@ extension InterventionViewController {
       let seed = Seeds(context: managedContext)
 
       seed.registered = false
-      seed.ekyID = 0
-      seed.referenceID = Int32(article.id)!
+      seed.referenceID =  0
+      seed.ekyID = Int32(article.id)!
       seed.variety = (article.variety == nil) ? article.name : article.variety
       seed.specie = article.species?.rawValue
       seed.unit = article.unit.rawValue
@@ -421,7 +423,7 @@ extension InterventionViewController {
     if article.referenceId != nil {
       var phytos: [Phytos]
       let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      let predicate = NSPredicate(format: "referenceID == %@", article.referenceId!)
       phytosFetchRequest.predicate = predicate
 
       do {
@@ -434,8 +436,8 @@ extension InterventionViewController {
       let phyto = Phytos(context: managedContext)
 
       phyto.registered = false
-      phyto.ekyID = 0
-      phyto.referenceID = Int32(article.id)!
+      phyto.referenceID = 0
+      phyto.ekyID = Int32(article.id)!
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
       phyto.used = false
@@ -446,7 +448,7 @@ extension InterventionViewController {
     if article.referenceId != nil {
       var fertilizers: [Fertilizers]
       let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
+      let predicate = NSPredicate(format: "referenceID == %@", article.referenceId!)
       fertilizersFetchRequest.predicate = predicate
 
       do {
@@ -459,8 +461,8 @@ extension InterventionViewController {
       let fertilizer = Fertilizers(context: managedContext)
 
       fertilizer.registered = false
-      fertilizer.ekyID = 0
-      fertilizer.referenceID = Int32(article.id)!
+      fertilizer.referenceID = 0
+      fertilizer.ekyID = Int32(article.id)!
       fertilizer.name = article.name
       fertilizer.unit = article.unit.rawValue
       fertilizer.used = false
@@ -574,7 +576,7 @@ extension InterventionViewController {
   func defineLastSynchronisationDate() -> String? {
     let dateFormatter = DateFormatter()
 
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
+    dateFormatter.timeZone = TimeZone(identifier: "UTC + 1")
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
     let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
     var lastSyncDate: String?
@@ -584,7 +586,6 @@ extension InterventionViewController {
     }
     return lastSyncDate
   }
-
 
   // MARK: - Queries: Equipments
 
@@ -994,7 +995,7 @@ extension InterventionViewController {
 
       interventionSeed.unit = fetchedInput.unit.rawValue
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
-      interventionSeed.seeds = seed as? Seeds
+      interventionSeed.seeds = (seed as? Seeds)
       interventionSeed.interventions = intervention
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
@@ -1003,7 +1004,7 @@ extension InterventionViewController {
 
       interventionFertilizer.unit = fetchedInput.unit.rawValue
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
-      interventionFertilizer.fertilizers = fertilizer as? Fertilizers
+      interventionFertilizer.fertilizers = (fertilizer as? Fertilizers)
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
@@ -1012,7 +1013,7 @@ extension InterventionViewController {
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
-      interventionPhyto.phytos = phyto as? Phytos
+      interventionPhyto.phytos = (phyto as? Phytos)
       interventionPhyto.interventions = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
@@ -1021,7 +1022,7 @@ extension InterventionViewController {
 
       interventionMaterial.unit = fetchedInput.unit.rawValue
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
-      interventionMaterial.materials = material as? Materials
+      interventionMaterial.materials = (material as? Materials)
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
@@ -1113,17 +1114,107 @@ extension InterventionViewController {
     }
   }
 
+  func updateEquipments(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<InterventionEquipments> = InterventionEquipments.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    equipmentsFetchRequest.predicate = predicate
+    do {
+      let equipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      for equipment in equipments {
+        managedContext.delete(equipment)
+      }
+      for fetchedEquipment in fetchedIntervention.tools! {
+        intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updatePersons(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let personsFetchRequest: NSFetchRequest<InterventionPersons> = InterventionPersons.fetchRequest()
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    personsFetchRequest.predicate = predicate
+    do {
+      let persons = try managedContext.fetch(personsFetchRequest)
+
+      for person in persons {
+        managedContext.delete(person)
+      }
+      for fetchedPerson in fetchedIntervention.operators! {
+        intervention.addToInterventionPersons(saveInterventionPersonsToIntervention(fetchedOperator: fetchedPerson, intervention: intervention))
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func deleteInterventionInputs(_ entityName: String, intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    inputsFetchRequest.predicate = predicate
+
+    do {
+      let inputs = try managedContext.fetch(inputsFetchRequest)
+
+      for input in inputs {
+        managedContext.delete(input as! NSManagedObject)
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateInputs(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Interventions) {
+    deleteInterventionInputs("InterventionSeeds", intervention: intervention)
+    deleteInterventionInputs("InterventionPhytosanitaries", intervention: intervention)
+    deleteInterventionInputs("InterventionFertilizers", intervention: intervention)
+    deleteInterventionInputs("InterventionMaterials", intervention: intervention)
+    for fetchedInput in fetchedIntervention.inputs! {
+      intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
+    }
+  }
+
   func updateIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
     let predicate = NSPredicate(format: "ekyID == %@", fetchedIntervention.id)
-    let intervention = returnEntityIfSame(entityName: "Interventions", predicate: predicate) as? Interventions
-    let dateFormatter = DateFormatter()
+    var intervention = returnEntityIfSame(entityName: "Interventions", predicate: predicate) as? Interventions
 
-    dateFormatter.locale = Locale(identifier: "fr_FR")
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    intervention?.workingPeriods?.executionDate = dateFormatter.date(from: (fetchedIntervention.workingDays.first?.executionDate)!)
-    intervention?.workingPeriods?.hourDuration = Float((fetchedIntervention.workingDays.first?.hourDuration)!)
-    intervention?.infos = fetchedIntervention.description
-    intervention?.type = fetchedIntervention.type.rawValue
+    if intervention != nil {
+      let dateFormatter = DateFormatter()
+
+      dateFormatter.locale = Locale(identifier: "fr_FR")
+      dateFormatter.dateFormat = "yyyy-MM-dd"
+      intervention?.workingPeriods?.executionDate = dateFormatter.date(from: (fetchedIntervention.workingDays.first?.executionDate)!)
+      intervention?.workingPeriods?.hourDuration = Float((fetchedIntervention.workingDays.first?.hourDuration)!)
+      intervention?.weather?.temperature = fetchedIntervention.weather?.temperature as NSNumber?
+      intervention?.weather?.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
+      intervention?.weather?.weatherDescription = (fetchedIntervention.weather?.description).map { $0.rawValue }
+      intervention?.infos = fetchedIntervention.description
+      intervention?.type = fetchedIntervention.type.rawValue
+      intervention?.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
+      updateEquipments(fetchedIntervention: fetchedIntervention, intervention: intervention!)
+      updatePersons(fetchedIntervention: fetchedIntervention, intervention: intervention!)
+      updateInputs(fetchedIntervention: fetchedIntervention, intervention: &intervention!)
+    }
   }
 
   func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
@@ -1153,7 +1244,7 @@ extension InterventionViewController {
           } else {
             self.updateIntervention(fetchedIntervention: intervention)
           }
-          self.updateInterventionStatus(fetchedIntervention: intervention)
+          //self.updateInterventionStatus(fetchedIntervention: intervention)
         }
       }
       group.leave()
