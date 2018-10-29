@@ -1073,7 +1073,7 @@ extension InterventionViewController {
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
-    intervention.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!)
+    (fetchedIntervention.workingDays.first != nil) ? intervention.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!) : nil
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.localized
     (intervention.type == InterventionType.Irrigation.rawValue) ? intervention.waterQuantity = Float(fetchedIntervention.waterQuantity!) : nil
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
@@ -1198,7 +1198,7 @@ extension InterventionViewController {
     var intervention = returnEntityIfSame(entityName: "Interventions", predicate: predicate) as? Interventions
 
     if intervention != nil {
-      intervention?.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!)
+      (fetchedIntervention.workingDays.first != nil) ? intervention?.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!) : nil
       intervention?.weather?.temperature = fetchedIntervention.weather?.temperature as NSNumber?
       intervention?.weather?.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
       intervention?.weather?.weatherDescription = (fetchedIntervention.weather?.description).map { $0.rawValue }
