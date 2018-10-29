@@ -37,6 +37,14 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     return nameTextField
   }()
 
+  lazy var errorLabel: UILabel = {
+    let errorLabel = UILabel(frame: CGRect.zero)
+    errorLabel.font = UIFont.systemFont(ofSize: 13)
+    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return errorLabel
+  }()
+
   lazy var firmNameTextField: UITextField = {
     let firmNameTextField = UITextField(frame: CGRect.zero)
     firmNameTextField.placeholder = "brand".localized
@@ -131,6 +139,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     self.isHidden = true
     self.addSubview(titleLabel)
     self.addSubview(nameTextField)
+    self.addSubview(errorLabel)
     self.addSubview(firmNameTextField)
     self.addSubview(maaTextField)
     self.addSubview(reentryDelayTextField)
@@ -148,6 +157,9 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
       nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       firmNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
       firmNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       firmNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
@@ -167,8 +179,8 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupActions() {
+    nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -191,14 +203,19 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
+  @objc private func nameDidChange(_ textField: UITextField) {
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
+  }
+
   @objc func closeView(sender: UIButton) {
     for subview in self.subviews {
-      if sender == cancelButton && subview is UITextField {
-        let textField = subview as! UITextField
-        textField.resignFirstResponder()
-        textField.text = ""
-      }
+      let textField = subview as? UITextField
+      textField?.resignFirstResponder()
+      textField?.text = ""
     }
+    errorLabel.isHidden = true
     self.isHidden = true
   }
 }
