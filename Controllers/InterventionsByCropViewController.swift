@@ -25,7 +25,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropsTableView.register(ProductionCell.self, forCellReuseIdentifier: "ProductionCell")
     cropsTableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
     cropsTableView.separatorInset = UIEdgeInsets.zero
-    //cropsTableView.separatorColor = UIColor.red
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
     cropsTableView.rowHeight = 50
@@ -100,9 +99,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let header = tableView.dequeueReusableCell(withIdentifier: "ProductionCell") as! ProductionCell
     let specie = cropsByProduction[section].first?.species?.localized.uppercased()
-    let startDate = cropsByProduction[section].first?.startDate
+    let stopDate = cropsByProduction[section].first?.stopDate
     let calendar = Calendar.current
-    let year = calendar.component(.year, from: startDate!)
+    let year = calendar.component(.year, from: stopDate!)
 
     header.nameLabel.text = String(format: "%@ %d", specie!, year)
     return header.contentView
