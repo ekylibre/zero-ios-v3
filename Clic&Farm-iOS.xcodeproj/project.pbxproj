@@ -89,6 +89,7 @@
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B8DB972218701D2005E2A71 /* InterventionsByCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB971218701D2005E2A71 /* InterventionsByCropViewController.swift */; };
 		6B8DB97421871D9A005E2A71 /* ProductionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97321871D9A005E2A71 /* ProductionCell.swift */; };
+		6B8DB97621875BFF005E2A71 /* CropDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */; };
 		6B8EE4E82178C92A0035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B8EE4EA2178D8E00035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
@@ -192,6 +193,7 @@
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B8DB971218701D2005E2A71 /* InterventionsByCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionsByCropViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
+		6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropDetailedView.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				04998B69217DB8DE000A5D2F /* Cells */,
 				04998B63217DB8DE000A5D2F /* Storyboards */,
 				04998B60217DB8DE000A5D2F /* CropsView.swift */,
+				6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */,
 				04998B5A217DB8DD000A5D2F /* CropView.swift */,
 				04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */,
 				04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */,
@@ -612,6 +615,7 @@
 				6B11EEE22139635400E2DEC4 /* (null) in Sources */,
 				0480CA5721650DDB0039FCB9 /* (null) in Sources */,
 				6B11EEDB2139635400E2DEC4 /* (null) in Sources */,
+				6B8DB97621875BFF005E2A71 /* CropDetailedView.swift in Sources */,
 				6B11EEDE2139635400E2DEC4 /* (null) in Sources */,
 				04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */,
 				04AF8C03216F9B6E00496BC2 /* (null) in Sources */,

@@ -234,7 +234,7 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="My crops" id="bb1-OK-ZMR">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="B8a-NN-FzZ">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="B8a-NN-FzZ">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="dismissViewController:" destination="6i8-BA-FKm" id="Ute-tY-kAc"/>

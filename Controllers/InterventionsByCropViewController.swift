@@ -16,12 +16,29 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   @IBOutlet weak var cropsTableView: UITableView!
 
   var cropsByProduction = [[Crops]]()
+  let cropDetailedView = CropDetailedView(frame: CGRect.zero)
 
   // MARK: - Initialization
 
   override func viewDidLoad() {
     fetchCrops()
     sortProductions()
+
+    for crops in cropsByProduction {
+      for crop in crops {
+        print(crop)
+      }
+    }
+    cropDetailedView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(cropDetailedView)
+
+    NSLayoutConstraint.activate([
+      cropDetailedView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+      cropDetailedView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -30),
+      cropDetailedView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+      cropDetailedView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
+      ])
+
     cropsTableView.register(ProductionCell.self, forCellReuseIdentifier: "ProductionCell")
     cropsTableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
     cropsTableView.separatorInset = UIEdgeInsets.zero
@@ -112,6 +129,25 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     cell.nameLabel.text = cropsByProduction[indexPath.section][indexPath.row].plotName
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let crop = cropsByProduction[indexPath.section][indexPath.row]
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+
+    cropDetailedView.nameLabel.text = crop.plotName?.uppercased()
+    cropDetailedView.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
+    cropDetailedView.specieLabel.text = crop.species?.localized
+    cropDetailedView.dateLabel.text = String(format: "Du %@ au %@", dateFormatter.string(from: crop.startDate!),
+                                             dateFormatter.string(from: crop.stopDate!))
+    cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
+    cropDetailedView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
   }
 
   // MARK: - Actions
