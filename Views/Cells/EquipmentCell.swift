@@ -15,7 +15,6 @@ class EquipmentCell: UITableViewCell {
   lazy var typeImageView: UIImageView = {
     let typeImageView = UIImageView(frame: CGRect.zero)
     typeImageView.tintColor = UIColor.darkGray
-    typeImageView.backgroundColor = UIColor.lightGray
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()

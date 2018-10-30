@@ -17,7 +17,6 @@ class PersonCell: UITableViewCell {
     let tintedImage = UIImage(named: "person")?.withRenderingMode(.alwaysTemplate)
     typeImageView.image = tintedImage
     typeImageView.tintColor = UIColor.darkGray
-    typeImageView.backgroundColor = UIColor.lightGray
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()
