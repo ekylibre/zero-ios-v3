@@ -571,9 +571,10 @@ extension InterventionViewController {
 
   func defineLastSynchronisationDate() -> String? {
     let dateFormatter = DateFormatter()
+    let timezone = TimeZone.current.abbreviation()
 
-    dateFormatter.timeZone = TimeZone(identifier: "UTC + 1")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+    dateFormatter.timeZone = TimeZone(abbreviation: timezone!)
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
     var lastSyncDate: String?
 
@@ -1243,7 +1244,10 @@ extension InterventionViewController {
     let group = DispatchGroup()
 
     group.enter()
-    appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+    let date = defineLastSynchronisationDate()
+    let query = InterventionQuery(modifiedSince: date)
+
+    appDelegate.apollo?.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         onCompleted(false)
@@ -1258,9 +1262,13 @@ extension InterventionViewController {
           let predicate = NSPredicate(format: "ekyID == %d", (intervention.id as NSString).intValue)
 
           if self.checkIfNewEntity(entityName: "Interventions", predicate: predicate) {
+            print("\nUpdating intervention: \(intervention)")
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
+            print("\nUpdated intervention: \(intervention)")
           } else {
-            self.updateIntervention(fetchedIntervention: intervention)
+              print("\nUpdating intervention: \(intervention)")
+              self.updateIntervention(fetchedIntervention: intervention)
+              print("\nUpdated intervention: \(intervention)")
           }
           //self.updateInterventionStatus(fetchedIntervention: intervention)
         }

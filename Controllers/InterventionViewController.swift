@@ -466,8 +466,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
           self.displayFarmName()
         }
         self.pushInterventionIfNeeded()
-        self.pushEntities()
-        self.updateInterventionIfNeeded()
+        //self.pushEntities()
+        //self.updateInterventionIfNeeded()
         self.fetchInterventions()
 
         do {
@@ -483,31 +483,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()
-    }
-  }
-
-  func updateInterventionIfNeeded() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
-    let ekyIDPredicate = NSPredicate(format: "ekyID != %d", 0)
-    let statusPredicate = NSPredicate(format: "status == %d", InterventionState.Created.rawValue)
-    let predicates = NSCompoundPredicate(type: .and, subpredicates: [ekyIDPredicate, statusPredicate])
-
-    interventionsFetchRequest.predicate = predicates
-
-    do {
-      let interventions = try managedContext.fetch(interventionsFetchRequest)
-
-      for intervention in interventions {
-        pushUpdatedIntervention(intervention: intervention)
-      }
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
 
@@ -536,6 +511,32 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
+
+  func updateInterventionIfNeeded() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let ekyIDPredicate = NSPredicate(format: "ekyID != %d", 0)
+    let statusPredicate = NSPredicate(format: "status == %d", InterventionState.Created.rawValue)
+    let predicates = NSCompoundPredicate(type: .and, subpredicates: [ekyIDPredicate, statusPredicate])
+
+    interventionsFetchRequest.predicate = predicates
+
+    do {
+      let interventions = try managedContext.fetch(interventionsFetchRequest)
+
+      for intervention in interventions {
+        pushUpdatedIntervention(intervention: intervention)
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
+    }
+  }
+
 
   func fetchCrops() -> [Crops] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
