@@ -25,12 +25,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     fetchCrops()
     sortProductions()
 
-    for crops in cropsByProduction {
-      for crop in crops {
-        print(crop)
-      }
-    }
-
     dimView.isHidden = true
     dimView.backgroundColor = UIColor.black
     dimView.alpha = 0.6
@@ -51,11 +45,11 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       ])
 
     cropsTableView.register(ProductionCell.self, forCellReuseIdentifier: "ProductionCell")
-    cropsTableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
+    cropsTableView.register(CropCell.self, forCellReuseIdentifier: "CropCell")
     cropsTableView.separatorInset = UIEdgeInsets.zero
     cropsTableView.tableFooterView = UIView()
     cropsTableView.bounces = false
-    cropsTableView.rowHeight = 50
+    cropsTableView.rowHeight = 70
     cropsTableView.delegate = self
     cropsTableView.dataSource = self
   }
@@ -136,9 +130,11 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialCell", for: indexPath) as! MaterialCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "CropCell", for: indexPath) as! CropCell
+    let crop = cropsByProduction[indexPath.section][indexPath.row]
 
-    cell.nameLabel.text = cropsByProduction[indexPath.section][indexPath.row].plotName
+    cell.plotNameLabel.text = crop.plotName
+    cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
     return cell
   }
 

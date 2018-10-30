@@ -95,6 +95,7 @@
 		6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6B8EE4ED2178D9340035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6B923FFD218861EC00FDFCFC /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B923FFC218861EC00FDFCFC /* CropCell.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BA3FEDC216653490070DA35 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
@@ -194,6 +195,7 @@
 		6B8DB971218701D2005E2A71 /* InterventionsByCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionsByCropViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
 		6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropDetailedView.swift; sourceTree = "<group>"; };
+		6B923FFC218861EC00FDFCFC /* CropCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropCell.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */,
 				04998B6E217DB8DE000A5D2F /* SelectedMaterialCell.swift */,
 				04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */,
+				6B923FFC218861EC00FDFCFC /* CropCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */,
 				04AF8C03216F9B6E00496BC2 /* (null) in Sources */,
 				0480CA5A21650DF20039FCB9 /* (null) in Sources */,
+				6B923FFD218861EC00FDFCFC /* CropCell.swift in Sources */,
 				04DC9FEE217DB88D00CB94C3 /* InterventionViewController+Apollo.swift in Sources */,
 				04998B7A217DB8DF000A5D2F /* FertilizerCreationView.swift in Sources */,
 				6B11EEDF2139635400E2DEC4 /* (null) in Sources */,
