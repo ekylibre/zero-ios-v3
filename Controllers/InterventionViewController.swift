@@ -100,7 +100,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
-    refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
     checkLocalData()
     if Connectivity.isConnectedToInternet() {
@@ -434,6 +433,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   // MARK: - Actions
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
+      refreshControl.beginRefreshing()
+      synchronise(self)
+    }
+  }
 
   @IBAction func synchronise(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
