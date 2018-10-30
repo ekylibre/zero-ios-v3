@@ -517,6 +517,9 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"from" = "From";
+"to" = "To";
+"yield" = "Yield";
 
 "locale" = "en_EN";
 
