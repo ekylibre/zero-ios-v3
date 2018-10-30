@@ -191,6 +191,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupPersonsView()
     initHarvestView()
     initWeatherView()
+    notesTextField.delegate = self
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
