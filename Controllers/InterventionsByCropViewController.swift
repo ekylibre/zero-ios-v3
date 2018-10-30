@@ -135,7 +135,27 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     cell.plotNameLabel.text = crop.plotName
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
+    drawInterventionImages(crop: crop, cell: cell)
     return cell
+  }
+
+  private func drawInterventionImages(crop: Crops, cell: CropCell) {
+    var column = 0
+
+    print(crop.plotName!)
+    if crop.targets == nil {
+      return
+    }
+
+    for case let target as Targets in crop.targets! {
+      let assetName = target.interventions!.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+      let image = UIImageView(image: UIImage(named: assetName))
+
+      image.frame = CGRect(x: 10 + (column * 30), y: 40, width: 20, height: 20)
+      print(target.interventions!.type!)
+      cell.contentView.addSubview(image)
+      column += 1
+    }
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
