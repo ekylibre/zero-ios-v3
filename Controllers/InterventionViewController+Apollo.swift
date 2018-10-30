@@ -44,9 +44,8 @@ extension InterventionViewController {
     }
 
     let apollo = appDelegate.apollo!
-    let query = FarmQuery(modifiedSince: defineLastSynchronisationDate())
 
-    apollo.fetch(query: query) { result, error in
+    apollo.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { result, error in
       if let error = error {
         print("Error: \(error)")
         endResult(false)
@@ -252,7 +251,7 @@ extension InterventionViewController {
 
   // MARK: - Articles
 
-  private func pushInput(unit: ArticleUnitEnum, name: String, type: ArticleTypeEnum) -> Int32{
+  private func pushInput(input: NSManagedObject) -> Int32{
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }
@@ -261,7 +260,9 @@ extension InterventionViewController {
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let group = DispatchGroup()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
+    let unit = (input is Fertilizers ? ArticleUnitEnum.kilogram : ArticleUnitEnum.liter)
+    let type = (input is Fertilizers ? ArticleTypeEnum.fertilizer : ArticleTypeEnum.chemical)
+    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
     let _ = apollo.clearCache()
 
     group.enter()
@@ -292,17 +293,7 @@ extension InterventionViewController {
       let managedContext = appDelegate.persistentContainer.viewContext
 
       do {
-        var inputID: Int32 = 0
-        switch input {
-        case is Phytos:
-          let phyto = input as! Phytos
-          inputID = pushInput(unit: ArticleUnitEnum.liter, name: phyto.name!, type: ArticleTypeEnum.chemical)
-        case is Fertilizers:
-          let fertilizer = input as! Fertilizers
-          inputID = pushInput(unit: ArticleUnitEnum.kilogram, name: fertilizer.name!, type: ArticleTypeEnum.fertilizer)
-        default:
-          return nil
-        }
+        let inputID = pushInput(input: input)
 
         input.setValue(inputID, forKey: "ekyID")
         try managedContext.save()
@@ -313,7 +304,7 @@ extension InterventionViewController {
     return input.value(forKey: "ekyID") as? Int32
   }
 
-  private func pushSeed(unit: ArticleUnitEnum, variety: String, specie: String, type: ArticleTypeEnum) -> Int32{
+  private func pushSeed(seed: Seeds) -> Int32{
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }
@@ -323,8 +314,13 @@ extension InterventionViewController {
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let _ = apollo.clearCache()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
-                                       specie: SpecieEnum(rawValue: specie), variety: variety)
+    let mutation = PushArticleMutation(
+      farmId: farmID,
+      unit: ArticleUnitEnum.kilogram,
+      name: seed.variety!,
+      type: ArticleTypeEnum.seed,
+      specie: SpecieEnum(rawValue: seed.specie!),
+      variety: seed.variety)
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
@@ -354,8 +350,7 @@ extension InterventionViewController {
       let managedContext = appDelegate.persistentContainer.viewContext
 
       do {
-        seed.ekyID = pushSeed(unit: ArticleUnitEnum.kilogram, variety: seed.variety!,
-                              specie: seed.specie!, type: ArticleTypeEnum.seed);
+        seed.ekyID = pushSeed(seed: seed);
         try managedContext.save()
       } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")
@@ -363,6 +358,7 @@ extension InterventionViewController {
     }
     return seed.ekyID
   }
+
 
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -644,7 +640,6 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipments(context: managedContext)
     let indicators = defineIndicators(fetchedEquipment.indicators)
-    var type = fetchedEquipment.type?.rawValue
 
     equipment.farmID = farmID
     equipment.type = fetchedEquipment.type?.rawValue
@@ -1489,6 +1484,49 @@ extension InterventionViewController {
     return equipment.ekyID
   }
 
+  func pushEntitiesIfNeeded(_ entityName: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let predicate = NSPredicate(format: "ekyID == %d", 0)
+
+    entitiesFetchRequest.predicate = predicate
+    do {
+      let entities = try managedContext.fetch(entitiesFetchRequest)
+
+      for entity in entities {
+        switch entity {
+        case is Equipments:
+          (entity as! Equipments).ekyID = pushEquipment(equipment: entity as! Equipments)
+        case is Persons:
+          (entity as! Persons).ekyID = pushPerson(person: entity as! Persons)
+        case is Seeds:
+          (entity as! Seeds).ekyID = pushSeed(seed: entity as! Seeds)
+        case is Phytos:
+          (entity as! Phytos).ekyID = pushInput(input: entity as! NSManagedObject)
+        case is Fertilizers:
+          (entity as! Fertilizers).ekyID = pushInput(input: entity as! NSManagedObject)
+        default:
+          return
+        }
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func pushEntities() {
+    pushEntitiesIfNeeded("Equipments")
+    pushEntitiesIfNeeded("Persons")
+    pushEntitiesIfNeeded("Seeds")
+    pushEntitiesIfNeeded("Phytos")
+    pushEntitiesIfNeeded("Fertilizers")
+  }
+
   func defineEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
     let equipments = intervention.interventionEquipments
     var equipmentsAttributes = [InterventionToolAttributes]()
@@ -1502,7 +1540,7 @@ extension InterventionViewController {
     return equipmentsAttributes
   }
 
-  private func pushPerson(firstName: String?, lastName: String) -> Int32 {
+  private func pushPerson(person: Persons) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }
@@ -1511,7 +1549,7 @@ extension InterventionViewController {
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let group = DispatchGroup()
-    let mutation = PushPersonMutation(farmId: farmID, firstName: firstName, lastName: lastName)
+    let mutation = PushPersonMutation(farmId: farmID, firstName: person.firstName, lastName: person.lastName!)
     let _ = apollo.clearCache()
 
     group.enter()
@@ -1540,7 +1578,7 @@ extension InterventionViewController {
       let managedContext = appDelegate.persistentContainer.viewContext
 
       do {
-        person.ekyID = pushPerson(firstName: person.firstName, lastName: person.lastName!)
+        person.ekyID = pushPerson(person: person)
         try managedContext.save()
       } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")

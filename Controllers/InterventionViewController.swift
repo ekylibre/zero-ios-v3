@@ -413,7 +413,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     switch segue.identifier {
     case "showAddInterventionVC":
       let destVC = segue.destination as! AddInterventionViewController
-      var type = (sender as? UIButton)?.titleLabel?.text
+      let type = (sender as? UIButton)?.titleLabel?.text
 
       if type != nil {
         destVC.interventionType = type
@@ -466,7 +466,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
           self.displayFarmName()
         }
         self.pushInterventionIfNeeded()
-        self.updateInterventionIfNeeded()
+        //self.pushEntities()
+        //self.updateInterventionIfNeeded()
         self.fetchInterventions()
 
         do {
