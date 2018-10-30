@@ -17,6 +17,8 @@
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="equipmentID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="indicatorOne" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="indicatorTwo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -174,26 +176,26 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crops" positionX="414" positionY="269" width="128" height="210"/>
-        <element name="Equipments" positionX="-659" positionY="-351" width="128" height="120"/>
-        <element name="Farms" positionX="-245.3203125" positionY="388.06640625" width="128" height="75"/>
-        <element name="Fertilizers" positionX="700" positionY="-657" width="128" height="255"/>
-        <element name="Harvests" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="InterventionEquipments" positionX="-198" positionY="-262" width="128" height="75"/>
-        <element name="InterventionFertilizers" positionX="423" positionY="-360" width="128" height="103"/>
-        <element name="InterventionMaterials" positionX="630" positionY="-225" width="128" height="120"/>
-        <element name="InterventionPersons" positionX="-135" positionY="-432" width="128" height="90"/>
-        <element name="InterventionPhytosanitaries" positionX="-315" positionY="-81" width="128" height="105"/>
-        <element name="Interventions" positionX="160" positionY="-252" width="128" height="270"/>
-        <element name="InterventionSeeds" positionX="151" positionY="-531" width="128" height="135"/>
-        <element name="Materials" positionX="990" positionY="-139" width="128" height="120"/>
-        <element name="Persons" positionX="-351" positionY="-459" width="128" height="135"/>
-        <element name="Phytos" positionX="-578" positionY="-106" width="128" height="210"/>
-        <element name="Seeds" positionX="153" positionY="-859" width="128" height="165"/>
-        <element name="Storages" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Targets" positionX="421" positionY="-36" width="128" height="90"/>
-        <element name="Users" positionX="-441" positionY="401" width="128" height="58"/>
-        <element name="Weather" positionX="-182" positionY="203" width="128" height="103"/>
-        <element name="WorkingPeriods" positionX="187" positionY="128" width="128" height="90"/>
+        <element name="Crops" positionX="886.87890625" positionY="171.3515625" width="128" height="210"/>
+        <element name="Equipments" positionX="627.27734375" positionY="-479.38671875" width="128" height="180"/>
+        <element name="Farms" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
+        <element name="Fertilizers" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
+        <element name="Harvests" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
+        <element name="InterventionEquipments" positionX="376.83203125" positionY="-222.34765625" width="128" height="75"/>
+        <element name="InterventionFertilizers" positionX="-208.0703125" positionY="-228.78515625" width="128" height="103"/>
+        <element name="InterventionMaterials" positionX="578.0703125" positionY="-161.76953125" width="128" height="120"/>
+        <element name="InterventionPersons" positionX="-195.78515625" positionY="16.1015625" width="128" height="90"/>
+        <element name="InterventionPhytosanitaries" positionX="621.36328125" positionY="1.16796875" width="128" height="105"/>
+        <element name="Interventions" positionX="160" positionY="-252" width="128" height="330"/>
+        <element name="InterventionSeeds" positionX="-149.890625" positionY="154.01171875" width="128" height="105"/>
+        <element name="Materials" positionX="824.87109375" positionY="-243.19140625" width="128" height="120"/>
+        <element name="Persons" positionX="-522.59765625" positionY="18.86328125" width="128" height="135"/>
+        <element name="Phytos" positionX="1030.23828125" positionY="-67.5859375" width="128" height="225"/>
+        <element name="Seeds" positionX="-386.609375" positionY="189.265625" width="128" height="165"/>
+        <element name="Storages" positionX="-388.83203125" positionY="-467.73046875" width="128" height="105"/>
+        <element name="Targets" positionX="581.33984375" positionY="207.44921875" width="128" height="90"/>
+        <element name="Users" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
+        <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="120"/>
+        <element name="WorkingPeriods" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>
     </elements>
 </model>
