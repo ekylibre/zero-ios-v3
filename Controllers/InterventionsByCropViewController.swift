@@ -16,6 +16,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   @IBOutlet weak var cropsTableView: UITableView!
 
   var cropsByProduction = [[Crops]]()
+  let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
 
   // MARK: - Initialization
@@ -29,10 +30,20 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
         print(crop)
       }
     }
+
+    dimView.isHidden = true
+    dimView.backgroundColor = UIColor.black
+    dimView.alpha = 0.6
+    dimView.translatesAutoresizingMaskIntoConstraints = false
     cropDetailedView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(dimView)
     view.addSubview(cropDetailedView)
 
     NSLayoutConstraint.activate([
+      dimView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+      dimView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       cropDetailedView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
       cropDetailedView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -30),
       cropDetailedView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -143,6 +154,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropDetailedView.dateLabel.text = String(format: "Du %@ au %@", dateFormatter.string(from: crop.startDate!),
                                              dateFormatter.string(from: crop.stopDate!))
     cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
+    dimView.isHidden = false
     cropDetailedView.isHidden = false
 
     UIView.animate(withDuration: 0.5, animations: {
