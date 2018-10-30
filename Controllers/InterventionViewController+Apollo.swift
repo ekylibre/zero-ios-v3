@@ -611,6 +611,31 @@ extension InterventionViewController {
     return true
   }
 
+  func defineIndicatorIfOnlyOne(_ indicator: String?) -> [String] {
+    let indicatorOne = indicator?.components(separatedBy: ":")
+
+    if indicatorOne!.count > 1 {
+      return [indicatorOne![1]]
+    }
+    return [String]()
+  }
+
+  func defineIndicators(_ indicator: String?) -> [String] {
+    if indicator == nil {
+      return [String]()
+    } else if (indicator?.contains("|"))! {
+      let indicators = indicator?.split(separator: "|")
+      let indicatorOne = indicators?[0].components(separatedBy: ":")[1]
+      let indicatorTwo = indicators?[1].components(separatedBy: ":")[1]
+      var returnIndicator = [String]()
+
+      returnIndicator.append(indicatorOne!)
+      returnIndicator.append(indicatorTwo!)
+      return (returnIndicator)
+    }
+    return defineIndicatorIfOnlyOne(indicator)
+  }
+
   private func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -618,12 +643,16 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipments(context: managedContext)
+    let indicators = defineIndicators(fetchedEquipment.indicators)
+    var type = fetchedEquipment.type?.rawValue
 
     equipment.farmID = farmID
     equipment.type = fetchedEquipment.type?.rawValue
     equipment.name = fetchedEquipment.name
     equipment.number = fetchedEquipment.number
     equipment.ekyID = (fetchedEquipment.id as NSString).intValue
+    equipment.indicatorOne = (indicators.count > 0 ? indicators[0] : nil)
+    equipment.indicatorTwo = (indicators.count > 1 ? indicators[1] : nil)
 
     do {
       try managedContext.save()
@@ -1407,7 +1436,7 @@ extension InterventionViewController {
     return harvestsAttributes
   }
 
-  private func pushEquipment(type: EquipmentTypeEnum, name: String, number: String?) -> Int32 {
+  private func pushEquipment(equipment: Equipments) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }
@@ -1416,8 +1445,14 @@ extension InterventionViewController {
     let apollo = appDelegate.apollo!
     let farmID = appDelegate.farmID!
     let group = DispatchGroup()
-    let mutation = PushEquipmentMutation(farmId: farmID, type: type, name: name, number: number)
     let _ = apollo.clearCache()
+    let mutation = PushEquipmentMutation(
+      farmId: farmID,
+      type: EquipmentTypeEnum(rawValue: equipment.type!)!,
+      name: equipment.name!,
+      number: equipment.number,
+      indicator1: equipment.indicatorOne,
+      indicator2: equipment.indicatorTwo)
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
@@ -1445,8 +1480,7 @@ extension InterventionViewController {
       let managedContext = appDelegate.persistentContainer.viewContext
 
       do {
-        let type = EquipmentTypeEnum(rawValue: equipment.type!)
-        equipment.ekyID = pushEquipment(type: type!, name: equipment.name!, number: equipment.number)
+        equipment.ekyID = pushEquipment(equipment: equipment)
         try managedContext.save()
       } catch let error as NSError {
         print("Could not save. \(error), \(error.userInfo)")
@@ -1460,8 +1494,8 @@ extension InterventionViewController {
     var equipmentsAttributes = [InterventionToolAttributes]()
 
     for equipment in equipments! {
-      let id = pushEquipmentIfNoEkyId(equipment: (equipment as! InterventionEquipments).equipments!)
-      let equipmentAttributes = InterventionToolAttributes(equipmentId: (id as NSNumber?)?.stringValue)
+      let equipmentID = pushEquipmentIfNoEkyId(equipment: (equipment as! InterventionEquipments).equipments!)
+      let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipmentID as NSNumber?)?.stringValue)
 
       equipmentsAttributes.append(equipmentAttributes)
     }

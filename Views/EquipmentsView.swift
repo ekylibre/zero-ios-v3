@@ -23,6 +23,78 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   var filteredEquipments = [Equipments]()
   var firstEquipmentType: String
 
+  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+    if let asset = NSDataAsset(name: "equipment-types") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredEquipments = jsonResult as? [[String: Any]]
+
+        for registeredEquipment in registeredEquipments! {
+          if equipmentNature == registeredEquipment["nature"] as! String {
+            var indicators = [String]()
+
+            !(registeredEquipment["main_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String) : nil
+            !(registeredEquipment["other_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String) : nil
+            return indicators
+          }
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("equipment-types.json not found")
+    }
+    return [String]()
+  }
+
+  func defineIndicatorsUnits(_ key: String) -> String? {
+    let units = [
+      "plowshare_count": "UNITY",
+      "motor_power": "FRENCH_HORSEPOWER",
+      "application_width": "METER",
+      "rows_count": "UNITY",
+      "nominal_storable_net_volume": "CUBIC_METER",
+      "nominal_storable_net_mass": "KILOGRAM",
+      "diameter": "METER",
+      "width": "METER",
+      "length": "METER"]
+
+    return units[key]
+  }
+
+  func defineIndicatorsIfNeeded(_ equipmentNature: String) {
+    let indicators = loadEquipmentIndicators(equipmentNature)
+
+    switch indicators.count {
+    case 2:
+      creationView.heighConstraint.constant = 475
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.secondEquipmentParameter.placeholder = indicators[1].localized
+      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
+      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1])?.localized
+      creationView.firstEquipmentParameter.isHidden = false
+      creationView.firstParameterUnit.isHidden = false
+      creationView.secondEquipmentParameter.isHidden = false
+      creationView.secondParameterUnit.isHidden = false
+    case 1:
+      creationView.heighConstraint.constant = 400
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
+      creationView.firstEquipmentParameter.isHidden = false
+      creationView.firstParameterUnit.isHidden = false
+      creationView.secondEquipmentParameter.isHidden = true
+      creationView.secondParameterUnit.isHidden = true
+    default:
+      creationView.heighConstraint.constant = 350
+      creationView.firstEquipmentParameter.isHidden = true
+      creationView.firstParameterUnit.isHidden = true
+      creationView.secondEquipmentParameter.isHidden = true
+      creationView.secondParameterUnit.isHidden = true
+    }
+  }
+
   // MARK: - Initialization
 
   init(firstType: String, frame: CGRect) {
@@ -31,6 +103,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     setupView()
     fetchEquipments()
     tableView.reloadData()
+    defineIndicatorsIfNeeded(firstEquipmentType.lowercased())
   }
 
   private func setupView() {
@@ -49,7 +122,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     self.addSubview(creationView)
 
     NSLayoutConstraint.activate([
-      creationView.heightAnchor.constraint(equalToConstant: 350),
       creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
       creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
       creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
@@ -171,6 +243,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
     equipment.number = number.isEmpty ? nil : number
+    equipment.indicatorOne = (creationView.firstEquipmentParameter.text != "" ? creationView.firstEquipmentParameter.text : nil)
+    equipment.indicatorTwo = (creationView.secondEquipmentParameter.text != "" ? creationView.secondEquipmentParameter.text : nil)
     equipments.append(equipment)
 
     do {
@@ -204,6 +278,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.firstEquipmentParameter.text = nil
+    creationView.secondEquipmentParameter.text = nil
   }
 
   @objc private func validateCreation() {
@@ -226,6 +302,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.text = ""
     creationView.errorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.firstEquipmentParameter.text = nil
+    creationView.secondEquipmentParameter.text = nil
   }
 
   private func checkEquipmentNumber() -> Bool {

@@ -1037,6 +1037,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       equipmentsSelectionView.creationView.typeImageView.image = UIImage(named: imageName)
       equipmentsSelectionView.creationView.typeButton.setTitle(value.localized, for: .normal)
+      equipmentsSelectionView.defineIndicatorsIfNeeded(value.lowercased())
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }
