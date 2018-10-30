@@ -515,17 +515,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc func action(sender: UIButton) {
-    let crops = fetchCrops()
-
-    if crops.count ==  0 {
-      let alert = UIAlertController(title: "", message: "start_online_with_crops".localized, preferredStyle: .alert)
-
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
-      present(alert, animated: true)
-    } else {
       hideInterventionAdd()
       performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
-    }
   }
 
   @objc func hideInterventionAdd() {
@@ -539,27 +530,34 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @IBAction func addIntervention(_ sender: Any) {
-    self.heightConstraint.constant = 220
-    createInterventionButton.isHidden = true
-    bottomView.layoutIfNeeded()
-    var index: CGFloat = 1
-    var line: CGFloat = 0
-    let width = bottomView.frame.size.width
+    let crops = fetchCrops()
 
-    for interventionButton in interventionButtons {
-      interventionButton.isHidden = false
-      interventionButton.frame = CGRect(x: index * width/5.357 + (index + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
-      interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
-      interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+    if crops.count ==  0 {
+      let alert = UIAlertController(title: "", message: "start_online_with_crops".localized, preferredStyle: .alert)
+
+      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      present(alert, animated: true)
+    } else {
+      self.heightConstraint.constant = 220
+      createInterventionButton.isHidden = true
       bottomView.layoutIfNeeded()
+      var index: CGFloat = 1
+      var column: CGFloat = 1
+      var line: CGFloat = 0
+      let width = bottomView.frame.size.width
 
-      if index > 2 {
-        line += 1
-        index = 0
-      } else {
+      for interventionButton in interventionButtons {
+        interventionButton.isHidden = false
+        interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
+        interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
+        interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+        bottomView.layoutIfNeeded()
+
         index += 1
+        column = index.truncatingRemainder(dividingBy: 4)
+        line = floor(index / 4)
       }
+      dimView.isHidden = false
     }
-    dimView.isHidden = false
   }
 }
