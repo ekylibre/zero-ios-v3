@@ -314,7 +314,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func displayInputQuantityInReadOnlyMode(quantity: String, unit: String, cell: SelectedInputCell) {
     if interventionState == InterventionState.Validated.rawValue {
       cell.inputQuantity.placeholder = quantity
-      cell.unitMeasureButton.setTitle(unit, for: .normal)
+      cell.unitMeasureButton.setTitle(unit.localized, for: .normal)
       cell.unitMeasureButton.setTitleColor(.lightGray, for: .normal)
     } else if quantity == "0" {
       cell.inputQuantity.placeholder = "0"
