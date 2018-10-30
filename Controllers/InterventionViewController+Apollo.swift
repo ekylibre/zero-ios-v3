@@ -604,6 +604,15 @@ extension InterventionViewController {
     return true
   }
 
+  func defineIndicatorIfOnlyOne(_ indicator: String?) -> [String] {
+    let indicatorOne = indicator?.components(separatedBy: ":")
+
+    if indicatorOne!.count > 1 {
+      return [indicatorOne![1]]
+    }
+    return [String]()
+  }
+
   func defineIndicators(_ indicator: String?) -> [String] {
     if indicator == nil {
       return [String]()
@@ -616,15 +625,8 @@ extension InterventionViewController {
       returnIndicator.append(indicatorOne!)
       returnIndicator.append(indicatorTwo!)
       return (returnIndicator)
-    } else {
-      let indicatorOne = indicator?.components(separatedBy: ":")
-
-      if indicatorOne!.count > 1 {
-        return [indicatorOne![1]]
-      } else {
-        return [String]()
-      }
     }
+    return defineIndicatorIfOnlyOne(indicator)
   }
 
   private func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
