@@ -1050,7 +1050,7 @@ extension InterventionViewController {
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
-      print("Unknown value of TypeEnum")
+      print("\(String(describing: fetchedInput.article?.type.rawValue)) : Unknown value of TypeEnum")
     }
 
     do {
@@ -1282,11 +1282,13 @@ extension InterventionViewController {
     let formatter = DateFormatter()
 
     formatter.dateFormat = "yyyy-MM-dd"
-    let workingDayAttributes = InterventionWorkingDayAttributes(
-      executionDate: formatter.string(from: executionDate!),
-      hourDuration: Double(intervention.workingPeriods!.hourDuration))
+    if executionDate != nil {
+      let workingDayAttributes = InterventionWorkingDayAttributes(
+        executionDate: formatter.string(from: executionDate!),
+        hourDuration: Double(intervention.workingPeriods!.hourDuration))
 
-    workingDaysAttributes.append(workingDayAttributes)
+      workingDaysAttributes.append(workingDayAttributes)
+    }
     return workingDaysAttributes
   }
 

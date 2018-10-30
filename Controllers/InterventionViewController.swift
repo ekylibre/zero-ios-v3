@@ -466,8 +466,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
           self.displayFarmName()
         }
         self.pushInterventionIfNeeded()
-        //self.pushEntities()
-        //self.updateInterventionIfNeeded()
+        self.pushEntities()
+        self.updateInterventionIfNeeded()
         self.fetchInterventions()
 
         do {

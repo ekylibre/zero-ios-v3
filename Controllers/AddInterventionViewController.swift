@@ -812,16 +812,23 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     var crops: [Crops]!
+    let group = DispatchGroup()
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-    let predicate = NSPredicate(format: "isSelected == true")
+    let predicate = NSPredicate(format: "isSelected == %d", true)
 
     cropsFetchRequest.predicate = predicate
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+    group.enter()
+    DispatchQueue.global().async {
+      do {
+        crops = try managedContext.fetch(cropsFetchRequest)
+        group.leave()
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+        group.leave()
+      }
     }
+    group.wait()
     return crops
   }
 
