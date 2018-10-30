@@ -316,6 +316,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.inputQuantity.placeholder = quantity
       cell.unitMeasureButton.setTitle(unit, for: .normal)
       cell.unitMeasureButton.setTitleColor(.lightGray, for: .normal)
+    } else if quantity == "0" {
+      cell.inputQuantity.placeholder = "0"
+    } else {
+      cell.inputQuantity.text = quantity
     }
   }
 
@@ -341,7 +345,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
           cell.inputName.text = interventionSeed.seeds?.specie?.localized
           cell.inputLabel.text = interventionSeed.seeds?.variety
-          cell.inputQuantity.text = (interventionSeed.quantity as NSNumber?)?.stringValue
           cell.type = "Seed"
           cell.inputImageView.image = UIImage(named: "seed")
           displayInputQuantityInReadOnlyMode(quantity: ((interventionSeed.quantity as NSNumber?)?.stringValue)!,
@@ -351,7 +354,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
           cell.inputName.text = interventionPhyto.phytos?.name
           cell.inputLabel.text = interventionPhyto.phytos?.firmName
-          cell.inputQuantity.text = (interventionPhyto.quantity as NSNumber?)?.stringValue
           cell.type = "Phyto"
           cell.inputImageView.image = UIImage(named: "phytosanitary")
           displayInputQuantityInReadOnlyMode(quantity: ((interventionPhyto.quantity as NSNumber?)?.stringValue)!,
@@ -361,7 +363,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
           cell.inputName.text = interventionFertilizer.fertilizers?.name?.localized
           cell.inputLabel.text = interventionFertilizer.fertilizers?.nature?.localized
-          cell.inputQuantity.text = (interventionFertilizer.quantity as NSNumber?)?.stringValue
           cell.type = "Fertilizer"
           cell.inputImageView.image = UIImage(named: "fertilizer")
           displayInputQuantityInReadOnlyMode(quantity: ((interventionFertilizer.quantity as NSNumber?)?.stringValue)!,
