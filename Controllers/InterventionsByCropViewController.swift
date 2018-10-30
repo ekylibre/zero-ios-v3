@@ -135,11 +135,11 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     cell.plotNameLabel.text = crop.plotName
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
-    drawInterventionImages(crop: crop, cell: cell)
+    updateInterventionImages(crop: crop, cell: cell)
     return cell
   }
 
-  private func drawInterventionImages(crop: Crops, cell: CropCell) {
+  private func updateInterventionImages(crop: Crops, cell: CropCell) {
     var column = 0
 
     print(crop.plotName!)
@@ -147,14 +147,21 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       return
     }
 
+    for imageView in cell.interventionImageViews {
+      imageView.isHidden = true
+    }
+
     for case let target as Targets in crop.targets! {
       let assetName = target.interventions!.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-      let image = UIImageView(image: UIImage(named: assetName))
 
-      image.frame = CGRect(x: 10 + (column * 30), y: 40, width: 20, height: 20)
+      cell.interventionImageViews[column].image = UIImage(named: assetName)
+      cell.interventionImageViews[column].isHidden = false
       print(target.interventions!.type!)
-      cell.contentView.addSubview(image)
       column += 1
+
+      if column == cell.interventionImageViews.count {
+        return
+      }
     }
   }
 

@@ -355,6 +355,7 @@
 		04998B69217DB8DE000A5D2F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6B923FFC218861EC00FDFCFC /* CropCell.swift */,
 				04998B75217DB8DE000A5D2F /* EquipmentCell.swift */,
 				04998B74217DB8DE000A5D2F /* FertilizerCell.swift */,
 				04998B6A217DB8DE000A5D2F /* HarvestCell.swift */,
@@ -370,7 +371,6 @@
 				04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */,
 				04998B6E217DB8DE000A5D2F /* SelectedMaterialCell.swift */,
 				04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */,
-				6B923FFC218861EC00FDFCFC /* CropCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

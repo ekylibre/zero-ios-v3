@@ -10,6 +10,8 @@ import UIKit
 
 class CropCell: UITableViewCell {
 
+  // MARK:- Properties
+
   lazy var plotNameLabel: UILabel = {
     let plotNameLabel = UILabel(frame: CGRect.zero)
     plotNameLabel.font = UIFont.systemFont(ofSize: 14)
@@ -25,6 +27,17 @@ class CropCell: UITableViewCell {
     return surfaceAreaLabel
   }()
 
+  lazy var interventionImageView: UIImageView = {
+    let interventionImageView = UIImageView(frame: CGRect.zero)
+    interventionImageView.isHidden = true
+    interventionImageView.translatesAutoresizingMaskIntoConstraints = false
+    return interventionImageView
+  }()
+
+  var interventionImageViews = [UIImageView]()
+
+  // MARK: - Initialization
+
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCell()
@@ -33,7 +46,10 @@ class CropCell: UITableViewCell {
   private func setupCell() {
     contentView.addSubview(plotNameLabel)
     contentView.addSubview(surfaceAreaLabel)
+    contentView.addSubview(interventionImageView)
+    interventionImageViews.append(interventionImageView)
     setupLayout()
+    setupImageViews()
   }
 
   private func setupLayout() {
@@ -42,8 +58,34 @@ class CropCell: UITableViewCell {
       plotNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       surfaceAreaLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      plotNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: surfaceAreaLabel.leadingAnchor, constant: -15)
+      plotNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: surfaceAreaLabel.leadingAnchor, constant: -15),
+      interventionImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      interventionImageView.heightAnchor.constraint(equalToConstant: 20),
+      interventionImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      interventionImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
+  }
+
+  private func setupImageViews() {
+    var count = 1
+    let maxImageViews = (Int(UIScreen.main.bounds.width) - 15) / 25
+
+    while (count != maxImageViews) {
+      let imageView = UIImageView(frame: CGRect.zero)
+      imageView.isHidden = true
+      imageView.translatesAutoresizingMaskIntoConstraints = false
+      contentView.addSubview(imageView)
+
+      NSLayoutConstraint.activate([
+        imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+        imageView.heightAnchor.constraint(equalToConstant: 20),
+        imageView.leadingAnchor.constraint(equalTo: interventionImageViews[count - 1].trailingAnchor, constant: 5),
+        imageView.widthAnchor.constraint(equalToConstant: 20),
+        ])
+
+      interventionImageViews.append(imageView)
+      count += 1
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {
