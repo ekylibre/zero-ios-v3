@@ -25,7 +25,7 @@ class CropDetailedView: UIView {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
-    nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+    nameLabel.font = UIFont.boldSystemFont(ofSize: 17)
     nameLabel.textColor = AppColor.TextColors.DarkGray
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -92,11 +92,11 @@ class CropDetailedView: UIView {
       nameLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       surfaceAreaLabel.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor),
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-      specieLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+      specieLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
       specieLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      dateLabel.topAnchor.constraint(equalTo: specieLabel.bottomAnchor, constant: 10),
+      dateLabel.topAnchor.constraint(equalTo: specieLabel.bottomAnchor, constant: 5),
       dateLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      yieldLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
+      yieldLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
       yieldLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       headerView.topAnchor.constraint(equalTo: self.topAnchor),
       headerView.heightAnchor.constraint(equalToConstant: 200),

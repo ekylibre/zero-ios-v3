@@ -144,22 +144,32 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let crop = cropsByProduction[indexPath.section][indexPath.row]
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "locale".localized)
-    dateFormatter.dateFormat = "dd/MM/yyyy"
 
-    cropDetailedView.nameLabel.text = crop.plotName?.uppercased()
-    cropDetailedView.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
-    cropDetailedView.specieLabel.text = crop.species?.localized
-    cropDetailedView.dateLabel.text = String(format: "Du %@ au %@", dateFormatter.string(from: crop.startDate!),
-                                             dateFormatter.string(from: crop.stopDate!))
-    cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
+    updateCropDetailedView(crop)
     dimView.isHidden = false
     cropDetailedView.isHidden = false
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
+  }
+
+  private func updateCropDetailedView(_ crop: Crops) {
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "dd/MM/yyyy"
+      return dateFormatter
+    }()
+    let startDate = dateFormatter.string(from: crop.startDate!)
+    let stopDate = dateFormatter.string(from: crop.stopDate!)
+
+    cropDetailedView.nameLabel.text = crop.plotName?.uppercased()
+    cropDetailedView.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
+    cropDetailedView.specieLabel.text = crop.species?.localized
+    cropDetailedView.dateLabel.text = String(format: "%@ %@ %@ %@", "from".localized, startDate,
+                                             "to".localized.lowercased(), stopDate)
+    cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
   }
 
   // MARK: - Actions
