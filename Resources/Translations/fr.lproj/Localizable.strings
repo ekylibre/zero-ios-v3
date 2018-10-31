@@ -450,14 +450,6 @@
 "thunderstorm" = "Orage";
 "clear_sky" = "Soleil";
 
-// Article Type
-
-"seed" = "Semence";
-"fertilizer" = "Fertilisant";
-"chemical" = "Phytosanitaire";
-"material" = "Materiel";
-"phytosanitary" = "Phytosanitaire";
-
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
 "number" = "Numéro";
