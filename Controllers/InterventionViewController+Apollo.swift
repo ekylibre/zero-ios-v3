@@ -1491,14 +1491,13 @@ extension InterventionViewController {
     return equipment.ekyID
   }
 
-  func pushEntitiesIfNeeded(_ entityName: String) {
+  func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let predicate = NSPredicate(format: "ekyID == %d", 0)
 
     entitiesFetchRequest.predicate = predicate
     do {
@@ -1527,11 +1526,15 @@ extension InterventionViewController {
   }
 
   func pushEntities() {
-    pushEntitiesIfNeeded("Equipments")
-    pushEntitiesIfNeeded("Persons")
-    pushEntitiesIfNeeded("Seeds")
-    pushEntitiesIfNeeded("Phytos")
-    pushEntitiesIfNeeded("Fertilizers")
+    let ekyPredicate = NSPredicate(format: "ekyID == %d", 0)
+    let referencePredicate = NSPredicate(format: "referenceID == %d", 0)
+    let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [ekyPredicate, referencePredicate])
+
+    pushEntitiesIfNeeded("Equipments", ekyPredicate)
+    pushEntitiesIfNeeded("Persons", ekyPredicate)
+    pushEntitiesIfNeeded("Seeds", predicates)
+    pushEntitiesIfNeeded("Phytos", predicates)
+    pushEntitiesIfNeeded("Fertilizers", predicates)
   }
 
   func defineEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
