@@ -440,7 +440,6 @@
 			buildPhases = (
 				6B4CA8A4214F9CB40052073D /* Generate Apollo GraphQL API */,
 				6BEA65692105C5EE0072840F /* Sources */,
-				040D85A4216BA387008E1628 /* Run Apollo */,
 				6BEA656A2105C5EE0072840F /* Frameworks */,
 				6BEA656B2105C5EE0072840F /* Resources */,
 				0411295B2110939D00AE884D /* ShellScript */,
@@ -540,24 +539,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		040D85A4216BA387008E1628 /* Run Apollo */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Apollo";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd /Users/jonathandehaay/GitHub/zero-ios-v3/GraphQL\n\n/Users/jonathandehaay/GitHub/zero-ios-v3/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift\n";
-		};
 		0411295B2110939D00AE884D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

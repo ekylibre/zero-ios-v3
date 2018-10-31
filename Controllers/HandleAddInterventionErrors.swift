@@ -91,9 +91,7 @@ extension AddInterventionViewController {
   }
 
   func cropErrorHandler() -> Bool {
-    let selectedCrops = fetchSelectedCrops()
-
-    if selectedCrops.count == 0 {
+    if cropsView.selectedCrops.count == 0 {
       let alert = UIAlertController(title: "", message: "you_have_to_select_a_crop".localized, preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
@@ -129,7 +127,7 @@ extension AddInterventionViewController {
   }
 
   func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
-    let selectedCrops = fetchSelectedCrops()
+    let selectedCrops = cropsView.selectedCrops
 
     if selectedCrops.count > 0 {
       var startDate = selectedCrops.first?.startDate

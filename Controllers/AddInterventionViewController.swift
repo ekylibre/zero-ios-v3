@@ -805,41 +805,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func fetchSelectedCrops() -> [Crops] {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
-    }
-
-    var crops: [Crops]!
-    let group = DispatchGroup()
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
-    let predicate = NSPredicate(format: "isSelected == %d", true)
-
-    cropsFetchRequest.predicate = predicate
-    group.enter()
-    DispatchQueue.global().async {
-      do {
-        crops = try managedContext.fetch(cropsFetchRequest)
-        group.leave()
-      } catch let error as NSError {
-        print("Could not fetch. \(error), \(error.userInfo)")
-        group.leave()
-      }
-    }
-    group.wait()
-    return crops
-  }
-
   func createTargets(intervention: Interventions) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedCrops = fetchSelectedCrops()
 
-    for selectedCrop in selectedCrops {
+    for selectedCrop in cropsView.selectedCrops {
       let target = Targets(context: managedContext)
 
       target.interventions = intervention
@@ -1122,11 +1095,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func checkCropsProduction() -> Bool {
     if interventionType == "harvest" || interventionType == "implantation" {
-      let selectedCrops = fetchSelectedCrops()
-      let firstCrop = selectedCrops.first?.species
-
-      for selectedCrop in selectedCrops {
-        if selectedCrop.species != firstCrop {
+      for selectedCrop in cropsView.selectedCrops {
+        if selectedCrop.species != cropsView.selectedCrops.first!.species {
           let alert = UIAlertController(
             title: "",
             message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,

@@ -79,6 +79,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   var currentIntervention: Interventions?
   var interventionState: InterventionState.RawValue!
   var crops = [[Crops]]()
+  var selectedCrops = [Crops]()
   var cropViews = [[CropView]]()
   var selectedCropsCount: Int = 0
   var selectedSurfaceArea: Float = 0
@@ -161,7 +162,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.selectionStyle = UITableViewCell.SelectionStyle.none
     if interventionState != nil {
       for crop in crops {
-        if crop.isSelected == true {
+        if selectedCrops.contains(crop) {
           cell.checkboxButton.imageView?.image = UIImage(named: "checked-checkbox")
           break
         }
@@ -271,7 +272,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         }
         selectedCropsCount += 1
         selectedSurfaceArea += (target.crops?.surfaceArea)!
-        target.crops?.isSelected = true
+        selectedCrops.append(target.crops!)
         cropsFromSamePlot.append(target.crops!)
       }
       self.crops.append(cropsFromSamePlot)
@@ -328,7 +329,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         if crop == target.crops {
           selectedCropsCount += 1
           selectedSurfaceArea += crop.surfaceArea
-          crop.isSelected = true
+          selectedCrops.append(crop)
           break
         }
       }
@@ -359,8 +360,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
               matched = true
             }
           }
-          if !matched {
-            view.crop.isSelected = false
+          if !matched, let index = selectedCrops.firstIndex(of: view.crop) {
+            selectedCrops.remove(at: index)
           }
         }
         initCropsViewInAppropriateMode(view: view)
@@ -397,7 +398,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     for (index, crop) in crops.enumerated() {
       cropViews[indexPath.row][index].checkboxImageView.isHighlighted = true
-      crop.isSelected = true
+      selectedCrops.append(crop)
     }
   }
 
@@ -409,7 +410,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         view.checkboxImageView.isHighlighted = false
         selectedCropsCount -= 1
         selectedSurfaceArea -= crops[index].surfaceArea
-        crops[index].isSelected = false
+
+        if let index = selectedCrops.firstIndex(of: crops[index]) {
+          selectedCrops.remove(at: index)
+        }
       }
       index += 1
     }
@@ -417,7 +421,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   func initCropsViewInAppropriateMode(view: CropView) {
     if interventionState != nil {
-      if view.crop.isSelected == true {
+      if selectedCrops.contains(view.crop) {
         view.checkboxImageView.image = UIImage(named: "checked-checkbox")
       }
       updateSelectedCropsLabel()
@@ -450,7 +454,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     selectedCropsCount += 1
     selectedSurfaceArea += crop.surfaceArea
-    crop.isSelected = true
+    selectedCrops.append(crop)
   }
 
   private func deselectCrop(_ crop: Crops, _ crops: [Crops], _ cell: PlotCell) {
@@ -467,7 +471,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     selectedCropsCount -= 1
     selectedSurfaceArea -= crop.surfaceArea
-    crop.isSelected = false
+
+    if let index = selectedCrops.firstIndex(of: crop) {
+      selectedCrops.remove(at: index)
+    }
   }
 
   private func updateSelectedCropsLabel() {
