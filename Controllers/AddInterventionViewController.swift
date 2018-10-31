@@ -131,7 +131,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var equipmentsSelectionView: EquipmentsView!
   var personsSelectionView: PersonsView!
   var selectedMaterials = [[NSManagedObject]]()
-  var selectedEquipments = [InterventionEquipments]()
+  var selectedEquipments = [Equipments]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
   var createdSeed = [NSManagedObject]()
@@ -388,12 +388,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
       let selectedEquipment = selectedEquipments[indexPath.row]
-      let imageName = selectedEquipment.equipments?.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+      let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
-      cell.typeImageView.image = UIImage(named: imageName!)?.withRenderingMode(.alwaysTemplate)
-      cell.nameLabel.text = selectedEquipment.equipments?.name
+      cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+      cell.nameLabel.text = selectedEquipment.name
       cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
-      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment.equipments!)
+      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
       return cell
     case selectedPersonsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath) as! SelectedPersonCell
@@ -597,11 +597,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         managedContext.delete(interventionEquipment)
       }
       for selectedEquipment in selectedEquipments {
-        let equipment = InterventionEquipments(context: managedContext)
+        let interventionEquipment = InterventionEquipments(context: managedContext)
 
-        equipment.interventions = intervention
-        equipment.equipments = selectedEquipment.equipments
-
+        interventionEquipment.interventions = intervention
+        interventionEquipment.equipments = selectedEquipment
       }
       try managedContext.save()
     } catch let error as NSError {
@@ -936,7 +935,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let interventionEquipment = InterventionEquipments(context: managedContext)
 
       interventionEquipment.interventions = intervention
-      interventionEquipment.equipments = selectedEquipment.equipments
+      interventionEquipment.equipments = selectedEquipment
     }
 
     do {

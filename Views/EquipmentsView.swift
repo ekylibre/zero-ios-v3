@@ -163,15 +163,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   // MARK: - Table view
 
-  func checkIfSelectedEquipmentsContains(_ equipment: Equipments) -> Bool {
-    for selectedEquipment in addInterventionViewController!.selectedEquipments {
-      if selectedEquipment.equipments == equipment {
-        return true
-      }
-    }
-    return false
-  }
-
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
@@ -183,7 +174,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
     let equipment = isSearching ? filteredEquipments[indexPath.row] : equipments[indexPath.row]
-    let isSelected = checkIfSelectedEquipmentsContains(equipment)
+    let isSelected = addInterventionViewController!.selectedEquipments.contains(equipment)
     let imageName = equipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
     cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)

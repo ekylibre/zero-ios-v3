@@ -748,7 +748,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
 
-    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased().localized
+    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased()
     weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
     weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
     weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?

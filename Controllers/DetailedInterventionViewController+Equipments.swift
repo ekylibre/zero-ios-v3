@@ -73,15 +73,7 @@ extension AddInterventionViewController {
   // MARK: - Selection
 
   func selectEquipment(_ equipment: Equipments) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedEquipment = InterventionEquipments(context: managedContext)
-
-    selectedEquipment.equipments = equipment
-    selectedEquipments.append(selectedEquipment)
+    selectedEquipments.append(equipment)
     closeEquipmentsSelectionView()
     updateView()
   }
