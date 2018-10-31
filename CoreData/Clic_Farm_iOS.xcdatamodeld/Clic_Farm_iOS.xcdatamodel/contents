@@ -102,7 +102,7 @@
         <relationship name="interventionSeeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionSeeds" inverseName="interventions" inverseEntity="InterventionSeeds" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="interventions" inverseEntity="Targets" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="interventions" inverseEntity="Weather" syncable="YES"/>
-        <relationship name="workingPeriods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingPeriods" inverseName="interventions" inverseEntity="WorkingPeriods" syncable="YES"/>
+        <relationship name="workingPeriod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkingPeriod" inverseName="intervention" inverseEntity="WorkingPeriod" syncable="YES"/>
     </entity>
     <entity name="InterventionSeeds" representedClassName="InterventionSeeds" syncable="YES" codeGenerationType="class">
         <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
@@ -171,10 +171,10 @@
         <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="weather" inverseEntity="Interventions" syncable="YES"/>
     </entity>
-    <entity name="WorkingPeriods" representedClassName="WorkingPeriods" syncable="YES" codeGenerationType="class">
+    <entity name="WorkingPeriod" representedClassName="WorkingPeriod" syncable="YES" codeGenerationType="class">
         <attribute name="executionDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="hourDuration" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriods" inverseEntity="Interventions" syncable="YES"/>
+        <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="workingPeriod" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <elements>
         <element name="Crops" positionX="886.87890625" positionY="171.3515625" width="128" height="210"/>
@@ -197,6 +197,6 @@
         <element name="Targets" positionX="581.33984375" positionY="207.44921875" width="128" height="90"/>
         <element name="Users" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
         <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="120"/>
-        <element name="WorkingPeriods" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>
+        <element name="WorkingPeriod" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>
     </elements>
 </model>

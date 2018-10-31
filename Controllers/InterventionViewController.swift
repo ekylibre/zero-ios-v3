@@ -153,12 +153,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func sortInterventionByDate() {
     interventions = interventions.sorted(by: {
-      let result: Bool!
-
-      if ($0.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil {
-        result = ($0.workingPeriods?.anyObject() as! WorkingPeriods).executionDate! >
-          ($1.workingPeriods?.anyObject() as! WorkingPeriods).executionDate!
-        return result
+      if $0.workingPeriod!.executionDate != nil && $1.workingPeriod!.executionDate != nil {
+        return $0.workingPeriod!.executionDate! > $1.workingPeriod!.executionDate!
       }
       return true
     })
@@ -247,7 +243,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       "Storages",
       "Users",
       "Weather",
-      "WorkingPeriods"]
+      "WorkingPeriod"]
 
     for entityName in entitiesNames {
       emptyCoreData(entityName: entityName)
@@ -293,7 +289,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let intervention = interventions[indexPath.row]
-    let workingPeriod = fetchWorkingPeriod(intervention)
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
     let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
     let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
@@ -302,35 +297,37 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
     cell.stateImageView.tintColor = stateTintColors[intervention.status]
+    cell.dateLabel.text = updateDateLabel(intervention.workingPeriod!.executionDate!)
     cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
     cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
-    if workingPeriod?.executionDate != nil {
-      cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
-    }
 
     cell.selectionStyle = .none
 
     return cell
   }
 
-  func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
+  private func updateDateLabel(_ date: Date) -> String {
+    let calendar = Calendar.current
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMM"
+      return dateFormatter
+    }()
+    var dateString = dateFormatter.string(from: date)
+    let year = calendar.component(.year, from: date)
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriods> = WorkingPeriods.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
-    workingPeriodsFetchRequest.predicate = predicate
-
-    do {
-      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
-      return workingPeriods.first
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+    if calendar.isDateInToday(date) {
+      return "today".localized.lowercased()
+    } else if calendar.isDateInYesterday(date) {
+      return "yesterday".localized.lowercased()
+    } else {
+      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
+        dateString.append(" \(year)")
+      }
+      return dateString
     }
-    return nil
   }
 
   private func updateCropsLabel(_ targets: NSSet) -> String {
@@ -373,12 +370,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let intervention = Interventions(context: managedContext)
-    let workingPeriod = WorkingPeriods(context: managedContext)
+    let workingPeriod = WorkingPeriod(context: managedContext)
 
     intervention.type = type
     intervention.infos = infos
     intervention.status = status
-    workingPeriod.interventions = intervention
+    workingPeriod.intervention = intervention
     workingPeriod.executionDate = executionDate
 
     do {

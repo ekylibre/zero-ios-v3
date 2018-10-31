@@ -72,9 +72,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
     let predicate = NSPredicate(format: "targets.@count > 0")
-    let sort = NSSortDescriptor(key: "productionID", ascending: true)
+    let sortDescriptor = NSSortDescriptor(key: "productionID", ascending: true)
     cropsFetchRequest.predicate = predicate
-    cropsFetchRequest.sortDescriptors = [sort]
+    cropsFetchRequest.sortDescriptors = [sortDescriptor]
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
@@ -118,7 +118,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
     let predicate = NSPredicate(format: "ANY targets.crops == %@", crop)
+    let sortDescriptor = NSSortDescriptor(key: "workingPeriod.executionDate", ascending: false)
     interventionsFetchRequest.predicate = predicate
+    interventionsFetchRequest.sortDescriptors = [sortDescriptor]
 
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
