@@ -56,9 +56,9 @@ class PlotCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      checkboxButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+      checkboxButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 17.5),
       checkboxButton.heightAnchor.constraint(equalToConstant: 25),
-      checkboxButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+      checkboxButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17.5),
       checkboxButton.widthAnchor.constraint(equalToConstant: 25),
       nameLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 15),
