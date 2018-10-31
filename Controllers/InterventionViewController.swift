@@ -97,6 +97,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     initialiseInterventionButtons()
 
     // Load table view
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.rowHeight = 80
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
@@ -297,21 +299,17 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let stateImages: [Int16: UIImage] = [0: UIImage(named: "out-of-sync")!, 1: UIImage(named: "synchronised")!, 2: UIImage(named: "validated")!]
     let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
 
-    cell.typeLabel.text = intervention.type?.localized
     cell.typeImageView.image = UIImage(named: assetName)
-    cell.syncImage.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
-    cell.syncImage.tintColor = stateTintColors[intervention.status]
+    cell.typeLabel.text = intervention.type?.localized
+    cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
+    cell.stateImageView.tintColor = stateTintColors[intervention.status]
     cell.cropsLabel.text = updateCropsLabel(targets!)
-    cell.infosLabel.text = intervention.infos
+    cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
     }
 
-    // Resize labels according to their text
-    cell.typeLabel.sizeToFit()
-    cell.cropsLabel.sizeToFit()
-    cell.infosLabel.sizeToFit()
     cell.selectionStyle = .none
 
     return cell

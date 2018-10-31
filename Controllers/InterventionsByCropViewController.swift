@@ -144,11 +144,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   private func updateInterventionImages(crop: Crops, cell: CropCell) {
     var column = 0
 
-    print(crop.plotName!)
-    if crop.targets == nil {
-      return
-    }
-
     for imageView in cell.interventionImageViews {
       imageView.isHidden = true
     }
@@ -158,7 +153,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
       cell.interventionImageViews[column].image = UIImage(named: assetName)
       cell.interventionImageViews[column].isHidden = false
-      print(target.interventions!.type!)
       column += 1
 
       if column == cell.interventionImageViews.count {
