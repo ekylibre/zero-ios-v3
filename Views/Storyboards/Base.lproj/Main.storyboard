@@ -41,12 +41,37 @@
                                 </constraints>
                                 <color key="barTintColor" red="0.1137254902" green="0.5450980392" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Synchro Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qI5-Ep-5Qd">
-                                <rect key="frame" x="16" y="69" width="343" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4VR-O2-NgE">
+                                <rect key="frame" x="117.5" y="27" width="140" height="30"/>
+                                <state key="normal" title="InterventionsByCrop">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="presentInterventionsByCrop:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="aWD-08-ly9"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ttg-Mf-cp2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="499"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="HhK-bh-tnX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Synchro Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qI5-Ep-5Qd">
+                                            <rect key="frame" x="15" y="14" width="345" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="qI5-Ep-5Qd" secondAttribute="trailing" constant="15" id="Cmd-NV-eFY"/>
+                                        <constraint firstItem="qI5-Ep-5Qd" firstAttribute="leading" secondItem="HhK-bh-tnX" secondAttribute="leading" constant="15" id="T5L-ot-4Eb"/>
+                                        <constraint firstAttribute="bottom" secondItem="qI5-Ep-5Qd" secondAttribute="bottom" id="Xht-4Q-2gW"/>
+                                    </constraints>
+                                </view>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1h-B8-3FP">
                                 <rect key="frame" x="0.0" y="563" width="375" height="60"/>
                                 <subviews>
@@ -74,23 +99,11 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ttg-Mf-cp2">
-                                <rect key="frame" x="0.0" y="93" width="375" height="470"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4VR-O2-NgE">
-                                <rect key="frame" x="117.5" y="27" width="140" height="30"/>
-                                <state key="normal" title="InterventionsByCrop">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="presentInterventionsByCrop:" destination="Ym6-0E-qVT" eventType="touchUpInside" id="aWD-08-ly9"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="ttg-Mf-cp2" firstAttribute="top" secondItem="OwN-92-HaX" secondAttribute="bottom" id="0L4-Zc-VC4"/>
                             <constraint firstItem="OwN-92-HaX" firstAttribute="leading" secondItem="BuB-B1-p77" secondAttribute="leading" id="0x4-qW-DSG"/>
                             <constraint firstItem="L1h-B8-3FP" firstAttribute="top" secondItem="ttg-Mf-cp2" secondAttribute="bottom" id="2bE-bb-S79"/>
                             <constraint firstItem="L1h-B8-3FP" firstAttribute="bottom" secondItem="BuB-B1-p77" secondAttribute="bottom" id="3KT-Wa-4oY"/>
@@ -99,8 +112,6 @@
                             <constraint firstItem="OwN-92-HaX" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="5tv-uC-5Gi"/>
                             <constraint firstItem="L1h-B8-3FP" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="AZj-Nd-7qa"/>
                             <constraint firstAttribute="bottom" secondItem="LDw-rB-9Pp" secondAttribute="bottom" id="BOK-Na-1RW"/>
-                            <constraint firstItem="ttg-Mf-cp2" firstAttribute="top" secondItem="qI5-Ep-5Qd" secondAttribute="bottom" constant="8" id="Kes-6r-W2p"/>
-                            <constraint firstItem="qI5-Ep-5Qd" firstAttribute="leading" secondItem="Bki-1z-HKT" secondAttribute="leadingMargin" id="S7J-Nq-Bd6"/>
                             <constraint firstItem="LDw-rB-9Pp" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="bottom" id="aBi-Qo-Toh"/>
                             <constraint firstItem="4VR-O2-NgE" firstAttribute="centerY" secondItem="OwN-92-HaX" secondAttribute="centerY" id="bKU-4q-suD"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="leading" secondItem="BuB-B1-p77" secondAttribute="leading" id="c04-Fj-ikK"/>
@@ -108,8 +119,6 @@
                             <constraint firstItem="4VR-O2-NgE" firstAttribute="centerX" secondItem="OwN-92-HaX" secondAttribute="centerX" id="jal-JE-v2v"/>
                             <constraint firstItem="BuB-B1-p77" firstAttribute="trailing" secondItem="LDw-rB-9Pp" secondAttribute="trailing" id="k4y-DG-Xag"/>
                             <constraint firstItem="LDw-rB-9Pp" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="bottom" id="l86-LM-TM9"/>
-                            <constraint firstItem="qI5-Ep-5Qd" firstAttribute="top" secondItem="OwN-92-HaX" secondAttribute="bottom" constant="5" id="nAU-zd-KKi"/>
-                            <constraint firstItem="qI5-Ep-5Qd" firstAttribute="trailing" secondItem="Bki-1z-HKT" secondAttribute="trailingMargin" id="tV6-Sj-UXK"/>
                             <constraint firstItem="OwN-92-HaX" firstAttribute="top" secondItem="BuB-B1-p77" secondAttribute="top" id="uuf-o3-16p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BuB-B1-p77"/>
@@ -125,6 +134,7 @@
                         <outlet property="createInterventionButton" destination="XRU-Wr-aoY" id="NFa-kI-oUK"/>
                         <outlet property="heightConstraint" destination="aP0-3P-QcV" id="zXq-CV-FZJ"/>
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
+                        <outlet property="syncView" destination="HhK-bh-tnX" id="E1c-9u-l4e"/>
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>

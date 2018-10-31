@@ -16,6 +16,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var syncView: UIView!
   @IBOutlet weak var synchroLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var createInterventionButton: UIButton!
@@ -97,6 +98,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     initialiseInterventionButtons()
 
     // Load table view
+    tableView.bringSubviewToFront(syncView)
     tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
     tableView.rowHeight = 80
     tableView.dataSource = self
