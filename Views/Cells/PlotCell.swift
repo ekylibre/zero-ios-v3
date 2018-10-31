@@ -46,11 +46,11 @@ class PlotCell: UITableViewCell {
 
   private func setupCell() {
     self.clipsToBounds = true
+    self.selectionStyle = .none
     contentView.addSubview(checkboxButton)
     contentView.addSubview(nameLabel)
     contentView.addSubview(surfaceAreaLabel)
     contentView.addSubview(expandCollapseImageView)
-    self.selectionStyle = .none
     setupLayout()
   }
 

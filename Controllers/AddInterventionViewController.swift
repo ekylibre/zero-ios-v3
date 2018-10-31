@@ -291,7 +291,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
-      cell.selectionStyle = .none
       if selectedInputs.count > indexPath.row {
         let selectedInput = selectedInputs[indexPath.row]
         let unit = selectedInput.value(forKey: "unit") as? String

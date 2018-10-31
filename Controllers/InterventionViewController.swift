@@ -300,13 +300,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
     }
-
-    // Resize labels according to their text
-    cell.typeLabel.sizeToFit()
-    cell.cropsLabel.sizeToFit()
-    cell.infosLabel.sizeToFit()
-    cell.selectionStyle = .none
-
     return cell
   }
 

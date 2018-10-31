@@ -45,7 +45,6 @@ class SeedCell: UITableViewCell {
     contentView.addSubview(varietyLabel)
     contentView.addSubview(specieLabel)
     contentView.addSubview(starImageView)
-    self.selectionStyle = .none
     setupLayout()
   }
 

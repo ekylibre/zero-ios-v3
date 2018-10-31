@@ -156,7 +156,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.nameLabel.sizeToFit()
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
-    cell.selectionStyle = UITableViewCell.SelectionStyle.none
     return cell
   }
 

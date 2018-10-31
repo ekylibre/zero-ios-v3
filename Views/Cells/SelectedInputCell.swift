@@ -136,6 +136,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   private func setupCell() {
+    self.backgroundColor = AppColor.CellColors.LightGray
+    self.selectionStyle = .none
     contentView.addSubview(inputImageView)
     contentView.addSubview(inputLabel)
     contentView.addSubview(inputName)
@@ -146,7 +148,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(unitMeasureButton)
     contentView.addSubview(warningImageView)
     contentView.addSubview(warningLabel)
-    self.selectionStyle = .none
     setupLayout()
   }
 
