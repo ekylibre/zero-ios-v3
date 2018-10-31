@@ -162,7 +162,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     if interventionState != nil {
       for crop in crops {
         if selectedCrops.contains(crop) {
-          cell.checkboxButton.imageView?.image = UIImage(named: "checked-checkbox")
+          cell.checkboxButton.isSelected = true
           break
         }
       }
@@ -417,7 +417,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   func initCropsViewInAppropriateMode(view: CropView) {
     if interventionState != nil {
       if selectedCrops.contains(view.crop) {
-        view.checkboxImageView.image = UIImage(named: "checked-checkbox")
+        view.checkboxImageView.isHighlighted = true
       }
       updateSelectedCropsLabel()
     }
