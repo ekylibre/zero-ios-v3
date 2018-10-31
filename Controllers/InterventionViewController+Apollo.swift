@@ -535,7 +535,7 @@ extension InterventionViewController {
     let timezone = TimeZone.current.abbreviation()
 
     dateFormatter.timeZone = TimeZone(abbreviation: timezone!)
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
     var lastSyncDate: String?
 
@@ -706,7 +706,7 @@ extension InterventionViewController {
 
     storage.storageID = (fetchedStorage.id as NSString).intValue
     storage.name = fetchedStorage.name
-    storage.type = fetchedStorage.type.rawValue.lowercased().localized
+    storage.type = fetchedStorage.type.rawValue.lowercased()
 
     do {
       try manaedContext.save()
@@ -897,8 +897,8 @@ extension InterventionViewController {
     let harvest = Harvests(context: managedContext)
 
     harvest.quantity = fetchedOutput.quantity ?? 0
-    harvest.type = fetchedOutput.nature.rawValue.lowercased().localized
-    harvest.unit = fetchedOutput.unit?.rawValue.lowercased().localized
+    harvest.type = fetchedOutput.nature.rawValue.lowercased()
+    harvest.unit = fetchedOutput.unit?.rawValue.lowercased()
     harvest.number = fetchedOutput.id
     harvest.interventions = intervention
 
@@ -952,7 +952,7 @@ extension InterventionViewController {
     harvest.type = nature
     harvest.number = fetchedLoad.number
     harvest.quantity = fetchedLoad.quantity
-    harvest.unit = fetchedLoad.unit?.rawValue.lowercased().localized
+    harvest.unit = fetchedLoad.unit?.rawValue.lowercased()
 
     do {
       try managedContext.save()
@@ -1040,7 +1040,7 @@ extension InterventionViewController {
         intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
       } else {
         for load in fetchedOutput.loads! {
-          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized))
+          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased()))
         }
       }
     }
@@ -1060,7 +1060,7 @@ extension InterventionViewController {
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
     (fetchedIntervention.workingDays.first != nil) ? intervention.workingPeriods = saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!) : nil
-    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.localized
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
     (intervention.type == InterventionType.Irrigation.rawValue) ? intervention.waterQuantity = Float(fetchedIntervention.waterQuantity!) : nil
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
@@ -1226,8 +1226,6 @@ extension InterventionViewController {
           if self.checkIfNewEntity(entityName: "Interventions", predicate: predicate) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
             self.updateInterventionStatus(fetchedIntervention: intervention)
-          } else {
-            //self.updateIntervention(fetchedIntervention: intervention)
           }
         }
       }
@@ -1238,6 +1236,35 @@ extension InterventionViewController {
       let _ = appDelegate.apollo?.clearCache()
       onCompleted(true)
     }
+  }
+
+  func updateInterventionIfChangedOnApi() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let group = DispatchGroup()
+
+    group.enter()
+    let date = defineLastSynchronisationDate()
+    let query = InterventionQuery(modifiedSince: date)
+    let _ = appDelegate.apollo?.clearCache()
+
+    appDelegate.apollo?.fetch(query: query, resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        let farm = (result?.data?.farms.first)!
+        for intervention in farm.interventions {
+          //print("\nUpdating intervention: \(intervention)")
+          self.updateIntervention(fetchedIntervention: intervention)
+          //print("\nUpdated intervention: \(intervention)")
+        }
+      }
+      group.leave()
+    })
   }
 
   // MARK: - Mutations: Interventions

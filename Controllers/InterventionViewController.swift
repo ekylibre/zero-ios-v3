@@ -468,6 +468,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         self.pushEntities()
         self.pushInterventionIfNeeded()
         self.updateInterventionIfNeeded()
+        self.updateInterventionIfChangedOnApi()
         self.fetchInterventions()
 
         do {
