@@ -59,7 +59,6 @@ class SelectionView: UIView {
     line.backgroundColor = tableView.separatorColor
     tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
-    tableView.bounces = false
     tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()

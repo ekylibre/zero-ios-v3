@@ -30,7 +30,6 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.layer.borderWidth  = 0.5
     selectedMaterialsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedMaterialsTableView.layer.cornerRadius = 5
-    selectedMaterialsTableView.bounces = false
     selectedMaterialsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self

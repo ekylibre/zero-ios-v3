@@ -37,7 +37,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let tableView = UITableView(frame: CGRect.zero)
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
-    tableView.bounces = false
     tableView.register(PlotCell.self, forCellReuseIdentifier: "PlotCell")
     tableView.rowHeight = UITableView.automaticDimension
     tableView.delegate = self

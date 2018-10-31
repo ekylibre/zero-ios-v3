@@ -29,7 +29,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
-    selectedInputsTableView.bounces = false
     selectedInputsTableView.layer.borderWidth  = 0.5
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite

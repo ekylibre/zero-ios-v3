@@ -31,7 +31,6 @@ extension AddInterventionViewController {
     selectedPersonsTableView.layer.borderWidth  = 0.5
     selectedPersonsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedPersonsTableView.layer.cornerRadius = 5
-    selectedPersonsTableView.bounces = false
     selectedPersonsTableView.register(SelectedPersonCell.self, forCellReuseIdentifier: "SelectedPersonCell")
     selectedPersonsTableView.dataSource = self
     selectedPersonsTableView.delegate = self

@@ -48,7 +48,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     line.backgroundColor = tableView.separatorColor
     tableView.tableHeaderView = line
     tableView.tableFooterView = UIView()
-    tableView.bounces = false
     tableView.register(SeedCell.self, forCellReuseIdentifier: "SeedCell")
     tableView.register(PhytoCell.self, forCellReuseIdentifier: "PhytoCell")
     tableView.register(FertilizerCell.self, forCellReuseIdentifier: "FertilizerCell")

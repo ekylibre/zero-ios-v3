@@ -30,7 +30,6 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.layer.borderWidth  = 0.5
     selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedEquipmentsTableView.layer.cornerRadius = 5
-    selectedEquipmentsTableView.bounces = false
     selectedEquipmentsTableView.register(SelectedEquipmentCell.self, forCellReuseIdentifier: "SelectedEquipmentCell")
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
