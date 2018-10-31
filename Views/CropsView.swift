@@ -81,7 +81,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   var crops = [[Crops]]()
   var selectedCrops = [Crops]()
   var cropViews = [[CropView]]()
-  var selectedCropsCount: Int = 0
   var selectedSurfaceArea: Float = 0
 
   // MARK: - Initialization
@@ -182,7 +181,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   func showPlotIfReadOnly() {
     if interventionState == InterventionState.Validated.rawValue {
-      for index in 0..<selectedCropsCount {
+      for index in 0..<selectedCrops.count {
         let indexPath = IndexPath.init(row: index, section: 0)
 
         selectedIndexPath = indexPath
@@ -270,7 +269,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
           self.crops.append(cropsFromSamePlot)
           cropsFromSamePlot = [Crops]()
         }
-        selectedCropsCount += 1
         selectedSurfaceArea += (target.crops?.surfaceArea)!
         selectedCrops.append(target.crops!)
         cropsFromSamePlot.append(target.crops!)
@@ -327,7 +325,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       }
       for target in targets! {
         if crop == target.crops {
-          selectedCropsCount += 1
           selectedSurfaceArea += crop.surfaceArea
           selectedCrops.append(crop)
           break
@@ -393,7 +390,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func selectPlot(_ crops: [Crops], _ indexPath: IndexPath) {
-    selectedCropsCount += crops.count
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
     for (index, crop) in crops.enumerated() {
@@ -408,7 +404,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for case let view as CropView in cell.contentView.subviews {
       if view.checkboxImageView.isHighlighted {
         view.checkboxImageView.isHighlighted = false
-        selectedCropsCount -= 1
         selectedSurfaceArea -= crops[index].surfaceArea
 
         if let index = selectedCrops.firstIndex(of: crops[index]) {
@@ -444,6 +439,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         view.checkboxImageView.isHighlighted = false
         deselectCrop(crop, crops, cell)
       }
+      updateSelectedCropsLabel()
     }
   }
 
@@ -452,7 +448,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       cell.checkboxButton.isSelected = true
     }
 
-    selectedCropsCount += 1
     selectedSurfaceArea += crop.surfaceArea
     selectedCrops.append(crop)
   }
@@ -469,7 +464,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       index += 1
     }
 
-    selectedCropsCount -= 1
     selectedSurfaceArea -= crop.surfaceArea
 
     if let index = selectedCrops.firstIndex(of: crop) {
@@ -478,12 +472,12 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func updateSelectedCropsLabel() {
-    if selectedCropsCount == 0 {
+    if selectedCrops.count == 0 {
       selectedCropsLabel.text = "no_crop_selected".localized
     } else {
-      let cropString = selectedCropsCount < 2 ? "crop".localized : "crops".localized
+      let cropString = selectedCrops.count < 2 ? "crop".localized : "crops".localized
 
-      selectedCropsLabel.text = String(format: cropString, selectedCropsCount) +
+      selectedCropsLabel.text = String(format: cropString, selectedCrops.count) +
         String(format: " • %.1f ha", selectedSurfaceArea)
     }
   }
