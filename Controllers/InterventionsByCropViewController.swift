@@ -110,6 +110,25 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     }
   }
 
+  private func fetchInterventions(fromCrop crop: Crops) -> [Interventions]? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let predicate = NSPredicate(format: "ANY targets.crops == %@", crop)
+    interventionsFetchRequest.predicate = predicate
+
+    do {
+      let interventions = try managedContext.fetch(interventionsFetchRequest)
+      return interventions
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
   // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -189,6 +208,8 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropDetailedView.dateLabel.text = String(format: "%@ %@ %@ %@", "from".localized, startDate,
                                              "to".localized.lowercased(), stopDate)
     cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
+    cropDetailedView.interventions = fetchInterventions(fromCrop: crop) ?? [Interventions]()
+    cropDetailedView.tableView.reloadData()
   }
 
   // MARK: - Actions

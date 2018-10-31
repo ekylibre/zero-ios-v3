@@ -293,17 +293,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let intervention = interventions[indexPath.row]
-    let targets = fetchTargets(intervention)
     let workingPeriod = fetchWorkingPeriod(intervention)
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateImages: [Int16: UIImage] = [0: UIImage(named: "out-of-sync")!, 1: UIImage(named: "synchronised")!, 2: UIImage(named: "validated")!]
+    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
     let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
 
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
     cell.stateImageView.tintColor = stateTintColors[intervention.status]
-    cell.cropsLabel.text = updateCropsLabel(targets!)
+    cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
     cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
     if workingPeriod?.executionDate != nil {
@@ -313,25 +312,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.selectionStyle = .none
 
     return cell
-  }
-
-  func fetchTargets(_ intervention: Interventions) -> [Targets]? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
-    targetsFetchRequest.predicate = predicate
-
-    do {
-      let targets = try managedContext.fetch(targetsFetchRequest)
-      return targets
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
   }
 
   func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
@@ -353,18 +333,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func updateCropsLabel(_ targets: [Targets]?) -> String? {
+  private func updateCropsLabel(_ targets: NSSet) -> String {
+    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
     var totalSurfaceArea: Float = 0
 
-    if targets != nil {
-      for target in targets! {
-        let crop = target.crops
-        totalSurfaceArea += crop?.surfaceArea ?? 0
-      }
-      let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
-      return String(format: cropString, targets!.count) + String(format: " • %.1f ha", totalSurfaceArea)
+    for case let target as Targets in targets {
+      let crop = target.crops!
+
+      totalSurfaceArea += crop.surfaceArea
     }
-    return nil
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
   func transformDate(date: Date) -> String {

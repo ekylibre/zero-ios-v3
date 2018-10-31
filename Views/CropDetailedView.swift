@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CropDetailedView: UIView {
+class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Properties
 
@@ -65,9 +65,15 @@ class CropDetailedView: UIView {
 
   lazy var tableView: UITableView = {
     let tableView = UITableView(frame: CGRect.zero)
+    tableView.rowHeight = 80
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.delegate = self
+    tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()
+
+  var interventions = [Interventions]()
 
   // MARK: - Initialization
 
@@ -81,6 +87,8 @@ class CropDetailedView: UIView {
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
+    tableView.separatorStyle = .none
+    tableView.tableFooterView = UIView()
     self.addSubview(headerView)
     self.addSubview(tableView)
     setupLayout()
@@ -99,7 +107,7 @@ class CropDetailedView: UIView {
       yieldLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
       yieldLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       headerView.topAnchor.constraint(equalTo: self.topAnchor),
-      headerView.heightAnchor.constraint(equalToConstant: 200),
+      headerView.heightAnchor.constraint(equalToConstant: 120),
       headerView.leftAnchor.constraint(equalTo: self.leftAnchor),
       headerView.rightAnchor.constraint(equalTo: self.rightAnchor),
       tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
@@ -111,5 +119,68 @@ class CropDetailedView: UIView {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Table view
+
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return interventions.count
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as! InterventionCell
+    let intervention = interventions[indexPath.row]
+    let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
+
+    cell.typeImageView.image = UIImage(named: assetName)
+    cell.typeLabel.text = intervention.type?.localized
+    cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
+    cell.stateImageView.tintColor = (intervention.status == 0) ? UIColor.orange : UIColor.green
+    cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
+    cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
+    cell.notesLabel.text = intervention.infos
+    cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.LightGray : AppColor.CellColors.White
+    return cell
+  }
+
+  private func updateDateLabel(_ workingPeriods: NSSet) -> String {
+    let date = (workingPeriods.allObjects as! [WorkingPeriods]).first!.executionDate!
+    let calendar = Calendar.current
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMM"
+      return dateFormatter
+    }()
+    var dateString = dateFormatter.string(from: date)
+    let year = calendar.component(.year, from: date)
+
+    if calendar.isDateInToday(date) {
+      return "today".localized.lowercased()
+    } else if calendar.isDateInYesterday(date) {
+      return "yesterday".localized.lowercased()
+    } else {
+      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
+        dateString.append(" \(year)")
+      }
+      return dateString
+    }
+  }
+
+  private func updateCropsLabel(_ targets: NSSet) -> String {
+    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
+    var totalSurfaceArea: Float = 0
+
+    for case let target as Targets in targets {
+      let crop = target.crops!
+
+      totalSurfaceArea += crop.surfaceArea
+    }
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
   }
 }
