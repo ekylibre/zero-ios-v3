@@ -49,7 +49,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
         for registeredSpecie in registeredSpecies! {
           let specie = registeredSpecie["name"] as! String
-          species.append(specie.uppercased())
+          if SpecieEnum(rawValue: specie.uppercased()) != SpecieEnum.__unknown(specie.uppercased()) {
+            species.append(specie.uppercased())
+          }
         }
       } catch {
         print("Lexicon error")
@@ -57,7 +59,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     } else {
       print("species.json not found")
     }
-
     return species.sorted()
   }
 
