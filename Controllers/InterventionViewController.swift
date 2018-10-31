@@ -465,8 +465,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         if self.navigationBar.items?.count == 1 {
           self.displayFarmName()
         }
-        self.pushInterventionIfNeeded()
         self.pushEntities()
+        self.pushInterventionIfNeeded()
         self.updateInterventionIfNeeded()
         self.fetchInterventions()
 

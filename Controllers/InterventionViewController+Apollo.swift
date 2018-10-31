@@ -284,26 +284,6 @@ extension InterventionViewController {
     return id
   }
 
-  func pushInputIfNoEkyID(input: NSManagedObject) -> Int32? {
-    if (input.value(forKey: "ekyID") as! Int32) == 0 {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return nil
-      }
-
-      let managedContext = appDelegate.persistentContainer.viewContext
-
-      do {
-        let inputID = pushInput(input: input)
-
-        input.setValue(inputID, forKey: "ekyID")
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-    return input.value(forKey: "ekyID") as? Int32
-  }
-
   private func pushSeed(seed: Seeds) -> Int32{
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
@@ -340,25 +320,6 @@ extension InterventionViewController {
     group.wait()
     return id
   }
-
-  func pushSeedIfNoEkyID(seed: Seeds) -> Int32? {
-    if seed.ekyID == 0 {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return nil
-      }
-
-      let managedContext = appDelegate.persistentContainer.viewContext
-
-      do {
-        seed.ekyID = pushSeed(seed: seed);
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-    return seed.ekyID
-  }
-
 
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -1360,7 +1321,7 @@ extension InterventionViewController {
           referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "SEED")
         } else if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID == 0 {
-          id = String(pushSeedIfNoEkyID(seed: seed.seeds!)!)
+          id = String(seed.seeds!.ekyID)
         } else {
           id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }
@@ -1375,7 +1336,7 @@ extension InterventionViewController {
           referenceId = (phyto.phytos?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "CHEMICAL")
         } else if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID == 0 {
-          id = String(pushInputIfNoEkyID(input: phyto.phytos!)!)
+          id = String(phyto.phytos!.ekyID)
         } else {
           id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
         }
@@ -1390,7 +1351,7 @@ extension InterventionViewController {
           referenceId = (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "FERTILIZER")
         } else if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID == 0 {
-          id = String(pushInputIfNoEkyID(input: fertilizer.fertilizers!)!)
+          id = String(fertilizer.fertilizers!.ekyID)
         } else {
           id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
         }
@@ -1405,7 +1366,7 @@ extension InterventionViewController {
           referenceId = (material.materials?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "MATERIAL")
         } else {
-          id = (material.materials?.ekyID as NSNumber?)?.stringValue
+          id = String(material.materials!.ekyID)
         }
         inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!))
       default:
@@ -1473,24 +1434,6 @@ extension InterventionViewController {
     return id
   }
 
-  func pushEquipmentIfNoEkyId(equipment: Equipments) -> Int32? {
-    if equipment.ekyID == 0 {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return nil
-      }
-
-      let managedContext = appDelegate.persistentContainer.viewContext
-
-      do {
-        equipment.ekyID = pushEquipment(equipment: equipment)
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-    return equipment.ekyID
-  }
-
   func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -1542,7 +1485,7 @@ extension InterventionViewController {
     var equipmentsAttributes = [InterventionToolAttributes]()
 
     for equipment in equipments! {
-      let equipmentID = pushEquipmentIfNoEkyId(equipment: (equipment as! InterventionEquipments).equipments!)
+      let equipmentID = (equipment as! InterventionEquipments).equipments!.ekyID
       let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipmentID as NSNumber?)?.stringValue)
 
       equipmentsAttributes.append(equipmentAttributes)
@@ -1579,30 +1522,12 @@ extension InterventionViewController {
     return id
   }
 
-  func pushPersonIfNoEkyId(person: Persons) -> Int32? {
-    if person.ekyID == 0 {
-      guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-        return nil
-      }
-
-      let managedContext = appDelegate.persistentContainer.viewContext
-
-      do {
-        person.ekyID = pushPerson(person: person)
-        try managedContext.save()
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
-    }
-    return person.ekyID
-  }
-
   func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
     let interventionPersons = intervention.interventionPersons
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
     for interventionPerson in interventionPersons! {
-      let id = pushPersonIfNoEkyId(person: (interventionPerson as! InterventionPersons).persons!)
+      let id = (interventionPerson as! InterventionPersons).persons?.ekyID
       let role = (interventionPerson as! InterventionPersons).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
         personId: (id as NSNumber?)?.stringValue,
