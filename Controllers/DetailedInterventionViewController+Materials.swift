@@ -33,7 +33,7 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
-    materialsSelectionView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
+    materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
     materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
     materialsSelectionView.addInterventionViewController = self
   }

@@ -34,7 +34,7 @@ extension AddInterventionViewController {
     selectedPersonsTableView.register(SelectedPersonCell.self, forCellReuseIdentifier: "SelectedPersonCell")
     selectedPersonsTableView.dataSource = self
     selectedPersonsTableView.delegate = self
-    personsSelectionView.exitButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
+    personsSelectionView.cancelButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
     personsSelectionView.addInterventionViewController = self
   }
 

@@ -41,14 +41,15 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   private func loadSpecies() -> [String] {
     var species = [String]()
 
-    if let asset = NSDataAsset(name: "species") {
+    if let asset = NSDataAsset(name: "production-natures") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredSpecies = jsonResult as? [[String: Any]]
+        let productionNatures = jsonResult as? [[String: Any]]
 
-        for registeredSpecie in registeredSpecies! {
-          let specie = registeredSpecie["name"] as! String
-          if SpecieEnum(rawValue: specie.uppercased()) != SpecieEnum.__unknown(specie.uppercased()) {
+        for productionNature in productionNatures! {
+          let specie = productionNature["specie"] as! String
+          if !species.contains(specie.uppercased()) &&
+            SpecieEnum(rawValue: specie.uppercased()) != SpecieEnum.__unknown(specie.uppercased()) {
             species.append(specie.uppercased())
           }
         }
@@ -56,7 +57,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         print("Lexicon error")
       }
     } else {
-      print("species.json not found")
+      print("production_natures.json not found")
     }
     return species.sorted()
   }
