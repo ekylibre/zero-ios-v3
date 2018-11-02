@@ -101,7 +101,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Properties
 
-  var newIntervention: Interventions!
+  var newIntervention: Intervention!
   var interventionType: String!
   var selectedRow: Int!
   var selectedValue: String!
@@ -464,7 +464,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let workingPeriod = WorkingPeriods(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
 
-    newIntervention = Interventions(context: managedContext)
+    newIntervention = Intervention(context: managedContext)
     newIntervention.type = interventionType
     newIntervention.status = InterventionState.Created.rawValue
     newIntervention.infos = "Infos"
@@ -528,7 +528,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveInterventionInputs(intervention: Interventions) {
+  func saveInterventionInputs(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -565,7 +565,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return crops
   }
 
-  func createTargets(intervention: Interventions) {
+  func createTargets(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -588,7 +588,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveHarvest(intervention: Interventions) {
+  func saveHarvest(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -614,7 +614,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createMaterials(intervention: Interventions) {
+  func createMaterials(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -635,7 +635,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(intervention: Interventions) {
+  func createEquipments(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -671,7 +671,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchedEntity = entity
   }
 
-  func saveWeather(intervention: Interventions) {
+  func saveWeather(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

@@ -25,7 +25,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Properties
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-  var interventions = [Interventions]() {
+  var interventions = [Intervention]() {
     didSet {
       tableView.reloadData()
     }
@@ -139,7 +139,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
@@ -236,7 +236,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       "InterventionMaterials",
       "InterventionPersons",
       "InterventionPhytosanitaries",
-      "Interventions",
+      "Intervention",
       "InterventionSeeds",
       "Materials",
       "Persons",
@@ -311,7 +311,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func fetchTargets(_ intervention: Interventions) -> [Targets]? {
+  func fetchTargets(_ intervention: Intervention) -> [Targets]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -330,7 +330,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
+  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriods? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -390,7 +390,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let intervention = Interventions(context: managedContext)
+    let intervention = Intervention(context: managedContext)
     let workingPeriod = WorkingPeriods(context: managedContext)
 
     intervention.type = type
@@ -476,7 +476,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let predicate = NSPredicate(format: "ekyID == %d", 0)
 
     interventionsFetchRequest.predicate = predicate

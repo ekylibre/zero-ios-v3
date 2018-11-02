@@ -789,7 +789,7 @@ extension InterventionViewController {
     weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
     weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
     weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
-    weather.interventions = intervention as? Interventions
+    weather.interventions = intervention as? Intervention
 
     do {
       try managedContext.save()
@@ -846,7 +846,7 @@ extension InterventionViewController {
     return nil
   }
 
-  private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Interventions) -> InterventionEquipments {
+  private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Intervention) -> InterventionEquipments {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return InterventionEquipments()
     }
@@ -871,7 +871,7 @@ extension InterventionViewController {
 
   // MARK: Targets
 
-  private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Interventions) -> Targets {
+  private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Intervention) -> Targets {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return Targets()
     }
@@ -891,7 +891,7 @@ extension InterventionViewController {
 
   // MARK: Doers
 
-  private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Interventions) -> InterventionPersons {
+  private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Intervention) -> InterventionPersons {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return InterventionPersons()
     }
@@ -925,7 +925,7 @@ extension InterventionViewController {
 
   // MARK: Harvests
 
-  private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Interventions) -> Harvests {
+  private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Intervention) -> Harvests {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return Harvests()
     }
@@ -969,7 +969,7 @@ extension InterventionViewController {
     return nil
   }
 
-  private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Interventions, nature: String) -> Harvests {
+  private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Intervention, nature: String) -> Harvests {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return Harvests()
     }
@@ -1001,7 +1001,7 @@ extension InterventionViewController {
 
   // MARK: Inputs
 
-  private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Interventions) -> Interventions {
+  private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Intervention) -> Intervention {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return intervention
     }
@@ -1062,7 +1062,7 @@ extension InterventionViewController {
 
   // MARK: Intervention
 
-  private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions {
+  private func saveEntitiesIntoIntervention(intervention: Intervention, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Intervention {
     for workingDay in fetchedIntervention.workingDays {
       intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
@@ -1093,7 +1093,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    var intervention = Interventions(context: managedContext)
+    var intervention = Intervention(context: managedContext)
 
     intervention.farmID = farmID
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
@@ -1120,7 +1120,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let predicate = NSPredicate(format: "ekyID == %@", fetchedIntervention.id)
 
     interventionFetchRequest.predicate = predicate
@@ -1159,7 +1159,7 @@ extension InterventionViewController {
         for intervention in farm.interventions {
           let predicate = NSPredicate(format: "ekyID == %d", (intervention.id as NSString).intValue)
 
-          if self.checkIfNewEntity(entityName: "Interventions", predicate: predicate) {
+          if self.checkIfNewEntity(entityName: "Intervention", predicate: predicate) {
             self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
           }
           self.updateInterventionStatus(fetchedIntervention: intervention)
@@ -1176,7 +1176,7 @@ extension InterventionViewController {
 
   // MARK: - Mutations: Interventions
 
-  func defineWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
+  func defineWorkingDayAttributesFrom(intervention: Intervention) -> [InterventionWorkingDayAttributes] {
     let workingDays = intervention.workingPeriods
     var workingDaysAttributes = [InterventionWorkingDayAttributes]()
 
@@ -1194,7 +1194,7 @@ extension InterventionViewController {
     return workingDaysAttributes
   }
 
-  func defineTargetAttributesFrom(intervention: Interventions) -> [InterventionTargetAttributes] {
+  func defineTargetAttributesFrom(intervention: Intervention) -> [InterventionTargetAttributes] {
     let targets = intervention.targets
     var targetsAttributes = [InterventionTargetAttributes]()
 
@@ -1233,7 +1233,7 @@ extension InterventionViewController {
     return inputAttributes
   }
 
-  func defineInputsAttributesFrom(intervention: Interventions) -> [InterventionInputAttributes] {
+  func defineInputsAttributesFrom(intervention: Intervention) -> [InterventionInputAttributes] {
     let seeds = intervention.interventionSeeds?.allObjects
     let phytos = intervention.interventionPhytosanitaries?.allObjects
     let fertilizers = intervention.interventionFertilizers?.allObjects
@@ -1312,7 +1312,7 @@ extension InterventionViewController {
     return inputsAttributes
   }
 
-  func defineHarvestAttributesFrom(intervention: Interventions) -> [InterventionOutputAttributes] {
+  func defineHarvestAttributesFrom(intervention: Intervention) -> [InterventionOutputAttributes] {
     let harvests = intervention.harvests
     var harvestsAttributes = [InterventionOutputAttributes]()
     for harvest in harvests! {
@@ -1388,7 +1388,7 @@ extension InterventionViewController {
     return equipment.ekyID
   }
 
-  func defineEquipmentAttributesFrom(intervention: Interventions) -> [InterventionToolAttributes] {
+  func defineEquipmentAttributesFrom(intervention: Intervention) -> [InterventionToolAttributes] {
     let equipments = intervention.interventionEquipments
     var equipmentsAttributes = [InterventionToolAttributes]()
 
@@ -1401,7 +1401,7 @@ extension InterventionViewController {
     return equipmentsAttributes
   }
 
-  func defineOperatorAttributesFrom(intervention: Interventions) -> [InterventionOperatorAttributes] {
+  func defineOperatorAttributesFrom(intervention: Intervention) -> [InterventionOperatorAttributes] {
     let interventionPersons = intervention.interventionPersons
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
@@ -1417,7 +1417,7 @@ extension InterventionViewController {
     return operatorsAttributes
   }
 
-  func defineWeatherAttributesFrom(intervention: Interventions) -> WeatherAttributes {
+  func defineWeatherAttributesFrom(intervention: Intervention) -> WeatherAttributes {
     var weather = WeatherAttributes()
 
     weather.temperature = intervention.weather?.temperature as? Double
@@ -1426,7 +1426,7 @@ extension InterventionViewController {
     return weather
   }
 
-  func pushIntervention(intervention: Interventions) -> Int32 {
+  func pushIntervention(intervention: Intervention) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }
