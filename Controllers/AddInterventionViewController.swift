@@ -37,13 +37,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationSeparatorView: UIView!
 
   // Inputs
+  @IBOutlet var inputsTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var inputsView: UIView!
   @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var addInputsButton: UIButton!
-  @IBOutlet weak var inputsCollapseButton: UIButton!
-  @IBOutlet weak var inputsNumber: UILabel!
+  @IBOutlet weak var inputsAddButton: UIButton!
+  @IBOutlet weak var inputsCountLabel: UILabel!
+  @IBOutlet weak var inputsExpandImageView: UIImageView!
   @IBOutlet weak var selectedInputsTableView: UITableView!
-  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var inputsSeparatorView: UIView!
 
   // Materials
@@ -814,6 +815,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     switch gestureRecognizer {
+    case inputsTapGesture:
+      return !selectedInputsTableView.bounds.contains(touch.location(in: selectedInputsTableView))
     case materialsTapGesture:
       return !selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView))
     case equipmentsTapGesture:
@@ -878,15 +881,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
       })
     }
-  }
-
-  @IBAction func selectInput(_ sender: Any) {
-    dimView.isHidden = false
-    inputsSelectionView.isHidden = false
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
   }
 
   @IBAction func cancelAdding(_ sender: Any) {

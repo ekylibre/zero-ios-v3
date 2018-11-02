@@ -74,26 +74,41 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
+  @IBAction func openInputsSelectionView(_ sender: Any) {
+    dimView.isHidden = false
+    inputsSelectionView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
   }
 
-  @IBAction func collapseInputsView(_ sender: Any) {
+  @IBAction private func tapInputsView() {
     let shouldExpand = (inputsHeightConstraint.constant == 70)
+    let tableViewHeight = (selectedInputs.count > 10) ? 10 * 80 : selectedInputs.count * 80
 
-    selectedInputsTableView.isHidden = !shouldExpand
-    inputsCollapseButton.imageView!.transform = inputsCollapseButton.imageView!.transform.rotated(by: CGFloat.pi)
-    view.layoutIfNeeded()
-
-    if shouldExpand {
-      resizeViewAndTableView(viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-        tableView: self.selectedInputsTableView)
-    } else {
-      inputsHeightConstraint.constant = 70
+    if selectedInputs.count == 0 {
+      return
     }
-    showEntitiesNumber(entities: selectedInputs, constraint: inputsHeightConstraint,
-      numberLabel: inputsNumber, addEntityButton: addInputsButton)
+
+    updateCountLabel()
+    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    inputsAddButton.isHidden = !shouldExpand
+    inputsCountLabel.isHidden = shouldExpand
+    inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+  }
+
+  private func updateCountLabel() {
+    if selectedInputs.count == 1 {
+      inputsCountLabel.text = "input".localized
+    } else {
+      inputsCountLabel.text = String(format: "inputs".localized, selectedInputs.count)
+    }
+  }
+
+  // MARK: -
+  func saveSelectedRow(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
   }
 
   func closeInputsSelectionView() {
@@ -105,13 +120,13 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     })
 
     if selectedInputs.count > 0 {
-      inputsCollapseButton.isHidden = false
+      inputsExpandImageView.isHidden = false
       selectedInputsTableView.isHidden = false
       resizeViewAndTableView(
         viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+        tableViewHeightConstraint: self.inputsTableViewHeightConstraint,
         tableView: self.selectedInputsTableView)
-      inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+      inputsExpandImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
       view.layoutIfNeeded()
     }
     selectedInputsTableView.reloadData()
@@ -175,13 +190,13 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
         self.selectedInputsTableView.isHidden = true
-        self.inputsCollapseButton.isHidden = true
+        self.inputsExpandImageView.isHidden = true
         self.inputsHeightConstraint.constant = 70
       } else {
         UIView.animate(withDuration: 0.5, animations: {
           self.resizeViewAndTableView(
             viewHeightConstraint: self.inputsHeightConstraint,
-            tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
+            tableViewHeightConstraint: self.inputsTableViewHeightConstraint,
             tableView: self.selectedInputsTableView
           )
           self.view.layoutIfNeeded()
