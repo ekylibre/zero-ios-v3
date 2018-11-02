@@ -170,7 +170,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farm")
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -228,7 +228,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let entitiesNames = [
       "Crop",
       "Equipment",
-      "Farms",
+      "Farm",
       "Fertilizer",
       "Harvests",
       "InterventionEquipment",
@@ -243,7 +243,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       "Phyto",
       "Seed",
       "Storages",
-      "Users",
+      "User",
       "Weather",
       "WorkingPeriod"]
 

@@ -92,7 +92,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let farmsFetchRequest: NSFetchRequest<Farms> = Farms.fetchRequest()
+    let farmsFetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
 
     do {
       let farms = try managedContext.fetch(farmsFetchRequest)
@@ -112,7 +112,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for farm in farms {
-      let newFarm = Farms(context: managedContext)
+      let newFarm = Farm(context: managedContext)
 
       newFarm.id = farm.id
       newFarm.name = farm.label

@@ -24,7 +24,7 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventionEquipments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionEquipment" inverseName="equipment" inverseEntity="InterventionEquipment" syncable="YES"/>
     </entity>
-    <entity name="Farms" representedClassName="Farms" syncable="YES" codeGenerationType="class">
+    <entity name="Farm" representedClassName="Farm" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -160,7 +160,7 @@
         <relationship name="crop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crop" inverseName="targets" inverseEntity="Crop" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="targets" inverseEntity="Intervention" syncable="YES"/>
     </entity>
-    <entity name="Users" representedClassName="Users" syncable="YES" codeGenerationType="class">
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Weather" representedClassName="Weather" syncable="YES" codeGenerationType="class">
@@ -178,7 +178,7 @@
     <elements>
         <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="210"/>
         <element name="Equipment" positionX="627.27734375" positionY="-479.38671875" width="128" height="180"/>
-        <element name="Farms" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
+        <element name="Farm" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
         <element name="Fertilizer" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
         <element name="Harvests" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
         <element name="InterventionEquipment" positionX="376.83203125" positionY="-222.34765625" width="128" height="75"/>
@@ -194,7 +194,7 @@
         <element name="Seed" positionX="-386.609375" positionY="189.265625" width="128" height="165"/>
         <element name="Storages" positionX="-388.83203125" positionY="-467.73046875" width="128" height="105"/>
         <element name="Target" positionX="581.33984375" positionY="207.44921875" width="128" height="90"/>
-        <element name="Users" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
+        <element name="User" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
         <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="120"/>
         <element name="WorkingPeriod" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>
     </elements>
