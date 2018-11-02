@@ -33,7 +33,7 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.register(SelectedEquipmentCell.self, forCellReuseIdentifier: "SelectedEquipmentCell")
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
-    equipmentsSelectionView.exitButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)
+    equipmentsSelectionView.cancelButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)
     equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes), for: .touchUpInside)
     equipmentsSelectionView.addInterventionViewController = self
   }

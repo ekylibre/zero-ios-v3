@@ -28,11 +28,11 @@ class SelectionView: UIView {
     return headerView
   }()
 
-  lazy var exitButton: UIButton = {
-    let exitButton = UIButton(frame: CGRect.zero)
-    exitButton.setImage(UIImage(named: "exit"), for: .normal)
-    exitButton.translatesAutoresizingMaskIntoConstraints = false
-    return exitButton
+  lazy var cancelButton: UIButton = {
+    let cancelButton = UIButton(frame: CGRect.zero)
+    cancelButton.setTitle("cancel".localized, for: .normal)
+    cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    return cancelButton
   }()
 
   lazy var searchBar: UISearchBar = {
@@ -90,7 +90,7 @@ class SelectionView: UIView {
     self.layer.cornerRadius = 5
     self.clipsToBounds = true
     self.addSubview(headerView)
-    self.addSubview(exitButton)
+    self.addSubview(cancelButton)
     self.addSubview(searchBar)
     self.addSubview(createButton)
     self.addSubview(tableView)
@@ -108,10 +108,9 @@ class SelectionView: UIView {
       headerView.heightAnchor.constraint(equalToConstant: 60),
       headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      exitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      exitButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      exitButton.widthAnchor.constraint(equalToConstant: 20),
-      exitButton.heightAnchor.constraint(equalToConstant: 20),
+      cancelButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+      cancelButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
+      cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
       searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
       searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
       searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
