@@ -72,7 +72,7 @@
         <relationship name="interventionPhytosanitaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPhytosanitary" inverseName="intervention" inverseEntity="InterventionPhytosanitary" syncable="YES"/>
         <relationship name="interventionSeeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionSeed" inverseName="intervention" inverseEntity="InterventionSeed" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Target" inverseName="intervention" inverseEntity="Target" syncable="YES"/>
-        <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="interventions" inverseEntity="Weather" syncable="YES"/>
+        <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="intervention" inverseEntity="Weather" syncable="YES"/>
         <relationship name="workingPeriods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingPeriod" inverseName="intervention" inverseEntity="WorkingPeriod" syncable="YES"/>
     </entity>
     <entity name="InterventionEquipment" representedClassName="InterventionEquipment" syncable="YES" codeGenerationType="class">
@@ -168,7 +168,7 @@
         <attribute name="temperature" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="weatherDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="weather" inverseEntity="Intervention" syncable="YES"/>
+        <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="weather" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <entity name="WorkingPeriod" representedClassName="WorkingPeriod" syncable="YES" codeGenerationType="class">
         <attribute name="executionDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>

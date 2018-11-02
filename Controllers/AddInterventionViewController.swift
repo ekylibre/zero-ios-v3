@@ -680,7 +680,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var currentWeather = Weather(context: managedContext)
 
     currentWeather = weather
-    currentWeather.interventions = intervention
+    currentWeather.intervention = intervention
 
     do {
       try managedContext.save()

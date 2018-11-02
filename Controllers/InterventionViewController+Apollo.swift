@@ -789,7 +789,7 @@ extension InterventionViewController {
     weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
     weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
     weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
-    weather.interventions = intervention as? Intervention
+    weather.intervention = intervention as? Intervention
 
     do {
       try managedContext.save()
