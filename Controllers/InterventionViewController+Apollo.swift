@@ -138,7 +138,7 @@ extension InterventionViewController {
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
     for crop in crops {
-      let newCrop = Crops(context: managedContext)
+      let newCrop = Crop(context: managedContext)
 
       newCrop.uuid = UUID(uuidString: crop.uuid)
       newCrop.plotName = crop.name
@@ -171,14 +171,14 @@ extension InterventionViewController {
     }
   }
 
-  private func fetchCrop(uuid: String) -> Crops? {
+  private func fetchCrop(uuid: String) -> Crop? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
-    var crops = [Crops]()
+    var crops = [Crop]()
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
     let predicate = NSPredicate(format: "uuid == %@", uuid)
     cropsFetchRequest.predicate = predicate
 
@@ -190,7 +190,7 @@ extension InterventionViewController {
     return crops.first
   }
 
-  private func updateCrop(local: Crops, updated: FarmQuery.Data.Farm.Crop) {
+  private func updateCrop(local: Crop, updated: FarmQuery.Data.Farm.Crop) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -222,7 +222,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let crop = Crops(context: managedContext)
+    let crop = Crop(context: managedContext)
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
@@ -871,20 +871,20 @@ extension InterventionViewController {
 
   // MARK: Targets
 
-  private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Intervention) -> Targets {
+  private func saveTargetToIntervention(fetchedTarget: InterventionQuery.Data.Farm.Intervention.Target, intervention: Intervention) -> Target {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return Targets()
+      return Target()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let target = Targets(context: managedContext)
+    let target = Target(context: managedContext)
     let predicate = NSPredicate(format: "uuid == %@", fetchedTarget.crop.uuid)
-    let crop = returnEntityIfSame(entityName: "Crops", predicate: predicate)
+    let crop = returnEntityIfSame(entityName: "Crop", predicate: predicate)
 
     if crop != nil {
       target.workAreaPercentage = Int16(fetchedTarget.workingPercentage)
-      target.crops = crop as? Crops
-      target.interventions = intervention
+      target.crop = crop as? Crop
+      target.intervention = intervention
     }
     return target
   }
@@ -1199,9 +1199,9 @@ extension InterventionViewController {
     var targetsAttributes = [InterventionTargetAttributes]()
 
     for target in targets! {
-      let target = target as! Targets
+      let target = target as! Target
       let targetAttributes = InterventionTargetAttributes(
-        cropId: (target.crops?.uuid)?.uuidString,
+        cropId: (target.crop?.uuid)?.uuidString,
         workZone: nil,
         workAreaPercentage: Int(target.workAreaPercentage))
 

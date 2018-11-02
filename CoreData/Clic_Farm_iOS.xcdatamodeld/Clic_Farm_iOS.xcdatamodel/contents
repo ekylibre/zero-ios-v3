@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
+    <entity name="Crop" representedClassName="Crop" syncable="YES" codeGenerationType="class">
         <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,7 +11,7 @@
         <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="surfaceArea" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="crops" inverseEntity="Targets" syncable="YES"/>
+        <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Target" inverseName="crop" inverseEntity="Target" syncable="YES"/>
     </entity>
     <entity name="Equipments" representedClassName="Equipments" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -71,7 +71,7 @@
         <relationship name="interventionPersons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPersons" inverseName="interventions" inverseEntity="InterventionPersons" syncable="YES"/>
         <relationship name="interventionPhytosanitaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPhytosanitaries" inverseName="interventions" inverseEntity="InterventionPhytosanitaries" syncable="YES"/>
         <relationship name="interventionSeeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionSeeds" inverseName="interventions" inverseEntity="InterventionSeeds" syncable="YES"/>
-        <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Targets" inverseName="interventions" inverseEntity="Targets" syncable="YES"/>
+        <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Target" inverseName="intervention" inverseEntity="Target" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="interventions" inverseEntity="Weather" syncable="YES"/>
         <relationship name="workingPeriods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkingPeriods" inverseName="interventions" inverseEntity="WorkingPeriods" syncable="YES"/>
     </entity>
@@ -155,10 +155,10 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="harvests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Harvests" inverseName="storages" inverseEntity="Harvests" syncable="YES"/>
     </entity>
-    <entity name="Targets" representedClassName="Targets" syncable="YES" codeGenerationType="class">
+    <entity name="Target" representedClassName="Target" syncable="YES" codeGenerationType="class">
         <attribute name="workAreaPercentage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="crops" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crops" inverseName="targets" inverseEntity="Crops" syncable="YES"/>
-        <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="targets" inverseEntity="Intervention" syncable="YES"/>
+        <relationship name="crop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crop" inverseName="targets" inverseEntity="Crop" syncable="YES"/>
+        <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="targets" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <entity name="Users" representedClassName="Users" syncable="YES" codeGenerationType="class">
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
@@ -176,7 +176,7 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="workingPeriods" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crops" positionX="886.87890625" positionY="171.3515625" width="128" height="210"/>
+        <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="210"/>
         <element name="Equipments" positionX="627.27734375" positionY="-479.38671875" width="128" height="180"/>
         <element name="Farms" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
         <element name="Fertilizers" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
@@ -193,7 +193,7 @@
         <element name="Phytos" positionX="1030.23828125" positionY="-67.5859375" width="128" height="225"/>
         <element name="Seeds" positionX="-386.609375" positionY="189.265625" width="128" height="165"/>
         <element name="Storages" positionX="-388.83203125" positionY="-467.73046875" width="128" height="105"/>
-        <element name="Targets" positionX="581.33984375" positionY="207.44921875" width="128" height="90"/>
+        <element name="Target" positionX="581.33984375" positionY="207.44921875" width="128" height="90"/>
         <element name="Users" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
         <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="120"/>
         <element name="WorkingPeriods" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>

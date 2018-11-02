@@ -546,14 +546,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func fetchSelectedCrops() -> [Crops] {
+  func fetchSelectedCrops() -> [Crop] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
+      return [Crop]()
     }
 
-    var crops: [Crops]!
+    var crops: [Crop]!
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
     let predicate = NSPredicate(format: "isSelected == true")
 
     cropsFetchRequest.predicate = predicate
@@ -574,10 +574,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let selectedCrops = fetchSelectedCrops()
 
     for crop in selectedCrops {
-      let target = Targets(context: managedContext)
+      let target = Target(context: managedContext)
 
-      target.interventions = intervention
-      target.crops = crop
+      target.intervention = intervention
+      target.crop = crop
       target.workAreaPercentage = 100
     }
 

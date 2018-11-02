@@ -226,7 +226,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   func emptyAllCoreDate() {
     let entitiesNames = [
-      "Crops",
+      "Crop",
       "Equipments",
       "Farms",
       "Fertilizers",
@@ -311,14 +311,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func fetchTargets(_ intervention: Intervention) -> [Targets]? {
+  func fetchTargets(_ intervention: Intervention) -> [Target]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
     targetsFetchRequest.predicate = predicate
 
     do {
@@ -349,12 +349,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func updateCropsLabel(_ targets: [Targets]?) -> String? {
+  func updateCropsLabel(_ targets: [Target]?) -> String? {
     var totalSurfaceArea: Float = 0
 
     if targets != nil {
       for target in targets! {
-        let crop = target.crops
+        let crop = target.crop
         totalSurfaceArea += crop?.surfaceArea ?? 0
       }
       let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
@@ -496,13 +496,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func fetchCrops() -> [Crops] {
+  func fetchCrops() -> [Crop] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
+      return [Crop]()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
@@ -511,7 +511,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return [Crops]()
+    return [Crop]()
   }
 
   @objc func action(sender: UIButton) {
