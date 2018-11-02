@@ -537,6 +537,8 @@
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
 "started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
+"today" = "Aujourd'hui";
+"yesterday" = "Hier";
 
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
