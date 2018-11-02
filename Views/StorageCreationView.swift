@@ -126,8 +126,11 @@ class StorageCreationView: UIView, UITextFieldDelegate {
   // MARK: - Actions
 
   func returnFirstTypeInSortedOrder() -> String {
-    let type = ["BUILDING", "HEAP", "SILO"]
+    var type = ["BUILDING", "HEAP", "SILO"]
 
-    return type[0].localized
+    type = type.sorted(by: {
+      $0.localized < $1.localized
+    })
+    return type[0]
   }
 }
