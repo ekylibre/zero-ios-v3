@@ -739,7 +739,7 @@ extension InterventionViewController {
     }
 
     let manaedContext = appDelegate.persistentContainer.viewContext
-    let storage = Storages(context: manaedContext)
+    let storage = Storage(context: manaedContext)
 
     storage.storageID = (fetchedStorage.id as NSString).intValue
     storage.name = fetchedStorage.name
@@ -767,7 +767,7 @@ extension InterventionViewController {
         for storage in farm.storages {
           let predicate = NSPredicate(format: "storageID == %d", (storage.id as NSString).intValue)
 
-          if self.checkIfNewEntity(entityName: "Storages", predicate: predicate) {
+          if self.checkIfNewEntity(entityName: "Storage", predicate: predicate) {
             self.saveStorage(fetchedStorage: storage, farmID: farm.id)
           }
         }
@@ -925,19 +925,19 @@ extension InterventionViewController {
 
   // MARK: Harvests
 
-  private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Intervention) -> Harvests {
+  private func createLoadIfGlobalOutput(fetchedOutput: InterventionQuery.Data.Farm.Intervention.Output, intervention: Intervention) -> Harvest {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return Harvests()
+      return Harvest()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvest = Harvests(context: managedContext)
+    let harvest = Harvest(context: managedContext)
 
     harvest.quantity = fetchedOutput.quantity ?? 0
     harvest.type = fetchedOutput.nature.rawValue.lowercased().localized
     harvest.unit = fetchedOutput.unit?.rawValue.lowercased().localized
     harvest.number = fetchedOutput.id
-    harvest.interventions = intervention
+    harvest.intervention = intervention
 
     do {
       try managedContext.save()
@@ -947,13 +947,13 @@ extension InterventionViewController {
     return harvest
   }
 
-  private func returnStorageIfSame(storageID: Int32?) -> Storages? {
+  private func returnStorageIfSame(storageID: Int32?) -> Storage? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
 
     do {
       let storages = try managedContext.fetch(storagesFetchRequest)
@@ -969,23 +969,23 @@ extension InterventionViewController {
     return nil
   }
 
-  private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Intervention, nature: String) -> Harvests {
+  private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load, intervention: Intervention, nature: String) -> Harvest {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return Harvests()
+      return Harvest()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvest = Harvests(context: managedContext)
+    let harvest = Harvest(context: managedContext)
     let storageID = fetchedLoad.storage?.id
-    let storage: Storages?
+    let storage: Storage?
 
     if storageID != nil {
       let predicate = NSPredicate(format: "storageID == %@", storageID!)
-      storage = returnEntityIfSame(entityName: "Storages", predicate: predicate) as? Storages
+      storage = returnEntityIfSame(entityName: "Storage", predicate: predicate) as? Storage
       storage?.addToHarvests(harvest)
-      harvest.storages = storage
+      harvest.storage = storage
     }
-    harvest.interventions = intervention
+    harvest.intervention = intervention
     harvest.type = nature
     harvest.number = fetchedLoad.number
     harvest.quantity = fetchedLoad.quantity
@@ -1316,13 +1316,13 @@ extension InterventionViewController {
     let harvests = intervention.harvests
     var harvestsAttributes = [InterventionOutputAttributes]()
     for harvest in harvests! {
-      let harvest = harvest as! Harvests
+      let harvest = harvest as! Harvest
       let loads = HarvestLoadAttributes(
         quantity: harvest.quantity,
         netQuantity: nil,
         unit: HarvestLoadUnitEnum(rawValue: harvest.unit!),
         number: harvest.number,
-        storageId: "\(String(describing: harvest.storages))")
+        storageId: "\(String(describing: harvest.storage))")
       let harvestAttributes = InterventionOutputAttributes(
         quantity: nil,
         nature: InterventionOutputTypeEnum(rawValue: harvest.type!.uppercased()),

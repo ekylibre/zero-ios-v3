@@ -126,11 +126,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weather: Weather!
   var weatherIsSelected: Bool = false
-  var harvests = [Harvests]()
+  var harvests = [Harvest]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
   var storagesPickerView: CustomPickerView!
-  var storages = [Storages]()
+  var storages = [Storage]()
   var weatherButtons = [UIButton]()
   let massUnitMeasure = [
     "GRAM",
@@ -378,7 +378,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.storage.layer.borderWidth = 1
       cell.storage.layer.cornerRadius = 5
-      cell.storage.setTitle(harvests[indexPath.row].storages?.name ?? "---", for: .normal)
+      cell.storage.setTitle(harvests[indexPath.row].storage?.name ?? "---", for: .normal)
       cell.quantity.keyboardType = .decimalPad
       cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.quantity.layer.borderWidth = 1
@@ -596,15 +596,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for harvestEntity in harvests {
-      let harvest = Harvests(context: managedContext)
+      let harvest = Harvest(context: managedContext)
       let type = harvestType.titleLabel?.text
 
-      harvest.interventions = intervention
+      harvest.intervention = intervention
       harvest.type = type
       harvest.number = harvestEntity.number
       harvest.quantity = harvestEntity.quantity
       harvest.unit = harvestEntity.unit
-      harvest.storages = harvestEntity.storages
+      harvest.storage = harvestEntity.storage
     }
 
     do {

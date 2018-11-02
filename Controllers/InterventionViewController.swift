@@ -230,7 +230,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       "Equipment",
       "Farm",
       "Fertilizer",
-      "Harvests",
+      "Harvest",
       "InterventionEquipment",
       "InterventionFertilizer",
       "InterventionMaterial",
@@ -242,7 +242,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       "Person",
       "Phyto",
       "Seed",
-      "Storages",
+      "Storage",
       "User",
       "Weather",
       "WorkingPeriod"]
