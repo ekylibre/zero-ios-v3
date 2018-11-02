@@ -34,7 +34,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let dimView = UIView()
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
-  var interventionButtonsLabels = [UILabel]()
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
 
@@ -119,22 +118,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     for buttonCount in 0...6 {
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
       let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
-      let label = UILabel()
 
       interventionButton.tag = buttonCount
       interventionButton.backgroundColor = .white
       interventionButton.setBackgroundImage(image, for: .normal)
+      interventionButton.setTitle(interventionTypes[buttonCount], for: .normal)
+      interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false
-      label.text = interventionTypes[buttonCount].localized
-      label.textColor = .white
-      label.font = UIFont.systemFont(ofSize: 15)
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.isHidden = true
       interventionButtons.append(interventionButton)
-      interventionButtonsLabels.append(label)
       bottomView.addSubview(interventionButton)
-      bottomView.addSubview(interventionButtonsLabels[interventionButton.tag])
     }
   }
 
@@ -421,7 +414,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     switch segue.identifier {
     case "showAddInterventionVC":
       let destVC = segue.destination as! AddInterventionViewController
-      let type = interventionTypes[((sender as? UIButton)?.tag)!]
+      let type = (sender as? UIButton)?.titleLabel?.text
 
       destVC.interventionType = type
       destVC.interventionState = nil
@@ -601,11 +594,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
         interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
 
-        interventionButtonsLabels[interventionButton.tag].isHidden = false
-        NSLayoutConstraint.activate([
-          interventionButtonsLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
-          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor, constant: 0)
-          ])
         bottomView.layoutIfNeeded()
 
         index += 1
