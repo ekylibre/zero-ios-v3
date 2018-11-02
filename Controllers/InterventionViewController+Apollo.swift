@@ -801,13 +801,13 @@ extension InterventionViewController {
 
   // MARK: Working Periods
 
-  private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
+  private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriod {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return WorkingPeriods()
+      return WorkingPeriod()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriod = WorkingPeriods(context: managedContext)
+    let workingPeriod = WorkingPeriod(context: managedContext)
     let dateFormatter = DateFormatter()
 
     dateFormatter.locale = Locale(identifier: "fr_FR")

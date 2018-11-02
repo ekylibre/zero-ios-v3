@@ -153,9 +153,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     interventions = interventions.sorted(by: {
       let result: Bool!
 
-      if ($0.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil {
-        result = ($0.workingPeriods?.anyObject() as! WorkingPeriods).executionDate! >
-          ($1.workingPeriods?.anyObject() as! WorkingPeriods).executionDate!
+      if ($0.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil {
+        result = ($0.workingPeriods?.anyObject() as! WorkingPeriod).executionDate! >
+          ($1.workingPeriods?.anyObject() as! WorkingPeriod).executionDate!
         return result
       }
       return true
@@ -245,7 +245,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       "Storages",
       "Users",
       "Weather",
-      "WorkingPeriods"]
+      "WorkingPeriod"]
 
     for entityName in entitiesNames {
       emptyCoreData(entityName: entityName)
@@ -330,14 +330,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriods? {
+  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriods> = WorkingPeriods.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
     workingPeriodsFetchRequest.predicate = predicate
 
     do {
@@ -391,12 +391,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let intervention = Intervention(context: managedContext)
-    let workingPeriod = WorkingPeriods(context: managedContext)
+    let workingPeriod = WorkingPeriod(context: managedContext)
 
     intervention.type = type
     intervention.infos = infos
     intervention.status = status
-    workingPeriod.interventions = intervention
+    workingPeriod.intervention = intervention
     workingPeriod.executionDate = executionDate
 
     do {
