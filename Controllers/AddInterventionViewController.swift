@@ -162,7 +162,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
-    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
