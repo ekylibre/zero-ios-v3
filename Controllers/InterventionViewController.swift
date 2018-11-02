@@ -227,11 +227,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func emptyAllCoreDate() {
     let entitiesNames = [
       "Crop",
-      "Equipments",
+      "Equipment",
       "Farms",
       "Fertilizers",
       "Harvests",
-      "InterventionEquipments",
+      "InterventionEquipment",
       "InterventionFertilizers",
       "InterventionMaterials",
       "InterventionPersons",

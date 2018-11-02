@@ -635,7 +635,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipment = Equipments(context: managedContext)
+    let equipment = Equipment(context: managedContext)
     let indicators = defineIndicators(fetchedEquipment.indicators)
     var type = fetchedEquipment.type?.rawValue
 
@@ -671,7 +671,7 @@ extension InterventionViewController {
 
             let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
 
-            if self.checkIfNewEntity(entityName: "Equipments", predicate: predicate) {
+            if self.checkIfNewEntity(entityName: "Equipment", predicate: predicate) {
               self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
             }
           }
@@ -846,19 +846,19 @@ extension InterventionViewController {
     return nil
   }
 
-  private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Intervention) -> InterventionEquipments {
+  private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Intervention) -> InterventionEquipment {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return InterventionEquipments()
+      return InterventionEquipment()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionEquipment = InterventionEquipments(context: managedContext)
+    let interventionEquipment = InterventionEquipment(context: managedContext)
     let predicate = NSPredicate(format: "ekyID == %@", (fetchedEquipment.equipment?.id)!)
-    let equipment = returnEntityIfSame(entityName: "Equipments", predicate: predicate)
+    let equipment = returnEntityIfSame(entityName: "Equipment", predicate: predicate)
 
     if equipment != nil {
-      (equipment as! Equipments).addToInterventionEquipments(interventionEquipment)
-      interventionEquipment.interventions = intervention
+      (equipment as! Equipment).addToInterventionEquipments(interventionEquipment)
+      interventionEquipment.intervention = intervention
     }
 
     do {
@@ -1335,7 +1335,7 @@ extension InterventionViewController {
     return harvestsAttributes
   }
 
-  private func pushEquipment(equipment: Equipments) -> Int32 {
+  private func pushEquipment(equipment: Equipment) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }
@@ -1370,7 +1370,7 @@ extension InterventionViewController {
     return id
   }
 
-  func pushEquipmentIfNoEkyId(equipment: Equipments) -> Int32? {
+  func pushEquipmentIfNoEkyId(equipment: Equipment) -> Int32? {
     if equipment.ekyID == 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return nil
@@ -1393,7 +1393,7 @@ extension InterventionViewController {
     var equipmentsAttributes = [InterventionToolAttributes]()
 
     for equipment in equipments! {
-      let equipmentID = pushEquipmentIfNoEkyId(equipment: (equipment as! InterventionEquipments).equipments!)
+      let equipmentID = pushEquipmentIfNoEkyId(equipment: (equipment as! InterventionEquipment).equipment!)
       let equipmentAttributes = InterventionToolAttributes(equipmentId: (equipmentID as NSNumber?)?.stringValue)
 
       equipmentsAttributes.append(equipmentAttributes)

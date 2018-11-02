@@ -115,7 +115,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var personsSelectionView: PersonsView!
   var selectedMaterials = [[NSManagedObject]]()
   var interventionEquipments = [NSManagedObject]()
-  var selectedEquipments = [Equipments]()
+  var selectedEquipments = [Equipment]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
   var createdSeed = [NSManagedObject]()
@@ -397,7 +397,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  private func getSelectedEquipmentInfos(_ equipment: Equipments) -> String {
+  private func getSelectedEquipmentInfos(_ equipment: Equipment) -> String {
     let type = equipment.type!.localized
     guard let number = equipment.number else {
       return type
@@ -642,10 +642,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
     for selectedEquipment in selectedEquipments {
-      let interventionEquipment = InterventionEquipments(context: managedContext)
+      let interventionEquipment = InterventionEquipment(context: managedContext)
 
-      interventionEquipment.interventions = intervention
-      interventionEquipment.equipments = selectedEquipment
+      interventionEquipment.intervention = intervention
+      interventionEquipment.equipment = selectedEquipment
     }
 
     do {

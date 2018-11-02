@@ -19,8 +19,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return creationView
   }()
 
-  var equipments = [Equipments]()
-  var filteredEquipments = [Equipments]()
+  var equipments = [Equipment]()
+  var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
 
   func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
@@ -146,7 +146,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    filteredEquipments = searchText.isEmpty ? equipments : equipments.filter({(equipment: Equipments) -> Bool in
+    filteredEquipments = searchText.isEmpty ? equipments : equipments.filter({(equipment: Equipment) -> Bool in
       let name = equipment.name!
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
@@ -185,7 +185,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return cell
   }
 
-  private func getEquipmentInfos(_ equipment: Equipments) -> String {
+  private func getEquipmentInfos(_ equipment: Equipment) -> String {
     let type = equipment.type!.localized
     guard let number = equipment.number else {
       return type
@@ -212,7 +212,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipmentsFetchRequest: NSFetchRequest<Equipments> = Equipments.fetchRequest()
+    let equipmentsFetchRequest: NSFetchRequest<Equipment> = Equipment.fetchRequest()
 
     do {
       equipments = try managedContext.fetch(equipmentsFetchRequest)
@@ -229,7 +229,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let equipment = Equipments(context: managedContext)
+    let equipment = Equipment(context: managedContext)
 
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
@@ -298,7 +298,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func checkEquipmentName() -> Bool {
-    let equipmentsWithSameName = equipments.filter({(equipment: Equipments) -> Bool in
+    let equipmentsWithSameName = equipments.filter({(equipment: Equipment) -> Bool in
       let name = equipment.name!
       return name.range(of: creationView.nameTextField.text!, options: .caseInsensitive) != nil
     })
