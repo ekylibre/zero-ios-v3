@@ -461,7 +461,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriod = WorkingPeriod(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
 
     newIntervention = Interventions(context: managedContext)
@@ -484,7 +484,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         newIntervention.waterUnit = ""
       }
     }
-    workingPeriod.intervention = newIntervention
+    workingPeriod.interventions = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)

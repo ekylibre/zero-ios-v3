@@ -804,13 +804,13 @@ extension InterventionViewController {
 
   // MARK: Working Periods
 
-  private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriod {
+  private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriods {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return WorkingPeriod()
+      return WorkingPeriods()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriod = WorkingPeriod(context: managedContext)
+    let workingPeriod = WorkingPeriods(context: managedContext)
     let dateFormatter = DateFormatter()
 
     dateFormatter.locale = Locale(identifier: "fr_FR")
@@ -1067,7 +1067,7 @@ extension InterventionViewController {
 
   private func saveEntitiesIntoIntervention(intervention: Interventions, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Interventions {
     for workingDay in fetchedIntervention.workingDays {
-      intervention.workingPeriod = saveWorkingDays(fetchedDay: workingDay)
+      intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
     }
     for fetchedEquipment in fetchedIntervention.tools! {
       intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
@@ -1180,18 +1180,20 @@ extension InterventionViewController {
   // MARK: - Mutations: Interventions
 
   func defineWorkingDayAttributesFrom(intervention: Interventions) -> [InterventionWorkingDayAttributes] {
-    let workingDay = intervention.workingPeriod
+    let workingDays = intervention.workingPeriods
     var workingDaysAttributes = [InterventionWorkingDayAttributes]()
 
-    let executionDate = (workingDay as AnyObject).value(forKey: "executionDate")
-    let formatter = DateFormatter()
+    for workingDay in workingDays! {
+      let executionDate = (workingDay as AnyObject).value(forKey: "executionDate")
+      let formatter = DateFormatter()
 
-    formatter.dateFormat = "yyyy-MM-dd"
-    let workingDayAttributes = InterventionWorkingDayAttributes(
-      executionDate: formatter.string(from: executionDate as! Date),
-      hourDuration: (workingDay as AnyObject).value(forKey: "hourDuration") as? Double)
+      formatter.dateFormat = "yyyy-MM-dd"
+      let workingDayAttributes = InterventionWorkingDayAttributes(
+        executionDate: formatter.string(from: executionDate as! Date),
+        hourDuration: (workingDay as AnyObject).value(forKey: "hourDuration") as? Double)
 
-    workingDaysAttributes.append(workingDayAttributes)
+      workingDaysAttributes.append(workingDayAttributes)
+    }
     return workingDaysAttributes
   }
 

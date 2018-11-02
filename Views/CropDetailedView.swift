@@ -141,14 +141,15 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
     cell.stateImageView.tintColor = (intervention.status == 0) ? UIColor.orange : UIColor.green
-    cell.dateLabel.text = updateDateLabel(intervention.workingPeriod!.executionDate!)
+    cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
     cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
     cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
   }
 
-  private func updateDateLabel(_ date: Date) -> String {
+  private func updateDateLabel(_ workingPeriods: NSSet) -> String {
+    let date = (workingPeriods.allObjects as! [WorkingPeriods]).first!.executionDate!
     let calendar = Calendar.current
     let dateFormatter: DateFormatter = {
       let dateFormatter = DateFormatter()
