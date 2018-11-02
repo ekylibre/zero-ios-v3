@@ -688,7 +688,7 @@ extension InterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let person = Persons(context: managedContext)
+    let person = Person(context: managedContext)
 
     person.farmID = farmID
     person.firstName = fetchedPerson.firstName
@@ -721,7 +721,7 @@ extension InterventionViewController {
           for person in farm.people {
             let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
 
-            if self.checkIfNewEntity(entityName: "Persons", predicate: predicate) {
+            if self.checkIfNewEntity(entityName: "Person", predicate: predicate) {
               self.savePersons(fetchedPerson: person, farmID: farm.id)
             }
           }
@@ -891,20 +891,20 @@ extension InterventionViewController {
 
   // MARK: Doers
 
-  private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Intervention) -> InterventionPersons {
+  private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Intervention) -> InterventionPerson {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return InterventionPersons()
+      return InterventionPerson()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionPersons = InterventionPersons(context: managedContext)
+    let interventionPersons = InterventionPerson(context: managedContext)
     let personID = fetchedOperator.person?.id
-    let person: Persons?
+    let person: Person?
 
     if personID != nil {
       let predicate = NSPredicate(format: "ekyID == %@", personID!)
 
-      person = returnEntityIfSame(entityName: "Persons", predicate: predicate) as? Persons
+      person = returnEntityIfSame(entityName: "Person", predicate: predicate) as? Person
       if person != nil {
         if fetchedOperator.role?.rawValue == "OPERATOR" {
           interventionPersons.isDriver = false
@@ -912,7 +912,7 @@ extension InterventionViewController {
           interventionPersons.isDriver = true
         }
         person?.addToInterventionPersons(interventionPersons)
-        interventionPersons.interventions = intervention
+        interventionPersons.intervention = intervention
       }
     }
     do {
@@ -1406,8 +1406,8 @@ extension InterventionViewController {
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
     for interventionPerson in interventionPersons! {
-      let personID = (interventionPerson as! InterventionPersons).persons?.ekyID
-      let role = (interventionPerson as! InterventionPersons).isDriver
+      let personID = (interventionPerson as! InterventionPerson).person?.ekyID
+      let role = (interventionPerson as! InterventionPerson).isDriver
       let operatorAttributes = InterventionOperatorAttributes(
         personId: (personID as NSNumber?)?.stringValue,
         role: (role ? OperatorRoleEnum(rawValue: "DRIVER") : OperatorRoleEnum(rawValue: "OPERATOR")))
