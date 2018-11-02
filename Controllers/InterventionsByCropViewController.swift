@@ -122,7 +122,12 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
-      return interventions
+      return interventions.sorted(by: {
+        let first = ($0.workingPeriods!.allObjects as! [WorkingPeriods]).first!
+        let second = ($1.workingPeriods!.allObjects as! [WorkingPeriods]).first!
+
+        return second.executionDate! < first.executionDate!
+      })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
