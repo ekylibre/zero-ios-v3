@@ -29,7 +29,7 @@
         <!--Intervention View Controller-->
         <scene sceneID="GPv-6C-vQQ">
             <objects>
-                <viewController id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InterventionViewController" id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bki-1z-HKT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -193,7 +193,6 @@
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
-                        <segue destination="krK-gd-8UN" kind="presentation" identifier="logoutSegue" id="wcF-Wj-Rjo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1563,7 +1562,6 @@
                         <outlet property="tfPassword" destination="ScR-OF-ai0" id="mBJ-fl-emB"/>
                         <outlet property="tfUsername" destination="vfb-X0-1tk" id="j9I-cx-eB1"/>
                         <segue destination="CoO-3Z-MeU" kind="show" identifier="showNoInternetVC" id="Adv-hH-Opk"/>
-                        <segue destination="Ym6-0E-qVT" kind="presentation" identifier="showInterventionVC" animates="NO" id="KZa-bZ-hB6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gp1-Vr-Vkq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1626,7 +1624,6 @@
         <image name="thunderstorm" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wcF-Wj-Rjo"/>
         <segue reference="FE4-xp-aKR"/>
     </inferredMetricsTieBreakers>
 </document>

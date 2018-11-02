@@ -46,6 +46,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
+    // Hide navigation bar
+    navigationController?.navigationBar.isHidden = true
+
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
@@ -271,7 +274,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       UserDefaults.standard.set(0, forKey: "lastSyncDate")
       UserDefaults.standard.synchronize()
       self.emptyAllCoreDate()
-      self.performSegue(withIdentifier: "logoutSegue", sender: self)
+      self.navigationController?.popViewController(animated: true)
     }))
     present(alert, animated: true)
   }
