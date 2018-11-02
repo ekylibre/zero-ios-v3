@@ -43,7 +43,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
-      if appDelegate.entityIsEmpty(entity: "Users") {
+      if !appDelegate.entityIsEmpty(entity: "Users") {
         authentificationService?.logout()
       }
       self.authentifyUser()
