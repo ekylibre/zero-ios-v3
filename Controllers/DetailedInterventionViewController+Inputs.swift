@@ -251,7 +251,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if totalCellNumber > 0 {
       for currentCell in 0..<(totalCellNumber) {
         indexPath = NSIndexPath(row: currentCell, section: 0) as IndexPath?
-        //updateInputQuantity(indexPath: indexPath)
+        updateInputQuantity(indexPath: indexPath)
       }
     }
   }

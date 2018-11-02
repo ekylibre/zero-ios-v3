@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040D85A6216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D85A5216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift */; };
 		0410A5FC2166192700529DA1 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 0410A5FB2166192700529DA1 /* schema.json */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		041248062179C05400A78D08 /* InterventionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248052179C05400A78D08 /* InterventionState.swift */; };
 		041248082179C05900A78D08 /* InterventionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248072179C05900A78D08 /* InterventionType.swift */; };
 		04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
 		04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
+		04137127218C5DD40034128A /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */; };
 		045F03C7217F1BDB00CCE5B3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F03C6217F1BDB00CCE5B3 /* API.swift */; };
 		047109152180688100DC262C /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047108FC2180688000DC262C /* ListTableViewController.swift */; };
 		047109162180688100DC262C /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047108FD2180688000DC262C /* HandleAddInterventionErrors.swift */; };
@@ -98,7 +98,6 @@
 		040D8598216B9F1B008E1628 /* queries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		040D859A216B9F4E008E1628 /* mutations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		040D859C216BA061008E1628 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		040D85A5216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+isFirstLaunch.swift"; sourceTree = "<group>"; };
 		0410A5FB2166192700529DA1 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
@@ -385,14 +384,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		6BA5D785214934F70054F969 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				040D85A5216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
 		6BEA65642105C5EE0072840F = {
 			isa = PBXGroup;
 			children = (
@@ -402,7 +393,6 @@
 				047BF0B12105D1F9009F3945 /* Views */,
 				047BF0BF2105F44F009F3945 /* CoreData */,
 				040D8595216B9EC1008E1628 /* GraphQL */,
-				6BA5D785214934F70054F969 /* Library */,
 				6B4CA89B214F9B560052073D /* GraphQL */,
 				042A44322121B38600CE6B24 /* Constants */,
 				6BA3713D213963230086DF9B /* Resources */,
@@ -576,7 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				040D85A6216BA41B008E1628 /* UserDefaults+isFirstLaunch.swift in Sources */,
+				04137127218C5DD40034128A /* UserDefaults+isFirstLaunch.swift in Sources */,
 				0471092F21806F7800DC262C /* ColorConstants.swift in Sources */,
 				045F03C7217F1BDB00CCE5B3 /* API.swift in Sources */,
 				0471092E21806F6E00DC262C /* AppDelegate.swift in Sources */,
