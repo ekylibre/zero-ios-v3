@@ -134,10 +134,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       selectedPhyto.unit = phyto.unit
       selectedPhyto.phyto = phyto
       selectedInputs.append(selectedPhyto)
-    case let fertilizer as Fertilizers:
-      let selectedFertilizer = InterventionFertilizers(context: managedContext)
+    case let fertilizer as Fertilizer:
+      let selectedFertilizer = InterventionFertilizer(context: managedContext)
       selectedFertilizer.unit = fertilizer.unit
-      selectedFertilizer.fertilizers = fertilizer
+      selectedFertilizer.fertilizer = fertilizer
       selectedInputs.append(selectedFertilizer)
     default:
       fatalError("Input type not found")
@@ -153,8 +153,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       (selectedInputs[index] as! InterventionSeed).seed?.used = false
     case is InterventionPhytosanitary:
       (selectedInputs[index] as! InterventionPhytosanitary).phyto?.used = false
-    case is InterventionFertilizers:
-      (selectedInputs[index] as! InterventionFertilizers).fertilizers?.used = false
+    case is InterventionFertilizer:
+      (selectedInputs[index] as! InterventionFertilizer).fertilizer?.used = false
     default:
       return
     }

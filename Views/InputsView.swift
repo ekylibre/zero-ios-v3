@@ -90,7 +90,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   var addInterventionViewController: AddInterventionViewController?
   var seeds = [Seed]()
   var phytos = [Phyto]()
-  var fertilizers = [Fertilizers]()
+  var fertilizers = [Fertilizer]()
   var isSearching: Bool = false
   var filteredInputs = [NSManagedObject]()
   var firstSpecie: String
@@ -293,7 +293,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let managedContext = appDelegate.persistentContainer.viewContext
     let seedsFetchRequest: NSFetchRequest<Seed> = Seed.fetchRequest()
     let phytosFetchRequest: NSFetchRequest<Phyto> = Phyto.fetchRequest()
-    let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+    let fertilizersFetchRequest: NSFetchRequest<Fertilizer> = Fertilizer.fetchRequest()
 
     do {
       seeds = try managedContext.fetch(seedsFetchRequest)
@@ -386,7 +386,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let fertilizer = Fertilizers(context: managedContext)
+    let fertilizer = Fertilizer(context: managedContext)
 
     fertilizer.registered = false
     fertilizer.ekyID = 0

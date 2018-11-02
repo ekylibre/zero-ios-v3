@@ -106,7 +106,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for registeredFertilizer in registeredFertilizers {
-      let fertilizer = Fertilizers(context: managedContext)
+      let fertilizer = Fertilizer(context: managedContext)
 
       fertilizer.registered = true
       fertilizer.ekyID = 0

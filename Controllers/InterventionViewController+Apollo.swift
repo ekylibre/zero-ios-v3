@@ -291,8 +291,8 @@ extension InterventionViewController {
         case is Phyto:
           let phyto = input as! Phyto
           inputID = pushInput(unit: ArticleUnitEnum.liter, name: phyto.name!, type: ArticleTypeEnum.chemical)
-        case is Fertilizers:
-          let fertilizer = input as! Fertilizers
+        case is Fertilizer:
+          let fertilizer = input as! Fertilizer
           inputID = pushInput(unit: ArticleUnitEnum.kilogram, name: fertilizer.name!, type: ArticleTypeEnum.fertilizer)
         default:
           return nil
@@ -440,8 +440,8 @@ extension InterventionViewController {
 
   private func saveFertilizer(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
     if article.referenceId != nil {
-      var fertilizers: [Fertilizers]
-      let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+      var fertilizers: [Fertilizer]
+      let fertilizersFetchRequest: NSFetchRequest<Fertilizer> = Fertilizer.fetchRequest()
       let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
       fertilizersFetchRequest.predicate = predicate
 
@@ -452,7 +452,7 @@ extension InterventionViewController {
         print("Could not fetch. \(error), \(error.userInfo)")
       }
     } else {
-      let fertilizer = Fertilizers(context: managedContext)
+      let fertilizer = Fertilizer(context: managedContext)
 
       fertilizer.registered = false
       fertilizer.ekyID = 0
@@ -464,7 +464,7 @@ extension InterventionViewController {
   }
 
   private func saveMaterial(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
-    let material = Materials(context: managedContext)
+    let material = Material(context: managedContext)
 
     material.name = article.name
     material.ekyID = Int32(article.id)!
@@ -472,7 +472,7 @@ extension InterventionViewController {
   }
 
   private func checkArticlesData(articles : [FarmQuery.Data.Farm.Article]) {
-    let types = ["SEED": "Seed", "CHEMICAL": "Phyto", "FERTILIZER": "Fertilizers", "MATERIAL": "Materials"]
+    let types = ["SEED": "Seed", "CHEMICAL": "Phyto", "FERTILIZER": "Fertilizer", "MATERIAL": "Material"]
 
     for article in articles {
       let type = types[article.type.rawValue]!
@@ -1022,13 +1022,13 @@ extension InterventionViewController {
       interventionSeed.intervention = intervention
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
-      let interventionFertilizer = InterventionFertilizers(context: managedContext)
-      let fertilizer = returnEntityIfSame(entityName: "Fertilizers", predicate: predicate)
+      let interventionFertilizer = InterventionFertilizer(context: managedContext)
+      let fertilizer = returnEntityIfSame(entityName: "Fertilizer", predicate: predicate)
 
       interventionFertilizer.unit = fetchedInput.unit.rawValue
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
-      interventionFertilizer.fertilizers = fertilizer as? Fertilizers
-      interventionFertilizer.interventions =  intervention
+      interventionFertilizer.fertilizer = fertilizer as? Fertilizer
+      interventionFertilizer.intervention =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
       let interventionPhyto = InterventionPhytosanitary(context: managedContext)
@@ -1040,13 +1040,13 @@ extension InterventionViewController {
       interventionPhyto.intervention = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
-      let interventionMaterial = InterventionMaterials(context: managedContext)
-      let material = returnEntityIfSame(entityName: "Materials", predicate: predicate)
+      let interventionMaterial = InterventionMaterial(context: managedContext)
+      let material = returnEntityIfSame(entityName: "Material", predicate: predicate)
 
       interventionMaterial.unit = fetchedInput.unit.rawValue
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
-      interventionMaterial.materials = material as? Materials
-      interventionMaterial.interventions = intervention
+      interventionMaterial.material = material as? Material
+      interventionMaterial.intervention = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
       print("Unknown value of TypeEnum")
@@ -1277,32 +1277,32 @@ extension InterventionViewController {
           id = (phyto.phyto?.ekyID as NSNumber?)?.stringValue
         }
         inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!))
-      case is InterventionFertilizers:
-        let fertilizer = input as! InterventionFertilizers
+      case is InterventionFertilizer:
+        let fertilizer = input as! InterventionFertilizer
         var id: String? = nil
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID != 0 {
-          referenceId = (fertilizer.fertilizers?.referenceID as NSNumber?)?.stringValue
+        if fertilizer.fertilizer?.ekyID == 0 && fertilizer.fertilizer?.referenceID != 0 {
+          referenceId = (fertilizer.fertilizer?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "FERTILIZER")
-        } else if fertilizer.fertilizers?.ekyID == 0 && fertilizer.fertilizers?.referenceID == 0 {
-          id = String(pushInputIfNoEkyID(input: fertilizer.fertilizers!)!)
+        } else if fertilizer.fertilizer?.ekyID == 0 && fertilizer.fertilizer?.referenceID == 0 {
+          id = String(pushInputIfNoEkyID(input: fertilizer.fertilizer!)!)
         } else {
-          id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
+          id = (fertilizer.fertilizer?.ekyID as NSNumber?)?.stringValue
         }
         inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity!, unit: fertilizer.unit!))
-      case is InterventionMaterials:
-        let material = input as! InterventionMaterials
+      case is InterventionMaterial:
+        let material = input as! InterventionMaterial
         var id: String? = nil
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if material.materials?.ekyID == 0 {
-          referenceId = (material.materials?.referenceID as NSNumber?)?.stringValue
+        if material.material?.ekyID == 0 {
+          referenceId = (material.material?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "MATERIAL")
         } else {
-          id = (material.materials?.ekyID as NSNumber?)?.stringValue
+          id = (material.material?.ekyID as NSNumber?)?.stringValue
         }
         inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!))
       default:

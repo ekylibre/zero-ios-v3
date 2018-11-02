@@ -317,8 +317,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
           cell.inputImageView.image = UIImage(named: "phytosanitary")
-        case is InterventionFertilizers:
-          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+        case is InterventionFertilizer:
+          let fertilizer = selectedInput.value(forKey: "fertilizer") as! Fertilizer
 
           cell.type = "Fertilizer"
           cell.inputName.text = fertilizer.name?.localized
@@ -495,7 +495,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     saveWeather(intervention: newIntervention)
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
-    resetInputsAttributes(entity: "Fertilizers")
+    resetInputsAttributes(entity: "Fertilizer")
 
     do {
       try managedContext.save()
@@ -621,11 +621,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    for case let interventionMaterial as InterventionMaterials in selectedMaterials[1] {
+    for case let interventionMaterial as InterventionMaterial in selectedMaterials[1] {
       let index = selectedMaterials[1].firstIndex(of: interventionMaterial)!
 
-      interventionMaterial.interventions = intervention
-      interventionMaterial.materials = selectedMaterials[0][index] as? Materials
+      interventionMaterial.intervention = intervention
+      interventionMaterial.material = selectedMaterials[0][index] as? Material
     }
 
     do {
@@ -891,9 +891,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
-    resetInputsAttributes(entity: "Seeds")
-    resetInputsAttributes(entity: "Phytos")
-    resetInputsAttributes(entity: "Fertilizers")
+    resetInputsAttributes(entity: "Seed")
+    resetInputsAttributes(entity: "Phyto")
+    resetInputsAttributes(entity: "Fertilizer")
     dismiss(animated: true, completion: nil)
   }
 
