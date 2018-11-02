@@ -311,12 +311,12 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func displayInputQuantityInReadOnlyMode(quantity: String, unit: String, cell: SelectedInputCell) {
+  func displayInputQuantityInReadOnlyMode(quantity: String?, unit: String?, cell: SelectedInputCell) {
     if interventionState == InterventionState.Validated.rawValue {
       cell.inputQuantity.placeholder = quantity
-      cell.unitMeasureButton.setTitle(unit.localized, for: .normal)
+      cell.unitMeasureButton.setTitle(unit?.localized, for: .normal)
       cell.unitMeasureButton.setTitleColor(.lightGray, for: .normal)
-    } else if quantity == "0" {
+    } else if quantity == "0" || quantity == nil {
       cell.inputQuantity.placeholder = "0"
     } else {
       cell.inputQuantity.text = quantity
@@ -347,8 +347,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           cell.inputLabel.text = interventionSeed.seeds?.variety
           cell.type = "Seed"
           cell.inputImageView.image = UIImage(named: "seed")
-          displayInputQuantityInReadOnlyMode(quantity: ((interventionSeed.quantity as NSNumber?)?.stringValue)!,
-                                             unit: interventionSeed.unit!, cell: cell)
+          displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber?)?.stringValue,
+                                             unit: interventionSeed.unit, cell: cell)
         case is InterventionPhytosanitaries:
           let interventionPhyto = selectedInput as! InterventionPhytosanitaries
 
@@ -356,8 +356,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           cell.inputLabel.text = interventionPhyto.phytos?.firmName
           cell.type = "Phyto"
           cell.inputImageView.image = UIImage(named: "phytosanitary")
-          displayInputQuantityInReadOnlyMode(quantity: ((interventionPhyto.quantity as NSNumber?)?.stringValue)!,
-                                             unit: interventionPhyto.unit!, cell: cell)
+          displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber?)?.stringValue,
+                                             unit: interventionPhyto.unit, cell: cell)
         case is InterventionFertilizers:
           let interventionFertilizer = selectedInput as! InterventionFertilizers
 
@@ -365,8 +365,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           cell.inputLabel.text = interventionFertilizer.fertilizers?.nature?.localized
           cell.type = "Fertilizer"
           cell.inputImageView.image = UIImage(named: "fertilizer")
-          displayInputQuantityInReadOnlyMode(quantity: ((interventionFertilizer.quantity as NSNumber?)?.stringValue)!,
-                                             unit: interventionFertilizer.unit!, cell: cell)
+          displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber?)?.stringValue,
+                                             unit: interventionFertilizer.unit, cell: cell)
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
         }

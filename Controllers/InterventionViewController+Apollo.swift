@@ -801,7 +801,7 @@ extension InterventionViewController {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
       if entities.count > 0 {
-        return entities.first as? NSManagedObject
+        return (entities.first as! NSManagedObject)
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -816,7 +816,7 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipments(context: managedContext)
-    let predicate = NSPredicate(format: "ekyID == %@", (fetchedEquipment.equipment?.id)!)
+    let predicate = NSPredicate(format: "ekyID == %d", Int32(fetchedEquipment.equipment!.id)!)
     let equipment = returnEntityIfSame(entityName: "Equipments", predicate: predicate)
 
     if equipment != nil {
@@ -865,7 +865,7 @@ extension InterventionViewController {
     let person: Persons?
 
     if personID != nil {
-      let predicate = NSPredicate(format: "ekyID == %@", personID!)
+      let predicate = NSPredicate(format: "ekyID == %d", Int32(personID!)!)
 
       person = returnEntityIfSame(entityName: "Persons", predicate: predicate) as? Persons
       if person != nil {
@@ -943,7 +943,7 @@ extension InterventionViewController {
     let storage: Storages?
 
     if storageID != nil {
-      let predicate = NSPredicate(format: "storageID == %@", storageID!)
+      let predicate = NSPredicate(format: "storageID == %d", Int32(storageID!)!)
       storage = returnEntityIfSame(entityName: "Storages", predicate: predicate) as? Storages
       storage?.addToHarvests(harvest)
       harvest.storages = storage
@@ -973,7 +973,7 @@ extension InterventionViewController {
     let id = fetchedInput.article?.id
     let predicate: NSPredicate!
 
-    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %@", id!))
+    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %d", Int32(id!)!))
     switch fetchedInput.article?.type.rawValue {
     case "SEED":
       let interventionSeed = InterventionSeeds(context: managedContext)
@@ -981,7 +981,7 @@ extension InterventionViewController {
 
       interventionSeed.unit = fetchedInput.unit.rawValue
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
-      interventionSeed.seeds = (seed as? Seeds)
+      interventionSeed.seeds = (seed as! Seeds)
       interventionSeed.interventions = intervention
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
@@ -990,7 +990,7 @@ extension InterventionViewController {
 
       interventionFertilizer.unit = fetchedInput.unit.rawValue
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
-      interventionFertilizer.fertilizers = (fertilizer as? Fertilizers)
+      interventionFertilizer.fertilizers = (fertilizer as! Fertilizers)
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
@@ -999,7 +999,7 @@ extension InterventionViewController {
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
-      interventionPhyto.phytos = (phyto as? Phytos)
+      interventionPhyto.phytos = (phyto as! Phytos)
       interventionPhyto.interventions = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
@@ -1008,7 +1008,7 @@ extension InterventionViewController {
 
       interventionMaterial.unit = fetchedInput.unit.rawValue
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
-      interventionMaterial.materials = (material as? Materials)
+      interventionMaterial.materials = (material as! Materials)
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
@@ -1180,7 +1180,7 @@ extension InterventionViewController {
   }
 
   func updateIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
-    let predicate = NSPredicate(format: "ekyID == %@", fetchedIntervention.id)
+    let predicate = NSPredicate(format: "ekyID == %d", Int32(fetchedIntervention.id)!)
     var intervention = returnEntityIfSame(entityName: "Interventions", predicate: predicate) as? Interventions
 
     if intervention != nil {

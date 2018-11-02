@@ -63,16 +63,32 @@ extension AddInterventionViewController {
     }
   }
 
+  func loadInputsFromIntervention(_ entityName: String, _ intervention: Interventions) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let predicate = NSPredicate(format: "interventions == %@", intervention)
+
+    inputsFetchRequest.predicate = predicate
+    do {
+      let inputs = try managedContext.fetch(inputsFetchRequest)
+      managedContext.performAndWait {
+        for input in inputs as! [NSManagedObject] {
+          selectedInputs.append(input)
+        }
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
   func loadInputs() {
-    for interventionSeed in currentIntervention?.interventionSeeds?.allObjects as! [InterventionSeeds] {
-      selectedInputs.append(interventionSeed)
-    }
-    for interventionPhyto in currentIntervention?.interventionPhytosanitaries?.allObjects as! [InterventionPhytosanitaries] {
-      selectedInputs.append(interventionPhyto)
-    }
-    for interventionFertilizer in currentIntervention.interventionFertilizers?.allObjects as! [InterventionFertilizers] {
-      selectedInputs.append(interventionFertilizer)
-    }
+    loadInputsFromIntervention("InterventionSeeds", currentIntervention)
+    loadInputsFromIntervention("InterventionPhytosanitaries", currentIntervention)
+    loadInputsFromIntervention("InterventionFertilizers", currentIntervention)
     refreshSelectedInputs()
   }
 
