@@ -20,6 +20,7 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
   @IBOutlet weak var delete: UIButton!
   @IBOutlet weak var storage: UIButton!
   @IBOutlet weak var unit: UIButton!
+  @IBOutlet weak var createStorage: UIButton!
 
   weak var cellDelegate: HarvestCellDelegate?
   var addInterventionController: AddInterventionViewController?
