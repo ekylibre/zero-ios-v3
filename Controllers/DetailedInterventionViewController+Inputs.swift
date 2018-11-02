@@ -124,15 +124,15 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     switch input {
-    case let seed as Seeds:
-      let selectedSeed = InterventionSeeds(context: managedContext)
+    case let seed as Seed:
+      let selectedSeed = InterventionSeed(context: managedContext)
       selectedSeed.unit = seed.unit
-      selectedSeed.seeds = seed
+      selectedSeed.seed = seed
       selectedInputs.append(selectedSeed)
-    case let phyto as Phytos:
-      let selectedPhyto = InterventionPhytosanitaries(context: managedContext)
+    case let phyto as Phyto:
+      let selectedPhyto = InterventionPhytosanitary(context: managedContext)
       selectedPhyto.unit = phyto.unit
-      selectedPhyto.phytos = phyto
+      selectedPhyto.phyto = phyto
       selectedInputs.append(selectedPhyto)
     case let fertilizer as Fertilizers:
       let selectedFertilizer = InterventionFertilizers(context: managedContext)
@@ -149,10 +149,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func resetInputsUsedAttribute(index: Int) {
     switch selectedInputs[index] {
-    case is InterventionSeeds:
-      (selectedInputs[index] as! InterventionSeeds).seeds?.used = false
-    case is InterventionPhytosanitaries:
-      (selectedInputs[index] as! InterventionPhytosanitaries).phytos?.used = false
+    case is InterventionSeed:
+      (selectedInputs[index] as! InterventionSeed).seed?.used = false
+    case is InterventionPhytosanitary:
+      (selectedInputs[index] as! InterventionPhytosanitary).phyto?.used = false
     case is InterventionFertilizers:
       (selectedInputs[index] as! InterventionFertilizers).fertilizers?.used = false
     default:

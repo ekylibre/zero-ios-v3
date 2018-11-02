@@ -303,15 +303,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
         switch selectedInput {
-        case is InterventionSeeds:
-          let seed = selectedInput.value(forKey: "seeds") as! Seeds
+        case is InterventionSeed:
+          let seed = selectedInput.value(forKey: "seed") as! Seed
 
           cell.type = "Seed"
           cell.inputName.text = seed.specie?.localized
           cell.inputLabel.text = seed.variety
           cell.inputImageView.image = UIImage(named: "seed")
-        case is InterventionPhytosanitaries:
-          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+        case is InterventionPhytosanitary:
+          let phyto = selectedInput.value(forKey: "phyto") as! Phyto
 
           cell.type = "Phyto"
           cell.inputName.text = phyto.name
@@ -493,8 +493,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     saveHarvest(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
     saveWeather(intervention: newIntervention)
-    resetInputsAttributes(entity: "Seeds")
-    resetInputsAttributes(entity: "Phytos")
+    resetInputsAttributes(entity: "Seed")
+    resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizers")
 
     do {
@@ -536,7 +536,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for selectedInput in selectedInputs {
-      selectedInput.setValue(intervention, forKey: "interventions")
+      selectedInput.setValue(intervention, forKey: "intervention")
     }
 
     do {

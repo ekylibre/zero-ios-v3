@@ -288,8 +288,8 @@ extension InterventionViewController {
       do {
         var inputID: Int32 = 0
         switch input {
-        case is Phytos:
-          let phyto = input as! Phytos
+        case is Phyto:
+          let phyto = input as! Phyto
           inputID = pushInput(unit: ArticleUnitEnum.liter, name: phyto.name!, type: ArticleTypeEnum.chemical)
         case is Fertilizers:
           let fertilizer = input as! Fertilizers
@@ -339,7 +339,7 @@ extension InterventionViewController {
     return id
   }
 
-  func pushSeedIfNoEkyID(seed: Seeds) -> Int32? {
+  func pushSeedIfNoEkyID(seed: Seed) -> Int32? {
     if seed.ekyID == 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return nil
@@ -389,8 +389,8 @@ extension InterventionViewController {
 
   private func saveSeed(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
     if article.referenceId != nil {
-      var seeds: [Seeds]
-      let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
+      var seeds: [Seed]
+      let seedsFetchRequest: NSFetchRequest<Seed> = Seed.fetchRequest()
       let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
       seedsFetchRequest.predicate = predicate
 
@@ -401,7 +401,7 @@ extension InterventionViewController {
         print("Could not fetch. \(error), \(error.userInfo)")
       }
     } else {
-      let seed = Seeds(context: managedContext)
+      let seed = Seed(context: managedContext)
 
       seed.registered = false
       seed.ekyID = 0
@@ -415,8 +415,8 @@ extension InterventionViewController {
 
   private func savePhyto(_ managedContext: NSManagedObjectContext, _ article: FarmQuery.Data.Farm.Article) {
     if article.referenceId != nil {
-      var phytos: [Phytos]
-      let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
+      var phytos: [Phyto]
+      let phytosFetchRequest: NSFetchRequest<Phyto> = Phyto.fetchRequest()
       let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!)
       phytosFetchRequest.predicate = predicate
 
@@ -427,7 +427,7 @@ extension InterventionViewController {
         print("Could not fetch. \(error), \(error.userInfo)")
       }
     } else {
-      let phyto = Phytos(context: managedContext)
+      let phyto = Phyto(context: managedContext)
 
       phyto.registered = false
       phyto.ekyID = 0
@@ -472,7 +472,7 @@ extension InterventionViewController {
   }
 
   private func checkArticlesData(articles : [FarmQuery.Data.Farm.Article]) {
-    let types = ["SEED": "Seeds", "CHEMICAL": "Phytos", "FERTILIZER": "Fertilizers", "MATERIAL": "Materials"]
+    let types = ["SEED": "Seed", "CHEMICAL": "Phyto", "FERTILIZER": "Fertilizers", "MATERIAL": "Materials"]
 
     for article in articles {
       let type = types[article.type.rawValue]!
@@ -512,7 +512,7 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    if local is Seeds {
+    if local is Seed {
       return
     } else {
       local.setValue(updated.name, forKey: "name")
@@ -1013,13 +1013,13 @@ extension InterventionViewController {
     predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %@", id!))
     switch fetchedInput.article?.type.rawValue {
     case "SEED":
-      let interventionSeed = InterventionSeeds(context: managedContext)
-      let seed = returnEntityIfSame(entityName: "Seeds", predicate: predicate)
+      let interventionSeed = InterventionSeed(context: managedContext)
+      let seed = returnEntityIfSame(entityName: "Seed", predicate: predicate)
 
       interventionSeed.unit = fetchedInput.unit.rawValue
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
-      interventionSeed.seeds = seed as? Seeds
-      interventionSeed.interventions = intervention
+      interventionSeed.seed = seed as? Seed
+      interventionSeed.intervention = intervention
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
       let interventionFertilizer = InterventionFertilizers(context: managedContext)
@@ -1031,13 +1031,13 @@ extension InterventionViewController {
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
-      let interventionPhyto = InterventionPhytosanitaries(context: managedContext)
-      let phyto = returnEntityIfSame(entityName: "Phytos", predicate: predicate)
+      let interventionPhyto = InterventionPhytosanitary(context: managedContext)
+      let phyto = returnEntityIfSame(entityName: "Phyto", predicate: predicate)
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
-      interventionPhyto.phytos = phyto as? Phytos
-      interventionPhyto.interventions = intervention
+      interventionPhyto.phyto = phyto as? Phyto
+      interventionPhyto.intervention = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
       let interventionMaterial = InterventionMaterials(context: managedContext)
@@ -1247,34 +1247,34 @@ extension InterventionViewController {
     initializeInputsArray(inputs: &inputs, entities: materials)
     for input in inputs {
       switch input {
-      case is InterventionSeeds:
-        let seed = input as! InterventionSeeds
+      case is InterventionSeed:
+        let seed = input as! InterventionSeed
         var id: String? = nil
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID != 0 {
-          referenceId = (seed.seeds?.referenceID as NSNumber?)?.stringValue
+        if seed.seed?.ekyID == 0 && seed.seed?.referenceID != 0 {
+          referenceId = (seed.seed?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "SEED")
-        } else if seed.seeds?.ekyID == 0 && seed.seeds?.referenceID == 0 {
-          id = String(pushSeedIfNoEkyID(seed: seed.seeds!)!)
+        } else if seed.seed?.ekyID == 0 && seed.seed?.referenceID == 0 {
+          id = String(pushSeedIfNoEkyID(seed: seed.seed!)!)
         } else {
-          id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
+          id = (seed.seed?.ekyID as NSNumber?)?.stringValue
         }
         inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity!, unit: seed.unit!))
-      case is InterventionPhytosanitaries:
-        let phyto = input as! InterventionPhytosanitaries
+      case is InterventionPhytosanitary:
+        let phyto = input as! InterventionPhytosanitary
         var id: String? = nil
         var referenceId: String? = nil
         var type: ArticleTypeEnum? = nil
 
-        if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID != 0 {
-          referenceId = (phyto.phytos?.referenceID as NSNumber?)?.stringValue
+        if phyto.phyto?.ekyID == 0 && phyto.phyto?.referenceID != 0 {
+          referenceId = (phyto.phyto?.referenceID as NSNumber?)?.stringValue
           type = ArticleTypeEnum(rawValue: "CHEMICAL")
-        } else if phyto.phytos?.ekyID == 0 && phyto.phytos?.referenceID == 0 {
-          id = String(pushInputIfNoEkyID(input: phyto.phytos!)!)
+        } else if phyto.phyto?.ekyID == 0 && phyto.phyto?.referenceID == 0 {
+          id = String(pushInputIfNoEkyID(input: phyto.phyto!)!)
         } else {
-          id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
+          id = (phyto.phyto?.ekyID as NSNumber?)?.stringValue
         }
         inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!))
       case is InterventionFertilizers:
