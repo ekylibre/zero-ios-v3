@@ -14,10 +14,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
   // MARK: - Initialization
 
   func initHarvestView() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     harvestSelectedType = "STRAW"
     harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
     harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
