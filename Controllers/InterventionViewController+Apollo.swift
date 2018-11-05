@@ -740,11 +740,11 @@ extension InterventionViewController {
 
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
-    let farmdID = appDelegate.farmID!
+    let farmID = appDelegate.farmID!
     let group = DispatchGroup()
     let _ = apollo.clearCache()
     let mutation = PushStorageMutation(
-      farmId: farmdID,
+      farmId: farmID,
       type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
       name: storage.name!)
 
