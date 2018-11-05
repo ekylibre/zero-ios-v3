@@ -43,6 +43,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     switch pickerView {
     case harvestNaturePickerView:
       harvestType.setTitle(unit.localized, for: .normal)
+      harvestSelectedType = unit
       harvestNaturePickerView.isHidden = true
       dimView.isHidden = true
     case harvestUnitPickerView:
@@ -51,10 +52,17 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       dimView.isHidden = true
       harvestTableView.reloadData()
     case storagesPickerView:
-      harvests[cellIndexPath.row].storage = searchStorage(name: unit)
+      let predicate = NSPredicate(format: "name == %@", unit)
+      let searchedStorage = fetchStorages(predicate: predicate)
+
+      harvests[cellIndexPath.row].storage = searchedStorage?.first
       storagesPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
+    case storagesTypes:
+      storageCreationView.typeButton.setTitle(unit.localized, for: .normal)
+      storageCreationView.selectedType = unit
+      storagesTypes.isHidden = true
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
 

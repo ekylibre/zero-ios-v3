@@ -733,6 +733,62 @@ extension InterventionViewController {
 
   // MARK: Storages
 
+  private func pushStorages(storage: Storage) -> Int32 {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return 0
+    }
+
+    var id: Int32 = 0
+    let apollo = appDelegate.apollo!
+    let farmID = appDelegate.farmID!
+    let group = DispatchGroup()
+    let _ = apollo.clearCache()
+    let mutation = PushStorageMutation(
+      farmId: farmID,
+      type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
+      name: storage.name!)
+
+    group.enter()
+    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("ResultError: \(resultError)")
+      } else  {
+        if let dataError = result?.data?.createStorage?.errors {
+          print("DataError: \(dataError)")
+        } else {
+          id = Int32(result!.data!.createStorage!.storage!.id)!
+        }
+      }
+      group.leave()
+    })
+    group.wait()
+    return id
+  }
+
+  func pushStoragesIfNeeded() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let entitiesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
+    let predicate = NSPredicate(format: "storageID == %d", 0)
+
+    entitiesFetchRequest.predicate = predicate
+    do {
+      let storages = try managedContext.fetch(entitiesFetchRequest)
+
+      for storage in storages {
+        storage.storageID = pushStorages(storage: storage)
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
   private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -1322,7 +1378,7 @@ extension InterventionViewController {
         netQuantity: nil,
         unit: HarvestLoadUnitEnum(rawValue: harvest.unit!),
         number: harvest.number,
-        storageId: "\(String(describing: harvest.storage))")
+        storageId: (harvest.storage?.storageID as NSNumber?)?.stringValue)
       let harvestAttributes = InterventionOutputAttributes(
         quantity: nil,
         nature: InterventionOutputTypeEnum(rawValue: harvest.type!.uppercased()),
@@ -1357,10 +1413,12 @@ extension InterventionViewController {
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
-      } else if let resultError = result?.data?.createEquipment?.errors {
-        print("Error: \(resultError)")
-      } else {
-        if result?.data?.createEquipment?.equipment?.id != nil {
+      } else if let resultError = result?.errors {
+        print("ResultError: \(resultError)")
+      } else  {
+        if let dataError = result?.data?.createEquipment?.errors {
+          print("DataError: \(dataError)")
+        } else {
           id = Int32(result!.data!.createEquipment!.equipment!.id)!
         }
       }

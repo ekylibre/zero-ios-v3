@@ -129,7 +129,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var harvests = [Harvest]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
+  var harvestSelectedType: String!
+  var storageCreationView: StorageCreationView!
   var storagesPickerView: CustomPickerView!
+  var storagesTypes: CustomPickerView!
   var storages = [Storage]()
   var weatherButtons = [UIButton]()
   let massUnitMeasure = [
@@ -202,15 +205,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
 
-    temperatureTextField.delegate = self
-    temperatureTextField.keyboardType = .decimalPad
-
-    windSpeedTextField.delegate = self
-    windSpeedTextField.keyboardType = .decimalPad
-
-    harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    harvestType.layer.borderWidth = 1
-    harvestType.layer.cornerRadius = 5
     initHarvestView()
 
     setupViewsAccordingInterventionType()
@@ -597,10 +591,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for harvestEntity in harvests {
       let harvest = Harvest(context: managedContext)
-      let type = harvestType.titleLabel?.text
 
+      harvest.type = harvestSelectedType
       harvest.intervention = intervention
-      harvest.type = type
       harvest.number = harvestEntity.number
       harvest.quantity = harvestEntity.quantity
       harvest.unit = harvestEntity.unit
