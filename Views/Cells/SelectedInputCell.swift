@@ -243,7 +243,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   @objc func saveQuantity(_ sender: Any) {
     addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-      (inputQuantity.text! as NSString).doubleValue, forKey: "quantity")
+      (inputQuantity.text!).floatValue, forKey: "quantity")
     addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
   }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crops" representedClassName="Crops" syncable="YES" codeGenerationType="class">
         <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
@@ -58,14 +58,14 @@
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionEquipments" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="InterventionFertilizers" representedClassName="InterventionFertilizers" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="fertilizers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fertilizers" inverseName="interventionFertilizers" inverseEntity="Fertilizers" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionFertilizers" inverseEntity="Interventions" syncable="YES"/>
     </entity>
     <entity name="InterventionMaterials" representedClassName="InterventionMaterials" syncable="YES" codeGenerationType="class">
         <attribute name="approximativeValue" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionMaterials" inverseEntity="Interventions" syncable="YES"/>
         <relationship name="materials" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Materials" inverseName="interventionMaterials" inverseEntity="Materials" syncable="YES"/>
@@ -76,7 +76,7 @@
         <relationship name="persons" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Persons" inverseName="interventionPersons" inverseEntity="Persons" syncable="YES"/>
     </entity>
     <entity name="InterventionPhytosanitaries" representedClassName="InterventionPhytosanitaries" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionPhytosanitaries" inverseEntity="Interventions" syncable="YES"/>
         <relationship name="phytos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Phytos" inverseName="interventionPhytosanitaries" inverseEntity="Phytos" syncable="YES"/>
@@ -103,7 +103,7 @@
         <relationship name="workingPeriods" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkingPeriods" inverseName="interventions" inverseEntity="WorkingPeriods" syncable="YES"/>
     </entity>
     <entity name="InterventionSeeds" representedClassName="InterventionSeeds" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Interventions" inverseName="interventionSeeds" inverseEntity="Interventions" syncable="YES"/>
         <relationship name="seeds" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Seeds" inverseName="interventionSeeds" inverseEntity="Seeds" syncable="YES"/>
@@ -182,7 +182,7 @@
         <element name="Fertilizers" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
         <element name="Harvests" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
         <element name="InterventionEquipments" positionX="376.83203125" positionY="-222.34765625" width="128" height="75"/>
-        <element name="InterventionFertilizers" positionX="-208.0703125" positionY="-228.78515625" width="128" height="103"/>
+        <element name="InterventionFertilizers" positionX="-208.0703125" positionY="-228.78515625" width="128" height="105"/>
         <element name="InterventionMaterials" positionX="578.0703125" positionY="-161.76953125" width="128" height="120"/>
         <element name="InterventionPersons" positionX="-195.78515625" positionY="16.1015625" width="128" height="90"/>
         <element name="InterventionPhytosanitaries" positionX="621.36328125" positionY="1.16796875" width="128" height="105"/>

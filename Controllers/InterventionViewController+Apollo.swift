@@ -980,7 +980,7 @@ extension InterventionViewController {
       let seed = returnEntityIfSame(entityName: "Seeds", predicate: predicate)
 
       interventionSeed.unit = fetchedInput.unit.rawValue
-      interventionSeed.quantity = fetchedInput.quantity as NSNumber?
+      fetchedInput.quantity != nil ? interventionSeed.quantity = Float(fetchedInput.quantity!) : nil
       interventionSeed.seeds = (seed as? Seeds)
       interventionSeed.interventions = intervention
       intervention.addToInterventionSeeds(interventionSeed)
@@ -989,7 +989,7 @@ extension InterventionViewController {
       let fertilizer = returnEntityIfSame(entityName: "Fertilizers", predicate: predicate)
 
       interventionFertilizer.unit = fetchedInput.unit.rawValue
-      interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
+      fetchedInput.quantity != nil ? interventionFertilizer.quantity = Float(fetchedInput.quantity!) : nil
       interventionFertilizer.fertilizers = (fertilizer as? Fertilizers)
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
@@ -998,7 +998,7 @@ extension InterventionViewController {
       let phyto = returnEntityIfSame(entityName: "Phytos", predicate: predicate)
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
-      interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
+      fetchedInput.quantity != nil ? interventionPhyto.quantity = Float(fetchedInput.quantity!) : nil
       interventionPhyto.phytos = (phyto as? Phytos)
       interventionPhyto.interventions = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
@@ -1007,7 +1007,7 @@ extension InterventionViewController {
       let material = returnEntityIfSame(entityName: "Materials", predicate: predicate)
 
       interventionMaterial.unit = fetchedInput.unit.rawValue
-      interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
+      fetchedInput.quantity != nil ? interventionMaterial.quantity = Float(fetchedInput.quantity!) : nil
       interventionMaterial.materials = (material as? Materials)
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
@@ -1307,7 +1307,7 @@ extension InterventionViewController {
     }
   }
 
-  func appendInputAttributes(id: String?, referenceID: String?, type: ArticleTypeEnum?, quantity: NSNumber, unit: String) -> InterventionInputAttributes {
+  func appendInputAttributes(id: String?, referenceID: String?, type: ArticleTypeEnum?, quantity: Float, unit: String) -> InterventionInputAttributes {
     let article = InterventionArticleAttributes(
       id: id,
       referenceId: referenceID,
@@ -1315,7 +1315,7 @@ extension InterventionViewController {
     let inputAttributes = InterventionInputAttributes(
       marketingAuthorizationNumber: nil,
       article: article,
-      quantity: Double(truncating: quantity),
+      quantity: Double(quantity),
       unit: ArticleAllUnitEnum(rawValue: unit)!,
       unitPrice: nil)
 
@@ -1350,7 +1350,7 @@ extension InterventionViewController {
         } else {
           id = (seed.seeds?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity!, unit: seed.unit!))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: seed.quantity, unit: seed.unit!))
       case is InterventionPhytosanitaries:
         let phyto = input as! InterventionPhytosanitaries
         var id: String? = nil
@@ -1365,7 +1365,7 @@ extension InterventionViewController {
         } else {
           id = (phyto.phytos?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity!, unit: phyto.unit!))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: phyto.quantity, unit: phyto.unit!))
       case is InterventionFertilizers:
         let fertilizer = input as! InterventionFertilizers
         var id: String? = nil
@@ -1380,7 +1380,7 @@ extension InterventionViewController {
         } else {
           id = (fertilizer.fertilizers?.ekyID as NSNumber?)?.stringValue
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity!, unit: fertilizer.unit!))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: fertilizer.quantity, unit: fertilizer.unit!))
       case is InterventionMaterials:
         let material = input as! InterventionMaterials
         var id: String? = nil
@@ -1393,7 +1393,7 @@ extension InterventionViewController {
         } else {
           id = String(material.materials!.ekyID)
         }
-        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity!, unit: material.unit!))
+        inputsAttributes.append(appendInputAttributes(id: id, referenceID: referenceId, type: type, quantity: material.quantity, unit: material.unit!))
       default:
         print("No type")
       }

@@ -102,7 +102,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     tableView.refreshControl = refreshControl
     refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
-    //initializeApolloClient()
     checkLocalData()
     if Connectivity.isConnectedToInternet() {
       fetchInterventions()
@@ -557,8 +556,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc func action(sender: UIButton) {
-      hideInterventionAdd()
-      performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+    hideInterventionAdd()
+    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
   }
 
   @objc func hideInterventionAdd() {
@@ -593,7 +592,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
         interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
         interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
-
+        
         bottomView.layoutIfNeeded()
 
         index += 1
