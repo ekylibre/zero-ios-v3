@@ -389,7 +389,7 @@
 
 "selecting_crops" = "Select a crop";
 "selecting_materials" = "Select a material";
-"selecting_equipments" = "Select a equipment";
+"selecting_equipments" = "Select an equipment";
 "selecting_persons" = "Select a person";
 
 "create_new_seed" = "+ Create new seed";
@@ -519,6 +519,9 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"from" = "From";
+"to" = "To";
+"yield" = "Yield";
 
 "locale" = "en_EN";
 
@@ -536,6 +539,8 @@
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Started must be on or after %@";
 "started_must_be_on_or_before" = "Started must be on or before %@";
+"today" = "Today";
+"yesterday" = "Yesterday";
 
 "input_quantity" = "Or %.1f %@";
 "input_quantity_per_surface" = "Or %.1f %@ per hectare";

@@ -452,14 +452,6 @@
 "thunderstorm" = "Orage";
 "clear_sky" = "Soleil";
 
-// Article Type
-
-"seed" = "Semence";
-"fertilizer" = "Fertilisant";
-"chemical" = "Phytosanitaire";
-"material" = "Materiel";
-"phytosanitary" = "Phytosanitaire";
-
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
 "number" = "Numéro";
@@ -527,6 +519,9 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"from" = "Du";
+"to" = "Au";
+"yield" = "Rendement";
 
 "locale" = "fr_FR";
 
@@ -544,6 +539,8 @@
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
 "started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
+"today" = "Aujourd'hui";
+"yesterday" = "Hier";
 
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
