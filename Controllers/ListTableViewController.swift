@@ -20,7 +20,6 @@ class ListTableViewController: UITableViewController {
     super.viewDidLoad()
 
     sortByLocales()
-    tableView.bounces = false
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
   }

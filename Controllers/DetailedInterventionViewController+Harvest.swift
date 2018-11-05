@@ -48,7 +48,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.layer.cornerRadius = 4
     harvestTableView.dataSource = self
     harvestTableView.delegate = self
-    harvestTableView.bounces = false
   }
 
   func initHarvestUnitPickerView () {

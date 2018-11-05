@@ -26,14 +26,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       inputsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
-    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
-    selectedInputsTableView.delegate = self
-    selectedInputsTableView.dataSource = self
-    selectedInputsTableView.bounces = false
+    inputsTapGesture.delegate = self
     selectedInputsTableView.layer.borderWidth  = 0.5
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedInputsTableView.layer.cornerRadius = 4
+    selectedInputsTableView.layer.cornerRadius = 5
+    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
+    selectedInputsTableView.bounces = false
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
     inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
     inputsSelectionView.addInterventionViewController = self
@@ -42,22 +42,24 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   private func loadSpecies() -> [String] {
     var species = [String]()
 
-    if let asset = NSDataAsset(name: "species") {
+    if let asset = NSDataAsset(name: "production-natures") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredSpecies = jsonResult as? [[String: Any]]
+        let productionNatures = jsonResult as? [[String: Any]]
 
-        for registeredSpecie in registeredSpecies! {
-          let specie = registeredSpecie["name"] as! String
-          species.append(specie.uppercased())
+        for productionNature in productionNatures! {
+          let specie = productionNature["specie"] as! String
+          if !species.contains(specie.uppercased()) &&
+            SpecieEnum(rawValue: specie.uppercased()) != SpecieEnum.__unknown(specie.uppercased()) {
+            species.append(specie.uppercased())
+          }
         }
       } catch {
         print("Lexicon error")
       }
     } else {
-      print("species.json not found")
+      print("production_natures.json not found")
     }
-
     return species.sorted()
   }
 
@@ -73,26 +75,41 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
+  @IBAction func openInputsSelectionView(_ sender: Any) {
+    dimView.isHidden = false
+    inputsSelectionView.isHidden = false
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+    })
   }
 
-  @IBAction func collapseInputsView(_ sender: Any) {
+  @IBAction private func tapInputsView() {
     let shouldExpand = (inputsHeightConstraint.constant == 70)
+    let tableViewHeight = (selectedInputs.count > 10) ? 10 * 110 : selectedInputs.count * 110
 
-    selectedInputsTableView.isHidden = !shouldExpand
-    inputsCollapseButton.imageView!.transform = inputsCollapseButton.imageView!.transform.rotated(by: CGFloat.pi)
-    view.layoutIfNeeded()
-
-    if shouldExpand {
-      resizeViewAndTableView(viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-        tableView: self.selectedInputsTableView)
-    } else {
-      inputsHeightConstraint.constant = 70
+    if selectedInputs.count == 0 {
+      return
     }
-    showEntitiesNumber(entities: selectedInputs, constraint: inputsHeightConstraint,
-      numberLabel: inputsNumber, addEntityButton: addInputsButton)
+
+    updateCountLabel()
+    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    inputsAddButton.isHidden = !shouldExpand
+    inputsCountLabel.isHidden = shouldExpand
+    inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+  }
+
+  private func updateCountLabel() {
+    if selectedInputs.count == 1 {
+      inputsCountLabel.text = "input".localized
+    } else {
+      inputsCountLabel.text = String(format: "inputs".localized, selectedInputs.count)
+    }
+  }
+
+  // MARK: -
+  func saveSelectedRow(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
   }
 
   func closeInputsSelectionView() {
@@ -104,13 +121,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     })
 
     if selectedInputs.count > 0 {
-      inputsCollapseButton.isHidden = false
+      inputsExpandImageView.isHidden = false
       selectedInputsTableView.isHidden = false
-      resizeViewAndTableView(
-        viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-        tableView: self.selectedInputsTableView)
-      inputsCollapseButton.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+      inputsTableViewHeightConstraint.constant = selectedInputsTableView.contentSize.height
+      inputsHeightConstraint.constant = inputsTableViewHeightConstraint.constant + 100
+      inputsExpandImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
       view.layoutIfNeeded()
     }
     selectedInputsTableView.reloadData()
@@ -174,17 +189,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
         self.selectedInputsTableView.isHidden = true
-        self.inputsCollapseButton.isHidden = true
+        self.inputsExpandImageView.isHidden = true
         self.inputsHeightConstraint.constant = 70
       } else {
-        UIView.animate(withDuration: 0.5, animations: {
-          self.resizeViewAndTableView(
-            viewHeightConstraint: self.inputsHeightConstraint,
-            tableViewHeightConstraint: self.selectedInputsTableViewHeightConstraint,
-            tableView: self.selectedInputsTableView
-          )
-          self.view.layoutIfNeeded()
-        })
+        self.inputsTableViewHeightConstraint.constant = self.selectedInputsTableView.contentSize.height
+        self.inputsHeightConstraint.constant = self.inputsTableViewHeightConstraint.constant + 100
+        self.view.layoutIfNeeded()
       }
     }))
     present(alert, animated: true)
@@ -215,8 +225,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = Float(cell.inputQuantity.text!)
-    let unit = cell.unitMeasureButton.titleLabel?.text
+    let quantity = cell.quantityTextField.text?.floatValue
+    let unit = cell.unitButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false
     if quantity == 0 || quantity == nil {

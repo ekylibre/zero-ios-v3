@@ -74,7 +74,7 @@
 		04DC9FF0217DB88D00CB94C3 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDC217DB88C00CB94C3 /* HandleKeyboard.swift */; };
 		04DC9FF1217DB88D00CB94C3 /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDD217DB88C00CB94C3 /* DetailedInterventionViewController+Inputs.swift */; };
 		04DC9FF2217DB88D00CB94C3 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDE217DB88C00CB94C3 /* InterventionViewController+Lexicon.swift */; };
-		04DC9FF3217DB88D00CB94C3 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDF217DB88C00CB94C3 /* LoginScreen.swift */; };
+		04DC9FF3217DB88D00CB94C3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FDF217DB88C00CB94C3 /* LoginViewController.swift */; };
 		04DC9FF4217DB88D00CB94C3 /* DetailedInterventionViewController+Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE0217DB88C00CB94C3 /* DetailedInterventionViewController+Persons.swift */; };
 		04DC9FF6217DB88D00CB94C3 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */; };
 		04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */; };
@@ -165,7 +165,6 @@
 		04998B76217DB8DE000A5D2F /* PlotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotCell.swift; sourceTree = "<group>"; };
 		04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedEquipmentCell.swift; sourceTree = "<group>"; };
 		04998B78217DB8DE000A5D2F /* PersonCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCreationView.swift; sourceTree = "<group>"; };
-		04A3BCBB2178D9F500C01690 /* IQKeyboardManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManager.framework; path = Carthage/Build/iOS/IQKeyboardManager.framework; sourceTree = "<group>"; };
 		04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
 		04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationView.swift; sourceTree = "<group>"; };
 		04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
@@ -183,7 +182,7 @@
 		04DC9FDC217DB88C00CB94C3 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
 		04DC9FDD217DB88C00CB94C3 /* DetailedInterventionViewController+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Inputs.swift"; sourceTree = "<group>"; };
 		04DC9FDE217DB88C00CB94C3 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
-		04DC9FDF217DB88C00CB94C3 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		04DC9FDF217DB88C00CB94C3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		04DC9FE0217DB88C00CB94C3 /* DetailedInterventionViewController+Persons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Persons.swift"; sourceTree = "<group>"; };
 		04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
 		04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -242,7 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */,
-				04A3BCBB2178D9F500C01690 /* IQKeyboardManager.framework */,
 				6B4CA8A2214F9C560052073D /* Apollo.framework */,
 				0411C4CE214FC31B005B6C01 /* ApolloSQLite.framework */,
 				0411C4D0214FC329005B6C01 /* ApolloWebSocket.framework */,
@@ -273,7 +271,7 @@
 				04DC9FDE217DB88C00CB94C3 /* InterventionViewController+Lexicon.swift */,
 				04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */,
 				04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */,
-				04DC9FDF217DB88C00CB94C3 /* LoginScreen.swift */,
+				04DC9FDF217DB88C00CB94C3 /* LoginViewController.swift */,
 				04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
@@ -596,7 +594,7 @@
 				048D2AFA2178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift in Sources */,
 				04998B80217DB8DF000A5D2F /* CustomPickerView.swift in Sources */,
 				04998B8B217DB8DF000A5D2F /* HarvestCell.swift in Sources */,
-				04DC9FF3217DB88D00CB94C3 /* LoginScreen.swift in Sources */,
+				04DC9FF3217DB88D00CB94C3 /* LoginViewController.swift in Sources */,
 				048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */,
 				048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */,
 				6B0B14002152523F001A3366 /* (null) in Sources */,
@@ -752,7 +750,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -807,7 +805,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -866,6 +864,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6FPGXA7K7Z;
 				INFOPLIST_FILE = "Clic&Farm-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -886,6 +885,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6FPGXA7K7Z;
 				INFOPLIST_FILE = "Clic&Farm-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

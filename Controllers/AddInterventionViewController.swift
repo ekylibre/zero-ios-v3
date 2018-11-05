@@ -37,13 +37,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var irrigationSeparatorView: UIView!
 
   // Inputs
+  @IBOutlet var inputsTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var inputsView: UIView!
   @IBOutlet weak var inputsHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var addInputsButton: UIButton!
-  @IBOutlet weak var inputsCollapseButton: UIButton!
-  @IBOutlet weak var inputsNumber: UILabel!
+  @IBOutlet weak var inputsAddButton: UIButton!
+  @IBOutlet weak var inputsCountLabel: UILabel!
+  @IBOutlet weak var inputsExpandImageView: UIImageView!
   @IBOutlet weak var selectedInputsTableView: UITableView!
-  @IBOutlet weak var selectedInputsTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var inputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var inputsSeparatorView: UIView!
 
   // Materials
@@ -77,7 +78,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
-  @IBOutlet weak var weatherCollapseButton: UIButton!
+  @IBOutlet weak var weatherExpandImageView: UIImageView!
   @IBOutlet weak var negativeTemperature: UIButton!
   @IBOutlet weak var temperatureTextField: UITextField!
   @IBOutlet weak var windSpeedTextField: UITextField!
@@ -165,7 +166,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
-    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
 
     // Adds type label on the navigation bar
     let navigationItem = UINavigationItem(title: "")
@@ -285,7 +286,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedInputsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
-      cell.selectionStyle = .none
       if selectedInputs.count > indexPath.row {
         let selectedInput = selectedInputs[indexPath.row]
         let unit = selectedInput.value(forKey: "unit") as? String
@@ -293,30 +293,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.unitMeasureButton.setTitle(unit?.localized, for: .normal)
-        cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
 
         switch selectedInput {
         case is InterventionSeed:
           let seed = selectedInput.value(forKey: "seed") as! Seed
 
           cell.type = "Seed"
-          cell.inputName.text = seed.specie?.localized
-          cell.inputLabel.text = seed.variety
+          cell.nameLabel.text = seed.specie?.localized
+          cell.infoLabel.text = seed.variety
           cell.inputImageView.image = UIImage(named: "seed")
         case is InterventionPhytosanitary:
           let phyto = selectedInput.value(forKey: "phyto") as! Phyto
 
           cell.type = "Phyto"
-          cell.inputName.text = phyto.name
-          cell.inputLabel.text = phyto.firmName
+          cell.nameLabel.text = phyto.name
+          cell.infoLabel.text = phyto.firmName
           cell.inputImageView.image = UIImage(named: "phytosanitary")
         case is InterventionFertilizer:
           let fertilizer = selectedInput.value(forKey: "fertilizer") as! Fertilizer
 
           cell.type = "Fertilizer"
-          cell.inputName.text = fertilizer.name?.localized
-          cell.inputLabel.text = fertilizer.nature?.localized
+          cell.nameLabel.text = fertilizer.name?.localized
+          cell.infoLabel.text = nil
           cell.inputImageView.image = UIImage(named: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
@@ -436,12 +435,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     default:
       return 60
     }
-  }
-
-  func resizeViewAndTableView(viewHeightConstraint: NSLayoutConstraint, tableViewHeightConstraint: NSLayoutConstraint,
-                              tableView: UITableView) {
-    tableViewHeightConstraint.constant = tableView.contentSize.height
-    viewHeightConstraint.constant = tableViewHeightConstraint.constant + 100
   }
 
   // MARK: - Core Data
@@ -808,6 +801,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     switch gestureRecognizer {
+    case inputsTapGesture:
+      return !selectedInputsTableView.bounds.contains(touch.location(in: selectedInputsTableView))
     case materialsTapGesture:
       return !selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView))
     case equipmentsTapGesture:
@@ -872,15 +867,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
       })
     }
-  }
-
-  @IBAction func selectInput(_ sender: Any) {
-    dimView.isHidden = false
-    inputsSelectionView.isHidden = false
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    })
   }
 
   @IBAction func cancelAdding(_ sender: Any) {

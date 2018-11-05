@@ -1,5 +1,5 @@
 //
-//  LoginScreen.swift
+//  LoginViewController.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 16/07/2018.
@@ -10,7 +10,7 @@ import UIKit
 import OAuth2
 import CoreData
 
-class LoginScreen: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
   // MARK: - Properties
 
@@ -31,7 +31,9 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-    
+
+    navigationController?.navigationBar.isHidden = true
+
     tfUsername.delegate = self
     tfPassword.delegate = self
     textView.text = "welcome_text".localized
@@ -43,7 +45,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
-      if appDelegate.entityIsEmpty(entity: "User") {
+      if appDelegate.entityIsEmpty(entity: "User") && authentificationService?.oauth2.accessToken != nil {
         authentificationService?.logout()
       }
       self.authentifyUser()
@@ -68,7 +70,12 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-      performSegue(withIdentifier: "showInterventionVC", sender: self)
+      let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+      let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController") as UIViewController
+
+      tfUsername.text = nil
+      tfPassword.text = nil
+      navigationController?.pushViewController(interventionVC, animated: true)
     }
   }
 
@@ -105,7 +112,10 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         self.checkLoggedStatus(token: token)
       }
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-        performSegue(withIdentifier: "showInterventionVC", sender: self)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController") as UIViewController
+
+        navigationController?.pushViewController(interventionVC, animated: false)
       }
     } else if buttonIsPressed && tfUsername.text!.count > 0 {
       authentificationService?.addNewUser(userName: tfUsername.text!)

@@ -100,7 +100,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     if volume == 0 {
       irrigationErrorLabel.text = "volume_cannot_be_null".localized
       irrigationErrorLabel.textColor = AppColor.TextColors.Red
-    } else if totalLabel.text == "select_crops".localized {
+    } else if totalLabel.text == "select_crops".localized.uppercased() {
       irrigationErrorLabel.text = "no_crop_selected".localized
       irrigationErrorLabel.textColor = AppColor.TextColors.Red
     } else {

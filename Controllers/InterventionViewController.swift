@@ -34,6 +34,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let dimView = UIView()
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
+  var interventionButtonsLabels = [UILabel]()
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
 
@@ -44,6 +45,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
+
+    // Hide navigation bar
+    navigationController?.navigationBar.isHidden = true
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -100,7 +104,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
-    refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
     checkLocalData()
     if Connectivity.isConnectedToInternet() {
@@ -117,15 +120,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     for buttonCount in 0...6 {
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
       let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
+      let interventionLabel = UILabel()
 
+      interventionButton.tag = buttonCount
       interventionButton.backgroundColor = UIColor.white
       interventionButton.setBackgroundImage(image, for: .normal)
-      interventionButton.setTitle(interventionTypes[buttonCount].localized, for: .normal)
-      interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false
+      interventionLabel.text = interventionTypes[buttonCount].localized
+      interventionLabel.textColor = .white
+      interventionLabel.font = UIFont.systemFont(ofSize: 15)
+      interventionLabel.translatesAutoresizingMaskIntoConstraints = false
+      interventionLabel.isHidden = true
       interventionButtons.append(interventionButton)
+      interventionButtonsLabels.append(interventionLabel)
       bottomView.addSubview(interventionButton)
+      bottomView.addSubview(interventionButtonsLabels[interventionButton.tag])
     }
   }
 
@@ -264,7 +274,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       UserDefaults.standard.set(0, forKey: "lastSyncDate")
       UserDefaults.standard.synchronize()
       self.emptyAllCoreData()
-      self.performSegue(withIdentifier: "logoutSegue", sender: self)
+      self.navigationController?.popViewController(animated: true)
     }))
     present(alert, animated: true)
   }
@@ -301,13 +311,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
     }
-
-    // Resize labels according to their text
-    cell.typeLabel.sizeToFit()
-    cell.cropsLabel.sizeToFit()
-    cell.infosLabel.sizeToFit()
-    cell.selectionStyle = .none
-
     return cell
   }
 
@@ -413,9 +416,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     switch segue.identifier {
     case "showAddInterventionVC":
       let destVC = segue.destination as! AddInterventionViewController
-      let index = interventionButtons.firstIndex(of: (sender as! UIButton))!
+      let type = interventionTypes[((sender as? UIButton)?.tag)!]
 
-      destVC.interventionType = interventionTypes[index]
+      destVC.interventionType = type
     default:
       return
     }
@@ -434,6 +437,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   // MARK: - Actions
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
+      refreshControl.beginRefreshing()
+      synchronise(self)
+    }
+  }
 
   @IBAction func synchronise(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -523,6 +533,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @objc func hideInterventionAdd() {
     for interventionButton in interventionButtons {
       interventionButton.isHidden = true
+      interventionButtonsLabels[interventionButton.tag].isHidden = true
     }
 
     createInterventionButton.isHidden = false
@@ -552,6 +563,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
         interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
         interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+        interventionButtonsLabels[interventionButton.tag].isHidden = false
+        NSLayoutConstraint.activate([
+          interventionButtonsLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
+          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor)
+          ])
+
         bottomView.layoutIfNeeded()
 
         index += 1
