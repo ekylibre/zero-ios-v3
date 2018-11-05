@@ -27,13 +27,13 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       ])
 
     inputsTapGesture.delegate = self
-    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
-    selectedInputsTableView.delegate = self
-    selectedInputsTableView.dataSource = self
     selectedInputsTableView.layer.borderWidth  = 0.5
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedInputsTableView.layer.cornerRadius = 4
+    selectedInputsTableView.layer.cornerRadius = 5
+    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
+    selectedInputsTableView.bounces = false
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
     inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
     inputsSelectionView.addInterventionViewController = self
