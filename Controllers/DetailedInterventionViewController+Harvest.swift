@@ -1,5 +1,5 @@
 //
-//  AddHarvest.swift
+//  DetailedInterventionViewController+Harvest.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 12/09/2018.
@@ -18,9 +18,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
       return
     }
 
-    if appDelegate.entityIsEmpty(entity: "Harvests") {
-      createSampleStorage()
-    }
     harvestSelectedType = "STRAW"
     harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
     harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
@@ -177,13 +174,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return storagesNames
   }
 
-  func createSampleStorage() {
-    createStorage(name: "Silot 1", type: "silo")
-    createStorage(name: "Bati 42", type: "building")
-    createStorage(name: "bati simple", type: "building")
-    createStorage(name: "bati silo", type: "silo")
-  }
-
   func createHarvest() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -192,9 +182,9 @@ extension AddInterventionViewController: HarvestCellDelegate {
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvests(context: managedContext)
 
-    harvest.number = ""
+    harvest.number = nil
     harvest.quantity = 0
-    harvest.type = "STRAW"
+    harvest.type = nil
     harvest.unit = "QUINTAL"
     harvests.append(harvest)
   }
@@ -210,7 +200,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storage.name = name
     storage.type = type
 
-    print("Create Storage: \(storage)")
     do {
       try managedContext.save()
       storages.append(storage)

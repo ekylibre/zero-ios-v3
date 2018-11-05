@@ -598,7 +598,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       harvest.quantity = harvestEntity.quantity
       harvest.unit = harvestEntity.unit
       harvest.storages = harvestEntity.storages
-      print("\nSaved harvest: \(harvest)")
     }
 
     do {
