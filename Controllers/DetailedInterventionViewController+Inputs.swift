@@ -26,6 +26,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       inputsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
+    inputsTapGesture.delegate = self
     selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
