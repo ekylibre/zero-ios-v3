@@ -431,6 +431,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       if interventionState == InterventionState.Validated.rawValue {
         cell.quantity.placeholder = String(harvest.quantity)
         cell.number.placeholder = harvest.number
+      } else if harvest.quantity == 0 {
+        cell.quantity.placeholder = "0"
+        cell.number.text = harvest.number
       } else {
         cell.quantity.text = String(harvest.quantity)
         cell.number.text = harvest.number

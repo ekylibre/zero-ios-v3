@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0410A5FC2166192700529DA1 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 0410A5FB2166192700529DA1 /* schema.json */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		041248062179C05400A78D08 /* InterventionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248052179C05400A78D08 /* InterventionState.swift */; };
 		041248082179C05900A78D08 /* InterventionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248072179C05900A78D08 /* InterventionType.swift */; };
@@ -75,8 +74,6 @@
 		04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B76217DB8DE000A5D2F /* PlotCell.swift */; };
 		04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */; };
 		04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B78217DB8DE000A5D2F /* PersonCreationView.swift */; };
-		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
-		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
@@ -98,7 +95,6 @@
 		040D8598216B9F1B008E1628 /* queries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		040D859A216B9F4E008E1628 /* mutations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		040D859C216BA061008E1628 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		0410A5FB2166192700529DA1 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		0411C4CC214FC30B005B6C01 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
@@ -110,7 +106,6 @@
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
-		04269C4D2179D49D00E0160C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		045F03C6217F1BDB00CCE5B3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		047108FC2180688000DC262C /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -172,8 +167,6 @@
 		04998B78217DB8DE000A5D2F /* PersonCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCreationView.swift; sourceTree = "<group>"; };
 		04A3BCBB2178D9F500C01690 /* IQKeyboardManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManager.framework; path = Carthage/Build/iOS/IQKeyboardManager.framework; sourceTree = "<group>"; };
 		04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
-		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
-		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -362,17 +355,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		6B4CA89B214F9B560052073D /* GraphQL */ = {
-			isa = PBXGroup;
-			children = (
-				04269C4D2179D49D00E0160C /* API.swift */,
-				6B4CA89D214F9B560052073D /* mutations.graphql */,
-				6B4CA89C214F9B560052073D /* queries.graphql */,
-				0410A5FB2166192700529DA1 /* schema.json */,
-			);
-			path = GraphQL;
-			sourceTree = "<group>";
-		};
 		6BA3713D213963230086DF9B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,7 +375,6 @@
 				047BF0B12105D1F9009F3945 /* Views */,
 				047BF0BF2105F44F009F3945 /* CoreData */,
 				040D8595216B9EC1008E1628 /* GraphQL */,
-				6B4CA89B214F9B560052073D /* GraphQL */,
 				042A44322121B38600CE6B24 /* Constants */,
 				6BA3713D213963230086DF9B /* Resources */,
 				0480CA432165068F0039FCB9 /* Library */,
@@ -511,10 +492,7 @@
 				047109322180715600DC262C /* Main.strings in Resources */,
 				047109312180715100DC262C /* Main.storyboard in Resources */,
 				047109302180714600DC262C /* Assets.xcassets in Resources */,
-				0410A5FC2166192700529DA1 /* schema.json in Resources */,
-				6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */,
 				04998B88217DB8DF000A5D2F /* LaunchScreen.storyboard in Resources */,
-				6B4CA89F214F9B560052073D /* queries.graphql in Resources */,
 				04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
