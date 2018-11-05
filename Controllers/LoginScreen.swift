@@ -43,7 +43,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
     if !staticIndex.firstLaunch {
       authentificationService = AuthentificationService(username: "", password: "")
-      if appDelegate.entityIsEmpty(entity: "Users") {
+      if appDelegate.entityIsEmpty(entity: "User") {
         authentificationService?.logout()
       }
       self.authentifyUser()
@@ -96,7 +96,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
       return
     }
 
-    if !appDelegate.entityIsEmpty(entity: "Users") {
+    if !appDelegate.entityIsEmpty(entity: "User") {
       authentificationService?.authorize(presenting: self)
       var token = authentificationService?.oauth2.accessToken
 

@@ -145,13 +145,13 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storagesTypes.isHidden = false
   }
 
-  func fetchStorages(predicate: NSPredicate?) -> [Storages]? {
+  func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
 
     storagesFetchRequest.predicate = predicate
     do {
@@ -169,7 +169,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
     var storagesNames = [String]()
 
     do {
@@ -192,7 +192,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvest = Harvests(context: managedContext)
+    let harvest = Harvest(context: managedContext)
 
     harvest.number = nil
     harvest.quantity = 0
@@ -207,7 +207,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storage = Storages(context: managedContext)
+    let storage = Storage(context: managedContext)
 
     storage.name = name
     storage.type = type

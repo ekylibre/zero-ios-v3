@@ -101,7 +101,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Properties
 
-  var newIntervention: Interventions!
+  var newIntervention: Intervention!
   var interventionType: String!
   var selectedRow: Int!
   var selectedValue: String!
@@ -115,7 +115,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var personsSelectionView: PersonsView!
   var selectedMaterials = [[NSManagedObject]]()
   var interventionEquipments = [NSManagedObject]()
-  var selectedEquipments = [Equipments]()
+  var selectedEquipments = [Equipment]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
   var createdSeed = [NSManagedObject]()
@@ -126,14 +126,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weather: Weather!
   var weatherIsSelected: Bool = false
-  var harvests = [Harvests]()
+  var harvests = [Harvest]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
   var harvestSelectedType: String!
   var storageCreationView: StorageCreationView!
   var storagesPickerView: CustomPickerView!
   var storagesTypes: CustomPickerView!
-  var storages = [Storages]()
+  var storages = [Storage]()
   var weatherButtons = [UIButton]()
   let massUnitMeasure = [
     "GRAM",
@@ -297,22 +297,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.backgroundColor = AppColor.ThemeColors.DarkWhite
 
         switch selectedInput {
-        case is InterventionSeeds:
-          let seed = selectedInput.value(forKey: "seeds") as! Seeds
+        case is InterventionSeed:
+          let seed = selectedInput.value(forKey: "seed") as! Seed
 
           cell.type = "Seed"
           cell.inputName.text = seed.specie?.localized
           cell.inputLabel.text = seed.variety
           cell.inputImageView.image = UIImage(named: "seed")
-        case is InterventionPhytosanitaries:
-          let phyto = selectedInput.value(forKey: "phytos") as! Phytos
+        case is InterventionPhytosanitary:
+          let phyto = selectedInput.value(forKey: "phyto") as! Phyto
 
           cell.type = "Phyto"
           cell.inputName.text = phyto.name
           cell.inputLabel.text = phyto.firmName
           cell.inputImageView.image = UIImage(named: "phytosanitary")
-        case is InterventionFertilizers:
-          let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
+        case is InterventionFertilizer:
+          let fertilizer = selectedInput.value(forKey: "fertilizer") as! Fertilizer
 
           cell.type = "Fertilizer"
           cell.inputName.text = fertilizer.name?.localized
@@ -372,7 +372,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.storage.layer.borderWidth = 1
       cell.storage.layer.cornerRadius = 5
-      cell.storage.setTitle(harvests[indexPath.row].storages?.name ?? "---", for: .normal)
+      cell.storage.setTitle(harvests[indexPath.row].storage?.name ?? "---", for: .normal)
       cell.quantity.keyboardType = .decimalPad
       cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.quantity.layer.borderWidth = 1
@@ -391,7 +391,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  private func getSelectedEquipmentInfos(_ equipment: Equipments) -> String {
+  private func getSelectedEquipmentInfos(_ equipment: Equipment) -> String {
     let type = equipment.type!.localized
     guard let number = equipment.number else {
       return type
@@ -455,10 +455,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriod = WorkingPeriods(context: managedContext)
+    let workingPeriod = WorkingPeriod(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
 
-    newIntervention = Interventions(context: managedContext)
+    newIntervention = Intervention(context: managedContext)
     newIntervention.type = interventionType
     newIntervention.status = InterventionState.Created.rawValue
     newIntervention.infos = "Infos"
@@ -478,7 +478,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         newIntervention.waterUnit = ""
       }
     }
-    workingPeriod.interventions = newIntervention
+    workingPeriod.intervention = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     workingPeriod.hourDuration = duration
     createTargets(intervention: newIntervention)
@@ -487,9 +487,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     saveHarvest(intervention: newIntervention)
     saveInterventionInputs(intervention: newIntervention)
     saveWeather(intervention: newIntervention)
-    resetInputsAttributes(entity: "Seeds")
-    resetInputsAttributes(entity: "Phytos")
-    resetInputsAttributes(entity: "Fertilizers")
+    resetInputsAttributes(entity: "Seed")
+    resetInputsAttributes(entity: "Phyto")
+    resetInputsAttributes(entity: "Fertilizer")
 
     do {
       try managedContext.save()
@@ -522,7 +522,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveInterventionInputs(intervention: Interventions) {
+  func saveInterventionInputs(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -530,7 +530,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for selectedInput in selectedInputs {
-      selectedInput.setValue(intervention, forKey: "interventions")
+      selectedInput.setValue(intervention, forKey: "intervention")
     }
 
     do {
@@ -540,14 +540,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func fetchSelectedCrops() -> [Crops] {
+  func fetchSelectedCrops() -> [Crop] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
+      return [Crop]()
     }
 
-    var crops: [Crops]!
+    var crops: [Crop]!
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
     let predicate = NSPredicate(format: "isSelected == true")
 
     cropsFetchRequest.predicate = predicate
@@ -559,7 +559,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return crops
   }
 
-  func createTargets(intervention: Interventions) {
+  func createTargets(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -568,10 +568,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let selectedCrops = fetchSelectedCrops()
 
     for crop in selectedCrops {
-      let target = Targets(context: managedContext)
+      let target = Target(context: managedContext)
 
-      target.interventions = intervention
-      target.crops = crop
+      target.intervention = intervention
+      target.crop = crop
       target.workAreaPercentage = 100
     }
 
@@ -582,7 +582,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveHarvest(intervention: Interventions) {
+  func saveHarvest(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -590,14 +590,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for harvestEntity in harvests {
-      let harvest = Harvests(context: managedContext)
+      let harvest = Harvest(context: managedContext)
 
-      harvest.interventions = intervention
       harvest.type = harvestSelectedType
+      harvest.intervention = intervention
       harvest.number = harvestEntity.number
       harvest.quantity = harvestEntity.quantity
       harvest.unit = harvestEntity.unit
-      harvest.storages = harvestEntity.storages
+      harvest.storage = harvestEntity.storage
     }
 
     do {
@@ -607,18 +607,18 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createMaterials(intervention: Interventions) {
+  func createMaterials(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    for case let interventionMaterial as InterventionMaterials in selectedMaterials[1] {
+    for case let interventionMaterial as InterventionMaterial in selectedMaterials[1] {
       let index = selectedMaterials[1].firstIndex(of: interventionMaterial)!
 
-      interventionMaterial.interventions = intervention
-      interventionMaterial.materials = selectedMaterials[0][index] as? Materials
+      interventionMaterial.intervention = intervention
+      interventionMaterial.material = selectedMaterials[0][index] as? Material
     }
 
     do {
@@ -628,17 +628,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(intervention: Interventions) {
+  func createEquipments(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
     for selectedEquipment in selectedEquipments {
-      let interventionEquipment = InterventionEquipments(context: managedContext)
+      let interventionEquipment = InterventionEquipment(context: managedContext)
 
-      interventionEquipment.interventions = intervention
-      interventionEquipment.equipments = selectedEquipment
+      interventionEquipment.intervention = intervention
+      interventionEquipment.equipment = selectedEquipment
     }
 
     do {
@@ -664,7 +664,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchedEntity = entity
   }
 
-  func saveWeather(intervention: Interventions) {
+  func saveWeather(intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -673,7 +673,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     var currentWeather = Weather(context: managedContext)
 
     currentWeather = weather
-    currentWeather.interventions = intervention
+    currentWeather.intervention = intervention
 
     do {
       try managedContext.save()
@@ -884,9 +884,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @IBAction func cancelAdding(_ sender: Any) {
-    resetInputsAttributes(entity: "Seeds")
-    resetInputsAttributes(entity: "Phytos")
-    resetInputsAttributes(entity: "Fertilizers")
+    resetInputsAttributes(entity: "Seed")
+    resetInputsAttributes(entity: "Phyto")
+    resetInputsAttributes(entity: "Fertilizer")
     dismiss(animated: true, completion: nil)
   }
 

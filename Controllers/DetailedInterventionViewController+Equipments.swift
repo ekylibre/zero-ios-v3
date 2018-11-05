@@ -72,7 +72,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectEquipment(_ equipment: Equipments) {
+  func selectEquipment(_ equipment: Equipment) {
     selectedEquipments.append(equipment)
     closeEquipmentsSelectionView()
     updateView()
