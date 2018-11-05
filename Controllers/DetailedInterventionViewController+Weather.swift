@@ -79,12 +79,12 @@ extension AddInterventionViewController {
     negativeTemperature.isHidden = state
   }
 
-  @IBAction func collapseOrExpandWeatherView(_ sender: Any) {
+  @IBAction private func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
-    weatherCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+    weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)
     hideWeatherItems(!shouldExpand)
     saveCurrentWeather(self)
   }

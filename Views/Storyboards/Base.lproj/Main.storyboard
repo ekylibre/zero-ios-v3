@@ -930,17 +930,13 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzQ-CL-iF5">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-more" translatesAutoresizingMaskIntoConstraints="NO" id="9cA-CI-OoX">
                                                         <rect key="frame" x="339" y="27.5" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="16" id="A3s-vR-vJw"/>
-                                                            <constraint firstAttribute="width" constant="16" id="USE-9g-9E8"/>
+                                                            <constraint firstAttribute="height" constant="16" id="Pqa-DF-1cC"/>
+                                                            <constraint firstAttribute="width" constant="16" id="RFs-1y-S07"/>
                                                         </constraints>
-                                                        <state key="normal" image="expand-more"/>
-                                                        <connections>
-                                                            <action selector="collapseOrExpandWeatherView:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="Wjw-0w-OyL"/>
-                                                        </connections>
-                                                    </button>
+                                                    </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Et-nE-Npz">
                                                         <rect key="frame" x="20" y="68" width="87.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -1119,10 +1115,10 @@
                                                     <constraint firstItem="W1a-qv-ooU" firstAttribute="top" secondItem="BK3-QQ-YBa" secondAttribute="top" id="18f-Zn-D5j"/>
                                                     <constraint firstItem="Bzs-kF-ytJ" firstAttribute="leading" secondItem="pOP-WE-pVI" secondAttribute="leading" id="3to-c3-waY"/>
                                                     <constraint firstItem="BK3-QQ-YBa" firstAttribute="centerY" secondItem="Bzs-kF-ytJ" secondAttribute="centerY" id="6S9-LS-in1"/>
-                                                    <constraint firstItem="wzQ-CL-iF5" firstAttribute="centerY" secondItem="wJi-KE-5Mc" secondAttribute="centerY" id="6pm-xH-lwY"/>
                                                     <constraint firstItem="W1a-qv-ooU" firstAttribute="leading" secondItem="as1-Zg-NLq" secondAttribute="leading" id="HKw-AY-Zjq"/>
                                                     <constraint firstItem="tZZ-Qa-9cm" firstAttribute="centerX" secondItem="3GM-HU-750" secondAttribute="centerX" id="IX5-1b-YeV"/>
                                                     <constraint firstItem="pOP-WE-pVI" firstAttribute="leading" secondItem="8gD-ba-J2E" secondAttribute="trailing" constant="10" id="IZF-QG-lhe"/>
+                                                    <constraint firstItem="9cA-CI-OoX" firstAttribute="centerY" secondItem="wJi-KE-5Mc" secondAttribute="centerY" id="Iru-h6-3i1"/>
                                                     <constraint firstItem="as1-Zg-NLq" firstAttribute="top" secondItem="2Et-nE-Npz" secondAttribute="top" id="N8a-sX-iGy"/>
                                                     <constraint firstItem="2Et-nE-Npz" firstAttribute="leading" secondItem="3GM-HU-750" secondAttribute="leading" constant="20" id="Nda-y5-2Ym"/>
                                                     <constraint firstItem="8gD-ba-J2E" firstAttribute="leading" secondItem="2Et-nE-Npz" secondAttribute="trailing" constant="10" id="O70-nC-Ktq"/>
@@ -1140,9 +1136,12 @@
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BK3-QQ-YBa" secondAttribute="trailing" constant="20" symbolic="YES" id="otl-hE-8gN"/>
                                                     <constraint firstItem="wJi-KE-5Mc" firstAttribute="top" secondItem="3GM-HU-750" secondAttribute="top" constant="25" id="ppQ-wk-RFN"/>
                                                     <constraint firstItem="tZZ-Qa-9cm" firstAttribute="top" secondItem="BK3-QQ-YBa" secondAttribute="bottom" constant="30" id="sqH-1b-qG2"/>
-                                                    <constraint firstAttribute="trailing" secondItem="wzQ-CL-iF5" secondAttribute="trailing" constant="20" id="xAU-yF-tmp"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9cA-CI-OoX" secondAttribute="trailing" constant="20" id="u9U-s8-hQW"/>
                                                     <constraint firstItem="2Et-nE-Npz" firstAttribute="centerY" secondItem="pOP-WE-pVI" secondAttribute="centerY" id="xAj-cb-IQy"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="l4M-fd-xXe" appends="YES" id="DAY-Um-kUf"/>
+                                                </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4uv-L3-5Pb" userLabel="Separator">
                                                 <rect key="frame" x="0.0" y="422.5" width="375" height="0.5"/>
@@ -1329,7 +1328,7 @@
                         <outlet property="temperatureTextField" destination="pOP-WE-pVI" id="oDq-IT-cK4"/>
                         <outlet property="thunderstorm" destination="vcc-mx-nY4" id="GGp-7u-CMA"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
-                        <outlet property="weatherCollapseButton" destination="wzQ-CL-iF5" id="Zq7-jm-i6J"/>
+                        <outlet property="weatherExpandImageView" destination="9cA-CI-OoX" id="cGh-on-XSh"/>
                         <outlet property="weatherViewHeightConstraint" destination="0Lj-Kl-0gA" id="JXh-5E-U1K"/>
                         <outlet property="windSpeedTextField" destination="Bzs-kF-ytJ" id="x5d-wp-ART"/>
                         <outlet property="workingPeriodDateButton" destination="MxI-Pz-rtl" id="uEf-co-lnM"/>
@@ -1378,6 +1377,11 @@
                 <tapGestureRecognizer id="VsL-Ke-7tF" userLabel="Persons Tap Gesture">
                     <connections>
                         <action selector="tapPersonsView" destination="pQK-Bk-vqJ" id="9wN-1c-f4p"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="l4M-fd-xXe" userLabel="Weather Tap Gesture">
+                    <connections>
+                        <action selector="tapWeatherView:" destination="pQK-Bk-vqJ" id="rlk-C7-hZD"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
