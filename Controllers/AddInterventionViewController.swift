@@ -299,30 +299,29 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         cell.cellDelegate = self
         cell.addInterventionViewController = self
         cell.indexPath = indexPath
-        cell.unitMeasureButton.setTitle(unit?.localized, for: .normal)
-        cell.backgroundColor = AppColor.ThemeColors.DarkWhite
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
 
         switch selectedInput {
         case is InterventionSeeds:
           let seed = selectedInput.value(forKey: "seeds") as! Seeds
 
           cell.type = "Seed"
-          cell.inputName.text = seed.specie?.localized
-          cell.inputLabel.text = seed.variety
+          cell.nameLabel.text = seed.specie?.localized
+          cell.infoLabel.text = seed.variety
           cell.inputImageView.image = UIImage(named: "seed")
         case is InterventionPhytosanitaries:
           let phyto = selectedInput.value(forKey: "phytos") as! Phytos
 
           cell.type = "Phyto"
-          cell.inputName.text = phyto.name
-          cell.inputLabel.text = phyto.firmName
+          cell.nameLabel.text = phyto.name
+          cell.infoLabel.text = phyto.firmName
           cell.inputImageView.image = UIImage(named: "phytosanitary")
         case is InterventionFertilizers:
           let fertilizer = selectedInput.value(forKey: "fertilizers") as! Fertilizers
 
           cell.type = "Fertilizer"
-          cell.inputName.text = fertilizer.name?.localized
-          cell.inputLabel.text = fertilizer.nature?.localized
+          cell.nameLabel.text = fertilizer.name?.localized
+          cell.infoLabel.text = nil
           cell.inputImageView.image = UIImage(named: "fertilizer")
         default:
           fatalError("Unknown input type for: \(String(describing: selectedInput))")
