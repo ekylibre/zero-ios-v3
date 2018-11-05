@@ -52,7 +52,10 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       dimView.isHidden = true
       harvestTableView.reloadData()
     case storagesPickerView:
-      harvests[cellIndexPath.row].storages = searchStorage(name: unit)
+      let predicate = NSPredicate(format: "name == %@", unit)
+      let searchedStorage = fetchStorages(predicate: predicate)
+
+      harvests[cellIndexPath.row].storages = searchedStorage?.first
       storagesPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()

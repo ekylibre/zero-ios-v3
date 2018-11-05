@@ -31,8 +31,18 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
     nameTextField.layer.shadowRadius = 0
+    nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
     return nameTextField
+  }()
+
+  lazy var errorLabel: UILabel = {
+    let errorLabel = UILabel(frame: CGRect.zero)
+    errorLabel.isHidden = true
+    errorLabel.font = UIFont.systemFont(ofSize: 13)
+    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return errorLabel
   }()
 
   lazy var typeLabel: UILabel = {
@@ -88,6 +98,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     isHidden = true
     addSubview(titleLabel)
     addSubview(nameTextField)
+    addSubview(errorLabel)
     addSubview(typeLabel)
     addSubview(typeButton)
     addSubview(cancelButton)
@@ -102,7 +113,10 @@ class StorageCreationView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
       nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      typeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
+      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      typeLabel.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 15),
       typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 10),
       typeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
@@ -137,5 +151,11 @@ class StorageCreationView: UIView, UITextFieldDelegate {
       $0 < $1
     })
     return types
+  }
+
+  @objc private func nameDidChange(_ sender: UITextField) {
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
   }
 }
