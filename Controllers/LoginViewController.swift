@@ -1,5 +1,5 @@
 //
-//  LoginScreen.swift
+//  LoginViewController.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 16/07/2018.
@@ -10,7 +10,7 @@ import UIKit
 import OAuth2
 import CoreData
 
-class LoginScreen: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
   // MARK: - Properties
 

@@ -1441,10 +1441,10 @@
             </objects>
             <point key="canvasLocation" x="2873" y="-99"/>
         </scene>
-        <!--Login Screen-->
+        <!--Login View Controller-->
         <scene sceneID="qGL-rz-WS6">
             <objects>
-                <viewController id="krK-gd-8UN" customClass="LoginScreen" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ybY-bV-jLm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
