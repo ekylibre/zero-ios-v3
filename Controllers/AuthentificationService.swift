@@ -40,7 +40,7 @@ open class AuthentificationService {
 
   func emptyUsersList() {
     let context = appDelegate.persistentContainer.viewContext
-    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
 
     request.returnsObjectsAsFaults = false
     do {
@@ -56,7 +56,7 @@ open class AuthentificationService {
 
   func addNewUser(userName: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let name = Users(context: managedContext)
+    let name = User(context: managedContext)
 
     name.userName = userName
 
@@ -69,11 +69,8 @@ open class AuthentificationService {
 
   public func authorize(presenting view: UIViewController) {
     oauth2.authorizeEmbedded(from: view) { (authParameters, error) in
-      if let _ = authParameters {
-        print("Authorization succeded")
-      }
-      else {
-        print("Authorization was canceled or went wrong: \(String(describing: error?.description))")
+      if let oauthError = error {
+        print("Authorization was canceled or went wrong: \(String(describing: oauthError.description))")
       }
       self.appDelegate.saveContext()
     }

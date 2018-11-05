@@ -15,7 +15,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   @IBOutlet weak var cropsTableView: UITableView!
 
-  var cropsByProduction = [[Crops]]()
+  var cropsByProduction = [[Crop]]()
   let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
 
@@ -70,7 +70,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
     let predicate = NSPredicate(format: "targets.@count > 0")
     let sort = NSSortDescriptor(key: "productionID", ascending: true)
     cropsFetchRequest.predicate = predicate
@@ -85,15 +85,15 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     }
   }
 
-  private func organizeCropsByProduction(_ crops: [Crops]) {
-    var cropsFromSameProduction = [Crops]()
+  private func organizeCropsByProduction(_ crops: [Crop]) {
+    var cropsFromSameProduction = [Crop]()
     var productionID = crops.first?.productionID
 
     for crop in crops {
       if crop.productionID != productionID {
         productionID = crop.productionID
         cropsByProduction.append(cropsFromSameProduction)
-        cropsFromSameProduction = [Crops]()
+        cropsFromSameProduction = [Crop]()
       }
       cropsFromSameProduction.append(crop)
     }
@@ -110,21 +110,21 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     }
   }
 
-  private func fetchInterventions(fromCrop crop: Crops) -> [Interventions]? {
+  private func fetchInterventions(fromCrop crop: Crop) -> [Intervention]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
-    let predicate = NSPredicate(format: "ANY targets.crops == %@", crop)
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
+    let predicate = NSPredicate(format: "ANY targets.crop == %@", crop)
     interventionsFetchRequest.predicate = predicate
 
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
       return interventions.sorted(by: {
-        let first = ($0.workingPeriods!.allObjects as! [WorkingPeriods]).first!
-        let second = ($1.workingPeriods!.allObjects as! [WorkingPeriods]).first!
+        let first = ($0.workingPeriods!.allObjects as! [WorkingPeriod]).first!
+        let second = ($1.workingPeriods!.allObjects as! [WorkingPeriod]).first!
 
         return second.executionDate! < first.executionDate!
       })
@@ -165,15 +165,15 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     return cell
   }
 
-  private func updateInterventionImages(crop: Crops, cell: CropCell) {
+  private func updateInterventionImages(crop: Crop, cell: CropCell) {
     var column = 0
 
     for imageView in cell.interventionImageViews {
       imageView.isHidden = true
     }
 
-    for case let target as Targets in crop.targets! {
-      let assetName = target.interventions!.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+    for case let target as Target in crop.targets! {
+      let assetName = target.intervention!.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
       cell.interventionImageViews[column].image = UIImage(named: assetName)
       cell.interventionImageViews[column].isHidden = false
@@ -197,7 +197,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     })
   }
 
-  private func updateCropDetailedView(_ crop: Crops) {
+  private func updateCropDetailedView(_ crop: Crop) {
     let dateFormatter: DateFormatter = {
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "locale".localized)
@@ -213,7 +213,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropDetailedView.dateLabel.text = String(format: "%@ %@ %@ %@", "from".localized, startDate,
                                              "to".localized.lowercased(), stopDate)
     cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
-    cropDetailedView.interventions = fetchInterventions(fromCrop: crop) ?? [Interventions]()
+    cropDetailedView.interventions = fetchInterventions(fromCrop: crop) ?? [Intervention]()
     cropDetailedView.tableView.reloadData()
   }
 

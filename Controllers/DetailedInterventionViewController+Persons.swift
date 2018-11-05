@@ -14,8 +14,8 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupPersonsView() {
-    selectedPersons.append([Persons]())
-    selectedPersons.append([InterventionPersons]())
+    selectedPersons.append([Person]())
+    selectedPersons.append([InterventionPerson]())
     personsSelectionView = PersonsView(frame: CGRect.zero)
     personsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(personsSelectionView)
@@ -31,23 +31,23 @@ extension AddInterventionViewController {
     selectedPersonsTableView.layer.borderWidth  = 0.5
     selectedPersonsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedPersonsTableView.layer.cornerRadius = 5
-    selectedPersonsTableView.bounces = false
     selectedPersonsTableView.register(SelectedPersonCell.self, forCellReuseIdentifier: "SelectedPersonCell")
+    selectedPersonsTableView.bounces = false
     selectedPersonsTableView.dataSource = self
     selectedPersonsTableView.delegate = self
-    personsSelectionView.exitButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
+    personsSelectionView.cancelButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
     personsSelectionView.addInterventionViewController = self
   }
 
   // MARK: - Selection
 
-  func selectPerson(_ person: Persons) {
+  func selectPerson(_ person: Person) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionPerson = InterventionPersons(context: managedContext)
+    let interventionPerson = InterventionPerson(context: managedContext)
 
     interventionPerson.isDriver = false
     selectedPersons[0].append(person)

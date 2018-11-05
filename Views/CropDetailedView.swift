@@ -73,7 +73,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     return tableView
   }()
 
-  var interventions = [Interventions]()
+  var interventions = [Intervention]()
 
   // MARK: - Initialization
 
@@ -149,7 +149,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func updateDateLabel(_ workingPeriods: NSSet) -> String {
-    let date = (workingPeriods.allObjects as! [WorkingPeriods]).first!.executionDate!
+    let date = (workingPeriods.allObjects as! [WorkingPeriod]).first!.executionDate!
     let calendar = Calendar.current
     let dateFormatter: DateFormatter = {
       let dateFormatter = DateFormatter()
@@ -176,8 +176,8 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
     var totalSurfaceArea: Float = 0
 
-    for case let target as Targets in targets {
-      let crop = target.crops!
+    for case let target as Target in targets {
+      let crop = target.crop!
 
       totalSurfaceArea += crop.surfaceArea
     }

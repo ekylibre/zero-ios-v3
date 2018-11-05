@@ -43,6 +43,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     switch pickerView {
     case harvestNaturePickerView:
       harvestType.setTitle(unit.localized, for: .normal)
+      harvestSelectedType = unit
       harvestNaturePickerView.isHidden = true
       dimView.isHidden = true
     case harvestUnitPickerView:
@@ -51,10 +52,17 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       dimView.isHidden = true
       harvestTableView.reloadData()
     case storagesPickerView:
-      harvests[cellIndexPath.row].storages = searchStorage(name: unit)
+      let predicate = NSPredicate(format: "name == %@", unit)
+      let searchedStorage = fetchStorages(predicate: predicate)
+
+      harvests[cellIndexPath.row].storage = searchedStorage?.first
       storagesPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
+    case storagesTypes:
+      storageCreationView.typeButton.setTitle(unit.localized, for: .normal)
+      storageCreationView.selectedType = unit
+      storagesTypes.isHidden = true
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
 
@@ -92,7 +100,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     if volume == 0 {
       irrigationErrorLabel.text = "volume_cannot_be_null".localized
       irrigationErrorLabel.textColor = AppColor.TextColors.Red
-    } else if totalLabel.text == "select_crops".localized {
+    } else if totalLabel.text == "select_crops".localized.uppercased() {
       irrigationErrorLabel.text = "no_crop_selected".localized
       irrigationErrorLabel.textColor = AppColor.TextColors.Red
     } else {

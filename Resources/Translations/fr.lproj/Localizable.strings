@@ -412,6 +412,7 @@
 "ferti_name_is_empty" = "Le nom du fertilisant ne peut être vide";
 "material_name_is_empty" = "Le nom du matériau ne peut être vide";
 "equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"storage_name_is_empty" = "Le nom de stockage ne peut être vide";
 "person_first_name_is_empty" = "Le prénom de l'opérateur ne peut être vide";
 "person_last_name_is_empty" = "Le nom de famille de l'opérateur ne peut être vide";
 
@@ -420,6 +421,7 @@
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 "delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
 "delete_harvest_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
@@ -449,14 +451,6 @@
 "snow" = "Neige";
 "thunderstorm" = "Orage";
 "clear_sky" = "Soleil";
-
-// Article Type
-
-"seed" = "Semence";
-"fertilizer" = "Fertilisant";
-"chemical" = "Phytosanitaire";
-"material" = "Materiel";
-"phytosanitary" = "Phytosanitaire";
 
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "stock_place" = "Stockage";
@@ -525,6 +519,9 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"from" = "Du";
+"to" = "Au";
+"yield" = "Rendement";
 
 "locale" = "fr_FR";
 
@@ -542,6 +539,8 @@
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
 "started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
+"today" = "Aujourd'hui";
+"yesterday" = "Hier";
 
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";

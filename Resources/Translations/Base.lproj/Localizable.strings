@@ -389,7 +389,7 @@
 
 "selecting_crops" = "Select a crop";
 "selecting_materials" = "Select a material";
-"selecting_equipments" = "Select a equipment";
+"selecting_equipments" = "Select an equipment";
 "selecting_persons" = "Select a person";
 
 "create_new_seed" = "+ Create new seed";
@@ -412,6 +412,7 @@
 "ferti_name_is_empty" = "Le nom du fertilisant ne peut être vide";
 "material_name_is_empty" = "Le nom du matériau ne peut être vide";
 "equipment_name_is_empty" = "Le nom de l'équipement ne peut être vide";
+"storage_name_is_empty" = "Le nom de stockage ne peut être vide";
 "person_first_name_is_empty" = "Le prénom de l'opérateur ne peut être vide";
 "person_last_name_is_empty" = "Le nom de famille de l'opérateur ne peut être vide";
 
@@ -420,6 +421,7 @@
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
 "delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
@@ -517,6 +519,9 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"from" = "From";
+"to" = "To";
+"yield" = "Yield";
 
 "locale" = "en_EN";
 
@@ -534,6 +539,8 @@
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Started must be on or after %@";
 "started_must_be_on_or_before" = "Started must be on or before %@";
+"today" = "Today";
+"yesterday" = "Yesterday";
 
 "input_quantity" = "Or %.1f %@";
 "input_quantity_per_surface" = "Or %.1f %@ per hectare";

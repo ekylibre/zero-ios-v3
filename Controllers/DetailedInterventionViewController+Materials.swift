@@ -13,8 +13,8 @@ extension AddInterventionViewController {
   // MARK: - Initialization
 
   func setupMaterialsView() {
-    selectedMaterials.append([Materials]())
-    selectedMaterials.append([InterventionMaterials]())
+    selectedMaterials.append([Material]())
+    selectedMaterials.append([InterventionMaterial]())
     materialsSelectionView = MaterialsView(frame: CGRect.zero)
     materialsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(materialsSelectionView)
@@ -30,24 +30,24 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.layer.borderWidth  = 0.5
     selectedMaterialsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedMaterialsTableView.layer.cornerRadius = 5
-    selectedMaterialsTableView.bounces = false
     selectedMaterialsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
+    selectedMaterialsTableView.bounces = false
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
-    materialsSelectionView.exitButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
+    materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
     materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
     materialsSelectionView.addInterventionViewController = self
   }
 
   // MARK: - Selection
 
-  func selectMaterial(_ material: Materials) {
+  func selectMaterial(_ material: Material) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionMaterial = InterventionMaterials(context: managedContext)
+    let interventionMaterial = InterventionMaterial(context: managedContext)
 
     interventionMaterial.unit = material.unit
     selectedMaterials[0].append(material)
@@ -151,7 +151,7 @@ extension AddInterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionMaterial = selectedMaterials[1][index] as! InterventionMaterials
+    let interventionMaterial = selectedMaterials[1][index] as! InterventionMaterial
 
     do {
       managedContext.delete(interventionMaterial)
