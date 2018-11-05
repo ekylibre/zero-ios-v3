@@ -75,7 +75,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return bottomView
   }()
 
-  var crops = [[Crops]]()
+  var crops = [[Crop]]()
   var cropViews = [[CropView]]()
   var selectedCropsCount: Int = 0
   var selectedSurfaceArea: Float = 0
@@ -159,7 +159,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return cell
   }
 
-  private func getPlotSurfaceArea(_ crops: [Crops]) -> Float {
+  private func getPlotSurfaceArea(_ crops: [Crop]) -> Float {
     var surfaceArea: Float = 0
 
     for crop in crops {
@@ -199,7 +199,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
     let sort = NSSortDescriptor(key: "plotName", ascending: true)
     cropsFetchRequest.sortDescriptors = [sort]
 
@@ -212,15 +212,15 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func organizeCropsByPlot(_ crops: [Crops]) {
-    var cropsFromSamePlot = [Crops]()
+  private func organizeCropsByPlot(_ crops: [Crop]) {
+    var cropsFromSamePlot = [Crop]()
     var name = crops.first?.plotName
 
     for crop in crops {
       if crop.plotName != name {
         name = crop.plotName
         self.crops.append(cropsFromSamePlot)
-        cropsFromSamePlot = [Crops]()
+        cropsFromSamePlot = [Crop]()
       }
       cropsFromSamePlot.append(crop)
     }
@@ -262,7 +262,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     updateSelectedCropsLabel()
   }
 
-  private func selectPlot(_ crops: [Crops], _ indexPath: IndexPath) {
+  private func selectPlot(_ crops: [Crop], _ indexPath: IndexPath) {
     selectedCropsCount += crops.count
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
@@ -272,7 +272,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func deselectPlot(_ crops: [Crops], _ cell: PlotCell) {
+  private func deselectPlot(_ crops: [Crop], _ cell: PlotCell) {
     var index: Int = 0
 
     for case let view as CropView in cell.contentView.subviews {
@@ -304,7 +304,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     updateSelectedCropsLabel()
   }
 
-  private func selectCrop(_ crop: Crops, _ cell: PlotCell) {
+  private func selectCrop(_ crop: Crop, _ cell: PlotCell) {
     if !cell.checkboxButton.isSelected {
       cell.checkboxButton.isSelected = true
     }
@@ -314,7 +314,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     crop.isSelected = true
   }
 
-  private func deselectCrop(_ crop: Crops, _ crops: [Crops], _ cell: PlotCell) {
+  private func deselectCrop(_ crop: Crop, _ crops: [Crop], _ cell: PlotCell) {
     var index: Int = 1
 
     for case let view as CropView in cell.contentView.subviews {

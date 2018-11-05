@@ -50,7 +50,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for registeredSeed in registeredSeeds {
-      let seed = Seeds(context: managedContext)
+      let seed = Seed(context: managedContext)
 
       seed.registered = true
       seed.ekyID = 0
@@ -76,7 +76,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for registeredPhyto in registeredPhytos {
-      let phyto = Phytos(context: managedContext)
+      let phyto = Phyto(context: managedContext)
 
       phyto.registered = true
       phyto.ekyID = 0
@@ -106,7 +106,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for registeredFertilizer in registeredFertilizers {
-      let fertilizer = Fertilizers(context: managedContext)
+      let fertilizer = Fertilizer(context: managedContext)
 
       fertilizer.registered = true
       fertilizer.ekyID = 0

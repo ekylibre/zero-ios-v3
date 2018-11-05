@@ -25,7 +25,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Properties
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-  var interventions = [Interventions]() {
+  var interventions = [Intervention]() {
     didSet {
       tableView.reloadData()
     }
@@ -149,7 +149,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
@@ -163,9 +163,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     interventions = interventions.sorted(by: {
       let result: Bool!
 
-      if ($0.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriods)?.executionDate != nil {
-        result = ($0.workingPeriods?.anyObject() as! WorkingPeriods).executionDate! >
-          ($1.workingPeriods?.anyObject() as! WorkingPeriods).executionDate!
+      if ($0.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil {
+        result = ($0.workingPeriods?.anyObject() as! WorkingPeriod).executionDate! >
+          ($1.workingPeriods?.anyObject() as! WorkingPeriod).executionDate!
         return result
       }
       return true
@@ -180,7 +180,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farm")
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -234,28 +234,28 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func emptyAllCoreDate() {
+  func emptyAllCoreData() {
     let entitiesNames = [
-      "Crops",
-      "Equipments",
-      "Farms",
-      "Fertilizers",
-      "Harvests",
-      "InterventionEquipments",
-      "InterventionFertilizers",
-      "InterventionMaterials",
-      "InterventionPersons",
-      "InterventionPhytosanitaries",
-      "Interventions",
-      "InterventionSeeds",
-      "Materials",
-      "Persons",
-      "Phytos",
-      "Seeds",
-      "Storages",
-      "Users",
+      "Crop",
+      "Equipment",
+      "Farm",
+      "Fertilizer",
+      "Harvest",
+      "InterventionEquipment",
+      "InterventionFertilizer",
+      "InterventionMaterial",
+      "InterventionPerson",
+      "InterventionPhytosanitary",
+      "Intervention",
+      "InterventionSeed",
+      "Material",
+      "Person",
+      "Phyto",
+      "Seed",
+      "Storage",
+      "User",
       "Weather",
-      "WorkingPeriods"]
+      "WorkingPeriod"]
 
     for entityName in entitiesNames {
       emptyCoreData(entityName: entityName)
@@ -273,7 +273,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
       UserDefaults.standard.set(0, forKey: "lastSyncDate")
       UserDefaults.standard.synchronize()
-      self.emptyAllCoreDate()
+      self.emptyAllCoreData()
       self.navigationController?.popViewController(animated: true)
     }))
     present(alert, animated: true)
@@ -314,14 +314,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
-  func fetchTargets(_ intervention: Interventions) -> [Targets]? {
+  func fetchTargets(_ intervention: Intervention) -> [Target]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
     targetsFetchRequest.predicate = predicate
 
     do {
@@ -333,14 +333,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
+  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriods> = WorkingPeriods.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
     workingPeriodsFetchRequest.predicate = predicate
 
     do {
@@ -352,12 +352,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func updateCropsLabel(_ targets: [Targets]?) -> String? {
+  func updateCropsLabel(_ targets: [Target]?) -> String? {
     var totalSurfaceArea: Float = 0
 
     if targets != nil {
       for target in targets! {
-        let crop = target.crops
+        let crop = target.crop
         totalSurfaceArea += crop?.surfaceArea ?? 0
       }
       let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
@@ -393,13 +393,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let intervention = Interventions(context: managedContext)
-    let workingPeriod = WorkingPeriods(context: managedContext)
+    let intervention = Intervention(context: managedContext)
+    let workingPeriod = WorkingPeriod(context: managedContext)
 
     intervention.type = type
     intervention.infos = infos
     intervention.status = status
-    workingPeriod.interventions = intervention
+    workingPeriod.intervention = intervention
     workingPeriod.executionDate = executionDate
 
     do {
@@ -486,7 +486,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let predicate = NSPredicate(format: "ekyID == %d", 0)
 
     interventionsFetchRequest.predicate = predicate
@@ -506,13 +506,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func fetchCrops() -> [Crops] {
+  func fetchCrops() -> [Crop] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
+      return [Crop]()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
@@ -521,7 +521,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return [Crops]()
+    return [Crop]()
   }
 
   @objc func action(sender: UIButton) {
