@@ -574,6 +574,9 @@
                                                                             </constraints>
                                                                             <color key="tintColor" red="0.54117647059999996" green="0.75686274509999996" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <state key="normal" image="add"/>
+                                                                            <connections>
+                                                                                <action selector="createStorage:" destination="ANj-fI-wdR" eventType="touchUpInside" id="FQ6-Qo-6KE"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Provided by the collector" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zF5-GL-OXu">
                                                                             <rect key="frame" x="99" y="100" width="196" height="30"/>

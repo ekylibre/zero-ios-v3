@@ -46,8 +46,9 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     addInterventionController?.harvests[indexPath.row].number = number.text!
   }
 
-  @IBAction func selectStorage(_ sender: Any) {
-    
+  @IBAction func createStorage(_ sender: Any) {
+    addInterventionController?.dimView.isHidden = false
+    addInterventionController?.storageCreationView.isHidden = false
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -37,7 +37,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
 
   lazy var typeLabel: UILabel = {
     let typeLabel = UILabel(frame: CGRect.zero)
-    typeLabel.text = "type".localized
+    typeLabel.text = "chose_type".localized
     typeLabel.font = UIFont.systemFont(ofSize: 15)
     typeLabel.textColor = AppColor.TextColors.DarkGray
     typeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -102,7 +102,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
       nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       typeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
       typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-      typeButton.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 10),
+      typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 10),
       typeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo:bottomAnchor, constant: -15),
@@ -131,6 +131,6 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     type = type.sorted(by: {
       $0.localized < $1.localized
     })
-    return type[0]
+    return type[0].localized
   }
 }

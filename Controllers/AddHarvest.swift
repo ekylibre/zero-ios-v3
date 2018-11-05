@@ -13,18 +13,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
   
   // MARK: - Initialization
 
-  func defineUnit(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-    dimView.isHidden = false
-    harvestUnitPickerView.isHidden = false
-  }
-
-  func defineStorage(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-    dimView.isHidden = false
-    storagesPickerView.isHidden = false
-  }
-
   func initHarvestView() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -36,8 +24,24 @@ extension AddInterventionViewController: HarvestCellDelegate {
     initializeHarvestTableView()
     initHarvestNaturePickerView()
     initHarvestUnitPickerView()
-    initStoragesPickerView()
+    initStoragesPickerViews()
     harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
+    harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    harvestType.layer.borderWidth = 1
+    harvestType.layer.cornerRadius = 5
+    setupStorageCreationView()
+  }
+
+  func defineUnit(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+    dimView.isHidden = false
+    harvestUnitPickerView.isHidden = false
+  }
+
+  func defineStorage(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+    dimView.isHidden = false
+    storagesPickerView.isHidden = false
   }
 
   func initializeHarvestTableView() {
@@ -67,16 +71,53 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(harvestNaturePickerView)
   }
 
-  func initStoragesPickerView() {
+  func initStoragesPickerViews() {
     let storages = fetchStoragesName()
+    let types = ["BUILDING", "HEAP", "SILO"]
 
     storagesPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), storages ?? ["---"], superview: view)
+    storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
     storagesPickerView.reference = self
+    storagesTypes.reference = self
     storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
+    storagesTypes.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesPickerView)
+    view.addSubview(storagesTypes)
   }
 
+  func setupStorageCreationView() {
+    storageCreationView = StorageCreationView(frame: CGRect.zero)
+    storageCreationView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(storageCreationView)
+
+    NSLayoutConstraint.activate([
+      storageCreationView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+      storageCreationView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+      storageCreationView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30),
+      storageCreationView.heightAnchor.constraint(equalToConstant: 300)
+      ])
+
+    storageCreationView.createButton.addTarget(self, action: #selector(createNewStorage), for: .touchUpInside)
+    storageCreationView.cancelButton.addTarget(self, action: #selector(cancelStorageCreation), for: .touchUpInside)
+    storageCreationView.typeButton.addTarget(self, action: #selector(showStorageTypes), for: .touchUpInside)
+  }
+
+
   // MARK: - Actions
+
+  @objc func createNewStorage(_ sender: Any) {
+    dimView.isHidden = true
+    storageCreationView.isHidden = true
+  }
+
+  @objc func cancelStorageCreation(_ sender: Any) {
+    dimView.isHidden = true
+    storageCreationView.isHidden = true
+  }
+
+  @objc func showStorageTypes(_ sender: Any) {
+    storagesTypes.isHidden = false
+  }
 
   func searchStorage(name: String) -> Storages? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
