@@ -26,13 +26,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       inputsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
-    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
-    selectedInputsTableView.delegate = self
-    selectedInputsTableView.dataSource = self
+    inputsTapGesture.delegate = self
     selectedInputsTableView.layer.borderWidth  = 0.5
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    selectedInputsTableView.backgroundColor = AppColor.ThemeColors.DarkWhite
-    selectedInputsTableView.layer.cornerRadius = 4
+    selectedInputsTableView.layer.cornerRadius = 5
+    selectedInputsTableView.register(SelectedInputCell.self, forCellReuseIdentifier: "SelectedInputCell")
+    selectedInputsTableView.bounces = false
+    selectedInputsTableView.delegate = self
+    selectedInputsTableView.dataSource = self
     inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
     inputsSelectionView.addInterventionViewController = self
@@ -85,7 +86,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   @IBAction private func tapInputsView() {
     let shouldExpand = (inputsHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedInputs.count > 10) ? 10 * 80 : selectedInputs.count * 80
+    let tableViewHeight = (selectedInputs.count > 10) ? 10 * 110 : selectedInputs.count * 110
 
     if selectedInputs.count == 0 {
       return
@@ -122,10 +123,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if selectedInputs.count > 0 {
       inputsExpandImageView.isHidden = false
       selectedInputsTableView.isHidden = false
-      resizeViewAndTableView(
-        viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.inputsTableViewHeightConstraint,
-        tableView: self.selectedInputsTableView)
+      inputsTableViewHeightConstraint.constant = selectedInputsTableView.contentSize.height
+      inputsHeightConstraint.constant = inputsTableViewHeightConstraint.constant + 100
       inputsExpandImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
       view.layoutIfNeeded()
     }
@@ -193,14 +192,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         self.inputsExpandImageView.isHidden = true
         self.inputsHeightConstraint.constant = 70
       } else {
-        UIView.animate(withDuration: 0.5, animations: {
-          self.resizeViewAndTableView(
-            viewHeightConstraint: self.inputsHeightConstraint,
-            tableViewHeightConstraint: self.inputsTableViewHeightConstraint,
-            tableView: self.selectedInputsTableView
-          )
-          self.view.layoutIfNeeded()
-        })
+        self.inputsTableViewHeightConstraint.constant = self.selectedInputsTableView.contentSize.height
+        self.inputsHeightConstraint.constant = self.inputsTableViewHeightConstraint.constant + 100
+        self.view.layoutIfNeeded()
       }
     }))
     present(alert, animated: true)
@@ -231,8 +225,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = cell.inputQuantity.text?.floatValue
-    let unit = cell.unitMeasureButton.titleLabel?.text
+    let quantity = cell.quantityTextField.text?.floatValue
+    let unit = cell.unitButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false
     if quantity == 0 || quantity == nil {

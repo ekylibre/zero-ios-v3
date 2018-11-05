@@ -13,27 +13,27 @@ class PersonCell: UITableViewCell {
   // MARK: - Properties
 
   lazy var personImageView: UIImageView = {
-    let typeImageView = UIImageView(frame: CGRect.zero)
+    let personImageView = UIImageView(frame: CGRect.zero)
     let tintedImage = UIImage(named: "person")?.withRenderingMode(.alwaysTemplate)
-    typeImageView.image = tintedImage
-    typeImageView.tintColor = UIColor.darkGray
-    typeImageView.translatesAutoresizingMaskIntoConstraints = false
-    return typeImageView
+    personImageView.image = tintedImage
+    personImageView.tintColor = UIColor.darkGray
+    personImageView.translatesAutoresizingMaskIntoConstraints = false
+    return personImageView
   }()
 
   lazy var firstNameLabel: UILabel = {
-    let nameLabel = UILabel(frame: CGRect.zero)
-    nameLabel.font = UIFont.systemFont(ofSize: 14)
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    return nameLabel
+    let firstNameLabel = UILabel(frame: CGRect.zero)
+    firstNameLabel.font = UIFont.systemFont(ofSize: 14)
+    firstNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    return firstNameLabel
   }()
 
   lazy var lastNameLabel: UILabel = {
-    let infosLabel = UILabel(frame: CGRect.zero)
-    infosLabel.font = UIFont.boldSystemFont(ofSize: 14)
-    infosLabel.textColor = AppColor.TextColors.DarkGray
-    infosLabel.translatesAutoresizingMaskIntoConstraints = false
-    return infosLabel
+    let lastNameLabel = UILabel(frame: CGRect.zero)
+    lastNameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    lastNameLabel.textColor = AppColor.TextColors.DarkGray
+    lastNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    return lastNameLabel
   }()
 
   // MARK: - Initialization

@@ -31,6 +31,7 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedEquipmentsTableView.layer.cornerRadius = 5
     selectedEquipmentsTableView.register(SelectedEquipmentCell.self, forCellReuseIdentifier: "SelectedEquipmentCell")
+    selectedEquipmentsTableView.bounces = false
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
     equipmentsSelectionView.cancelButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)

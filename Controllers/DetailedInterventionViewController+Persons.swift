@@ -32,6 +32,7 @@ extension AddInterventionViewController {
     selectedPersonsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedPersonsTableView.layer.cornerRadius = 5
     selectedPersonsTableView.register(SelectedPersonCell.self, forCellReuseIdentifier: "SelectedPersonCell")
+    selectedPersonsTableView.bounces = false
     selectedPersonsTableView.dataSource = self
     selectedPersonsTableView.delegate = self
     personsSelectionView.cancelButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
