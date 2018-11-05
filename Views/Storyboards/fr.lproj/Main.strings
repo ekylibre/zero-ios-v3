@@ -8,41 +8,17 @@
 /* Class = "UITextField"; text = "7"; ObjectID = "3Fz-6d-VQ1"; */
 "3Fz-6d-VQ1.text" = "7";
 
-/* Class = "UITextField"; placeholder = "Number"; ObjectID = "3ay-Ie-glI"; */
-"3ay-Ie-glI.placeholder" = "Numéro";
-
 /* Class = "UILabel"; text = "Hours"; ObjectID = "3cP-JT-NmL"; */
-"3cP-JT-NmL.text" = "Heures";
+"3cP-JT-NmL.text" = "heures";
 
 /* Class = "UIButton"; normalTitle = "+ ADD"; ObjectID = "5AO-Jj-0ZP"; */
 "5AO-Jj-0ZP.normalTitle" = "+ AJOUTER";
 
-/* Class = "UIButton"; normalTitle = "CREATE"; ObjectID = "7oC-Bf-KLg"; */
-"7oC-Bf-KLg.normalTitle" = "CRÉER";
-
 /* Class = "UILabel"; text = "Wind speed"; ObjectID = "BK3-QQ-YBa"; */
 "BK3-QQ-YBa.text" = "Vitesse du vent";
 
-/* Class = "UILabel"; text = "Creating an equipment"; ObjectID = "BiR-Np-yVB"; */
-"BiR-Np-yVB.text" = "Creation d'un équipement";
-
-/* Class = "UITextField"; placeholder = "Name"; ObjectID = "BuY-c0-rnF"; */
-"BuY-c0-rnF.placeholder" = "Nom";
-
-/* Class = "UIButton"; normalTitle = "+ CREATE A NEW EQUIPMENT"; ObjectID = "DJS-aN-eaO"; */
-"DJS-aN-eaO.normalTitle" = "+ CRÉER UN NOUVEL EQUIPEMENT";
-
 /* Class = "UILabel"; text = "Crops Label"; ObjectID = "EgV-or-pGj"; */
 "EgV-or-pGj.text" = "Crops Label";
-
-/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "Fu9-pv-EZJ"; */
-"Fu9-pv-EZJ.normalTitle" = "ANNULER";
-
-/* Class = "UITextField"; placeholder = "Last name"; ObjectID = "Gfz-0d-yzp"; */
-"Gfz-0d-yzp.placeholder" = "Nom";
-
-/* Class = "UILabel"; text = "Type Label"; ObjectID = "HRC-pY-jcH"; */
-"HRC-pY-jcH.text" = "Type Label";
 
 /* Class = "UILabel"; text = "People"; ObjectID = "IAh-c6-yzZ"; */
 "IAh-c6-yzZ.text" = "Opérateurs";
@@ -59,23 +35,14 @@
 /* Class = "UILabel"; text = "+ SELECT"; ObjectID = "N64-8y-rWg"; */
 "N64-8y-rWg.text" = "+ SÉLECTIONNER";
 
-/* Class = "UILabel"; text = "REGISTER AN INTERVENTION"; ObjectID = "NNw-dJ-5Yi"; */
-"NNw-dJ-5Yi.text" = "ENREGISTRER UNE INTERVENTION";
-
 /* Class = "UILabel"; text = "Crops"; ObjectID = "SLR-hS-kBq"; */
 "SLR-hS-kBq.text" = "Cultures";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "ScR-OF-ai0"; */
 "ScR-OF-ai0.placeholder" = "Mot de passe";
 
-/* Class = "UILabel"; text = "Type"; ObjectID = "Tur-MK-R4c"; */
-"Tur-MK-R4c.text" = "Type";
-
 /* Class = "UILabel"; text = "Not filled in"; ObjectID = "UXL-bz-O2x"; */
 "UXL-bz-O2x.text" = "Non renseignée";
-
-/* Class = "UILabel"; text = "Name Label"; ObjectID = "Uvf-Sv-2Q5"; */
-"Uvf-Sv-2Q5.text" = "Name Label";
 
 /* Class = "UILabel"; text = "km/h"; ObjectID = "W1a-qv-ooU"; */
 "W1a-qv-ooU.text" = "km/h";
@@ -92,17 +59,8 @@
 /* Class = "UILabel"; text = "°C"; ObjectID = "as1-Zg-NLq"; */
 "as1-Zg-NLq.text" = "°C";
 
-/* Class = "UIButton"; normalTitle = "+ CREATE A PERSON"; ObjectID = "beT-1i-CuG"; */
-"beT-1i-CuG.normalTitle" = "+ CRÉER UNE PERSONNE";
-
 /* Class = "UILabel"; text = "Duration"; ObjectID = "ha2-4s-ot1"; */
 "ha2-4s-ot1.text" = "Durée";
-
-/* Class = "UIButton"; normalTitle = "WICH BEGINS"; ObjectID = "jHP-kl-RhJ"; */
-"jHP-kl-RhJ.normalTitle" = "QUI COMMENCE";
-
-/* Class = "UITextField"; placeholder = "Role"; ObjectID = "lXs-eO-iv8"; */
-"lXs-eO-iv8.placeholder" = "Titre";
 
 /* Class = "UIButton"; normalTitle = "REGISTER"; ObjectID = "mBB-VD-0Gd"; */
 "mBB-VD-0Gd.normalTitle" = "ENREGISTRER";
@@ -121,18 +79,6 @@
 
 /* Class = "UILabel"; text = "Type Label"; ObjectID = "qg1-zw-twO"; */
 "qg1-zw-twO.text" = "Type Label";
-
-/* Class = "UILabel"; text = "Clic&Farm"; ObjectID = "rcy-Q6-0lU"; */
-"rcy-Q6-0lU.text" = "Clic&Farm";
-
-/* Class = "UILabel"; text = "Select an equipment"; ObjectID = "sPo-hC-Lsa"; */
-"sPo-hC-Lsa.text" = "Sélectionnez un équipement";
-
-/* Class = "UIButton"; normalTitle = "CREATE"; ObjectID = "sYv-EJ-5M5"; */
-"sYv-EJ-5M5.normalTitle" = "CRÉER";
-
-/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "tLB-CA-7x6"; */
-"tLB-CA-7x6.normalTitle" = "ANNULER";
 
 /* Class = "UILabel"; text = "Working time"; ObjectID = "tS7-0f-DOT"; */
 "tS7-0f-DOT.text" = "Temps de travail";
@@ -155,9 +101,6 @@
 /* Class = "UILabel"; text = "Weather"; ObjectID = "wJi-KE-5Mc"; */
 "wJi-KE-5Mc.text" = "Météo";
 
-/* Class = "UILabel"; text = "Driver"; ObjectID = "x4p-m0-YZ1"; */
-"x4p-m0-YZ1.text" = "Conducteur";
-
 /* Class = "UIButton"; normalTitle = "+ ADD"; ObjectID = "xR1-hG-glp"; */
 "xR1-hG-glp.normalTitle" = "+ AJOUTER";
 
@@ -172,7 +115,6 @@
 
 /* Class = "UILabel"; text = "Nature"; ObjectID = "mNi-kd-EFz"; */
 "mNi-kd-EFz.text" = "Nature";
-
 
 /* Class = "UIButton"; normalTitle = "Straw"; ObjectID = "yGb-zU-Lzj"; */
 "vEX-tE-fGs.normalTitle" = "Paille";

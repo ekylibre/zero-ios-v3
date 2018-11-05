@@ -87,9 +87,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }()
 
   var addInterventionViewController: AddInterventionViewController?
-  var seeds = [Seeds]()
-  var phytos = [Phytos]()
-  var fertilizers = [Fertilizers]()
+  var seeds = [Seed]()
+  var phytos = [Phyto]()
+  var fertilizers = [Fertilizer]()
   var isSearching: Bool = false
   var filteredInputs = [NSManagedObject]()
   var firstSpecie: String
@@ -290,9 +290,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let seedsFetchRequest: NSFetchRequest<Seeds> = Seeds.fetchRequest()
-    let phytosFetchRequest: NSFetchRequest<Phytos> = Phytos.fetchRequest()
-    let fertilizersFetchRequest: NSFetchRequest<Fertilizers> = Fertilizers.fetchRequest()
+    let seedsFetchRequest: NSFetchRequest<Seed> = Seed.fetchRequest()
+    let phytosFetchRequest: NSFetchRequest<Phyto> = Phyto.fetchRequest()
+    let fertilizersFetchRequest: NSFetchRequest<Fertilizer> = Fertilizer.fetchRequest()
 
     do {
       seeds = try managedContext.fetch(seedsFetchRequest)
@@ -335,7 +335,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     let formattedSpecie = specie.uppercased().replacingOccurrences(of: " ", with: "_")
     let managedContext = appDelegate.persistentContainer.viewContext
-    let seed = Seeds(context: managedContext)
+    let seed = Seed(context: managedContext)
 
     seed.registered = false
     seed.ekyID = 0
@@ -359,7 +359,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let phyto = Phytos(context: managedContext)
+    let phyto = Phyto(context: managedContext)
 
     phyto.registered = false
     phyto.ekyID = 0
@@ -385,7 +385,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let fertilizer = Fertilizers(context: managedContext)
+    let fertilizer = Fertilizer(context: managedContext)
 
     fertilizer.registered = false
     fertilizer.ekyID = 0
