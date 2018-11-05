@@ -427,20 +427,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    switch tableView {
-    case harvestTableView:
-      return 150
-    case selectedInputsTableView:
+    if tableView == selectedInputsTableView {
       return 110
-    case selectedMaterialsTableView:
-      return 80
-    case selectedEquipmentsTableView:
-      return 55
-    case selectedPersonsTableView:
-      return 65
-    default:
-      return 60
     }
+    return 0
   }
 
   func resizeViewAndTableView(viewHeightConstraint: NSLayoutConstraint, tableViewHeightConstraint: NSLayoutConstraint,

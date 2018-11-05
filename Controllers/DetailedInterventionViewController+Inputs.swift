@@ -123,10 +123,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if selectedInputs.count > 0 {
       inputsExpandImageView.isHidden = false
       selectedInputsTableView.isHidden = false
-      resizeViewAndTableView(
-        viewHeightConstraint: self.inputsHeightConstraint,
-        tableViewHeightConstraint: self.inputsTableViewHeightConstraint,
-        tableView: self.selectedInputsTableView)
+      inputsTableViewHeightConstraint.constant = selectedInputsTableView.contentSize.height
+      inputsHeightConstraint.constant = inputsTableViewHeightConstraint.constant + 100
       inputsExpandImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
       view.layoutIfNeeded()
     }
@@ -194,14 +192,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         self.inputsExpandImageView.isHidden = true
         self.inputsHeightConstraint.constant = 70
       } else {
-        UIView.animate(withDuration: 0.5, animations: {
-          self.resizeViewAndTableView(
-            viewHeightConstraint: self.inputsHeightConstraint,
-            tableViewHeightConstraint: self.inputsTableViewHeightConstraint,
-            tableView: self.selectedInputsTableView
-          )
-          self.view.layoutIfNeeded()
-        })
+        self.inputsTableViewHeightConstraint.constant = self.selectedInputsTableView.contentSize.height
+        self.inputsHeightConstraint.constant = self.inputsTableViewHeightConstraint.constant + 100
+        self.view.layoutIfNeeded()
       }
     }))
     present(alert, animated: true)

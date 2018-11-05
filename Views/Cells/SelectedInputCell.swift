@@ -160,7 +160,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 10),
+      quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
       quantityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       quantityTextField.heightAnchor.constraint(equalToConstant: 30),
