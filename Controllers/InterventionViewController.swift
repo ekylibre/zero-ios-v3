@@ -224,7 +224,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func emptyAllCoreDate() {
+  func emptyAllCoreData() {
     let entitiesNames = [
       "Crop",
       "Equipment",
@@ -263,7 +263,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
       UserDefaults.standard.set(0, forKey: "lastSyncDate")
       UserDefaults.standard.synchronize()
-      self.emptyAllCoreDate()
+      self.emptyAllCoreData()
       self.performSegue(withIdentifier: "logoutSegue", sender: self)
     }))
     present(alert, animated: true)
