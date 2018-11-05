@@ -433,12 +433,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return 0
   }
 
-  func resizeViewAndTableView(viewHeightConstraint: NSLayoutConstraint, tableViewHeightConstraint: NSLayoutConstraint,
-                              tableView: UITableView) {
-    tableViewHeightConstraint.constant = tableView.contentSize.height
-    viewHeightConstraint.constant = tableViewHeightConstraint.constant + 100
-  }
-
   // MARK: - Core Data
 
   @IBAction func createIntervention() {
