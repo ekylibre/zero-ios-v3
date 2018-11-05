@@ -150,12 +150,12 @@ extension AddInterventionViewController: HarvestCellDelegate {
       return nil
     }
 
-    let managesContext = appDelegate.persistentContainer.viewContext
+    let managedContext = appDelegate.persistentContainer.viewContext
     let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
 
     storagesFetchRequest.predicate = predicate
     do {
-      let storages = try managesContext.fetch(storagesFetchRequest)
+      let storages = try managedContext.fetch(storagesFetchRequest)
       return storages
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
