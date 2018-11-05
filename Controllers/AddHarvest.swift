@@ -30,7 +30,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
       return
     }
 
-    if appDelegate.entityIsEmpty(entity: "Harvests") {
+    if appDelegate.entityIsEmpty(entity: "Harvest") {
       createSampleStorage()
     }
     initializeHarvestTableView()
@@ -78,14 +78,14 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   // MARK: - Actions
 
-  func searchStorage(name: String) -> Storages? {
+  func searchStorage(name: String) -> Storage? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
-    var storages: [Storages]
+    var storages: [Storage]
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
     let predicate = NSPredicate(format: "name == %@", name)
 
     storagesFetchRequest.predicate = predicate
@@ -105,7 +105,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
     var storagesNames = [String]()
 
     do {
@@ -135,7 +135,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvest = Harvests(context: managedContext)
+    let harvest = Harvest(context: managedContext)
 
     harvest.number = ""
     harvest.quantity = 0
@@ -150,7 +150,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storage = Storages(context: managedContext)
+    let storage = Storage(context: managedContext)
 
     storage.name = name
     storage.type = type

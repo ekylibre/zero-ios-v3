@@ -40,7 +40,7 @@ open class AuthentificationService {
 
   func emptyUsersList() {
     let context = appDelegate.persistentContainer.viewContext
-    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
 
     request.returnsObjectsAsFaults = false
     do {
@@ -56,7 +56,7 @@ open class AuthentificationService {
 
   func addNewUser(userName: String) {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let name = Users(context: managedContext)
+    let name = User(context: managedContext)
 
     name.userName = userName
 
