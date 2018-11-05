@@ -60,11 +60,9 @@ extension AddInterventionViewController {
 
     if temperature.count > 0 {
       if negativeTemperature.title(for: .normal) == "-" && !temperatureTextField.text!.contains("-") {
-        temperatureTextField.text = "-" + temperatureTextField.text!
+        temperatureTextField.text?.insert("-", at: temperatureTextField.text!.startIndex)
       } else if negativeTemperature.title(for: .normal) == "+" && temperatureTextField.text!.contains("-") {
-        let index = temperatureTextField.text!.index(temperatureTextField.text!.startIndex, offsetBy: 1)
-
-        temperatureTextField.text = String(temperatureTextField.text![index...])
+        temperatureTextField.text = String(temperatureTextField.text!.dropFirst())
       }
       resetTemperatureTextFieldIfNotConform()
     }

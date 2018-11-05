@@ -565,7 +565,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         interventionButtonsLabels[interventionButton.tag].isHidden = false
         NSLayoutConstraint.activate([
           interventionButtonsLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
-          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor, constant: 0)
+          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor)
           ])
 
         bottomView.layoutIfNeeded()
