@@ -46,7 +46,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
 
   lazy var typeButton: UIButton = {
     let typeButton = UIButton(frame: CGRect.zero)
-    typeButton.setTitle(returnFirstTypeInSortedOrder(), for: .normal)
+    typeButton.setTitle(returnTypesInSortedOrder()[0], for: .normal)
     typeButton.setTitleColor(.black, for: .normal)
     typeButton.contentHorizontalAlignment = .leading
     typeButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
@@ -71,6 +71,8 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     createButton.translatesAutoresizingMaskIntoConstraints = false
     return createButton
   }()
+
+  var selectedType: String?
 
   // MARK: - Initialization
 
@@ -125,12 +127,15 @@ class StorageCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  func returnFirstTypeInSortedOrder() -> String {
-    var type = ["BUILDING", "HEAP", "SILO"]
+  func returnTypesInSortedOrder() -> [String] {
+    var types = ["BUILDING", "HEAP", "SILO"]
 
-    type = type.sorted(by: {
-      $0.localized < $1.localized
+    for index in 0..<types.count {
+      types[index] = types[index].localized
+    }
+    types = types.sorted(by: {
+      $0 < $1
     })
-    return type[0].localized
+    return types
   }
 }

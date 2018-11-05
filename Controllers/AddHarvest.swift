@@ -21,15 +21,17 @@ extension AddInterventionViewController: HarvestCellDelegate {
     if appDelegate.entityIsEmpty(entity: "Harvests") {
       createSampleStorage()
     }
-    initializeHarvestTableView()
-    initHarvestNaturePickerView()
-    initHarvestUnitPickerView()
-    initStoragesPickerViews()
+    harvestSelectedType = "STRAW"
     harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
     harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
     harvestType.layer.borderWidth = 1
     harvestType.layer.cornerRadius = 5
+    initializeHarvestTableView()
+    initHarvestNaturePickerView()
+    initHarvestUnitPickerView()
+    initStoragesPickerView()
     setupStorageCreationView()
+    initStoragesTypesPickerView()
   }
 
   func defineUnit(_ indexPath: IndexPath) {
@@ -71,17 +73,21 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(harvestNaturePickerView)
   }
 
-  func initStoragesPickerViews() {
+  func initStoragesPickerView() {
     let storages = fetchStoragesName()
-    let types = ["BUILDING", "HEAP", "SILO"]
 
     storagesPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), storages ?? ["---"], superview: view)
-    storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
     storagesPickerView.reference = self
-    storagesTypes.reference = self
     storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
-    storagesTypes.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesPickerView)
+  }
+
+  func initStoragesTypesPickerView() {
+    let types = ["BUILDING", "HEAP", "SILO"]
+
+    storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
+    storagesTypes.reference = self
+    storagesTypes.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesTypes)
   }
 
@@ -97,6 +103,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
       storageCreationView.heightAnchor.constraint(equalToConstant: 300)
       ])
 
+    storageCreationView.selectedType = "BUILDING"
     storageCreationView.createButton.addTarget(self, action: #selector(createNewStorage), for: .touchUpInside)
     storageCreationView.cancelButton.addTarget(self, action: #selector(cancelStorageCreation), for: .touchUpInside)
     storageCreationView.typeButton.addTarget(self, action: #selector(showStorageTypes), for: .touchUpInside)
@@ -105,14 +112,21 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   // MARK: - Actions
 
-  @objc func createNewStorage(_ sender: Any) {
+  @objc func cancelStorageCreation(_ sender: Any) {
+    storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
+    storageCreationView.nameTextField.text = ""
     dimView.isHidden = true
     storageCreationView.isHidden = true
   }
 
-  @objc func cancelStorageCreation(_ sender: Any) {
-    dimView.isHidden = true
-    storageCreationView.isHidden = true
+  @objc func createNewStorage(_ sender: Any) {
+    storageCreationView.nameTextField.resignFirstResponder()
+    createStorage(name: storageCreationView.nameTextField.text!, type: storageCreationView.selectedType!)
+    let storages = fetchStoragesName()
+
+    storagesPickerView.values = (storages != nil ? storages! : ["---"])
+    storagesPickerView.reloadComponent(0)
+    cancelStorageCreation(self)
   }
 
   @objc func showStorageTypes(_ sender: Any) {
@@ -196,6 +210,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storage.name = name
     storage.type = type
 
+    print("Create Storage: \(storage)")
     do {
       try managedContext.save()
       storages.append(storage)

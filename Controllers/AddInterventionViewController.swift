@@ -129,6 +129,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var harvests = [Harvests]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
+  var harvestSelectedType: String!
   var storageCreationView: StorageCreationView!
   var storagesPickerView: CustomPickerView!
   var storagesTypes: CustomPickerView!
@@ -590,14 +591,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     for harvestEntity in harvests {
       let harvest = Harvests(context: managedContext)
-      let type = harvestType.titleLabel?.text
 
       harvest.interventions = intervention
-      harvest.type = type
+      harvest.type = harvestSelectedType
       harvest.number = harvestEntity.number
       harvest.quantity = harvestEntity.quantity
       harvest.unit = harvestEntity.unit
       harvest.storages = harvestEntity.storages
+      print("\nSaved harvest: \(harvest)")
     }
 
     do {

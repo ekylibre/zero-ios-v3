@@ -43,6 +43,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     switch pickerView {
     case harvestNaturePickerView:
       harvestType.setTitle(unit.localized, for: .normal)
+      harvestSelectedType = unit
       harvestNaturePickerView.isHidden = true
       dimView.isHidden = true
     case harvestUnitPickerView:
@@ -57,6 +58,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       harvestTableView.reloadData()
     case storagesTypes:
       storageCreationView.typeButton.setTitle(unit.localized, for: .normal)
+      storageCreationView.selectedType = unit
       storagesTypes.isHidden = true
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
