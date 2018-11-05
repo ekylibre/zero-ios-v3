@@ -981,7 +981,7 @@ extension InterventionViewController {
 
       interventionSeed.unit = fetchedInput.unit.rawValue
       interventionSeed.quantity = fetchedInput.quantity as NSNumber?
-      interventionSeed.seeds = (seed as! Seeds)
+      interventionSeed.seeds = (seed as? Seeds)
       interventionSeed.interventions = intervention
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
@@ -990,7 +990,7 @@ extension InterventionViewController {
 
       interventionFertilizer.unit = fetchedInput.unit.rawValue
       interventionFertilizer.quantity = fetchedInput.quantity as NSNumber?
-      interventionFertilizer.fertilizers = (fertilizer as! Fertilizers)
+      interventionFertilizer.fertilizers = (fertilizer as? Fertilizers)
       interventionFertilizer.interventions =  intervention
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
@@ -999,7 +999,7 @@ extension InterventionViewController {
 
       interventionPhyto.unit = fetchedInput.unit.rawValue
       interventionPhyto.quantity = fetchedInput.quantity as NSNumber?
-      interventionPhyto.phytos = (phyto as! Phytos)
+      interventionPhyto.phytos = (phyto as? Phytos)
       interventionPhyto.interventions = intervention
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
@@ -1008,7 +1008,7 @@ extension InterventionViewController {
 
       interventionMaterial.unit = fetchedInput.unit.rawValue
       interventionMaterial.quantity = fetchedInput.quantity as NSNumber?
-      interventionMaterial.materials = (material as! Materials)
+      interventionMaterial.materials = (material as? Materials)
       interventionMaterial.interventions = intervention
       intervention.addToInterventionMaterials(interventionMaterial)
     default:
@@ -1258,9 +1258,7 @@ extension InterventionViewController {
       } else {
         let farm = (result?.data?.farms.first)!
         for intervention in farm.interventions {
-          //print("\nUpdating intervention: \(intervention)")
           self.updateIntervention(fetchedIntervention: intervention)
-          //print("\nUpdated intervention: \(intervention)")
         }
       }
       group.leave()

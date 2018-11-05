@@ -228,7 +228,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func updateInputQuantity(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = Float(cell.inputQuantity.text!)
+    let quantity = Float(cell.inputQuantity.text!.replacingOccurrences(of: ",", with: "."))
     let unit = cell.unitMeasureButton.titleLabel?.text
 
     cell.surfaceQuantity.isHidden = false
