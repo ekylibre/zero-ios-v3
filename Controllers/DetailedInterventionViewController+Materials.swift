@@ -31,6 +31,7 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.layer.borderColor = UIColor.lightGray.cgColor
     selectedMaterialsTableView.layer.cornerRadius = 5
     selectedMaterialsTableView.register(SelectedMaterialCell.self, forCellReuseIdentifier: "SelectedMaterialCell")
+    selectedMaterialsTableView.bounces = false
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
     materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
