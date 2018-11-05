@@ -500,12 +500,6 @@
                                                             </tableViewCell>
                                                         </prototypes>
                                                     </tableView>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UpY-ou-8K6">
-                                                        <rect key="frame" x="87" y="25" width="0.0" height="0.0"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <gestureRecognizers/>
@@ -519,10 +513,7 @@
                                                     <constraint firstItem="xR1-hG-glp" firstAttribute="leading" secondItem="aUf-in-lcY" secondAttribute="trailing" constant="15" id="LcG-BC-3Gp"/>
                                                     <constraint firstAttribute="trailing" secondItem="6C4-57-Ghw" secondAttribute="trailing" constant="20" id="Ojx-S6-oqJ"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xR1-hG-glp" secondAttribute="trailing" constant="20" symbolic="YES" id="PTA-Sn-4tg"/>
-                                                    <constraint firstItem="UpY-ou-8K6" firstAttribute="top" secondItem="e04-dp-jck" secondAttribute="top" constant="25" id="QUM-fO-U5J"/>
-                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UpY-ou-8K6" secondAttribute="trailing" constant="20" symbolic="YES" id="T50-kC-wXO"/>
                                                     <constraint firstItem="aUf-in-lcY" firstAttribute="leading" secondItem="e04-dp-jck" secondAttribute="leading" constant="20" id="Uez-UW-0aN"/>
-                                                    <constraint firstItem="UpY-ou-8K6" firstAttribute="leading" secondItem="aUf-in-lcY" secondAttribute="trailing" constant="15" id="azM-2G-flA"/>
                                                     <constraint firstItem="6C4-57-Ghw" firstAttribute="leading" secondItem="e04-dp-jck" secondAttribute="leading" constant="20" id="c2f-8S-sda"/>
                                                     <constraint firstItem="Fba-dj-Hdb" firstAttribute="centerY" secondItem="aUf-in-lcY" secondAttribute="centerY" id="oE2-w8-mhA"/>
                                                     <constraint firstItem="xR1-hG-glp" firstAttribute="centerY" secondItem="aUf-in-lcY" secondAttribute="centerY" id="qxM-Y0-yn1"/>

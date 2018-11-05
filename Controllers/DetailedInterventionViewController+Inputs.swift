@@ -86,7 +86,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   @IBAction private func tapInputsView() {
     let shouldExpand = (inputsHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedInputs.count > 10) ? 10 * 80 : selectedInputs.count * 80
+    let tableViewHeight = (selectedInputs.count > 10) ? 10 * 110 : selectedInputs.count * 110
 
     if selectedInputs.count == 0 {
       return
