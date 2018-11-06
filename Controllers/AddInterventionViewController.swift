@@ -525,9 +525,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for selectedInput in selectedInputs {
-      if selectedInput is InterventionPhytosanitary {
-        print("\nSelectedInput: \(String(describing: selectedInput.value(forKey: "phyto")))")
-      }
       selectedInput.setValue(intervention, forKey: "intervention")
     }
 
