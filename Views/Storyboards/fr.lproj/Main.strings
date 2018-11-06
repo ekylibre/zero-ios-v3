@@ -127,3 +127,6 @@
 
 /* Class = "UILabel"; text = "Number"; ObjectID = "k4t-Fe-Hr6"; */
 "k4t-Fe-Hr6.text" = "Numéro";
+
+/* Class = "UILabel"; text = "Unauthorized mixing"; ObjectID = "iR3-Um-nVa"; */
+"iR3-Um-nVa.text" = "Mélange non autorisé";

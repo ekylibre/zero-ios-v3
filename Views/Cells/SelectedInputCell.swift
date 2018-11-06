@@ -261,18 +261,20 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @objc func saveQuantity(_ sender: Any) {
-    let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as! InterventionPhytosanitary).phyto?.referenceID
+    if addInterventionViewController?.selectedInputs[indexPath.row] is InterventionPhytosanitary {
+      let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as! InterventionPhytosanitary).phyto?.referenceID
 
-    if !checkPhytosanitaryDoses(phytoID!, quantityTextField.text!.floatValue) {
-      warningLabel.isHidden = false
-      warningImageView.isHidden = false
-      surfaceQuantityTopConstraint.constant = 20
-    } else {
-      warningLabel.isHidden = true
-      warningImageView.isHidden = true
-      surfaceQuantityTopConstraint.constant = 5
+      if !checkPhytosanitaryDoses(phytoID!, quantityTextField.text!.floatValue) {
+        warningLabel.isHidden = false
+        warningImageView.isHidden = false
+        surfaceQuantityTopConstraint.constant = 20
+      } else {
+        warningLabel.isHidden = true
+        warningImageView.isHidden = true
+        surfaceQuantityTopConstraint.constant = 5
+      }
     }
-    setupLayout()
+//    setupLayout()
     addInterventionViewController?.selectedInputs[indexPath.row].setValue(
       quantityTextField.text!.floatValue, forKey: "quantity")
     addInterventionViewController?.updateInputQuantity(indexPath: indexPath)

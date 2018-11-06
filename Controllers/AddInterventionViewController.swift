@@ -46,6 +46,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var inputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var inputsSeparatorView: UIView!
+  @IBOutlet weak var inputsUnauthorizedMixImage: UIImageView!
+  @IBOutlet weak var inputsUnauthorizedMixLabel: UILabel!
 
   // Materials
   @IBOutlet var materialsTapGesture: UITapGestureRecognizer!
@@ -523,6 +525,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
 
     for selectedInput in selectedInputs {
+      if selectedInput is InterventionPhytosanitary {
+        print("\nSelectedInput: \(String(describing: selectedInput.value(forKey: "phyto")))")
+      }
       selectedInput.setValue(intervention, forKey: "intervention")
     }
 

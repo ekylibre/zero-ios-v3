@@ -26,6 +26,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       inputsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
+    inputsUnauthorizedMixImage.tintColor = .red
+
     inputsTapGesture.delegate = self
     selectedInputsTableView.layer.borderWidth  = 0.5
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
@@ -93,10 +95,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
 
     updateCountLabel()
-    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
     inputsAddButton.isHidden = !shouldExpand
     inputsCountLabel.isHidden = shouldExpand
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+    selectedInputsTableView.isHidden = !shouldExpand
+    inputsUnauthorizedMixLabel.isHidden = !shouldExpand
+    inputsUnauthorizedMixImage.isHidden = !shouldExpand
+    shouldExpand ? checkAllMixCategoryCode() : nil
   }
 
   private func updateCountLabel() {
@@ -131,6 +137,35 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
+  func checkAllMixCategoryCode() {
+    var firstInput: InterventionPhytosanitary?
+    var unauthorized = false
+
+    for case let selectedInput as InterventionPhytosanitary in selectedInputs {
+      firstInput == nil ? firstInput = selectedInput : nil
+      if !checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, firstInput!.phyto!.mixCategoryCode!) {
+        unauthorized = true
+        break
+      }
+    }
+    if selectedInputs.count > 1 && unauthorized {
+      inputsUnauthorizedMixImage.isHidden = false
+      inputsUnauthorizedMixLabel.isHidden = false
+    } else {
+      inputsUnauthorizedMixImage.isHidden = true
+      inputsUnauthorizedMixLabel.isHidden = true
+    }
+  }
+
+  func checkMixCategoryCode(_ firstMixCode: String, _ secondMixCode: String) -> Bool {
+    let autorizedMix = ["1":"1234", "2":"134", "3":"14", "4":"14", "5":""]
+
+    if !autorizedMix[firstMixCode]!.contains(secondMixCode) {
+      return false
+    }
+    return true
+  }
+
   func selectInput(_ input: NSManagedObject) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -149,6 +184,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       selectedPhyto.unit = phyto.unit
       selectedPhyto.phyto = phyto
       selectedInputs.append(selectedPhyto)
+      checkAllMixCategoryCode()
     case let fertilizer as Fertilizer:
       let selectedFertilizer = InterventionFertilizer(context: managedContext)
       selectedFertilizer.unit = fertilizer.unit
@@ -186,6 +222,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.resetInputsUsedAttribute(index: indexPath.row)
       self.selectedInputs.remove(at: indexPath.row)
+      self.checkAllMixCategoryCode()
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
         self.selectedInputsTableView.isHidden = true
