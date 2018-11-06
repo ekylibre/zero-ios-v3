@@ -59,11 +59,11 @@ class CropView: UIView {
     return gesture
   }()
 
-  let crop: Crops
+  let crop: Crop
 
   // MARK: - Initialization
 
-  init(frame: CGRect, _ crop: Crops) {
+  init(frame: CGRect, _ crop: Crop) {
     self.crop = crop
     super.init(frame: frame)
     setupView()

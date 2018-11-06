@@ -13,25 +13,12 @@ extension AddInterventionViewController: HarvestCellDelegate {
   
   // MARK: - Initialization
 
-  func defineUnit(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-    dimView.isHidden = false
-    harvestUnitPickerView.isHidden = false
-  }
-
-  func defineStorage(_ indexPath: IndexPath) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    if !appDelegate.entityIsEmpty(entity: "Storages") {
-      cellIndexPath = indexPath
-      dimView.isHidden = false
-      storagesPickerView.isHidden = false
-    }
-  }
-
   func initHarvestView() {
+    let fetchedStorages = fetchStorages(predicate: nil)
+
+    fetchedStorages != nil ? storages = fetchedStorages! : nil
+    harvestSelectedType = "STRAW"
+    harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
     harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
     harvestType.layer.borderWidth = 1
     harvestType.layer.cornerRadius = 5
@@ -39,7 +26,20 @@ extension AddInterventionViewController: HarvestCellDelegate {
     initHarvestNaturePickerView()
     initHarvestUnitPickerView()
     initStoragesPickerView()
-    harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
+    setupStorageCreationView()
+    initStoragesTypesPickerView()
+  }
+
+  func defineUnit(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+    dimView.isHidden = false
+    harvestUnitPickerView.isHidden = false
+  }
+
+  func defineStorage(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+    dimView.isHidden = false
+    storagesPickerView.isHidden = false
   }
 
   func initializeHarvestTableView() {
@@ -48,7 +48,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.layer.cornerRadius = 4
     harvestTableView.dataSource = self
     harvestTableView.delegate = self
-    harvestTableView.bounces = false
   }
 
   func initHarvestUnitPickerView () {
@@ -78,23 +77,85 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(storagesPickerView)
   }
 
+  func initStoragesTypesPickerView() {
+    let types = ["BUILDING", "HEAP", "SILO"]
+
+    storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
+    storagesTypes.reference = self
+    storagesTypes.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(storagesTypes)
+  }
+
+  func setupStorageCreationView() {
+    storageCreationView = StorageCreationView(frame: CGRect.zero)
+    storageCreationView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(storageCreationView)
+
+    NSLayoutConstraint.activate([
+      storageCreationView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+      storageCreationView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+      storageCreationView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30),
+      storageCreationView.heightAnchor.constraint(equalToConstant: 300)
+      ])
+    storageCreationView.selectedType = "BUILDING"
+    storageCreationView.createButton.addTarget(self, action: #selector(createNewStorage), for: .touchUpInside)
+    storageCreationView.cancelButton.addTarget(self, action: #selector(cancelStorageCreation), for: .touchUpInside)
+    storageCreationView.typeButton.addTarget(self, action: #selector(showStorageTypes), for: .touchUpInside)
+  }
+
+
   // MARK: - Actions
 
-  func searchStorage(name: String) -> Storages? {
+  private func checkStorageName() -> Bool {
+    if storageCreationView.nameTextField.text!.isEmpty {
+      storageCreationView.errorLabel.text = "storage_name_is_empty".localized
+      storageCreationView.errorLabel.isHidden = false
+      return false
+    } else if storages.contains(where: { $0.name?.lowercased() == storageCreationView.nameTextField.text?.lowercased() }) {
+      storageCreationView.errorLabel.text = "storage_name_not_available".localized
+      storageCreationView.errorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
+  @objc func cancelStorageCreation(_ sender: Any) {
+    storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
+    storageCreationView.nameTextField.text = ""
+    dimView.isHidden = true
+    storageCreationView.isHidden = true
+  }
+
+  @objc func createNewStorage(_ sender: Any) {
+    if !checkStorageName() {
+      return
+    }
+
+    storageCreationView.nameTextField.resignFirstResponder()
+    createStorage(name: storageCreationView.nameTextField.text!, type: storageCreationView.selectedType!)
+    let storages = fetchStoragesName()
+
+    storagesPickerView.values = (storages != nil ? storages! : ["---"])
+    storagesPickerView.reloadComponent(0)
+    cancelStorageCreation(self)
+  }
+
+  @objc func showStorageTypes(_ sender: Any) {
+    storagesTypes.isHidden = false
+  }
+
+  func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
-    var storages: [Storages]
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
-    let predicate = NSPredicate(format: "name == %@", name)
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
 
     storagesFetchRequest.predicate = predicate
-
     do {
-      storages = try managedContext.fetch(storagesFetchRequest)
-      return storages.first
+      let storages = try managedContext.fetch(storagesFetchRequest)
+      return storages
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -107,17 +168,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storages> = Storages.fetchRequest()
-    let predicate = NSPredicate(format: "name != nil")
+    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
     var storagesNames = [String]()
-
-    storagesFetchRequest.predicate = predicate
 
     do {
       let storages = try managedContext.fetch(storagesFetchRequest)
 
       for storage in storages {
-        storagesNames.append(storage.name!)
+        if storage.name != nil {
+          storagesNames.append(storage.name!)
+        }
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -131,11 +191,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let harvest = Harvests(context: managedContext)
+    let harvest = Harvest(context: managedContext)
 
-    harvest.number = ""
+    harvest.number = nil
     harvest.quantity = 0
-    harvest.type = "STRAW"
+    harvest.type = nil
     harvest.unit = "QUINTAL"
     harvests.append(harvest)
   }
@@ -146,7 +206,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let storage = Storages(context: managedContext)
+    let storage = Storage(context: managedContext)
 
     storage.name = name
     storage.type = type

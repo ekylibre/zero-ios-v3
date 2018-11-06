@@ -25,7 +25,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Properties
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-  var interventions = [Interventions]() {
+  var interventions = [Intervention]() {
     didSet {
       tableView.reloadData()
     }
@@ -34,6 +34,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let dimView = UIView()
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
+  var interventionButtonsLabels = [UILabel]()
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
 
@@ -44,6 +45,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
+
+    // Hide navigation bar
+    navigationController?.navigationBar.isHidden = true
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -100,7 +104,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
-    refreshControl.addTarget(self, action: #selector(synchronise(_:)), for: .valueChanged)
 
     checkLocalData()
     if Connectivity.isConnectedToInternet() {
@@ -117,16 +120,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     for buttonCount in 0...6 {
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
       let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
+      let interventionLabel = UILabel()
 
       interventionButton.tag = buttonCount
-      interventionButton.backgroundColor = .white
+      interventionButton.backgroundColor = UIColor.white
       interventionButton.setBackgroundImage(image, for: .normal)
-      interventionButton.setTitle(interventionTypes[buttonCount], for: .normal)
-      interventionButton.setTitleColor(UIColor.white, for: .normal)
       interventionButton.layer.cornerRadius = 3
       interventionButton.isHidden = false
+      interventionLabel.text = interventionTypes[buttonCount].localized
+      interventionLabel.textColor = .white
+      interventionLabel.font = UIFont.systemFont(ofSize: 15)
+      interventionLabel.translatesAutoresizingMaskIntoConstraints = false
+      interventionLabel.isHidden = true
       interventionButtons.append(interventionButton)
+      interventionButtonsLabels.append(interventionLabel)
       bottomView.addSubview(interventionButton)
+      bottomView.addSubview(interventionButtonsLabels[interventionButton.tag])
     }
   }
 
@@ -136,7 +145,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
@@ -150,8 +159,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     interventions = interventions.sorted(by: {
       let result: Bool!
 
-      if ($0.workingPeriods)?.executionDate != nil && ($1.workingPeriods)?.executionDate != nil {
-        result = ($0.workingPeriods)!.executionDate! > ($1.workingPeriods)!.executionDate!
+      if ($0.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil {
+        result = ($0.workingPeriods?.anyObject() as! WorkingPeriod).executionDate! >
+          ($1.workingPeriods?.anyObject() as! WorkingPeriod).executionDate!
         return result
       }
       return true
@@ -166,7 +176,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farms")
+    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farm")
 
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
@@ -220,28 +230,28 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func emptyAllCoreDate() {
+  func emptyAllCoreData() {
     let entitiesNames = [
-      "Crops",
-      "Equipments",
-      "Farms",
-      "Fertilizers",
-      "Harvests",
-      "InterventionEquipments",
-      "InterventionFertilizers",
-      "InterventionMaterials",
-      "InterventionPersons",
-      "InterventionPhytosanitaries",
-      "Interventions",
-      "InterventionSeeds",
-      "Materials",
-      "Persons",
-      "Phytos",
-      "Seeds",
-      "Storages",
-      "Users",
+      "Crop",
+      "Equipment",
+      "Farm",
+      "Fertilizer",
+      "Harvest",
+      "InterventionEquipment",
+      "InterventionFertilizer",
+      "InterventionMaterial",
+      "InterventionPerson",
+      "InterventionPhytosanitary",
+      "Intervention",
+      "InterventionSeed",
+      "Material",
+      "Person",
+      "Phyto",
+      "Seed",
+      "Storage",
+      "User",
       "Weather",
-      "WorkingPeriods"]
+      "WorkingPeriod"]
 
     for entityName in entitiesNames {
       emptyCoreData(entityName: entityName)
@@ -259,8 +269,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
       UserDefaults.standard.set(0, forKey: "lastSyncDate")
       UserDefaults.standard.synchronize()
-      self.emptyAllCoreDate()
-      self.performSegue(withIdentifier: "logoutSegue", sender: self)
+      self.emptyAllCoreData()
+      self.navigationController?.popViewController(animated: true)
     }))
     present(alert, animated: true)
   }
@@ -297,13 +307,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: workingPeriod!.executionDate!)
     }
-
-    // Resize labels according to their text
-    cell.typeLabel.sizeToFit()
-    cell.cropsLabel.sizeToFit()
-    cell.infosLabel.sizeToFit()
-    cell.selectionStyle = .none
-
     return cell
   }
 
@@ -311,14 +314,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     performSegue(withIdentifier: "updateIntervention", sender: self)
   }
 
-  func fetchTargets(_ intervention: Interventions) -> [Targets]? {
+  func fetchTargets(_ intervention: Intervention) -> [Target]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
     targetsFetchRequest.predicate = predicate
 
     do {
@@ -330,14 +333,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func fetchWorkingPeriod(_ intervention: Interventions) -> WorkingPeriods? {
+  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriods> = WorkingPeriods.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
     workingPeriodsFetchRequest.predicate = predicate
 
     do {
@@ -349,12 +352,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func updateCropsLabel(_ targets: [Targets]?) -> String? {
+  func updateCropsLabel(_ targets: [Target]?) -> String? {
     var totalSurfaceArea: Float = 0
 
     if targets != nil {
       for target in targets! {
-        let crop = target.crops
+        let crop = target.crop
         totalSurfaceArea += crop?.surfaceArea ?? 0
       }
       let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
@@ -390,13 +393,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let intervention = Interventions(context: managedContext)
-    let workingPeriod = WorkingPeriods(context: managedContext)
+    let intervention = Intervention(context: managedContext)
+    let workingPeriod = WorkingPeriod(context: managedContext)
 
     intervention.type = type
     intervention.infos = infos
     intervention.status = status
-    workingPeriod.interventions = intervention
+    workingPeriod.intervention = intervention
     workingPeriod.executionDate = executionDate
 
     do {
@@ -413,7 +416,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     switch segue.identifier {
     case "showAddInterventionVC":
       let destVC = segue.destination as! AddInterventionViewController
-      let type = (sender as? UIButton)?.titleLabel?.text
+      let type = interventionTypes[((sender as? UIButton)?.tag)!]
 
       destVC.interventionType = type
       destVC.interventionState = nil
@@ -447,6 +450,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Actions
 
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
+      refreshControl.beginRefreshing()
+      synchronise(self)
+    }
+  }
+
   @IBAction func synchronise(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -464,6 +474,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
           self.displayFarmName()
         }
         self.pushEntities()
+        self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.updateInterventionIfNeeded()
         self.updateInterventionIfChangedOnApi()
@@ -491,7 +502,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let predicate = NSPredicate(format: "ekyID == %d", 0)
 
     interventionsFetchRequest.predicate = predicate
@@ -517,7 +528,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Interventions> = Interventions.fetchRequest()
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let ekyIDPredicate = NSPredicate(format: "ekyID != %d", 0)
     let statusPredicate = NSPredicate(format: "status == %d", InterventionState.Created.rawValue)
     let predicates = NSCompoundPredicate(type: .and, subpredicates: [ekyIDPredicate, statusPredicate])
@@ -537,13 +548,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
 
-  func fetchCrops() -> [Crops] {
+  func fetchCrops() -> [Crop] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crops]()
+      return [Crop]()
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
@@ -552,7 +563,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return [Crops]()
+    return [Crop]()
   }
 
   @objc func action(sender: UIButton) {
@@ -563,6 +574,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @objc func hideInterventionAdd() {
     for interventionButton in interventionButtons {
       interventionButton.isHidden = true
+      interventionButtonsLabels[interventionButton.tag].isHidden = true
     }
 
     createInterventionButton.isHidden = false
@@ -592,7 +604,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
         interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
         interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
-        
+
+        interventionButtonsLabels[interventionButton.tag].isHidden = false
+        NSLayoutConstraint.activate([
+          interventionButtonsLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
+          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor)
+          ])
+
         bottomView.layoutIfNeeded()
 
         index += 1

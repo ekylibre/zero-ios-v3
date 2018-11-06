@@ -81,7 +81,6 @@ class PhytoCell: UITableViewCell {
     contentView.addSubview(reentryLabel)
     contentView.addSubview(inFieldReentryDelayLabel)
     contentView.addSubview(starImageView)
-    self.selectionStyle = .none
     setupLayout()
   }
 

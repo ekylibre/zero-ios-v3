@@ -37,7 +37,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     let tableView = UITableView(frame: CGRect.zero)
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
-    tableView.bounces = false
     tableView.register(PlotCell.self, forCellReuseIdentifier: "PlotCell")
     tableView.rowHeight = UITableView.automaticDimension
     tableView.delegate = self
@@ -76,10 +75,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return bottomView
   }()
 
-  var currentIntervention: Interventions?
+  var currentIntervention: Intervention?
   var interventionState: InterventionState.RawValue!
-  var crops = [[Crops]]()
-  var selectedCrops = [Crops]()
+  var crops = [[Crop]]()
+  var selectedCrops = [Crop]()
   var cropViews = [[CropView]]()
   var selectedSurfaceArea: Float = 0
 
@@ -170,7 +169,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return cell
   }
 
-  private func getPlotSurfaceArea(_ crops: [Crops]) -> Float {
+  private func getPlotSurfaceArea(_ crops: [Crop]) -> Float {
     var surfaceArea: Float = 0
 
     for crop in crops {
@@ -223,7 +222,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crops> = Crops.fetchRequest()
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
     let sort = NSSortDescriptor(key: "plotName", ascending: true)
     cropsFetchRequest.sortDescriptors = [sort]
 
@@ -250,28 +249,28 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", currentIntervention!)
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", currentIntervention!)
 
     targetsFetchRequest.predicate = predicate
 
     do {
       let targets = try managedContext.fetch(targetsFetchRequest)
 
-      var cropsFromSamePlot = [Crops]()
+      var cropsFromSamePlot = [Crop]()
       var name: String!
       for target in targets {
         if name == nil {
-          name = target.crops?.plotName
+          name = target.crop?.plotName
         }
-        if target.crops?.plotName != name {
-          name = target.crops?.plotName
+        if target.crop?.plotName != name {
+          name = target.crop?.plotName
           self.crops.append(cropsFromSamePlot)
-          cropsFromSamePlot = [Crops]()
+          cropsFromSamePlot = [Crop]()
         }
-        selectedSurfaceArea += (target.crops?.surfaceArea)!
-        selectedCrops.append(target.crops!)
-        cropsFromSamePlot.append(target.crops!)
+        selectedSurfaceArea += (target.crop?.surfaceArea)!
+        selectedCrops.append(target.crop!)
+        cropsFromSamePlot.append(target.crop!)
       }
       self.crops.append(cropsFromSamePlot)
     } catch let error as NSError {
@@ -279,29 +278,29 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func organizeCropsByPlot(_ crops: [Crops]) {
-    var cropsFromSamePlot = [Crops]()
+  private func organizeCropsByPlot(_ crops: [Crop]) {
+    var cropsFromSamePlot = [Crop]()
     var name = crops.first?.plotName
 
     for crop in crops {
       if crop.plotName != name {
         name = crop.plotName
         self.crops.append(cropsFromSamePlot)
-        cropsFromSamePlot = [Crops]()
+        cropsFromSamePlot = [Crop]()
       }
       cropsFromSamePlot.append(crop)
     }
     self.crops.append(cropsFromSamePlot)
   }
 
-  private func checkIfTargetMatch() -> [Targets]? {
+  private func checkIfTargetMatch() -> [Target]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Targets> = Targets.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", currentIntervention!)
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", currentIntervention!)
 
     targetsFetchRequest.predicate = predicate
     do {
@@ -312,19 +311,19 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return nil
   }
 
-  private func loadAllTargetAndSelectThem(_ crops: [Crops]) {
+  private func loadAllTargetAndSelectThem(_ crops: [Crop]) {
     let targets = checkIfTargetMatch()
-    var cropsFromSamePlot = [Crops]()
+    var cropsFromSamePlot = [Crop]()
     var name = crops.first?.plotName
 
     for crop in crops {
       if crop.plotName != name {
         name = crop.plotName
         self.crops.append(cropsFromSamePlot)
-        cropsFromSamePlot = [Crops]()
+        cropsFromSamePlot = [Crop]()
       }
       for target in targets! {
-        if crop == target.crops {
+        if crop == target.crop {
           selectedSurfaceArea += crop.surfaceArea
           selectedCrops.append(crop)
           break
@@ -339,7 +338,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var frame: CGRect
     var cropViews = [CropView]()
     var view: CropView
-    var targets: [Targets]?
+    var targets: [Target]?
 
     if interventionState != nil {
       targets = checkIfTargetMatch()
@@ -353,7 +352,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
         if targets != nil {
           var matched = false
           for target in targets! {
-            if view.crop == target.crops {
+            if view.crop == target.crop {
               matched = true
             }
           }
@@ -389,7 +388,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func selectPlot(_ crops: [Crops], _ indexPath: IndexPath) {
+  private func selectPlot(_ crops: [Crop], _ indexPath: IndexPath) {
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
     for (index, crop) in crops.enumerated() {
@@ -398,7 +397,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func deselectPlot(_ crops: [Crops], _ cell: PlotCell) {
+  private func deselectPlot(_ crops: [Crop], _ cell: PlotCell) {
     var index: Int = 0
 
     for case let view as CropView in cell.contentView.subviews {
@@ -443,7 +442,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func selectCrop(_ crop: Crops, _ cell: PlotCell) {
+  private func selectCrop(_ crop: Crop, _ cell: PlotCell) {
     if !cell.checkboxButton.isSelected {
       cell.checkboxButton.isSelected = true
     }
@@ -452,7 +451,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     selectedCrops.append(crop)
   }
 
-  private func deselectCrop(_ crop: Crops, _ crops: [Crops], _ cell: PlotCell) {
+  private func deselectCrop(_ crop: Crop, _ crops: [Crop], _ cell: PlotCell) {
     var index: Int = 1
 
     for case let view as CropView in cell.contentView.subviews {

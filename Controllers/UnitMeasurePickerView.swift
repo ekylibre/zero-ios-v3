@@ -57,11 +57,11 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
     if pickerView == volumeUnitPicker {
       volumeUnitPicker.isHidden = true
       selectedInputs[cellIndexPath.row].setValue(volumeUnitMeasure[row], forKey: "unit")
-      cell.unitMeasureButton.setTitle(volumeUnitMeasure[row].localized, for: .normal)
+      cell.unitButton.setTitle(volumeUnitMeasure[row].localized, for: .normal)
     } else {
       massUnitPicker.isHidden = true
       selectedInputs[cellIndexPath.row].setValue(massUnitMeasure[row], forKey: "unit")
-      cell.unitMeasureButton.setTitle(massUnitMeasure[row].localized, for: .normal)
+      cell.unitButton.setTitle(massUnitMeasure[row].localized, for: .normal)
     }
     selectedInputsTableView.reloadData()
     updateInputQuantity(indexPath: cellIndexPath)

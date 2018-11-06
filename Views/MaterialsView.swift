@@ -19,8 +19,8 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     return creationView
   }()
 
-  var materials = [Materials]()
-  var filteredMaterials = [Materials]()
+  var materials = [Material]()
+  var filteredMaterials = [Material]()
 
   // MARK: - Initialization
 
@@ -72,7 +72,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    filteredMaterials = searchText.isEmpty ? materials : materials.filter({(material: Materials) -> Bool in
+    filteredMaterials = searchText.isEmpty ? materials : materials.filter({(material: Material) -> Bool in
       let name = material.name!
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
@@ -126,7 +126,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let materialsFetchRequest: NSFetchRequest<Materials> = Materials.fetchRequest()
+    let materialsFetchRequest: NSFetchRequest<Material> = Material.fetchRequest()
 
     do {
       materials = try managedContext.fetch(materialsFetchRequest)
@@ -150,7 +150,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let material = Materials(context: managedContext)
+    let material = Material(context: managedContext)
 
     material.name = name
     material.unit = unit
@@ -211,16 +211,11 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   private func checkMaterialName() -> Bool {
-    let materialsWithSameName = materials.filter({(material: Materials) -> Bool in
-      let name = material.name!
-      return name.range(of: creationView.nameTextField.text!, options: .caseInsensitive) != nil
-    })
-
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "material_name_is_empty".localized
       creationView.errorLabel.isHidden = false
       return false
-    } else if materialsWithSameName.count > 0 {
+    } else if materials.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
       creationView.errorLabel.text = "material_name_not_available".localized
       creationView.errorLabel.isHidden = false
       return false

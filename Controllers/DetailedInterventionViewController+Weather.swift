@@ -99,19 +99,18 @@ extension AddInterventionViewController {
   }
 
   @IBAction func setTemperatureToNegative(_ sender: UIButton) {
-    let temperature = temperatureTextField.text!
+    if negativeTemperature.title(for: .normal) == "-" {
+      negativeTemperature.setTitle("+", for: .normal)
+    } else {
+      negativeTemperature.setTitle("-", for: .normal)
+    }
+    saveCurrentWeather(self)
+  }
 
-    if temperature.count > 0 {
-      let index = temperature.index(temperature.startIndex, offsetBy: 1)
-      let firstCharacter = temperature[..<index]
-
-      if firstCharacter == "-" {
-        negativeTemperature.setTitle("+", for: .normal)
-        temperatureTextField.text = String(temperature[index...])
-      } else if temperatureTextField.text != "0" {
-        negativeTemperature.setTitle("-", for: .normal)
-        temperatureTextField.text = "-" + temperature
-      }
+  func resetTemperatureTextFieldIfNotConform() {
+    if temperatureTextField.text == "-0" || temperatureTextField.text == "0" || temperatureTextField.text == "-" {
+      temperatureTextField.text = nil
+      temperatureTextField.placeholder = "0"
     }
   }
 
@@ -119,9 +118,12 @@ extension AddInterventionViewController {
     let temperature = temperatureTextField.text!
 
     if temperature.count > 0 {
-      if negativeTemperature.titleLabel?.text == "-" && !temperature.contains("-") {
-        temperatureTextField.text = "-" + temperature
+      if negativeTemperature.title(for: .normal) == "-" && !temperatureTextField.text!.contains("-") {
+        temperatureTextField.text?.insert("-", at: temperatureTextField.text!.startIndex)
+      } else if negativeTemperature.title(for: .normal) == "+" && temperatureTextField.text!.contains("-") {
+        temperatureTextField.text = String(temperatureTextField.text!.dropFirst())
       }
+      resetTemperatureTextFieldIfNotConform()
     }
   }
 
@@ -134,12 +136,12 @@ extension AddInterventionViewController {
     negativeTemperature.isHidden = state
   }
 
-  @IBAction func collapseOrExpandWeatherView(_ sender: Any) {
+  @IBAction private func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
-    weatherCollapseButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+    weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)
     hideWeatherItems(!shouldExpand)
     saveCurrentWeather(self)
   }

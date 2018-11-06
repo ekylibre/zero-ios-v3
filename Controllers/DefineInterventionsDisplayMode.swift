@@ -33,7 +33,7 @@ extension AddInterventionViewController {
   func loadWorkingPeriod() {
     let dateFormatter = DateFormatter()
     let selectedDate: String
-    let workingPeriods = currentIntervention.workingPeriods
+    let workingPeriods = (currentIntervention.workingPeriods?.allObjects.first as? WorkingPeriod)
     let date = workingPeriods?.executionDate
     let duration = workingPeriods?.hourDuration
 
@@ -63,14 +63,14 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadInputsFromIntervention(_ entityName: String, _ intervention: Interventions) {
+  func loadInputsFromIntervention(_ entityName: String, _ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let predicate = NSPredicate(format: "interventions == %@", intervention)
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
 
     inputsFetchRequest.predicate = predicate
     do {
@@ -86,9 +86,9 @@ extension AddInterventionViewController {
   }
 
   func loadInputs() {
-    loadInputsFromIntervention("InterventionSeeds", currentIntervention)
-    loadInputsFromIntervention("InterventionPhytosanitaries", currentIntervention)
-    loadInputsFromIntervention("InterventionFertilizers", currentIntervention)
+    loadInputsFromIntervention("InterventionSeed", currentIntervention)
+    loadInputsFromIntervention("InterventionPhytosanitary", currentIntervention)
+    loadInputsFromIntervention("InterventionFertilizer", currentIntervention)
     refreshSelectedInputs()
   }
 
@@ -98,8 +98,8 @@ extension AddInterventionViewController {
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionMaterialsFetchRequest: NSFetchRequest<InterventionMaterials> = InterventionMaterials.fetchRequest()
-    let predicate = NSPredicate(format: "interventions == %@", currentIntervention)
+    let interventionMaterialsFetchRequest: NSFetchRequest<InterventionMaterial> = InterventionMaterial.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", currentIntervention)
 
     interventionMaterialsFetchRequest.predicate = predicate
 
@@ -107,8 +107,8 @@ extension AddInterventionViewController {
       let interventionMaterials = try managedContext.fetch(interventionMaterialsFetchRequest)
 
       for interventionMaterial in interventionMaterials {
-        if interventionMaterial.materials != nil {
-          selectMaterial(interventionMaterial.materials!)
+        if interventionMaterial.material != nil {
+          selectMaterial(interventionMaterial.material!)
         }
       }
     } catch let error as NSError {
@@ -118,7 +118,7 @@ extension AddInterventionViewController {
   }
 
   func loadHarvest() {
-    for harvest in currentIntervention.harvests?.allObjects as! [Harvests] {
+    for harvest in currentIntervention.harvests?.allObjects as! [Harvest] {
       harvests.append(harvest)
     }
     addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
@@ -129,18 +129,18 @@ extension AddInterventionViewController {
   }
 
   func loadEquipments() {
-    for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipments] {
-      if interventionEquipment.equipments != nil {
-        selectEquipment(interventionEquipment.equipments!)
+    for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipment] {
+      if interventionEquipment.equipment != nil {
+        selectEquipment(interventionEquipment.equipment!)
       }
     }
     refreshSelectedEquipments()
   }
 
   func loadPersons() {
-    for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPersons] {
-      if interventionPerson.persons != nil {
-        selectPerson(interventionPerson.persons!, interventionPerson.isDriver)
+    for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPerson] {
+      if interventionPerson.person != nil {
+        selectPerson(interventionPerson.person!, interventionPerson.isDriver)
       }
     }
     refreshSelectedPersons()

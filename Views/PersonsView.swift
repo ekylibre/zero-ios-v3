@@ -19,8 +19,8 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     return creationView
   }()
 
-  var persons = [Persons]()
-  var filteredPersons = [Persons]()
+  var persons = [Person]()
+  var filteredPersons = [Person]()
 
   // MARK: - Initialization
 
@@ -73,7 +73,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
   }
 
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    filteredPersons = searchText.isEmpty ? persons : persons.filter({(person: Persons) -> Bool in
+    filteredPersons = searchText.isEmpty ? persons : persons.filter({(person: Person) -> Bool in
       let name = person.firstName!
       return name.range(of: searchText, options: .caseInsensitive) != nil
     })
@@ -128,7 +128,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let personsFetchRequest: NSFetchRequest<Persons> = Persons.fetchRequest()
+    let personsFetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
 
     do {
       persons = try managedContext.fetch(personsFetchRequest)
@@ -152,7 +152,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let person = Persons(context: managedContext)
+    let person = Person(context: managedContext)
 
     person.firstName = firstName
     person.lastName = lastName
