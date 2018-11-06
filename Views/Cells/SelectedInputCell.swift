@@ -107,7 +107,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let warningImageView = UIImageView(frame: CGRect.zero)
 
     warningImageView.isHidden = true
-    warningImageView.image = UIImage(named: "filled-circle")
+    warningImageView.image = UIImage(named: "warning")
+    warningImageView.tintColor = .red
     warningImageView.translatesAutoresizingMaskIntoConstraints = false
     return warningImageView
   }()
@@ -117,10 +118,24 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
-    warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "unauthorized_mixing".localized
+    warningLabel.textColor = .red
+    warningLabel.text = "invalid_dose".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
+  }()
+
+  lazy var surfaceQuantityTopConstraint: NSLayoutConstraint = {
+    let surfaceQuantityTopConstraint = NSLayoutConstraint(
+      item: surfaceQuantity,
+      attribute: .top,
+      relatedBy: .equal,
+      toItem: quantityTextField,
+      attribute: .bottom,
+      multiplier: 1,
+      constant: 5)
+
+    surfaceQuantityTopConstraint.isActive = true
+    return surfaceQuantityTopConstraint
   }()
 
   // MARK: - Initialization
@@ -143,6 +158,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(warningImageView)
     contentView.addSubview(warningLabel)
     contentView.addSubview(surfaceQuantity)
+    contentView.addConstraint(surfaceQuantityTopConstraint)
     setupLayout()
   }
 
@@ -170,27 +186,15 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       unitButton.heightAnchor.constraint(equalToConstant: 30),
       unitButton.leadingAnchor.constraint(equalTo: quantityTextField.trailingAnchor, constant: 10),
       unitButton.widthAnchor.constraint(equalToConstant: 70),
-
+      warningImageView.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 5),
       warningImageView.heightAnchor.constraint(equalToConstant: 10),
       warningImageView.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
       warningImageView.widthAnchor.constraint(equalToConstant: 10),
+      warningLabel.centerYAnchor.constraint(equalTo: warningImageView.centerYAnchor),
       warningLabel.leadingAnchor.constraint(equalTo: warningImageView.trailingAnchor, constant: 3),
       surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor)
-      ])
-
-    if warningImageView.isHidden {
-      NSLayoutConstraint.activate([
-        surfaceQuantity.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 1)
-        ]
-      )
-    } else {
-      NSLayoutConstraint.activate([
-        warningImageView.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 5),
-        warningLabel.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 2),
-        surfaceQuantity.topAnchor.constraint(equalTo: warningImageView.bottomAnchor, constant: 1)
-        ]
-      )
-    }
+      ]
+    )
   }
 
   // MARK: - Actions
@@ -232,9 +236,45 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     cellDelegate?.removeInputCell(indexPath)
   }
 
+  private func checkPhytosanitaryDoses(_ phytoID: Int32, _ quantity: Float) -> Bool {
+    if let asset = NSDataAsset(name: "phytosanitary-doses") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let phytosanitaryDoses = jsonResult as? [[String: Any]]
+
+        for phytosanitaryDose in phytosanitaryDoses! {
+          let productID = phytosanitaryDose["product_id"] as! NSNumber
+
+          if Int(truncating: productID) == phytoID {
+            let dose = phytosanitaryDose["dose"] as! NSNumber
+
+            return quantity <= Float(truncating: dose)
+          }
+        }
+      } catch let error as NSError {
+        print("Lexicon fetch failed. \(error)")
+      }
+    } else {
+      print("phytosanitary-doses.json not found")
+    }
+    return true
+  }
+
   @objc func saveQuantity(_ sender: Any) {
+    let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as! InterventionPhytosanitary).phyto?.referenceID
+
+    if !checkPhytosanitaryDoses(phytoID!, quantityTextField.text!.floatValue) {
+      warningLabel.isHidden = false
+      warningImageView.isHidden = false
+      surfaceQuantityTopConstraint.constant = 20
+    } else {
+      warningLabel.isHidden = true
+      warningImageView.isHidden = true
+      surfaceQuantityTopConstraint.constant = 5
+    }
+    setupLayout()
     addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-      (quantityTextField.text! as NSString).doubleValue, forKey: "quantity")
+      quantityTextField.text!.floatValue, forKey: "quantity")
     addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
   }
 

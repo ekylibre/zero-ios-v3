@@ -54,8 +54,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
             species.append(specie.uppercased())
           }
         }
-      } catch {
-        print("Lexicon error")
+      } catch let error as NSError {
+        print("Lexicon fetch failed. \(error)")
       }
     } else {
       print("production_natures.json not found")
