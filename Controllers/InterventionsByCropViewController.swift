@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 class InterventionsByCropViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -18,12 +19,14 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   var cropsByProduction = [[Crop]]()
   let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
+  let locationManager = CLLocationManager()
 
   // MARK: - Initialization
 
   override func viewDidLoad() {
     fetchCrops()
     sortProductions()
+    setupLocationManager(locationManager)
 
     dimView.isHidden = true
     dimView.backgroundColor = UIColor.black
