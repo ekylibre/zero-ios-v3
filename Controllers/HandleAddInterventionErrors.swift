@@ -126,8 +126,13 @@ extension AddInterventionViewController {
         stopDate = (selectedCrop.stopDate! < stopDate! ? selectedCrop.stopDate! : stopDate)
       }
       if selectedDate < startDate! || selectedDate > stopDate! {
-        let message = (selectedDate < startDate! ? String(format: "started_must_be_on_or_after".localized, startDate! as CVarArg) :
-          String(format: "started_must_be_on_or_before".localized, stopDate! as CVarArg))
+        var message: String!
+
+        if selectedDate < startDate! {
+          message = String(format: "started_must_be_on_or_after".localized, DateConverter.convertDateStringInLocalizedFormat(startDate!))
+        } else {
+          message = String(format: "started_must_be_on_or_before".localized, DateConverter.convertDateStringInLocalizedFormat(stopDate!))
+        }
         let alert = UIAlertController(
           title: "working_periods_is_invalid".localized,
           message: message,

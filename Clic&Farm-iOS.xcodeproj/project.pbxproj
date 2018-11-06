@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041028AB2191ACBD0015978B /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028AA2191ACBD0015978B /* DateConverter.swift */; };
 		0410A5FC2166192700529DA1 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 0410A5FB2166192700529DA1 /* schema.json */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		041248062179C05400A78D08 /* InterventionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248052179C05400A78D08 /* InterventionState.swift */; };
@@ -114,6 +115,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		041028AA2191ACBD0015978B /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		0410A5FB2166192700529DA1 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 		0480CA432165068F0039FCB9 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				041028AA2191ACBD0015978B /* DateConverter.swift */,
 				048D2AF32178C8D6002EDF62 /* Localizable.swift */,
 				048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */,
 				048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */,
@@ -580,6 +583,7 @@
 				6B8EE4EA2178D8E00035094C /* (null) in Sources */,
 				04998B93217DB8DF000A5D2F /* SeedCell.swift in Sources */,
 				6B8EE4E82178C92A0035094C /* (null) in Sources */,
+				041028AB2191ACBD0015978B /* DateConverter.swift in Sources */,
 				04DC9FF1217DB88D00CB94C3 /* DetailedInterventionViewController+Inputs.swift in Sources */,
 				041248062179C05400A78D08 /* InterventionState.swift in Sources */,
 				04DC9FEB217DB88D00CB94C3 /* DetailedInterventionViewController+Equipments.swift in Sources */,

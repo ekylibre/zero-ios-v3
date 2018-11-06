@@ -523,7 +523,9 @@
 "to" = "To";
 "yield" = "Yield";
 
+// Date
 "locale" = "en_EN";
+"date_format" = "yyyy-MM-dd";
 
 // Synchronization
 "today_last_synchronization" = "Last synchronization %02d:%02d";
