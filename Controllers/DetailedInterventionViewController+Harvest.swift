@@ -37,9 +37,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func defineStorage(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-    dimView.isHidden = false
-    storagesPickerView.isHidden = false
+    if storages.count > 0 {
+      cellIndexPath = indexPath
+      dimView.isHidden = false
+      storagesPickerView.isHidden = false
+    }
   }
 
   func initializeHarvestTableView() {
