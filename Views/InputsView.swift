@@ -190,6 +190,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
   }
 
+  func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
+    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
+      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
+        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
@@ -212,7 +223,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
       let unit: String = inFieldReentryDelay > 1 ? "hours".localized : "hour".localized
       let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
+      let authorized = checkPhytoMixCategoryCode((fromPhytos[indexPath.row] as! Phyto))
 
+      cell.unauthorizedMixingLabel.isHidden = authorized
+      cell.unauthorizedMixingImage.isHidden = authorized
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String

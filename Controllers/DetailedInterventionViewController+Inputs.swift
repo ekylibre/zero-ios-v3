@@ -142,10 +142,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     var unauthorized = false
 
     for case let selectedInput as InterventionPhytosanitary in selectedInputs {
-      firstInput == nil ? firstInput = selectedInput : nil
-      if !checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, firstInput!.phyto!.mixCategoryCode!) {
-        unauthorized = true
-        break
+      if selectedInput.phyto?.mixCategoryCode != nil {
+        firstInput == nil ? firstInput = selectedInput : nil
+        if firstInput?.phyto?.mixCategoryCode != nil {
+          if !checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, firstInput!.phyto!.mixCategoryCode!) {
+            unauthorized = true
+            break
+          }
+        }
       }
     }
     if selectedInputs.count > 1 && unauthorized {
