@@ -103,6 +103,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var firstEquipmentParameter: UITextField = {
     let firstEquipmentParameter = UITextField(frame: CGRect.zero)
+    firstEquipmentParameter.keyboardType = .decimalPad
     firstEquipmentParameter.text = nil
     firstEquipmentParameter.isHidden = true
     firstEquipmentParameter.autocorrectionType = .no
@@ -129,6 +130,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var secondEquipmentParameter: UITextField = {
     let secondEquipmentParameter = UITextField(frame: CGRect.zero)
+    secondEquipmentParameter.keyboardType = .decimalPad
     secondEquipmentParameter.text = nil
     secondEquipmentParameter.isHidden = true
     secondEquipmentParameter.autocorrectionType = .no
@@ -247,6 +249,33 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   }
 
   // MARK: - Text field
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
+    var invalidCharacters: CharacterSet!
+
+    if containsADot || textField.text?.count == 0 {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
+    } else {
+      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
+    }
+    switch textField {
+    case firstEquipmentParameter:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    case secondEquipmentParameter:
+      return string.rangeOfCharacter(
+        from: invalidCharacters,
+        options: [],
+        range: string.startIndex ..< string.endIndex
+        ) == nil
+    default:
+      return true
+    }
+  }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
