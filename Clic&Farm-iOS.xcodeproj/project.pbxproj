@@ -309,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
+				041028AA2191ACBD0015978B /* DateConverter.swift */,
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				041248052179C05400A78D08 /* InterventionState.swift */,
 				041248072179C05900A78D08 /* InterventionType.swift */,
@@ -327,7 +328,6 @@
 		0480CA432165068F0039FCB9 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				041028AA2191ACBD0015978B /* DateConverter.swift */,
 				048D2AF32178C8D6002EDF62 /* Localizable.swift */,
 				048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */,
 				048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */,
