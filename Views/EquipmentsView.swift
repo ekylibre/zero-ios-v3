@@ -216,8 +216,15 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     do {
       equipments = try managedContext.fetch(equipmentsFetchRequest)
-      equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+      equipments = equipments.sorted(by: {
+        let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+        if firstName != nil && secondName != nil {
+          return firstName! < secondName!
+        }
+        return true
+      })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -282,8 +289,15 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     creationView.nameTextField.resignFirstResponder()
     createEquipment(name: creationView.nameTextField.text!, number: creationView.numberTextField.text!)
-    equipments = equipments.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+    equipments = equipments.sorted(by: {
+      let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+      if firstName != nil && secondName != nil {
+        return firstName! < secondName!
+      }
+      return true
+    })
     tableView.reloadData()
     creationView.isHidden = true
     dimView.isHidden = true

@@ -130,8 +130,15 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
 
     do {
       materials = try managedContext.fetch(materialsFetchRequest)
-      materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+      materials = materials.sorted(by: {
+        let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+        if firstName != nil && secondName != nil {
+          return firstName! < secondName!
+        }
+        return true
+      })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -185,8 +192,15 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
 
     creationView.nameTextField.resignFirstResponder()
     createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue)
-    materials = materials.sorted(by: { $0.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      < $1.name!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+    materials = materials.sorted(by: {
+      let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+      if firstName != nil && secondName != nil {
+        return firstName! < secondName!
+      }
+      return true
+    })
     tableView.reloadData()
     creationView.isHidden = true
     dimView.isHidden = true

@@ -132,8 +132,15 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
     do {
       persons = try managedContext.fetch(personsFetchRequest)
-      persons = persons.sorted(by: { $0.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        < $1.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+      persons = persons.sorted(by: {
+        let firstName = $0.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let secondName = $1.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+        if firstName != nil && secondName != nil {
+          return firstName! < secondName!
+        }
+        return true
+      })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -194,8 +201,15 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
     creationView.firstNameTextField.resignFirstResponder()
     createPerson(firstName: creationView.firstNameTextField.text!, lastName: creationView.lastNameTextField.text!)
-    persons = persons.sorted(by: { $0.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      < $1.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+    persons = persons.sorted(by: {
+      let firstName = $0.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let secondName = $1.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+      if firstName != nil && secondName != nil {
+        return firstName! < secondName!
+      }
+      return true
+    })
     tableView.reloadData()
     creationView.isHidden = true
     dimView.isHidden = true
