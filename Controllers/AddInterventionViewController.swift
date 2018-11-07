@@ -753,7 +753,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     } else {
       numberOfDecimalDigits = 0
     }
-    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2
+    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {

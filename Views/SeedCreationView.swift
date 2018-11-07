@@ -131,7 +131,16 @@ class SeedCreationView: UIView, UITextFieldDelegate {
   }
 
   // MARK: - Text field
-  
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+      return true
+    }
+
+    return oldText.replacingCharacters(in: r, with: string).count <= 500
+  }
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false

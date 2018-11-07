@@ -177,6 +177,18 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Text field
 
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+      return true
+    }
+
+    if textField.keyboardType == .numberPad {
+      return oldText.replacingCharacters(in: r, with: string).count <= 16
+    }
+    return oldText.replacingCharacters(in: r, with: string).count <= 500
+  }
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let nextTag = textField.tag + 1
 
