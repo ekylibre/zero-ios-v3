@@ -49,7 +49,7 @@ extension AddInterventionViewController {
   }
 
   func resetTemperatureTextFieldIfNotConform() {
-    if temperatureTextField.text == "-0" || temperatureTextField.text == "0" || temperatureTextField.text == "-" {
+    if temperatureTextField.text == "-." || temperatureTextField.text == "-" {
       temperatureTextField.text = nil
       temperatureTextField.placeholder = "0"
     }
