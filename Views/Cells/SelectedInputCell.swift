@@ -197,7 +197,11 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     )
   }
 
-  // MARK: - Actions
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Text field
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -215,7 +219,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     } else {
       numberOfDecimalDigits = 0
     }
-    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2
+    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -223,6 +227,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     saveQuantity(self)
     return false
   }
+
+  // MARK: - Actions
 
   @objc func showUnitMeasure(sender: UIButton) {
     addInterventionViewController?.dimView.isHidden = false
@@ -276,13 +282,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
         surfaceQuantityTopConstraint.constant = 5
       }
     }
-//    setupLayout()
     addInterventionViewController?.selectedInputs[indexPath.row].setValue(
       quantityTextField.text!.floatValue, forKey: "quantity")
     addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 }

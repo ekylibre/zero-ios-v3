@@ -123,10 +123,36 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Actions
+  // MARK: - Text field
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+      return true
+    }
+
+    let newText = oldText.replacingCharacters(in: r, with: string)
+    let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
+    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
+    let numberOfDecimalDigits: Int
+
+    if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+      numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+    } else {
+      numberOfDecimalDigits = 0
+    }
+    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
+  }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
+    let nextTag = textField.tag + 1
+
+    if let nextResponder = textField.superview?.viewWithTag(nextTag) as? UITextField {
+      nextResponder.becomeFirstResponder()
+    } else {
+      textField.resignFirstResponder()
+    }
+
     return false
   }
 }
