@@ -111,9 +111,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
     updateCountLabel()
     inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    inputsAddButton.isHidden = !shouldExpand
-    inputsCountLabel.isHidden = shouldExpand
+    inputsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+    selectedInputsTableView.isHidden = !shouldExpand
+    showEntitiesNumber(
+      entities: selectedInputs,
+      constraint: inputsHeightConstraint,
+      numberLabel: inputsCountLabel,
+      addEntityButton: inputsAddButton)
   }
 
   private func updateCountLabel() {
@@ -238,18 +243,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func updateInputQuantity(indexPath: IndexPath) {
-    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = cell.quantityTextField.text?.floatValue
-    let unit = cell.unitButton.titleLabel?.text
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as? SelectedInputCell
+    let isValidated = (interventionState == InterventionState.Validated.rawValue)
+    let quantity = (isValidated ? cell?.quantityTextField.placeholder?.floatValue : cell?.quantityTextField.text?.floatValue)
+    let unit = cell?.unitButton.titleLabel?.text
 
-    cell.surfaceQuantity.isHidden = false
+    cell?.surfaceQuantity.isHidden = false
     if quantity == 0 || quantity == nil {
-      let error = (cell.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
-      cell.surfaceQuantity.text = error
-      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      let error = (cell?.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
+      cell?.surfaceQuantity.text = error
+      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else if totalLabel.text == "select_crops".localized.uppercased() {
-      cell.surfaceQuantity.text = "no_crop_selected".localized
-      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      cell?.surfaceQuantity.text = "no_crop_selected".localized
+      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
       defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }

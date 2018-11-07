@@ -23,6 +23,7 @@ extension AddInterventionViewController {
       selectedPersonsTableView.isUserInteractionEnabled = false
       temperatureTextField.isUserInteractionEnabled = false
       windSpeedTextField.isUserInteractionEnabled = false
+      negativeTemperature.isUserInteractionEnabled = false
       notesTextField.isUserInteractionEnabled = false
       for weatherButton in weatherButtons {
         weatherButton.isUserInteractionEnabled = false
