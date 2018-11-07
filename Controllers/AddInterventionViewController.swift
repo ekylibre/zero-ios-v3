@@ -819,7 +819,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func checkCropsProduction() -> Bool {
-    if interventionType == "harvest" || interventionType == "implantation" {
+     if interventionType == InterventionType.Harvest.rawValue || interventionType == InterventionType.Implantation.rawValue {
       let selectedCrops = fetchSelectedCrops()
       let firstCrop = selectedCrops.first?.species
 

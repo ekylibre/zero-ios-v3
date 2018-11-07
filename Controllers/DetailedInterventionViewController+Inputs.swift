@@ -270,18 +270,18 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func updateInputQuantity(indexPath: IndexPath) {
-    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = cell.quantityTextField.text?.floatValue
-    let unit = cell.unitButton.titleLabel?.text
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as? SelectedInputCell
+    let quantity = cell?.quantityTextField.text?.floatValue
+    let unit = cell?.unitButton.titleLabel?.text
 
-    cell.surfaceQuantity.isHidden = false
+    cell?.surfaceQuantity.isHidden = false
     if quantity == 0 || quantity == nil {
-      let error = (cell.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
-      cell.surfaceQuantity.text = error
-      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      let error = (cell?.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
+      cell?.surfaceQuantity.text = error
+      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else if totalLabel.text == "select_crops".localized.uppercased() {
-      cell.surfaceQuantity.text = "no_crop_selected".localized
-      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      cell?.surfaceQuantity.text = "no_crop_selected".localized
+      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
       defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }
