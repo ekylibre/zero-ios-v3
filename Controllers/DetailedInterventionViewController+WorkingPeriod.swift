@@ -30,6 +30,7 @@ extension AddInterventionViewController {
       selectDateView.widthAnchor.constraint(equalToConstant: 350),
       ])
 
+    workingPeriodDurationTextField.delegate = self
     workingPeriodDateButton.setTitle(currentDateString, for: .normal)
     workingPeriodDateButton.layer.borderWidth = 0.5
     workingPeriodDateButton.layer.borderColor = UIColor.lightGray.cgColor

@@ -739,31 +739,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
-    var invalidCharacters: CharacterSet!
-
-    if containsADot || textField.text?.count == 0 {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
-    } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
-    }
-
-    switch textField {
-    case temperatureTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    case windSpeedTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    default:
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
       return true
     }
+
+    let newText = oldText.replacingCharacters(in: r, with: string)
+    let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
+    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
+    let numberOfDecimalDigits: Int
+
+    if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+      numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+    } else {
+      numberOfDecimalDigits = 0
+    }
+    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
