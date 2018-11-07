@@ -152,9 +152,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         }
       }
     }
-    if selectedInputs.count > 1 && unauthorized {
-      inputsUnauthorizedMixImage.isHidden = false
-      inputsUnauthorizedMixLabel.isHidden = false
+    var selectedPhytos = [InterventionPhytosanitary]()
+
+    for case let selectedPhyto as InterventionPhytosanitary in selectedInputs {
+      selectedPhytos.append(selectedPhyto)
+    }
+    if selectedPhytos.count > 1 && unauthorized {
+        inputsUnauthorizedMixImage.isHidden = false
+        inputsUnauthorizedMixLabel.isHidden = false
     } else {
       inputsUnauthorizedMixImage.isHidden = true
       inputsUnauthorizedMixLabel.isHidden = true
