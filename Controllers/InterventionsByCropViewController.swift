@@ -51,7 +51,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropsTableView.register(CropCell.self, forCellReuseIdentifier: "CropCell")
     cropsTableView.separatorInset = UIEdgeInsets.zero
     cropsTableView.tableFooterView = UIView()
-    cropsTableView.bounces = false
     cropsTableView.rowHeight = 70
     cropsTableView.delegate = self
     cropsTableView.dataSource = self
@@ -163,6 +162,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let crop = cropsByProduction[indexPath.section][indexPath.row]
 
     cell.plotNameLabel.text = crop.plotName
+    updateDistanceLabel(cell)
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
     updateInterventionImages(crop: crop, cell: cell)
     return cell
@@ -185,6 +185,20 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       if column == cell.interventionImageViews.count {
         return
       }
+    }
+  }
+
+  private func updateDistanceLabel(_ cell: CropCell) {
+    if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus().rawValue > 2 {
+      let sampleCoordinate = CLLocation(latitude: 44.8404400, longitude: -0.5805000)
+      guard let distance = locationManager.location?.distance(from: sampleCoordinate) else {
+        return
+      }
+
+      cell.distanceLabel.isHidden = false
+      cell.distanceLabel.text = String(format: "%.1f m", distance)
+    } else {
+      cell.distanceLabel.isHidden = true
     }
   }
 

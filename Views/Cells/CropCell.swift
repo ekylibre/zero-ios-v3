@@ -19,6 +19,15 @@ class CropCell: UITableViewCell {
     return plotNameLabel
   }()
 
+  lazy var distanceLabel: UILabel = {
+    let distanceLabel = UILabel(frame: CGRect.zero)
+    distanceLabel.font = UIFont.systemFont(ofSize: 14)
+    distanceLabel.textColor = AppColor.TextColors.Green
+    distanceLabel.isHidden = true
+    distanceLabel.translatesAutoresizingMaskIntoConstraints = false
+    return distanceLabel
+  }()
+
   lazy var surfaceAreaLabel: UILabel = {
     let surfaceAreaLabel = UILabel(frame: CGRect.zero)
     surfaceAreaLabel.font = UIFont.systemFont(ofSize: 14)
@@ -45,6 +54,7 @@ class CropCell: UITableViewCell {
 
   private func setupCell() {
     contentView.addSubview(plotNameLabel)
+    contentView.addSubview(distanceLabel)
     contentView.addSubview(surfaceAreaLabel)
     contentView.addSubview(interventionImageView)
     interventionImageViews.append(interventionImageView)
@@ -56,7 +66,9 @@ class CropCell: UITableViewCell {
     NSLayoutConstraint.activate([
       plotNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
       plotNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      surfaceAreaLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      distanceLabel.centerYAnchor.constraint(equalTo: plotNameLabel.centerYAnchor),
+      distanceLabel.trailingAnchor.constraint(equalTo: surfaceAreaLabel.leadingAnchor, constant: -15),
+      surfaceAreaLabel.centerYAnchor.constraint(equalTo: plotNameLabel.centerYAnchor),
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       plotNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: surfaceAreaLabel.leadingAnchor, constant: -15),
       interventionImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
