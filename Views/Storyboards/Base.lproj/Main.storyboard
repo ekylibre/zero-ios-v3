@@ -178,7 +178,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qFt-k1-Es0">
-                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <sections/>
                             </tableView>
@@ -190,7 +190,7 @@
                             <constraint firstItem="qFt-k1-Es0" firstAttribute="leading" secondItem="txS-uS-JUJ" secondAttribute="leading" id="K0V-0c-Nz8"/>
                             <constraint firstItem="qFt-k1-Es0" firstAttribute="top" secondItem="vqC-IQ-fHf" secondAttribute="bottom" id="Ku6-9U-Da2"/>
                             <constraint firstItem="vqC-IQ-fHf" firstAttribute="leading" secondItem="txS-uS-JUJ" secondAttribute="leading" id="cLZ-il-I4r"/>
-                            <constraint firstItem="txS-uS-JUJ" firstAttribute="bottom" secondItem="qFt-k1-Es0" secondAttribute="bottom" id="eg3-a4-KWg"/>
+                            <constraint firstAttribute="bottom" secondItem="qFt-k1-Es0" secondAttribute="bottom" id="iBR-dS-XmZ"/>
                             <constraint firstItem="vqC-IQ-fHf" firstAttribute="trailing" secondItem="txS-uS-JUJ" secondAttribute="trailing" id="rQb-2J-lGP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="txS-uS-JUJ"/>
@@ -1623,4 +1623,8 @@
         <image name="thunderstorm" width="100" height="100"/>
         <image name="trash" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Vxv-f7-ZrT"/>
+        <segue reference="EKH-vj-NkS"/>
+    </inferredMetricsTieBreakers>
 </document>
