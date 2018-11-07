@@ -1000,7 +1000,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func goBackToInterventionViewController() {
-    performSegue(withIdentifier: "goBackToInterventionViewController", sender: self)
+    dismiss(animated: true, completion: nil)
   }
 
   func writeValueBack(tag: Int, value: String) {
