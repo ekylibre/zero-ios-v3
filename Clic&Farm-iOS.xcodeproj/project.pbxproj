@@ -90,6 +90,7 @@
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B6574EB2190A04400848EB4 /* InterventionsByCropViewController+GPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6574EA2190A04400848EB4 /* InterventionsByCropViewController+GPS.swift */; };
 		6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084B2193142200F54D29 /* sample_location.gpx */; };
+		6B6C084F219318BD00F54D29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
 		6B85D17721919B5F00E43046 /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D17621919B5F00E43046 /* CustomTypes.swift */; };
 		6B8DB972218701D2005E2A71 /* InterventionsByCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB971218701D2005E2A71 /* InterventionsByCropViewController.swift */; };
 		6B8DB97421871D9A005E2A71 /* ProductionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97321871D9A005E2A71 /* ProductionCell.swift */; };
@@ -199,6 +200,8 @@
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B6574EA2190A04400848EB4 /* InterventionsByCropViewController+GPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterventionsByCropViewController+GPS.swift"; sourceTree = "<group>"; };
 		6B6C084B2193142200F54D29 /* sample_location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_location.gpx; sourceTree = "<group>"; };
+		6B6C084E219318BD00F54D29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B85D17621919B5F00E43046 /* CustomTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypes.swift; sourceTree = "<group>"; };
 		6B8DB971218701D2005E2A71 /* InterventionsByCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionsByCropViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
@@ -241,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				041313AE21401483005437F0 /* Localizable.strings */,
+				6B6C084D219318BD00F54D29 /* InfoPlist.strings */,
 			);
 			path = Translations;
 			sourceTree = "<group>";
@@ -541,6 +545,7 @@
 				6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */,
 				04998B88217DB8DF000A5D2F /* LaunchScreen.storyboard in Resources */,
 				6B4CA89F214F9B560052073D /* queries.graphql in Resources */,
+				6B6C084F219318BD00F54D29 /* InfoPlist.strings in Resources */,
 				04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -725,6 +730,15 @@
 				04998B68217DB8DE000A5D2F /* fr */,
 			);
 			name = Main.strings;
+			sourceTree = "<group>";
+		};
+		6B6C084D219318BD00F54D29 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B6C084E219318BD00F54D29 /* Base */,
+				6B6C0850219318C100F54D29 /* fr */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
