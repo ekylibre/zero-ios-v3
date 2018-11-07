@@ -16,6 +16,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
 
+    irrigationVolumeTextField.delegate = self
     irrigationVolumeTextField.layer.borderWidth = 0.5
     irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
     irrigationVolumeTextField.layer.cornerRadius = 5
