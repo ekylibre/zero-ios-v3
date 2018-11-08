@@ -40,7 +40,7 @@ extension InterventionViewController {
 
   func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
     let apollo = appDelegate.apollo!
-    let query = FarmQuery(modifiedSince: defineLastSynchronisationDate())
+    let query = FarmQuery(modifiedSince: getLastSyncDate())
 
     apollo.fetch(query: query) { result, error in
       if let error = error {
@@ -146,8 +146,8 @@ extension InterventionViewController {
       newCrop.productionMode = crop.productionMode
       newCrop.provisionalYield = crop.provisionalYield
       newCrop.species = crop.species.rawValue
-      newCrop.startDate = dateFormatter.date(from: crop.startDate!)
-      newCrop.stopDate = dateFormatter.date(from: crop.stopDate!)
+      newCrop.startDate = crop.startDate!
+      newCrop.stopDate = crop.stopDate!
       let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
       let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
@@ -205,8 +205,8 @@ extension InterventionViewController {
     local.productionMode = updated.productionMode
     local.provisionalYield = updated.provisionalYield
     local.species = updated.species.rawValue
-    local.startDate = dateFormatter.date(from: updated.startDate!)
-    local.stopDate = dateFormatter.date(from: updated.stopDate!)
+    local.startDate = updated.startDate!
+    local.stopDate = updated.stopDate!
     let splitString = updated.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     local.surfaceArea = surfaceArea
@@ -234,8 +234,8 @@ extension InterventionViewController {
     crop.productionMode = new.productionMode
     crop.provisionalYield = new.provisionalYield
     crop.species = new.species.rawValue
-    crop.startDate = dateFormatter.date(from: new.startDate!)
-    crop.stopDate = dateFormatter.date(from: new.stopDate!)
+    crop.startDate = new.startDate!
+    crop.stopDate = new.stopDate!
     let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     crop.surfaceArea = surfaceArea
@@ -569,18 +569,8 @@ extension InterventionViewController {
 
   // MARK: - Update
 
-  func defineLastSynchronisationDate() -> String? {
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.timeZone = TimeZone(identifier: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
-    var lastSyncDate: String?
-
-    if date != nil {
-      lastSyncDate = dateFormatter.string(from: date!)
-    }
-    return lastSyncDate
+  func getLastSyncDate() -> Date? {
+    return UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
   }
 
   // MARK: - Queries: Equipments
@@ -662,8 +652,9 @@ extension InterventionViewController {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
+    let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+    appDelegate.apollo?.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -709,8 +700,9 @@ extension InterventionViewController {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
+    let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+    appDelegate.apollo?.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         completion(false)
@@ -815,8 +807,9 @@ extension InterventionViewController {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
+    let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: FarmQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+    appDelegate.apollo?.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -871,7 +864,7 @@ extension InterventionViewController {
 
     dateFormatter.locale = Locale(identifier: "fr_FR")
     dateFormatter.dateFormat = "yyyy-MM-dd"
-    workingPeriod.executionDate = dateFormatter.date(from: fetchedDay.executionDate!)
+    workingPeriod.executionDate = fetchedDay.executionDate!
     workingPeriod.hourDuration = Float(fetchedDay.hourDuration!)
 
     do {
@@ -1200,11 +1193,11 @@ extension InterventionViewController {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-
+    let query = InterventionQuery(modifiedSince: getLastSyncDate())
     let group = DispatchGroup()
 
     group.enter()
-    appDelegate.apollo?.fetch(query: InterventionQuery(modifiedSince: defineLastSynchronisationDate())) { (result, error) in
+    appDelegate.apollo?.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         onCompleted(false)
@@ -1236,17 +1229,15 @@ extension InterventionViewController {
   // MARK: - Mutations: Interventions
 
   func defineWorkingDayAttributesFrom(intervention: Intervention) -> [InterventionWorkingDayAttributes] {
-    let workingDays = intervention.workingPeriods
+    guard let workingDays = intervention.workingPeriods else {
+      fatalError("Could not unwrap NSSet (workingPeriods")
+    }
     var workingDaysAttributes = [InterventionWorkingDayAttributes]()
 
-    for workingDay in workingDays! {
-      let executionDate = (workingDay as AnyObject).value(forKey: "executionDate")
-      let formatter = DateFormatter()
-
-      formatter.dateFormat = "yyyy-MM-dd"
+    for case let workingDay as WorkingPeriod in workingDays {
       let workingDayAttributes = InterventionWorkingDayAttributes(
-        executionDate: formatter.string(from: executionDate as! Date),
-        hourDuration: (workingDay as AnyObject).value(forKey: "hourDuration") as? Double)
+        executionDate: workingDay.executionDate!,
+        hourDuration: Double(workingDay.hourDuration))
 
       workingDaysAttributes.append(workingDayAttributes)
     }
@@ -1261,7 +1252,6 @@ extension InterventionViewController {
       let target = target as! Target
       let targetAttributes = InterventionTargetAttributes(
         cropId: (target.crop?.uuid)?.uuidString,
-        workZone: nil,
         workAreaPercentage: Int(target.workAreaPercentage))
 
       targetsAttributes.append(targetAttributes)
