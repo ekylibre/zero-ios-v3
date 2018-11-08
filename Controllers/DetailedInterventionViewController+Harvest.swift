@@ -108,6 +108,37 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   // MARK: - Actions
 
+  @IBAction func tapHarvestView() {
+    let shouldExpand = (harvestViewHeightConstraint.constant == 70)
+    let tableViewHeight = (harvests.count > 10) ? 10 * 150 : harvests.count * 150
+
+    if harvests.count == 0 {
+      return
+    }
+
+    updateHarvestCountLabel()
+    harvestNature.isHidden = !shouldExpand
+    harvestType.isHidden = !shouldExpand
+    harvestTableView.isHidden = !shouldExpand
+    harvestAddButton.isHidden = !shouldExpand
+    harvestCountLabel.isHidden = shouldExpand
+    harvestTableView.isHidden = !shouldExpand
+    harvestExpandImageView.isHidden = (harvests.count == 0)
+    harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
+    harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 125) : 70
+    harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+  }
+
+  private func updateHarvestCountLabel() {
+    if harvests.count == 1 {
+      harvestCountLabel.text = "load".localized
+    } else if harvests.count > 1 {
+      harvestCountLabel.text = String(format: "loads".localized, harvests.count)
+    } else {
+      harvestCountLabel.text = "none".localized
+    }
+  }
+
   private func checkStorageName() -> Bool {
     if storageCreationView.nameTextField.text!.isEmpty {
       storageCreationView.errorLabel.text = "storage_name_is_empty".localized
@@ -238,6 +269,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
       self.harvests.remove(at: indexPath.row)
       self.harvestTableView.reloadData()
       if self.harvests.count == 0 {
+        self.harvestExpandImageView.isHidden = true
         self.harvestTableView.isHidden = true
         self.harvestType.isHidden = true
         self.harvestNature.isHidden = true
@@ -255,13 +287,20 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   @IBAction func addHarvest(_ sender: UIButton) {
     createHarvest()
-    harvestNature.isHidden = false
-    harvestType.isHidden = false
-    harvestTableView.isHidden = false
-    harvestTableView.reloadData()
-    if harvests.count < 4 {
-      harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
-      harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
+    if harvests.count > 0 {
+      let tableViewHeight = (harvests.count > 10) ? 10 * 150 : harvests.count * 150
+
+      harvestNature.isHidden = false
+      harvestType.isHidden = false
+      harvestTableView.isHidden = false
+      harvestAddButton.isHidden = false
+      harvestCountLabel.isHidden = true
+      harvestTableView.isHidden = false
+      harvestExpandImageView.isHidden = false
+      harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 125)
+      harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      view.layoutIfNeeded()
     }
+    harvestTableView.reloadData()
   }
 }

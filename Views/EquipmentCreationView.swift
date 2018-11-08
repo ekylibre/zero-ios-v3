@@ -9,9 +9,9 @@
 import UIKit
 
 class EquipmentCreationView: UIView, UITextFieldDelegate {
-
+  
   // MARK: - Properties
-
+  
   lazy var heighConstraint: NSLayoutConstraint = {
     let heightConstraint = NSLayoutConstraint(
       item: self,
@@ -21,11 +21,11 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       attribute: .notAnAttribute,
       multiplier: 1,
       constant: 350)
-
+    
     heightConstraint.isActive = true
     return heightConstraint
   }()
-
+  
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "create_equipment_title".localized
@@ -33,14 +33,14 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     return titleLabel
   }()
-
+  
   lazy var typeImageView: UIImageView = {
     let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
     let typeImageView = UIImageView(image: UIImage(named: imageName))
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()
-
+  
   lazy var typeLabel: UILabel = {
     let typeLabel = UILabel(frame: CGRect.zero)
     typeLabel.text = "chose_type".localized
@@ -49,7 +49,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     typeLabel.translatesAutoresizingMaskIntoConstraints = false
     return typeLabel
   }()
-
+  
   lazy var typeButton: UIButton = {
     let typeButton = UIButton(frame: CGRect.zero)
     typeButton.setTitle(firstEquipmentType.localized, for: .normal)
@@ -60,7 +60,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     typeButton.translatesAutoresizingMaskIntoConstraints = false
     return typeButton
   }()
-
+  
   lazy var nameTextField: UITextField = {
     let nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "name".localized
@@ -76,7 +76,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
     return nameTextField
   }()
-
+  
   lazy var errorLabel: UILabel = {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
@@ -84,7 +84,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()
-
+  
   lazy var numberTextField: UITextField = {
     let numberTextField = UITextField(frame: CGRect.zero)
     numberTextField.placeholder = "number".localized
@@ -100,7 +100,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     numberTextField.translatesAutoresizingMaskIntoConstraints = false
     return numberTextField
   }()
-
+  
   lazy var firstEquipmentParameter: UITextField = {
     let firstEquipmentParameter = UITextField(frame: CGRect.zero)
     firstEquipmentParameter.keyboardType = .decimalPad
@@ -118,7 +118,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     firstEquipmentParameter.translatesAutoresizingMaskIntoConstraints = false
     return firstEquipmentParameter
   }()
-
+  
   lazy var firstParameterUnit: UILabel = {
     let firstParameterUnit = UILabel(frame: CGRect.zero)
     firstParameterUnit.isHidden = true
@@ -127,7 +127,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     firstParameterUnit.translatesAutoresizingMaskIntoConstraints = false
     return firstParameterUnit
   }()
-
+  
   lazy var secondEquipmentParameter: UITextField = {
     let secondEquipmentParameter = UITextField(frame: CGRect.zero)
     secondEquipmentParameter.keyboardType = .decimalPad
@@ -145,7 +145,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     secondEquipmentParameter.translatesAutoresizingMaskIntoConstraints = false
     return secondEquipmentParameter
   }()
-
+  
   lazy var secondParameterUnit: UILabel = {
     let secondParameterUnit = UILabel(frame: CGRect.zero)
     secondParameterUnit.isHidden = true
@@ -154,7 +154,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     secondParameterUnit.translatesAutoresizingMaskIntoConstraints = false
     return secondParameterUnit
   }()
-
+  
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
@@ -163,7 +163,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
     return cancelButton
   }()
-
+  
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("create".localized.uppercased(), for: .normal)
@@ -172,17 +172,17 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     createButton.translatesAutoresizingMaskIntoConstraints = false
     return createButton
   }()
-
+  
   var firstEquipmentType: String
-
+  
   // MARK: - Initialization
-
+  
   init(firstType: String, frame: CGRect) {
     firstEquipmentType = firstType
     super.init(frame: frame)
     setupView()
   }
-
+  
   private func setupView() {
     self.backgroundColor = UIColor.white
     self.layer.cornerRadius = 5
@@ -204,7 +204,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     self.addConstraint(heighConstraint)
     setupLayout()
   }
-
+  
   private func setupLayout() {
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
@@ -243,25 +243,37 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
       ])
   }
-
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
+  
   // MARK: - Text field
-
+  
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
     guard let oldText = textField.text, let r = Range(range, in: oldText) else {
       return true
     }
-
+    
     if textField.keyboardType == .numberPad {
       return oldText.replacingCharacters(in: r, with: string).count <= 16
+    } else if textField.keyboardType == .decimalPad {
+      let newText = oldText.replacingCharacters(in: r, with: string)
+      let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
+      let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
+      let numberOfDecimalDigits: Int
+      
+      if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+        numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+      } else {
+        numberOfDecimalDigits = 0
+      }
+      return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
     }
     return oldText.replacingCharacters(in: r, with: string).count <= 500
   }
-
+  
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false

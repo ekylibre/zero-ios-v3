@@ -94,10 +94,14 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var thunderstorm: UIButton!
 
   // Harvest
+  @IBOutlet var harvestTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var harvestView: UIView!
   @IBOutlet weak var harvestTableView: UITableView!
   @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestAddButton: UIButton!
+  @IBOutlet weak var harvestCountLabel: UILabel!
+  @IBOutlet weak var harvestExpandImageView: UIImageView!
   @IBOutlet weak var harvestNature: UILabel!
   @IBOutlet weak var harvestType: UIButton!
   @IBOutlet weak var harvestSeparatorView: UIView!
