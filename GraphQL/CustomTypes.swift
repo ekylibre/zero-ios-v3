@@ -16,7 +16,7 @@ extension Date: JSONDecodable, JSONEncodable {
     }
 
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
 
     guard let date = dateFormatter.date(from: string) else {
       throw JSONDecodingError.couldNotConvert(value: string, to: Date.self)
@@ -28,7 +28,7 @@ extension Date: JSONDecodable, JSONEncodable {
   public var jsonValue: JSONValue {
     let dateFormatter = DateFormatter()
 
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     return dateFormatter.string(from: self)
   }
 }
@@ -44,7 +44,7 @@ extension Point: JSONDecodable, JSONEncodable {
     let coordinates = string[1 ... string.count - 1].split(separator: ",")
 
     guard let longitude = Double(coordinates[1]), let latitude = Double(coordinates[0]) else {
-      throw JSONDecodingError.couldNotConvert(value: value, to: String.self)
+      throw JSONDecodingError.couldNotConvert(value: coordinates[1], to: Double.self)
     }
     self = Point(x: longitude, y: latitude)
   }
