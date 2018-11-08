@@ -113,7 +113,11 @@ extension AddInterventionViewController {
   @objc func saveCurrentWeather(_ sender: Any) {
     checkTemperatureTextField()
     if temperatureTextField.text == "" && windSpeedTextField.text == "" {
-      currentWeatherLabel.text = "not_filled_in".localized
+      if weather.weatherDescription != nil {
+        currentWeatherLabel.text = weather.weatherDescription?.lowercased().localized
+      } else {
+        currentWeatherLabel.text = "not_filled_in".localized
+      }
     } else {
       let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "")
       let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
