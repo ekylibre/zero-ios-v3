@@ -162,7 +162,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let crop = cropsByProduction[indexPath.section][indexPath.row]
 
     cell.plotNameLabel.text = crop.plotName
-    updateDistanceLabel(cell)
+    updateDistanceLabel(crop: crop, cell: cell)
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
     updateInterventionImages(crop: crop, cell: cell)
     return cell
@@ -188,18 +188,30 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     }
   }
 
-  private func updateDistanceLabel(_ cell: CropCell) {
+  private func updateDistanceLabel(crop: Crop, cell: CropCell) {
     if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus().rawValue > 2 {
-      let sampleCoordinate = CLLocation(latitude: 44.8404400, longitude: -0.5805000)
-      guard let distance = locationManager.location?.distance(from: sampleCoordinate) else {
-        return
-      }
+      guard let cropLocation = getLocation(string: crop.centroid!) else { return }
+      guard let distance = locationManager.location?.distance(from: cropLocation) else { return }
+      let value = distance < 1000 ? distance : distance / 1000
+      let unit = distance < 1000 ? "m" : "km"
 
       cell.distanceLabel.isHidden = false
-      cell.distanceLabel.text = String(format: "%.1f m", distance)
+      cell.distanceLabel.text = String(format: "%.1f %@", value, unit)
     } else {
       cell.distanceLabel.isHidden = true
     }
+  }
+
+  private func getLocation(string: String) -> CLLocation? {
+    let coordinates = string[1 ..< string.count - 1].split(separator: ",")
+
+    if coordinates.count != 2 {
+      return nil
+    }
+    guard let longitude = Double(coordinates.first!), let latitude = Double(coordinates.last!) else {
+      return nil
+    }
+    return CLLocation(latitude: latitude, longitude: longitude)
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
