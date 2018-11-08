@@ -336,7 +336,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
-      cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
       return cell
     case selectedEquipmentsTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
