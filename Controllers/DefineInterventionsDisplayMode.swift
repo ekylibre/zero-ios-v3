@@ -147,6 +147,17 @@ extension AddInterventionViewController {
     refreshSelectedPersons()
   }
 
+  func changeNegativeTemperatureButton() {
+    let temperature = weather.temperature
+
+    if temperature != nil {
+      negativeTemperature.setTitle((Int(truncating: temperature!) > 0 ? "+" : "-"), for: .normal)
+    } else {
+      negativeTemperature.setTitle("+", for: .selected)
+    }
+    interventionState == InterventionState.Validated.rawValue ? negativeTemperature.setTitleColor(.lightGray, for: .normal) : nil
+  }
+
   func loadInterventionInReadOnlyMode() {
     dimView.isHidden = true
     cropsView.isHidden = true
@@ -167,6 +178,7 @@ extension AddInterventionViewController {
     loadPersons()
     loadHarvest()
     weather = currentIntervention?.weather
+    changeNegativeTemperatureButton()
     loadWeatherInReadOnlyMode()
     disableUserInteraction()
   }
@@ -182,6 +194,7 @@ extension AddInterventionViewController {
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     weather = currentIntervention?.weather
+    changeNegativeTemperatureButton()
     loadInputs()
     loadMaterials()
     loadIrrigation()
