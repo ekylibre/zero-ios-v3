@@ -21,6 +21,7 @@ class SelectedEquipmentCell: UITableViewCell {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.lineBreakMode = .byTruncatingTail
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -37,6 +38,7 @@ class SelectedEquipmentCell: UITableViewCell {
 
   lazy var infosLabel: UILabel = {
     let infosLabel = UILabel(frame: CGRect.zero)
+    infosLabel.lineBreakMode = .byTruncatingTail
     infosLabel.font = UIFont.systemFont(ofSize: 14)
     infosLabel.textColor = AppColor.TextColors.DarkGray
     infosLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +70,7 @@ class SelectedEquipmentCell: UITableViewCell {
       typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor, multiplier: 1),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),

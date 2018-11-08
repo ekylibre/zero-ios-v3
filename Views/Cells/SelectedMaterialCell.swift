@@ -23,6 +23,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.lineBreakMode = .byTruncatingTail
     nameLabel.font = UIFont.systemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -102,6 +103,7 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       materialImageView.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: materialImageView.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: materialImageView.trailingAnchor, constant: 10),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor, multiplier: 1),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),

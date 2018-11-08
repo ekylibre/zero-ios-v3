@@ -23,6 +23,7 @@ class SelectedPersonCell: UITableViewCell {
 
   lazy var firstNameLabel: UILabel = {
     let firstNameLabel = UILabel(frame: CGRect.zero)
+    firstNameLabel.lineBreakMode = .byTruncatingTail
     firstNameLabel.font = UIFont.systemFont(ofSize: 14)
     firstNameLabel.translatesAutoresizingMaskIntoConstraints = false
     return firstNameLabel
@@ -30,6 +31,7 @@ class SelectedPersonCell: UITableViewCell {
 
   lazy var lastNameLabel: UILabel = {
     let lastNameLabel = UILabel(frame: CGRect.zero)
+    lastNameLabel.lineBreakMode = .byTruncatingTail
     lastNameLabel.font = UIFont.boldSystemFont(ofSize: 14)
     lastNameLabel.translatesAutoresizingMaskIntoConstraints = false
     return lastNameLabel
@@ -94,6 +96,7 @@ class SelectedPersonCell: UITableViewCell {
       lastNameLabel.centerYAnchor.constraint(equalTo: firstNameLabel.centerYAnchor),
       lastNameLabel.leadingAnchor.constraint(equalTo: firstNameLabel.trailingAnchor, constant: 5),
       lastNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: lastNameLabel.trailingAnchor, multiplier: 1),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),

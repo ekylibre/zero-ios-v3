@@ -30,6 +30,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.lineBreakMode = .byTruncatingTail
     nameLabel.font = UIFont.systemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -37,6 +38,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var infoLabel: UILabel = {
     let infoLabel = UILabel(frame: CGRect.zero)
+    infoLabel.lineBreakMode = .byTruncatingTail
     infoLabel.font = UIFont.boldSystemFont(ofSize: 14)
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
     return infoLabel
@@ -172,6 +174,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       nameLabel.leadingAnchor.constraint(equalTo: inputImageView.trailingAnchor, constant: 10),
       infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       infoLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: infoLabel.trailingAnchor, multiplier: 1),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
