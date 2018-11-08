@@ -16,7 +16,7 @@ extension Date: JSONDecodable, JSONEncodable {
     }
 
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
+    dateFormatter.dateFormat = string.count > 10 ? "yyyy-MM-dd HH:mm:ss zzz" : "yyyy-MM-dd"
 
     guard let date = dateFormatter.date(from: string) else {
       throw JSONDecodingError.couldNotConvert(value: string, to: Date.self)
@@ -37,14 +37,12 @@ public typealias Point = MKMapPoint
 
 extension Point: JSONDecodable, JSONEncodable {
   public init(jsonValue value: JSONValue) throws {
-    guard let string = value as? String else {
-      throw JSONDecodingError.couldNotConvert(value: value, to: String.self)
+    guard let coordinates = value as? [Double] else {
+      throw JSONDecodingError.couldNotConvert(value: value, to: [Double].self)
     }
 
-    let coordinates = string[1 ... string.count - 1].split(separator: ",")
-
-    guard let longitude = Double(coordinates[1]), let latitude = Double(coordinates[0]) else {
-      throw JSONDecodingError.couldNotConvert(value: coordinates[1], to: Double.self)
+    guard let longitude = coordinates.first, let latitude = coordinates.last else {
+      throw JSONDecodingError.couldNotConvert(value: coordinates, to: Double.self)
     }
     self = Point(x: longitude, y: latitude)
   }
