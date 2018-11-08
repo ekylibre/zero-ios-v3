@@ -730,28 +730,6 @@ extension InterventionViewController {
     return id
   }
 
-  func pushStoragesIfNeeded() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
-    let predicate = NSPredicate(format: "storageID == %d", 0)
-
-    entitiesFetchRequest.predicate = predicate
-    do {
-      let storages = try managedContext.fetch(entitiesFetchRequest)
-
-      for storage in storages {
-        storage.storageID = pushStorages(storage: storage)
-      }
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not fetch or save. \(error), \(error.userInfo)")
-    }
-  }
-
   private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -1545,6 +1523,8 @@ extension InterventionViewController {
           (entity as! Phyto).ekyID = pushInput(input: entity as! NSManagedObject)
         case is Fertilizer:
           (entity as! Fertilizer).ekyID = pushInput(input: entity as! NSManagedObject)
+        case is Storage:
+          (entity as! Storage).storageID = pushStorages(storage: entity as! Storage)
         default:
           return
         }
@@ -1558,6 +1538,7 @@ extension InterventionViewController {
   func pushEntities() {
     let ekyPredicate = NSPredicate(format: "ekyID == %d", 0)
     let referencePredicate = NSPredicate(format: "referenceID == %d", 0)
+    let storagePredicate = NSPredicate(format: "storageID == %d", 0)
     let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [ekyPredicate, referencePredicate])
 
     pushEntitiesIfNeeded("Equipment", ekyPredicate)
@@ -1565,6 +1546,7 @@ extension InterventionViewController {
     pushEntitiesIfNeeded("Seed", predicates)
     pushEntitiesIfNeeded("Phyto", predicates)
     pushEntitiesIfNeeded("Fertilizer", predicates)
+    pushEntitiesIfNeeded("Storage", storagePredicate)
   }
 
   func defineEquipmentAttributesFrom(intervention: Intervention) -> [InterventionToolAttributes] {
