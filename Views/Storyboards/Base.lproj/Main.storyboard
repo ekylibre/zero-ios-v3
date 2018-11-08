@@ -139,7 +139,7 @@
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
                         <segue destination="krK-gd-8UN" kind="presentation" identifier="logoutSegue" id="wcF-Wj-Rjo"/>
-                        <segue destination="6i8-BA-FKm" kind="show" identifier="showInterventionsByCrop" id="Og0-d3-16l"/>
+                        <segue destination="6i8-BA-FKm" kind="presentation" identifier="showInterventionsByCrop" id="Og0-d3-16l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
