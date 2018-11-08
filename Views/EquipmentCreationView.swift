@@ -103,7 +103,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var firstEquipmentParameter: UITextField = {
     let firstEquipmentParameter = UITextField(frame: CGRect.zero)
-    firstEquipmentParameter.keyboardType = .numberPad
+    firstEquipmentParameter.keyboardType = .decimalPad
     firstEquipmentParameter.text = nil
     firstEquipmentParameter.isHidden = true
     firstEquipmentParameter.autocorrectionType = .no
@@ -130,7 +130,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   lazy var secondEquipmentParameter: UITextField = {
     let secondEquipmentParameter = UITextField(frame: CGRect.zero)
-    secondEquipmentParameter.keyboardType = .numberPad
+    secondEquipmentParameter.keyboardType = .decimalPad
     secondEquipmentParameter.text = nil
     secondEquipmentParameter.isHidden = true
     secondEquipmentParameter.autocorrectionType = .no

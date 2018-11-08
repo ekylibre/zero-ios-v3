@@ -49,7 +49,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return [String]()
   }
 
-  func defineIndicatorsUnits(_ key: String) -> String? {
+  func defineIndicatorsUnits(_ key: String, _ textField: UITextField) -> String? {
     let units = [
       "plowshare_count": "UNITY",
       "motor_power": "FRENCH_HORSEPOWER",
@@ -61,6 +61,11 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       "width": "METER",
       "length": "METER"]
 
+    if units[key] == "UNITY" {
+      textField.keyboardType = .numberPad
+    } else {
+      textField.keyboardType = .decimalPad
+    }
     return units[key]
   }
 
@@ -72,8 +77,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       creationView.heighConstraint.constant = 475
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
-      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1])?.localized
+      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = false
@@ -81,7 +86,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     case 1:
       creationView.heighConstraint.constant = 400
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
+      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = true
