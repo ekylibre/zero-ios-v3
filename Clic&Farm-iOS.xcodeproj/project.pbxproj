@@ -89,6 +89,7 @@
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B6574EB2190A04400848EB4 /* InterventionsByCropViewController+GPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6574EA2190A04400848EB4 /* InterventionsByCropViewController+GPS.swift */; };
+		6B6866A42194691400D5645B /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6866A32194691300D5645B /* String+Error.swift */; };
 		6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084B2193142200F54D29 /* sample_location.gpx */; };
 		6B6C084F219318BD00F54D29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
 		6B85D17721919B5F00E43046 /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D17621919B5F00E43046 /* CustomTypes.swift */; };
@@ -199,6 +200,7 @@
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B6574EA2190A04400848EB4 /* InterventionsByCropViewController+GPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterventionsByCropViewController+GPS.swift"; sourceTree = "<group>"; };
+		6B6866A32194691300D5645B /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
 		6B6C084B2193142200F54D29 /* sample_location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_location.gpx; sourceTree = "<group>"; };
 		6B6C084E219318BD00F54D29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -349,10 +351,11 @@
 			isa = PBXGroup;
 			children = (
 				048D2AF32178C8D6002EDF62 /* Localizable.swift */,
+				6B6866A32194691300D5645B /* String+Error.swift */,
 				048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */,
+				6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */,
 				048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */,
 				048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */,
-				6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */,
 				04998B95217DB8DF000A5D2F /* FertilizerCell.swift in Sources */,
 				04998B7C217DB8DF000A5D2F /* SelectionView.swift in Sources */,
+				6B6866A42194691400D5645B /* String+Error.swift in Sources */,
 				04DC9FF4217DB88D00CB94C3 /* DetailedInterventionViewController+Persons.swift in Sources */,
 				04DC9FEA217DB88D00CB94C3 /* AddInterventionViewController.swift in Sources */,
 				04DC9FF0217DB88D00CB94C3 /* HandleKeyboard.swift in Sources */,
