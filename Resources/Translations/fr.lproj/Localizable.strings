@@ -519,6 +519,7 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"my_crops_title" = "Mes cultures";
 "from" = "Du";
 "to" = "Au";
 "yield" = "Rendement";

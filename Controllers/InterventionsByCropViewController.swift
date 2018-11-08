@@ -14,6 +14,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   // MARK: - Properties
 
+  @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var cropsTableView: UITableView!
 
   var cropsByProduction = [[Crop]]()
@@ -24,6 +25,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   // MARK: - Initialization
 
   override func viewDidLoad() {
+    setupNavigationBar()
     fetchCrops()
     sortProductions()
     setupLocationManager(locationManager)
@@ -54,6 +56,20 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropsTableView.rowHeight = 70
     cropsTableView.delegate = self
     cropsTableView.dataSource = self
+  }
+
+  private func setupNavigationBar() {
+    let titleLabel = UILabel()
+    let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(dismissViewController))
+
+    titleLabel.text = "my_crops_title".localized
+    titleLabel.textColor = UIColor.white
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+    cancelButton.tintColor = UIColor.white
+
+    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+    navigationItem.rightBarButtonItem = cancelButton
+    navigationBar.setItems([navigationItem], animated: false)
   }
 
   private func sortProductions() {
@@ -248,7 +264,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   // MARK: - Actions
 
-  @IBAction func dismissViewController(_ sender: Any) {
+  @objc private func dismissViewController() {
     self.dismiss(animated: true, completion: nil)
   }
 }

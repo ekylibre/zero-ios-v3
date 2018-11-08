@@ -163,19 +163,6 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqC-IQ-fHf">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <color key="barTintColor" red="0.1137254902" green="0.5450980392" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="My crops" id="bb1-OK-ZMR">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="B8a-NN-FzZ">
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="dismissViewController:" destination="6i8-BA-FKm" id="Ute-tY-kAc"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qFt-k1-Es0">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
@@ -197,6 +184,7 @@
                     </view>
                     <connections>
                         <outlet property="cropsTableView" destination="qFt-k1-Es0" id="77Q-2k-XAH"/>
+                        <outlet property="navigationBar" destination="vqC-IQ-fHf" id="TER-od-kbV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDt-wo-rZF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1624,7 +1612,7 @@
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vxv-f7-ZrT"/>
+        <segue reference="wcF-Wj-Rjo"/>
         <segue reference="EKH-vj-NkS"/>
     </inferredMetricsTieBreakers>
 </document>
