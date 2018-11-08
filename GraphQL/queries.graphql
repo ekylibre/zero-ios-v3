@@ -111,7 +111,7 @@ query Farm ($modifiedSince: Date){
       startDate
       stopDate
       surfaceArea
-      shape
+      #shape
       centroid
     }
     people (modifiedSince: $modifiedSince) {
