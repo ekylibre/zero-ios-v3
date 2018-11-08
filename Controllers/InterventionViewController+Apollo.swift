@@ -151,6 +151,7 @@ extension InterventionViewController {
       let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
       let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
+      newCrop.centroid = crop.centroid.jsonValue as? String
     }
 
     do {
@@ -210,6 +211,7 @@ extension InterventionViewController {
     let splitString = updated.surfaceArea.split(separator: " ", maxSplits: 1)
     let surfaceArea = Float(splitString.first!)!
     local.surfaceArea = surfaceArea
+    local.centroid = updated.centroid.jsonValue as? String
 
     do {
       try managedContext.save()

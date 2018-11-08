@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crop" representedClassName="Crop" syncable="YES" codeGenerationType="class">
+        <attribute name="centroid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
@@ -177,17 +178,17 @@
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="workingPeriods" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="210"/>
+        <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="240"/>
         <element name="Equipment" positionX="627.27734375" positionY="-479.38671875" width="128" height="180"/>
         <element name="Farm" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
         <element name="Fertilizer" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
         <element name="Harvest" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
+        <element name="Intervention" positionX="160" positionY="-252" width="128" height="330"/>
         <element name="InterventionEquipment" positionX="376.83203125" positionY="-222.34765625" width="128" height="75"/>
         <element name="InterventionFertilizer" positionX="-208.0703125" positionY="-228.78515625" width="128" height="105"/>
         <element name="InterventionMaterial" positionX="578.0703125" positionY="-161.76953125" width="128" height="120"/>
         <element name="InterventionPerson" positionX="-195.78515625" positionY="16.1015625" width="128" height="90"/>
         <element name="InterventionPhytosanitary" positionX="621.36328125" positionY="1.16796875" width="128" height="105"/>
-        <element name="Intervention" positionX="160" positionY="-252" width="128" height="330"/>
         <element name="InterventionSeed" positionX="-149.890625" positionY="154.01171875" width="128" height="105"/>
         <element name="Material" positionX="824.87109375" positionY="-243.19140625" width="128" height="135"/>
         <element name="Person" positionX="-522.59765625" positionY="18.86328125" width="128" height="135"/>
