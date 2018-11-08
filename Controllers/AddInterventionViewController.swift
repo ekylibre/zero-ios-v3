@@ -233,6 +233,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       inputsView.isHidden = true
       inputsSeparatorView.isHidden = true
     case InterventionType.Irrigation.rawValue:
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
       irrigationView.isHidden = false
       irrigationSeparatorView.isHidden = false
     default:
