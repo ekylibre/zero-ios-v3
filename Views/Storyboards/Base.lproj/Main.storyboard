@@ -1529,7 +1529,7 @@
                                     <constraint firstAttribute="width" constant="175" id="dE3-zN-Dda"/>
                                 </constraints>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Welcome to the Clic&amp;Farm mobile application! To start, log in with your Ekylibre account..." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcH-Tp-UHn">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Welcome to the Clic&amp;Farm mobile application! To start, log in with your Ekylibre account..." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcH-Tp-UHn">
                                 <rect key="frame" x="30" y="275" width="315" height="92"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
