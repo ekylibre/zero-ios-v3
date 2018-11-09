@@ -19,6 +19,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   var cropsByProduction = [[Crop]]()
   let headerView = UIView(frame: CGRect.zero)
+  let locationSwitch = UISwitch(frame: CGRect.zero)
   let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
   let locationManager = CLLocationManager()
@@ -84,7 +85,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   private func setupTableHeaderView() {
     let locationLabel = UILabel(frame: CGRect.zero)
-    let locationSwitch = UISwitch(frame: CGRect.zero)
 
     locationLabel.text = "location".localized
     locationSwitch.onTintColor = AppColor.BarColors.Green
@@ -98,9 +98,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     headerView.addSubview(locationSwitch)
 
     NSLayoutConstraint.activate([
-      locationLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 15),
+      locationLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20),
       locationLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      locationSwitch.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -15),
+      locationSwitch.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -20),
       locationSwitch.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
       ])
 
@@ -206,7 +206,11 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let crop = cropsByProduction[indexPath.section][indexPath.row]
 
     cell.plotNameLabel.text = crop.plotName
-    updateDistanceLabel(crop: crop, cell: cell)
+    if locationSwitch.isOn {
+      updateDistanceLabel(crop: crop, cell: cell)
+    } else {
+      cell.distanceLabel.isHidden = true
+    }
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", crop.surfaceArea)
     updateInterventionImages(crop: crop, cell: cell)
     return cell

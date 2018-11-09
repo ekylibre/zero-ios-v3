@@ -31,11 +31,19 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
     cropsTableView.reloadData()
   }
 
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    if status.rawValue > 2 {
+      locationManager.startUpdatingLocation()
+      locationSwitch.setOn(true, animated: true)
+    }
+  }
+
   // MARK: - Actions
 
   @objc func updateLocationParameter(sender: UISwitch) {
     if !sender.isOn {
       locationManager.stopUpdatingLocation()
+      cropsTableView.reloadData()
       return
     }
 
