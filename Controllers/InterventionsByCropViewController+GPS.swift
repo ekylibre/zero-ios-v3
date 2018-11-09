@@ -35,6 +35,8 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
     if status.rawValue > 2 {
       locationManager.startUpdatingLocation()
       locationSwitch.setOn(true, animated: true)
+    } else {
+      locationSwitch.setOn(false, animated: true)
     }
   }
 
@@ -48,11 +50,26 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
     }
 
     if !CLLocationManager.locationServicesEnabled() {
-      return
+      requestLocationServices()
     } else if CLLocationManager.authorizationStatus().rawValue < 3 {
       requestAuthorization()
+    } else {
+      if locationManager.delegate == nil {
+        locationManager.delegate = self
+      }
+      locationManager.startUpdatingLocation()
     }
-    locationManager.startUpdatingLocation()
+  }
+
+  private func requestLocationServices() {
+    let alert = UIAlertController(title: "location_request_title".localized, message:
+      "location_request_message".localized, preferredStyle: .alert)
+    let cancelAction = UIAlertAction(title: "ok".localized.uppercased(), style: .cancel, handler: { _ in
+      self.locationSwitch.setOn(false, animated: true)
+    })
+
+    alert.addAction(cancelAction)
+    self.present(alert, animated: true, completion: nil)
   }
 
   private func requestAuthorization() {

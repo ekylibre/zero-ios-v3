@@ -523,6 +523,8 @@
 "from" = "From";
 "to" = "To";
 "yield" = "Yield";
+"location_request_title" = "Location Services Disabled";
+"location_request_message" = "Please enable location services.";
 "authorization_request_title" = "Location Services Disabled";
 "authorization_request_message" = "Please enable location services for this app.";
 "settings" = "Settings";
