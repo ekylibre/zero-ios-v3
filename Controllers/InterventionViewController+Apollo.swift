@@ -398,6 +398,7 @@ extension InterventionViewController {
       phyto.ekyID = Int32(article.id)!
       phyto.name = article.name
       phyto.unit = article.unit.rawValue
+      phyto.maaID = article.marketingAuthorizationNumber
       phyto.used = false
     }
   }
