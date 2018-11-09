@@ -63,7 +63,7 @@ extension InterventionViewController {
         self.saveArticles(articles: farms.first!.articles)
         self.loadEquipments()
         self.loadStorage()
-        self.loadPeople { (success) -> Void in
+        self.loadPersons { (success) -> Void in
           if success {
             self.loadIntervention(onCompleted: { (success) -> Void in
               endResult(success)
@@ -78,7 +78,7 @@ extension InterventionViewController {
         self.checkArticlesData(articles: farms.first!.articles)
         self.loadEquipments()
         self.loadStorage()
-        self.loadPeople { (success) -> Void in
+        self.loadPersons { (success) -> Void in
           if success {
             self.loadIntervention(onCompleted: { (success) -> Void in
               endResult(success)
@@ -354,7 +354,7 @@ extension InterventionViewController {
     if article.referenceId != nil {
       var seeds: [Seed]
       let seedsFetchRequest: NSFetchRequest<Seed> = Seed.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!) // Warning("Check predicate")
+      let predicate = NSPredicate(format: "referenceID == %d", Int32(article.referenceId!)!)
       seedsFetchRequest.predicate = predicate
 
       do {
@@ -380,7 +380,7 @@ extension InterventionViewController {
     if article.referenceId != nil {
       var phytos: [Phyto]
       let phytosFetchRequest: NSFetchRequest<Phyto> = Phyto.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!) // Warning("Check predicate")
+      let predicate = NSPredicate(format: "referenceID == %d", Int32(article.referenceId!)!)
       phytosFetchRequest.predicate = predicate
 
       do {
@@ -405,7 +405,7 @@ extension InterventionViewController {
     if article.referenceId != nil {
       var fertilizers: [Fertilizer]
       let fertilizersFetchRequest: NSFetchRequest<Fertilizer> = Fertilizer.fetchRequest()
-      let predicate = NSPredicate(format: "referenceID == %d", article.referenceId!) // Warning("Check predicate")
+      let predicate = NSPredicate(format: "referenceID == %d", Int32(article.referenceId!)!)
       fertilizersFetchRequest.predicate = predicate
 
       do {
@@ -559,7 +559,6 @@ extension InterventionViewController {
 
     do {
       let entities = try managedContext.fetch(entityFetchRequest)
-
       if entities.count > 0 {
         return false
       }
@@ -665,7 +664,7 @@ extension InterventionViewController {
     }
   }
 
-  func loadPeople(completion: @escaping (_ success: Bool) -> Void) {
+  func loadPersons(completion: @escaping (_ success: Bool) -> Void) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -799,10 +798,6 @@ extension InterventionViewController {
   // MARK: Working Periods
 
   private func saveWorkingDays(fetchedDay: InterventionQuery.Data.Farm.Intervention.WorkingDay) -> WorkingPeriod {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return WorkingPeriod()
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriod = WorkingPeriod(context: managedContext)
     let dateFormatter = DateFormatter()
@@ -823,10 +818,6 @@ extension InterventionViewController {
   // MARK: Intervention Equipments
 
   private func returnEntityIfSame(entityName: String, predicate: NSPredicate) -> NSManagedObject? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
 
@@ -844,13 +835,9 @@ extension InterventionViewController {
   }
 
   private func saveEquipmentsToIntervention(fetchedEquipment: InterventionQuery.Data.Farm.Intervention.Tool, intervention: Intervention) -> InterventionEquipment {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return InterventionEquipment()
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipment(context: managedContext)
-    let predicate = NSPredicate(format: "ekyID == %@", (fetchedEquipment.equipment?.id)!) // Warning("Check predicate")
+    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!)) // Warning("Check predicate")
     let equipment = returnEntityIfSame(entityName: "Equipment", predicate: predicate)
 
     if equipment != nil {
@@ -889,10 +876,6 @@ extension InterventionViewController {
   // MARK: Persons
 
   private func saveInterventionPersonsToIntervention(fetchedOperator: InterventionQuery.Data.Farm.Intervention.Operator, intervention: Intervention) -> InterventionPerson {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return InterventionPerson()
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPersons = InterventionPerson(context: managedContext)
     let personID = fetchedOperator.person?.id
@@ -999,10 +982,6 @@ extension InterventionViewController {
   // MARK: Inputs
 
   private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input, intervention: Intervention) -> Intervention {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return intervention
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let id = fetchedInput.article?.id
     let predicate: NSPredicate!
@@ -1137,10 +1116,6 @@ extension InterventionViewController {
   }
 
   func updateEquipments(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsFetchRequest: NSFetchRequest<InterventionEquipment> = InterventionEquipment.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1161,10 +1136,6 @@ extension InterventionViewController {
   }
 
   func updatePersons(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let personsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1185,10 +1156,6 @@ extension InterventionViewController {
   }
 
   func deleteInterventionInputs(_ entityName: String, intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     let managedContext = appDelegate.persistentContainer.viewContext
     let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1287,7 +1254,7 @@ extension InterventionViewController {
     let query = InterventionQuery(modifiedSince: date)
     let _ = appDelegate.apollo?.clearCache()
 
-    appDelegate.apollo?.fetch(query: query, resultHandler: { (result, error) in
+    appDelegate.apollo?.fetch(query: query, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1300,6 +1267,7 @@ extension InterventionViewController {
       }
       group.leave()
     })
+    group.wait()
   }
 
   // MARK: - Mutations: Interventions
@@ -1506,8 +1474,10 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let group = DispatchGroup()
 
     entitiesFetchRequest.predicate = predicate
+    group.enter()
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
@@ -1530,9 +1500,12 @@ extension InterventionViewController {
         }
       }
       try managedContext.save()
+      group.leave()
     } catch let error as NSError {
       print("Could not fetch or save. \(error), \(error.userInfo)")
+      group.leave()
     }
+    group.wait()
   }
 
   func pushEntities() {
