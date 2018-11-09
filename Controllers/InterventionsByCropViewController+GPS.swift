@@ -47,18 +47,27 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
       locationManager.stopUpdatingLocation()
       cropsTableView.reloadData()
       return
-    }
+    } else if !checkLocationState() { return }
 
+    if locationManager.delegate == nil {
+      setupLocationManager()
+    }
+    locationManager.startUpdatingLocation()
+  }
+
+  private func checkLocationState() -> Bool {
     if !CLLocationManager.locationServicesEnabled() {
       requestLocationServices()
+      return false
     } else if CLLocationManager.authorizationStatus().rawValue < 3 {
-      requestAuthorization()
-    } else {
-      if locationManager.delegate == nil {
-        locationManager.delegate = self
+      if CLLocationManager.authorizationStatus() == .notDetermined {
+        setupLocationManager()
+        return false
       }
-      locationManager.startUpdatingLocation()
+      requestAuthorization()
+      return false
     }
+    return true
   }
 
   private func requestLocationServices() {
