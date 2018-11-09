@@ -32,6 +32,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
+  let farmNameLabel = UILabel()
   let dimView = UIView()
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
@@ -46,8 +47,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.hideKeyboardWhenTappedAround()
 
     setupNavigationBar()
-    // Hide navigation bar
-    navigationController?.navigationBar.isHidden = true
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -118,10 +117,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func setupNavigationBar() {
-    let navigationItem = UINavigationItem(title: "")
+    let navigationItem = UINavigationItem()
     let cropsButton = UIButton()
     let logoutButton = UIButton()
 
+    farmNameLabel.text = fetchFarmName()
+    farmNameLabel.textColor = UIColor.white
+    farmNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
     cropsButton.setImage(UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate), for: .normal)
     cropsButton.tintColor = .white
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
@@ -136,6 +138,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       logoutButton.heightAnchor.constraint(equalToConstant: 32.0)
       ])
 
+    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
     navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton),
                                           UIBarButtonItem(customView: cropsButton)]
     navigationBar.setItems([navigationItem], animated: true)
@@ -199,32 +202,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Apollo
 
-  func fetchFarmNameAndId() -> String? {
+  func fetchFarmName() -> String? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farm")
+    let farmsFetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
 
     do {
-      let entities = try managedContext.fetch(entitiesFetchRequest)
-
-      return entities.first?.value(forKey: "name") as? String
+      let entities = try managedContext.fetch(farmsFetchRequest)
+      return entities.first?.name
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
     return nil
-  }
-
-  func displayFarmName() {
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width / 2, height: navigationBar.frame.height)
-    let farmLabel = UILabel(frame: firstFrame)
-
-    farmLabel.text = fetchFarmNameAndId()
-    farmLabel.textColor = UIColor.white
-    farmLabel.font = UIFont.boldSystemFont(ofSize: 18)
-    navigationBar.addSubview(farmLabel)
   }
 
   // MARK: - Logout
@@ -453,9 +445,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     queryFarms { (success) in
       if success {
-        if self.navigationBar.items?.count == 1 {
-          self.displayFarmName()
-        }
+        self.farmNameLabel.text = self.fetchFarmName()
         self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
