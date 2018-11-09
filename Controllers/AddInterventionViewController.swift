@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextViewDelegate {
 
   // MARK: - Outlets
 
@@ -17,6 +17,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var totalLabel: UILabel!
+  @IBOutlet weak var notesTextView: UITextView!
 
   // Working period
   @IBOutlet weak var workingPeriodHeightConstraint: NSLayoutConstraint!
@@ -213,6 +214,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     windSpeedTextField.keyboardType = .decimalPad
 
     initHarvestView()
+
+    notesTextView.delegate = self
 
     setupViewsAccordingInterventionType()
   }

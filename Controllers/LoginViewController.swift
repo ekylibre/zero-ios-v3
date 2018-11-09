@@ -32,7 +32,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
       return
     }
 
-    navigationController?.navigationBar.isHidden = true
+    navigationController?.navigationBar.tintColor = AppColor.BarColors.Blue
+    //navigationController?.navigationBar.isHidden = true
 
     tfUsername.delegate = self
     tfPassword.delegate = self
