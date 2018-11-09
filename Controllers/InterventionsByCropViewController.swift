@@ -18,6 +18,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   @IBOutlet weak var cropsTableView: UITableView!
 
   var cropsByProduction = [[Crop]]()
+  let headerView = UIView(frame: CGRect.zero)
   let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
   let locationManager = CLLocationManager()
@@ -28,7 +29,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     setupNavigationBar()
     fetchCrops()
     sortProductions()
-    setupLocationManager(locationManager)
+    setupLocationManager()
 
     dimView.isHidden = true
     dimView.backgroundColor = UIColor.black
@@ -49,6 +50,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       cropDetailedView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
+    setupTableHeaderView()
     cropsTableView.register(ProductionCell.self, forCellReuseIdentifier: "ProductionCell")
     cropsTableView.register(CropCell.self, forCellReuseIdentifier: "CropCell")
     cropsTableView.separatorInset = UIEdgeInsets.zero
@@ -78,6 +80,32 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
         <
       $1.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
+  }
+
+  private func setupTableHeaderView() {
+    let locationLabel = UILabel(frame: CGRect.zero)
+    let locationSwitch = UISwitch(frame: CGRect.zero)
+
+    locationLabel.text = "location".localized
+    locationSwitch.onTintColor = AppColor.BarColors.Green
+    locationSwitch.tintColor = UIColor.lightGray
+    locationSwitch.layer.cornerRadius = 16
+    locationSwitch.backgroundColor = UIColor.lightGray
+    locationSwitch.addTarget(self, action: #selector(updateLocationParameter), for: .valueChanged)
+    locationLabel.translatesAutoresizingMaskIntoConstraints = false
+    locationSwitch.translatesAutoresizingMaskIntoConstraints = false
+    headerView.addSubview(locationLabel)
+    headerView.addSubview(locationSwitch)
+
+    NSLayoutConstraint.activate([
+      locationLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 15),
+      locationLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+      locationSwitch.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -15),
+      locationSwitch.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
+      ])
+
+    headerView.frame = CGRect(x: 0, y: 0, width: cropsTableView.frame.width, height: 50)
+    cropsTableView.tableHeaderView = headerView
   }
 
   // MARK: - Core Data
