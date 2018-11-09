@@ -41,7 +41,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectMaterial(_ material: Material) {
+  func selectMaterial(_ material: Material, quantity: Float?, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -50,7 +50,8 @@ extension AddInterventionViewController {
     let interventionMaterial = InterventionMaterial(context: managedContext)
 
     interventionMaterial.material = material
-    interventionMaterial.unit = material.unit
+    quantity != nil ? interventionMaterial.quantity = quantity! : nil
+    interventionMaterial.unit = unit
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
     closeSelectionView()

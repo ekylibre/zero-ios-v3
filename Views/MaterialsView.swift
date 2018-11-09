@@ -111,7 +111,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let fromMaterials = isSearching ? filteredMaterials : materials
 
-    addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row])
+    addInterventionViewController?.selectMaterial(fromMaterials[indexPath.row], quantity: nil, unit: fromMaterials[indexPath.row].unit!)
     searchBar.text = nil
     searchBar.endEditing(true)
     isSearching = false

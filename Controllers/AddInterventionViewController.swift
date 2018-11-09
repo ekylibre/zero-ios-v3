@@ -381,11 +381,19 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       let quantity = selectedMaterials[1][indexPath.row].value(forKey: "quantity") as! Float
       let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
 
+      if interventionState == InterventionState.Validated.rawValue {
+        cell.quantityTextField.placeholder = String(format: "%g", quantity)
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
+        cell.unitButton.setTitleColor(.lightGray, for: .normal)
+      } else if quantity == 0 {
+        cell.quantityTextField.placeholder = "0"
+        cell.quantityTextField.text = ""
+      } else {
+        cell.quantityTextField.text = String(format: "%g", quantity)
+      }
       cell.nameLabel.text = name
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
-      cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
       return cell
     case selectedEquipmentsTableView:

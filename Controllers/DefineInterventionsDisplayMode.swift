@@ -109,7 +109,7 @@ extension AddInterventionViewController {
 
       for interventionMaterial in interventionMaterials {
         if interventionMaterial.material != nil {
-          selectMaterial(interventionMaterial.material!)
+          selectMaterial(interventionMaterial.material!, quantity: interventionMaterial.quantity, unit: interventionMaterial.unit!)
         }
       }
     } catch let error as NSError {
