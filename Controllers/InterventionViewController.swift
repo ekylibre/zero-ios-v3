@@ -39,14 +39,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
 
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
+  // MARK: - Initialization
 
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
+    setupNavigationBar()
     // Hide navigation bar
     navigationController?.navigationBar.isHidden = true
 
@@ -116,8 +115,30 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } else {
       fetchInterventions()
     }
+  }
 
-    initializeLogoutItem()
+  private func setupNavigationBar() {
+    let navigationItem = UINavigationItem(title: "")
+    let cropsButton = UIButton()
+    let logoutButton = UIButton()
+
+    cropsButton.setImage(UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    cropsButton.tintColor = .white
+    cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
+    logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    logoutButton.tintColor = .white
+    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
+
+    NSLayoutConstraint.activate([
+      cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
+      cropsButton.heightAnchor.constraint(equalToConstant: 32.0),
+      logoutButton.widthAnchor.constraint(equalToConstant: 32.0),
+      logoutButton.heightAnchor.constraint(equalToConstant: 32.0)
+      ])
+
+    navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton),
+                                          UIBarButtonItem(customView: cropsButton)]
+    navigationBar.setItems([navigationItem], animated: true)
   }
 
   func initialiseInterventionButtons() {
@@ -208,20 +229,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Logout
 
-  func initializeLogoutItem() {
-    let navigationItem = UINavigationItem(title: "")
-    let logoutButton = UIButton()
-    let image = UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate)
-
-    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
-    logoutButton.setImage(image, for: .normal)
-    logoutButton.imageView?.tintColor = .white
-    let rightItem = UIBarButtonItem.init(customView: logoutButton)
-
-    navigationItem.rightBarButtonItem = rightItem
-    navigationBar.setItems([navigationItem], animated: true)
-  }
-
   func emptyCoreData(entityName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -285,7 +292,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Interventions by crop
 
-  @IBAction func presentInterventionsByCrop(_ sender: Any) {
+  @objc private func presentInterventionsByCrop(_ sender: Any) {
     self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
   }
 
