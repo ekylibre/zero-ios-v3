@@ -216,6 +216,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     initHarvestView()
 
     notesTextView.delegate = self
+    setTextViewPlaceholder()
 
     setupViewsAccordingInterventionType()
   }
@@ -774,6 +775,34 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return false
     }
     return false
+  }
+
+  // MARK: - Text View Delegate
+
+  func setTextViewPlaceholder() {
+    notesTextView.text = "notes".localized
+    notesTextView.textColor = .lightGray
+  }
+
+  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    if notesTextView.textColor == .lightGray {
+      notesTextView.text = ""
+      notesTextView.textColor = .black
+    }
+    return true
+  }
+
+  func textViewDidChange(_ textView: UITextView) {
+    if notesTextView.text.count == 0 {
+      setTextViewPlaceholder()
+    }
+  }
+
+  func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+    if notesTextView.text.count == 0 {
+      setTextViewPlaceholder()
+    }
+    return true
   }
 
   // MARK: - Gesture recognizer
