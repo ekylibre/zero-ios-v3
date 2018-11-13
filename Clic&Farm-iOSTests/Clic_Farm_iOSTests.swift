@@ -140,7 +140,7 @@ class Clic_Farm_iOSTests: XCTestCase {
 
   // MARK: - Tests
 
-  func testCreatePerson() {
+  func test_insert_person() {
     //Given the firstName & lastName
     let firstName = "Z"
     let lastName = "26"
@@ -152,7 +152,7 @@ class Clic_Farm_iOSTests: XCTestCase {
     XCTAssertNotNil(person)
   }
 
-  func testFetchAllPersons() {
+  func test_fetch_all_persons() {
     //Given a storage with two todo
     //When fetch
     let results = sut.fetchAll()
@@ -161,7 +161,7 @@ class Clic_Farm_iOSTests: XCTestCase {
     XCTAssertEqual(results.count, 5)
   }
 
-  func testRemovePerson() {
+  func test_remove_person() {
     //Given a item in persistent store
     let items = sut.fetchAll()
     let item = items[0]
@@ -175,7 +175,7 @@ class Clic_Farm_iOSTests: XCTestCase {
     XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfItems - 1)
   }
 
-  func testSave() {
+  func test_save() {
     //Given a person
     let firstName = "Y"
     let lastName = "25"
