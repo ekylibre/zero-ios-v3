@@ -30,23 +30,23 @@ class CoreDataManager {
 
   // MARK: - CRUD
 
-  func insertPerson(firstName: String, lastName: String) -> Person? {
-    let person = Person(context: backgroundContext)
+  func insertPerson(firstName: String, lastName: String) -> TestPerson? {
+    let person = TestPerson(context: backgroundContext)
     person.firstName = firstName
     person.lastName = lastName
-
-    do {
-      try backgroundContext.save()
-    } catch {
-      print("Could not save \(error)")
-    }
     return person
   }
 
-  func fetchAll() -> [Person] {
-    let request: NSFetchRequest<Person> = Person.fetchRequest()
-    let results = try? persistentContainer.viewContext.fetch(request)
-    return results ?? [Person]()
+  func fetchAll() -> [TestPerson] {
+    let request: NSFetchRequest<TestPerson> = TestPerson.fetchRequest()
+
+    do {
+      let results = try persistentContainer.viewContext.fetch(request)
+      return results
+    } catch {
+      print("Could not fetch \(error)")
+    }
+    return [TestPerson]()
   }
 
   func remove(objectID: NSManagedObjectID) {
@@ -94,15 +94,9 @@ class Clic_Farm_iOSTests: XCTestCase {
   func initStubs() {
 
     func insertPerson(firstName: String, lastName: String) {
-      let person = Person(context: mockPersistentContainer.viewContext)
+      let person = TestPerson(context: mockPersistentContainer.viewContext)
       person.firstName = firstName
       person.lastName = lastName
-
-      do {
-        try mockPersistentContainer.viewContext.save()
-      } catch {
-        print("Could not save \(error)")
-      }
     }
 
     insertPerson(firstName: "A", lastName: "1")
@@ -119,7 +113,7 @@ class Clic_Farm_iOSTests: XCTestCase {
   }
 
   func flushData() {
-    let fetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
+    let fetchRequest: NSFetchRequest<TestPerson> = TestPerson.fetchRequest()
     let objects = try! mockPersistentContainer.viewContext.fetch(fetchRequest)
 
     for object in objects {
@@ -134,11 +128,13 @@ class Clic_Farm_iOSTests: XCTestCase {
     super.setUp()
     initStubs()
     sut = CoreDataManager(container: mockPersistentContainer)
+    NotificationCenter.default.addObserver(self, selector: #selector(contextSaved(notification:)),
+                                           name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
   }
 
   override func tearDown() {
-    sut = nil
     flushData()
+    sut = nil
     super.tearDown()
   }
 
@@ -154,26 +150,21 @@ class Clic_Farm_iOSTests: XCTestCase {
 
     //Assert: return person
     XCTAssertNotNil(person)
-
   }
 
   func testFetchAllPersons() {
-
     //Given a storage with two todo
     //When fetch
     let results = sut.fetchAll()
 
     //Assert return five todo items
     XCTAssertEqual(results.count, 5)
-
   }
 
   func testRemovePerson() {
-
     //Given a item in persistent store
     let items = sut.fetchAll()
     let item = items[0]
-
     let numberOfItems = items.count
 
     //When remove a item
@@ -182,13 +173,42 @@ class Clic_Farm_iOSTests: XCTestCase {
 
     //Assert number of item - 1
     XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfItems - 1)
+  }
 
+  func testSave() {
+    //Given a person
+    let firstName = "Y"
+    let lastName = "25"
+
+    let expect = expectation(description: "Context Saved")
+
+    waitForSavedNotification { (notification) in
+      expect.fulfill()
+    }
+
+    _ = sut.insertPerson(firstName: firstName, lastName: lastName)
+
+    //When save
+    sut.save()
+
+    //Assert save is called via notification (wait)
+    waitForExpectations(timeout: 1, handler: nil)
   }
 
   //Convenient method for getting the number of data in store now
   func numberOfItemsInPersistentStore() -> Int {
-    let request: NSFetchRequest<Person> = Person.fetchRequest()
+    let request: NSFetchRequest<TestPerson> = TestPerson.fetchRequest()
     let results = try! mockPersistentContainer.viewContext.fetch(request)
     return results.count
+  }
+
+  var saveNotificationCompleteHandler: ((Notification) -> ())?
+
+  func waitForSavedNotification(completeHandler: @escaping ((Notification) -> ())) {
+    saveNotificationCompleteHandler = completeHandler
+  }
+
+  func contextSaved(notification: Notification) {
+    saveNotificationCompleteHandler?(notification)
   }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crop" representedClassName="Crop" syncable="YES" codeGenerationType="class">
         <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -160,6 +160,10 @@
         <relationship name="crop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Crop" inverseName="targets" inverseEntity="Crop" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="targets" inverseEntity="Intervention" syncable="YES"/>
     </entity>
+    <entity name="TestPerson" representedClassName=".TestPerson" syncable="YES" codeGenerationType="class">
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -181,12 +185,12 @@
         <element name="Farm" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
         <element name="Fertilizer" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
         <element name="Harvest" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
+        <element name="Intervention" positionX="160" positionY="-252" width="128" height="330"/>
         <element name="InterventionEquipment" positionX="376.83203125" positionY="-222.34765625" width="128" height="75"/>
         <element name="InterventionFertilizer" positionX="-208.0703125" positionY="-228.78515625" width="128" height="105"/>
         <element name="InterventionMaterial" positionX="578.0703125" positionY="-161.76953125" width="128" height="120"/>
         <element name="InterventionPerson" positionX="-195.78515625" positionY="16.1015625" width="128" height="90"/>
         <element name="InterventionPhytosanitary" positionX="621.36328125" positionY="1.16796875" width="128" height="105"/>
-        <element name="Intervention" positionX="160" positionY="-252" width="128" height="330"/>
         <element name="InterventionSeed" positionX="-149.890625" positionY="154.01171875" width="128" height="105"/>
         <element name="Material" positionX="824.87109375" positionY="-243.19140625" width="128" height="135"/>
         <element name="Person" positionX="-522.59765625" positionY="18.86328125" width="128" height="135"/>
@@ -197,5 +201,6 @@
         <element name="User" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
         <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="120"/>
         <element name="WorkingPeriod" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>
+        <element name="TestPerson" positionX="169.74609375" positionY="112.58203125" width="128" height="75"/>
     </elements>
 </model>
