@@ -92,7 +92,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let volume = irrigationVolumeTextField.text!.floatValue
     let unit = irrigationUnitButton.title(for: .normal)
 
-    selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit!.localized)
+    selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit!)
     updateInfoLabel(volume, unit!)
   }
 

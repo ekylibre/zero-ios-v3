@@ -24,7 +24,28 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_irrigationErrorLabel_isUpdated() {
+
+  func test_irrigationErrorLabel_withIntegerVolume_shouldBeUpdated() {
+    //Given
+    let _ = addInterventionVC.view
+    let volume: Float = 34359293
+    let unit = "HECTOLITER"
+
+    //When
+    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedSurfaceArea = 1
+    addInterventionVC.totalLabel.text = "selected"
+    addInterventionVC.irrigationVolumeTextField.text = String(volume)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
+    addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
+
+    //Then
+    print("\nVolume: \(volume), A: \(unit.localized)")
+    let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit.localized)
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Fail when volume is an integer")
+  }
+
+  func test_irrigationErrorLabel_withDecimalVolume_shouldBeUpdated() {
     //Given
     let _ = addInterventionVC.view
     let volume = 1.0530
@@ -35,28 +56,29 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
-    addInterventionVC.irrigationUnitButton.setTitle(unit, for: .normal)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
     addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
 
     //Then
     let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit.localized)
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Wrong error label text")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Fail when volume is a decimal")
   }
 
   func test_irrigationErrorLabel_withNoCropSelected_shouldNotUpdate() {
     //Given
     let _ = addInterventionVC.view
-    let volume = 1.0230
+    let volume = 1.0530
     let unit = "HECTOLITER"
 
     //When
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
-    addInterventionVC.irrigationUnitButton.setTitle(unit, for: .normal)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
     addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
 
     //Then
     let expectedString = "no_crop_selected".localized
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Wrong error label text")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString,
+                   "Need to have at least one crop selected")
   }
 
   func test_irrigationErrorLabel_withoutVolume_shouldNotUpdate() {
@@ -69,12 +91,12 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = nil
-    addInterventionVC.irrigationUnitButton.setTitle(unit, for: .normal)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
     addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
 
     //Then
     let expectedString = "volume_cannot_be_null".localized
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Wrong error label text")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
   }
 
   func test_irrigationErrorLabel_withVolumeEqualZero_shouldNotUpdate() {
@@ -88,12 +110,12 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
-    addInterventionVC.irrigationUnitButton.setTitle(unit, for: .normal)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
     addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
 
     //Then
     let expectedString = "volume_cannot_be_null".localized
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Wrong error label text")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
   }
 
   func test_workingPeriodUnit_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
