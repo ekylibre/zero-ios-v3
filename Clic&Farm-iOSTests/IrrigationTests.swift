@@ -1,5 +1,5 @@
 //
-//  Clic_Farm_iOSUpdateTests.swift
+//  IrrigationTests.swift
 //  Clic&Farm-iOSTests
 //
 //  Created by Guillaume Roux on 13/11/2018.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Clic_Farm_iOS
 
-class Clic_Farm_iOSUpdateTests: XCTestCase {
+class IrrigationTests: XCTestCase {
 
   var addInterventionVC: AddInterventionViewController!
 
@@ -24,8 +24,7 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     super.tearDown()
   }
 
-
-  func test_irrigationErrorLabel_withIntegerVolume_shouldBeUpdated() {
+  func test_errorLabel_withIntegerVolume_shouldBeUpdated() {
     //Given
     let _ = addInterventionVC.view
     let volume: Float = 34359293
@@ -45,7 +44,7 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Fail when volume is an integer")
   }
 
-  func test_irrigationErrorLabel_withDecimalVolume_shouldBeUpdated() {
+  func test_errorLabel_withDecimalVolume_shouldBeUpdated() {
     //Given
     let _ = addInterventionVC.view
     let volume = 1.0530
@@ -64,7 +63,7 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Fail when volume is a decimal")
   }
 
-  func test_irrigationErrorLabel_withNoCropSelected_shouldNotUpdate() {
+  func test_errorLabel_withNoCropSelected_shouldNotUpdate() {
     //Given
     let _ = addInterventionVC.view
     let volume = 1.0530
@@ -81,7 +80,7 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
                    "Need to have at least one crop selected")
   }
 
-  func test_irrigationErrorLabel_withoutVolume_shouldNotUpdate() {
+  func test_errorLabel_withoutVolume_shouldNotUpdate() {
     //Given
     let _ = addInterventionVC.view
     let unit = "HECTOLITER"
@@ -99,7 +98,7 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
   }
 
-  func test_irrigationErrorLabel_withVolumeEqualZero_shouldNotUpdate() {
+  func test_errorLabel_withVolumeEqualZero_shouldNotUpdate() {
     //Given
     let _ = addInterventionVC.view
     let volume = 0
@@ -116,37 +115,5 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     //Then
     let expectedString = "volume_cannot_be_null".localized
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
-  }
-
-  func test_workingPeriodUnit_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
-    //Given
-    let _ = addInterventionVC.view
-    let duration = "1.00"
-
-    //When
-    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
-                   "unit should be plural before sendActions")
-    addInterventionVC.workingPeriodDurationTextField.text = duration
-    addInterventionVC.workingPeriodDurationTextField.sendActions(for: .editingChanged)
-
-    //Then
-    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hour".localized,
-                   "Working period unit label not updated correctly when duration is <= 1")
-  }
-
-  func test_workingPeriodUnit_withDurationGreaterThan1_shouldBePlural() {
-    //Given
-    let _ = addInterventionVC.view
-    let duration = "1000"
-
-    //When
-    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
-                   "unit should be plural before sendActions")
-    addInterventionVC.workingPeriodDurationTextField.text = duration
-    addInterventionVC.workingPeriodDurationTextField.sendActions(for: .editingChanged)
-
-    //Then
-    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
-                   "Working period unit label not updated correctly when duration is > 1")
   }
 }
