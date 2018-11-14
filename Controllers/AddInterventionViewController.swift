@@ -848,25 +848,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   @objc func validateCrops(_ sender: Any) {
-    if checkCropsProduction() {
-      if cropsView.selectedCropsLabel.text == "Aucune sélection" {
-        totalLabel.text = "+ SÉLECTIONNER"
-        totalLabel.textColor = AppColor.TextColors.Green
-      } else {
-        totalLabel.text = cropsView.selectedCropsLabel.text
-        totalLabel.textColor = AppColor.TextColors.DarkGray
-      }
-      totalLabel.sizeToFit()
-      updateIrrigation(self)
-
-      cropsView.isHidden = true
-      dimView.isHidden = true
-
-      updateAllInputQuantity()
-      UIView.animate(withDuration: 0.5, animations: {
-        UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-      })
+    if !checkCropsProduction() {
+      return
+    } else if cropsView.selectedCropsLabel.text == "no_crop_selected".localized {
+      totalLabel.text = "select_crops".localized.uppercased()
+      totalLabel.textColor = AppColor.TextColors.Green
+    } else {
+      totalLabel.text = cropsView.selectedCropsLabel.text
+      totalLabel.textColor = AppColor.TextColors.DarkGray
     }
+    totalLabel.sizeToFit()
+    irrigationVolumeTextField.sendActions(for: .editingChanged)
+
+    cropsView.isHidden = true
+    dimView.isHidden = true
+
+    updateAllInputQuantity()
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
   }
 
   @IBAction func cancelAdding(_ sender: Any) {

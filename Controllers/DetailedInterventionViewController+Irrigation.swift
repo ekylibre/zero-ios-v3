@@ -88,7 +88,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationExpandImageView.transform = irrigationExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  @objc public func updateIrrigation(_ sender: Any) {
+  @objc private func updateIrrigation(_ sender: Any) {
     let volume = irrigationVolumeTextField.text!.floatValue
     let unit = irrigationUnitButton.titleLabel!.text!
 

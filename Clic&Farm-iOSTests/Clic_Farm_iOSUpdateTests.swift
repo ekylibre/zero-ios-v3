@@ -15,7 +15,7 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: self.classForCoder))
+    let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
     addInterventionVC = storyboard.instantiateViewController(withIdentifier: "AddInterventionVC") as? AddInterventionViewController
   }
 
@@ -27,17 +27,19 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
   func test_irrigationErrorLabel_isUpdated() {
     //Given
     let _ = addInterventionVC.view
-    let volume = "1.0230"
-    let unit = "hl"
+    let volume = 1.0530
+    let unit = "HECTOLITER"
 
     //When
     addInterventionVC.cropsView.selectedCropsCount = 1
     addInterventionVC.cropsView.selectedSurfaceArea = 1
-    addInterventionVC.irrigationVolumeTextField.text = volume
-    addInterventionVC.irrigationUnitButton.setTitle(unit, for: .normal)
+    addInterventionVC.totalLabel.text = "selected"
+    addInterventionVC.irrigationVolumeTextField.text = String(volume)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
+    addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
 
     //Then
-    let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit)
+    let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit.localized)
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Wrong error label text")
   }
 }
