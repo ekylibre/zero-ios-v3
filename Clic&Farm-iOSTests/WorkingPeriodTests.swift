@@ -17,6 +17,7 @@ class WorkingPeriodTests: XCTestCase {
     super.setUp()
     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
     addInterventionVC = storyboard.instantiateViewController(withIdentifier: "AddInterventionVC") as? AddInterventionViewController
+    let _ = addInterventionVC.view
   }
 
   override func tearDown() {
@@ -24,9 +25,8 @@ class WorkingPeriodTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_unit_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
+  func test_unitLabel_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
     //Given
-    let _ = addInterventionVC.view
     let duration = "1.00"
 
     //When
@@ -40,9 +40,8 @@ class WorkingPeriodTests: XCTestCase {
                    "Working period unit label not updated correctly when duration is <= 1")
   }
 
-  func test_unit_withDurationGreaterThan1_shouldBePlural() {
+  func test_unitLabel_withDurationGreaterThan1_shouldBePlural() {
     //Given
-    let _ = addInterventionVC.view
     let duration = "1000"
 
     //When
