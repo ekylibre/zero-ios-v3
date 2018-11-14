@@ -55,6 +55,7 @@
 		04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */; };
 		04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B78217DB8DE000A5D2F /* PersonCreationView.swift */; };
 		04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */; };
+		04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */; };
 		04C0D5BF218CA96700EEECD8 /* StorageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */; };
 		04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */; };
 		04DC9FE5217DB88D00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */; };
@@ -155,6 +156,7 @@
 		04998B78217DB8DE000A5D2F /* PersonCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCreationView.swift; sourceTree = "<group>"; };
 		04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
 		04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsTests.swift; sourceTree = "<group>"; };
+		04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentsTests.swift; sourceTree = "<group>"; };
 		04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationView.swift; sourceTree = "<group>"; };
 		04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */,
 				04143AC5219C554800CFA700 /* Info.plist */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 				6B113189219C3CAA002272F0 /* CropsTests.swift */,
@@ -635,6 +638,7 @@
 				6B874618219AD1400030447B /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
 				6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */,
+				04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */,
 				6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */,
 				04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */,
 				6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */,
