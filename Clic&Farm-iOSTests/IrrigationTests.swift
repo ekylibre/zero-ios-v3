@@ -131,7 +131,7 @@ class IrrigationTests: XCTestCase {
 
     //Then
     let expectedString =  String(format: "%@ • %g %@", "volume".localized, 0.0, unit.localized)
-    XCTAssertEqual(addInterventionVC.selectedIrrigationLabel.text, expectedString, "Voulume shoud not be null")
+    XCTAssertEqual(addInterventionVC.selectedIrrigationLabel.text, expectedString, "Label should show volume without value")
   }
 
   func test_selectedIrrigationLabel_withVolume_shouldNotUpdate() {
@@ -149,6 +149,7 @@ class IrrigationTests: XCTestCase {
 
     //Then
     let expectedString =  String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
-    XCTAssertEqual(addInterventionVC.selectedIrrigationLabel.text, expectedString, "Voulume shoud not be null")
+    XCTAssertEqual(addInterventionVC.selectedIrrigationLabel.text, expectedString,
+                   "Label should be updated with volume when text fields is edited")
   }
 }
