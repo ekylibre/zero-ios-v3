@@ -95,4 +95,36 @@ class Clic_Farm_iOSUpdateTests: XCTestCase {
     let expectedString = "volume_cannot_be_null".localized
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Wrong error label text")
   }
+
+  func test_workingPeriodUnit_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
+    //Given
+    let _ = addInterventionVC.view
+    let duration = "1.00"
+
+    //When
+    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
+                   "unit should be plural before sendActions")
+    addInterventionVC.workingPeriodDurationTextField.text = duration
+    addInterventionVC.workingPeriodDurationTextField.sendActions(for: .editingChanged)
+
+    //Then
+    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hour".localized,
+                   "Working period unit label not updated correctly when duration is <= 1")
+  }
+
+  func test_workingPeriodUnit_withDurationGreaterThan1_shouldBePlural() {
+    //Given
+    let _ = addInterventionVC.view
+    let duration = "1000"
+
+    //When
+    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
+                   "unit should be plural before sendActions")
+    addInterventionVC.workingPeriodDurationTextField.text = duration
+    addInterventionVC.workingPeriodDurationTextField.sendActions(for: .editingChanged)
+
+    //Then
+    XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
+                   "Working period unit label not updated correctly when duration is > 1")
+  }
 }
