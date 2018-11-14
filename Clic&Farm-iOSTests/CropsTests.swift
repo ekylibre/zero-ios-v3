@@ -47,7 +47,6 @@ class CropsTests: XCTestCase {
     addInterventionVC.cropsView.selectedCropsCount = cropsCount
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
-    addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
 
     //Then
     let expectedString = String(format: "crop".localized, 1) + " • 23.1 ha"
@@ -66,7 +65,6 @@ class CropsTests: XCTestCase {
     addInterventionVC.cropsView.selectedCropsCount = cropsCount
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
-    addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
 
     //Then
     let expectedString = String(format: "crops".localized, 12) + " • 284.2 ha"
