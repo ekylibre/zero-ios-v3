@@ -1375,7 +1375,7 @@
                         <action selector="tapIrrigationView:" destination="pQK-Bk-vqJ" id="5R8-BO-7n1"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="J9Q-vM-fIb">
+                <tapGestureRecognizer id="J9Q-vM-fIb" userLabel="Inputs Tap Gesture">
                     <connections>
                         <action selector="tapInputsView" destination="pQK-Bk-vqJ" id="dsy-gw-ZKo"/>
                     </connections>
@@ -1385,7 +1385,7 @@
                         <action selector="tapMaterialsView" destination="pQK-Bk-vqJ" id="gH0-UQ-D7n"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="lAp-Ke-r70">
+                <tapGestureRecognizer id="lAp-Ke-r70" userLabel="Equipments Tap Gesture">
                     <connections>
                         <action selector="tapEquipmentsView" destination="pQK-Bk-vqJ" id="CGQ-rB-LxS"/>
                     </connections>
@@ -1626,6 +1626,6 @@
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FE4-xp-aKR"/>
+        <segue reference="uas-Qa-jvK"/>
     </inferredMetricsTieBreakers>
 </document>
