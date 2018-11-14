@@ -30,15 +30,15 @@ class CoreDataManager {
 
   // MARK: - CRUD
 
-  func insertPerson(firstName: String, lastName: String) -> TestPerson? {
-    let person = TestPerson(context: backgroundContext)
+  func insertPerson(firstName: String, lastName: String) -> Person? {
+    let person = Person(context: backgroundContext)
     person.firstName = firstName
     person.lastName = lastName
     return person
   }
 
-  func fetchAll() -> [TestPerson] {
-    let request: NSFetchRequest<TestPerson> = TestPerson.fetchRequest()
+  func fetchAll() -> [Person] {
+    let request: NSFetchRequest<Person> = Person.fetchRequest()
 
     do {
       let results = try persistentContainer.viewContext.fetch(request)
@@ -46,7 +46,7 @@ class CoreDataManager {
     } catch {
       print("Could not fetch \(error)")
     }
-    return [TestPerson]()
+    return [Person]()
   }
 
   func remove(objectID: NSManagedObjectID) {
@@ -94,7 +94,7 @@ class Clic_Farm_iOSTests: XCTestCase {
   func initStubs() {
 
     func insertPerson(firstName: String, lastName: String) {
-      let person = TestPerson(context: mockPersistentContainer.viewContext)
+      let person = Person(context: mockPersistentContainer.viewContext)
       person.firstName = firstName
       person.lastName = lastName
     }
@@ -113,7 +113,7 @@ class Clic_Farm_iOSTests: XCTestCase {
   }
 
   func flushData() {
-    let fetchRequest: NSFetchRequest<TestPerson> = TestPerson.fetchRequest()
+    let fetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
     let objects = try! mockPersistentContainer.viewContext.fetch(fetchRequest)
 
     for object in objects {
@@ -197,7 +197,7 @@ class Clic_Farm_iOSTests: XCTestCase {
 
   //Convenient method for getting the number of data in store now
   func numberOfItemsInPersistentStore() -> Int {
-    let request: NSFetchRequest<TestPerson> = TestPerson.fetchRequest()
+    let request: NSFetchRequest<Person> = Person.fetchRequest()
     let results = try! mockPersistentContainer.viewContext.fetch(request)
     return results.count
   }
