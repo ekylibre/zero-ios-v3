@@ -17,6 +17,7 @@ class IrrigationTests: XCTestCase {
     super.setUp()
     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
     addInterventionVC = storyboard.instantiateViewController(withIdentifier: "AddInterventionVC") as? AddInterventionViewController
+    let _ = addInterventionVC.view
   }
 
   override func tearDown() {
@@ -39,7 +40,6 @@ class IrrigationTests: XCTestCase {
     addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
 
     //Then
-    print("\nVolume: \(volume), A: \(unit.localized)")
     let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit.localized)
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Volume is an integer")
   }
@@ -115,5 +115,40 @@ class IrrigationTests: XCTestCase {
     //Then
     let expectedString = "volume_cannot_be_null".localized
     XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
+  }
+
+  func test_selectedIrrigationLabel_withoutVolume_shouldNotUpdate() {
+    //Given
+    let unit = "LITER"
+
+    //When
+    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedSurfaceArea = 1
+    addInterventionVC.totalLabel.text = "selected"
+    addInterventionVC.irrigationVolumeTextField.text = nil
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
+    addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
+
+    //Then
+    let expectedString =  String(format: "%@ • %g %@", "volume".localized, 0.0, unit.localized)
+    XCTAssertEqual(addInterventionVC.selectedIrrigationLabel.text, expectedString, "Voulume shoud not be null")
+  }
+
+  func test_selectedIrrigationLabel_withVolume_shouldNotUpdate() {
+    //Given
+    let volume: Double = 42
+    let unit = "LITER"
+
+    //When
+    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedSurfaceArea = 1
+    addInterventionVC.totalLabel.text = "selected"
+    addInterventionVC.irrigationVolumeTextField.text = String(volume)
+    addInterventionVC.irrigationUnitButton.setTitle(unit.localized, for: .normal)
+    addInterventionVC.irrigationVolumeTextField.sendActions(for: .editingChanged)
+
+    //Then
+    let expectedString =  String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
+    XCTAssertEqual(addInterventionVC.selectedIrrigationLabel.text, expectedString, "Voulume shoud not be null")
   }
 }
