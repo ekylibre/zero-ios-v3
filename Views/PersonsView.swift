@@ -139,7 +139,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     }
   }
 
-  private func createPerson(firstName: String, lastName: String) {
+  func createPerson(firstName: String, lastName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -205,7 +205,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     creationView.lastNameErrorLabel.isHidden = true
   }
 
-  private func checkPersonName() -> Bool {
+  func checkPersonName() -> Bool {
     creationView.firstNameErrorLabel.isHidden = !creationView.firstNameTextField.text!.isEmpty
     creationView.lastNameErrorLabel.isHidden = !creationView.lastNameTextField.text!.isEmpty
 

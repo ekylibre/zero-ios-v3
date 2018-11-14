@@ -56,9 +56,8 @@ class EquipmentsTests: XCTestCase {
     //When
     addInterventionVC.equipmentsSelectionView.createEquipment(name: "Sample equipment 1", number: "1")
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
-    let returned = addInterventionVC.equipmentsSelectionView.checkEquipmentName()
+    let _ = addInterventionVC.equipmentsSelectionView.checkEquipmentName()
 
-    print("return: \(returned)")
     //Then
     XCTAssertEqual(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.text, "equipment_name_not_available".localized,
                    "Should display same name error label")
