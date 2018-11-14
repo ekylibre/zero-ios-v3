@@ -80,6 +80,7 @@
 		04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */; };
 		6B0B14002152523F001A3366 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */; };
+		6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113189219C3CAA002272F0 /* CropsTests.swift */; };
 		6B11EEDB2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEDD2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B11EEDE2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -191,6 +192,7 @@
 		04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
 		04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPeriodTests.swift; sourceTree = "<group>"; };
+		6B113189219C3CAA002272F0 /* CropsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropsTests.swift; sourceTree = "<group>"; };
 		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
@@ -422,9 +424,10 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */,
-				6B77AD3C219B046E00839053 /* IrrigationTests.swift */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
+				6B113189219C3CAA002272F0 /* CropsTests.swift */,
+				6B77AD3C219B046E00839053 /* IrrigationTests.swift */,
+				6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */,
 				6BEA658A2105C5EF0072840F /* Info.plist */,
 			);
 			path = "Clic&Farm-iOSTests";
@@ -666,6 +669,7 @@
 			files = (
 				6B874618219AD1400030447B /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
+				6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */,
 				6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */,
 				6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */,
 			);

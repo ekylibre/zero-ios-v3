@@ -331,7 +331,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     crop.isSelected = false
   }
 
-  private func updateSelectedCropsLabel() {
+  func updateSelectedCropsLabel() {
     if selectedCropsCount == 0 {
       selectedCropsLabel.text = "no_crop_selected".localized
     } else {
