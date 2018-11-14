@@ -17,9 +17,6 @@
 		04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
 		04269C4E2179D49D00E0160C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04269C4D2179D49D00E0160C /* API.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
-		0480CA5721650DDB0039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		0480CA5821650DDB0039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		0480CA5A21650DF20039FCB9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF32178C8D6002EDF62 /* Localizable.swift */; };
 		048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */; };
 		048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */; };
@@ -57,7 +54,6 @@
 		04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B76217DB8DE000A5D2F /* PlotCell.swift */; };
 		04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */; };
 		04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B78217DB8DE000A5D2F /* PersonCreationView.swift */; };
-		04AF8C03216F9B6E00496BC2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		04C0D5BF218CA96700EEECD8 /* StorageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */; };
 		04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */; };
 		04DC9FE5217DB88D00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */; };
@@ -78,34 +74,19 @@
 		04DC9FF4217DB88D00CB94C3 /* DetailedInterventionViewController+Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE0217DB88C00CB94C3 /* DetailedInterventionViewController+Persons.swift */; };
 		04DC9FF6217DB88D00CB94C3 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE2217DB88C00CB94C3 /* ListProtocol.swift */; };
 		04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FE3217DB88C00CB94C3 /* ListTableViewController.swift */; };
-		6B0B14002152523F001A3366 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */; };
 		6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113189219C3CAA002272F0 /* CropsTests.swift */; };
-		6B11EEDB2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B11EEDD2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B11EEDE2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B11EEDF2139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B11EEE12139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B11EEE22139635400E2DEC4 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
 		6B874618219AD1400030447B /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
-		6B8EE4E82178C92A0035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6B8EE4EA2178D8E00035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
-		6B8EE4ED2178D9340035094C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
-		6BA3FEDC216653490070DA35 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		6BE43C17219B24E200811629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
-		6BEA65DD2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6BEA65DF2105CD820072840F /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6BFEE71A2179D0C7001F7955 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6BFEE71F2179D0C7001F7955 /* (null) in Sources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +112,7 @@
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
+		04143AC5219C554800CFA700 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04269C4D2179D49D00E0160C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		048D2AF32178C8D6002EDF62 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -204,7 +186,6 @@
 		6BEA656D2105C5EE0072840F /* Clic&Farm-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clic&Farm-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
-		6BEA658A2105C5EF0072840F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -426,9 +407,9 @@
 			children = (
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 				6B113189219C3CAA002272F0 /* CropsTests.swift */,
+				04143AC5219C554800CFA700 /* Info.plist */,
 				6B77AD3C219B046E00839053 /* IrrigationTests.swift */,
 				6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */,
-				6BEA658A2105C5EF0072840F /* Info.plist */,
 			);
 			path = "Clic&Farm-iOSTests";
 			sourceTree = "<group>";
@@ -479,7 +460,7 @@
 		6BEA65652105C5EE0072840F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Ekylibre;
 				TargetAttributes = {
@@ -580,7 +561,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C0D5BF218CA96700EEECD8 /* StorageCreationView.swift in Sources */,
-				6B8EE4ED2178D9340035094C /* (null) in Sources */,
 				04998B90217DB8DF000A5D2F /* SelectedInputCell.swift in Sources */,
 				04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */,
 				04DC9FE6217DB88D00CB94C3 /* DetailedInterventionViewController+Weather.swift in Sources */,
@@ -589,9 +569,7 @@
 				04998B8C217DB8DF000A5D2F /* PhytoCell.swift in Sources */,
 				6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				04998B7D217DB8DF000A5D2F /* PersonsView.swift in Sources */,
-				6B8EE4EA2178D8E00035094C /* (null) in Sources */,
 				04998B93217DB8DF000A5D2F /* SeedCell.swift in Sources */,
-				6B8EE4E82178C92A0035094C /* (null) in Sources */,
 				04DC9FF1217DB88D00CB94C3 /* DetailedInterventionViewController+Inputs.swift in Sources */,
 				041248062179C05400A78D08 /* InterventionState.swift in Sources */,
 				04DC9FEB217DB88D00CB94C3 /* DetailedInterventionViewController+Equipments.swift in Sources */,
@@ -609,25 +587,12 @@
 				04DC9FF3217DB88D00CB94C3 /* LoginViewController.swift in Sources */,
 				048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */,
 				048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */,
-				6B0B14002152523F001A3366 /* (null) in Sources */,
 				04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */,
-				6BEA65DF2105CD820072840F /* (null) in Sources */,
-				6B11EEDD2139635400E2DEC4 /* (null) in Sources */,
-				0480CA5821650DDB0039FCB9 /* (null) in Sources */,
 				04DC9FE5217DB88D00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */,
-				6B11EEE22139635400E2DEC4 /* (null) in Sources */,
-				0480CA5721650DDB0039FCB9 /* (null) in Sources */,
-				6B11EEDB2139635400E2DEC4 /* (null) in Sources */,
-				6B11EEDE2139635400E2DEC4 /* (null) in Sources */,
 				04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */,
-				04AF8C03216F9B6E00496BC2 /* (null) in Sources */,
-				0480CA5A21650DF20039FCB9 /* (null) in Sources */,
 				04DC9FEE217DB88D00CB94C3 /* InterventionViewController+Apollo.swift in Sources */,
 				04998B7A217DB8DF000A5D2F /* FertilizerCreationView.swift in Sources */,
-				6B11EEDF2139635400E2DEC4 /* (null) in Sources */,
 				04DC9FE9217DB88D00CB94C3 /* DetailedInterventionViewController+Materials.swift in Sources */,
-				6BA3FEDC216653490070DA35 /* (null) in Sources */,
-				6BEA65DD2105CD820072840F /* (null) in Sources */,
 				04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */,
 				042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */,
 				04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */,
@@ -637,14 +602,11 @@
 				6BB225432118490A0036E167 /* AppDelegate.swift in Sources */,
 				04998B7B217DB8DF000A5D2F /* RoundedButton.swift in Sources */,
 				04DC9FE8217DB88D00CB94C3 /* HandleAddInterventionErrors.swift in Sources */,
-				6B11EEE12139635400E2DEC4 /* (null) in Sources */,
 				0413139A213FFC3E005437F0 /* Decodables.swift in Sources */,
 				04998B7F217DB8DF000A5D2F /* CropView.swift in Sources */,
 				04DC9FF6217DB88D00CB94C3 /* ListProtocol.swift in Sources */,
 				04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */,
 				04DC9FEC217DB88D00CB94C3 /* AuthentificationService.swift in Sources */,
-				6BFEE71A2179D0C7001F7955 /* (null) in Sources */,
-				6BFEE71F2179D0C7001F7955 /* (null) in Sources */,
 				04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */,
 				04DC9FF7217DB88D00CB94C3 /* ListTableViewController.swift in Sources */,
 				04998B8E217DB8DF000A5D2F /* SelectedPersonCell.swift in Sources */,

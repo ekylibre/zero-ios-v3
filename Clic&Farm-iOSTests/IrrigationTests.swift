@@ -41,7 +41,7 @@ class IrrigationTests: XCTestCase {
     //Then
     print("\nVolume: \(volume), A: \(unit.localized)")
     let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit.localized)
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Fail when volume is an integer")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Volume is an integer")
   }
 
   func test_errorLabel_withDecimalVolume_shouldBeUpdated() {
@@ -60,10 +60,10 @@ class IrrigationTests: XCTestCase {
 
     //Then
     let expectedString = String(format: "input_quantity_per_surface".localized, volume, unit.localized)
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Fail when volume is a decimal")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Volume is a decimal")
   }
 
-  func test_errorLabel_withNoCropSelected_shouldNotUpdate() {
+  func test_irrigationErrorLabel_withoutSelectedCrop_shouldNotUpdate() {
     //Given
     let _ = addInterventionVC.view
     let volume = 1.0530
