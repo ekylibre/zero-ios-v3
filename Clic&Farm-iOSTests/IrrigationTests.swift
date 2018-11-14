@@ -27,7 +27,6 @@ class IrrigationTests: XCTestCase {
 
   func test_errorLabel_withIntegerVolume_shouldBeUpdated() {
     //Given
-    let _ = addInterventionVC.view
     let volume: Float = 34359293
     let unit = "HECTOLITER"
 
@@ -46,7 +45,6 @@ class IrrigationTests: XCTestCase {
 
   func test_errorLabel_withDecimalVolume_shouldBeUpdated() {
     //Given
-    let _ = addInterventionVC.view
     let volume = 1.0530
     let unit = "HECTOLITER"
 
@@ -65,7 +63,6 @@ class IrrigationTests: XCTestCase {
 
   func test_irrigationErrorLabel_withoutSelectedCrop_shouldNotUpdate() {
     //Given
-    let _ = addInterventionVC.view
     let volume = 1.0530
     let unit = "HECTOLITER"
 
@@ -82,7 +79,6 @@ class IrrigationTests: XCTestCase {
 
   func test_errorLabel_withoutVolume_shouldNotUpdate() {
     //Given
-    let _ = addInterventionVC.view
     let unit = "HECTOLITER"
 
     //When
@@ -100,7 +96,6 @@ class IrrigationTests: XCTestCase {
 
   func test_errorLabel_withVolumeEqualZero_shouldNotUpdate() {
     //Given
-    let _ = addInterventionVC.view
     let volume = 0
     let unit = "HECTOLITER"
 
