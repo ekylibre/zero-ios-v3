@@ -121,4 +121,16 @@ class MaterialsTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
                   "errorLabel must not be hidden when there is an error")
   }
+
+  func test_searchBarCancelButtonClicked() {
+    // Given
+    let searchBar = addInterventionVC.materialsSelectionView.searchBar
+    addInterventionVC.materialsSelectionView.isSearching = true
+
+    // Then
+    addInterventionVC.materialsSelectionView.searchBarCancelButtonClicked(searchBar)
+
+    // When
+    XCTAssertFalse(addInterventionVC.materialsSelectionView.isSearching, "Shouldn't searching")
+  }
 }
