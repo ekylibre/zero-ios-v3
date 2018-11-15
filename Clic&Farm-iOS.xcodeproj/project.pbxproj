@@ -174,6 +174,8 @@
 		04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionVCTests.swift; sourceTree = "<group>"; };
 		04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionVCTests.swift; sourceTree = "<group>"; };
 		04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionVCTableViewTests.swift; sourceTree = "<group>"; };
+		04BE4BD3219DA116000707A1 /* Clic_Farm_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSUITests.swift; sourceTree = "<group>"; };
+		04BE4BD5219DA116000707A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationView.swift; sourceTree = "<group>"; };
 		04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
@@ -375,6 +377,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		04BE4BD2219DA116000707A1 /* Clic&Farm-iOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				04BE4BD3219DA116000707A1 /* Clic_Farm_iOSUITests.swift */,
+				04BE4BD5219DA116000707A1 /* Info.plist */,
+			);
+			path = "Clic&Farm-iOSUITests";
+			sourceTree = "<group>";
+		};
 		6B4CA89B214F9B560052073D /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +421,7 @@
 				6BA3713D213963230086DF9B /* Resources */,
 				0480CA432165068F0039FCB9 /* Library */,
 				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
+				04BE4BD2219DA116000707A1 /* Clic&Farm-iOSUITests */,
 				6BEA656E2105C5EE0072840F /* Products */,
 				047B57CB2108605400C48F68 /* Frameworks */,
 			);

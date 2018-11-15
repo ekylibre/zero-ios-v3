@@ -128,8 +128,8 @@ class AddInterventionVCTableViewTests: XCTestCase {
       estimatedHeightForRowAt: indexPath)
 
     //Then
-    XCTAssertEqual(heightForRow, 110, "Height should be 150")
-    XCTAssertEqual(estimatedHeight, 110, "Estimated height should be 150")
+    XCTAssertEqual(heightForRow, 110, "Height should be 110")
+    XCTAssertEqual(estimatedHeight, 110, "Estimated height should be 110")
   }
 
   func test_tableViewHeightForRowAndEstimatedHeightForRow_withSelectedMaterialsTableView() {
@@ -143,8 +143,8 @@ class AddInterventionVCTableViewTests: XCTestCase {
       estimatedHeightForRowAt: indexPath)
 
     //Then
-    XCTAssertEqual(heightForRow, 80, "Height should be 150")
-    XCTAssertEqual(estimatedHeight, 80, "Estimated height should be 150")
+    XCTAssertEqual(heightForRow, 80, "Height should be 80")
+    XCTAssertEqual(estimatedHeight, 80, "Estimated height should be 80")
   }
 
   func test_tableViewHeightForRowAndEstimatedHeightForRow_withSelectedEquipmentsTableView() {
@@ -158,8 +158,8 @@ class AddInterventionVCTableViewTests: XCTestCase {
       estimatedHeightForRowAt: indexPath)
 
     //Then
-    XCTAssertEqual(heightForRow, 55, "Height should be 150")
-    XCTAssertEqual(estimatedHeight, 55, "Estimated height should be 150")
+    XCTAssertEqual(heightForRow, 55, "Height should be 55")
+    XCTAssertEqual(estimatedHeight, 55, "Estimated height should be 55")
   }
 
   func test_tableViewHeightForRowAndEstimatedHeightForRow_withSelectedPersonsTableView() {
@@ -173,8 +173,8 @@ class AddInterventionVCTableViewTests: XCTestCase {
       estimatedHeightForRowAt: indexPath)
 
     //Then
-    XCTAssertEqual(heightForRow, 65, "Height should be 150")
-    XCTAssertEqual(estimatedHeight, 65, "Estimated height should be 150")
+    XCTAssertEqual(heightForRow, 65, "Height should be 65")
+    XCTAssertEqual(estimatedHeight, 65, "Estimated height should be 65")
   }
 
   func test_tableViewHeightForRowAndEstimatedHeightForRow_withRandomTableView() {
@@ -185,7 +185,7 @@ class AddInterventionVCTableViewTests: XCTestCase {
     let estimatedHeight = addInterventionVC.tableView(tableView, estimatedHeightForRowAt: indexPath)
 
     //Then
-    XCTAssertEqual(heightForRow, 60, "Height should be 150")
-    XCTAssertEqual(estimatedHeight, 60, "Estimated height should be 150")
+    XCTAssertEqual(heightForRow, 60, "Height should be 60")
+    XCTAssertEqual(estimatedHeight, 60, "Estimated height should be 60")
   }
 }

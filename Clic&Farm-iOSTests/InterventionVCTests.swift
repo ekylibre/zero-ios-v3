@@ -73,4 +73,17 @@ class InterventionVCTests: XCTestCase {
     //Then
     XCTAssertEqual(interventionVC.transformDate(date: date), expectedDate, "Should display day and mounth")
   }
+
+  func test_hideInterventionAdd_shouldHideButtons() {
+    // When
+    interventionVC.hideInterventionAdd()
+
+    //Then
+    for interventionButton in interventionVC.interventionButtons {
+      XCTAssertTrue(interventionButton.isHidden, "Should be hidden")
+    }
+    XCTAssertTrue(interventionVC.dimView.isHidden, "Should be hidden")
+    XCTAssertFalse(interventionVC.createInterventionButton.isHidden, "Should be displayed")
+    XCTAssertEqual(interventionVC.heightConstraint.constant, 60, "Height constraint should be 60")
+  }
 }
