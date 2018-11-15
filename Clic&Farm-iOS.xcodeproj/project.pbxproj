@@ -19,6 +19,9 @@
 		0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */; };
 		0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */; };
 		0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */; };
+		041D87CC219DB45D00DFBC62 /* SeedCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */; };
+		041D87CE219DB78800DFBC62 /* StorageCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */; };
+		041D87D0219DBD8600DFBC62 /* PhytoCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */; };
 		04269C4E2179D49D00E0160C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04269C4D2179D49D00E0160C /* API.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 		048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF32178C8D6002EDF62 /* Localizable.swift */; };
@@ -128,6 +131,9 @@
 		0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyMaterialsTests.swift; sourceTree = "<group>"; };
 		0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyInputsTests.swift; sourceTree = "<group>"; };
 		0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyPersonsTests.swift; sourceTree = "<group>"; };
+		041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedCreationViewTests.swift; sourceTree = "<group>"; };
+		041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationViewTests.swift; sourceTree = "<group>"; };
+		041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhytoCreationViewTests.swift; sourceTree = "<group>"; };
 		04269C4D2179D49D00E0160C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		048D2AF32178C8D6002EDF62 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -439,6 +445,9 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */,
+				041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */,
+				041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */,
 				04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */,
 				04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
@@ -679,16 +688,19 @@
 				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
 				04BE4BCA219D823A000707A1 /* AddInterventionVCTests.swift in Sources */,
 				6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */,
+				041D87D0219DBD8600DFBC62 /* PhytoCreationViewTests.swift in Sources */,
 				04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */,
 				04BE4BC8219D75B1000707A1 /* InterventionVCTests.swift in Sources */,
 				6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */,
 				04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */,
 				0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */,
 				0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */,
+				041D87CE219DB78800DFBC62 /* StorageCreationViewTests.swift in Sources */,
 				0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */,
 				6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */,
 				04BE4BCC219D8B96000707A1 /* AddInterventionVCTableViewTests.swift in Sources */,
 				04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */,
+				041D87CC219DB45D00DFBC62 /* SeedCreationViewTests.swift in Sources */,
 				6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
