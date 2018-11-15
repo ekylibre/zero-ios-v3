@@ -25,27 +25,35 @@ class MaterialsTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_checkMaterialName_withoutExistingMaterialAndAName_shouldNotDisplayError() {
+  func test_checkMaterialName_withValidName_shouldReturnTrue() {
     //Given
     let name = "Sample material"
 
     //When
     addInterventionVC.materialsSelectionView.materials.removeAll()
+    XCTAssertEqual(addInterventionVC.materialsSelectionView.materials.count, 0, "materials must be empty")
     addInterventionVC.materialsSelectionView.creationView.nameTextField.text = name
 
     //Then
-    XCTAssertEqual(addInterventionVC.materialsSelectionView.checkMaterialName(), true,
-                                "Should not display error label")
+    XCTAssertTrue(addInterventionVC.materialsSelectionView.checkMaterialName(),
+                  "checkMaterialName must return true when the name is valid")
+    XCTAssertTrue(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
+                   "errorLabel must be hidden when there is not any error")
   }
 
-  func test_checkMaterialName_withoutExistingMaterialAndNoName_shouldDisplayError() {
+  func test_checkMaterialName_withEmptyName_shouldReturnFalse() {
+    //Given
+    let name = ""
+
     //When
     addInterventionVC.materialsSelectionView.materials.removeAll()
-    addInterventionVC.materialsSelectionView.creationView.nameTextField.text = nil
-    let _ = addInterventionVC.materialsSelectionView.checkMaterialName()
+    XCTAssertEqual(addInterventionVC.materialsSelectionView.materials.count, 0, "materials must be empty")
+    addInterventionVC.materialsSelectionView.creationView.nameTextField.text = name
 
     //Then
-    XCTAssertEqual(addInterventionVC.materialsSelectionView.creationView.errorLabel.text, "material_name_is_empty".localized,
-                   "Should display empty name error label")
+    XCTAssertFalse(addInterventionVC.materialsSelectionView.checkMaterialName(),
+                  "checkMaterialName must return true when the name is empty")
+    XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
+                   "errorLabel must not be hidden when there is an error")
   }
 }

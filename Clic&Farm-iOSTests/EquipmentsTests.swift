@@ -25,27 +25,35 @@ class EquipmentsTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_checkEquipmentName_withoutExistingEquipmentAndAName_shouldNotDisplayError() {
+  func test_checkEquipmentName_withValidName_shouldReturnTrue() {
     //Given
-    let name = "Sample material"
+    let name = "Sample equipment"
 
     //When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
+    XCTAssertEqual(addInterventionVC.equipmentsSelectionView.equipments.count, 0, "equipments must be empty")
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
 
     //Then
-    XCTAssertEqual(addInterventionVC.equipmentsSelectionView.checkEquipmentName(), true,
-                   "Should not display error label")
+    XCTAssertTrue(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
+                  "checkEquipmentName must return true when the name is valid")
+    XCTAssertTrue(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
+                   "errorLabel must be hidden when there is not any error")
   }
 
-  func test_checkEquipmentName_withoutExistingEquipmentAndNoName_shouldDisplayError() {
+  func test_checkEquipmentName_withEmptyName_shouldReturnFalse() {
+    //Given
+    let name = ""
+
     //When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
-    addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = nil
-    let _ = addInterventionVC.equipmentsSelectionView.checkEquipmentName()
+    XCTAssertEqual(addInterventionVC.equipmentsSelectionView.equipments.count, 0, "equipments must be empty")
+    addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
 
     //Then
-    XCTAssertEqual(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.text, "equipment_name_is_empty".localized,
-                   "Should display empty name error label")
+    XCTAssertFalse(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
+                  "checkEquipmentName must return false when the name is empty")
+    XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
+                   "errorLabel must be hidden when there is an error")
   }
 }
