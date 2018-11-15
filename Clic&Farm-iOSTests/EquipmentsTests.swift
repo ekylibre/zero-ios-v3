@@ -121,4 +121,57 @@ class EquipmentsTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
                    "errorLabel must not be hidden when there is an error")
   }
+
+  func test_equipmentsCountLabel_withoutSelectedEquipments_shouldBeHidden() {
+    //When
+    addInterventionVC.selectedEquipments.removeAll()
+    XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
+    addInterventionVC.tapEquipmentsView()
+
+    //Then
+    XCTAssertTrue(addInterventionVC.equipmentsCountLabel.isHidden,
+                  "equipmentsCountLabel must be hidden if selectedEquipments is empty")
+  }
+
+  func test_equipmentsCountLabel_withSingleSelectedEquipment_shouldBeDisplayed() {
+    //Given
+    let equipment = sut.insertObject(entityName: "Equipment") as! Equipment
+
+    //When
+    addInterventionVC.selectedEquipments.removeAll()
+    XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
+    addInterventionVC.selectedEquipments.append(equipment)
+    XCTAssertEqual(addInterventionVC.selectedEquipments.count, 1, "selectedEquipments must contain new equipment")
+    addInterventionVC.tapEquipmentsView()
+    addInterventionVC.tapEquipmentsView()
+
+    //Then
+    XCTAssertFalse(addInterventionVC.equipmentsCountLabel.isHidden,
+                   "equipmentsCountLabel must not be hidden if selectedEquipments is not empty")
+    XCTAssertEqual(addInterventionVC.equipmentsCountLabel.text, "equipment".localized,
+                   "equipmentsCountLabel text must be 'equipment' when only one equipment is selected")
+  }
+
+  func test_equipmentsCountLabel_withMultipleSelectedEquipments_shouldBeDisplayed() {
+    //Given
+    let firstEquipment = sut.insertObject(entityName: "Equipment") as! Equipment
+    let secondEquipment = sut.insertObject(entityName: "Equipment") as! Equipment
+    let thirdEquipment = sut.insertObject(entityName: "Equipment") as! Equipment
+
+    //When
+    addInterventionVC.selectedEquipments.removeAll()
+    XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
+    addInterventionVC.selectedEquipments.append(firstEquipment)
+    addInterventionVC.selectedEquipments.append(secondEquipment)
+    addInterventionVC.selectedEquipments.append(thirdEquipment)
+    XCTAssertEqual(addInterventionVC.selectedEquipments.count, 3, "selectedEquipments must contain new equipments")
+    addInterventionVC.tapEquipmentsView()
+    addInterventionVC.tapEquipmentsView()
+
+    //Then
+    XCTAssertFalse(addInterventionVC.equipmentsCountLabel.isHidden,
+                   "equipmentsCountLabel must not be hidden if selectedEquipments is not empty")
+    XCTAssertEqual(addInterventionVC.equipmentsCountLabel.text, String(format: "equipments".localized, 3),
+                   "equipmentsCountLabel text must be 'equipments' when multiple equipments are selected")
+  }
 }
