@@ -61,6 +61,7 @@
 		04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */; };
 		04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */; };
 		04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E42219C706900F01EC6 /* PersonsTests.swift */; };
+		04BE4BC8219D75B1000707A1 /* InterventionVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */; };
 		04C0D5BF218CA96700EEECD8 /* StorageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */; };
 		04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */; };
 		04DC9FE5217DB88D00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */; };
@@ -168,6 +169,7 @@
 		04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsTests.swift; sourceTree = "<group>"; };
 		04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentsTests.swift; sourceTree = "<group>"; };
 		04A58E42219C706900F01EC6 /* PersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTests.swift; sourceTree = "<group>"; };
+		04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionVCTests.swift; sourceTree = "<group>"; };
 		04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationView.swift; sourceTree = "<group>"; };
 		04DC9FD0217DB88B00CB94C3 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		04DC9FD1217DB88B00CB94C3 /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 				6B113189219C3CAA002272F0 /* CropsTests.swift */,
 				04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */,
+				04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */,
 				6B77AD3C219B046E00839053 /* IrrigationTests.swift */,
 				04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */,
 				04A58E42219C706900F01EC6 /* PersonsTests.swift */,
@@ -658,6 +661,7 @@
 				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
 				6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */,
 				04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */,
+				04BE4BC8219D75B1000707A1 /* InterventionVCTests.swift in Sources */,
 				6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */,
 				04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */,
 				0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */,

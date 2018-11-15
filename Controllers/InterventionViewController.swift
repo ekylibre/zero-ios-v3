@@ -369,7 +369,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func transformDate(date: Date) -> String {
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.locale = Locale(identifier: "locale".localized)
     dateFormatter.dateFormat = "d MMMM"
 
     var dateString = dateFormatter.string(from: date)
