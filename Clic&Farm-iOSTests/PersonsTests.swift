@@ -104,4 +104,57 @@ class PersonsTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.personsSelectionView.creationView.lastNameErrorLabel.isHidden,
                    "lastNameErrorLabel must not be hidden when lastName is empty")
   }
+
+  func test_firstNameDidChange_shouldHide() {
+    // Given
+    addInterventionVC.personsSelectionView.creationView.firstNameErrorLabel.isHidden = false
+
+    // When
+    addInterventionVC.personsSelectionView.creationView.firstNameTextField.sendActions(for: .editingChanged)
+
+    // Then
+    XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.firstNameErrorLabel.isHidden, "Should be hidden")
+  }
+
+  func test_lastNameDidChange_shouldHide() {
+    // Given
+    addInterventionVC.personsSelectionView.creationView.lastNameErrorLabel.isHidden = false
+
+    // When
+    addInterventionVC.personsSelectionView.creationView.lastNameTextField.sendActions(for: .editingChanged)
+
+    // Then
+    XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.lastNameErrorLabel.isHidden, "Should be hidden")
+  }
+
+  func test_openCreationView_shouldDisplay() {
+    // Given
+    addInterventionVC.personsSelectionView.creationView.isHidden = true
+    addInterventionVC.personsSelectionView.dimView.isHidden = true
+
+    // When
+    addInterventionVC.personsSelectionView.createButton.sendActions(for: .touchUpInside)
+
+    // Then
+    XCTAssertFalse(addInterventionVC.personsSelectionView.creationView.isHidden, "Should be displayed")
+    XCTAssertFalse(addInterventionVC.personsSelectionView.dimView.isHidden, "Should be displayed")
+  }
+
+  func test_cancelCreation_shouldCloseView() {
+    // Given
+    addInterventionVC.personsSelectionView.creationView.isHidden = false
+    addInterventionVC.personsSelectionView.dimView.isHidden = false
+    addInterventionVC.personsSelectionView.creationView.firstNameTextField.text = "First name test"
+    addInterventionVC.personsSelectionView.creationView.lastNameTextField.text = "Last name test"
+
+    // When
+    addInterventionVC.personsSelectionView.creationView.cancelButton.sendActions(for: .touchUpInside)
+
+    // Then
+    XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.isHidden, "Should be hidden")
+    XCTAssertTrue(addInterventionVC.personsSelectionView.dimView.isHidden, "Should be hidden")
+    XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.isHidden, "Should be hidden")
+    XCTAssertEqual(addInterventionVC.personsSelectionView.creationView.firstNameTextField.text, "", "Should be empty")
+    XCTAssertEqual(addInterventionVC.personsSelectionView.creationView.lastNameTextField.text, "", "Should be empty")
+  }
 }
