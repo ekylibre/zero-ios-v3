@@ -48,4 +48,13 @@ class MaterialsTests: XCTestCase {
     XCTAssertEqual(addInterventionVC.materialsSelectionView.creationView.errorLabel.text, "material_name_is_empty".localized,
                    "Should display empty name error label")
   }
+
+  func test_updateMaterialsCountLabelWithoutEquipment_shouldNotChange() {
+    //When
+    addInterventionVC.selectedMaterials[0].removeAll()
+    addInterventionVC.updateMaterialsCountLabel()
+
+    //Then
+    XCTAssertEqual(addInterventionVC.materialsCountLabel.text, "none".localized, "Should have no materials")
+  }
 }

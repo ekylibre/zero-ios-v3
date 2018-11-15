@@ -86,16 +86,18 @@ extension AddInterventionViewController {
       return
     }
 
-    updateCountLabel()
+    updateMaterialsCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     materialsAddButton.isHidden = !shouldExpand
     materialsCountLabel.isHidden = shouldExpand
     materialsExpandImageView.transform = materialsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  private func updateCountLabel() {
+  func updateMaterialsCountLabel() {
     if selectedMaterials[0].count == 1 {
       materialsCountLabel.text = "material".localized
+    } else if selectedMaterials[0].count == 0 {
+      materialsCountLabel.text = "none".localized
     } else {
       materialsCountLabel.text = String(format: "materials".localized, selectedMaterials[0].count)
     }
