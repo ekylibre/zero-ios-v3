@@ -25,7 +25,7 @@ class PersonsTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_checkPeronsName_withNoExistingPersonsAndAFirstNameAndALastName_shouldReturnTrue() {
+  func test_checkPeronsName_withoutExistingPersonsAndAFirstNameAndALastName_shouldReturnTrue() {
     //Given
     let firstName = "Sample fist name"
     let lastName = "Sample last name"
@@ -40,7 +40,7 @@ class PersonsTests: XCTestCase {
                    "Should return true")
   }
 
-  func test_checkPeronsName_withNoExistingPersonsAndAFirstName_shouldReturnFalse() {
+  func test_checkPeronsName_withoutExistingPersonsAndAFirstName_shouldReturnFalse() {
     //Given
     let firstName = "Sample fist name"
 
@@ -53,7 +53,7 @@ class PersonsTests: XCTestCase {
                    "Should return false")
   }
 
-  func test_checkPeronsName_withNoExistingPersonsAndALastName_shouldReturnFalse() {
+  func test_checkPeronsName_withoutExistingPersonsAndALastName_shouldReturnFalse() {
     //Given
     let lastName = "Sample last name"
 
@@ -66,7 +66,7 @@ class PersonsTests: XCTestCase {
                    "Should return false")
   }
 
-  func test_checkPeronsName_withNoExistingPersonsAndNoName_shouldReturnFalse() {
+  func test_checkPeronsName_withoutExistingPersonsAndNoName_shouldReturnFalse() {
     //When
     addInterventionVC.personsSelectionView.persons.removeAll()
     addInterventionVC.personsSelectionView.creationView.firstNameTextField.text = nil

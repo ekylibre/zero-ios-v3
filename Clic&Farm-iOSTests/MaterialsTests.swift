@@ -25,7 +25,7 @@ class MaterialsTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_checkMaterialName_withNoExistingMaterialAndAName_shouldNotDisplayError() {
+  func test_checkMaterialName_withoutExistingMaterialAndAName_shouldNotDisplayError() {
     //Given
     let name = "Sample material"
 
@@ -38,7 +38,7 @@ class MaterialsTests: XCTestCase {
                                 "Should not display error label")
   }
 
-  func test_checkMaterialName_withNoExistingMaterialAndNoName_shouldDisplayError() {
+  func test_checkMaterialName_withoutExistingMaterialAndNoName_shouldDisplayError() {
     //When
     addInterventionVC.materialsSelectionView.materials.removeAll()
     addInterventionVC.materialsSelectionView.creationView.nameTextField.text = nil

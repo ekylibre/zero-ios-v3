@@ -139,7 +139,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     }
   }
 
-  func createPerson(firstName: String, lastName: String) {
+  private func createPerson(firstName: String, lastName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

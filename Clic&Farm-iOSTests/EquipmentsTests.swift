@@ -25,7 +25,7 @@ class EquipmentsTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_checkEquipmentName_withNoExistingEquipmentAndAName_shouldNotDisplayError() {
+  func test_checkEquipmentName_withoutExistingEquipmentAndAName_shouldNotDisplayError() {
     //Given
     let name = "Sample material"
 
@@ -38,7 +38,7 @@ class EquipmentsTests: XCTestCase {
                    "Should not display error label")
   }
 
-  func test_checkEquipmentName_withNoExistingEquipmentAndNoName_shouldDisplayError() {
+  func test_checkEquipmentName_withoutExistingEquipmentAndNoName_shouldDisplayError() {
     //When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = nil
