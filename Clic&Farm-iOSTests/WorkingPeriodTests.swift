@@ -137,6 +137,17 @@ class WorkingPeriodTests: XCTestCase {
                    "Label must contain new date and duration values")
   }
 
+  func test_dateButton_withTouchUpInside_shouldDisplaySelectDateView() {
+    //When
+    XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
+                  "Select date view must be hidden before sendActions")
+    addInterventionVC.workingPeriodDateButton.sendActions(for: .touchUpInside)
+
+    //Then
+    XCTAssertFalse(addInterventionVC.selectDateView.isHidden,
+                  "Select date view must not be hidden after sendActions")
+  }
+
   func test_unitLabel_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
     //Given
     let duration = "1.00"
