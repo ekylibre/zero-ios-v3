@@ -211,7 +211,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupViewsAccordingInterventionType()
   }
 
-  private func setupViewsAccordingInterventionType() {
+  func setupViewsAccordingInterventionType() {
     switch interventionType {
     case InterventionType.Care.rawValue:
       materialsView.isHidden = false
