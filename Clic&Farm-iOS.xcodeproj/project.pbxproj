@@ -15,6 +15,10 @@
 		041313B321401483005437F0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
 		04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
+		0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */; };
+		0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */; };
+		0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */; };
+		0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */; };
 		04269C4E2179D49D00E0160C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04269C4D2179D49D00E0160C /* API.swift */; };
 		042A44342121B38600CE6B24 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
 		048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF32178C8D6002EDF62 /* Localizable.swift */; };
@@ -117,6 +121,10 @@
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		04143AC5219C554800CFA700 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyEquipmentsTests.swift; sourceTree = "<group>"; };
+		0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyMaterialsTests.swift; sourceTree = "<group>"; };
+		0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyInputsTests.swift; sourceTree = "<group>"; };
+		0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyPersonsTests.swift; sourceTree = "<group>"; };
 		04269C4D2179D49D00E0160C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		048D2AF32178C8D6002EDF62 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -413,6 +421,7 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */,
 				04143AC5219C554800CFA700 /* Info.plist */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 				6B113189219C3CAA002272F0 /* CropsTests.swift */,
@@ -420,6 +429,9 @@
 				6B77AD3C219B046E00839053 /* IrrigationTests.swift */,
 				04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */,
 				04A58E42219C706900F01EC6 /* PersonsTests.swift */,
+				0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */,
+				0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */,
+				0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */,
 				6B11318B219C6791002272F0 /* WeatherTests.swift */,
 				6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */,
 			);
@@ -642,11 +654,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B874618219AD1400030447B /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */,
 				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
 				6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */,
 				04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */,
 				6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */,
 				04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */,
+				0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */,
+				0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */,
+				0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */,
 				6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */,
 				04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */,
 				6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */,

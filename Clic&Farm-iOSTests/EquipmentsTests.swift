@@ -56,4 +56,13 @@ class EquipmentsTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
                    "errorLabel must be hidden when there is an error")
   }
+
+  func test_updateEquipmentsCountLabelWithoutEquipment_shouldNotChange() {
+    //When
+    addInterventionVC.selectedEquipments.removeAll()
+    addInterventionVC.updateEquipmentsCountLabel()
+
+    //Then
+    XCTAssertEqual(addInterventionVC.equipmentsCountLabel.text, "none".localized, "Should have no equipments")
+  }
 }

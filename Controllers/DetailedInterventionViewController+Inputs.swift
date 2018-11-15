@@ -92,16 +92,18 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       return
     }
 
-    updateCountLabel()
+    updateInputsCountLabel()
     inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     inputsAddButton.isHidden = !shouldExpand
     inputsCountLabel.isHidden = shouldExpand
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  private func updateCountLabel() {
+  func updateInputsCountLabel() {
     if selectedInputs.count == 1 {
       inputsCountLabel.text = "input".localized
+    } else if selectedInputs.count == 0 {
+      inputsCountLabel.text = "none".localized
     } else {
       inputsCountLabel.text = String(format: "inputs".localized, selectedInputs.count)
     }

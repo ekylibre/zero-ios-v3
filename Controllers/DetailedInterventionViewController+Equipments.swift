@@ -108,16 +108,18 @@ extension AddInterventionViewController {
       return
     }
 
-    updateCountLabel()
+    updateEquipmentsCountLabel()
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     equipmentsAddButton.isHidden = !shouldExpand
     equipmentsCountLabel.isHidden = shouldExpand
     equipmentsExpandImageView.transform = equipmentsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  private func updateCountLabel() {
+  func updateEquipmentsCountLabel() {
     if selectedEquipments.count == 1 {
       equipmentsCountLabel.text = "equipment".localized
+    } else if selectedEquipments.count == 0 {
+      equipmentsCountLabel.text = "none".localized
     } else {
       equipmentsCountLabel.text = String(format: "equipments".localized, selectedEquipments.count)
     }
