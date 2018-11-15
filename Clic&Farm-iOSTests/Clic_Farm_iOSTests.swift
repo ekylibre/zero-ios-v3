@@ -10,66 +10,11 @@ import XCTest
 import CoreData
 @testable import Clic_Farm_iOS
 
-class CoreDataManager {
-
-  let persistentContainer: NSPersistentContainer!
-  let backgroundContext: NSManagedObjectContext!
-
-  init(container: NSPersistentContainer) {
-    self.persistentContainer = container
-    self.backgroundContext = self.persistentContainer.newBackgroundContext()
-    self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
-  }
-
-  convenience init() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      fatalError("Can not get shared app delegate")
-    }
-    self.init(container: appDelegate.persistentContainer)
-  }
-
-  // MARK: - CRUD
-
-  func insertPerson(firstName: String, lastName: String) -> Person? {
-    let person = Person(context: backgroundContext)
-    person.firstName = firstName
-    person.lastName = lastName
-    return person
-  }
-
-  func fetchAll() -> [Person] {
-    let request: NSFetchRequest<Person> = Person.fetchRequest()
-
-    do {
-      let results = try persistentContainer.viewContext.fetch(request)
-      return results
-    } catch {
-      print("Could not fetch \(error)")
-    }
-    return [Person]()
-  }
-
-  func remove(objectID: NSManagedObjectID) {
-    let object = backgroundContext.object(with: objectID)
-    backgroundContext.delete(object)
-  }
-
-  func save() {
-    if backgroundContext.hasChanges {
-      do {
-        try backgroundContext.save()
-      } catch {
-        print("Could not save \(error)")
-      }
-    }
-  }
-}
-
 class Clic_Farm_iOSTests: XCTestCase {
 
-  var sut: CoreDataManager!
+  var sut: StorageManager!
   lazy var managedObjectModel: NSManagedObjectModel = {
-    let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self))] )!
+    let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main])!
     return managedObjectModel
   }()
 
@@ -122,12 +67,10 @@ class Clic_Farm_iOSTests: XCTestCase {
     try! mockPersistentContainer.viewContext.save()
   }
 
-  // MARK: - Setup
-
   override func setUp() {
     super.setUp()
     initStubs()
-    sut = CoreDataManager(container: mockPersistentContainer)
+    sut = StorageManager(container: mockPersistentContainer)
     NotificationCenter.default.addObserver(self, selector: #selector(contextSaved(notification:)),
                                            name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
   }
@@ -138,45 +81,44 @@ class Clic_Farm_iOSTests: XCTestCase {
     super.tearDown()
   }
 
-  // MARK: - Tests
-
-  func test_insert_person() {
-    //Given the firstName & lastName
+  func test_insertPerson() {
+    //Given
     let firstName = "Z"
     let lastName = "26"
 
-    //When add person
-    let person = sut.insertPerson(firstName: firstName, lastName: lastName)
+    //When
+    let person = sut.insertObject(entityName: "Person") as! Person
+    person.firstName = firstName
+    person.lastName = lastName
 
-    //Assert: return person
+    //Then
     XCTAssertNotNil(person)
   }
 
-  func test_fetch_all_persons() {
-    //Given a storage with two todo
-    //When fetch
-    let results = sut.fetchAll()
+  func test_fetchAllPersons() {
+    //When
+    let results = sut.fetchAllObjects(entityName: "Person")
 
-    //Assert return five todo items
+    //Then
     XCTAssertEqual(results.count, 5)
   }
 
-  func test_remove_person() {
-    //Given a item in persistent store
-    let items = sut.fetchAll()
-    let item = items[0]
-    let numberOfItems = items.count
+  func test_removePerson() {
+    //Given
+    let persons = sut.fetchAllObjects(entityName: "Person")
+    let person = persons[0]
+    let numberOfPersons = persons.count
 
-    //When remove a item
-    sut.remove(objectID: item.objectID)
+    //When
+    sut.remove(objectID: person.objectID)
     sut.save()
 
-    //Assert number of item - 1
-    XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfItems - 1)
+    //Then
+    XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfPersons - 1)
   }
 
   func test_save() {
-    //Given a person
+    //Given
     let firstName = "Y"
     let lastName = "25"
 
@@ -186,12 +128,14 @@ class Clic_Farm_iOSTests: XCTestCase {
       expect.fulfill()
     }
 
-    _ = sut.insertPerson(firstName: firstName, lastName: lastName)
-
-    //When save
+    //When
+    let person = sut.insertObject(entityName: "Person") as! Person
+    person.firstName = firstName
+    person.lastName = lastName
+    XCTAssertNotNil(person, "person must not be nil")
     sut.save()
 
-    //Assert save is called via notification (wait)
+    //Assert
     waitForExpectations(timeout: 1, handler: nil)
   }
 
