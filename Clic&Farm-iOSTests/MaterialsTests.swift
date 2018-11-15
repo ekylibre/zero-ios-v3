@@ -56,4 +56,13 @@ class MaterialsTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
                    "errorLabel must not be hidden when there is an error")
   }
+
+  func test_updateMaterialsCountLabelWithoutEquipment_shouldNotChange() {
+    //When
+    addInterventionVC.selectedMaterials[0].removeAll()
+    addInterventionVC.updateMaterialsCountLabel()
+
+    //Then
+    XCTAssertEqual(addInterventionVC.materialsCountLabel.text, "none".localized, "Should have no materials")
+  }
 }
