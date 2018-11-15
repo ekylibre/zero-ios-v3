@@ -30,7 +30,7 @@ class InterventionVCTests: XCTestCase {
     let today = Date()
 
     //Then
-    XCTAssertEqual(interventionVC.transformDate(date: today), "today".localized.lowercased())
+    XCTAssertEqual(interventionVC.transformDate(date: today), "today".localized.lowercased(), "Should display today")
   }
 
   func test_transformDate_withYesterdayDate_shouldDisplayYesterday() {
@@ -38,33 +38,39 @@ class InterventionVCTests: XCTestCase {
     let yesterday = Date(timeIntervalSinceNow: -86400)
 
     //Then
-    XCTAssertEqual(interventionVC.transformDate(date: yesterday), "yesterday".localized.lowercased())
+    XCTAssertEqual(interventionVC.transformDate(date: yesterday), "yesterday".localized.lowercased(), "Should display yesterday")
   }
 
   func test_transformDate_withADate_shouldDisplayDateWithYear() {
     //Given
     let date = Date(timeIntervalSince1970: 946547333)
+    let expectedDate: String = {
+      let expectedDate: String!
+
+      if "locale".localized == "fr_FR" {
+        expectedDate = "30 décembre 1999"
+      } else {
+        expectedDate = "30 December 1999"
+      }
+      return expectedDate
+    }()
 
     //Then
-    var expectedDate: String!
-    if "locale".localized == "fr_FR" {
-      expectedDate = "30 décembre 1999"
-    } else {
-      expectedDate = "30 December 1999"
-    }
-    XCTAssertEqual(interventionVC.transformDate(date: date), expectedDate)
+    XCTAssertEqual(interventionVC.transformDate(date: date), expectedDate, "Should display day, mounth and year")
   }
 
   func test_transformDate_withDateEqualTwoDaysAgo_shouldDisplayDateWithoutYear() {
     //Given
     let date = Date(timeIntervalSinceNow: -172800)
+    let expectedDate: String = {
+      let dateFormatter = DateFormatter()
+
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMMM"
+      return dateFormatter.string(from: date)
+    }()
 
     //Then
-    let dateFormatter = DateFormatter()
-
-    dateFormatter.locale = Locale(identifier: "locale".localized)
-    dateFormatter.dateFormat = "d MMMM"
-    let expectedDate = Date(timeIntervalSinceNow: -172800)
-    XCTAssertEqual(interventionVC.transformDate(date: date), dateFormatter.string(from: expectedDate))
+    XCTAssertEqual(interventionVC.transformDate(date: date), expectedDate, "Should display day and mounth")
   }
 }
