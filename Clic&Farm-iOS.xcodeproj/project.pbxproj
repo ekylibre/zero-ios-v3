@@ -86,16 +86,15 @@
 		6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */; };
 		6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113189219C3CAA002272F0 /* CropsTests.swift */; };
 		6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11318B219C6791002272F0 /* WeatherTests.swift */; };
+		6B28441C219D877500DED846 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28441B219D877500DED846 /* StorageManager.swift */; };
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
-		6B874618219AD1400030447B /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6B8EE4EB2178D8E80035094C /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
 		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6BA37141213963230086DF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		6BB225432118490A0036E167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
-		6BE43C17219B24E200811629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -195,6 +194,7 @@
 		6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPeriodTests.swift; sourceTree = "<group>"; };
 		6B113189219C3CAA002272F0 /* CropsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropsTests.swift; sourceTree = "<group>"; };
 		6B11318B219C6791002272F0 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
+		6B28441B219D877500DED846 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
@@ -319,6 +319,7 @@
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				041248052179C05400A78D08 /* InterventionState.swift */,
 				041248072179C05900A78D08 /* InterventionType.swift */,
+				6B28441B219D877500DED846 /* StorageManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -546,7 +547,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BE43C17219B24E200811629 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +593,7 @@
 				04C0D5BF218CA96700EEECD8 /* StorageCreationView.swift in Sources */,
 				04998B90217DB8DF000A5D2F /* SelectedInputCell.swift in Sources */,
 				04DC9FE4217DB88D00CB94C3 /* UnitMeasurePickerView.swift in Sources */,
+				6B28441C219D877500DED846 /* StorageManager.swift in Sources */,
 				04DC9FE6217DB88D00CB94C3 /* DetailedInterventionViewController+Weather.swift in Sources */,
 				6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */,
 				04998B81217DB8DF000A5D2F /* EquipmentCreationView.swift in Sources */,
@@ -659,7 +660,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B874618219AD1400030447B /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */,
 				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
 				04BE4BCA219D823A000707A1 /* AddInterventionVCTests.swift in Sources */,
