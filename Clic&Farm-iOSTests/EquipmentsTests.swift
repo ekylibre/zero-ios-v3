@@ -127,6 +127,7 @@ class EquipmentsTests: XCTestCase {
     addInterventionVC.selectedEquipments.removeAll()
     XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
     addInterventionVC.tapEquipmentsView()
+    addInterventionVC.tapEquipmentsView()
 
     //Then
     XCTAssertTrue(addInterventionVC.equipmentsCountLabel.isHidden,
