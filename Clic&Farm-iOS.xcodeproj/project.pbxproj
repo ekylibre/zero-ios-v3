@@ -421,8 +421,6 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */,
-				04143AC5219C554800CFA700 /* Info.plist */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
 				6B113189219C3CAA002272F0 /* CropsTests.swift */,
 				04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */,
@@ -432,8 +430,10 @@
 				0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */,
 				0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */,
 				0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */,
+				0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */,
 				6B11318B219C6791002272F0 /* WeatherTests.swift */,
 				6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */,
+				04143AC5219C554800CFA700 /* Info.plist */,
 			);
 			path = "Clic&Farm-iOSTests";
 			sourceTree = "<group>";
