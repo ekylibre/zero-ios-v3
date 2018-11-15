@@ -78,7 +78,27 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.addGestureRecognizer(gesture)
     dimView.isHidden = true
 
-    // Updates synchronisation label
+    updateSynchronisationLabel()
+
+    initialiseInterventionButtons()
+
+    // Load table view
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.refreshControl = refreshControl
+
+    checkLocalData()
+    if Connectivity.isConnectedToInternet() {
+      fetchInterventions()
+      synchronise(self)
+    } else {
+      fetchInterventions()
+    }
+
+    initializeLogoutItem()
+  }
+
+  func updateSynchronisationLabel() {
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
@@ -97,23 +117,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } else {
       synchroLabel.text = "no_synchronization_listed".localized
     }
-
-    initialiseInterventionButtons()
-
-    // Load table view
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.refreshControl = refreshControl
-
-    checkLocalData()
-    if Connectivity.isConnectedToInternet() {
-      fetchInterventions()
-      synchronise(self)
-    } else {
-      fetchInterventions()
-    }
-
-    initializeLogoutItem()
   }
 
   func initialiseInterventionButtons() {

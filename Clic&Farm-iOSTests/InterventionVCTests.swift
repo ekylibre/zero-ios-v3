@@ -86,4 +86,51 @@ class InterventionVCTests: XCTestCase {
     XCTAssertFalse(interventionVC.createInterventionButton.isHidden, "Should be displayed")
     XCTAssertEqual(interventionVC.heightConstraint.constant, 60, "Height constraint should be 60")
   }
+
+  func test_updateSynchronisationLabel_withoutSync() {
+    // When
+    UserDefaults.standard.setValue(0, forKey: "lastSyncDate")
+    interventionVC.updateSynchronisationLabel()
+
+    // Then
+    XCTAssertEqual(interventionVC.synchroLabel.text, "no_synchronization_listed".localized,
+                   "Should have no synchronization listed")
+  }
+
+  func test_updateSynchronisationLabel_withASyncToday() {
+    // Given
+    let date = Date()
+    let calendar = Calendar.current
+    let dateFormatter = DateFormatter()
+
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMMM"
+    let hour = calendar.component(.hour, from: date)
+    let minute = calendar.component(.minute, from: date)
+    let expectedDate = String(format: "today_last_synchronization".localized, hour, minute)
+
+    // When
+    UserDefaults.standard.setValue(date, forKey: "lastSyncDate")
+    interventionVC.updateSynchronisationLabel()
+
+    // Then
+    XCTAssertEqual(interventionVC.synchroLabel.text, expectedDate, "Should have a synchronization listed")
+  }
+
+  func test_updateSynchronisationLabel_withASyncYesterday() {
+    // Given
+    let date = Date(timeIntervalSinceNow: -86400)
+    let dateFormatter = DateFormatter()
+
+    dateFormatter.locale = Locale(identifier: "locale".localized)
+    dateFormatter.dateFormat = "d MMMM"
+    let expectedDate = "last_synchronization".localized + dateFormatter.string(from: date)
+
+    // When
+    UserDefaults.standard.setValue(date, forKey: "lastSyncDate")
+    interventionVC.updateSynchronisationLabel()
+
+    // Then
+    XCTAssertEqual(interventionVC.synchroLabel.text, expectedDate, "Should have a synchronization listed")
+  }
 }
