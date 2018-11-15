@@ -11,17 +11,17 @@ import XCTest
 
 class InterventionVCTests: XCTestCase {
 
-  var InterventionVC: InterventionViewController!
+  var interventionVC: InterventionViewController!
 
   override func setUp() {
     super.setUp()
     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-    InterventionVC = storyboard.instantiateViewController(withIdentifier: "InterventionViewController") as? InterventionViewController
-    let _ = InterventionVC.view
+    interventionVC = storyboard.instantiateViewController(withIdentifier: "InterventionViewController") as? InterventionViewController
+    let _ = interventionVC.view
   }
 
   override func tearDown() {
-    InterventionVC = nil
+    interventionVC = nil
     super.tearDown()
   }
 
@@ -30,7 +30,7 @@ class InterventionVCTests: XCTestCase {
     let today = Date()
 
     //Then
-    XCTAssertEqual(InterventionVC.transformDate(date: today), "today".localized.lowercased())
+    XCTAssertEqual(interventionVC.transformDate(date: today), "today".localized.lowercased())
   }
 
   func test_transformDate_withYesterdayDate_shouldDisplayYesterday() {
@@ -38,7 +38,7 @@ class InterventionVCTests: XCTestCase {
     let yesterday = Date(timeIntervalSinceNow: -86400)
 
     //Then
-    XCTAssertEqual(InterventionVC.transformDate(date: yesterday), "yesterday".localized.lowercased())
+    XCTAssertEqual(interventionVC.transformDate(date: yesterday), "yesterday".localized.lowercased())
   }
 
   func test_transformDate_withADate_shouldDisplayDateWithYear() {
@@ -52,7 +52,7 @@ class InterventionVCTests: XCTestCase {
     } else {
       expectedDate = "30 December 1999"
     }
-    XCTAssertEqual(InterventionVC.transformDate(date: date), expectedDate)
+    XCTAssertEqual(interventionVC.transformDate(date: date), expectedDate)
   }
 
   func test_transformDate_withDateEqualTwoDaysAgo_shouldDisplayDateWithoutYear() {
@@ -65,6 +65,6 @@ class InterventionVCTests: XCTestCase {
     dateFormatter.locale = Locale(identifier: "locale".localized)
     dateFormatter.dateFormat = "d MMMM"
     let expectedDate = Date(timeIntervalSinceNow: -172800)
-    XCTAssertEqual(InterventionVC.transformDate(date: date), dateFormatter.string(from: expectedDate))
+    XCTAssertEqual(interventionVC.transformDate(date: date), dateFormatter.string(from: expectedDate))
   }
 }
