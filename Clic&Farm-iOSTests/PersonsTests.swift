@@ -65,7 +65,7 @@ class PersonsTests: XCTestCase {
                   "lastNameErrorLabel must be hidden when lastName is not empty")
   }
 
-  func test_checkPeronsName_withoutExistingPersonsAndALastName_shouldReturnFalse() {
+  func test_checkPeronsName_withEmptyLastName_shouldReturnFalse() {
     //Given
     let firstName = "Sample first name"
     let lastName = ""
