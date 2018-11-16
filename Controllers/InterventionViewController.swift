@@ -32,7 +32,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  let farmNameLabel = UILabel()
+  let navItem = UINavigationItem()
   let dimView = UIView()
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
@@ -117,7 +117,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func setupNavigationBar() {
-    let navigationItem = UINavigationItem()
+    let farmNameLabel = UILabel()
     let cropsButton = UIButton()
     let logoutButton = UIButton()
 
@@ -138,10 +138,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       logoutButton.heightAnchor.constraint(equalToConstant: 32.0)
       ])
 
-    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
-    navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton),
-                                          UIBarButtonItem(customView: cropsButton)]
-    navigationBar.setItems([navigationItem], animated: true)
+    navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
+    navItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton), UIBarButtonItem(customView: cropsButton)]
+    navigationBar.setItems([navItem], animated: true)
   }
 
   func initialiseInterventionButtons() {
@@ -442,10 +441,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let calendar = Calendar.current
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
+    let farmNameLabel = navItem.leftBarButtonItem?.customView as? UILabel
 
     queryFarms { (success) in
       if success {
-        self.farmNameLabel.text = self.fetchFarmName()
+        farmNameLabel?.text = self.fetchFarmName()
         self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
