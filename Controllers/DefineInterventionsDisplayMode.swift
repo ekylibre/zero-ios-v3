@@ -64,67 +64,41 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadInputsFromIntervention(_ entityName: String, _ intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-
-    inputsFetchRequest.predicate = predicate
-    do {
-      let inputs = try managedContext.fetch(inputsFetchRequest)
-      managedContext.performAndWait {
-        for input in inputs as! [NSManagedObject] {
-          selectedInputs.append(input)
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-  }
-
   func loadInputs() {
-    loadInputsFromIntervention("InterventionSeed", currentIntervention)
-    loadInputsFromIntervention("InterventionPhytosanitary", currentIntervention)
-    loadInputsFromIntervention("InterventionFertilizer", currentIntervention)
+    let interventionSeeds = currentIntervention.interventionSeeds
+    let interventionPhytosanitaries = currentIntervention.interventionPhytosanitaries
+    let interventionFertilizers = currentIntervention.interventionFertilizers
+
+    for case let interventionSeed as InterventionSeed in interventionSeeds! {
+      selectedInputs.append(interventionSeed)
+    }
+    for case let interventionPhyto as InterventionPhytosanitary in interventionPhytosanitaries! {
+      selectedInputs.append(interventionPhyto)
+    }
+    for case let interventionFertilizer as InterventionFertilizer in interventionFertilizers! {
+      selectedInputs.append(interventionFertilizer)
+    }
     refreshSelectedInputs()
   }
 
   func loadMaterials() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
+    let interventionMaterials = currentIntervention.interventionMaterials
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionMaterialsFetchRequest: NSFetchRequest<InterventionMaterial> = InterventionMaterial.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", currentIntervention)
-
-    interventionMaterialsFetchRequest.predicate = predicate
-
-    do {
-      let interventionMaterials = try managedContext.fetch(interventionMaterialsFetchRequest)
-
-      for interventionMaterial in interventionMaterials {
-        if interventionMaterial.material != nil {
-          selectMaterial(interventionMaterial.material!, quantity: interventionMaterial.quantity, unit: interventionMaterial.unit!)
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+    for case let interventionMaterial as InterventionMaterial in interventionMaterials! {
+      selectMaterial(interventionMaterial.material!, quantity: interventionMaterial.quantity, unit: interventionMaterial.unit!)
     }
     refreshSelectedMaterials()
   }
 
   func loadHarvest() {
-    for harvest in currentIntervention.harvests?.allObjects as! [Harvest] {
-      harvests.append(harvest)
+    let interventionHarvests = currentIntervention.harvests
+
+    for case let harvest as Harvest in interventionHarvests! {
+      selectedHarvests.append(harvest)
     }
     addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
-    if harvests.count > 0 {
-      harvestType.setTitle(harvests.first?.type, for: .normal)
+    if selectedHarvests.count > 0 {
+      harvestType.setTitle(selectedHarvests.first?.type, for: .normal)
       refreshHarvestView()
     }
   }

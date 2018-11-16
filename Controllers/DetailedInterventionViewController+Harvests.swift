@@ -197,7 +197,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvest.quantity = 0
     harvest.type = nil
     harvest.unit = "QUINTAL"
-    harvests.append(harvest)
+    selectedHarvests.append(harvest)
   }
 
   func createStorage(name: String, type: String) {
@@ -233,14 +233,14 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { (action: UIAlertAction!) in
-      self.harvests.remove(at: indexPath.row)
+      self.selectedHarvests.remove(at: indexPath.row)
       self.harvestTableView.reloadData()
-      if self.harvests.count == 0 {
+      if self.selectedHarvests.count == 0 {
         self.harvestTableView.isHidden = true
         self.harvestType.isHidden = true
         self.harvestNature.isHidden = true
         self.harvestViewHeightConstraint.constant = 70
-      } else if self.harvests.count < 4 {
+      } else if self.selectedHarvests.count < 4 {
         UIView.animate(withDuration: 0.5, animations: {
           self.harvestTableViewHeightConstraint.constant = self.harvestTableView.contentSize.height
           self.harvestViewHeightConstraint.constant = self.harvestTableViewHeightConstraint.constant + 125
@@ -257,7 +257,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestType.isHidden = false
     harvestTableView.isHidden = false
     harvestTableView.reloadData()
-    if harvests.count < 4 {
+    if selectedHarvests.count < 4 {
       harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
       harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
     }
@@ -268,7 +268,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestType.isHidden = false
     harvestTableView.isHidden = false
     harvestTableView.reloadData()
-    if harvests.count < 4 {
+    if selectedHarvests.count < 4 {
       harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
       harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
     }

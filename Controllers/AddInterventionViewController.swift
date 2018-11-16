@@ -144,7 +144,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var cellIndexPath: IndexPath!
   var weather: Weather!
   var weatherIsSelected: Bool = false
-  var harvests = [Harvest]()
+  var selectedHarvests = [Harvest]()
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
   var harvestSelectedType: String!
@@ -310,7 +310,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case selectedPersonsTableView:
       return selectedPersons[0].count
     case harvestTableView:
-      return harvests.count
+      return selectedHarvests.count
     default:
       return 1
     }
@@ -420,7 +420,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return cell
     case harvestTableView:
       let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
-      let harvest = harvests[indexPath.row]
+      let harvest = selectedHarvests[indexPath.row]
       let unit = harvest.unit
 
       cell.addInterventionController = self
@@ -434,7 +434,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.storage.layer.borderWidth = 1
       cell.storage.layer.cornerRadius = 5
-      cell.storage.setTitle(harvests[indexPath.row].storage?.name ?? "---", for: .normal)
+      cell.storage.setTitle(selectedHarvests[indexPath.row].storage?.name ?? "---", for: .normal)
       cell.quantity.keyboardType = .decimalPad
       cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
       cell.quantity.layer.borderWidth = 1
@@ -692,7 +692,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       for harvest in fetchedHarvests {
         managedContext.delete(harvest)
       }
-      for harvestEntity in harvests {
+      for harvestEntity in selectedHarvests {
         let harvest = Harvest(context: managedContext)
         let type = harvestType.titleLabel?.text
 
@@ -871,7 +871,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    for harvestEntity in harvests {
+    for harvestEntity in selectedHarvests {
       let harvest = Harvest(context: managedContext)
 
       harvest.type = harvestSelectedType

@@ -73,10 +73,10 @@ extension AddInterventionViewController {
   func harvestErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
-    if harvests.count == 0 {
+    if selectedHarvests.count == 0 {
       alert.message = "you_must_create_a_harvest_load".localized
     } else {
-      for harvest in harvests {
+      for harvest in selectedHarvests {
         if harvest.quantity == 0 {
           alert.message = "you_must_enter_harvest_quantity".localized
         }
