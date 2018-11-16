@@ -798,6 +798,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
+  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    if notesTextView.textColor == .lightGray {
+      return false
+    }
+    return true
+  }
+
   func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
     if notesTextView.text.count == 0 {
       setTextViewPlaceholder()
