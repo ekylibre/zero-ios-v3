@@ -219,4 +219,58 @@ class InputsTests: XCTestCase {
                    "create_new_ferti".localized.uppercased(),
                    "createButton title must be 'create_new_ferti' when selectedSegmentIndex is 2")
   }
+
+  func test_selectedSegment_withImplantationType_shouldBeFirst() {
+    //Given
+    let interventionType = InterventionType.Implantation.rawValue
+
+    //When
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
+                   "selectedSegment must be first before changing intervnetionType")
+    addInterventionVC.interventionType = interventionType
+    addInterventionVC.setupViewsAccordingInterventionType()
+
+    //Then
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
+                   "selectedSegment must be first for implantation interventions")
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(),
+                   "createButton title must be 'create_new_seed' when selectedSegmentIndex == 0")
+  }
+
+  func test_selectedSegment_withCropProtectionType_shouldBeSecond() {
+    //Given
+    let interventionType = InterventionType.CropProtection.rawValue
+
+    //When
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
+                   "selectedSegment must be first before changing intervnetionType")
+    addInterventionVC.interventionType = interventionType
+    addInterventionVC.setupViewsAccordingInterventionType()
+
+    //Then
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 1,
+                   "selectedSegment must be second for cropProtection interventions")
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_phyto".localized.uppercased(),
+                   "createButton title must be 'create_new_phyto' when selectedSegmentIndex == 1")
+  }
+
+  func test_selectedSegment_withFertilizationType_shouldBeThird() {
+    //Given
+    let interventionType = InterventionType.Fertilization.rawValue
+
+    //When
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
+                   "selectedSegment must be first before changing intervnetionType")
+    addInterventionVC.interventionType = interventionType
+    addInterventionVC.setupViewsAccordingInterventionType()
+
+    //Then
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 2,
+                   "selectedSegment must be third for fertilization interventions")
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_ferti".localized.uppercased(),
+                   "createButton title must be 'create_new_ferti' when selectedSegmentIndex == 2")
+  }
 }
