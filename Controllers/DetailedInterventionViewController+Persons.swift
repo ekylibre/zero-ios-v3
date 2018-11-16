@@ -126,7 +126,7 @@ extension AddInterventionViewController {
   @objc func tapPersonsDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedPersonCell
     let indexPath = selectedPersonsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: nil, message: "delete_person_prompt".localized, preferredStyle: .alert)
+    let alert = UIAlertController(title: "delete_person_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in

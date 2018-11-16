@@ -146,7 +146,7 @@ extension AddInterventionViewController {
   @objc func tapEquipmentsDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedEquipmentCell
     let indexPath = selectedEquipmentsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: nil, message: "delete_equipment_prompt".localized, preferredStyle: .alert)
+    let alert = UIAlertController(title: "delete_equipment_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
