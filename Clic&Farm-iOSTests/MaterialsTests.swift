@@ -61,7 +61,7 @@ class MaterialsTests: XCTestCase {
     XCTAssertTrue(addInterventionVC.materialsSelectionView.checkMaterialName(),
                   "checkMaterialName must return true when the name is valid")
     XCTAssertTrue(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
-                   "errorLabel must be hidden when there is not any error")
+                  "errorLabel must be hidden when there is not any error")
   }
 
   func test_checkMaterialName_withEmptyName_shouldReturnFalse() {
@@ -75,7 +75,7 @@ class MaterialsTests: XCTestCase {
 
     //Then
     XCTAssertFalse(addInterventionVC.materialsSelectionView.checkMaterialName(),
-                  "checkMaterialName must return true when the name is empty")
+                   "checkMaterialName must return true when the name is empty")
     XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
                    "errorLabel must not be hidden when there is an error")
   }
@@ -117,9 +117,9 @@ class MaterialsTests: XCTestCase {
 
     //Then
     XCTAssertFalse(addInterventionVC.materialsSelectionView.checkMaterialName(),
-                  "checkMaterialName must return false when the name is already taken by a material")
+                   "checkMaterialName must return false when the name is already taken by a material")
     XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
-                  "errorLabel must not be hidden when there is an error")
+                   "errorLabel must not be hidden when there is an error")
   }
 
   func test_searchBarCancelButtonClicked() {
@@ -134,7 +134,19 @@ class MaterialsTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.materialsSelectionView.isSearching, "Shouldn't searching")
   }
 
-  func test_materialsCountLabel_withSingleSelectedmaterial_shouldBeDisplayed() {
+  func test_materialsCountLabel_withoutSelectedMaterials_shouldBeHidden() {
+    //When
+    addInterventionVC.selectedMaterials[0].removeAll()
+    XCTAssertEqual(addInterventionVC.selectedMaterials[0].count, 0, "selectedMaterials must be empty")
+    addInterventionVC.tapMaterialsView()
+    addInterventionVC.tapMaterialsView()
+
+    //Then
+    XCTAssertTrue(addInterventionVC.materialsCountLabel.isHidden,
+                  "materialsCountLabel must be hidden if selectedMaterials is empty")
+  }
+
+  func test_materialsCountLabel_withSingleSelectedMaterial_shouldBeDisplayed() {
     //Given
     let material = sut.insertObject(entityName: "Material") as! Material
 
@@ -153,7 +165,7 @@ class MaterialsTests: XCTestCase {
                    "materialsCountLabel text must be 'material' when only one material is selected")
   }
 
-  func test_materialsCountLabel_withMultipleSelectedmaterials_shouldBeDisplayed() {
+  func test_materialsCountLabel_withMultipleSelectedMaterials_shouldBeDisplayed() {
     //Given
     let firstMaterial = sut.insertObject(entityName: "Material") as! Material
     let secondMaterial = sut.insertObject(entityName: "Material") as! Material
@@ -172,17 +184,5 @@ class MaterialsTests: XCTestCase {
                    "materialsCountLabel must not be hidden if selectedMaterials is not empty")
     XCTAssertEqual(addInterventionVC.materialsCountLabel.text, String(format: "materials".localized, 2),
                    "materialsCountLabel text must be 'materials' when multiple materials are selected")
-  }
-
-  func test_materialsCountLabel_withoutSelectedMaterials_shouldBeHidden() {
-    //When
-    addInterventionVC.selectedMaterials[0].removeAll()
-    XCTAssertEqual(addInterventionVC.selectedMaterials[0].count, 0, "selectedMaterials must be empty")
-    addInterventionVC.tapMaterialsView()
-    addInterventionVC.tapMaterialsView()
-
-    //Then
-    XCTAssertTrue(addInterventionVC.materialsCountLabel.isHidden,
-                  "materialsCountLabel must be hidden if selectedMaterials is empty")
   }
 }

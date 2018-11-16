@@ -61,7 +61,7 @@ class EquipmentsTests: XCTestCase {
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
                   "checkEquipmentName must return true when the name is valid")
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
-                   "errorLabel must be hidden when there is not any error")
+                  "errorLabel must be hidden when there is not any error")
   }
 
   func test_checkEquipmentName_withEmptyName_shouldReturnFalse() {
@@ -75,7 +75,7 @@ class EquipmentsTests: XCTestCase {
 
     //Then
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
-                  "checkEquipmentName must return false when the name is empty")
+                   "checkEquipmentName must return false when the name is empty")
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
                    "errorLabel must not be hidden when there is an error")
   }
@@ -98,7 +98,7 @@ class EquipmentsTests: XCTestCase {
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
                   "checkEquipmentName must return true when there is not an existing equipment with this same name")
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
-                   "errorLabel must be hidden when there is not any error")
+                  "errorLabel must be hidden when there is not any error")
   }
 
   func test_checkEquipmentName_withExistingName_shouldReturnFalse() {
@@ -117,7 +117,7 @@ class EquipmentsTests: XCTestCase {
 
     //Then
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
-                  "checkEquipmentName must return false when the name is already taken by an equipment")
+                   "checkEquipmentName must return false when the name is already taken by an equipment")
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
                    "errorLabel must not be hidden when there is an error")
   }
