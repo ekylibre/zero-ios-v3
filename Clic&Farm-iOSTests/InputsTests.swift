@@ -126,9 +126,9 @@ class InputsTests: XCTestCase {
     XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 420,
                    "inputsHeightConstraint should be 420 if selectedInputs contains 3 inputs")
     XCTAssertFalse(addInterventionVC.inputsAddButton.isHidden,
-                   "inputsAddButton must be hidden if inputsView is expand")
+                   "inputsAddButton must be displayed if inputsView is expand")
     XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,
-                  "inputsCountLabel must be displayed if selectedInputs is filled")
+                  "inputsCountLabel must be hidden if inputsView is expand")
   }
 
   func addSampleInputsForTests() {
@@ -169,9 +169,9 @@ class InputsTests: XCTestCase {
     XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 1190,
                    "inputsHeightConstraint should be 1190 if selectedInputs contains 10 inputs or more")
     XCTAssertFalse(addInterventionVC.inputsAddButton.isHidden,
-                   "inputsAddButton must be hidden if inputsView is expand")
+                   "inputsAddButton must be displayed if inputsView is expand")
     XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,
-                  "inputsCountLabel must be displayed if selectedInputs is filled")
+                  "inputsCountLabel must be hidden if inputsView is expand")
   }
 
   func test_inputsCreateButton_withDefaultValue_shouldNotChange() {
