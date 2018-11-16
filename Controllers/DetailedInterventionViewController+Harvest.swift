@@ -226,7 +226,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   func removeHarvestCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(
-      title: "",
+      title: nil,
       message: "delete_harvest_prompt".localized,
       preferredStyle: .alert
     )
