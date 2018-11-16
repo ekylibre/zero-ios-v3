@@ -1,5 +1,5 @@
 //
-//  Clic_Farm_iOSMockTests.swift
+//  ApolloTests.swift
 //  Clic&Farm-iOSMockTests
 //
 //  Created by Guillaume Roux on 16/11/2018.
@@ -10,7 +10,7 @@ import XCTest
 @testable import Clic_Farm_iOS
 import Apollo
 
-class Clic_Farm_iOSMockTests: XCTestCase {
+class ApolloTests: XCTestCase {
 
     override func setUp() {
       super.setUp()
