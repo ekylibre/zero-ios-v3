@@ -88,16 +88,90 @@ class InputsTests: XCTestCase {
                    "inputsCountLabel text must be 'inputs' when multiple inputs are selected")
   }
 
-  func test_inputsCountLabel_withoutSelectedInputs_shouldBeHidden() {
+  func test_tapInputsView_withoutSelectedInputs_shouldCollapse() {
+    // Given
+    addInterventionVC.inputsHeightConstraint.constant = 70
+
     // When
     addInterventionVC.selectedInputs.removeAll()
     XCTAssertEqual(addInterventionVC.selectedInputs.count, 0, "selectedInputs must be empty")
     addInterventionVC.tapInputsView()
+    //addInterventionVC.tapInputsView()
+
+    // Then
+    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 70,
+                   "inputsHeightConstraint should be 70 if selectedInputs is empty")
+    XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,
+                  "inputsCountLabel must be hidden if selectedInputs is empty")
+  }
+
+  func test_tapInputsView_withMultiplesSelectedInputs_shouldExpand() {
+    // Given
+    let firstInput = sut.insertObject(entityName: "Fertilizer") as! Fertilizer
+    let secondInput = sut.insertObject(entityName: "Phyto") as! Phyto
+    let thirdInput = sut.insertObject(entityName: "Seed") as! Seed
+
+    addInterventionVC.inputsHeightConstraint.constant = 70
+
+    // When
+    addInterventionVC.selectedInputs.removeAll()
+    XCTAssertEqual(addInterventionVC.selectedInputs.count, 0, "selectedInputs must be empty")
+    addInterventionVC.selectedInputs.append(firstInput)
+    addInterventionVC.selectedInputs.append(secondInput)
+    addInterventionVC.selectedInputs.append(thirdInput)
+    XCTAssertEqual(addInterventionVC.selectedInputs.count, 3, "selectedInputs must contain new inputs")
     addInterventionVC.tapInputsView()
 
     // Then
+    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 420,
+                   "inputsHeightConstraint should be 420 if selectedInputs contains 3 inputs")
+    XCTAssertFalse(addInterventionVC.inputsAddButton.isHidden,
+                   "inputsAddButton must be hidden if inputsView is expand")
     XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,
-                  "inputsCountLabel must be hidden if selectedInputs is empty")
+                  "inputsCountLabel must be displayed if selectedInputs is filled")
+  }
+
+  func addSampleInputsForTests() {
+    var index = 0
+    let entityName = [0: "Seed", 1: "Phyto", 2: "Fertilizer"]
+
+    while index != 11 {
+      let rand = Int.random(in: 0..<3)
+      switch entityName[rand] {
+      case "Seed":
+        let input = sut.insertObject(entityName: entityName[rand]!) as! Seed
+        addInterventionVC.selectedInputs.append(input)
+      case "Phyto":
+        let input = sut.insertObject(entityName: entityName[rand]!) as! Phyto
+        addInterventionVC.selectedInputs.append(input)
+      case "Fertilizer":
+        let input = sut.insertObject(entityName: entityName[rand]!) as! Fertilizer
+        addInterventionVC.selectedInputs.append(input)
+      default:
+        return
+      }
+      index += 1
+    }
+  }
+
+  func test_tapInputsView_withElevenSelectedInputs_shouldExpand() {
+    // Given
+    addInterventionVC.inputsHeightConstraint.constant = 70
+
+    // When
+    addInterventionVC.selectedInputs.removeAll()
+    XCTAssertEqual(addInterventionVC.selectedInputs.count, 0, "selectedInputs must be empty")
+    addSampleInputsForTests()
+    XCTAssertEqual(addInterventionVC.selectedInputs.count, 11, "selectedInputs must contain new inputs")
+    addInterventionVC.tapInputsView()
+
+    // Then
+    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 1190,
+                   "inputsHeightConstraint should be 1190 if selectedInputs contains 10 inputs or more")
+    XCTAssertFalse(addInterventionVC.inputsAddButton.isHidden,
+                   "inputsAddButton must be hidden if inputsView is expand")
+    XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,
+                  "inputsCountLabel must be displayed if selectedInputs is filled")
   }
 
   func test_inputsCreateButton_withDefaultValue_shouldNotChange() {
