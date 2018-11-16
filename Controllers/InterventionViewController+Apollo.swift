@@ -263,9 +263,6 @@ extension InterventionViewController {
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
     let _ = apollo.clearCache()
 
-    print("\nInput: \(input)")
-    print("\nType: \(type)")
-    print("\nUnit: \(unit)")
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
@@ -815,6 +812,7 @@ extension InterventionViewController {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+    print("Working period: \(workingPeriod)")
     return workingPeriod
   }
 
@@ -1042,9 +1040,6 @@ extension InterventionViewController {
   // MARK: Intervention
 
   private func saveEntitiesIntoIntervention(intervention: Intervention, fetchedIntervention: InterventionQuery.Data.Farm.Intervention) -> Intervention {
-    for workingDay in fetchedIntervention.workingDays {
-      intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: workingDay))
-    }
     for fetchedEquipment in fetchedIntervention.tools! {
       intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
     }
@@ -1078,12 +1073,14 @@ extension InterventionViewController {
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
-    (fetchedIntervention.workingDays.first != nil) ? intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!)) : nil
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
     (intervention.type == InterventionType.Irrigation.rawValue) ? intervention.waterQuantity = Float(fetchedIntervention.waterQuantity!) : nil
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
     intervention.status = (fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue
+    if intervention.workingPeriods?.count == 0 {
+      intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!))
+    }
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
     }
@@ -1191,7 +1188,12 @@ extension InterventionViewController {
     var intervention = returnEntityIfSame(entityName: "Intervention", predicate: predicate) as? Intervention
 
     if intervention != nil {
-      (fetchedIntervention.workingDays.first != nil) ? intervention?.addToWorkingPeriods(saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!)) : nil
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "yyyy-MM-dd"
+      let date = dateFormatter.date(from: fetchedIntervention.workingDays.first!.executionDate!)
+
+      intervention?.workingPeriods?.setValue(date, forKey: "executionDate")
+      intervention?.workingPeriods?.setValue(fetchedIntervention.workingDays.first?.hourDuration, forKey: "hourDuration")
       intervention?.weather?.temperature = fetchedIntervention.weather?.temperature as NSNumber?
       intervention?.weather?.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
       intervention?.weather?.weatherDescription = (fetchedIntervention.weather?.description).map { $0.rawValue }
