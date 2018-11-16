@@ -131,11 +131,11 @@ class InputsTests: XCTestCase {
                   "inputsCountLabel must be hidden if inputsView is expand")
   }
 
-  func addSampleInputsForTests() {
+  func addSampleInputsForTests(_ inputsNumber: Int) {
     var index = 0
     let entityName = [0: "Seed", 1: "Phyto", 2: "Fertilizer"]
 
-    while index != 11 {
+    while index != inputsNumber {
       let rand = Int.random(in: 0..<3)
       switch entityName[rand] {
       case "Seed":
@@ -161,7 +161,7 @@ class InputsTests: XCTestCase {
     // When
     addInterventionVC.selectedInputs.removeAll()
     XCTAssertEqual(addInterventionVC.selectedInputs.count, 0, "selectedInputs must be empty")
-    addSampleInputsForTests()
+    addSampleInputsForTests(11)
     XCTAssertEqual(addInterventionVC.selectedInputs.count, 11, "selectedInputs must contain new inputs")
     addInterventionVC.tapInputsView()
 
