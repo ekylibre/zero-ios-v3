@@ -812,7 +812,6 @@ extension InterventionViewController {
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-    print("Working period: \(workingPeriod)")
     return workingPeriod
   }
 

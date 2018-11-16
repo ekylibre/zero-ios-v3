@@ -521,31 +521,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     currentIntervention.status = InterventionState.Created.rawValue
     currentIntervention.infos = notesTextField.text
     currentIntervention.farmID = appDelegate.farmID
-    if interventionType == "IRRIGATION" {
-      let waterVolume = irrigationVolumeTextField.text!.floatValue
-
-      currentIntervention.waterQuantity = waterVolume
-      switch irrigationUnitButton.titleLabel?.text {
-      case "m³":
-        currentIntervention.waterUnit = "CUBIC_METER"
-      case "hl":
-        currentIntervention.waterUnit = "HECTOLITER"
-      case "l":
-        currentIntervention.waterUnit = "LITER"
-      default:
-        currentIntervention.waterUnit = ""
-      }
-    }
-    createTargets(intervention: currentIntervention)
-    createEquipments(intervention: currentIntervention)
-    createInterventionPersons(intervention: currentIntervention)
-    saveInterventionInputs(intervention: currentIntervention)
-    createMaterials(intervention: currentIntervention)
-    createHarvest(intervention: currentIntervention)
+    changeWaterUnit()
+    createTargets(currentIntervention)
+    createEquipments(currentIntervention)
+    createInterventionPersons(currentIntervention)
+    saveInterventionInputs(currentIntervention)
+    createMaterials(currentIntervention)
+    createHarvest(currentIntervention)
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
-    saveWeather(intervention: currentIntervention)
+    saveWeather(currentIntervention)
 
     do {
       try managedContext.save()
@@ -559,18 +545,22 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if !checkErrorsAccordingInterventionType() {
       return
     }
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriod = WorkingPeriod(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
 
-    workingPeriod.intervention = currentIntervention
-    workingPeriod.executionDate = selectDateView.datePicker.date
-    workingPeriod.hourDuration = duration
+    currentIntervention.workingPeriods?.setValue(selectDateView.datePicker.date, forKey: "executionDate")
+    currentIntervention.workingPeriods?.setValue(duration, forKey: "hourDuration")
     currentIntervention.infos = notesTextField.text
+    changeWaterUnit()
+    updateTargets(currentIntervention)
+    updateEquipments(currentIntervention)
+    updatePersons(currentIntervention)
+    updateInputs(currentIntervention)
+    updateHarvest(currentIntervention)
+    currentIntervention.status = InterventionState.Created.rawValue
+    performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
+  }
+
+  func changeWaterUnit() {
     if interventionType == "IRRIGATION" {
       let waterVolume = irrigationVolumeTextField.text!.floatValue
 
@@ -586,16 +576,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
         currentIntervention.waterUnit = ""
       }
     }
-    updateTargets(intervention: currentIntervention)
-    updateEquipments(intervention: currentIntervention)
-    updatePersons(intervention: currentIntervention)
-    updateInputs(intervention: currentIntervention)
-    updateHarvest(intervention: currentIntervention)
-    currentIntervention.status = InterventionState.Created.rawValue
-    performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
-  func updateEquipments(intervention: Intervention) {
+  func updateEquipments(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -623,7 +606,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func updateTargets(intervention: Intervention) {
+  func updateTargets(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -639,13 +622,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       for target in targets {
         managedContext.delete(target)
       }
-      createTargets(intervention: intervention)
+      createTargets(intervention)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
 
-  func updatePersons(intervention: Intervention) {
+  func updatePersons(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -674,7 +657,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func updateHarvest(intervention: Intervention) {
+  func updateHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -709,7 +692,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func deleteInput(intervention: Intervention, inputName: String) {
+  func deleteInput(_ intervention: Intervention, _ inputName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -731,16 +714,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func updateInputs(intervention: Intervention) {
+  func updateInputs(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    deleteInput(intervention: intervention, inputName: "InterventionSeed")
-    deleteInput(intervention: intervention, inputName: "InterventionPhytosanitary")
-    deleteInput(intervention: intervention, inputName: "InterventionFertilizer")
+    deleteInput(intervention, "InterventionSeed")
+    deleteInput(intervention, "InterventionPhytosanitary")
+    deleteInput(intervention, "InterventionFertilizer")
 
     do {
       for selectedInput in selectedInputs {
@@ -802,7 +785,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveInterventionInputs(intervention: Intervention) {
+  func saveInterventionInputs(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -820,7 +803,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createTargets(intervention: Intervention) {
+  func createTargets(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -842,7 +825,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createInterventionPersons(intervention: Intervention) {
+  func createInterventionPersons(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -864,7 +847,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createHarvest(intervention: Intervention) {
+  func createHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -889,7 +872,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createMaterials(intervention: Intervention) {
+  func createMaterials(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -910,7 +893,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(intervention: Intervention) {
+  func createEquipments(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -946,7 +929,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchedEntity = entity
   }
 
-  func saveWeather(intervention: Intervention) {
+  func saveWeather(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
