@@ -104,7 +104,9 @@ extension AddInterventionViewController {
   }
 
   func loadEquipments() {
-    for interventionEquipment in currentIntervention?.interventionEquipments?.allObjects as! [InterventionEquipment] {
+    let interventionEquipments = currentIntervention.interventionEquipments
+
+    for case let interventionEquipment as InterventionEquipment in interventionEquipments! {
       if interventionEquipment.equipment != nil {
         selectEquipment(interventionEquipment.equipment!)
       }
@@ -113,7 +115,9 @@ extension AddInterventionViewController {
   }
 
   func loadPersons() {
-    for interventionPerson in currentIntervention.interventionPersons?.allObjects as! [InterventionPerson] {
+    let interventionPersons = currentIntervention.interventionPersons
+
+    for case let interventionPerson as InterventionPerson in interventionPersons! {
       if interventionPerson.person != nil {
         selectPerson(interventionPerson.person!, interventionPerson.isDriver)
       }
