@@ -161,7 +161,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupActions() {
-    segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControl.Event.valueChanged)
+    segmentedControl.addTarget(self, action: #selector(changeSegment), for: .valueChanged)
     createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
     seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)

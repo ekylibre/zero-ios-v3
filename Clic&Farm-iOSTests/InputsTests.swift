@@ -99,4 +99,50 @@ class InputsTests: XCTestCase {
     XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,
                   "inputsCountLabel must be hidden if selectedInputs is empty")
   }
+
+  func test_inputsCreateButton_withDefaultValue_shouldNotChange() {
+    //When
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(),
+                   "createButton title default value must be 'create_new_seed'")
+    addInterventionVC.inputsAddButton.sendActions(for: .touchUpInside)
+
+    //Then
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(), "createButton title must not change")
+  }
+
+  func test_inputsCreateButton_withSegmentChangedToPhyto_shouldChange() {
+    //When
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(),
+                   "createButton title default value must be 'create_new_seed'")
+    addInterventionVC.inputsAddButton.sendActions(for: .touchUpInside)
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(), "createButton title must not change after opening")
+    addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex = 1
+    addInterventionVC.inputsSelectionView.segmentedControl.sendActions(for: .valueChanged)
+
+    //Then
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_phyto".localized.uppercased(),
+                   "createButton title must be 'create_new_phyto' when selectedSegmentIndex is 1")
+  }
+
+  func test_inputsCreateButton_withSegmentChangedToFertilizer_shouldChange() {
+    //When
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(),
+                   "createButton title default value must be 'create_new_seed'")
+    addInterventionVC.inputsAddButton.sendActions(for: .touchUpInside)
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_seed".localized.uppercased(), "createButton title must not change after opening")
+    addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
+    addInterventionVC.inputsSelectionView.segmentedControl.sendActions(for: .valueChanged)
+
+    //Then
+    XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
+                   "create_new_ferti".localized.uppercased(),
+                   "createButton title must be 'create_new_ferti' when selectedSegmentIndex is 2")
+  }
 }
