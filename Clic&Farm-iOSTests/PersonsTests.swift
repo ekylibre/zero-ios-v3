@@ -7,21 +7,44 @@
 //
 
 import XCTest
+import CoreData
 @testable import Clic_Farm_iOS
 
 class PersonsTests: XCTestCase {
   
   var addInterventionVC: AddInterventionViewController!
+  var sut: StorageManager!
+  let managedObjectModel: NSManagedObjectModel = {
+    let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main])!
+    return managedObjectModel
+  }()
+  lazy var mockPersistentContainer: NSPersistentContainer = {
+    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: self.managedObjectModel)
+    let description = NSPersistentStoreDescription()
+    description.type = NSInMemoryStoreType
+    description.shouldAddStoreAsynchronously = false
+    container.persistentStoreDescriptions = [description]
+    container.loadPersistentStores { (description, error) in
+      precondition(description.type == NSInMemoryStoreType)
+
+      if let error = error {
+        fatalError("Create an in-mem coordinator failed \(error)")
+      }
+    }
+    return container
+  }()
 
   override func setUp() {
     super.setUp()
     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
     addInterventionVC = storyboard.instantiateViewController(withIdentifier: "AddInterventionVC") as? AddInterventionViewController
     let _ = addInterventionVC.view
+    sut = StorageManager(container: mockPersistentContainer)
   }
 
   override func tearDown() {
     addInterventionVC = nil
+    sut = nil
     super.tearDown()
   }
 
@@ -156,5 +179,61 @@ class PersonsTests: XCTestCase {
     XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.isHidden, "Should be hidden")
     XCTAssertEqual(addInterventionVC.personsSelectionView.creationView.firstNameTextField.text, "", "Should be empty")
     XCTAssertEqual(addInterventionVC.personsSelectionView.creationView.lastNameTextField.text, "", "Should be empty")
+  }
+
+  func test_personsCountLabel_withoutSelectedPersons_shouldBeHidden() {
+    //When
+    addInterventionVC.selectedPersons[0].removeAll()
+    XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 0, "selectedPersons must be empty")
+    addInterventionVC.tapPersonsView()
+    addInterventionVC.tapPersonsView()
+
+    //Then
+    XCTAssertTrue(addInterventionVC.personsCountLabel.isHidden,
+                  "personsCountLabel must be hidden if selectedPersons is empty")
+  }
+
+  func test_personsCountLabel_withSingleSelectedPerson_shouldBeDisplayed() {
+    //Given
+    let person = sut.insertObject(entityName: "Person") as! Person
+
+    //When
+    addInterventionVC.selectedPersons[0].removeAll()
+    XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 0, "selectedPersons must be empty")
+    addInterventionVC.selectedPersons[0].append(person)
+    XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 1, "selectedPersons must contain new person")
+    addInterventionVC.tapPersonsView()
+    addInterventionVC.tapPersonsView()
+
+    //Then
+    XCTAssertFalse(addInterventionVC.personsCountLabel.isHidden,
+                   "personsCountLabel must not be hidden if selectedPersons is not empty")
+    XCTAssertEqual(addInterventionVC.personsCountLabel.text, "person".localized,
+                   "personsCountLabel text must be 'person' when only one person is selected")
+  }
+
+  func test_personsCountLabel_withMultipleSelectedPersons_shouldBeDisplayed() {
+    //Given
+    let firstPerson = sut.insertObject(entityName: "Person") as! Person
+    let secondPerson = sut.insertObject(entityName: "Person") as! Person
+    let thirdPerson = sut.insertObject(entityName: "Person") as! Person
+    let fourthPerson = sut.insertObject(entityName: "Person") as! Person
+
+    //When
+    addInterventionVC.selectedPersons[0].removeAll()
+    XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 0, "selectedPersons must be empty")
+    addInterventionVC.selectedPersons[0].append(firstPerson)
+    addInterventionVC.selectedPersons[0].append(secondPerson)
+    addInterventionVC.selectedPersons[0].append(thirdPerson)
+    addInterventionVC.selectedPersons[0].append(fourthPerson)
+    XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 4, "selectedPersons must contain new persons")
+    addInterventionVC.tapPersonsView()
+    addInterventionVC.tapPersonsView()
+
+    //Then
+    XCTAssertFalse(addInterventionVC.personsCountLabel.isHidden,
+                   "personsCountLabel must not be hidden if selectedPersons is not empty")
+    XCTAssertEqual(addInterventionVC.personsCountLabel.text, String(format: "persons".localized, 4),
+                   "personsCountLabel text must be 'persons' when multiple persons are selected")
   }
 }

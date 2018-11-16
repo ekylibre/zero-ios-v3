@@ -77,7 +77,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction private func tapPersonsView() {
+  @IBAction func tapPersonsView() {
     let shouldExpand = (personsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedPersons[0].count > 10) ? 10 * 65 : selectedPersons[0].count * 65
 
