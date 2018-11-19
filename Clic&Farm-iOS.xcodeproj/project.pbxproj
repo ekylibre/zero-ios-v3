@@ -91,7 +91,6 @@
 		6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */; };
 		6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113189219C3CAA002272F0 /* CropsTests.swift */; };
 		6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11318B219C6791002272F0 /* WeatherTests.swift */; };
-		6B1C9A4F219EF30E00CB7709 /* ApolloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1C9A4E219EF30E00CB7709 /* ApolloTests.swift */; };
 		6B28441C219D877500DED846 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28441B219D877500DED846 /* StorageManager.swift */; };
 		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
 		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
@@ -105,13 +104,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6B1C9A51219EF30F00CB7709 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6BEA65652105C5EE0072840F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6BEA656C2105C5EE0072840F;
-			remoteInfo = "Clic&Farm-iOS";
-		};
 		6BEA65852105C5EF0072840F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6BEA65652105C5EE0072840F /* Project object */;
@@ -212,9 +204,6 @@
 		6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPeriodTests.swift; sourceTree = "<group>"; };
 		6B113189219C3CAA002272F0 /* CropsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropsTests.swift; sourceTree = "<group>"; };
 		6B11318B219C6791002272F0 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
-		6B1C9A4C219EF30E00CB7709 /* Clic&Farm-iOSMockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSMockTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B1C9A4E219EF30E00CB7709 /* ApolloTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloTests.swift; sourceTree = "<group>"; };
-		6B1C9A50219EF30E00CB7709 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B28441B219D877500DED846 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
@@ -231,13 +220,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		6B1C9A49219EF30E00CB7709 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6BEA656A2105C5EE0072840F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -402,15 +384,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		6B1C9A4D219EF30E00CB7709 /* Clic&Farm-iOSMockTests */ = {
-			isa = PBXGroup;
-			children = (
-				6B1C9A4E219EF30E00CB7709 /* ApolloTests.swift */,
-				6B1C9A50219EF30E00CB7709 /* Info.plist */,
-			);
-			path = "Clic&Farm-iOSMockTests";
-			sourceTree = "<group>";
-		};
 		6B4CA89B214F9B560052073D /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,7 +419,6 @@
 				6BA3713D213963230086DF9B /* Resources */,
 				0480CA432165068F0039FCB9 /* Library */,
 				6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */,
-				6B1C9A4D219EF30E00CB7709 /* Clic&Farm-iOSMockTests */,
 				6BEA656E2105C5EE0072840F /* Products */,
 				047B57CB2108605400C48F68 /* Frameworks */,
 			);
@@ -457,7 +429,6 @@
 			children = (
 				6BEA656D2105C5EE0072840F /* Clic&Farm-iOS.app */,
 				6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */,
-				6B1C9A4C219EF30E00CB7709 /* Clic&Farm-iOSMockTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -492,24 +463,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6B1C9A4B219EF30E00CB7709 /* Clic&Farm-iOSMockTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6B1C9A55219EF30F00CB7709 /* Build configuration list for PBXNativeTarget "Clic&Farm-iOSMockTests" */;
-			buildPhases = (
-				6B1C9A48219EF30E00CB7709 /* Sources */,
-				6B1C9A49219EF30E00CB7709 /* Frameworks */,
-				6B1C9A4A219EF30E00CB7709 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6B1C9A52219EF30F00CB7709 /* PBXTargetDependency */,
-			);
-			name = "Clic&Farm-iOSMockTests";
-			productName = "Clic&Farm-iOSMockTests";
-			productReference = 6B1C9A4C219EF30E00CB7709 /* Clic&Farm-iOSMockTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		6BEA656C2105C5EE0072840F /* Clic&Farm-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6BEA658D2105C5EF0072840F /* Build configuration list for PBXNativeTarget "Clic&Farm-iOS" */;
@@ -557,10 +510,6 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Ekylibre;
 				TargetAttributes = {
-					6B1C9A4B219EF30E00CB7709 = {
-						CreatedOnToolsVersion = 10.1;
-						TestTargetID = 6BEA656C2105C5EE0072840F;
-					};
 					6BEA656C2105C5EE0072840F = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1000;
@@ -588,19 +537,11 @@
 			targets = (
 				6BEA656C2105C5EE0072840F /* Clic&Farm-iOS */,
 				6BEA65832105C5EF0072840F /* Clic&Farm-iOSTests */,
-				6B1C9A4B219EF30E00CB7709 /* Clic&Farm-iOSMockTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		6B1C9A4A219EF30E00CB7709 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6BEA656B2105C5EE0072840F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -660,14 +601,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6B1C9A48219EF30E00CB7709 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6B1C9A4F219EF30E00CB7709 /* ApolloTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6BEA65692105C5EE0072840F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -767,11 +700,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6B1C9A52219EF30F00CB7709 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6BEA656C2105C5EE0072840F /* Clic&Farm-iOS */;
-			targetProxy = 6B1C9A51219EF30F00CB7709 /* PBXContainerItemProxy */;
-		};
 		6BEA65862105C5EF0072840F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6BEA656C2105C5EE0072840F /* Clic&Farm-iOS */;
@@ -808,49 +736,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		6B1C9A53219EF30F00CB7709 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6FPGXA7K7Z;
-				INFOPLIST_FILE = "Clic&Farm-iOSMockTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ekylibre.Clic-Farm-iOSMockTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clic&Farm-iOS.app/Clic&Farm-iOS";
-			};
-			name = Debug;
-		};
-		6B1C9A54219EF30F00CB7709 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6FPGXA7K7Z;
-				INFOPLIST_FILE = "Clic&Farm-iOSMockTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ekylibre.Clic-Farm-iOSMockTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clic&Farm-iOS.app/Clic&Farm-iOS";
-			};
-			name = Release;
-		};
 		6BEA658B2105C5EF0072840F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1056,15 +941,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6B1C9A55219EF30F00CB7709 /* Build configuration list for PBXNativeTarget "Clic&Farm-iOSMockTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6B1C9A53219EF30F00CB7709 /* Debug */,
-				6B1C9A54219EF30F00CB7709 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		6BEA65682105C5EE0072840F /* Build configuration list for PBXProject "Clic&Farm-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
