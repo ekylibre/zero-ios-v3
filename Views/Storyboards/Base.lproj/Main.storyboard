@@ -29,7 +29,7 @@
         <!--Intervention View Controller-->
         <scene sceneID="GPv-6C-vQQ">
             <objects>
-                <viewController storyboardIdentifier="InterventionViewController" id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InterventionViewController" id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bki-1z-HKT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -78,7 +78,7 @@
                                 <rect key="frame" x="0.0" y="93" width="375" height="470"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InterventionCell" rowHeight="90" id="IvT-FB-GAn" customClass="InterventionCell" customModule="clic_and_farm" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IvT-FB-GAn" id="bnZ-Ve-doS">
@@ -208,7 +208,7 @@
         <!--Add Intervention View Controller-->
         <scene sceneID="PGn-fO-1Ks">
             <objects>
-                <viewController id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DUW-oV-g3X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -595,7 +595,7 @@
                                                             <constraint firstAttribute="height" constant="150" id="DpE-um-EV5"/>
                                                         </constraints>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HarvestCell" rowHeight="149" id="ANj-fI-wdR" customClass="HarvestCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HarvestCell" rowHeight="149" id="ANj-fI-wdR" customClass="HarvestCell" customModule="clic_and_farm" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="149"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ANj-fI-wdR" id="6gO-bf-wtV">
@@ -1215,7 +1215,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prM-9G-bHc" userLabel="Notes View">
                                                 <rect key="frame" x="0.0" y="423" width="375" height="70"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sMy-as-Aui">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sMy-as-Aui">
                                                         <rect key="frame" x="20" y="30" width="335" height="30"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -1223,7 +1223,7 @@
                                                         </constraints>
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                     </textView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9a-56-fCp">
                                                         <rect key="frame" x="20" y="61" width="335" height="0.5"/>
@@ -1250,10 +1250,9 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="bh9-Fk-VZ0" firstAttribute="leading" secondItem="fGp-gL-8mm" secondAttribute="leading" id="JJf-W1-Crt"/>
-                                    <constraint firstAttribute="bottom" secondItem="bh9-Fk-VZ0" secondAttribute="bottom" constant="100" id="S3e-mK-3Kc"/>
                                     <constraint firstItem="bh9-Fk-VZ0" firstAttribute="centerX" secondItem="fGp-gL-8mm" secondAttribute="centerX" id="ToD-vD-C04"/>
                                     <constraint firstAttribute="trailing" secondItem="bh9-Fk-VZ0" secondAttribute="trailing" id="hGs-YQ-DfV"/>
-                                    <constraint firstAttribute="bottom" secondItem="bh9-Fk-VZ0" secondAttribute="bottom" constant="100" id="qpf-bM-q5d"/>
+                                    <constraint firstAttribute="bottom" secondItem="bh9-Fk-VZ0" secondAttribute="bottom" constant="50" id="qpf-bM-q5d"/>
                                     <constraint firstItem="bh9-Fk-VZ0" firstAttribute="top" secondItem="fGp-gL-8mm" secondAttribute="top" id="xw4-Y4-Wgp"/>
                                 </constraints>
                             </scrollView>
@@ -1384,6 +1383,8 @@
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="negativeTemperature" destination="8gD-ba-J2E" id="rB1-Yn-D0E"/>
                         <outlet property="notesTextView" destination="sMy-as-Aui" id="fDN-ce-XaT"/>
+                        <outlet property="notesTextViewHeightConstraint" destination="m6V-NU-pXu" id="Zjz-ck-9hO"/>
+                        <outlet property="notesViewHeightConstraint" destination="0az-Tl-ybJ" id="aua-lj-ZfX"/>
                         <outlet property="personsAddButton" destination="yGb-zU-Lzj" id="sEH-iA-1Gc"/>
                         <outlet property="personsCountLabel" destination="orv-Jv-Mfq" id="wBW-SM-aLH"/>
                         <outlet property="personsExpandImageView" destination="kwc-yl-NBR" id="Xuj-eY-7Ey"/>
@@ -1469,13 +1470,13 @@
         <!--List Table View Controller-->
         <scene sceneID="Gxg-d7-MJI">
             <objects>
-                <tableViewController id="mHI-gi-QLg" customClass="ListTableViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="mHI-gi-QLg" customClass="ListTableViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XGF-Qx-Lnm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="mxm-yl-8v2" customClass="ListCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="mxm-yl-8v2" customClass="ListCell" customModule="clic_and_farm" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mxm-yl-8v2" id="vdR-bD-PDH">
@@ -1517,7 +1518,7 @@
         <!--Login View Controller-->
         <scene sceneID="qGL-rz-WS6">
             <objects>
-                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ybY-bV-jLm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1579,7 +1580,7 @@
                                     <action selector="openForgottenPasswordLinkWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="1rn-ME-Wsc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="Clic_Farm_iOS" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="clic_and_farm" customModuleProvider="target">
                                 <rect key="frame" x="162.5" y="576" width="50" height="36"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Login">
@@ -1635,7 +1636,7 @@
         <!--No Internet On First Connection-->
         <scene sceneID="20c-UI-Xxq">
             <objects>
-                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i5Q-WN-VSA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

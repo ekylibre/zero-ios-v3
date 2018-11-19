@@ -17,7 +17,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var totalLabel: UILabel!
-  @IBOutlet weak var notesTextView: UITextView!
 
   // Working period
   @IBOutlet weak var workingPeriodHeightConstraint: NSLayoutConstraint!
@@ -106,6 +105,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var harvestNature: UILabel!
   @IBOutlet weak var harvestType: UIButton!
   @IBOutlet weak var harvestSeparatorView: UIView!
+
+  // Notes
+  @IBOutlet weak var notesTextView: UITextView!
+  @IBOutlet weak var notesTextViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var notesViewHeightConstraint: NSLayoutConstraint!
 
   // MARK: - Properties
 
@@ -793,8 +797,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func textViewDidChange(_ textView: UITextView) {
+    let fixedSize = notesTextView.frame.size.width
+    let newHeight = notesTextView.sizeThatFits(CGSize(width: fixedSize, height: CGFloat.greatestFiniteMagnitude)).height
+
+    notesTextViewHeightConstraint.constant = newHeight
+    notesViewHeightConstraint.constant = notesTextViewHeightConstraint.constant
     if notesTextView.text.count == 0 {
-      setTextViewPlaceholder()
+      notesTextViewHeightConstraint.constant = 30
+      notesViewHeightConstraint.constant = 70
+       setTextViewPlaceholder()
     }
   }
 
