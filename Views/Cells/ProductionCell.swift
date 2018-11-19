@@ -19,8 +19,8 @@ class ProductionCell: UITableViewCell {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.textColor = AppColor.TextColors.Blue
     nameLabel.font = UIFont.boldSystemFont(ofSize: 15)
-    nameLabel.textColor = AppColor.TextColors.Green
     nameLabel.textAlignment = .center
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel

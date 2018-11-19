@@ -14,7 +14,8 @@ class CropCell: UITableViewCell {
 
   lazy var plotNameLabel: UILabel = {
     let plotNameLabel = UILabel(frame: CGRect.zero)
-    plotNameLabel.font = UIFont.systemFont(ofSize: 14)
+    plotNameLabel.textColor = AppColor.TextColors.Blue
+    plotNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     plotNameLabel.translatesAutoresizingMaskIntoConstraints = false
     return plotNameLabel
   }()
