@@ -27,8 +27,10 @@ class PhytoCreationViewTests: XCTestCase {
 
   func test_textFieldShouldReturn_withMaaTextField_shouldReturnFalse() {
     // Then
-    XCTAssertFalse(addInterventionVC.inputsSelectionView.phytoView.textFieldShouldReturn(
-      addInterventionVC.inputsSelectionView.phytoView.maaTextField))
+    XCTAssertFalse(
+      addInterventionVC.inputsSelectionView.phytoView.textFieldShouldReturn(
+      addInterventionVC.inputsSelectionView.phytoView.maaTextField),
+      "Next text field should become first responder when pressing return button")
   }
 
   func test_closeView_withSenderIsCancelButton() {

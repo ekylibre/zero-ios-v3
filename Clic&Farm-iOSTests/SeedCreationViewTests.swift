@@ -31,7 +31,7 @@ class SeedCreationViewTests: XCTestCase {
 
     // Then
     XCTAssertFalse(addInterventionVC.inputsSelectionView.seedView.textFieldShouldReturn(textField),
-                  "Should return false")
+                  "Text field should become first responder when pressing return button")
   }
 
   func test_closeView_withSenderIsCancelButton() {

@@ -30,7 +30,8 @@ class StorageCreationViewTests: XCTestCase {
     let textField = UITextField()
 
     // Then
-    XCTAssertFalse(addInterventionVC.storageCreationView.textFieldShouldReturn(textField), "Should return false")
+    XCTAssertFalse(addInterventionVC.storageCreationView.textFieldShouldReturn(textField),
+                   "Text field should become first responder when pressing return button")
   }
 
   func test_nameDidChange_withErrorLabelIsDisplayed() {
