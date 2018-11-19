@@ -91,7 +91,7 @@ class IrrigationTests: XCTestCase {
 
     //Then
     let expectedString = "volume_cannot_be_null".localized
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Volume shoud not be null")
   }
 
   func test_errorLabel_withVolumeEqualZero_shouldNotUpdate() {
@@ -109,7 +109,7 @@ class IrrigationTests: XCTestCase {
 
     //Then
     let expectedString = "volume_cannot_be_null".localized
-    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Voulume shoud not be null")
+    XCTAssertEqual(addInterventionVC.irrigationErrorLabel.text, expectedString, "Volume shoud not be null")
   }
 
   func test_selectedIrrigationLabel_withoutVolume_shouldNotUpdate() {
