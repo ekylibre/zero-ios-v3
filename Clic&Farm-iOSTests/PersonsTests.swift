@@ -48,7 +48,7 @@ class PersonsTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_checkPeronsName_withValidNames_shouldReturnTrue() {
+  func test_checkPersonName_withValidNames_shouldReturnTrue() {
     //Given
     let firstName = "Sample first name"
     let lastName = "Sample last name"
@@ -68,7 +68,7 @@ class PersonsTests: XCTestCase {
                   "lastNameErrorLabel must be hidden when there is not any error")
   }
 
-  func test_checkPeronsName_withEmptyFirstName_shouldReturnFalse() {
+  func test_checkPersonName_withEmptyFirstName_shouldReturnFalse() {
     //Given
     let firstName = ""
     let lastName = "Sample last name"
@@ -88,7 +88,7 @@ class PersonsTests: XCTestCase {
                   "lastNameErrorLabel must be hidden when lastName is not empty")
   }
 
-  func test_checkPeronsName_withEmptyLastName_shouldReturnFalse() {
+  func test_checkPersonName_withEmptyLastName_shouldReturnFalse() {
     //Given
     let firstName = "Sample first name"
     let lastName = ""
@@ -108,7 +108,7 @@ class PersonsTests: XCTestCase {
                    "lastNameErrorLabel must not be hidden when lastName is empty")
   }
 
-  func test_checkPeronsName_withEmptyNames_shouldReturnFalse() {
+  func test_checkPersonName_withEmptyNames_shouldReturnFalse() {
     //Given
     let firstName = ""
     let lastName = ""
