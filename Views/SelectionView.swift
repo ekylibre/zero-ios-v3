@@ -47,6 +47,7 @@ class SelectionView: UIView {
   lazy var createButton: UIButton = {
     let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
+    createButton.setTitleColor(AppColor.TextColors.LightGreen, for: .highlighted)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
     return createButton

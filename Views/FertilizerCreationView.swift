@@ -67,6 +67,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
+    cancelButton.setTitleColor(AppColor.TextColors.LightGreen, for: .highlighted)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
     return cancelButton
@@ -76,6 +77,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("create".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
+    createButton.setTitleColor(AppColor.TextColors.LightGreen, for: .highlighted)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
     return createButton
