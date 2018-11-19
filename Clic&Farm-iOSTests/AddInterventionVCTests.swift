@@ -42,7 +42,7 @@ class AddInterventionVCTests: XCTestCase {
 
     //Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 1,
-                   "Phytos selection view should appears first")
+                   "Phytos selection view should appear first")
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.title(for: .normal),
                    "create_new_phyto".localized.uppercased(), "Create button should have right title")
   }
@@ -54,7 +54,7 @@ class AddInterventionVCTests: XCTestCase {
 
     //Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 2,
-                   "Fertilizers selection view should appears first")
+                   "Fertilizers selection view should appear first")
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.title(for: .normal),
                    "create_new_ferti".localized.uppercased(), "Create button should have right title")
   }
