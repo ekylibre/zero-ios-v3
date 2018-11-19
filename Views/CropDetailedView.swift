@@ -15,8 +15,9 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   lazy var headerView: UIView = {
     let headerView = UIView(frame: CGRect.zero)
     headerView.addSubview(nameLabel)
-    headerView.addSubview(surfaceAreaLabel)
+    headerView.addSubview(cancelButton)
     headerView.addSubview(specieLabel)
+    headerView.addSubview(surfaceAreaLabel)
     headerView.addSubview(dateLabel)
     headerView.addSubview(yieldLabel)
     headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,12 +32,14 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     return nameLabel
   }()
 
-  lazy var surfaceAreaLabel: UILabel = {
-    let surfaceAreaLabel = UILabel(frame: CGRect.zero)
-    surfaceAreaLabel.font = UIFont.systemFont(ofSize: 14)
-    surfaceAreaLabel.textColor = AppColor.TextColors.DarkGray
-    surfaceAreaLabel.translatesAutoresizingMaskIntoConstraints = false
-    return surfaceAreaLabel
+  lazy var cancelButton: UIButton = {
+    let cancelButton = UIButton(frame: CGRect.zero)
+    cancelButton.setTitle("cancel".localized, for: .normal)
+    cancelButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
+    cancelButton.setTitleColor(AppColor.TextColors.LightBlue, for: .highlighted)
+    cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+    cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    return cancelButton
   }()
 
   lazy var specieLabel: UILabel = {
@@ -53,6 +56,14 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     dateLabel.textColor = AppColor.TextColors.DarkGray
     dateLabel.translatesAutoresizingMaskIntoConstraints = false
     return dateLabel
+  }()
+
+  lazy var surfaceAreaLabel: UILabel = {
+    let surfaceAreaLabel = UILabel(frame: CGRect.zero)
+    surfaceAreaLabel.font = UIFont.systemFont(ofSize: 14)
+    surfaceAreaLabel.textColor = AppColor.TextColors.DarkGray
+    surfaceAreaLabel.translatesAutoresizingMaskIntoConstraints = false
+    return surfaceAreaLabel
   }()
 
   lazy var yieldLabel: UILabel = {
@@ -98,12 +109,15 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     NSLayoutConstraint.activate([
       nameLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 20),
       nameLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      surfaceAreaLabel.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-      surfaceAreaLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+      cancelButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+      cancelButton.heightAnchor.constraint(equalTo: cancelButton.widthAnchor),
+      cancelButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
       specieLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
       specieLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       dateLabel.topAnchor.constraint(equalTo: specieLabel.bottomAnchor, constant: 5),
       dateLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+      surfaceAreaLabel.centerYAnchor.constraint(equalTo: dateLabel.centerYAnchor),
+      surfaceAreaLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
       yieldLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
       yieldLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       headerView.topAnchor.constraint(equalTo: self.topAnchor),

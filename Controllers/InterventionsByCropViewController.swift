@@ -59,6 +59,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropsTableView.rowHeight = 70
     cropsTableView.delegate = self
     cropsTableView.dataSource = self
+    cropDetailedView.cancelButton.addTarget(self, action: #selector(hideCropDetailedView), for: .touchUpInside)
   }
 
   private func setupNavigationBar() {
@@ -298,5 +299,18 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   @objc private func dismissViewController() {
     self.dismiss(animated: true, completion: nil)
+  }
+
+  @objc private func hideCropDetailedView() {
+    if let selectedIndexPath = cropsTableView.indexPathForSelectedRow {
+      cropsTableView.deselectRow(at: selectedIndexPath, animated: false)
+    }
+
+    cropDetailedView.isHidden = true
+    dimView.isHidden = true
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
   }
 }
