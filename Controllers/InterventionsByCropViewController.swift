@@ -30,7 +30,11 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     setupNavigationBar()
     fetchCrops()
     sortProductionsByName()
-    setupLocationManager()
+    if !UserDefaults.standard.bool(forKey: "hasAnsweredLocationRequest") {
+      setupLocationManager()
+      UserDefaults.standard.set(true, forKey: "hasAnsweredLocationRequest")
+      UserDefaults.standard.synchronize()
+    }
 
     dimView.isHidden = true
     dimView.backgroundColor = UIColor.black
@@ -80,6 +84,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let locationLabel = UILabel(frame: CGRect.zero)
 
     locationLabel.text = "filter_by_proximity".localized
+    locationLabel.font = UIFont.systemFont(ofSize: 15)
     locationSwitch.onTintColor = AppColor.BarColors.Green
     locationSwitch.tintColor = UIColor.lightGray
     locationSwitch.layer.cornerRadius = 16
