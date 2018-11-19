@@ -15,7 +15,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   lazy var headerView: UIView = {
     let headerView = UIView(frame: CGRect.zero)
     headerView.addSubview(nameLabel)
-    headerView.addSubview(cancelButton)
+    headerView.addSubview(closeButton)
     headerView.addSubview(specieLabel)
     headerView.addSubview(surfaceAreaLabel)
     headerView.addSubview(dateLabel)
@@ -32,14 +32,14 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     return nameLabel
   }()
 
-  lazy var cancelButton: UIButton = {
-    let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("cancel".localized, for: .normal)
-    cancelButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
-    cancelButton.setTitleColor(AppColor.TextColors.LightBlue, for: .highlighted)
-    cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-    cancelButton.translatesAutoresizingMaskIntoConstraints = false
-    return cancelButton
+  lazy var closeButton: UIButton = {
+    let closeButton = UIButton(frame: CGRect.zero)
+    closeButton.setTitle("close".localized, for: .normal)
+    closeButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
+    closeButton.setTitleColor(AppColor.TextColors.LightBlue, for: .highlighted)
+    closeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+    closeButton.translatesAutoresizingMaskIntoConstraints = false
+    return closeButton
   }()
 
   lazy var specieLabel: UILabel = {
@@ -109,9 +109,9 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     NSLayoutConstraint.activate([
       nameLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 20),
       nameLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      cancelButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
-      cancelButton.heightAnchor.constraint(equalTo: cancelButton.widthAnchor),
-      cancelButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+      closeButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+      closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor),
+      closeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
       specieLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
       specieLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       dateLabel.topAnchor.constraint(equalTo: specieLabel.bottomAnchor, constant: 5),

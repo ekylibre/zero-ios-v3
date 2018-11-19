@@ -339,6 +339,7 @@
 "cancel" = "Annuler";
 "validate" = "Valider";
 "delete" = "Supprimer";
+"close" = "Fermer";
 "no" = "Non";
 "yes" = "Oui";
 
@@ -520,6 +521,7 @@
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
 "my_crops_title" = "Mes cultures";
+"filter_by_proximity" = "Filtrer par proximité";
 "from" = "Du";
 "to" = "Au";
 "yield" = "Rendement";

@@ -59,7 +59,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropsTableView.rowHeight = 70
     cropsTableView.delegate = self
     cropsTableView.dataSource = self
-    cropDetailedView.cancelButton.addTarget(self, action: #selector(hideCropDetailedView), for: .touchUpInside)
+    cropDetailedView.closeButton.addTarget(self, action: #selector(hideCropDetailedView), for: .touchUpInside)
   }
 
   private func setupNavigationBar() {
@@ -79,7 +79,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   private func setupTableHeaderView() {
     let locationLabel = UILabel(frame: CGRect.zero)
 
-    locationLabel.text = "location".localized
+    locationLabel.text = "filter_by_proximity".localized
     locationSwitch.onTintColor = AppColor.BarColors.Green
     locationSwitch.tintColor = UIColor.lightGray
     locationSwitch.layer.cornerRadius = 16
