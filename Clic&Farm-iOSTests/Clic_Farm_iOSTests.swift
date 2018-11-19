@@ -92,7 +92,7 @@ class Clic_Farm_iOSTests: XCTestCase {
     person.lastName = lastName
 
     //Then
-    XCTAssertNotNil(person)
+    XCTAssertNotNil(person, "person must not be nil")
   }
 
   func test_fetchAllPersons() {
@@ -100,7 +100,7 @@ class Clic_Farm_iOSTests: XCTestCase {
     let results = sut.fetchAllObjects(entityName: "Person")
 
     //Then
-    XCTAssertEqual(results.count, 5)
+    XCTAssertEqual(results.count, 5, "results must contain the 5 sample persons")
   }
 
   func test_removePerson() {
@@ -114,7 +114,8 @@ class Clic_Farm_iOSTests: XCTestCase {
     sut.save()
 
     //Then
-    XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfPersons - 1)
+    XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfPersons - 1,
+                   "persistent store must not contain deleted person")
   }
 
   func test_save() {
