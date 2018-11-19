@@ -144,7 +144,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   }
 
   func sortProductionsByName() {
-    print("name sort")
     sortCropsByPlotName()
 
     cropsByProduction = cropsByProduction.sorted(by: {
@@ -165,7 +164,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   }
 
   func organizeProductionsByDistance() {
-    print("distance sort")
     sortCropsByDistance()
 
     cropsByProduction = cropsByProduction.sorted(by: {
