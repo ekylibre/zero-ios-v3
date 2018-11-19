@@ -31,6 +31,7 @@ class SelectionView: UIView {
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized, for: .normal)
+    cancelButton.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
     return cancelButton
   }()
