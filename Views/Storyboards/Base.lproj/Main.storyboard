@@ -1328,13 +1328,13 @@
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="top" secondItem="96m-Su-72M" secondAttribute="bottom" id="PJY-kn-gNg"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="leading" secondItem="DUW-oV-g3X" secondAttribute="leading" id="Qac-Pa-0rs"/>
                             <constraint firstItem="mbF-nF-QUt" firstAttribute="trailing" secondItem="TZH-N4-7jc" secondAttribute="trailing" id="QeT-Hw-9V5"/>
+                            <constraint firstItem="fGp-gL-8mm" firstAttribute="bottom" secondItem="96m-Su-72M" secondAttribute="top" id="Qpf-dY-1Lc"/>
                             <constraint firstItem="q3s-Gt-LrC" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" id="RXb-qb-Hef"/>
                             <constraint firstAttribute="trailing" secondItem="dVv-q0-QD8" secondAttribute="trailing" id="Taq-yT-QFx"/>
                             <constraint firstItem="96m-Su-72M" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" id="TmG-hP-Dp7"/>
                             <constraint firstItem="mbF-nF-QUt" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" id="V7N-S6-v6s"/>
                             <constraint firstAttribute="bottom" secondItem="dVv-q0-QD8" secondAttribute="bottom" id="WDz-FH-zDD"/>
                             <constraint firstItem="q3s-Gt-LrC" firstAttribute="top" secondItem="TZH-N4-7jc" secondAttribute="top" id="aaa-Xp-oN7"/>
-                            <constraint firstItem="96m-Su-72M" firstAttribute="top" secondItem="fGp-gL-8mm" secondAttribute="bottom" id="btq-n8-yJQ"/>
                             <constraint firstAttribute="bottom" secondItem="mbF-nF-QUt" secondAttribute="bottom" id="cA2-NP-JvD"/>
                             <constraint firstItem="96m-Su-72M" firstAttribute="trailing" secondItem="TZH-N4-7jc" secondAttribute="trailing" id="fAq-F2-i0u"/>
                             <constraint firstItem="fGp-gL-8mm" firstAttribute="leading" secondItem="q3s-Gt-LrC" secondAttribute="leading" id="fGj-WN-wjM"/>
@@ -1405,6 +1405,8 @@
                         <outlet property="personsTableViewHeightConstraint" destination="mfR-vs-HG6" id="It4-rf-zCA"/>
                         <outlet property="personsTapGesture" destination="VsL-Ke-7tF" id="438-IC-giE"/>
                         <outlet property="saveInterventionButton" destination="mBB-VD-0Gd" id="c45-f0-xi1"/>
+                        <outlet property="scrollView" destination="fGp-gL-8mm" id="0BO-U3-hMh"/>
+                        <outlet property="scrollViewBottomConstraint" destination="Qpf-dY-1Lc" id="a5q-3t-nBq"/>
                         <outlet property="selectedEquipmentsTableView" destination="S1G-aq-VJB" id="oOf-I6-SXw"/>
                         <outlet property="selectedInputsTableView" destination="6C4-57-Ghw" id="xOS-xe-Tgz"/>
                         <outlet property="selectedIrrigationLabel" destination="sKN-nM-sDX" id="ypK-gf-POF"/>

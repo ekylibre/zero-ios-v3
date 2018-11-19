@@ -102,7 +102,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // Notes
   @IBOutlet weak var notesTextField: UITextField!
 
-  // Bottom view
+  // Scroll view
+  @IBOutlet weak var scrollView: UIScrollView!
+  @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+
+  // Bottom views
   @IBOutlet weak var bottomBarView: UIView!
   @IBOutlet weak var bottomView: UIView!
 

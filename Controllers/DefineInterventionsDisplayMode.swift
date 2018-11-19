@@ -144,6 +144,8 @@ extension AddInterventionViewController {
     notesTextField.placeholder = (currentIntervention.infos == "" ? "Notes" : currentIntervention.infos)
     bottomBarView.isHidden = true
     bottomView.isHidden = true
+    scrollViewBottomConstraint.isActive = false
+    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "read-only")
     cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
