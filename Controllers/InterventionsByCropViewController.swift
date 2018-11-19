@@ -29,7 +29,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   override func viewDidLoad() {
     setupNavigationBar()
     fetchCrops()
-    sortProductions()
+    sortProductionsByName()
     setupLocationManager()
 
     dimView.isHidden = true
@@ -76,14 +76,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     navigationBar.setItems([navigationItem], animated: false)
   }
 
-  private func sortProductions() {
-    cropsByProduction = cropsByProduction.sorted(by: {
-      $0.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        <
-      $1.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-    })
-  }
-
   private func setupTableHeaderView() {
     let locationLabel = UILabel(frame: CGRect.zero)
 
@@ -126,7 +118,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
       organizeCropsByProduction(crops)
-      sortCropsByPlotName()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -147,12 +138,50 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropsByProduction.append(cropsFromSameProduction)
   }
 
+  func sortProductionsByName() {
+    print("name sort")
+    sortCropsByPlotName()
+
+    cropsByProduction = cropsByProduction.sorted(by: {
+      $0.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        <
+        $1.first!.species!.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+    })
+  }
+
   private func sortCropsByPlotName() {
     for (index, crops) in cropsByProduction.enumerated() {
       cropsByProduction[index] = crops.sorted(by: {
         $0.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
           <
         $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      })
+    }
+  }
+
+  func organizeProductionsByDistance() {
+    print("distance sort")
+    sortCropsByDistance()
+
+    cropsByProduction = cropsByProduction.sorted(by: {
+      guard let firstNearestCropLocation = getLocation(string: $0.first!.centroid!) else { return true }
+      guard let secondNearestCropLocation = getLocation(string: $1.first!.centroid!) else { return true }
+      guard let firstDistance = locationManager.location?.distance(from: firstNearestCropLocation) else { return true }
+      guard let secondDistance = locationManager.location?.distance(from: secondNearestCropLocation) else { return true }
+
+      return firstDistance < secondDistance
+    })
+  }
+
+  private func sortCropsByDistance() {
+    for (index, crops) in cropsByProduction.enumerated() {
+      cropsByProduction[index] = crops.sorted(by: {
+        guard let firstCropLocation = getLocation(string: $0.centroid!) else { return true }
+        guard let secondCropLocation = getLocation(string: $1.centroid!) else { return true }
+        guard let firstDistance = locationManager.location?.distance(from: firstCropLocation) else { return true }
+        guard let secondDistance = locationManager.location?.distance(from: secondCropLocation) else { return true }
+
+        return firstDistance < secondDistance
       })
     }
   }

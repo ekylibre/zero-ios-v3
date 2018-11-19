@@ -28,6 +28,7 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
     guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
 
     print("locations = \(locValue.latitude) \(locValue.longitude)")
+    organizeProductionsByDistance()
     cropsTableView.reloadData()
   }
 
@@ -44,10 +45,14 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
 
   @objc func updateLocationParameter(sender: UISwitch) {
     if !sender.isOn {
+      sortProductionsByName()
       locationManager.stopUpdatingLocation()
       cropsTableView.reloadData()
       return
-    } else if !checkLocationState() { return }
+    } else if !checkLocationState() {
+      locationSwitch.setOn(false, animated: true)
+      return
+    }
 
     if locationManager.delegate == nil {
       setupLocationManager()

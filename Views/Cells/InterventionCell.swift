@@ -20,7 +20,6 @@ class InterventionCell: UITableViewCell {
 
   lazy var typeLabel: UILabel = {
     let typeLabel = UILabel(frame: CGRect.zero)
-    typeLabel.font = UIFont.systemFont(ofSize: 14)
     typeLabel.font = UIFont.boldSystemFont(ofSize: 14)
     typeLabel.textColor = AppColor.TextColors.Blue
     typeLabel.translatesAutoresizingMaskIntoConstraints = false
