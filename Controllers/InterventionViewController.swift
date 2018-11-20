@@ -169,6 +169,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       ])
   }
 
+  // MARK: - Core Data
+
+  func fetchFarmName() -> String? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let farmsFetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
+
+    do {
+      let entities = try managedContext.fetch(farmsFetchRequest)
+      return entities.first?.name
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
   private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -196,25 +215,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
       return true
     })
-  }
-
-  // MARK: - Apollo
-
-  func fetchFarmName() -> String? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let farmsFetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
-
-    do {
-      let entities = try managedContext.fetch(farmsFetchRequest)
-      return entities.first?.name
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
   }
 
   // MARK: - Logout
@@ -261,12 +261,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     alert.addAction(cancelAction)
     alert.addAction(logoutAction)
     present(alert, animated: true)
-  }
-
-  // MARK: - Interventions by crop
-
-  @objc private func presentInterventionsByCrop(_ sender: Any) {
-    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
   }
 
   // MARK: - Table view data source
@@ -491,6 +485,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @objc func action(sender: UIButton) {
       hideInterventionAdd()
       performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+  }
+
+  @objc private func presentInterventionsByCrop(_ sender: Any) {
+    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
   }
 
   @objc func hideInterventionAdd() {
