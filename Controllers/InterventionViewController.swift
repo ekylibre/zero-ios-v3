@@ -55,7 +55,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     checkLocalData()
     fetchInterventions()
     if Connectivity.isConnectedToInternet() {
-      synchronise()
+      synchronise(self)
     }
   }
 
@@ -103,6 +103,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createInterventionButton.layer.shadowRadius = 0
     createInterventionButton.layer.masksToBounds = false
     createInterventionButton.layer.cornerRadius = 3
+    createInterventionButton.addTarget(self, action: #selector(expandBottomView), for: .touchUpInside)
 
     setupInterventionTypeButtons()
     setupInterventionTypeLabels()
@@ -311,7 +312,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()
-      synchronise()
+      synchronise(self)
     }
   }
 
@@ -347,7 +348,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Actions
 
-  @IBAction private func synchronise() {
+  @IBAction private func synchronise(_ sender: Any) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -410,7 +411,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @IBAction private func addIntervention(_ sender: Any) {
+  @objc private func expandBottomView() {
     if !checkCropsData() {
       return
     }
