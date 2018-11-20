@@ -40,6 +40,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
     errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.isHidden = true
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()
@@ -68,6 +69,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
+    cancelButton.setTitleColor(AppColor.TextColors.LightGreen, for: .highlighted)
     cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
     return cancelButton
@@ -77,6 +79,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("create".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
+    createButton.setTitleColor(AppColor.TextColors.LightGreen, for: .highlighted)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
     return createButton

@@ -3201,22 +3201,6 @@
             "deprecationReason": null
           },
           {
-            "name": "workZone",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Polygon",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "workingPercentage",
             "description": null,
             "args": [],
@@ -5521,16 +5505,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "ID",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "workZone",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Polygon",
               "ofType": null
             },
             "defaultValue": null

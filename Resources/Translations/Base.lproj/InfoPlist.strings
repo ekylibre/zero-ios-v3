@@ -1,0 +1,14 @@
+/* 
+  InfoPlist.strings
+  Clic&Farm-iOS
+
+  Created by Guillaume Roux on 07/11/2018.
+  Copyright © 2018 Ekylibre. All rights reserved.
+*/
+
+NSLocationAlwaysAndWhenInUseUsageDescription =
+"Your current location will be used to display distances between your device and each of your crops.";
+NSLocationAlwaysUsageDescription =
+"Your current location will be used to display distances between your device and each of your crops.";
+NSLocationWhenInUseUsageDescription =
+"Your current location will be used to display distances between your device and each of your crops.";

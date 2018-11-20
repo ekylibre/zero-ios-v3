@@ -95,8 +95,8 @@
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "vfb-X0-1tk"; */
 "vfb-X0-1tk.placeholder" = "Email";
 
-/* Class = "UILabel"; text = "today • 7h"; ObjectID = "wAO-eJ-lrk"; */
-"wAO-eJ-lrk.text" = "aujourd'hui • 7h";
+/* Class = "UILabel"; text = "today • 7 h"; ObjectID = "wAO-eJ-lrk"; */
+"wAO-eJ-lrk.text" = "aujourd'hui • 7 h";
 
 /* Class = "UILabel"; text = "Weather"; ObjectID = "wJi-KE-5Mc"; */
 "wJi-KE-5Mc.text" = "Météo";

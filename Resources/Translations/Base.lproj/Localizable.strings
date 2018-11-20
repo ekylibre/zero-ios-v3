@@ -339,6 +339,7 @@
 "cancel" = "Cancel";
 "validate" = "Validate";
 "delete" = "Delete";
+"close" = "Close";
 "no" = "No";
 "yes" = "Yes";
 
@@ -519,9 +520,16 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"my_crops_title" = "My crops";
+"filter_by_proximity" = "Filter by proximity";
 "from" = "From";
 "to" = "To";
 "yield" = "Yield";
+"location_request_title" = "Location Services Disabled";
+"location_request_message" = "Please enable location services.";
+"authorization_request_title" = "Location Services Disabled";
+"authorization_request_message" = "Please enable location services for this app.";
+"settings" = "Settings";
 
 // Date
 "locale" = "en_EN";

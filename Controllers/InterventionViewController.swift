@@ -16,6 +16,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var syncView: UIView!
   @IBOutlet weak var synchroLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var createInterventionButton: UIButton!
@@ -31,6 +32,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
+  let navItem = UINavigationItem()
   let dimView = UIView()
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
@@ -38,16 +40,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
 
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
+  // MARK: - Initialization
 
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
-    // Hide navigation bar
-    navigationController?.navigationBar.isHidden = true
+    setupNavigationBar()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -78,7 +77,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.addGestureRecognizer(gesture)
     dimView.isHidden = true
 
-    // Updates synchronisation label
+    updateSynchronisationLabel()
+
+    initialiseInterventionButtons()
+
+    // Load table view
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.refreshControl = refreshControl
+
+    checkLocalData()
+    if Connectivity.isConnectedToInternet() {
+      fetchInterventions()
+      synchronise(self)
+    } else {
+      fetchInterventions()
+    }
+  }
+
+  func updateSynchronisationLabel() {
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
@@ -101,6 +118,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     initialiseInterventionButtons()
 
     // Load table view
+    tableView.bringSubviewToFront(syncView)
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.rowHeight = 80
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
@@ -112,8 +132,34 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     } else {
       fetchInterventions()
     }
+  }
 
-    initializeLogoutItem()
+  private func setupNavigationBar() {
+    let farmNameLabel = UILabel()
+    let cropsButton = UIButton()
+    let logoutButton = UIButton()
+
+    navigationController?.navigationBar.isHidden = true
+    farmNameLabel.text = fetchFarmName()
+    farmNameLabel.textColor = UIColor.white
+    farmNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
+    cropsButton.setImage(UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    cropsButton.tintColor = .white
+    cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
+    logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    logoutButton.tintColor = .white
+    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
+
+    NSLayoutConstraint.activate([
+      cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
+      cropsButton.heightAnchor.constraint(equalToConstant: 32.0),
+      logoutButton.widthAnchor.constraint(equalToConstant: 32.0),
+      logoutButton.heightAnchor.constraint(equalToConstant: 32.0)
+      ])
+
+    navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
+    navItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton), UIBarButtonItem(customView: cropsButton)]
+    navigationBar.setItems([navItem], animated: true)
   }
 
   func initialiseInterventionButtons() {
@@ -174,49 +220,24 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Apollo
 
-  func fetchFarmNameAndId() -> String? {
+  func fetchFarmName() -> String? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let entitiesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Farm")
+    let farmsFetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
 
     do {
-      let entities = try managedContext.fetch(entitiesFetchRequest)
-
-      return entities.first?.value(forKey: "name") as? String
+      let entities = try managedContext.fetch(farmsFetchRequest)
+      return entities.first?.name
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
     return nil
   }
 
-  func displayFarmName() {
-    let firstFrame = CGRect(x: 10, y: 0, width: navigationBar.frame.width / 2, height: navigationBar.frame.height)
-    let farmLabel = UILabel(frame: firstFrame)
-
-    farmLabel.text = fetchFarmNameAndId()
-    farmLabel.textColor = UIColor.white
-    farmLabel.font = UIFont.boldSystemFont(ofSize: 18)
-    navigationBar.addSubview(farmLabel)
-  }
-
   // MARK: - Logout
-
-  func initializeLogoutItem() {
-    let navigationItem = UINavigationItem(title: "")
-    let logoutButton = UIButton()
-    let image = UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate)
-
-    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
-    logoutButton.setImage(image, for: .normal)
-    logoutButton.imageView?.tintColor = .white
-    let rightItem = UIBarButtonItem.init(customView: logoutButton)
-
-    navigationItem.rightBarButtonItem = rightItem
-    navigationBar.setItems([navigationItem], animated: true)
-  }
 
   func emptyCoreData(entityName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -279,6 +300,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     present(alert, animated: true)
   }
 
+  // MARK: - Interventions by crop
+
+  @objc private func presentInterventionsByCrop(_ sender: Any) {
+    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
+  }
+
   // MARK: - Table view data source
   
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -295,42 +322,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     let intervention = interventions[indexPath.row]
-    let targets = fetchTargets(intervention)
     let workingPeriod = fetchWorkingPeriod(intervention)
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateImages: [Int16: UIImage] = [0: UIImage(named: "out-of-sync")!, 1: UIImage(named: "synchronised")!, 2: UIImage(named: "validated")!]
+    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
     let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
 
-    cell.typeLabel.text = intervention.type?.localized
     cell.typeImageView.image = UIImage(named: assetName)
-    cell.syncImage.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
-    cell.syncImage.tintColor = stateTintColors[intervention.status]
-    cell.cropsLabel.text = updateCropsLabel(targets!)
-    cell.infosLabel.text = intervention.infos
+    cell.typeLabel.text = intervention.type?.localized
+    cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
+    cell.stateImageView.tintColor = stateTintColors[intervention.status]
+    cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
+    cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
     if workingPeriod?.executionDate != nil {
       cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
     }
     return cell
-  }
-
-  func fetchTargets(_ intervention: Intervention) -> [Target]? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-    targetsFetchRequest.predicate = predicate
-
-    do {
-      let targets = try managedContext.fetch(targetsFetchRequest)
-      return targets
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
   }
 
   func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
@@ -352,24 +359,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  func updateCropsLabel(_ targets: [Target]?) -> String? {
+  private func updateCropsLabel(_ targets: NSSet) -> String {
+    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
     var totalSurfaceArea: Float = 0
 
-    if targets != nil {
-      for target in targets! {
-        let crop = target.crop
-        totalSurfaceArea += crop?.surfaceArea ?? 0
-      }
-      let cropString = targets!.count < 2 ? "crop".localized : "crops".localized
-      return String(format: cropString, targets!.count) + String(format: " • %.1f ha", totalSurfaceArea)
+    for case let target as Target in targets {
+      let crop = target.crop!
+
+      totalSurfaceArea += crop.surfaceArea
     }
-    return nil
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
   func transformDate(date: Date) -> String {
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.locale = Locale(identifier: "locale".localized)
     dateFormatter.dateFormat = "d MMMM"
 
     var dateString = dateFormatter.string(from: date)
@@ -455,12 +460,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let calendar = Calendar.current
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
+    let farmNameLabel = navItem.leftBarButtonItem?.customView as? UILabel
 
     queryFarms { (success) in
       if success {
-        if self.navigationBar.items?.count == 1 {
-          self.displayFarmName()
-        }
+        farmNameLabel?.text = self.fetchFarmName()
         self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
