@@ -33,7 +33,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   let navItem = UINavigationItem()
-  let dimView = UIView()
+  let dimView = UIView(frame: CGRect.zero)
   let refreshControl = UIRefreshControl()
   var interventionButtons = [UIButton]()
   var interventionButtonsLabels = [UILabel]()
@@ -47,6 +47,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.hideKeyboardWhenTappedAround()
 
     setupNavigationBar()
+    initialiseInterventionButtons()
+    setupDimView()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
@@ -60,26 +62,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createInterventionButton.layer.cornerRadius = 3
     //createInterventionButton.clipsToBounds = true
 
-    // Dim view
-    self.view.addSubview(dimView)
-
-    dimView.translatesAutoresizingMaskIntoConstraints = false
-    dimView.backgroundColor = UIColor.black
-    dimView.alpha = 0.6
-    let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
-    let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
-    let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
-    let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
-    NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
-    dimView.isUserInteractionEnabled = true
-    let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
-    gesture.numberOfTapsRequired = 1
-    dimView.addGestureRecognizer(gesture)
-    dimView.isHidden = true
-
     updateSynchronisationLabel()
-
-    initialiseInterventionButtons()
 
     // Load table view
     tableView.dataSource = self
@@ -181,6 +164,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       bottomView.addSubview(interventionButton)
       bottomView.addSubview(interventionButtonsLabels[interventionButton.tag])
     }
+  }
+
+  private func setupDimView() {
+    let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
+
+    dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    dimView.addGestureRecognizer(gesture)
+    dimView.isHidden = true
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(dimView)
+
+    NSLayoutConstraint.activate([
+      dimView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+      dimView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+      dimView.bottomAnchor.constraint(equalTo: bottomView.topAnchor)
+      ])
   }
 
   override func viewWillAppear(_ animated: Bool) {
