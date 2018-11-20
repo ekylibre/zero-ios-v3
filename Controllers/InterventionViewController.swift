@@ -198,22 +198,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     do {
       interventions = try managedContext.fetch(interventionsFetchRequest)
-      sortInterventionByDate()
+      sortInterventionsByDate()
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
-  func sortInterventionByDate() {
+  func sortInterventionsByDate() {
     interventions = interventions.sorted(by: {
-      let result: Bool!
+      let firstWorkingPeriod = $0.workingPeriods?.anyObject() as! WorkingPeriod
+      let secondWorkingPeriod = $1.workingPeriods?.anyObject() as! WorkingPeriod
 
-      if ($0.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil {
-        result = ($0.workingPeriods?.anyObject() as! WorkingPeriod).executionDate! >
-          ($1.workingPeriods?.anyObject() as! WorkingPeriod).executionDate!
-        return result
-      }
-      return true
+      return firstWorkingPeriod.executionDate! < secondWorkingPeriod.executionDate!
     })
   }
 
