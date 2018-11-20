@@ -219,13 +219,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Logout
 
-  func emptyCoreData(entityName: String) {
+  private func emptyAllCoreData() {
+    let entityNames = appDelegate.persistentContainer.managedObjectModel.entities.map({ (entity) -> String in
+      return entity.name!
+    })
+
+    for entityName in entityNames {
+      batchDeleteEntity(name: entityName)
+    }
+  }
+
+  private func batchDeleteEntity(name: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: name)
     let request = NSBatchDeleteRequest(fetchRequest: fetch)
 
     do {
@@ -235,48 +245,21 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func emptyAllCoreData() {
-    let entitiesNames = [
-      "Crop",
-      "Equipment",
-      "Farm",
-      "Fertilizer",
-      "Harvest",
-      "InterventionEquipment",
-      "InterventionFertilizer",
-      "InterventionMaterial",
-      "InterventionPerson",
-      "InterventionPhytosanitary",
-      "Intervention",
-      "InterventionSeed",
-      "Material",
-      "Person",
-      "Phyto",
-      "Seed",
-      "Storage",
-      "User",
-      "Weather",
-      "WorkingPeriod"]
-
-    for entityName in entitiesNames {
-      emptyCoreData(entityName: entityName)
-    }
-  }
-
   @objc func logoutFromFarm(_ sender: Any) {
     let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
-
-    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
+    let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
+    let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
       let authentificationService = AuthentificationService(username: "", password: "")
 
       authentificationService.logout()
-      UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
-      UserDefaults.standard.set(0, forKey: "lastSyncDate")
+      UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
       UserDefaults.standard.synchronize()
       self.emptyAllCoreData()
       self.navigationController?.popViewController(animated: true)
-    }))
+    })
+
+    alert.addAction(cancelAction)
+    alert.addAction(logoutAction)
     present(alert, animated: true)
   }
 
