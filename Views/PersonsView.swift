@@ -205,7 +205,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     creationView.lastNameErrorLabel.isHidden = true
   }
 
-  private func checkPersonName() -> Bool {
+  func checkPersonName() -> Bool {
     creationView.firstNameErrorLabel.isHidden = !creationView.firstNameTextField.text!.isEmpty
     creationView.lastNameErrorLabel.isHidden = !creationView.lastNameTextField.text!.isEmpty
 

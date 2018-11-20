@@ -81,6 +81,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
     errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.isHidden = true
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()

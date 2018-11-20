@@ -124,7 +124,6 @@
                         <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
-                        <segue destination="krK-gd-8UN" kind="presentation" identifier="logoutSegue" id="wcF-Wj-Rjo"/>
                         <segue destination="6i8-BA-FKm" kind="presentation" identifier="showInterventionsByCrop" id="Og0-d3-16l"/>
                     </connections>
                 </viewController>
@@ -180,7 +179,7 @@
         <!--Add Intervention View Controller-->
         <scene sceneID="PGn-fO-1Ks">
             <objects>
-                <viewController id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddInterventionVC" id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DUW-oV-g3X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -241,8 +240,8 @@
                                                         <color key="textColor" red="0.070588235294117646" green="0.41568627450980394" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="today • 7h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAO-eJ-lrk">
-                                                        <rect key="frame" x="160" y="26.5" width="70.5" height="18"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="today • 7 h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAO-eJ-lrk">
+                                                        <rect key="frame" x="160" y="26.5" width="74.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1347,7 +1346,7 @@
                         <action selector="tapIrrigationView:" destination="pQK-Bk-vqJ" id="5R8-BO-7n1"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="J9Q-vM-fIb">
+                <tapGestureRecognizer id="J9Q-vM-fIb" userLabel="Inputs Tap Gesture">
                     <connections>
                         <action selector="tapInputsView" destination="pQK-Bk-vqJ" id="dsy-gw-ZKo"/>
                     </connections>
@@ -1357,7 +1356,7 @@
                         <action selector="tapMaterialsView" destination="pQK-Bk-vqJ" id="gH0-UQ-D7n"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="lAp-Ke-r70">
+                <tapGestureRecognizer id="lAp-Ke-r70" userLabel="Equipments Tap Gesture">
                     <connections>
                         <action selector="tapEquipmentsView" destination="pQK-Bk-vqJ" id="CGQ-rB-LxS"/>
                     </connections>
@@ -1598,7 +1597,6 @@
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wcF-Wj-Rjo"/>
         <segue reference="EKH-vj-NkS"/>
     </inferredMetricsTieBreakers>
 </document>

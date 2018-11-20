@@ -77,7 +77,25 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.addGestureRecognizer(gesture)
     dimView.isHidden = true
 
-    // Updates synchronisation label
+    updateSynchronisationLabel()
+
+    initialiseInterventionButtons()
+
+    // Load table view
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.refreshControl = refreshControl
+
+    checkLocalData()
+    if Connectivity.isConnectedToInternet() {
+      fetchInterventions()
+      synchronise(self)
+    } else {
+      fetchInterventions()
+    }
+  }
+
+  func updateSynchronisationLabel() {
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
@@ -355,7 +373,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func transformDate(date: Date) -> String {
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "fr_FR")
+    dateFormatter.locale = Locale(identifier: "locale".localized)
     dateFormatter.dateFormat = "d MMMM"
 
     var dateString = dateFormatter.string(from: date)
