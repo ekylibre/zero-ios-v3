@@ -116,8 +116,8 @@
 /* Class = "UILabel"; text = "Nature"; ObjectID = "mNi-kd-EFz"; */
 "mNi-kd-EFz.text" = "Nature";
 
-/* Class = "UIButton"; normalTitle = "Straw"; ObjectID = "yGb-zU-Lzj"; */
-"vEX-tE-fGs.normalTitle" = "Paille";
+/* Class = "UIButton"; normalTitle = "GRAIN"; ObjectID = "yGb-zU-Lzj"; */
+"vEX-tE-fGs.normalTitle" = "Grain";
 
 /* Class = "UILabel"; text = "Quantity"; ObjectID = "ZjH-1x-xh7"; */
 "ZjH-1x-xh7.text" = "Quantité";

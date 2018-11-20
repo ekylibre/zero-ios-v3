@@ -31,6 +31,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func defineUnit(_ indexPath: IndexPath) {
+    let unit = ["KILOGRAM", "QUINTAL", "TON"]
+    let cell = harvestTableView.cellForRow(at: indexPath) as? HarvestCell
+    let title = cell?.unit.titleLabel?.text
+
+    for index in 0..<unit.count {
+      if title == unit[index].localized {
+        harvestUnitPickerView.selectRow(index, inComponent: 0, animated: false)
+        break
+      }
+    }
     cellIndexPath = indexPath
     dimView.isHidden = false
     harvestUnitPickerView.isHidden = false
@@ -38,6 +48,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   func defineStorage(_ indexPath: IndexPath) {
     if storages.count > 0 {
+      let storagesName = fetchStoragesName()
+      let cell = harvestTableView.cellForRow(at: indexPath) as? HarvestCell
+      let title = cell?.storage.titleLabel?.text
+
+      for index in 0..<storagesName!.count {
+        if title == storagesName?[index].localized {
+          storagesPickerView.selectRow(index, inComponent: 0, animated: false)
+          break
+        }
+      }
       cellIndexPath = indexPath
       dimView.isHidden = false
       storagesPickerView.isHidden = false
@@ -53,7 +73,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestUnitPickerView () {
-    let unit = ["QUINTAL", "TON", "KILOGRAM"]
+    let unit = ["KILOGRAM", "QUINTAL", "TON"]
 
     harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
     harvestUnitPickerView.reference = self
@@ -62,7 +82,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func initHarvestNaturePickerView() {
-    let unit = ["STRAW", "GRAIN", "SILAGE"]
+    let unit = ["GRAIN", "SILAGE", "STRAW"]
 
     harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
     harvestNaturePickerView.reference = self
@@ -215,7 +235,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return storagesNames
+    return storagesNames.sorted()
   }
 
   func createHarvest() {
@@ -253,6 +273,14 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction func changeHarvestNature(_ sender: UIButton) {
+    let unit = ["GRAIN", "SILAGE", "STRAW"]
+
+    for index in 0..<unit.count {
+      if harvestNature.text == unit[index].localized {
+        harvestNaturePickerView.selectRow(index, inComponent: 0, animated: false)
+        break
+      }
+    }
     dimView.isHidden = false
     harvestNaturePickerView.isHidden = false
   }
