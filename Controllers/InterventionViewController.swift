@@ -46,20 +46,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.hideKeyboardWhenTappedAround()
 
     setupNavigationBar()
-    initialiseInterventionButtons()
+    setupBottomView()
     setupDimView()
 
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-
-    // Rounded buttons
-    createInterventionButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-    createInterventionButton.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-    createInterventionButton.layer.shadowOpacity = 1.0
-    createInterventionButton.layer.shadowRadius = 0.0
-    createInterventionButton.layer.masksToBounds = false
-    createInterventionButton.layer.cornerRadius = 3
-    //createInterventionButton.clipsToBounds = true
 
     updateSynchronisationLabel()
 
@@ -127,6 +118,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
     navItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton), UIBarButtonItem(customView: cropsButton)]
     navigationBar.setItems([navItem], animated: true)
+  }
+
+  private func setupBottomView() {
+    createInterventionButton.layer.shadowColor = UIColor.black.withAlphaComponent(0.25).cgColor
+    createInterventionButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+    createInterventionButton.layer.shadowOpacity = 1
+    createInterventionButton.layer.shadowRadius = 0
+    createInterventionButton.layer.masksToBounds = false
+    createInterventionButton.layer.cornerRadius = 3
+    //createInterventionButton.clipsToBounds = true
+
+    initialiseInterventionButtons()
   }
 
   func initialiseInterventionButtons() {
