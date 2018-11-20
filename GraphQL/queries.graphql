@@ -103,16 +103,16 @@ query Farm ($modifiedSince: Date){
       uuid
       name
       species
-      #productionNature {
-      #  name
-      #}
+      productionNature {
+        id
+      }
       productionMode
       provisionalYield
       startDate
       stopDate
       surfaceArea
       #shape
-      #centroid
+      centroid
     }
     people (modifiedSince: $modifiedSince) {
       id

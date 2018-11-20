@@ -48,3 +48,6 @@ node_modules
 
 # API auto-generated files
 GraphQL/API.swift
+
+# .gpx files to test location
+Resources/sample_location.gpx
