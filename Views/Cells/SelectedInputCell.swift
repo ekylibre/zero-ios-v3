@@ -48,7 +48,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let deleteButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
     deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
+    deleteButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
     deleteButton.tintColor = UIColor.red
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
@@ -227,7 +227,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    saveQuantity(self)
+    saveQuantity()
     return false
   }
 
@@ -258,7 +258,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     cellDelegate?.saveSelectedRow(indexPath)
   }
 
-  @objc func removeCell(sender: UIButton) {
+  @objc func removeCell() {
     cellDelegate?.removeInputCell(indexPath)
   }
 
@@ -286,7 +286,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return true
   }
 
-  @objc func saveQuantity(_ sender: Any) {
+  @objc func saveQuantity() {
     if addInterventionViewController?.selectedInputs[indexPath.row] is InterventionPhytosanitary {
       let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as! InterventionPhytosanitary).phyto?.referenceID
 

@@ -264,7 +264,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.isHidden = false
   }
 
-  @objc private func nameDidChange(_ textfield: UITextField) {
+  @objc private func nameDidChange() {
     if !creationView.errorLabel.isHidden {
       creationView.errorLabel.isHidden = true
     }
