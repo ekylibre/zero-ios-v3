@@ -21,7 +21,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var createInterventionButton: UIButton!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var bottomBottom: NSLayoutConstraint!
 
   // MARK: - Properties
 

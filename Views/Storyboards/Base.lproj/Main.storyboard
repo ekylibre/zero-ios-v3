@@ -29,7 +29,7 @@
         <!--Intervention View Controller-->
         <scene sceneID="GPv-6C-vQQ">
             <objects>
-                <viewController storyboardIdentifier="InterventionViewController" id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InterventionViewController" id="Ym6-0E-qVT" customClass="InterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bki-1z-HKT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,7 +100,6 @@
                             <constraint firstItem="OwN-92-HaX" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="5tv-uC-5Gi"/>
                             <constraint firstItem="L1h-B8-3FP" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="AZj-Nd-7qa"/>
                             <constraint firstAttribute="bottom" secondItem="LDw-rB-9Pp" secondAttribute="bottom" id="BOK-Na-1RW"/>
-                            <constraint firstItem="LDw-rB-9Pp" firstAttribute="top" secondItem="L1h-B8-3FP" secondAttribute="bottom" id="aBi-Qo-Toh"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="leading" secondItem="BuB-B1-p77" secondAttribute="leading" id="c04-Fj-ikK"/>
                             <constraint firstItem="ttg-Mf-cp2" firstAttribute="trailing" secondItem="BuB-B1-p77" secondAttribute="trailing" id="dzo-Zi-Noy"/>
                             <constraint firstItem="BuB-B1-p77" firstAttribute="trailing" secondItem="LDw-rB-9Pp" secondAttribute="trailing" id="k4y-DG-Xag"/>
@@ -115,7 +114,6 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="bottomBottom" destination="3KT-Wa-4oY" id="1oL-X5-TOg"/>
                         <outlet property="bottomView" destination="L1h-B8-3FP" id="OFz-wX-08P"/>
                         <outlet property="createInterventionButton" destination="XRU-Wr-aoY" id="NFa-kI-oUK"/>
                         <outlet property="heightConstraint" destination="aP0-3P-QcV" id="zXq-CV-FZJ"/>
@@ -566,7 +564,7 @@
                                                             <constraint firstAttribute="height" constant="150" id="DpE-um-EV5"/>
                                                         </constraints>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HarvestCell" rowHeight="149" id="ANj-fI-wdR" customClass="HarvestCell" customModule="clic_and_farm" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HarvestCell" rowHeight="149" id="ANj-fI-wdR" customClass="HarvestCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="149"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ANj-fI-wdR" id="6gO-bf-wtV">
@@ -1441,13 +1439,13 @@
         <!--List Table View Controller-->
         <scene sceneID="Gxg-d7-MJI">
             <objects>
-                <tableViewController id="mHI-gi-QLg" customClass="ListTableViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="mHI-gi-QLg" customClass="ListTableViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XGF-Qx-Lnm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="mxm-yl-8v2" customClass="ListCell" customModule="clic_and_farm" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="mxm-yl-8v2" customClass="ListCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mxm-yl-8v2" id="vdR-bD-PDH">
@@ -1489,7 +1487,7 @@
         <!--Login View Controller-->
         <scene sceneID="qGL-rz-WS6">
             <objects>
-                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ybY-bV-jLm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1551,7 +1549,7 @@
                                     <action selector="openForgottenPasswordLinkWithSender:" destination="krK-gd-8UN" eventType="touchUpInside" id="1rn-ME-Wsc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="clic_and_farm" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQf-3V-e73" customClass="roundedButton" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                 <rect key="frame" x="162.5" y="576" width="50" height="36"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Login">
@@ -1607,7 +1605,7 @@
         <!--No Internet On First Connection-->
         <scene sceneID="20c-UI-Xxq">
             <objects>
-                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i5Q-WN-VSA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1662,7 +1660,6 @@
         <image name="warning" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uas-Qa-jvK"/>
         <segue reference="EKH-vj-NkS"/>
     </inferredMetricsTieBreakers>
 </document>
