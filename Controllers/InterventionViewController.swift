@@ -105,7 +105,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createInterventionButton.layer.shadowRadius = 0
     createInterventionButton.layer.masksToBounds = false
     createInterventionButton.layer.cornerRadius = 3
-    //createInterventionButton.clipsToBounds = true
 
     setupBottomViewHiddenObjects()
   }
@@ -155,7 +154,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func setupDimView() {
-    let gesture = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
+    let gesture = UITapGestureRecognizer(target: self, action: #selector(collapseBottomView))
 
     dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
     dimView.addGestureRecognizer(gesture)
@@ -302,11 +301,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func presentAddInterventionVC(sender: UIButton) {
-    hideInterventionAdd()
+    collapseBottomView()
     performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
   }
 
   @objc private func presentInterventionsByCrop(_ sender: Any) {
+    collapseBottomView()
     self.performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
   }
 
@@ -400,17 +400,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return [Crop]()
   }
 
-  @objc func hideInterventionAdd() {
-    for interventionButton in interventionTypeButtons {
-      interventionButton.isHidden = true
-      interventionTypeLabels[interventionButton.tag].isHidden = true
-    }
-
-    createInterventionButton.isHidden = false
-    heightConstraint.constant = 60
-    dimView.isHidden = true
-  }
-
   @IBAction private func addIntervention(_ sender: Any) {
     let crops = fetchCrops()
 
@@ -447,6 +436,17 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
       dimView.isHidden = false
     }
+  }
+
+  @objc func collapseBottomView() {
+    for index in 0...6 {
+      interventionTypeButtons[index].isHidden = true
+      interventionTypeLabels[index].isHidden = true
+    }
+
+    dimView.isHidden = true
+    heightConstraint.constant = 60
+    createInterventionButton.isHidden = false
   }
 
   // MARK: - Logout

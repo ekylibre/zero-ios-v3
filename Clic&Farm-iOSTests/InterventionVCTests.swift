@@ -74,9 +74,9 @@ class InterventionVCTests: XCTestCase {
     XCTAssertEqual(interventionVC.transformDate(date: date), expectedDate, "Should display day and mounth")
   }
 
-  func test_hideInterventionAdd_shouldHideButtons() {
+  func test_collapseBottomView_shouldHideButtons() {
     // When
-    interventionVC.hideInterventionAdd()
+    interventionVC.collapseBottomView()
 
     //Then
     for interventionButton in interventionVC.interventionTypeButtons {
