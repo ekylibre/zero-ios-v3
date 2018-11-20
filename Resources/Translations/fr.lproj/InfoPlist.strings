@@ -1,0 +1,14 @@
+/* 
+  InfoPlist.strings
+  Clic&Farm-iOS
+
+  Created by Guillaume Roux on 07/11/2018.
+  Copyright © 2018 Ekylibre. All rights reserved.
+*/
+
+NSLocationAlwaysAndWhenInUseUsageDescription =
+"Votre position sera utilisée pour afficher les distances entre votre appareil et chacune de vos cultures.";
+NSLocationAlwaysUsageDescription =
+"Votre position sera utilisée pour afficher les distances entre votre appareil et chacune de vos cultures.";
+NSLocationWhenInUseUsageDescription =
+"Votre position sera utilisée pour afficher les distances entre votre appareil et chacune de vos cultures.";
