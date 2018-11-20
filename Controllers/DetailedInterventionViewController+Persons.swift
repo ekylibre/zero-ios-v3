@@ -141,4 +141,16 @@ extension AddInterventionViewController {
     updateView()
     personsSelectionView.tableView.reloadData()
   }
+
+  func selectedPersonsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedPersonCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath) as! SelectedPersonCell
+    let selectedPerson = selectedPersons[0][indexPath.row]
+
+    cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
+    cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
+    cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
+    cell.driverSwitch.isOn = selectedPersons[1][indexPath.row].value(forKey: "isDriver") as! Bool
+    cell.driverSwitch.addTarget(self, action: #selector(updateIsDriver), for: .valueChanged)
+    return cell
+  }
 }

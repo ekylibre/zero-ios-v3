@@ -296,4 +296,45 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       }
     }
   }
+
+  func selectedInputsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedInputCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
+
+    if selectedInputs.count > indexPath.row {
+      let selectedInput = selectedInputs[indexPath.row]
+      let unit = selectedInput.value(forKey: "unit") as? String
+
+      cell.cellDelegate = self
+      cell.addInterventionViewController = self
+      cell.indexPath = indexPath
+      cell.unitButton.setTitle(unit?.localized, for: .normal)
+
+      switch selectedInput {
+      case is InterventionSeed:
+        let seed = selectedInput.value(forKey: "seed") as! Seed
+
+        cell.type = "Seed"
+        cell.nameLabel.text = seed.specie?.localized
+        cell.infoLabel.text = seed.variety
+        cell.inputImageView.image = UIImage(named: "seed")
+      case is InterventionPhytosanitary:
+        let phyto = selectedInput.value(forKey: "phyto") as! Phyto
+
+        cell.type = "Phyto"
+        cell.nameLabel.text = phyto.name
+        cell.infoLabel.text = phyto.firmName
+        cell.inputImageView.image = UIImage(named: "phytosanitary")
+      case is InterventionFertilizer:
+        let fertilizer = selectedInput.value(forKey: "fertilizer") as! Fertilizer
+
+        cell.type = "Fertilizer"
+        cell.nameLabel.text = fertilizer.name?.localized
+        cell.infoLabel.text = nil
+        cell.inputImageView.image = UIImage(named: "fertilizer")
+      default:
+        fatalError("Unknown input type for: \(String(describing: selectedInput))")
+      }
+    }
+    return cell
+  }
 }

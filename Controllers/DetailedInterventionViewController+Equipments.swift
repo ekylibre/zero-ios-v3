@@ -160,4 +160,25 @@ extension AddInterventionViewController {
     updateView()
     equipmentsSelectionView.tableView.reloadData()
   }
+
+  private func getSelectedEquipmentInfos(_ equipment: Equipment) -> String {
+    let type = equipment.type!.localized
+    guard let number = equipment.number else {
+      return type
+    }
+
+    return String(format: "%@ #%@", type, number)
+  }
+
+  func selectedEquipmentsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedEquipmentCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
+    let selectedEquipment = selectedEquipments[indexPath.row]
+    let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+
+    cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+    cell.nameLabel.text = selectedEquipment.name
+    cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
+    cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
+    return cell
+  }
 }

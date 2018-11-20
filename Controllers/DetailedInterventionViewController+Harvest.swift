@@ -328,4 +328,36 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
     harvestTableView.reloadData()
   }
+
+  func harvestTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> HarvestCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
+    let harvest = harvests[indexPath.row]
+    let unit = harvest.unit
+
+    cell.addInterventionController = self
+    cell.cellDelegate = self
+    cell.indexPath = indexPath
+    cell.unit.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    cell.unit.layer.borderWidth = 1
+    cell.unit.layer.cornerRadius = 5
+    cell.unit.setTitle(unit?.localized, for: .normal)
+    cell.storage.backgroundColor = AppColor.ThemeColors.White
+    cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    cell.storage.layer.borderWidth = 1
+    cell.storage.layer.cornerRadius = 5
+    cell.storage.setTitle(harvests[indexPath.row].storage?.name ?? "---", for: .normal)
+    cell.quantity.keyboardType = .decimalPad
+    cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    cell.quantity.layer.borderWidth = 1
+    cell.quantity.layer.cornerRadius = 5
+    cell.quantity.text = String(harvest.quantity)
+    cell.quantity.delegate = cell
+    cell.number.layer.borderColor =  AppColor.CellColors.LightGray.cgColor
+    cell.number.layer.borderWidth = 1
+    cell.number.layer.cornerRadius = 5
+    cell.number.text = harvest.number
+    cell.number.delegate = cell
+    cell.selectionStyle = .none
+    return cell
+  }
 }
