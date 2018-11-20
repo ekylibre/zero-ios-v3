@@ -172,7 +172,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return true
   }
 
-  @objc func cancelStorageCreation(_ sender: Any) {
+  @objc func cancelStorageCreation() {
+
     storagesTypes.selectRow(0, inComponent: 0, animated: false)
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
     storageCreationView.nameTextField.text = ""
@@ -180,7 +181,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storageCreationView.isHidden = true
   }
 
-  @objc func createNewStorage(_ sender: Any) {
+  @objc func createNewStorage() {
     if !checkStorageName() {
       return
     }
@@ -191,10 +192,10 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     storagesPickerView.values = (storages != nil ? storages! : ["---"])
     storagesPickerView.reloadComponent(0)
-    cancelStorageCreation(self)
+    cancelStorageCreation()
   }
 
-  @objc func showStorageTypes(_ sender: Any) {
+  @objc func showStorageTypes() {
     storagesTypes.isHidden = false
   }
 

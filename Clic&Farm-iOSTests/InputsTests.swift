@@ -123,7 +123,7 @@ class InputsTests: XCTestCase {
     addInterventionVC.tapInputsView()
 
     // Then
-    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 420,
+    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 430,
                    "inputsHeightConstraint should be 420 if selectedInputs contains 3 inputs")
     XCTAssertFalse(addInterventionVC.inputsAddButton.isHidden,
                    "inputsAddButton must be displayed if inputsView is expand")
@@ -166,8 +166,8 @@ class InputsTests: XCTestCase {
     addInterventionVC.tapInputsView()
 
     // Then
-    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 1190,
-                   "inputsHeightConstraint should be 1190 if selectedInputs contains 10 inputs or more")
+    XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 1200,
+                   "inputsHeightConstraint should be 1200 if selectedInputs contains 10 inputs or more")
     XCTAssertFalse(addInterventionVC.inputsAddButton.isHidden,
                    "inputsAddButton must be displayed if inputsView is expand")
     XCTAssertTrue(addInterventionVC.inputsCountLabel.isHidden,

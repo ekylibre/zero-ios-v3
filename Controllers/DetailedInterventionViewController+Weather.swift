@@ -45,7 +45,7 @@ extension AddInterventionViewController {
     } else {
       negativeTemperature.setTitle("-", for: .normal)
     }
-    saveCurrentWeather(self)
+    saveCurrentWeather()
   }
 
   func resetTemperatureTextFieldIfNotConform() {
@@ -84,7 +84,7 @@ extension AddInterventionViewController {
     currentWeatherLabel.isHidden = shouldExpand
     weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)
     hideWeatherItems(!shouldExpand)
-    saveCurrentWeather(self)
+    saveCurrentWeather()
   }
 
   func resetSelectedWeather() {
@@ -110,7 +110,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc func saveCurrentWeather(_ sender: Any) {
+  @objc func saveCurrentWeather() {
     checkTemperatureTextField()
     if temperatureTextField.text == "" && windSpeedTextField.text == "" {
       if weather.weatherDescription != nil {

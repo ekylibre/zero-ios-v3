@@ -155,7 +155,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     return types
   }
 
-  @objc private func nameDidChange(_ sender: UITextField) {
+  @objc private func nameDidChange() {
     if !errorLabel.isHidden {
       errorLabel.isHidden = true
     }

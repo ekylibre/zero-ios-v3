@@ -774,9 +774,9 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     textField.resignFirstResponder()
     switch textField {
     case temperatureTextField:
-      saveCurrentWeather(self)
+      saveCurrentWeather()
     case windSpeedTextField:
-      saveCurrentWeather(self)
+      saveCurrentWeather()
     default:
       return false
     }
