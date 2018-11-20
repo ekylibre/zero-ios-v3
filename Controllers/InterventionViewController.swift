@@ -82,6 +82,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     initialiseInterventionButtons()
 
     // Load table view
+    tableView.bringSubviewToFront(syncView)
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.rowHeight = 80
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
@@ -115,23 +118,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       synchroLabel.text = "no_synchronization_listed".localized
     }
 
-    initialiseInterventionButtons()
-
-    // Load table view
-    tableView.bringSubviewToFront(syncView)
-    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
-    tableView.rowHeight = 80
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.refreshControl = refreshControl
-
-    checkLocalData()
-    if Connectivity.isConnectedToInternet() {
-      fetchInterventions()
-      synchronise(self)
-    } else {
-      fetchInterventions()
-    }
   }
 
   private func setupNavigationBar() {
