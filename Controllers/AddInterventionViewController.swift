@@ -700,6 +700,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showSpecies":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
+      destVC.lastSelectedValue = inputsSelectionView.seedView.specieButton.titleLabel?.text
       destVC.rawStrings = species
       destVC.tag = 0
     case "showMaterialUnits":
@@ -717,6 +718,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
+      destVC.lastSelectedValue = equipmentsSelectionView.creationView.typeButton.titleLabel?.text
       destVC.rawStrings = equipmentTypes
       destVC.tag = 3
     default:

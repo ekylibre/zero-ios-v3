@@ -173,6 +173,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @objc func cancelStorageCreation(_ sender: Any) {
+    storagesTypes.selectRow(0, inComponent: 0, animated: false)
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
     storageCreationView.nameTextField.text = ""
     dimView.isHidden = true

@@ -13,6 +13,7 @@ class ListTableViewController: UITableViewController {
   // MARK: - Properties
 
   var delegate: WriteValueBackDelegate?
+  var lastSelectedValue: String?
   var rawStrings: [String]!
   var tag: Int!
 
@@ -22,6 +23,7 @@ class ListTableViewController: UITableViewController {
     sortByLocales()
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
+    scrollToLastSelectedValue()
   }
 
   private func sortByLocales() {
@@ -30,6 +32,18 @@ class ListTableViewController: UITableViewController {
         <
       $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
+  }
+
+  func scrollToLastSelectedValue() {
+    var indexPath: IndexPath!
+
+    for index in 0..<rawStrings.count {
+      if lastSelectedValue == rawStrings[index].localized {
+        indexPath = IndexPath(row: index, section: 0)
+        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+        break
+      }
+    }
   }
 
   // MARK: - Table view
