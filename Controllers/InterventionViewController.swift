@@ -55,7 +55,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     checkLocalData()
     if Connectivity.isConnectedToInternet() {
       fetchInterventions()
-      synchronise(self)
+      synchronise()
     } else {
       fetchInterventions()
     }
@@ -173,7 +173,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Core Data
 
-  func fetchFarmName() -> String? {
+  private func fetchFarmName() -> String? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -206,7 +206,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func sortInterventionsByDate() {
+  private func sortInterventionsByDate() {
     interventions = interventions.sorted(by: {
       let firstWorkingPeriod = $0.workingPeriods?.anyObject() as! WorkingPeriod
       let secondWorkingPeriod = $1.workingPeriods?.anyObject() as! WorkingPeriod
@@ -295,7 +295,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
+  @IBAction private func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
     if segue.source is AddInterventionViewController {
       fetchInterventions()
     }
@@ -315,11 +315,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()
-      synchronise(self)
+      synchronise()
     }
   }
 
-  @IBAction func synchronise(_ sender: Any) {
+  @IBAction private func synchronise() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -356,7 +356,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func pushInterventionIfNeeded() {
+  private func pushInterventionIfNeeded() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -382,7 +382,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func fetchCrops() -> [Crop] {
+  private func fetchCrops() -> [Crop] {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return [Crop]()
     }
@@ -411,7 +411,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.isHidden = true
   }
 
-  @IBAction func addIntervention(_ sender: Any) {
+  @IBAction private func addIntervention(_ sender: Any) {
     let crops = fetchCrops()
 
     if crops.count ==  0 {
@@ -451,7 +451,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Logout
 
-  @objc func presentLogoutAlert() {
+  @objc private func presentLogoutAlert() {
     let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
     let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
     let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
