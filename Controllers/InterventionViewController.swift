@@ -115,8 +115,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       synchroLabel.text = "no_synchronization_listed".localized
     }
 
-    initialiseInterventionButtons()
-
     // Load table view
     tableView.bringSubviewToFront(syncView)
     tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
