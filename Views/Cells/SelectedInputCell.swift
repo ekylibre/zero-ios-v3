@@ -89,7 +89,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     unitButton.layer.borderColor = UIColor.lightGray.cgColor
     unitButton.layer.cornerRadius = 5
     unitButton.clipsToBounds = false
-    unitButton.addTarget(self, action: #selector(self.showUnitMeasure(sender:)), for: .touchUpInside)
+    unitButton.addTarget(self, action: #selector(showUnitMeasure), for: .touchUpInside)
     unitButton.translatesAutoresizingMaskIntoConstraints = false
     return unitButton
   }()
@@ -234,10 +234,25 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   // MARK: - Actions
 
   @objc func showUnitMeasure(sender: UIButton) {
+
     addInterventionViewController?.dimView.isHidden = false
     if type == "Phyto" {
+      let title = sender.titleLabel?.text
+      for index in 0..<addInterventionViewController!.volumeUnitMeasure.count {
+        if title == addInterventionViewController?.volumeUnitMeasure[index].localized {
+          addInterventionViewController?.volumeUnitPicker.selectRow(index, inComponent: 0, animated: false)
+          break
+        }
+      }
       addInterventionViewController?.volumeUnitPicker.isHidden = false
     } else {
+      let title = sender.titleLabel?.text
+      for index in 0..<addInterventionViewController!.massUnitMeasure.count {
+        if title == addInterventionViewController?.massUnitMeasure[index].localized {
+          addInterventionViewController?.massUnitPicker.selectRow(index, inComponent: 0, animated: false)
+          break
+        }
+      }
       addInterventionViewController?.massUnitPicker.isHidden = false
     }
     cellDelegate?.saveSelectedRow(indexPath)
