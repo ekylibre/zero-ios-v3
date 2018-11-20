@@ -183,10 +183,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       ])
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-  }
-
   private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
