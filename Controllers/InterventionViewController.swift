@@ -53,11 +53,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     setupDimView()
 
     checkLocalData()
+    fetchInterventions()
     if Connectivity.isConnectedToInternet() {
-      fetchInterventions()
       synchronise()
-    } else {
-      fetchInterventions()
     }
   }
 
@@ -210,7 +208,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let firstWorkingPeriod = $0.workingPeriods?.anyObject() as! WorkingPeriod
       let secondWorkingPeriod = $1.workingPeriods?.anyObject() as! WorkingPeriod
 
-      return firstWorkingPeriod.executionDate! < secondWorkingPeriod.executionDate!
+      return firstWorkingPeriod.executionDate! > secondWorkingPeriod.executionDate!
     })
   }
 
@@ -280,6 +278,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
+      refreshControl.beginRefreshing()
+      synchronise()
+    }
+  }
+
   // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -301,23 +306,16 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func presentAddInterventionVC(sender: UIButton) {
-    collapseBottomView()
     performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+    collapseBottomView()
   }
 
   @objc private func presentInterventionsByCrop(_ sender: Any) {
-    collapseBottomView()
     self.performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
+    collapseBottomView()
   }
 
   // MARK: - Actions
-
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
-      refreshControl.beginRefreshing()
-      synchronise()
-    }
-  }
 
   @IBAction private func synchronise() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
