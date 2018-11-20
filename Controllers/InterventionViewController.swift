@@ -217,53 +217,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     })
   }
 
-  // MARK: - Logout
-
-  private func emptyAllCoreData() {
-    let entityNames = appDelegate.persistentContainer.managedObjectModel.entities.map({ (entity) -> String in
-      return entity.name!
-    })
-
-    for entityName in entityNames {
-      batchDeleteEntity(name: entityName)
-    }
-  }
-
-  private func batchDeleteEntity(name: String) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-    let request = NSBatchDeleteRequest(fetchRequest: fetch)
-
-    do {
-      try managedContext.execute(request)
-    } catch let error as NSError {
-      print("Could not remove data. \(error), \(error.userInfo)")
-    }
-  }
-
-  @objc func logoutFromFarm(_ sender: Any) {
-    let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
-    let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
-    let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
-      let authentificationService = AuthentificationService(username: "", password: "")
-
-      authentificationService.logout()
-      UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-      UserDefaults.standard.synchronize()
-      self.emptyAllCoreData()
-      self.navigationController?.popViewController(animated: true)
-    })
-
-    alert.addAction(cancelAction)
-    alert.addAction(logoutAction)
-    present(alert, animated: true)
-  }
-
-  // MARK: - Table view data source
+  // MARK: - Table view
   
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -327,29 +281,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       totalSurfaceArea += crop.surfaceArea
     }
     return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
-  }
-
-  func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let intervention = Intervention(context: managedContext)
-    let workingPeriod = WorkingPeriod(context: managedContext)
-
-    intervention.type = type
-    intervention.infos = infos
-    intervention.status = status
-    workingPeriod.intervention = intervention
-    workingPeriod.executionDate = executionDate
-
-    do {
-      try managedContext.save()
-      interventions.append(intervention)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
   }
 
   // MARK: - Navigation
@@ -517,6 +448,52 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         line = floor(index / 4)
       }
       dimView.isHidden = false
+    }
+  }
+
+  // MARK: - Logout
+
+  @objc func logoutFromFarm(_ sender: Any) {
+    let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
+    let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
+    let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
+      let authentificationService = AuthentificationService(username: "", password: "")
+
+      authentificationService.logout()
+      UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+      UserDefaults.standard.synchronize()
+      self.emptyAllCoreData()
+      self.navigationController?.popViewController(animated: true)
+    })
+
+    alert.addAction(cancelAction)
+    alert.addAction(logoutAction)
+    present(alert, animated: true)
+  }
+
+  private func emptyAllCoreData() {
+    let entityNames = appDelegate.persistentContainer.managedObjectModel.entities.map({ (entity) -> String in
+      return entity.name!
+    })
+
+    for entityName in entityNames {
+      batchDeleteEntity(name: entityName)
+    }
+  }
+
+  private func batchDeleteEntity(name: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+    let request = NSBatchDeleteRequest(fetchRequest: fetch)
+
+    do {
+      try managedContext.execute(request)
+    } catch let error as NSError {
+      print("Could not remove data. \(error), \(error.userInfo)")
     }
   }
 }
