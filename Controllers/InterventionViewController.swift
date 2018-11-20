@@ -64,6 +64,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     updateSynchronisationLabel()
 
     // Load table view
+    tableView.bringSubviewToFront(syncView)
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.rowHeight = 80
     tableView.dataSource = self
     tableView.delegate = self
     tableView.refreshControl = refreshControl
@@ -95,22 +98,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
     } else {
       synchroLabel.text = "no_synchronization_listed".localized
-    }
-
-    // Load table view
-    tableView.bringSubviewToFront(syncView)
-    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
-    tableView.rowHeight = 80
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.refreshControl = refreshControl
-
-    checkLocalData()
-    if Connectivity.isConnectedToInternet() {
-      fetchInterventions()
-      synchronise(self)
-    } else {
-      fetchInterventions()
     }
   }
 
@@ -166,7 +153,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func setupDimView() {
-    let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
+    let gesture = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
 
     dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
     dimView.addGestureRecognizer(gesture)
@@ -426,12 +413,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     if segue.source is AddInterventionViewController {
       fetchInterventions()
     }
-  }
-
-  func makeDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
-    let calendar = Calendar(identifier: .gregorian)
-    let components = DateComponents(year: year, month: month, day: day, hour: hour, minute: minute, second: second)
-    return calendar.date(from: components)!
   }
 
   // MARK: - Actions
