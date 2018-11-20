@@ -132,23 +132,23 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func updateSyncLabel() {
-    if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
-      let calendar = Calendar.current
-
-      if calendar.isDateInToday(date) {
-        let hour = calendar.component(.hour, from: date)
-        let minute = calendar.component(.minute, from: date)
-
-        syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
-      } else {
-        let dateFormatter = DateFormatter()
-
-        dateFormatter.locale = Locale(identifier: "locale".localized)
-        dateFormatter.dateFormat = "d MMMM"
-        syncLabel.text = "last_synchronization".localized + dateFormatter.string(from: date)
-      }
-    } else {
+    guard let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date else {
       syncLabel.text = "no_synchronization_listed".localized
+      return
+    }
+    let calendar = Calendar.current
+
+    if calendar.isDateInToday(date) {
+      let hour = calendar.component(.hour, from: date)
+      let minute = calendar.component(.minute, from: date)
+
+      syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+    } else {
+      let dateFormatter = DateFormatter()
+
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMMM"
+      syncLabel.text = "last_synchronization".localized + dateFormatter.string(from: date)
     }
   }
 
