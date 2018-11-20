@@ -34,8 +34,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let navItem = UINavigationItem()
   let dimView = UIView(frame: CGRect.zero)
   let refreshControl = UIRefreshControl()
-  var interventionButtons = [UIButton]()
-  var interventionButtonsLabels = [UILabel]()
+  var interventionTypeButtons = [UIButton]()
+  var interventionTypeLabels = [UILabel]()
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
 
@@ -129,10 +129,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createInterventionButton.layer.cornerRadius = 3
     //createInterventionButton.clipsToBounds = true
 
-    initialiseInterventionButtons()
+    setupBottomViewHiddenObjects()
   }
 
-  func initialiseInterventionButtons() {
+  func setupBottomViewHiddenObjects() {
     for buttonCount in 0...6 {
       let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
       let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
@@ -148,10 +148,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionLabel.font = UIFont.systemFont(ofSize: 15)
       interventionLabel.translatesAutoresizingMaskIntoConstraints = false
       interventionLabel.isHidden = true
-      interventionButtons.append(interventionButton)
-      interventionButtonsLabels.append(interventionLabel)
+      interventionTypeButtons.append(interventionButton)
+      interventionTypeLabels.append(interventionLabel)
       bottomView.addSubview(interventionButton)
-      bottomView.addSubview(interventionButtonsLabels[interventionButton.tag])
+      bottomView.addSubview(interventionTypeLabels[interventionButton.tag])
     }
   }
 
@@ -514,9 +514,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc func hideInterventionAdd() {
-    for interventionButton in interventionButtons {
+    for interventionButton in interventionTypeButtons {
       interventionButton.isHidden = true
-      interventionButtonsLabels[interventionButton.tag].isHidden = true
+      interventionTypeLabels[interventionButton.tag].isHidden = true
     }
 
     createInterventionButton.isHidden = false
@@ -541,15 +541,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       var line: CGFloat = 0
       let width = bottomView.frame.size.width
 
-      for interventionButton in interventionButtons {
+      for interventionButton in interventionTypeButtons {
         interventionButton.isHidden = false
         interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
         interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
         interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
-        interventionButtonsLabels[interventionButton.tag].isHidden = false
+        interventionTypeLabels[interventionButton.tag].isHidden = false
         NSLayoutConstraint.activate([
-          interventionButtonsLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
-          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor)
+          interventionTypeLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
+          interventionTypeLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor)
           ])
 
         bottomView.layoutIfNeeded()

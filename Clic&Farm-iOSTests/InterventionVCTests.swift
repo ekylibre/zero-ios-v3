@@ -79,7 +79,7 @@ class InterventionVCTests: XCTestCase {
     interventionVC.hideInterventionAdd()
 
     //Then
-    for interventionButton in interventionVC.interventionButtons {
+    for interventionButton in interventionVC.interventionTypeButtons {
       XCTAssertTrue(interventionButton.isHidden, "Should be hidden")
     }
     XCTAssertTrue(interventionVC.dimView.isHidden, "Should be hidden")
