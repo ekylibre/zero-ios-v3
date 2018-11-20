@@ -118,8 +118,8 @@
                         <outlet property="createInterventionButton" destination="XRU-Wr-aoY" id="NFa-kI-oUK"/>
                         <outlet property="heightConstraint" destination="aP0-3P-QcV" id="zXq-CV-FZJ"/>
                         <outlet property="navigationBar" destination="OwN-92-HaX" id="mZx-So-UkL"/>
+                        <outlet property="syncLabel" destination="qI5-Ep-5Qd" id="7BA-ip-6w3"/>
                         <outlet property="syncView" destination="HhK-bh-tnX" id="E1c-9u-l4e"/>
-                        <outlet property="synchroLabel" destination="qI5-Ep-5Qd" id="DTW-xd-421"/>
                         <outlet property="tableView" destination="ttg-Mf-cp2" id="vuV-KO-27u"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="IIb-81-RCP"/>
                         <segue destination="6i8-BA-FKm" kind="presentation" identifier="showInterventionsByCrop" id="Og0-d3-16l"/>

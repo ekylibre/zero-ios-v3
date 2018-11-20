@@ -17,7 +17,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var syncView: UIView!
-  @IBOutlet weak var synchroLabel: UILabel!
+  @IBOutlet weak var syncLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var createInterventionButton: UIButton!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -52,7 +52,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
-    updateSynchronisationLabel()
+    updateSyncLabel()
 
     // Load table view
     tableView.bringSubviewToFront(syncView)
@@ -71,7 +71,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func updateSynchronisationLabel() {
+  func updateSyncLabel() {
     if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
       let calendar = Calendar.current
       let dateFormatter = DateFormatter()
@@ -83,12 +83,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let dateString = dateFormatter.string(from: date)
 
       if calendar.isDateInToday(date) {
-        synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+        syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
       } else {
-        synchroLabel.text = "last_synchronization".localized + dateString
+        syncLabel.text = "last_synchronization".localized + dateString
       }
     } else {
-      synchroLabel.text = "no_synchronization_listed".localized
+      syncLabel.text = "no_synchronization_listed".localized
     }
   }
 
@@ -453,11 +453,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } catch let error as NSError {
           print("Could not save. \(error), \(error.userInfo)")
         }
-        self.synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+        self.syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
       } else {
-        self.synchroLabel.text = "sync_failure".localized
+        self.syncLabel.text = "sync_failure".localized
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()

@@ -90,7 +90,7 @@ class InterventionVCTests: XCTestCase {
   func test_updateSynchronisationLabel_withoutSync() {
     // When
     UserDefaults.standard.setValue(0, forKey: "lastSyncDate")
-    interventionVC.updateSynchronisationLabel()
+    interventionVC.updateSyncLabel()
 
     // Then
     XCTAssertEqual(interventionVC.synchroLabel.text, "no_synchronization_listed".localized,
@@ -111,7 +111,7 @@ class InterventionVCTests: XCTestCase {
 
     // When
     UserDefaults.standard.setValue(date, forKey: "lastSyncDate")
-    interventionVC.updateSynchronisationLabel()
+    interventionVC.updateSyncLabel()
 
     // Then
     XCTAssertEqual(interventionVC.synchroLabel.text, expectedDate, "Should have a synchronization listed")
@@ -128,7 +128,7 @@ class InterventionVCTests: XCTestCase {
 
     // When
     UserDefaults.standard.setValue(date, forKey: "lastSyncDate")
-    interventionVC.updateSynchronisationLabel()
+    interventionVC.updateSyncLabel()
 
     // Then
     XCTAssertEqual(interventionVC.synchroLabel.text, expectedDate, "Should have a synchronization listed")
