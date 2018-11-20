@@ -45,14 +45,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
+    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     setupNavigationBar()
     setupBottomView()
-    setupDimView()
-
-    // Change status bar appearance
-    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-
     updateSyncLabel()
+    setupDimView()
 
     // Load table view
     tableView.bringSubviewToFront(syncView)
@@ -68,27 +65,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       synchronise(self)
     } else {
       fetchInterventions()
-    }
-  }
-
-  func updateSyncLabel() {
-    if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
-      let calendar = Calendar.current
-      let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "locale".localized)
-      dateFormatter.dateFormat = "d MMMM"
-
-      let hour = calendar.component(.hour, from: date)
-      let minute = calendar.component(.minute, from: date)
-      let dateString = dateFormatter.string(from: date)
-
-      if calendar.isDateInToday(date) {
-        syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
-      } else {
-        syncLabel.text = "last_synchronization".localized + dateString
-      }
-    } else {
-      syncLabel.text = "no_synchronization_listed".localized
     }
   }
 
@@ -152,6 +128,27 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionTypeLabels.append(interventionLabel)
       bottomView.addSubview(interventionButton)
       bottomView.addSubview(interventionTypeLabels[interventionButton.tag])
+    }
+  }
+
+  func updateSyncLabel() {
+    if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
+      let calendar = Calendar.current
+
+      if calendar.isDateInToday(date) {
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+
+        syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+      } else {
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.locale = Locale(identifier: "locale".localized)
+        dateFormatter.dateFormat = "d MMMM"
+        syncLabel.text = "last_synchronization".localized + dateFormatter.string(from: date)
+      }
+    } else {
+      syncLabel.text = "no_synchronization_listed".localized
     }
   }
 
