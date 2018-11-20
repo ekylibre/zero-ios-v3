@@ -47,17 +47,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     setupNavigationBar()
+    setupTableView()
     setupBottomView()
     updateSyncLabel()
     setupDimView()
-
-    // Load table view
-    tableView.bringSubviewToFront(syncView)
-    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
-    tableView.rowHeight = 80
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.refreshControl = refreshControl
 
     checkLocalData()
     if Connectivity.isConnectedToInternet() {
@@ -94,6 +87,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
     navItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton), UIBarButtonItem(customView: cropsButton)]
     navigationBar.setItems([navItem], animated: true)
+  }
+
+  private func setupTableView() {
+    tableView.bringSubviewToFront(syncView)
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.rowHeight = 80
+    tableView.delegate = self
+    tableView.dataSource = self
+    tableView.refreshControl = refreshControl
   }
 
   private func setupBottomView() {
