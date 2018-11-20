@@ -82,7 +82,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
     logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
     logoutButton.tintColor = .white
-    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
+    logoutButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
 
     NSLayoutConstraint.activate([
       cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
@@ -299,6 +299,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
+  @objc private func presentAddInterventionVC(sender: UIButton) {
+    hideInterventionAdd()
+    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+  }
+
+  @objc private func presentInterventionsByCrop(_ sender: Any) {
+    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
+  }
+
   // MARK: - Actions
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -389,15 +398,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return [Crop]()
   }
 
-  @objc func action(sender: UIButton) {
-      hideInterventionAdd()
-      performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
-  }
-
-  @objc private func presentInterventionsByCrop(_ sender: Any) {
-    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
-  }
-
   @objc func hideInterventionAdd() {
     for interventionButton in interventionTypeButtons {
       interventionButton.isHidden = true
@@ -430,7 +430,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         interventionButton.isHidden = false
         interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
         interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
-        interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+        interventionButton.addTarget(self, action: #selector(presentAddInterventionVC), for: .touchUpInside)
         interventionTypeLabels[interventionButton.tag].isHidden = false
         NSLayoutConstraint.activate([
           interventionTypeLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
@@ -449,22 +449,26 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Logout
 
-  @objc func logoutFromFarm(_ sender: Any) {
+  @objc func presentLogoutAlert() {
     let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
     let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
     let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
-      let authentificationService = AuthentificationService(username: "", password: "")
-
-      authentificationService.logout()
-      UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-      UserDefaults.standard.synchronize()
-      self.emptyAllCoreData()
-      self.navigationController?.popViewController(animated: true)
+      self.logoutUser()
     })
 
     alert.addAction(cancelAction)
     alert.addAction(logoutAction)
     present(alert, animated: true)
+  }
+
+  private func logoutUser() {
+    let authentificationService = AuthentificationService(username: "", password: "")
+
+    authentificationService.logout()
+    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    UserDefaults.standard.synchronize()
+    emptyAllCoreData()
+    navigationController?.popViewController(animated: true)
   }
 
   private func emptyAllCoreData() {
