@@ -136,7 +136,7 @@ extension AddInterventionViewController {
     negativeTemperature.isHidden = state
   }
 
-  @IBAction private func tapWeatherView(_ sender: Any) {
+  @IBAction func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
@@ -174,7 +174,7 @@ extension AddInterventionViewController {
     if temperatureTextField.text == "" && windSpeedTextField.text == "" {
       currentWeatherLabel.text = "not_filled_in".localized
     } else {
-      let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "")
+      let temperature = (temperatureTextField.text != "" ? temperatureTextField.text : "--")
       let wind = (windSpeedTextField.text != "" ? windSpeedTextField.text : "--")
       let currentTemperature = String(format: "temp".localized, temperature!)
       let currentWind = String(format: "wind".localized, wind!)

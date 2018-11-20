@@ -114,7 +114,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction private func tapEquipmentsView() {
+  @IBAction func tapEquipmentsView() {
     let shouldExpand = (equipmentsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 
@@ -122,7 +122,7 @@ extension AddInterventionViewController {
       return
     }
 
-    updateCountLabel()
+    updateEquipmentsCountLabel()
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     if interventionState != InterventionState.Validated.rawValue {
       equipmentsAddButton.isHidden = !shouldExpand
@@ -132,9 +132,11 @@ extension AddInterventionViewController {
     equipmentsExpandImageView.transform = equipmentsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  private func updateCountLabel() {
+  func updateEquipmentsCountLabel() {
     if selectedEquipments.count == 1 {
       equipmentsCountLabel.text = "equipment".localized
+    } else if selectedEquipments.count == 0 {
+      equipmentsCountLabel.text = "none".localized
     } else {
       equipmentsCountLabel.text = String(format: "equipments".localized, selectedEquipments.count)
     }
@@ -161,7 +163,7 @@ extension AddInterventionViewController {
   @objc func tapEquipmentsDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedEquipmentCell
     let indexPath = selectedEquipmentsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: nil, message: "delete_equipment_prompt".localized, preferredStyle: .alert)
+    let alert = UIAlertController(title: "delete_equipment_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in

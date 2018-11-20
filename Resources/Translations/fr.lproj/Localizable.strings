@@ -339,6 +339,7 @@
 "cancel" = "Annuler";
 "validate" = "Valider";
 "delete" = "Supprimer";
+"close" = "Fermer";
 "no" = "Non";
 "yes" = "Oui";
 
@@ -521,9 +522,16 @@
 "unauthorized_mixing" = "Mélange non autorisé";
 "gps_is_off" = "Le GPS de votre smartphone est éteint.";
 "waiting_gps_signal" = "En attente d'un signal GPS…";
+"my_crops_title" = "Mes cultures";
+"filter_by_proximity" = "Filtrer par proximité";
 "from" = "Du";
 "to" = "Au";
 "yield" = "Rendement";
+"location_request_title" = "Services de Localisation Désactivés";
+"location_request_message" = "Veuillez activer les services de localisation.";
+"authorization_request_title" = "Services de Localisation Désactivés";
+"authorization_request_message" = "Veuillez activer les services de localisation pour cette application.";
+"settings" = "Réglages";
 
 "locale" = "fr_FR";
 

@@ -144,7 +144,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     }
   }
 
-  private func createMaterial(name: String, unit: String) {
+  func createMaterial(name: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -210,7 +210,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     creationView.unitButton.setTitle("METER".localized.lowercased(), for: .normal)
   }
 
-  private func checkMaterialName() -> Bool {
+  func checkMaterialName() -> Bool {
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "material_name_is_empty".localized
       creationView.errorLabel.isHidden = false

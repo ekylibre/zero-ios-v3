@@ -35,6 +35,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     let createButton = UIButton(frame: CGRect.zero)
     createButton.setTitle("create_new_seed".localized.uppercased(), for: .normal)
     createButton.setTitleColor(AppColor.TextColors.Green, for: .normal)
+    createButton.setTitleColor(AppColor.TextColors.LightGreen, for: .highlighted)
     createButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     createButton.translatesAutoresizingMaskIntoConstraints = false
     return createButton
@@ -161,7 +162,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupActions() {
-    segmentedControl.addTarget(self, action: #selector(changeSegment), for: UIControl.Event.valueChanged)
+    segmentedControl.addTarget(self, action: #selector(changeSegment), for: .valueChanged)
     createButton.addTarget(self, action: #selector(tapCreateButton), for: .touchUpInside)
     seedView.cancelButton.addTarget(self, action: #selector(hideDimView), for: .touchUpInside)
     seedView.createButton.addTarget(self, action: #selector(createInput), for: .touchUpInside)

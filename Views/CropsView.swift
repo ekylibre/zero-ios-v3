@@ -57,8 +57,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   lazy var validateButton: UIButton = {
     let validateButton = UIButton(frame: CGRect.zero)
     validateButton.setTitle("validate".localized.uppercased(), for: .normal)
-    validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    validateButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
     validateButton.setTitleColor(AppColor.TextColors.Black, for: .normal)
+    validateButton.setTitleColor(AppColor.TextColors.Black.withAlphaComponent(0.3), for: .highlighted)
     validateButton.backgroundColor = UIColor.white
     validateButton.layer.cornerRadius = 3
     validateButton.clipsToBounds = true
@@ -470,7 +471,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  private func updateSelectedCropsLabel() {
+  func updateSelectedCropsLabel() {
     if selectedCrops.count == 0 {
       selectedCropsLabel.text = "no_crop_selected".localized
     } else {

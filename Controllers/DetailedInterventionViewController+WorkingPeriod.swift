@@ -45,13 +45,17 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
-  @IBAction private func tapWorkingPeriodView(_ sender: Any) {
+  @IBAction func tapWorkingPeriodView(_ sender: Any) {
     let shouldExpand = (workingPeriodHeightConstraint.constant == 70)
     let dateString = workingPeriodDateButton.titleLabel!.text!
     let duration = workingPeriodDurationTextField.text!.floatValue
 
     workingPeriodHeightConstraint.constant = shouldExpand ? 155 : 70
-    selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", dateString, duration)
+    if duration.truncatingRemainder(dividingBy: 1) == 0 {
+      selectedWorkingPeriodLabel.text = String(format: "%@ • %g h", dateString, duration)
+    } else {
+      selectedWorkingPeriodLabel.text = String(format: "%@ • %.1f h", dateString, duration)
+    }
     selectedWorkingPeriodLabel.isHidden = shouldExpand
     workingPeriodDateButton.isHidden = !shouldExpand
     workingPeriodExpandImageView.transform = workingPeriodExpandImageView.transform.rotated(by: CGFloat.pi)

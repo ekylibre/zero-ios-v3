@@ -25,14 +25,15 @@ struct AppColor {
     static let LightGray = UIColor(red: 236/255, green: 235/255, blue: 235/255, alpha: 1)
   }
 
-  // These values may need changes
   struct TextColors {
     static let Black = UIColor.black
-    static let White = UIColor.white
     static let Blue = UIColor(red: 0/255, green: 98/255, blue: 202/255, alpha: 1)
-    static let Green = UIColor(red: 154/255, green: 200/255, blue: 106/255, alpha: 1)
     static let DarkGray = UIColor.darkGray
+    static let Green = UIColor(red: 154/255, green: 200/255, blue: 106/255, alpha: 1)
+    static let LightBlue = Blue.withAlphaComponent(0.3)
+    static let LightGreen = Green.withAlphaComponent(0.3)
     static let Red = UIColor.red
+    static let White = UIColor.white
   }
 
   struct ThemeColors {

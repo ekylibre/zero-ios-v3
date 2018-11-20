@@ -7,26 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		041028942191A0BE0015978B /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410287F2191A0BD0015978B /* DetailedInterventionViewController+WorkingPeriod.swift */; };
-		041028952191A0BE0015978B /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028802191A0BD0015978B /* InterventionViewController+Lexicon.swift */; };
-		041028962191A0BE0015978B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028812191A0BD0015978B /* LoginViewController.swift */; };
-		041028972191A0BE0015978B /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028822191A0BD0015978B /* UnitMeasurePickerView.swift */; };
-		041028982191A0BE0015978B /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028832191A0BD0015978B /* ListProtocol.swift */; };
-		041028992191A0BE0015978B /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028842191A0BD0015978B /* DetailedInterventionViewController+Inputs.swift */; };
-		0410289A2191A0BE0015978B /* DetailedInterventionViewController+Harvests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028852191A0BD0015978B /* DetailedInterventionViewController+Harvests.swift */; };
-		0410289B2191A0BE0015978B /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028862191A0BD0015978B /* AddInterventionViewController.swift */; };
-		0410289C2191A0BE0015978B /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028872191A0BD0015978B /* AuthentificationService.swift */; };
-		0410289D2191A0BE0015978B /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028882191A0BD0015978B /* HandleKeyboard.swift */; };
-		0410289E2191A0BE0015978B /* DetailedInterventionViewController+Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028892191A0BD0015978B /* DetailedInterventionViewController+Persons.swift */; };
-		0410289F2191A0BE0015978B /* DetailedInterventionViewController+Materials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410288A2191A0BD0015978B /* DetailedInterventionViewController+Materials.swift */; };
-		041028A02191A0BE0015978B /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410288B2191A0BD0015978B /* HandleAddInterventionErrors.swift */; };
-		041028A12191A0BE0015978B /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410288C2191A0BE0015978B /* InterventionViewController.swift */; };
-		041028A22191A0BE0015978B /* DefineInterventionsDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410288D2191A0BE0015978B /* DefineInterventionsDisplayMode.swift */; };
-		041028A32191A0BE0015978B /* InterventionViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410288E2191A0BE0015978B /* InterventionViewController+Apollo.swift */; };
-		041028A42191A0BE0015978B /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410288F2191A0BE0015978B /* ListTableViewController.swift */; };
-		041028A52191A0BE0015978B /* DetailedInterventionViewController+Irrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028902191A0BE0015978B /* DetailedInterventionViewController+Irrigation.swift */; };
-		041028A62191A0BE0015978B /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028912191A0BE0015978B /* DetailedInterventionViewController+Equipments.swift */; };
-		041028A72191A0BE0015978B /* DetailedInterventionViewController+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028922191A0BE0015978B /* DetailedInterventionViewController+Weather.swift */; };
 		041028A92191A6260015978B /* StorageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		0411D210219093A40026843F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0411D20F219093A40026843F /* API.swift */; };
@@ -35,49 +15,97 @@
 		04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
 		04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
 		04137127218C5DD40034128A /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */; };
+		04163C4321A401D7001315C7 /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B60217DB8DE000A5D2F /* CropsView.swift */; };
+		04163C4521A401E8001315C7 /* FertilizerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B55217DB8DD000A5D2F /* FertilizerCreationView.swift */; };
+		0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */; };
+		0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */; };
+		0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */; };
+		0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */; };
+		041D87CC219DB45D00DFBC62 /* SeedCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */; };
+		041D87CE219DB78800DFBC62 /* StorageCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */; };
+		041D87D0219DBD8600DFBC62 /* PhytoCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */; };
+		045F6F90219EBD2700308D8B /* InputsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F6F8F219EBD2700308D8B /* InputsTests.swift */; };
 		0471092E21806F6E00DC262C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253E211849090036E167 /* AppDelegate.swift */; };
 		0471092F21806F7800DC262C /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A44332121B38600CE6B24 /* ColorConstants.swift */; };
-		047109302180714600DC262C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		047109312180715100DC262C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
 		047109322180715600DC262C /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998B67217DB8DE000A5D2F /* Main.strings */; };
 		047109332180716100DC262C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
+		0479C41D21A40936008DA4C2 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */; };
+		0479C41E21A40936008DA4C2 /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */; };
+		0479C41F21A40936008DA4C2 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40921A40935008DA4C2 /* HandleKeyboard.swift */; };
+		0479C42021A40936008DA4C2 /* DetailedInterventionViewController+Harvests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */; };
+		0479C42121A40936008DA4C2 /* DetailedInterventionViewController+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40B21A40935008DA4C2 /* DetailedInterventionViewController+Weather.swift */; };
+		0479C42221A40936008DA4C2 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40C21A40935008DA4C2 /* HandleAddInterventionErrors.swift */; };
+		0479C42321A40936008DA4C2 /* InterventionsByCropViewController+GPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40D21A40935008DA4C2 /* InterventionsByCropViewController+GPS.swift */; };
+		0479C42421A40936008DA4C2 /* InterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40E21A40935008DA4C2 /* InterventionViewController.swift */; };
+		0479C42521A40936008DA4C2 /* DetailedInterventionViewController+Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40F21A40935008DA4C2 /* DetailedInterventionViewController+Persons.swift */; };
+		0479C42621A40936008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41021A40935008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift */; };
+		0479C42721A40936008DA4C2 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41121A40935008DA4C2 /* AuthentificationService.swift */; };
+		0479C42821A40936008DA4C2 /* InterventionViewController+Apollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41221A40935008DA4C2 /* InterventionViewController+Apollo.swift */; };
+		0479C42921A40936008DA4C2 /* InterventionViewController+Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41321A40935008DA4C2 /* InterventionViewController+Lexicon.swift */; };
+		0479C42A21A40936008DA4C2 /* DefineInterventionsDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41421A40935008DA4C2 /* DefineInterventionsDisplayMode.swift */; };
+		0479C42B21A40936008DA4C2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41521A40935008DA4C2 /* LoginViewController.swift */; };
+		0479C42C21A40936008DA4C2 /* ListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41621A40935008DA4C2 /* ListProtocol.swift */; };
+		0479C42D21A40936008DA4C2 /* DetailedInterventionViewController+Materials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41721A40935008DA4C2 /* DetailedInterventionViewController+Materials.swift */; };
+		0479C42E21A40936008DA4C2 /* DetailedInterventionViewController+Irrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41821A40935008DA4C2 /* DetailedInterventionViewController+Irrigation.swift */; };
+		0479C42F21A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41921A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift */; };
+		0479C43021A40936008DA4C2 /* InterventionsByCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41A21A40936008DA4C2 /* InterventionsByCropViewController.swift */; };
+		0479C43121A40936008DA4C2 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */; };
+		0479C43221A40936008DA4C2 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41C21A40936008DA4C2 /* ListTableViewController.swift */; };
+		0479C43321A40BD8008DA4C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
+		0479C43421A40CCB008DA4C2 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
+		0479C43521A40CCB008DA4C2 /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6B217DB8DE000A5D2F /* PhytoCell.swift */; };
+		0479C43621A40CCB008DA4C2 /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B72217DB8DE000A5D2F /* SeedCell.swift */; };
+		0479C43721A40CCB008DA4C2 /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */; };
+		0479C43821A40CCB008DA4C2 /* EquipmentCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */; };
+		0479C43921A40CCB008DA4C2 /* PersonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B58217DB8DD000A5D2F /* PersonsView.swift */; };
+		0479C43B21A40FA1008DA4C2 /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C43A21A40FA1008DA4C2 /* CustomTypes.swift */; };
 		048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF32178C8D6002EDF62 /* Localizable.swift */; };
 		048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */; };
 		048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */; };
 		04998B79217DB8DE000A5D2F /* InputsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B54217DB8DD000A5D2F /* InputsView.swift */; };
-		04998B7A217DB8DF000A5D2F /* FertilizerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B55217DB8DD000A5D2F /* FertilizerCreationView.swift */; };
 		04998B7B217DB8DF000A5D2F /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B56217DB8DD000A5D2F /* RoundedButton.swift */; };
 		04998B7C217DB8DF000A5D2F /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B57217DB8DD000A5D2F /* SelectionView.swift */; };
-		04998B7D217DB8DF000A5D2F /* PersonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B58217DB8DD000A5D2F /* PersonsView.swift */; };
 		04998B7E217DB8DF000A5D2F /* MaterialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B59217DB8DD000A5D2F /* MaterialsView.swift */; };
 		04998B7F217DB8DF000A5D2F /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5A217DB8DD000A5D2F /* CropView.swift */; };
 		04998B80217DB8DF000A5D2F /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */; };
-		04998B81217DB8DF000A5D2F /* EquipmentCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */; };
 		04998B82217DB8DF000A5D2F /* PhytoCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5D217DB8DE000A5D2F /* PhytoCreationView.swift */; };
 		04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5E217DB8DE000A5D2F /* SeedCreationView.swift */; };
 		04998B84217DB8DF000A5D2F /* MaterialCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B5F217DB8DE000A5D2F /* MaterialCreationView.swift */; };
-		04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B60217DB8DE000A5D2F /* CropsView.swift */; };
 		04998B86217DB8DF000A5D2F /* EquipmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B61217DB8DE000A5D2F /* EquipmentsView.swift */; };
 		04998B87217DB8DF000A5D2F /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B62217DB8DE000A5D2F /* SelectDateView.swift */; };
-		04998B88217DB8DF000A5D2F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */; };
 		04998B8B217DB8DF000A5D2F /* HarvestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6A217DB8DE000A5D2F /* HarvestCell.swift */; };
-		04998B8C217DB8DF000A5D2F /* PhytoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6B217DB8DE000A5D2F /* PhytoCell.swift */; };
 		04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6C217DB8DE000A5D2F /* PersonCell.swift */; };
 		04998B8E217DB8DF000A5D2F /* SelectedPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */; };
 		04998B8F217DB8DF000A5D2F /* SelectedMaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6E217DB8DE000A5D2F /* SelectedMaterialCell.swift */; };
-		04998B90217DB8DF000A5D2F /* SelectedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */; };
 		04998B91217DB8DF000A5D2F /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B70217DB8DE000A5D2F /* ListCell.swift */; };
 		04998B92217DB8DF000A5D2F /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B71217DB8DE000A5D2F /* MaterialCell.swift */; };
-		04998B93217DB8DF000A5D2F /* SeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B72217DB8DE000A5D2F /* SeedCell.swift */; };
 		04998B94217DB8DF000A5D2F /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B73217DB8DE000A5D2F /* InterventionCell.swift */; };
 		04998B95217DB8DF000A5D2F /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B74217DB8DE000A5D2F /* FertilizerCell.swift */; };
 		04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B75217DB8DE000A5D2F /* EquipmentCell.swift */; };
 		04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B76217DB8DE000A5D2F /* PlotCell.swift */; };
 		04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */; };
 		04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B78217DB8DE000A5D2F /* PersonCreationView.swift */; };
+		04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */; };
+		04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */; };
+		04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E42219C706900F01EC6 /* PersonsTests.swift */; };
+		04BE4BC8219D75B1000707A1 /* InterventionVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */; };
+		04BE4BCA219D823A000707A1 /* AddInterventionVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */; };
+		04BE4BCC219D8B96000707A1 /* AddInterventionVCTableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */; };
+		6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */; };
+		6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113189219C3CAA002272F0 /* CropsTests.swift */; };
+		6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11318B219C6791002272F0 /* WeatherTests.swift */; };
+		6B28441C219D877500DED846 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28441B219D877500DED846 /* StorageManager.swift */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
-		6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
+		6B6866A42194691400D5645B /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6866A32194691300D5645B /* String+Error.swift */; };
+		6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084B2193142200F54D29 /* sample_location.gpx */; };
+		6B6C084F219318BD00F54D29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
+		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
+		6B8DB97421871D9A005E2A71 /* ProductionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97321871D9A005E2A71 /* ProductionCell.swift */; };
+		6B8DB97621875BFF005E2A71 /* CropDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */; };
+		6B923FFD218861EC00FDFCFC /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B923FFC218861EC00FDFCFC /* CropCell.swift */; };
 		6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BB2253B211849090036E167 /* Clic_Farm_iOS.xcdatamodeld */; };
+		6BDA19AB2191D2CF00726D4A /* String+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 		6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04131399213FFC3E005437F0 /* Decodables.swift */; };
 /* End PBXBuildFile section */
@@ -96,26 +124,6 @@
 		040D8598216B9F1B008E1628 /* queries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		040D859A216B9F4E008E1628 /* mutations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		040D859C216BA061008E1628 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		0410287F2191A0BD0015978B /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
-		041028802191A0BD0015978B /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
-		041028812191A0BD0015978B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		041028822191A0BD0015978B /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
-		041028832191A0BD0015978B /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
-		041028842191A0BD0015978B /* DetailedInterventionViewController+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Inputs.swift"; sourceTree = "<group>"; };
-		041028852191A0BD0015978B /* DetailedInterventionViewController+Harvests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Harvests.swift"; sourceTree = "<group>"; };
-		041028862191A0BD0015978B /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
-		041028872191A0BD0015978B /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
-		041028882191A0BD0015978B /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
-		041028892191A0BD0015978B /* DetailedInterventionViewController+Persons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Persons.swift"; sourceTree = "<group>"; };
-		0410288A2191A0BD0015978B /* DetailedInterventionViewController+Materials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Materials.swift"; sourceTree = "<group>"; };
-		0410288B2191A0BD0015978B /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
-		0410288C2191A0BE0015978B /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
-		0410288D2191A0BE0015978B /* DefineInterventionsDisplayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefineInterventionsDisplayMode.swift; sourceTree = "<group>"; };
-		0410288E2191A0BE0015978B /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
-		0410288F2191A0BE0015978B /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
-		041028902191A0BE0015978B /* DetailedInterventionViewController+Irrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Irrigation.swift"; sourceTree = "<group>"; };
-		041028912191A0BE0015978B /* DetailedInterventionViewController+Equipments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Equipments.swift"; sourceTree = "<group>"; };
-		041028922191A0BE0015978B /* DetailedInterventionViewController+Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Weather.swift"; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		0411C4CC214FC30B005B6C01 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
@@ -128,7 +136,39 @@
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
+		04143AC5219C554800CFA700 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyEquipmentsTests.swift; sourceTree = "<group>"; };
+		0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyMaterialsTests.swift; sourceTree = "<group>"; };
+		0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyInputsTests.swift; sourceTree = "<group>"; };
+		0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyPersonsTests.swift; sourceTree = "<group>"; };
+		041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedCreationViewTests.swift; sourceTree = "<group>"; };
+		041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationViewTests.swift; sourceTree = "<group>"; };
+		041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhytoCreationViewTests.swift; sourceTree = "<group>"; };
 		042A44332121B38600CE6B24 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		045F6F8F219EBD2700308D8B /* InputsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputsTests.swift; sourceTree = "<group>"; };
+		0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
+		0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Equipments.swift"; sourceTree = "<group>"; };
+		0479C40921A40935008DA4C2 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
+		0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Harvests.swift"; sourceTree = "<group>"; };
+		0479C40B21A40935008DA4C2 /* DetailedInterventionViewController+Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Weather.swift"; sourceTree = "<group>"; };
+		0479C40C21A40935008DA4C2 /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
+		0479C40D21A40935008DA4C2 /* InterventionsByCropViewController+GPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionsByCropViewController+GPS.swift"; sourceTree = "<group>"; };
+		0479C40E21A40935008DA4C2 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
+		0479C40F21A40935008DA4C2 /* DetailedInterventionViewController+Persons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Persons.swift"; sourceTree = "<group>"; };
+		0479C41021A40935008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
+		0479C41121A40935008DA4C2 /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
+		0479C41221A40935008DA4C2 /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
+		0479C41321A40935008DA4C2 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
+		0479C41421A40935008DA4C2 /* DefineInterventionsDisplayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefineInterventionsDisplayMode.swift; sourceTree = "<group>"; };
+		0479C41521A40935008DA4C2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0479C41621A40935008DA4C2 /* ListProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListProtocol.swift; sourceTree = "<group>"; };
+		0479C41721A40935008DA4C2 /* DetailedInterventionViewController+Materials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Materials.swift"; sourceTree = "<group>"; };
+		0479C41821A40935008DA4C2 /* DetailedInterventionViewController+Irrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Irrigation.swift"; sourceTree = "<group>"; };
+		0479C41921A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Inputs.swift"; sourceTree = "<group>"; };
+		0479C41A21A40936008DA4C2 /* InterventionsByCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionsByCropViewController.swift; sourceTree = "<group>"; };
+		0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
+		0479C41C21A40936008DA4C2 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		0479C43A21A40FA1008DA4C2 /* CustomTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTypes.swift; sourceTree = "<group>"; };
 		048D2AF32178C8D6002EDF62 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FloatValue.swift"; sourceTree = "<group>"; };
 		048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
@@ -167,16 +207,34 @@
 		04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedEquipmentCell.swift; sourceTree = "<group>"; };
 		04998B78217DB8DE000A5D2F /* PersonCreationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCreationView.swift; sourceTree = "<group>"; };
 		04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
+		04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialsTests.swift; sourceTree = "<group>"; };
+		04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentsTests.swift; sourceTree = "<group>"; };
+		04A58E42219C706900F01EC6 /* PersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTests.swift; sourceTree = "<group>"; };
+		04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionVCTests.swift; sourceTree = "<group>"; };
+		04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionVCTests.swift; sourceTree = "<group>"; };
+		04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionVCTableViewTests.swift; sourceTree = "<group>"; };
 		04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationView.swift; sourceTree = "<group>"; };
+		6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPeriodTests.swift; sourceTree = "<group>"; };
+		6B113189219C3CAA002272F0 /* CropsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropsTests.swift; sourceTree = "<group>"; };
+		6B11318B219C6791002272F0 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
+		6B28441B219D877500DED846 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
+		6B6866A32194691300D5645B /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
+		6B6C084B2193142200F54D29 /* sample_location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_location.gpx; sourceTree = "<group>"; };
+		6B6C084E219318BD00F54D29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6B77AD3C219B046E00839053 /* IrrigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrrigationTests.swift; sourceTree = "<group>"; };
+		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
+		6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropDetailedView.swift; sourceTree = "<group>"; };
+		6B923FFC218861EC00FDFCFC /* CropCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropCell.swift; sourceTree = "<group>"; };
 		6BA3713E213963230086DF9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BA37140213963230086DF9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BB2253C211849090036E167 /* Clic_Farm_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clic_Farm_iOS.xcdatamodel; sourceTree = "<group>"; };
 		6BB2253E211849090036E167 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Subscript.swift"; sourceTree = "<group>"; };
 		6BEA656D2105C5EE0072840F /* Clic&Farm-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clic&Farm-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65842105C5EF0072840F /* Clic&Farm-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clic_Farm_iOSTests.swift; sourceTree = "<group>"; };
-		6BEA658A2105C5EF0072840F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BEA65E02105CD8A0072840F /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				0411D20F219093A40026843F /* API.swift */,
+				0479C43A21A40FA1008DA4C2 /* CustomTypes.swift */,
 				040D859A216B9F4E008E1628 /* mutations.graphql */,
 				040D8598216B9F1B008E1628 /* queries.graphql */,
 				040D859C216BA061008E1628 /* schema.json */,
@@ -216,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				041313AE21401483005437F0 /* Localizable.strings */,
+				6B6C084D219318BD00F54D29 /* InfoPlist.strings */,
 			);
 			path = Translations;
 			sourceTree = "<group>";
@@ -245,26 +305,28 @@
 		047BF0B02105D1D2009F3945 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				041028862191A0BD0015978B /* AddInterventionViewController.swift */,
-				041028872191A0BD0015978B /* AuthentificationService.swift */,
-				0410288D2191A0BE0015978B /* DefineInterventionsDisplayMode.swift */,
-				041028912191A0BE0015978B /* DetailedInterventionViewController+Equipments.swift */,
-				041028852191A0BD0015978B /* DetailedInterventionViewController+Harvests.swift */,
-				041028842191A0BD0015978B /* DetailedInterventionViewController+Inputs.swift */,
-				041028902191A0BE0015978B /* DetailedInterventionViewController+Irrigation.swift */,
-				0410288A2191A0BD0015978B /* DetailedInterventionViewController+Materials.swift */,
-				041028892191A0BD0015978B /* DetailedInterventionViewController+Persons.swift */,
-				041028922191A0BE0015978B /* DetailedInterventionViewController+Weather.swift */,
-				0410287F2191A0BD0015978B /* DetailedInterventionViewController+WorkingPeriod.swift */,
-				0410288B2191A0BD0015978B /* HandleAddInterventionErrors.swift */,
-				041028882191A0BD0015978B /* HandleKeyboard.swift */,
-				0410288C2191A0BE0015978B /* InterventionViewController.swift */,
-				0410288E2191A0BE0015978B /* InterventionViewController+Apollo.swift */,
-				041028802191A0BD0015978B /* InterventionViewController+Lexicon.swift */,
-				041028832191A0BD0015978B /* ListProtocol.swift */,
-				0410288F2191A0BE0015978B /* ListTableViewController.swift */,
-				041028812191A0BD0015978B /* LoginViewController.swift */,
-				041028822191A0BD0015978B /* UnitMeasurePickerView.swift */,
+				0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */,
+				0479C41121A40935008DA4C2 /* AuthentificationService.swift */,
+				0479C41421A40935008DA4C2 /* DefineInterventionsDisplayMode.swift */,
+				0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */,
+				0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */,
+				0479C41921A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift */,
+				0479C41821A40935008DA4C2 /* DetailedInterventionViewController+Irrigation.swift */,
+				0479C41721A40935008DA4C2 /* DetailedInterventionViewController+Materials.swift */,
+				0479C40F21A40935008DA4C2 /* DetailedInterventionViewController+Persons.swift */,
+				0479C40B21A40935008DA4C2 /* DetailedInterventionViewController+Weather.swift */,
+				0479C41021A40935008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift */,
+				0479C40C21A40935008DA4C2 /* HandleAddInterventionErrors.swift */,
+				0479C40921A40935008DA4C2 /* HandleKeyboard.swift */,
+				0479C41A21A40936008DA4C2 /* InterventionsByCropViewController.swift */,
+				0479C40D21A40935008DA4C2 /* InterventionsByCropViewController+GPS.swift */,
+				0479C40E21A40935008DA4C2 /* InterventionViewController.swift */,
+				0479C41221A40935008DA4C2 /* InterventionViewController+Apollo.swift */,
+				0479C41321A40935008DA4C2 /* InterventionViewController+Lexicon.swift */,
+				0479C41621A40935008DA4C2 /* ListProtocol.swift */,
+				0479C41C21A40936008DA4C2 /* ListTableViewController.swift */,
+				0479C41521A40935008DA4C2 /* LoginViewController.swift */,
+				0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -274,6 +336,7 @@
 			children = (
 				04998B69217DB8DE000A5D2F /* Cells */,
 				04998B63217DB8DE000A5D2F /* Storyboards */,
+				6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */,
 				04998B60217DB8DE000A5D2F /* CropsView.swift */,
 				04998B5A217DB8DD000A5D2F /* CropView.swift */,
 				04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */,
@@ -302,6 +365,7 @@
 				04131399213FFC3E005437F0 /* Decodables.swift */,
 				041248052179C05400A78D08 /* InterventionState.swift */,
 				041248072179C05900A78D08 /* InterventionType.swift */,
+				6B28441B219D877500DED846 /* StorageManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,7 +382,9 @@
 			isa = PBXGroup;
 			children = (
 				048D2AF32178C8D6002EDF62 /* Localizable.swift */,
+				6B6866A32194691300D5645B /* String+Error.swift */,
 				048D2AF42178C8D6002EDF62 /* String+FloatValue.swift */,
+				6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */,
 				048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */,
 				048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */,
 			);
@@ -338,6 +404,7 @@
 		04998B69217DB8DE000A5D2F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6B923FFC218861EC00FDFCFC /* CropCell.swift */,
 				04998B75217DB8DE000A5D2F /* EquipmentCell.swift */,
 				04998B74217DB8DE000A5D2F /* FertilizerCell.swift */,
 				04998B6A217DB8DE000A5D2F /* HarvestCell.swift */,
@@ -347,6 +414,7 @@
 				04998B6C217DB8DE000A5D2F /* PersonCell.swift */,
 				04998B6B217DB8DE000A5D2F /* PhytoCell.swift */,
 				04998B76217DB8DE000A5D2F /* PlotCell.swift */,
+				6B8DB97321871D9A005E2A71 /* ProductionCell.swift */,
 				04998B72217DB8DE000A5D2F /* SeedCell.swift */,
 				04998B77217DB8DE000A5D2F /* SelectedEquipmentCell.swift */,
 				04998B6F217DB8DE000A5D2F /* SelectedInputCell.swift */,
@@ -362,6 +430,7 @@
 				6BA3713E213963230086DF9B /* Assets.xcassets */,
 				6BA37140213963230086DF9B /* Info.plist */,
 				04134B28217DB36A009E32C2 /* oauthInfo.plist */,
+				6B6C084B2193142200F54D29 /* sample_location.gpx */,
 				041313AC21401483005437F0 /* Translations */,
 			);
 			path = Resources;
@@ -397,8 +466,26 @@
 		6BEA65872105C5EF0072840F /* Clic&Farm-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				045F6F8F219EBD2700308D8B /* InputsTests.swift */,
+				041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */,
+				041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */,
+				041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */,
+				04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */,
+				04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */,
 				6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */,
-				6BEA658A2105C5EF0072840F /* Info.plist */,
+				6B113189219C3CAA002272F0 /* CropsTests.swift */,
+				04A58E40219C6ACD00F01EC6 /* EquipmentsTests.swift */,
+				04BE4BC7219D75B1000707A1 /* InterventionVCTests.swift */,
+				6B77AD3C219B046E00839053 /* IrrigationTests.swift */,
+				04A58E3E219C5F4200F01EC6 /* MaterialsTests.swift */,
+				04A58E42219C706900F01EC6 /* PersonsTests.swift */,
+				0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */,
+				0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */,
+				0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */,
+				0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */,
+				6B11318B219C6791002272F0 /* WeatherTests.swift */,
+				6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */,
+				04143AC5219C554800CFA700 /* Info.plist */,
 			);
 			path = "Clic&Farm-iOSTests";
 			sourceTree = "<group>";
@@ -449,8 +536,8 @@
 		6BEA65652105C5EE0072840F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1010;
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Ekylibre;
 				TargetAttributes = {
 					6BEA656C2105C5EE0072840F = {
@@ -489,11 +576,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0479C43321A40BD8008DA4C2 /* Assets.xcassets in Resources */,
 				047109332180716100DC262C /* Localizable.strings in Resources */,
 				047109322180715600DC262C /* Main.strings in Resources */,
 				047109312180715100DC262C /* Main.storyboard in Resources */,
-				047109302180714600DC262C /* Assets.xcassets in Resources */,
-				04998B88217DB8DF000A5D2F /* LaunchScreen.storyboard in Resources */,
+				6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */,
+				6B6C084F219318BD00F54D29 /* InfoPlist.strings in Resources */,
 				04134B29217DB36A009E32C2 /* oauthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,7 +624,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $PROJECT_DIR/GraphQL\n\n$PROJECT_DIR/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift\n";
+			shellScript = "cd $PROJECT_DIR/GraphQL\n\n$PROJECT_DIR/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift --passthroughCustomScalars\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -545,68 +633,77 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				041028A32191A0BE0015978B /* InterventionViewController+Apollo.swift in Sources */,
+				0479C43421A40CCB008DA4C2 /* Connectivity.swift in Sources */,
+				0479C43521A40CCB008DA4C2 /* PhytoCell.swift in Sources */,
+				0479C43621A40CCB008DA4C2 /* SeedCell.swift in Sources */,
+				0479C43721A40CCB008DA4C2 /* SelectedInputCell.swift in Sources */,
+				0479C43821A40CCB008DA4C2 /* EquipmentCreationView.swift in Sources */,
+				0479C43921A40CCB008DA4C2 /* PersonsView.swift in Sources */,
 				04137127218C5DD40034128A /* UserDefaults+isFirstLaunch.swift in Sources */,
-				041028972191A0BE0015978B /* UnitMeasurePickerView.swift in Sources */,
 				0471092F21806F7800DC262C /* ColorConstants.swift in Sources */,
 				0471092E21806F6E00DC262C /* AppDelegate.swift in Sources */,
 				6BAEC2332137DA3400958F39 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
 				6BFEE7222179D0C7001F7955 /* Decodables.swift in Sources */,
 				041028A92191A6260015978B /* StorageCreationView.swift in Sources */,
-				04998B90217DB8DF000A5D2F /* SelectedInputCell.swift in Sources */,
-				6B8EE4EC2178D92E0035094C /* Connectivity.swift in Sources */,
-				04998B81217DB8DF000A5D2F /* EquipmentCreationView.swift in Sources */,
-				04998B8C217DB8DF000A5D2F /* PhytoCell.swift in Sources */,
-				04998B7D217DB8DF000A5D2F /* PersonsView.swift in Sources */,
-				04998B93217DB8DF000A5D2F /* SeedCell.swift in Sources */,
+				0479C42821A40936008DA4C2 /* InterventionViewController+Apollo.swift in Sources */,
+				04163C4521A401E8001315C7 /* FertilizerCreationView.swift in Sources */,
+				04163C4321A401D7001315C7 /* CropsView.swift in Sources */,
+				0479C42021A40936008DA4C2 /* DetailedInterventionViewController+Harvests.swift in Sources */,
+				6B28441C219D877500DED846 /* StorageManager.swift in Sources */,
+				6B8DB97421871D9A005E2A71 /* ProductionCell.swift in Sources */,
+				0479C42521A40936008DA4C2 /* DetailedInterventionViewController+Persons.swift in Sources */,
 				041248062179C05400A78D08 /* InterventionState.swift in Sources */,
 				04998B91217DB8DF000A5D2F /* ListCell.swift in Sources */,
+				0479C42E21A40936008DA4C2 /* DetailedInterventionViewController+Irrigation.swift in Sources */,
+				0479C42B21A40936008DA4C2 /* LoginViewController.swift in Sources */,
 				04998B8F217DB8DF000A5D2F /* SelectedMaterialCell.swift in Sources */,
 				04998B7E217DB8DF000A5D2F /* MaterialsView.swift in Sources */,
 				04998B82217DB8DF000A5D2F /* PhytoCreationView.swift in Sources */,
+				0479C43121A40936008DA4C2 /* UnitMeasurePickerView.swift in Sources */,
 				04998B86217DB8DF000A5D2F /* EquipmentsView.swift in Sources */,
 				041248082179C05900A78D08 /* InterventionType.swift in Sources */,
+				0479C41F21A40936008DA4C2 /* HandleKeyboard.swift in Sources */,
 				04998B80217DB8DF000A5D2F /* CustomPickerView.swift in Sources */,
-				041028992191A0BE0015978B /* DetailedInterventionViewController+Inputs.swift in Sources */,
+				0479C43021A40936008DA4C2 /* InterventionsByCropViewController.swift in Sources */,
 				04998B8B217DB8DF000A5D2F /* HarvestCell.swift in Sources */,
-				0410289C2191A0BE0015978B /* AuthentificationService.swift in Sources */,
+				0479C42A21A40936008DA4C2 /* DefineInterventionsDisplayMode.swift in Sources */,
+				0479C42F21A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift in Sources */,
+				0479C43221A40936008DA4C2 /* ListTableViewController.swift in Sources */,
+				0479C43B21A40FA1008DA4C2 /* CustomTypes.swift in Sources */,
 				048D2AF72178C8D6002EDF62 /* Localizable.swift in Sources */,
-				0410289F2191A0BE0015978B /* DetailedInterventionViewController+Materials.swift in Sources */,
-				041028A02191A0BE0015978B /* HandleAddInterventionErrors.swift in Sources */,
 				048D2AF92178C8D6002EDF62 /* UIApplication+StatusBar.swift in Sources */,
 				04998B98217DB8DF000A5D2F /* SelectedEquipmentCell.swift in Sources */,
-				041028A42191A0BE0015978B /* ListTableViewController.swift in Sources */,
-				041028942191A0BE0015978B /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */,
-				04998B85217DB8DF000A5D2F /* CropsView.swift in Sources */,
-				04998B7A217DB8DF000A5D2F /* FertilizerCreationView.swift in Sources */,
-				041028952191A0BE0015978B /* InterventionViewController+Lexicon.swift in Sources */,
-				0410289E2191A0BE0015978B /* DetailedInterventionViewController+Persons.swift in Sources */,
+				6B8DB97621875BFF005E2A71 /* CropDetailedView.swift in Sources */,
+				6BDA19AB2191D2CF00726D4A /* String+Subscript.swift in Sources */,
+				6B923FFD218861EC00FDFCFC /* CropCell.swift in Sources */,
+				0479C42C21A40936008DA4C2 /* ListProtocol.swift in Sources */,
 				04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */,
-				041028A72191A0BE0015978B /* DetailedInterventionViewController+Weather.swift in Sources */,
 				04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */,
-				0410289D2191A0BE0015978B /* HandleKeyboard.swift in Sources */,
 				04998B92217DB8DF000A5D2F /* MaterialCell.swift in Sources */,
 				048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */,
 				04998B94217DB8DF000A5D2F /* InterventionCell.swift in Sources */,
 				04998B7B217DB8DF000A5D2F /* RoundedButton.swift in Sources */,
+				0479C42621A40936008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */,
+				0479C42D21A40936008DA4C2 /* DetailedInterventionViewController+Materials.swift in Sources */,
 				04998B7F217DB8DF000A5D2F /* CropView.swift in Sources */,
-				041028A62191A0BE0015978B /* DetailedInterventionViewController+Equipments.swift in Sources */,
+				0479C42721A40936008DA4C2 /* AuthentificationService.swift in Sources */,
+				0479C42321A40936008DA4C2 /* InterventionsByCropViewController+GPS.swift in Sources */,
 				04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */,
-				041028A12191A0BE0015978B /* InterventionViewController.swift in Sources */,
+				0479C41E21A40936008DA4C2 /* DetailedInterventionViewController+Equipments.swift in Sources */,
+				0479C42421A40936008DA4C2 /* InterventionViewController.swift in Sources */,
+				0479C42121A40936008DA4C2 /* DetailedInterventionViewController+Weather.swift in Sources */,
 				04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */,
-				041028982191A0BE0015978B /* ListProtocol.swift in Sources */,
-				041028A22191A0BE0015978B /* DefineInterventionsDisplayMode.swift in Sources */,
+				0479C41D21A40936008DA4C2 /* AddInterventionViewController.swift in Sources */,
 				04998B8E217DB8DF000A5D2F /* SelectedPersonCell.swift in Sources */,
+				0479C42921A40936008DA4C2 /* InterventionViewController+Lexicon.swift in Sources */,
 				0411D210219093A40026843F /* API.swift in Sources */,
-				0410289B2191A0BE0015978B /* AddInterventionViewController.swift in Sources */,
-				041028962191A0BE0015978B /* LoginViewController.swift in Sources */,
 				04998B87217DB8DF000A5D2F /* SelectDateView.swift in Sources */,
-				041028A52191A0BE0015978B /* DetailedInterventionViewController+Irrigation.swift in Sources */,
+				0479C42221A40936008DA4C2 /* HandleAddInterventionErrors.swift in Sources */,
 				04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */,
 				04998B95217DB8DF000A5D2F /* FertilizerCell.swift in Sources */,
 				04998B7C217DB8DF000A5D2F /* SelectionView.swift in Sources */,
+				6B6866A42194691400D5645B /* String+Error.swift in Sources */,
 				04998B79217DB8DE000A5D2F /* InputsView.swift in Sources */,
-				0410289A2191A0BE0015978B /* DetailedInterventionViewController+Harvests.swift in Sources */,
 				04998B84217DB8DF000A5D2F /* MaterialCreationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,6 +712,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045F6F90219EBD2700308D8B /* InputsTests.swift in Sources */,
+				0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */,
+				6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */,
+				04BE4BCA219D823A000707A1 /* AddInterventionVCTests.swift in Sources */,
+				6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */,
+				041D87D0219DBD8600DFBC62 /* PhytoCreationViewTests.swift in Sources */,
+				04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */,
+				04BE4BC8219D75B1000707A1 /* InterventionVCTests.swift in Sources */,
+				6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */,
+				04A58E41219C6ACD00F01EC6 /* EquipmentsTests.swift in Sources */,
+				0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */,
+				0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */,
+				041D87CE219DB78800DFBC62 /* StorageCreationViewTests.swift in Sources */,
+				0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */,
+				6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */,
+				04BE4BCC219D8B96000707A1 /* AddInterventionVCTableViewTests.swift in Sources */,
+				04A58E3F219C5F4200F01EC6 /* MaterialsTests.swift in Sources */,
+				041D87CC219DB45D00DFBC62 /* SeedCreationViewTests.swift in Sources */,
 				6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -653,6 +768,15 @@
 				04998B68217DB8DE000A5D2F /* fr */,
 			);
 			name = Main.strings;
+			sourceTree = "<group>";
+		};
+		6B6C084D219318BD00F54D29 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B6C084E219318BD00F54D29 /* Base */,
+				6B6C0850219318C100F54D29 /* fr */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

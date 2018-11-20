@@ -101,7 +101,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     })
   }
 
-  @IBAction private func tapInputsView() {
+  @IBAction func tapInputsView() {
     let shouldExpand = (inputsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedInputs.count > 10) ? 10 * 110 : selectedInputs.count * 110
 
@@ -109,7 +109,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       return
     }
 
-    updateCountLabel()
+    updateInputsCountLabel()
     inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     inputsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
@@ -121,9 +121,11 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       addEntityButton: inputsAddButton)
   }
 
-  private func updateCountLabel() {
+  func updateInputsCountLabel() {
     if selectedInputs.count == 1 {
       inputsCountLabel.text = "input".localized
+    } else if selectedInputs.count == 0 {
+      inputsCountLabel.text = "none".localized
     } else {
       inputsCountLabel.text = String(format: "inputs".localized, selectedInputs.count)
     }
@@ -195,11 +197,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func removeInputCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(
-      title: "",
-      message: "delete_input_prompt".localized,
-      preferredStyle: .alert
-    )
+    let alert = UIAlertController(title: "delete_input_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in

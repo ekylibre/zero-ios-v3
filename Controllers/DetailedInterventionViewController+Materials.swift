@@ -93,7 +93,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction private func tapMaterialsView() {
+  @IBAction func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
@@ -101,7 +101,7 @@ extension AddInterventionViewController {
       return
     }
 
-    updateCountLabel()
+    updateMaterialsCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     if interventionState != InterventionState.Validated.rawValue {
       materialsAddButton.isHidden = !shouldExpand
@@ -111,9 +111,11 @@ extension AddInterventionViewController {
     materialsExpandImageView.transform = materialsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  private func updateCountLabel() {
+  func updateMaterialsCountLabel() {
     if selectedMaterials[0].count == 1 {
       materialsCountLabel.text = "material".localized
+    } else if selectedMaterials[0].count == 0 {
+      materialsCountLabel.text = "none".localized
     } else {
       materialsCountLabel.text = String(format: "materials".localized, selectedMaterials[0].count)
     }
@@ -154,7 +156,7 @@ extension AddInterventionViewController {
   @objc func tapDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: nil, message: "delete_material_prompt".localized, preferredStyle: .alert)
+    let alert = UIAlertController(title: "delete_material_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in

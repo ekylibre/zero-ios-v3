@@ -230,7 +230,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     }
   }
 
-  private func createEquipment(name: String, number: String) {
+  func createEquipment(name: String, number: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -326,7 +326,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return true
   }
 
-  private func checkEquipmentName() -> Bool {
+  func checkEquipmentName() -> Bool {
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "equipment_name_is_empty".localized
       creationView.errorLabel.isHidden = false
