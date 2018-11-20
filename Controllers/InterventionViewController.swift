@@ -457,7 +457,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     queryFarms { (success) in
       if success {
-        farmNameLabel?.text = self.fetchFarmName()
+        if farmNameLabel?.text == nil {
+          farmNameLabel?.text = self.fetchFarmName()
+        }
         self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
