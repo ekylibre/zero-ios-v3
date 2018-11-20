@@ -13,7 +13,24 @@ extension AddInterventionViewController {
 
   // MARK: - Initialization
 
-  func initializeWeatherButtons() {
+  func setupWeatherView() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let weather = Weather(context: managedContext)
+
+    self.weather = weather
+    temperatureTextField.delegate = self
+    temperatureTextField.keyboardType = .decimalPad
+    windSpeedTextField.delegate = self
+    windSpeedTextField.keyboardType = .decimalPad
+    initializeWeatherButtons()
+    setupWeatherActions()
+  }
+
+  private func initializeWeatherButtons() {
     weatherButtons = [brokenClouds, clearSky, fewClouds, lightRain, mist, showerRain, snow, thunderstorm]
 
     for index in 0..<weatherButtons.count {
@@ -32,7 +49,7 @@ extension AddInterventionViewController {
     negativeTemperature.layer.cornerRadius = 4
   }
 
-  func setupWeatherActions() {
+  private func setupWeatherActions() {
     temperatureTextField.addTarget(self, action: #selector(saveCurrentWeather), for: .editingChanged)
     windSpeedTextField.addTarget(self, action: #selector(saveCurrentWeather), for: .editingChanged)
   }
@@ -48,14 +65,14 @@ extension AddInterventionViewController {
     saveCurrentWeather()
   }
 
-  func resetTemperatureTextFieldIfNotConform() {
+  private func resetTemperatureTextFieldIfNotConform() {
     if temperatureTextField.text == "-." || temperatureTextField.text == "-" {
       temperatureTextField.text = nil
       temperatureTextField.placeholder = "0"
     }
   }
 
-  func checkTemperatureTextField() {
+  private func checkTemperatureTextField() {
     let temperature = temperatureTextField.text!
 
     if temperature.count > 0 {
@@ -68,7 +85,7 @@ extension AddInterventionViewController {
     }
   }
 
-  func hideWeatherItems(_ state: Bool) {
+  private func hideWeatherItems(_ state: Bool) {
     for index in 0..<weatherButtons.count {
       weatherButtons[index].isHidden = state
     }
@@ -87,7 +104,7 @@ extension AddInterventionViewController {
     saveCurrentWeather()
   }
 
-  func resetSelectedWeather() {
+  private func resetSelectedWeather() {
     for weatherButton in weatherButtons {
       weatherButton.layer.borderWidth = 1
       weatherButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -128,16 +145,5 @@ extension AddInterventionViewController {
     }
     weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
     weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
-  }
-
-  func initWeather() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let weather = Weather(context: managedContext)
-
-    self.weather = weather
   }
 }

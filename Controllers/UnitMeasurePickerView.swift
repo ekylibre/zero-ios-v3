@@ -12,7 +12,7 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
 
   // MARK: - Initialization
 
-  func initUnitMeasurePickerView() {
+  func initUnitMeasurePickerViews() {
     volumeUnitPicker.backgroundColor = AppColor.CellColors.White
     volumeUnitPicker.frame = CGRect(x: 0, y: view.frame.maxY - 200, width: view.bounds.width, height: 200)
     volumeUnitPicker.delegate = self

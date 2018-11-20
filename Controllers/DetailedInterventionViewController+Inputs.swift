@@ -120,7 +120,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     cellIndexPath = indexPath
   }
 
-  func closeInputsSelectionView() {
+  private func closeInputsSelectionView() {
     dimView.isHidden = true
     inputsSelectionView.isHidden = true
 
@@ -139,7 +139,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func checkAllMixCategoryCode() {
+  private func checkAllMixCategoryCode() {
     var firstMixCategoryCode: String?
     var unauthorized = false
 
@@ -209,7 +209,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     closeInputsSelectionView()
   }
 
-  func resetInputsUsedAttribute(index: Int) {
+  private func resetInputsUsedAttribute(index: Int) {
     switch selectedInputs[index] {
     case is InterventionSeed:
       (selectedInputs[index] as! InterventionSeed).seed?.used = false
@@ -244,7 +244,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     present(alert, animated: true)
   }
 
-  func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
+  private func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let surfaceArea = cropsView.selectedSurfaceArea
     var efficiency: Float = 0

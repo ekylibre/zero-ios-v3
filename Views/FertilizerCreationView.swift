@@ -158,7 +158,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  @objc func closeView(sender: UIButton) {
+  @objc private func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
     if sender == cancelButton {
       nameTextField.text = ""

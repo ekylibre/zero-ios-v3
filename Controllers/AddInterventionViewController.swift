@@ -194,8 +194,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
 
-    initUnitMeasurePickerView()
-
     saveInterventionButton.layer.cornerRadius = 3
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
@@ -205,19 +203,13 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setupWorkingPeriodView()
     setupIrrigationView()
     setupInputsView()
+    setupHarvestView()
     setupMaterialsView()
     setupEquipmentsView()
     setupPersonsView()
+    setupWeatherView()
 
-    initializeWeatherButtons()
-    initWeather()
-    setupWeatherActions()
-    temperatureTextField.delegate = self
-    temperatureTextField.keyboardType = .decimalPad
-    windSpeedTextField.delegate = self
-    windSpeedTextField.keyboardType = .decimalPad
-
-    initHarvestView()
+    initUnitMeasurePickerViews()
 
     notesTextView.delegate = self
     setTextViewPlaceholder()

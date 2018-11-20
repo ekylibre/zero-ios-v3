@@ -150,7 +150,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  @objc func closeView(sender: UIButton) {
+  @objc private func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
     if sender == cancelButton {
       specieButton.setTitle(firstSpecie.localized, for: .normal)

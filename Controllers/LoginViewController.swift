@@ -56,7 +56,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
   // MARK: - Navigation
 
-  func checkLoggedStatus(token: String?) {
+  private func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
@@ -99,7 +99,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  func authentifyUser() {
+  private func authentifyUser() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

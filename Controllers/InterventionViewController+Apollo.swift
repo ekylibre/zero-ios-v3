@@ -282,7 +282,7 @@ extension InterventionViewController {
     return id
   }
 
-  func pushInputIfNoEkyID(input: NSManagedObject) -> Int32? {
+  private func pushInputIfNoEkyID(input: NSManagedObject) -> Int32? {
     if (input.value(forKey: "ekyID") as! Int32) == 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return nil
@@ -344,7 +344,7 @@ extension InterventionViewController {
     return id
   }
 
-  func pushSeedIfNoEkyID(seed: Seed) -> Int32? {
+  private func pushSeedIfNoEkyID(seed: Seed) -> Int32? {
     if seed.ekyID == 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return nil
@@ -571,7 +571,7 @@ extension InterventionViewController {
 
   // MARK: - Update
 
-  func getLastSyncDate() -> Date? {
+  private func getLastSyncDate() -> Date? {
     return UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
   }
 
@@ -599,7 +599,7 @@ extension InterventionViewController {
     return true
   }
 
-  func defineIndicatorIfOnlyOne(_ indicator: String?) -> [String] {
+  private func defineIndicatorIfOnlyOne(_ indicator: String?) -> [String] {
     let indicatorOne = indicator?.components(separatedBy: ":")
 
     if indicatorOne!.count > 1 {
@@ -608,7 +608,7 @@ extension InterventionViewController {
     return [String]()
   }
 
-  func defineIndicators(_ indicator: String?) -> [String] {
+  private func defineIndicators(_ indicator: String?) -> [String] {
     if indicator == nil {
       return [String]()
     } else if (indicator?.contains("|"))! {
@@ -650,7 +650,7 @@ extension InterventionViewController {
     }
   }
 
-  func loadEquipments() {
+  private func loadEquipments() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -698,7 +698,7 @@ extension InterventionViewController {
     }
   }
 
-  func loadPeople(completion: @escaping (_ success: Bool) -> Void) {
+  private func loadPeople(completion: @escaping (_ success: Bool) -> Void) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -805,7 +805,7 @@ extension InterventionViewController {
     }
   }
 
-  func loadStorage() {
+  private func loadStorage() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -1168,7 +1168,7 @@ extension InterventionViewController {
     }
   }
 
-  func updateInterventionStatus(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
+  private func updateInterventionStatus(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -1191,7 +1191,7 @@ extension InterventionViewController {
     }
   }
 
-  func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
+  private func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -1230,7 +1230,7 @@ extension InterventionViewController {
 
   // MARK: - Mutations: Interventions
 
-  func defineWorkingDayAttributesFrom(intervention: Intervention) -> [InterventionWorkingDayAttributes] {
+  private func defineWorkingDayAttributesFrom(intervention: Intervention) -> [InterventionWorkingDayAttributes] {
     guard let workingDays = intervention.workingPeriods else {
       fatalError("Could not unwrap NSSet (workingPeriods")
     }
@@ -1246,7 +1246,7 @@ extension InterventionViewController {
     return workingDaysAttributes
   }
 
-  func defineTargetAttributesFrom(intervention: Intervention) -> [InterventionTargetAttributes] {
+  private func defineTargetAttributesFrom(intervention: Intervention) -> [InterventionTargetAttributes] {
     let targets = intervention.targets
     var targetsAttributes = [InterventionTargetAttributes]()
 
@@ -1261,7 +1261,7 @@ extension InterventionViewController {
     return targetsAttributes
   }
 
-  func initializeInputsArray(inputs: inout [NSManagedObject], entities: [Any]?) {
+  private func initializeInputsArray(inputs: inout [NSManagedObject], entities: [Any]?) {
     if entities != nil {
       for entity in entities! {
         inputs.append(entity as! NSManagedObject)
@@ -1269,7 +1269,7 @@ extension InterventionViewController {
     }
   }
 
-  func appendInputAttributes(id: String?, referenceID: String?, type: ArticleTypeEnum?, quantity: NSNumber, unit: String) -> InterventionInputAttributes {
+  private func appendInputAttributes(id: String?, referenceID: String?, type: ArticleTypeEnum?, quantity: NSNumber, unit: String) -> InterventionInputAttributes {
     let article = InterventionArticleAttributes(
       id: id,
       referenceId: referenceID,
@@ -1284,7 +1284,7 @@ extension InterventionViewController {
     return inputAttributes
   }
 
-  func defineInputsAttributesFrom(intervention: Intervention) -> [InterventionInputAttributes] {
+  private func defineInputsAttributesFrom(intervention: Intervention) -> [InterventionInputAttributes] {
     let seeds = intervention.interventionSeeds?.allObjects
     let phytos = intervention.interventionPhytosanitaries?.allObjects
     let fertilizers = intervention.interventionFertilizers?.allObjects
@@ -1363,7 +1363,7 @@ extension InterventionViewController {
     return inputsAttributes
   }
 
-  func defineHarvestAttributesFrom(intervention: Intervention) -> [InterventionOutputAttributes] {
+  private func defineHarvestAttributesFrom(intervention: Intervention) -> [InterventionOutputAttributes] {
     let harvests = intervention.harvests
     var harvestsAttributes = [InterventionOutputAttributes]()
     for harvest in harvests! {
@@ -1423,7 +1423,7 @@ extension InterventionViewController {
     return id
   }
 
-  func pushEquipmentIfNoEkyId(equipment: Equipment) -> Int32? {
+  private func pushEquipmentIfNoEkyId(equipment: Equipment) -> Int32? {
     if equipment.ekyID == 0 {
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return nil
@@ -1441,7 +1441,7 @@ extension InterventionViewController {
     return equipment.ekyID
   }
 
-  func defineEquipmentAttributesFrom(intervention: Intervention) -> [InterventionToolAttributes] {
+  private func defineEquipmentAttributesFrom(intervention: Intervention) -> [InterventionToolAttributes] {
     let equipments = intervention.interventionEquipments
     var equipmentsAttributes = [InterventionToolAttributes]()
 
@@ -1454,7 +1454,7 @@ extension InterventionViewController {
     return equipmentsAttributes
   }
 
-  func defineOperatorAttributesFrom(intervention: Intervention) -> [InterventionOperatorAttributes] {
+  private func defineOperatorAttributesFrom(intervention: Intervention) -> [InterventionOperatorAttributes] {
     let interventionPersons = intervention.interventionPersons
     var operatorsAttributes = [InterventionOperatorAttributes]()
 
@@ -1470,7 +1470,7 @@ extension InterventionViewController {
     return operatorsAttributes
   }
 
-  func defineWeatherAttributesFrom(intervention: Intervention) -> WeatherAttributes {
+  private func defineWeatherAttributesFrom(intervention: Intervention) -> WeatherAttributes {
     var weather = WeatherAttributes()
 
     weather.temperature = intervention.weather?.temperature as? Double

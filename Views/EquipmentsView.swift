@@ -23,7 +23,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
 
-  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+  private func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
     if let asset = NSDataAsset(name: "equipment-types") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
@@ -49,7 +49,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return [String]()
   }
 
-  func defineIndicatorsUnits(_ key: String, _ textField: UITextField) -> String? {
+  private func defineIndicatorsUnits(_ key: String, _ textField: UITextField) -> String? {
     let units = [
       "plowshare_count": "UNITY",
       "motor_power": "FRENCH_HORSEPOWER",
@@ -235,7 +235,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     }
   }
 
-  func createEquipment(name: String, number: String) {
+  private func createEquipment(name: String, number: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

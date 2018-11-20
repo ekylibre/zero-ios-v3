@@ -10,7 +10,7 @@ import UIKit
 
 extension AddInterventionViewController {
 
-  func implantationErrorHandler() -> Bool {
+  private func implantationErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
     if selectedInputs.count == 0 {
@@ -30,7 +30,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func cropProtectionErrorHandler() -> Bool {
+  private func cropProtectionErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
     if selectedInputs.count == 0 {
@@ -50,7 +50,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func fertilizationErrorHandler() -> Bool {
+  private func fertilizationErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
     if selectedInputs.count == 0 {
@@ -70,7 +70,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func harvestErrorHandler() -> Bool {
+  private func harvestErrorHandler() -> Bool {
     let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
     if harvests.count == 0 {
@@ -90,7 +90,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func cropErrorHandler() -> Bool {
+  private func cropErrorHandler() -> Bool {
     let selectedCrops = fetchSelectedCrops()
 
     if selectedCrops.count == 0 {
@@ -103,7 +103,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func irrigationErrorHandler() -> Bool {
+  private func irrigationErrorHandler() -> Bool {
     if irrigationVolumeTextField.text?.floatValue == 0 {
       let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
 
@@ -114,7 +114,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
+  private func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
     let selectedCrops = fetchSelectedCrops()
 
     if selectedCrops.count > 0 {

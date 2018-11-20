@@ -34,7 +34,7 @@ class ListTableViewController: UITableViewController {
     })
   }
 
-  func scrollToLastSelectedValue() {
+  private func scrollToLastSelectedValue() {
     var indexPath: IndexPath!
 
     for index in 0..<rawStrings.count {

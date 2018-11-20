@@ -233,7 +233,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  @objc func showUnitMeasure(sender: UIButton) {
+  @objc private func showUnitMeasure(sender: UIButton) {
 
     addInterventionViewController?.dimView.isHidden = false
     if type == "Phyto" {
@@ -286,7 +286,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return true
   }
 
-  @objc func saveQuantity() {
+  @objc private func saveQuantity() {
     if addInterventionViewController?.selectedInputs[indexPath.row] is InterventionPhytosanitary {
       let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as! InterventionPhytosanitary).phyto?.referenceID
 

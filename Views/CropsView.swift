@@ -248,7 +248,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Actions
 
-  @objc func tapCheckbox(_ sender: UIButton) {
+  @objc private func tapCheckbox(_ sender: UIButton) {
     let cell = sender.superview?.superview as! PlotCell
     let indexPath = tableView.indexPath(for: cell)!
     let crops = self.crops[indexPath.row]
@@ -287,7 +287,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  @objc func tapCropView(sender: UIGestureRecognizer) {
+  @objc private func tapCropView(sender: UIGestureRecognizer) {
     let cell = sender.view?.superview?.superview as! PlotCell
     let plotIndex = tableView.indexPath(for: cell)!.row
     let view = sender.view as! CropView

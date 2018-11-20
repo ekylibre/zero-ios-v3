@@ -205,7 +205,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  @objc func closeView(sender: UIButton) {
+  @objc private func closeView(sender: UIButton) {
     for subview in self.subviews {
       if sender == cancelButton && subview is UITextField {
         let textField = subview as! UITextField

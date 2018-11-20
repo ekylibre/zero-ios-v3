@@ -144,7 +144,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     }
   }
 
-  func createMaterial(name: String, unit: String) {
+  private func createMaterial(name: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

@@ -13,7 +13,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   
   // MARK: - Initialization
 
-  func initHarvestView() {
+  func setupHarvestView() {
     let fetchedStorages = fetchStorages(predicate: nil)
 
     fetchedStorages != nil ? storages = fetchedStorages! : nil
@@ -64,7 +64,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
   }
 
-  func initializeHarvestTableView() {
+  private func initializeHarvestTableView() {
     harvestTableView.layer.borderWidth  = 0.5
     harvestTableView.layer.borderColor = UIColor.lightGray.cgColor
     harvestTableView.layer.cornerRadius = 4
@@ -72,7 +72,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.delegate = self
   }
 
-  func initHarvestUnitPickerView () {
+  private func initHarvestUnitPickerView () {
     let unit = ["KILOGRAM", "QUINTAL", "TON"]
 
     harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
@@ -81,7 +81,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(harvestUnitPickerView)
   }
 
-  func initHarvestNaturePickerView() {
+  private func initHarvestNaturePickerView() {
     let unit = ["GRAIN", "SILAGE", "STRAW"]
 
     harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
@@ -90,7 +90,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(harvestNaturePickerView)
   }
 
-  func initStoragesPickerView() {
+  private func initStoragesPickerView() {
     let storages = fetchStoragesName()
 
     storagesPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), storages ?? ["---"], superview: view)
@@ -99,7 +99,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(storagesPickerView)
   }
 
-  func initStoragesTypesPickerView() {
+  private func initStoragesTypesPickerView() {
     let types = ["BUILDING", "HEAP", "SILO"]
 
     storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
@@ -108,7 +108,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(storagesTypes)
   }
 
-  func setupStorageCreationView() {
+  private func setupStorageCreationView() {
     storageCreationView = StorageCreationView(frame: CGRect.zero)
     storageCreationView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storageCreationView)
@@ -124,7 +124,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storageCreationView.cancelButton.addTarget(self, action: #selector(cancelStorageCreation), for: .touchUpInside)
     storageCreationView.typeButton.addTarget(self, action: #selector(showStorageTypes), for: .touchUpInside)
   }
-
 
   // MARK: - Actions
 
@@ -172,7 +171,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return true
   }
 
-  @objc func cancelStorageCreation() {
+  @objc private func cancelStorageCreation() {
 
     storagesTypes.selectRow(0, inComponent: 0, animated: false)
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
@@ -181,7 +180,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storageCreationView.isHidden = true
   }
 
-  @objc func createNewStorage() {
+  @objc private func createNewStorage() {
     if !checkStorageName() {
       return
     }
@@ -195,7 +194,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     cancelStorageCreation()
   }
 
-  @objc func showStorageTypes() {
+  @objc private func showStorageTypes() {
     storagesTypes.isHidden = false
   }
 
@@ -240,7 +239,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return storagesNames.sorted()
   }
 
-  func createHarvest() {
+  private func createHarvest() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -255,7 +254,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvests.append(harvest)
   }
 
-  func createStorage(name: String, type: String) {
+  private func createStorage(name: String, type: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

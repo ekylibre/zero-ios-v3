@@ -161,7 +161,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func updateSyncLabel() {
+  private func updateSyncLabel() {
     guard let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date else {
       syncLabel.text = "no_synchronization_listed".localized
       return

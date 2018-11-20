@@ -420,7 +420,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Actions
 
-  @objc func changeSegment() {
+  @objc private func changeSegment() {
     let searchText = searchBar.text!
     let createButtonTitles = [
       0: "create_new_seed".localized.uppercased(),
@@ -444,7 +444,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  @objc func tapCreateButton() {
+  @objc private func tapCreateButton() {
     dimView.isHidden = false
     if segmentedControl.selectedSegmentIndex == 0 {
       seedView.isHidden = false
@@ -483,7 +483,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     dimView.isHidden = true
   }
 
-  @objc func hideDimView() {
+  @objc private func hideDimView() {
     dimView.isHidden = true
   }
 
