@@ -116,9 +116,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
-    let predicate = NSPredicate(format: "targets.@count > 0")
     let sort = NSSortDescriptor(key: "productionID", ascending: true)
-    cropsFetchRequest.predicate = predicate
     cropsFetchRequest.sortDescriptors = [sort]
 
     do {
