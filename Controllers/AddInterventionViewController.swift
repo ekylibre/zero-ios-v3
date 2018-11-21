@@ -672,7 +672,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     harvestsFetchRequest.predicate = predicate
 
-
     do {
       let fetchedHarvests = try managedContext.fetch(harvestsFetchRequest)
 
@@ -956,7 +955,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBAction func saveOrUpdateIntervention() {
     if interventionState == nil {
       createIntervention()
-    } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
+    } else if interventionState == InterventionState.Created.rawValue ||
+      interventionState == InterventionState.Synced.rawValue {
       updateIntervention()
     }
   }
@@ -1148,13 +1148,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       numberLabel.isHidden = false
       switch entities {
       case selectedInputs:
-        numberLabel.text = (entities.count == 1 ? "input".localized : String(format: "inputs".localized, entities.count))
+        numberLabel.text = (entities.count == 1 ? "input".localized :
+          String(format: "inputs".localized, entities.count))
       case selectedMaterials[1]:
-        numberLabel.text = (entities.count == 1 ? "material".localized : String(format: "materials".localized, entities.count))
+        numberLabel.text = (entities.count == 1 ? "material".localized :
+          String(format: "materials".localized, entities.count))
       case selectedEquipments:
-        numberLabel.text = (entities.count == 1 ? "equipment".localized : String(format: "equipments".localized, entities.count))
+        numberLabel.text = (entities.count == 1 ? "equipment".localized :
+          String(format: "equipments".localized, entities.count))
       case selectedPersons[1]:
-        numberLabel.text = (entities.count == 1 ? "person".localized : String(format: "persons".localized, entities.count))
+        numberLabel.text = (entities.count == 1 ? "person".localized :
+          String(format: "persons".localized, entities.count))
       default:
         return
       }

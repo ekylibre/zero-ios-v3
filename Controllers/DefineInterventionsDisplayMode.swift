@@ -85,7 +85,8 @@ extension AddInterventionViewController {
     let interventionMaterials = currentIntervention.interventionMaterials
 
     for case let interventionMaterial as InterventionMaterial in interventionMaterials! {
-      selectMaterial(interventionMaterial.material!, quantity: interventionMaterial.quantity, unit: interventionMaterial.unit!)
+      selectMaterial(interventionMaterial.material!, quantity: interventionMaterial.quantity,
+                     unit: interventionMaterial.unit!)
     }
     refreshSelectedMaterials()
   }
@@ -133,7 +134,8 @@ extension AddInterventionViewController {
     } else {
       negativeTemperature.setTitle("+", for: .selected)
     }
-    interventionState == InterventionState.Validated.rawValue ? negativeTemperature.setTitleColor(.lightGray, for: .normal) : nil
+    interventionState == InterventionState.Validated.rawValue ?
+      negativeTemperature.setTitleColor(.lightGray, for: .normal) : nil
   }
 
   func loadInterventionInReadOnlyMode() {
@@ -187,7 +189,8 @@ extension AddInterventionViewController {
   func loadInterventionInAppropriateMode() {
     if interventionState == InterventionState.Validated.rawValue {
       loadInterventionInReadOnlyMode()
-    } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
+    } else if interventionState == InterventionState.Created.rawValue ||
+      interventionState == InterventionState.Synced.rawValue {
       loadInterventionInEditableMode()
     }
   }

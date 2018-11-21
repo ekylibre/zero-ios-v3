@@ -232,7 +232,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
       if interventionState == InterventionState.Validated.rawValue {
         loadSelectedTargets()
-      } else if interventionState == InterventionState.Created.rawValue || interventionState == InterventionState.Synced.rawValue {
+      } else if interventionState == InterventionState.Created.rawValue ||
+        interventionState == InterventionState.Synced.rawValue {
         loadAllTargetAndSelectThem(crops)
       } else {
         organizeCropsByPlot(crops)
