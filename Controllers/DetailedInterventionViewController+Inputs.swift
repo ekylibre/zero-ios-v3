@@ -80,7 +80,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   @IBAction func openInputsSelectionView(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
-
+    inputsSelectionView.tableView.reloadData()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
