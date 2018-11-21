@@ -79,7 +79,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var selectedPersonsTableView: UITableView!
   @IBOutlet weak var personsTableViewHeightConstraint: NSLayoutConstraint!
 
-  // Wheater
+  // Weather
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherExpandImageView: UIImageView!
@@ -376,11 +376,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriod = WorkingPeriod(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
+    let notes = (notesTextView.text != "notes".localized)
 
     newIntervention = Intervention(context: managedContext)
     newIntervention.type = interventionType
     newIntervention.status = InterventionState.Created.rawValue
-    newIntervention.infos = notesTextView.text
+    notes ? newIntervention.infos = notesTextView.text : nil
     newIntervention.farmID = appDelegate.farmID
     changeWaterUnit()
     workingPeriod.intervention = newIntervention
