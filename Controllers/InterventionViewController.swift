@@ -30,14 +30,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       tableView.reloadData()
     }
   }
-
   let navItem = UINavigationItem()
-  let dimView = UIView(frame: CGRect.zero)
   let refreshControl = UIRefreshControl()
   var interventionTypeButtons = [UIButton]()
   var interventionTypeLabels = [UILabel]()
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
+  let dimView = UIView(frame: CGRect.zero)
 
   // MARK: - Initialization
 
@@ -53,11 +52,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     setupDimView()
 
     checkLocalData()
-    fetchInterventions()
     if Connectivity.isConnectedToInternet() {
       tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height), animated: true)
       refreshControl.beginRefreshing()
       refreshControl.sendActions(for: .valueChanged)
+    } else {
+      fetchInterventions()
     }
   }
 
@@ -114,10 +114,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   private func setupInterventionTypeButtons() {
     for index in 0...6 {
+      let interventionTypeButton = UIButton(frame: CGRect.zero)
       let assetName = interventionTypes[index].lowercased().replacingOccurrences(of: "_", with: "-")
       let image = UIImage(named: assetName)
-      let interventionTypeButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width,
-                                                          height: bottomView.bounds.height))
 
       interventionTypeButton.tag = index
       interventionTypeButton.backgroundColor = UIColor.white
