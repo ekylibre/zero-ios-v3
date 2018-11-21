@@ -174,11 +174,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       nameLabel.leadingAnchor.constraint(equalTo: inputImageView.trailingAnchor, constant: 10),
       infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       infoLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: infoLabel.trailingAnchor, multiplier: 1),
-      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
       quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
       quantityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
@@ -195,7 +190,13 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       warningImageView.widthAnchor.constraint(equalToConstant: 10),
       warningLabel.centerYAnchor.constraint(equalTo: warningImageView.centerYAnchor),
       warningLabel.leadingAnchor.constraint(equalTo: warningImageView.trailingAnchor, constant: 3),
-      surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor)
+      surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
+      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      deleteButton.heightAnchor.constraint(equalToConstant: 20),
+      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.widthAnchor.constraint(equalToConstant: 20),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: infoLabel.trailingAnchor,
+                                            multiplier: 1)
       ]
     )
   }
@@ -212,10 +213,11 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       return true
     }
 
+    let numberOfDecimalDigits: Int
     let newText = oldText.replacingCharacters(in: r, with: string)
     let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
-    let numberOfDecimalDigits: Int
+    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
+      newText.components(separatedBy: ".").count - 1)
 
     if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
       numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
@@ -288,7 +290,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   @objc private func saveQuantity() {
     if addInterventionViewController?.selectedInputs[indexPath.row] is InterventionPhytosanitary {
-      let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as! InterventionPhytosanitary).phyto?.referenceID
+      let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as!
+        InterventionPhytosanitary).phyto?.referenceID
 
       if !checkPhytosanitaryDoses(phytoID!, quantityTextField.text!.floatValue) {
         warningLabel.isHidden = false

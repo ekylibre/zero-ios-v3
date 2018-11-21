@@ -34,9 +34,10 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.bounces = false
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
-    materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
-    materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
     materialsSelectionView.addInterventionViewController = self
+    materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
+    materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits),
+                                                             for: .touchUpInside)
   }
 
   // MARK: - Selection
@@ -168,17 +169,19 @@ extension AddInterventionViewController {
     materialsSelectionView.tableView.reloadData()
   }
 
-  func selectedMaterialsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedMaterialCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
-    let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
-    let quantity = selectedMaterials[1][indexPath.row].value(forKey: "quantity") as! Float
-    let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
+  func selectedMaterialsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath)
+    -> SelectedMaterialCell {
+      let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
+      let quantity = selectedMaterials[1][indexPath.row].value(forKey: "quantity") as! Float
+      let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath)
+        as! SelectedMaterialCell
 
-    cell.nameLabel.text = name
-    cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-    cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
-    cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
-    cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
-    return cell
+      cell.nameLabel.text = name
+      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
+      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
+      cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
+      cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
+      return cell
   }
 }

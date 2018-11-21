@@ -114,7 +114,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
       }
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController") as UIViewController
+        let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController")
+          as UIViewController
 
         navigationController?.pushViewController(interventionVC, animated: false)
       }
@@ -137,12 +138,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
       keys = NSDictionary(contentsOfFile: path)
     }
     if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
-      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!,
+                                options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
+                                completionHandler: nil)
     }
   }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any])
+  -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {
+      key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)
+    })
 }

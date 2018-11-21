@@ -96,15 +96,16 @@ class SelectedPersonCell: UITableViewCell {
       lastNameLabel.centerYAnchor.constraint(equalTo: firstNameLabel.centerYAnchor),
       lastNameLabel.leadingAnchor.constraint(equalTo: firstNameLabel.trailingAnchor, constant: 5),
       lastNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: lastNameLabel.trailingAnchor, multiplier: 1),
+      driverSwitch.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5),
+      driverSwitch.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 7.5),
+      driverLabel.centerYAnchor.constraint(equalTo: driverSwitch.centerYAnchor),
+      driverLabel.leadingAnchor.constraint(equalTo: driverSwitch.trailingAnchor, constant: 5),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      driverSwitch.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7.5),
-      driverSwitch.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 7.5),
-      driverLabel.centerYAnchor.constraint(equalTo: driverSwitch.centerYAnchor),
-      driverLabel.leadingAnchor.constraint(equalTo: driverSwitch.trailingAnchor, constant: 5)
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: lastNameLabel.trailingAnchor,
+                                            multiplier: 1)
       ])
   }
 

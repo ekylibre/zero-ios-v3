@@ -74,8 +74,9 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   private func initHarvestUnitPickerView () {
     let unit = ["KILOGRAM", "QUINTAL", "TON"]
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
+    harvestUnitPickerView = CustomPickerView(frame: frame, unit, superview: view)
     harvestUnitPickerView.reference = self
     harvestUnitPickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestUnitPickerView)
@@ -83,8 +84,9 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   private func initHarvestNaturePickerView() {
     let unit = ["GRAIN", "SILAGE", "STRAW"]
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
+    harvestNaturePickerView = CustomPickerView(frame: frame, unit, superview: view)
     harvestNaturePickerView.reference = self
     harvestNaturePickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestNaturePickerView)
@@ -92,8 +94,9 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   private func initStoragesPickerView() {
     let storages = fetchStoragesName()
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    storagesPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), storages ?? ["---"], superview: view)
+    storagesPickerView = CustomPickerView(frame: frame, storages ?? ["---"], superview: view)
     storagesPickerView.reference = self
     storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesPickerView)
@@ -163,7 +166,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
       storageCreationView.errorLabel.text = "storage_name_is_empty".localized
       storageCreationView.errorLabel.isHidden = false
       return false
-    } else if storages.contains(where: { $0.name?.lowercased() == storageCreationView.nameTextField.text?.lowercased() }) {
+    } else if storages.contains(where:
+      { $0.name?.lowercased() == storageCreationView.nameTextField.text?.lowercased() }) {
       storageCreationView.errorLabel.text = "storage_name_not_available".localized
       storageCreationView.errorLabel.isHidden = false
       return false
@@ -329,6 +333,15 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.reloadData()
   }
 
+  private func setupObjectsLayer(_ button: UIButton, _ textField: UITextField) {
+    button.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    button.layer.borderWidth = 1
+    button.layer.cornerRadius = 5
+    textField.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    textField.layer.borderWidth = 1
+    textField.layer.cornerRadius = 5
+  }
+
   func harvestTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> HarvestCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
     let harvest = harvests[indexPath.row]
@@ -337,26 +350,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
     cell.addInterventionController = self
     cell.cellDelegate = self
     cell.indexPath = indexPath
-    cell.unit.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    cell.unit.layer.borderWidth = 1
-    cell.unit.layer.cornerRadius = 5
     cell.unit.setTitle(unit?.localized, for: .normal)
     cell.storage.backgroundColor = AppColor.ThemeColors.White
-    cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    cell.storage.layer.borderWidth = 1
-    cell.storage.layer.cornerRadius = 5
     cell.storage.setTitle(harvests[indexPath.row].storage?.name ?? "---", for: .normal)
     cell.quantity.keyboardType = .decimalPad
-    cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    cell.quantity.layer.borderWidth = 1
-    cell.quantity.layer.cornerRadius = 5
     cell.quantity.text = String(harvest.quantity)
     cell.quantity.delegate = cell
-    cell.number.layer.borderColor =  AppColor.CellColors.LightGray.cgColor
-    cell.number.layer.borderWidth = 1
-    cell.number.layer.cornerRadius = 5
     cell.number.text = harvest.number
     cell.number.delegate = cell
+    setupObjectsLayer(cell.unit, cell.quantity)
+    setupObjectsLayer(cell.storage, cell.number)
     cell.selectionStyle = .none
     return cell
   }

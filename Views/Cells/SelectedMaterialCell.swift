@@ -103,11 +103,6 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       materialImageView.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: materialImageView.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: materialImageView.trailingAnchor, constant: 10),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor, multiplier: 1),
-      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
       quantityLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
       quantityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
@@ -117,7 +112,13 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       unitButton.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       unitButton.heightAnchor.constraint(equalToConstant: 30),
       unitButton.leadingAnchor.constraint(equalTo: quantityTextField.trailingAnchor, constant: 10),
-      unitButton.widthAnchor.constraint(equalToConstant: 70)
+      unitButton.widthAnchor.constraint(equalToConstant: 70),
+      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      deleteButton.heightAnchor.constraint(equalToConstant: 20),
+      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.widthAnchor.constraint(equalToConstant: 20),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor,
+                                            multiplier: 1)
       ])
   }
 
@@ -133,10 +134,11 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       return true
     }
 
+    let numberOfDecimalDigits: Int
     let newText = oldText.replacingCharacters(in: r, with: string)
     let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
-    let numberOfDecimalDigits: Int
+    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
+      newText.components(separatedBy: ".").count - 1)
 
     if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
       numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1

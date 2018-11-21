@@ -143,8 +143,9 @@ extension AddInterventionViewController {
   }
 
   func selectedPersonsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedPersonCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath) as! SelectedPersonCell
     let selectedPerson = selectedPersons[0][indexPath.row]
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath)
+      as! SelectedPersonCell
 
     cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
     cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String

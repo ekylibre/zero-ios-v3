@@ -68,7 +68,8 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   private func setupNavigationBar() {
     let titleLabel = UILabel()
-    let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(dismissViewController))
+    let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil,
+                                       action: #selector(dismissViewController))
 
     titleLabel.text = "my_crops_title".localized
     titleLabel.textColor = UIColor.white
@@ -170,7 +171,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       guard let firstNearestCropLocation = getLocation(string: $0.first!.centroid!) else { return true }
       guard let secondNearestCropLocation = getLocation(string: $1.first!.centroid!) else { return true }
       guard let firstDistance = locationManager.location?.distance(from: firstNearestCropLocation) else { return true }
-      guard let secondDistance = locationManager.location?.distance(from: secondNearestCropLocation) else { return true }
+      guard let secondDistance = locationManager.location?.distance(from: secondNearestCropLocation) else {
+        return true
+      }
 
       return firstDistance < secondDistance
     })
