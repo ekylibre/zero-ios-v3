@@ -104,9 +104,6 @@
                             <constraint firstItem="OwN-92-HaX" firstAttribute="top" secondItem="BuB-B1-p77" secondAttribute="top" id="uuf-o3-16p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BuB-B1-p77"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="BzD-f5-fbo" appends="YES" id="BDd-Za-wlT"/>
-                        </connections>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -124,11 +121,6 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1rQ-td-wpq" userLabel="Exit" sceneMemberID="exit"/>
-                <swipeGestureRecognizer direction="down" id="BzD-f5-fbo">
-                    <connections>
-                        <action selector="synchronise:" destination="Ym6-0E-qVT" id="HrX-lr-Yxj"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1076" y="-99.400299850074973"/>
         </scene>
@@ -1657,6 +1649,6 @@
         <image name="warning" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="EKH-vj-NkS"/>
+        <segue reference="FE4-xp-aKR"/>
     </inferredMetricsTieBreakers>
 </document>

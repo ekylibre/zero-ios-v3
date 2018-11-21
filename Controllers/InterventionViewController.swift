@@ -55,7 +55,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     checkLocalData()
     fetchInterventions()
     if Connectivity.isConnectedToInternet() {
-      synchronise(self)
+      tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height), animated: true)
+      refreshControl.beginRefreshing()
+      refreshControl.sendActions(for: .valueChanged)
     }
   }
 
@@ -94,6 +96,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     tableView.delegate = self
     tableView.dataSource = self
     tableView.refreshControl = refreshControl
+    refreshControl.addTarget(self, action: #selector(synchronise), for: .valueChanged)
   }
 
   private func setupBottomView() {
@@ -342,6 +345,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func presentInterventionsByCrop(_ sender: Any) {
+    if !checkCropsData() {
+      return
+    }
+
     self.performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
     collapseBottomView()
   }
