@@ -178,7 +178,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       dateFormatter.locale = Locale(identifier: "locale".localized)
       dateFormatter.dateFormat = "d MMMM"
-      syncLabel.text = "last_synchronization".localized + dateFormatter.string(from: date)
+      syncLabel.text = String(format: "last_synchronization".localized, dateFormatter.string(from: date))
     }
   }
 
