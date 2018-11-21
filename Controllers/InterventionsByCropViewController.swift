@@ -23,7 +23,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
   let locationManager = CLLocationManager()
-  var toUpdateIntervention: Intervention?
 
   // MARK: - Initialization
 
@@ -330,14 +329,10 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   // MARK: - Navigation
 
-  func performSegueToUpdateIntervention() {
-    performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
-  }
-
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     let destVC = segue.destination as! AddInterventionViewController
-    destVC.currentIntervention = toUpdateIntervention
-    destVC.interventionState = toUpdateIntervention?.status
+    destVC.currentIntervention = cropDetailedView.toUpdateIntervention
+    destVC.interventionState = cropDetailedView.toUpdateIntervention?.status
   }
 
   // MARK: - Actions
