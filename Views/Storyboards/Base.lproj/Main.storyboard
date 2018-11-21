@@ -446,6 +446,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" id="Bbt-1y-Pg7"/>
                                                         </constraints>
+                                                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </tableView>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="zPL-ag-FOJ">
                                                         <rect key="frame" x="20" y="80" width="15" height="15"/>
@@ -552,6 +554,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="150" id="DpE-um-EV5"/>
                                                         </constraints>
+                                                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HarvestCell" rowHeight="149" id="ANj-fI-wdR" customClass="HarvestCell" customModule="Clic_Farm_iOS" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="335" height="149"/>
@@ -904,6 +908,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" id="mfR-vs-HG6"/>
                                                         </constraints>
+                                                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </tableView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
