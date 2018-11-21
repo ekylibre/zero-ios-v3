@@ -315,7 +315,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()
-      synchronise(self)
+      synchronise()
     }
   }
 
@@ -355,7 +355,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Actions
 
-  @IBAction private func synchronise(_ sender: Any) {
+  @objc private func synchronise() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
