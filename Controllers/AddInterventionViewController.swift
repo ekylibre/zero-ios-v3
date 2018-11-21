@@ -657,30 +657,19 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       return true
     }
 
-    let numberOfDecimalDigits: Int
     let newText = oldText.replacingCharacters(in: r, with: string)
-    let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
-      newText.components(separatedBy: ".").count - 1)
+    var numberOfDecimalDigits = 0
 
-    if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+    if newText.components(separatedBy: ".").count > 2 || newText.components(separatedBy: ",").count > 2 {
+      return false
+    } else if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
       numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
-    } else {
-      numberOfDecimalDigits = 0
     }
-    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
+    return numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    switch textField {
-    case temperatureTextField:
-      saveCurrentWeather()
-    case windSpeedTextField:
-      saveCurrentWeather()
-    default:
-      return false
-    }
     return false
   }
 

@@ -134,29 +134,14 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       return true
     }
 
-    let numberOfDecimalDigits: Int
     let newText = oldText.replacingCharacters(in: r, with: string)
-    let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
-      newText.components(separatedBy: ".").count - 1)
+    var numberOfDecimalDigits = 0
 
-    if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+    if newText.components(separatedBy: ".").count > 2 || newText.components(separatedBy: ",").count > 2 {
+      return false
+    } else if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
       numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
-    } else {
-      numberOfDecimalDigits = 0
     }
-    return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
-  }
-
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    let nextTag = textField.tag + 1
-
-    if let nextResponder = textField.superview?.viewWithTag(nextTag) as? UITextField {
-      nextResponder.becomeFirstResponder()
-    } else {
-      textField.resignFirstResponder()
-    }
-
-    return false
+    return numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 }

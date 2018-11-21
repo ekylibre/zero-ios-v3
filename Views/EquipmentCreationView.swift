@@ -259,23 +259,21 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       return true
     }
 
-    if textField.keyboardType == .numberPad {
+    if textField.keyboardType == .default {
+      return oldText.replacingCharacters(in: r, with: string).count <= 500
+    } else if textField.keyboardType == .numberPad {
       return oldText.replacingCharacters(in: r, with: string).count <= 16
-    } else if textField.keyboardType == .decimalPad {
-      let numberOfDecimalDigits: Int
-      let newText = oldText.replacingCharacters(in: r, with: string)
-      let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-      let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
-        newText.components(separatedBy: ".").count - 1)
-
-      if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
-        numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
-      } else {
-        numberOfDecimalDigits = 0
-      }
-      return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 2 && newText.count <= 16
     }
-    return oldText.replacingCharacters(in: r, with: string).count <= 500
+
+    let newText = oldText.replacingCharacters(in: r, with: string)
+    var numberOfDecimalDigits = 0
+
+    if newText.components(separatedBy: ".").count > 2 || newText.components(separatedBy: ",").count > 2 {
+      return false
+    } else if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+      numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+    }
+    return numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
