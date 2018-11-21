@@ -138,7 +138,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Table view
 
-  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let interventionsByCropVC = parentViewController as? InterventionsByCropViewController else {
       return
     }

@@ -330,9 +330,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let destVC = segue.destination as! AddInterventionViewController
-    destVC.currentIntervention = cropDetailedView.toUpdateIntervention
-    destVC.interventionState = cropDetailedView.toUpdateIntervention?.status
+    let destVC = segue.destination as? AddInterventionViewController
+    destVC?.currentIntervention = cropDetailedView.toUpdateIntervention
+    destVC?.interventionState = cropDetailedView.toUpdateIntervention?.status
   }
 
   // MARK: - Actions
