@@ -42,7 +42,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     setupNavigationBar()
@@ -52,12 +51,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     setupDimView()
 
     checkLocalData()
+    fetchInterventions()
     if Connectivity.isConnectedToInternet() {
       tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height), animated: true)
       refreshControl.beginRefreshing()
       refreshControl.sendActions(for: .valueChanged)
-    } else {
-      fetchInterventions()
     }
   }
 
@@ -343,7 +341,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()
-      synchronise()
+      refreshControl.sendActions(for: .valueChanged)
     }
   }
 
