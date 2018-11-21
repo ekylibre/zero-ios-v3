@@ -79,6 +79,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var selectedPersonsTableView: UITableView!
   @IBOutlet weak var personsTableViewHeightConstraint: NSLayoutConstraint!
 
+  // Wheater
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherExpandImageView: UIImageView!
@@ -379,7 +380,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     newIntervention = Intervention(context: managedContext)
     newIntervention.type = interventionType
     newIntervention.status = InterventionState.Created.rawValue
-    newIntervention.infos = "Infos"
+    newIntervention.infos = notesTextView.text
     newIntervention.farmID = appDelegate.farmID
     changeWaterUnit()
     workingPeriod.intervention = newIntervention

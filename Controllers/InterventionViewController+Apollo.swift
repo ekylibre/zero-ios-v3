@@ -632,11 +632,9 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipment = Equipment(context: managedContext)
     let indicators = defineIndicators(fetchedEquipment.indicators)
-    var type = fetchedEquipment.type?.rawValue
 
-    type = type?.lowercased()
     equipment.farmID = farmID
-    equipment.type = type?.localized
+    equipment.type = fetchedEquipment.type?.rawValue
     equipment.name = fetchedEquipment.name
     equipment.number = fetchedEquipment.number
     equipment.ekyID = (fetchedEquipment.id as NSString).intValue
@@ -796,7 +794,7 @@ extension InterventionViewController {
 
     storage.storageID = (fetchedStorage.id as NSString).intValue
     storage.name = fetchedStorage.name
-    storage.type = fetchedStorage.type.rawValue.lowercased().localized
+    storage.type = fetchedStorage.type.rawValue
 
     do {
       try manaedContext.save()
@@ -839,7 +837,7 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
 
-    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased().localized
+    weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased()
     weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
     weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
     weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
@@ -988,8 +986,8 @@ extension InterventionViewController {
     let harvest = Harvest(context: managedContext)
 
     harvest.quantity = fetchedOutput.quantity ?? 0
-    harvest.type = fetchedOutput.nature.rawValue.lowercased().localized
-    harvest.unit = fetchedOutput.unit?.rawValue.lowercased().localized
+    harvest.type = fetchedOutput.nature.rawValue
+    harvest.unit = fetchedOutput.unit?.rawValue
     harvest.number = fetchedOutput.id
     harvest.intervention = intervention
 
@@ -1043,7 +1041,7 @@ extension InterventionViewController {
     harvest.type = nature
     harvest.number = fetchedLoad.number
     harvest.quantity = fetchedLoad.quantity
-    harvest.unit = fetchedLoad.unit?.rawValue.lowercased().localized
+    harvest.unit = fetchedLoad.unit?.rawValue
 
     do {
       try managedContext.save()
@@ -1134,7 +1132,7 @@ extension InterventionViewController {
         intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
       } else {
         for load in fetchedOutput.loads! {
-          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased().localized))
+          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue))
         }
       }
     }
@@ -1153,7 +1151,7 @@ extension InterventionViewController {
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
-    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue.lowercased().localized
+    intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
     intervention.weather = saveWeatherInIntervention(fetchedIntervention: fetchedIntervention, intervention: intervention) as? Weather
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
     intervention.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
