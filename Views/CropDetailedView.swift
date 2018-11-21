@@ -137,6 +137,15 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Table view
 
+  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    guard let interventionsByCropVC = parentViewController as? InterventionsByCropViewController else {
+      return
+    }
+
+    interventionsByCropVC.toUpdateIntervention = interventions[indexPath.row]
+    interventionsByCropVC.performSegue(withIdentifier: "updateInterventionByCrop", sender: interventionsByCropVC)
+  }
+
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }

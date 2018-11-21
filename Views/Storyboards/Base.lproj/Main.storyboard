@@ -141,7 +141,7 @@
         <!--Interventions By Crop View Controller-->
         <scene sceneID="mjm-Z2-dcZ">
             <objects>
-                <viewController id="6i8-BA-FKm" customClass="InterventionsByCropViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6i8-BA-FKm" customClass="InterventionsByCropViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tZt-Ob-0DN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -171,6 +171,7 @@
                     <connections>
                         <outlet property="cropsTableView" destination="qFt-k1-Es0" id="77Q-2k-XAH"/>
                         <outlet property="navigationBar" destination="vqC-IQ-fHf" id="TER-od-kbV"/>
+                        <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="updateInterventionByCrop" id="tOu-ZL-mF8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDt-wo-rZF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -180,7 +181,7 @@
         <!--Add Intervention View Controller-->
         <scene sceneID="PGn-fO-1Ks">
             <objects>
-                <viewController storyboardIdentifier="AddInterventionVC" id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddInterventionVC" id="pQK-Bk-vqJ" customClass="AddInterventionViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DUW-oV-g3X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1677,8 +1678,7 @@
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FE4-xp-aKR"/>
-        <segue reference="74J-jI-YTr"/>
         <segue reference="EKH-vj-NkS"/>
+        <segue reference="sUz-8n-dYb"/>
     </inferredMetricsTieBreakers>
 </document>

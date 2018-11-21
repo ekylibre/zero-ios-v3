@@ -23,6 +23,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   let dimView = UIView(frame: CGRect.zero)
   let cropDetailedView = CropDetailedView(frame: CGRect.zero)
   let locationManager = CLLocationManager()
+  var toUpdateIntervention: Intervention?
 
   // MARK: - Initialization
 
@@ -158,7 +159,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       cropsByProduction[index] = crops.sorted(by: {
         $0.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
           <
-        $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+          $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       })
     }
   }
@@ -325,6 +326,18 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropDetailedView.yieldLabel.text = String(format: "%@: %@", "yield".localized, crop.provisionalYield!)
     cropDetailedView.interventions = fetchInterventions(fromCrop: crop) ?? [Intervention]()
     cropDetailedView.tableView.reloadData()
+  }
+
+  // MARK: - Navigation
+
+  func performSegueToUpdateIntervention() {
+    performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
+  }
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    let destVC = segue.destination as! AddInterventionViewController
+    destVC.currentIntervention = toUpdateIntervention
+    destVC.interventionState = toUpdateIntervention?.status
   }
 
   // MARK: - Actions

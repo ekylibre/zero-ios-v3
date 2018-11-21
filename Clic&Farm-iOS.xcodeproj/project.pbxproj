@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		041028A92191A6260015978B /* StorageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */; };
 		0411295A2110937300AE884D /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
+		0411309621A5A4510004A6A2 /* UIView+ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0411309521A5A4510004A6A2 /* UIView+ParentViewController.swift */; };
 		0411D210219093A40026843F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0411D20F219093A40026843F /* API.swift */; };
 		041248062179C05400A78D08 /* InterventionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248052179C05400A78D08 /* InterventionState.swift */; };
 		041248082179C05900A78D08 /* InterventionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041248072179C05900A78D08 /* InterventionType.swift */; };
@@ -125,6 +126,7 @@
 		040D859A216B9F4E008E1628 /* mutations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		040D859C216BA061008E1628 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		041129592110937300AE884D /* OAuth2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2.framework; path = Carthage/Build/iOS/OAuth2.framework; sourceTree = "<group>"; };
+		0411309521A5A4510004A6A2 /* UIView+ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ParentViewController.swift"; sourceTree = "<group>"; };
 		0411C4CA214FC2FB005B6C01 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		0411C4CC214FC30B005B6C01 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		0411C4CE214FC31B005B6C01 /* ApolloSQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApolloSQLite.framework; path = Carthage/Build/iOS/ApolloSQLite.framework; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 				6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */,
 				048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */,
 				048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */,
+				0411309521A5A4510004A6A2 /* UIView+ParentViewController.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				04998B96217DB8DF000A5D2F /* EquipmentCell.swift in Sources */,
 				0479C41E21A40936008DA4C2 /* DetailedInterventionViewController+Equipments.swift in Sources */,
 				0479C42421A40936008DA4C2 /* InterventionViewController.swift in Sources */,
+				0411309621A5A4510004A6A2 /* UIView+ParentViewController.swift in Sources */,
 				0479C42121A40936008DA4C2 /* DetailedInterventionViewController+Weather.swift in Sources */,
 				04998B8D217DB8DF000A5D2F /* PersonCell.swift in Sources */,
 				0479C41D21A40936008DA4C2 /* AddInterventionViewController.swift in Sources */,
