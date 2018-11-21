@@ -735,6 +735,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   // MARK: - Actions
 
   @IBAction func selectCrops(_ sender: Any) {
+    view.endEditing(true)
     dimView.isHidden = false
     cropsView.isHidden = false
 

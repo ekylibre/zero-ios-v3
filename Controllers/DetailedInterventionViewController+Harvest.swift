@@ -138,6 +138,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
       return
     }
 
+    view.endEditing(true)
     updateHarvestCountLabel()
     harvestNature.isHidden = !shouldExpand
     harvestType.isHidden = !shouldExpand

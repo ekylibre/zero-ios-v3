@@ -94,6 +94,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       return
     }
 
+    view.endEditing(true)
     updateInputsCountLabel()
     inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
     inputsAddButton.isHidden = !shouldExpand

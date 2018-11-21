@@ -97,6 +97,7 @@ extension AddInterventionViewController {
   @IBAction func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
+    view.endEditing(true)
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
     weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)

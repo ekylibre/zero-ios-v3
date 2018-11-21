@@ -85,6 +85,7 @@ extension AddInterventionViewController {
       return
     }
 
+    view.endEditing(true)
     updatePersonsCountLabel()
     personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     personsAddButton.isHidden = !shouldExpand

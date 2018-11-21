@@ -84,6 +84,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   @IBAction func tapIrrigationView(_ sender: Any) {
     let shouldExpand: Bool = (irrigationHeightConstraint.constant == 70)
 
+    view.endEditing(true)
     irrigationHeightConstraint.constant = shouldExpand ? 140 : 70
     selectedIrrigationLabel.isHidden = shouldExpand
     irrigationVolumeTextField.isHidden = !shouldExpand

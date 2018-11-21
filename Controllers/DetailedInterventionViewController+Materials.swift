@@ -87,6 +87,7 @@ extension AddInterventionViewController {
       return
     }
 
+    view.endEditing(true)
     updateMaterialsCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     materialsAddButton.isHidden = !shouldExpand

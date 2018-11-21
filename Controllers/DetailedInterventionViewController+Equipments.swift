@@ -110,6 +110,7 @@ extension AddInterventionViewController {
       return
     }
 
+    view.endEditing(true)
     updateEquipmentsCountLabel()
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     equipmentsAddButton.isHidden = !shouldExpand
