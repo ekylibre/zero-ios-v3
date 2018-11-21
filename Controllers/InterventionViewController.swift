@@ -247,6 +247,32 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     })
   }
 
+  private func checkCropsData() -> Bool {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return false
+    }
+
+    var crops: [Crop]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if crops.count == 0 {
+      let alert = UIAlertController(title:  "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
+      let action = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
+
+      alert.addAction(action)
+      present(alert, animated: true)
+      return false
+    }
+    return true
+  }
+
   // MARK: - Table view
   
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -434,32 +460,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionTypeButtons[index].isHidden = false
       interventionTypeLabels[index].isHidden = false
     }
-  }
-
-  private func checkCropsData() -> Bool {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return false
-    }
-
-    var crops: [Crop]!
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
-
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-
-    if crops.count == 0 {
-      let alert = UIAlertController(title:  "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
-      let action = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
-
-      alert.addAction(action)
-      present(alert, animated: true)
-      return false
-    }
-    return true
   }
 
   @objc func collapseBottomView() {
