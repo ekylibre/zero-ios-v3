@@ -149,7 +149,8 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as! InterventionCell
     let intervention = interventions[indexPath.row]
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
+    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!,
+                                         2: UIImage(named: "validated")!]
 
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized

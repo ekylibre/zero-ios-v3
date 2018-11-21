@@ -112,7 +112,8 @@ extension AddInterventionViewController {
   }
 
   @IBAction func selectWeather(_ sender: UIButton) {
-    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW",
+                               "THUNDERSTORM"]
 
     if sender.layer.borderColor == UIColor.lightGray.cgColor {
       resetSelectedWeather()

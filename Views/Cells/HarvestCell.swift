@@ -61,10 +61,11 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     }
 
     if textField.keyboardType == .decimalPad {
+      let numberOfDecimalDigits: Int
       let newText = oldText.replacingCharacters(in: r, with: string)
       let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-      let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
-      let numberOfDecimalDigits: Int
+      let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
+        newText.components(separatedBy: ".").count - 1)
 
       if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
         numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1

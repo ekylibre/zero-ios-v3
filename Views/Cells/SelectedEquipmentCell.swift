@@ -70,14 +70,15 @@ class SelectedEquipmentCell: UITableViewCell {
       typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor, multiplier: 1),
+      infosLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
+      infosLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
       deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      infosLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      infosLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor,
+                                            multiplier: 1)
       ])
   }
 

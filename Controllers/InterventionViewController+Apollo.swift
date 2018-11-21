@@ -1479,6 +1479,26 @@ extension InterventionViewController {
     return weather
   }
 
+  private func setupMutation(_ intervention: Intervention) -> PushInterMutation {
+    let mutation = PushInterMutation(
+      farmId: intervention.farmID!,
+      procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
+      cropList: defineTargetAttributesFrom(intervention: intervention),
+      workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
+      waterQuantity: intervention.type == "IRRIGATION" ? Int(intervention.waterQuantity) : nil,
+      waterUnit: intervention.type == "IRRIGATION" ?
+        InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!) : nil,
+      inputs: defineInputsAttributesFrom(intervention: intervention),
+      outputs: defineHarvestAttributesFrom(intervention: intervention),
+      globalOutputs: false,
+      tools: defineEquipmentAttributesFrom(intervention: intervention),
+      operators: defineOperatorAttributesFrom(intervention: intervention),
+      weather: defineWeatherAttributesFrom(intervention: intervention),
+      description: intervention.infos)
+
+    return mutation
+  }
+
   func pushIntervention(intervention: Intervention) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
@@ -1488,20 +1508,7 @@ extension InterventionViewController {
     let group = DispatchGroup()
     let apollo = appDelegate.apollo
     let _ = apollo?.clearCache()
-    let mutation = PushInterMutation(
-      farmId: intervention.farmID!,
-      procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
-      cropList: defineTargetAttributesFrom(intervention: intervention),
-      workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
-      waterQuantity: intervention.type == "IRRIGATION" ? Int(intervention.waterQuantity) : nil,
-      waterUnit: intervention.type == "IRRIGATION" ? InterventionWaterVolumeUnitEnum(rawValue: intervention.waterUnit!) : nil,
-      inputs: defineInputsAttributesFrom(intervention: intervention),
-      outputs: defineHarvestAttributesFrom(intervention: intervention),
-      globalOutputs: false,
-      tools: defineEquipmentAttributesFrom(intervention: intervention),
-      operators: defineOperatorAttributesFrom(intervention: intervention),
-      weather: defineWeatherAttributesFrom(intervention: intervention),
-      description: intervention.infos)
+    let mutation = setupMutation(intervention)
 
     group.enter()
     apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in

@@ -74,19 +74,24 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     switch indicators.count {
     case 2:
+      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+      let indicatorTwo = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
+
       creationView.heighConstraint.constant = 475
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
-      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
+      creationView.firstParameterUnit.text = indicatorOne
+      creationView.secondParameterUnit.text = indicatorTwo
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = false
       creationView.secondParameterUnit.isHidden = false
     case 1:
+      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+
       creationView.heighConstraint.constant = 400
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+      creationView.firstParameterUnit.text = indicatorOne
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = true
@@ -246,8 +251,10 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
     equipment.number = number.isEmpty ? nil : number
-    equipment.indicatorOne = (creationView.firstEquipmentParameter.text != "" ? creationView.firstEquipmentParameter.text : nil)
-    equipment.indicatorTwo = (creationView.secondEquipmentParameter.text != "" ? creationView.secondEquipmentParameter.text : nil)
+    equipment.indicatorOne = (creationView.firstEquipmentParameter.text != "" ?
+      creationView.firstEquipmentParameter.text : nil)
+    equipment.indicatorTwo = (creationView.secondEquipmentParameter.text != "" ?
+      creationView.secondEquipmentParameter.text : nil)
     equipments.append(equipment)
 
     do {

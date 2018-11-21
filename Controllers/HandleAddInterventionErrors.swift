@@ -105,7 +105,8 @@ extension AddInterventionViewController {
 
   private func irrigationErrorHandler() -> Bool {
     if irrigationVolumeTextField.text?.floatValue == 0 {
-      let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
+      let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized,
+                                    preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
       present(alert, animated: true)
@@ -129,9 +130,11 @@ extension AddInterventionViewController {
         var message: String!
 
         if selectedDate < startDate! {
-          message = String(format: "started_must_be_on_or_after".localized, DateConverter.convertDateStringInLocalizedFormat(startDate!))
+          message = String(format: "started_must_be_on_or_after".localized,
+                           DateConverter.convertDateStringInLocalizedFormat(startDate!))
         } else {
-          message = String(format: "started_must_be_on_or_before".localized, DateConverter.convertDateStringInLocalizedFormat(stopDate!))
+          message = String(format: "started_must_be_on_or_before".localized,
+                           DateConverter.convertDateStringInLocalizedFormat(stopDate!))
         }
         let alert = UIAlertController(
           title: "working_periods_is_invalid".localized,

@@ -9,7 +9,8 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextViewDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,
+UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextViewDelegate {
 
   // MARK: - Outlets
 
@@ -178,22 +179,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-
-    // Adds type label on the navigation bar
-    let navigationItem = UINavigationItem(title: "")
-    let typeLabel = UILabel()
-
-    if interventionType != nil {
-      typeLabel.text = interventionType.localized
-    }
-    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
-    typeLabel.textColor = UIColor.white
-
-    let leftItem = UIBarButtonItem.init(customView: typeLabel)
-
-    navigationItem.leftBarButtonItem = leftItem
-    navigationBar.setItems([navigationItem], animated: false)
-
+    setupNavigationBar()
     saveInterventionButton.layer.cornerRadius = 3
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
@@ -215,6 +201,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     setTextViewPlaceholder()
 
     setupViewsAccordingInterventionType()
+  }
+
+  private func setupNavigationBar() {
+    let navigationItem = UINavigationItem(title: "")
+    let typeLabel = UILabel()
+
+    if interventionType != nil {
+      typeLabel.text = interventionType.localized
+    }
+    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
+    typeLabel.textColor = UIColor.white
+    let leftItem = UIBarButtonItem.init(customView: typeLabel)
+
+    navigationItem.leftBarButtonItem = leftItem
+    navigationBar.setItems([navigationItem], animated: false)
   }
 
   func setupViewsAccordingInterventionType() {
@@ -345,6 +346,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Core Data
 
+  private func changeWaterUnit() {
+    if interventionType == "IRRIGATION" {
+      let waterVolume = irrigationVolumeTextField.text!.floatValue
+
+      newIntervention.waterQuantity = waterVolume
+      switch irrigationUnitButton.titleLabel?.text {
+      case "m³":
+        newIntervention.waterUnit = "CUBIC_METER"
+      case "hl":
+        newIntervention.waterUnit = "HECTOLITER"
+      case "l":
+        newIntervention.waterUnit = "LITER"
+      default:
+        newIntervention.waterUnit = ""
+      }
+    }
+  }
+
   @IBAction func createIntervention() {
     if !checkErrorsAccordingInterventionType() {
       return
@@ -362,21 +381,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     newIntervention.status = InterventionState.Created.rawValue
     newIntervention.infos = "Infos"
     newIntervention.farmID = appDelegate.farmID
-    if interventionType == "IRRIGATION" {
-      let waterVolume = irrigationVolumeTextField.text!.floatValue
-
-      newIntervention.waterQuantity = waterVolume
-      switch irrigationUnitButton.titleLabel?.text {
-      case "m³":
-        newIntervention.waterUnit = "CUBIC_METER"
-      case "hl":
-        newIntervention.waterUnit = "HECTOLITER"
-      case "l":
-        newIntervention.waterUnit = "LITER"
-      default:
-        newIntervention.waterUnit = ""
-      }
-    }
+    changeWaterUnit()
     workingPeriod.intervention = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     workingPeriod.hourDuration = duration
@@ -547,7 +552,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  private func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
+  private func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject],
+                           entity: inout [NSManagedObject]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -649,10 +655,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return true
     }
 
+    let numberOfDecimalDigits: Int
     let newText = oldText.replacingCharacters(in: r, with: string)
     let isNumeric = newText.isEmpty || !newText.contains("0123456789.,")
-    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 : newText.components(separatedBy: ".").count - 1)
-    let numberOfDecimalDigits: Int
+    let numberOfDots = (newText.contains(",") ? newText.components(separatedBy: ",").count - 1 :
+      newText.components(separatedBy: ".").count - 1)
 
     if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
       numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
@@ -699,7 +706,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if notesTextView.text.count == 0 {
       notesTextViewHeightConstraint.constant = 30
       notesViewHeightConstraint.constant = 70
-       setTextViewPlaceholder()
+      setTextViewPlaceholder()
     }
   }
 
@@ -747,7 +754,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   private func checkCropsProduction() -> Bool {
-     if interventionType == InterventionType.Harvest.rawValue || interventionType == InterventionType.Implantation.rawValue {
+    if interventionType == InterventionType.Harvest.rawValue ||
+      interventionType == InterventionType.Implantation.rawValue {
       let selectedCrops = fetchSelectedCrops()
       let firstCrop = selectedCrops.first?.species
 

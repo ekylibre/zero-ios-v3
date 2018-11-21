@@ -114,9 +114,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   private func setupInterventionTypeButtons() {
     for index in 0...6 {
-      let interventionTypeButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
       let assetName = interventionTypes[index].lowercased().replacingOccurrences(of: "_", with: "-")
       let image = UIImage(named: assetName)
+      let interventionTypeButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width,
+                                                          height: bottomView.bounds.height))
 
       interventionTypeButton.tag = index
       interventionTypeButton.backgroundColor = UIColor.white
@@ -257,13 +258,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
-      fatalError("The dequeued cell is not an instance of InterventionCell")
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath)
+      as? InterventionCell else {
+        fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
     let intervention = interventions[indexPath.row]
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
+    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!,
+                                         2: UIImage(named: "validated")!]
 
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized

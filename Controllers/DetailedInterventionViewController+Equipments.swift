@@ -34,9 +34,11 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.bounces = false
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
-    equipmentsSelectionView.cancelButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)
-    equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes), for: .touchUpInside)
     equipmentsSelectionView.addInterventionViewController = self
+    equipmentsSelectionView.cancelButton.addTarget(self, action: #selector(closeEquipmentsSelectionView),
+                                                   for: .touchUpInside)
+    equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes),
+                                                              for: .touchUpInside)
   }
 
   private func loadEquipmentTypes() -> [String] {
@@ -64,7 +66,7 @@ extension AddInterventionViewController {
     let sortedEquipmentTypes = equipmentTypes.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <
-      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
 
     return sortedEquipmentTypes.first!
@@ -170,15 +172,18 @@ extension AddInterventionViewController {
     return String(format: "%@ #%@", type, number)
   }
 
-  func selectedEquipmentsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedEquipmentCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
-    let selectedEquipment = selectedEquipments[indexPath.row]
-    let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+  func selectedEquipmentsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath)
+    -> SelectedEquipmentCell {
+      let selectedEquipment = selectedEquipments[indexPath.row]
+      let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath)
+        as! SelectedEquipmentCell
 
-    cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-    cell.nameLabel.text = selectedEquipment.name
-    cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
-    cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
-    return cell
+
+      cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+      cell.nameLabel.text = selectedEquipment.name
+      cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
+      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
+      return cell
   }
 }
