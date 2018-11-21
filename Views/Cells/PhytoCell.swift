@@ -110,6 +110,7 @@ class PhytoCell: UITableViewCell {
     NSLayoutConstraint.activate([
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       firmNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
       firmNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
       unauthorizedMixingImage.heightAnchor.constraint(equalToConstant: 15),

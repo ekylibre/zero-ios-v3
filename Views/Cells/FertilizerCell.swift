@@ -52,6 +52,7 @@ class FertilizerCell: UITableViewCell {
     NSLayoutConstraint.activate([
       nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
       natureLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
       natureLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
       natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
