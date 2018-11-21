@@ -175,7 +175,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <color key="barTintColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </navigationBar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGp-gL-8mm">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="fGp-gL-8mm">
                                 <rect key="frame" x="0.0" y="64" width="375" height="499"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
@@ -1264,26 +1264,18 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.54509803921568623" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbF-nF-QUt" userLabel="Dim View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50476241440000003" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="mbF-nF-QUt" firstAttribute="top" secondItem="TZH-N4-7jc" secondAttribute="top" id="38y-FJ-yfu"/>
                             <constraint firstItem="fGp-gL-8mm" firstAttribute="top" secondItem="q3s-Gt-LrC" secondAttribute="bottom" id="4Jw-z0-aFc"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="top" secondItem="96m-Su-72M" secondAttribute="bottom" id="PJY-kn-gNg"/>
                             <constraint firstItem="dVv-q0-QD8" firstAttribute="leading" secondItem="DUW-oV-g3X" secondAttribute="leading" id="Qac-Pa-0rs"/>
-                            <constraint firstItem="mbF-nF-QUt" firstAttribute="trailing" secondItem="TZH-N4-7jc" secondAttribute="trailing" id="QeT-Hw-9V5"/>
                             <constraint firstItem="q3s-Gt-LrC" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" id="RXb-qb-Hef"/>
                             <constraint firstAttribute="trailing" secondItem="dVv-q0-QD8" secondAttribute="trailing" id="Taq-yT-QFx"/>
                             <constraint firstItem="96m-Su-72M" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" id="TmG-hP-Dp7"/>
-                            <constraint firstItem="mbF-nF-QUt" firstAttribute="leading" secondItem="TZH-N4-7jc" secondAttribute="leading" id="V7N-S6-v6s"/>
                             <constraint firstAttribute="bottom" secondItem="dVv-q0-QD8" secondAttribute="bottom" id="WDz-FH-zDD"/>
                             <constraint firstItem="q3s-Gt-LrC" firstAttribute="top" secondItem="TZH-N4-7jc" secondAttribute="top" id="aaa-Xp-oN7"/>
                             <constraint firstItem="96m-Su-72M" firstAttribute="top" secondItem="fGp-gL-8mm" secondAttribute="bottom" id="btq-n8-yJQ"/>
-                            <constraint firstAttribute="bottom" secondItem="mbF-nF-QUt" secondAttribute="bottom" id="cA2-NP-JvD"/>
                             <constraint firstItem="96m-Su-72M" firstAttribute="trailing" secondItem="TZH-N4-7jc" secondAttribute="trailing" id="fAq-F2-i0u"/>
                             <constraint firstItem="fGp-gL-8mm" firstAttribute="leading" secondItem="q3s-Gt-LrC" secondAttribute="leading" id="fGj-WN-wjM"/>
                             <constraint firstItem="TZH-N4-7jc" firstAttribute="bottom" secondItem="96m-Su-72M" secondAttribute="bottom" id="jo2-PX-ujF"/>
@@ -1298,7 +1290,6 @@
                         <outlet property="brokenClouds" destination="ca3-oq-1ls" id="Wau-QD-H2E"/>
                         <outlet property="clearSky" destination="8jz-fe-slq" id="pMJ-I2-u0I"/>
                         <outlet property="currentWeatherLabel" destination="UXL-bz-O2x" id="J7m-Rj-5XB"/>
-                        <outlet property="dimView" destination="mbF-nF-QUt" id="KuD-Ad-JWc"/>
                         <outlet property="equipmentsAddButton" destination="5AO-Jj-0ZP" id="qfE-7r-xtB"/>
                         <outlet property="equipmentsCountLabel" destination="lB9-6U-iCz" id="oP5-yt-cDO"/>
                         <outlet property="equipmentsExpandImageView" destination="gpT-xG-nNl" id="b65-Rs-A0j"/>

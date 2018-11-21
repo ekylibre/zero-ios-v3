@@ -16,7 +16,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var saveInterventionButton: UIButton!
-  @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var totalLabel: UILabel!
 
   // Working period
@@ -121,6 +120,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var selectedValue: String!
   var selectDateView: SelectDateView!
   var irrigationPickerView: CustomPickerView!
+  var dimView = UIView(frame: CGRect.zero)
   var cropsView: CropsView!
   var species: [String]!
   var inputsSelectionView: InputsView!
@@ -181,6 +181,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     setupNavigationBar()
+    setupDimView()
     saveInterventionButton.layer.cornerRadius = 3
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
@@ -217,6 +218,19 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
+  }
+
+  private func setupDimView() {
+    dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(dimView)
+
+    NSLayoutConstraint.activate([
+      dimView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+      dimView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      ])
   }
 
   func setupViewsAccordingInterventionType() {
