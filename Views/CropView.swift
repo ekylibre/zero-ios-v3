@@ -14,9 +14,7 @@ class CropView: UIView {
 
   lazy var cropImageView: UIImageView = {
     let cropImageView = UIImageView(frame: CGRect.zero)
-    let cropImage = UIImage(named: "plots")!
-    let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
-    cropImageView.image = tintedImage
+    cropImageView.image = UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate)
     cropImageView.tintColor = UIColor.darkGray
     cropImageView.backgroundColor = UIColor.lightGray
     cropImageView.translatesAutoresizingMaskIntoConstraints = false
