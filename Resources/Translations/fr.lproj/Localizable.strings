@@ -508,7 +508,6 @@
 "km_per_hour" = "km/h";
 "ok" = "Ok";
 "crop_list" = "Liste des cultures";
-"waiting_for_gps" = "Recherche d'une position GPS…";
 "brand" = "Marque";
 "mmaid_number" = "N° AMM";
 "reentry_delay" = "Délai de ré-entrée";
@@ -518,8 +517,6 @@
 "invalid_dose" = "Dose invalide";
 "approximate_amount" = "Quantité approximative";
 "unauthorized_mixing" = "Mélange non autorisé";
-"gps_is_off" = "Le GPS de votre smartphone est éteint.";
-"waiting_gps_signal" = "En attente d'un signal GPS…";
 "my_crops_title" = "Mes cultures";
 "filter_by_proximity" = "Filtrer par proximité";
 "from" = "Du";

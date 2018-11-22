@@ -508,7 +508,6 @@
 "km_per_hour" = "km/h";
 "ok" = "Ok";
 "crop_list" = "List of crops";
-"waiting_for_gps" = "Search for a GPS position...";
 "brand" = "Brand";
 "mmaid_number" = "N° MMA";
 "reentry_delay" = "Re-entry delay";
@@ -518,8 +517,6 @@
 "invalid_dose" = "Invalid dose";
 "approximate_amount" = "Approximate amount";
 "unauthorized_mixing" = "Unauthorized mixing";
-"gps_is_off" = "Your smartphone's GPS is off.";
-"waiting_gps_signal" = "En attente d'un Waiting for a GPS signal...";
 "my_crops_title" = "My crops";
 "filter_by_proximity" = "Filter by proximity";
 "from" = "From";
