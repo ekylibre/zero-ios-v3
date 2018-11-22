@@ -32,11 +32,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
   let navItem = UINavigationItem()
   let refreshControl = UIRefreshControl()
+  let dimView = UIView(frame: CGRect.zero)
   var interventionTypeButtons = [UIButton]()
   var interventionTypeLabels = [UILabel]()
+  var farmNameLabel: UILabel!
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
-  let dimView = UIView(frame: CGRect.zero)
 
   // MARK: - Initialization
 
@@ -60,11 +61,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func setupNavigationBar() {
-    let farmNameLabel = UILabel()
     let cropsButton = UIButton()
     let logoutButton = UIButton()
 
     navigationController?.navigationBar.isHidden = true
+    farmNameLabel = UILabel()
     farmNameLabel.text = fetchFarmName()
     farmNameLabel.textColor = UIColor.white
     farmNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
@@ -260,7 +261,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     if crops.count == 0 {
-      let alert = UIAlertController(title:  "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
+      let alert = UIAlertController(title: "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
       let action = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
 
       alert.addAction(action)
@@ -381,6 +382,14 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   // MARK: - Actions
 
+  private func updateFarmNameLabel() {
+    if farmNameLabel?.text == nil {
+      farmNameLabel?.text = fetchFarmName()
+      navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
+      navigationBar.setItems([navItem], animated: true)
+    }
+  }
+
   @objc private func synchronise() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -391,13 +400,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let calendar = Calendar.current
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
-    let farmNameLabel = navItem.leftBarButtonItem?.customView as? UILabel
 
     queryFarms { (success) in
       if success {
-        if farmNameLabel?.text == nil {
-          farmNameLabel?.text = self.fetchFarmName()
-        }
+        self.updateFarmNameLabel()
         self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
