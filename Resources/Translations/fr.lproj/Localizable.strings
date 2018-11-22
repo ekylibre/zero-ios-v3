@@ -330,8 +330,6 @@
 "validate" = "Valider";
 "delete" = "Supprimer";
 "close" = "Fermer";
-"no" = "Non";
-"yes" = "Oui";
 
 "none" = "Aucun";
 "quantity" = "Quantité";
@@ -395,12 +393,36 @@
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
+// Alerts
+"start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
+"disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
+
 "delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
 "delete_harvest_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
 "delete_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
+"date_not_corresponding_to_crop" = "La date d'intervention doit correspondre aux dates de la culture !";
+"you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
+"you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
+"you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
+"you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
+"you_must_select_seed" = "Vous devez ajouter au moins une semence !";
+"you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
+"you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
+"you_must_enter_a_water_volume" = "Vous devez rentrer le volume d'eau utilisé !";
+"you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
+"you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
+"confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
+
+"location_request_title" = "Services de Localisation Désactivés";
+"location_request_message" = "Veuillez activer les services de localisation.";
+"authorization_request_title" = "Services de Localisation Désactivés";
+"authorization_request_message" = "Veuillez activer les services de localisation pour cette application.";
+"settings" = "Réglages";
+
+// Weather
 "not_filled_in" = "Non renseignée";
 "temp" = "Temp.: %@ °C |";
 "wind" = " vent: %@ km/h";
@@ -425,21 +447,7 @@
 "surface_area" = "%.1f ha travaillés";
 "intervention" = "Intervention";
 "notes" = "Notes";
-"date_not_corresponding_to_crop" = "La date d'intervention doit correspondre aux dates de la culture !";
-"you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
-"you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
-"you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
-"you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
-"you_must_select_seed" = "Vous devez ajouter au moins une semence !";
-"you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
-"you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
-"you_must_enter_a_water_volume" = "Vous devez rentrer le volume d'eau utilisé !";
-"you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
-"you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
-"confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
-"start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "driver" = "Conducteur";
-"disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
 "you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
 "ok" = "Ok";
@@ -451,11 +459,6 @@
 "from" = "Du";
 "to" = "Au";
 "yield" = "Rendement";
-"location_request_title" = "Services de Localisation Désactivés";
-"location_request_message" = "Veuillez activer les services de localisation.";
-"authorization_request_title" = "Services de Localisation Désactivés";
-"authorization_request_message" = "Veuillez activer les services de localisation pour cette application.";
-"settings" = "Réglages";
 
 "locale" = "fr_FR";
 
