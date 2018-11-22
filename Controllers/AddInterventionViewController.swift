@@ -703,14 +703,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   func textViewDidChange(_ textView: UITextView) {
-    let fixedSize = notesTextView.frame.size.width
-    let newHeight = notesTextView.sizeThatFits(CGSize(width: fixedSize, height: CGFloat.greatestFiniteMagnitude)).height
-
-    notesTextViewHeightConstraint.constant = newHeight
-    notesViewHeightConstraint.constant = notesTextViewHeightConstraint.constant
     if notesTextView.text.count == 0 {
-      notesTextViewHeightConstraint.constant = 30
-      notesViewHeightConstraint.constant = 70
       setTextViewPlaceholder()
     }
   }
