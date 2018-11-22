@@ -253,9 +253,10 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       inputsView.isHidden = true
       inputsSeparatorView.isHidden = true
     case InterventionType.Irrigation.rawValue:
-      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
       irrigationView.isHidden = false
       irrigationSeparatorView.isHidden = false
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
+      inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
     default:
       return
     }
