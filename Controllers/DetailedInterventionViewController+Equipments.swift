@@ -143,7 +143,7 @@ extension AddInterventionViewController {
   }
 
   @objc private func showEquipmentTypes() {
-    self.performSegue(withIdentifier: "showEquipmentTypes", sender: self)
+    performSegue(withIdentifier: "showEquipmentTypes", sender: self)
   }
 
   @objc func tapEquipmentsDeleteButton(sender: UIButton) {

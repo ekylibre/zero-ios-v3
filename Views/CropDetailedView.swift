@@ -94,14 +94,14 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func setupView() {
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
+    isHidden = true
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
     tableView.separatorStyle = .none
     tableView.tableFooterView = UIView()
-    self.addSubview(headerView)
-    self.addSubview(tableView)
+    addSubview(headerView)
+    addSubview(tableView)
     setupLayout()
   }
 
@@ -120,14 +120,14 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
       yieldLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
       yieldLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      headerView.topAnchor.constraint(equalTo: self.topAnchor),
+      headerView.topAnchor.constraint(equalTo: topAnchor),
       headerView.heightAnchor.constraint(equalToConstant: 120),
-      headerView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      headerView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      headerView.leftAnchor.constraint(equalTo: leftAnchor),
+      headerView.rightAnchor.constraint(equalTo: rightAnchor),
       tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
+      tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      tableView.leftAnchor.constraint(equalTo: leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: rightAnchor)
     ])
   }
 

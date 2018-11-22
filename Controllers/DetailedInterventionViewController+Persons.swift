@@ -133,7 +133,7 @@ extension AddInterventionViewController {
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
       self.deletePerson(indexPath.row)
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   private func deletePerson(_ index: Int)  {

@@ -376,7 +376,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       return
     }
 
-    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
+    performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
     collapseBottomView()
   }
 

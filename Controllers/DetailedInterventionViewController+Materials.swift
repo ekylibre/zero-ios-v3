@@ -130,11 +130,11 @@ extension AddInterventionViewController {
     let cell = sender.superview?.superview as! SelectedMaterialCell
 
     selectedRow = selectedMaterialsTableView.indexPath(for: cell)!.row
-    self.performSegue(withIdentifier: "showSelectedMaterialUnits", sender: self)
+    performSegue(withIdentifier: "showSelectedMaterialUnits", sender: self)
   }
 
   @objc private func showMaterialUnits() {
-    self.performSegue(withIdentifier: "showMaterialUnits", sender: self)
+    performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
 
   @objc func tapDeleteButton(sender: UIButton) {
@@ -146,7 +146,7 @@ extension AddInterventionViewController {
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
       self.deleteMaterial(indexPath.row)
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   private func deleteMaterial(_ index: Int)  {

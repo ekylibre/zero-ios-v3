@@ -87,16 +87,16 @@ class SelectionView: UIView {
   }
 
   private func setupView() {
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.addSubview(headerView)
-    self.addSubview(cancelButton)
-    self.addSubview(searchBar)
-    self.addSubview(createButton)
-    self.addSubview(tableView)
-    self.addSubview(dimView)
+    isHidden = true
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    addSubview(headerView)
+    addSubview(cancelButton)
+    addSubview(searchBar)
+    addSubview(createButton)
+    addSubview(tableView)
+    addSubview(dimView)
     setupLayout()
   }
 
@@ -106,26 +106,26 @@ class SelectionView: UIView {
     NSLayoutConstraint.activate([
       titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
       titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      headerView.topAnchor.constraint(equalTo: self.topAnchor),
+      headerView.topAnchor.constraint(equalTo: topAnchor),
       headerView.heightAnchor.constraint(equalToConstant: 60),
-      headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
       cancelButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
       cancelButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
-      cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
       searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
-      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
       createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
-      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      createButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       tableViewTopAnchor,
-      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.rightAnchor.constraint(equalTo: self.rightAnchor),
-      dimView.topAnchor.constraint(equalTo: self.topAnchor),
-      dimView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      dimView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      dimView.rightAnchor.constraint(equalTo: self.rightAnchor)
+      tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      tableView.leftAnchor.constraint(equalTo: leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: rightAnchor),
+      dimView.topAnchor.constraint(equalTo: topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      dimView.leftAnchor.constraint(equalTo: leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: rightAnchor)
       ])
   }
 
@@ -134,6 +134,6 @@ class SelectionView: UIView {
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

@@ -50,16 +50,16 @@ class EquipmentCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      typeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      typeImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
       typeImageView.heightAnchor.constraint(equalToConstant: 35),
-      typeImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      typeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
-      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      infosLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      infosLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      infosLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+      infosLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
       ])
   }
 

@@ -29,9 +29,9 @@ class MaterialCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+      nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+      nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
       ])
   }
 

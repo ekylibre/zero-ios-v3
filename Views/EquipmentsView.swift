@@ -108,7 +108,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   // MARK: - Initialization
 
   init(firstType: String, frame: CGRect) {
-    self.firstEquipmentType = firstType
+    firstEquipmentType = firstType
     super.init(frame: frame)
     setupView()
     fetchEquipments()
@@ -129,12 +129,12 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func setupCreationView() {
-    self.addSubview(creationView)
+    addSubview(creationView)
 
     NSLayoutConstraint.activate([
-      creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      creationView.leftAnchor.constraint(equalTo: leftAnchor),
+      creationView.rightAnchor.constraint(equalTo: rightAnchor),
       ])
   }
 
@@ -337,6 +337,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

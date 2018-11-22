@@ -108,11 +108,11 @@ class PhytoCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+      nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firmNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-      firmNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firmNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       unauthorizedMixingImage.heightAnchor.constraint(equalToConstant: 15),
       unauthorizedMixingImage.widthAnchor.constraint(equalToConstant: 15),
       unauthorizedMixingImage.leadingAnchor.constraint(equalTo: firmNameLabel.leadingAnchor),
@@ -120,16 +120,16 @@ class PhytoCell: UITableViewCell {
       unauthorizedMixingLabel.centerYAnchor.constraint(equalTo: unauthorizedMixingImage.centerYAnchor),
       unauthorizedMixingLabel.leadingAnchor.constraint(equalTo: unauthorizedMixingImage.trailingAnchor, constant: 3),
       maaLabel.topAnchor.constraint(equalTo: unauthorizedMixingImage.bottomAnchor, constant: 5),
-      maaLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      maaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       maaIDLabel.centerYAnchor.constraint(equalTo: maaLabel.centerYAnchor),
       maaIDLabel.leadingAnchor.constraint(equalTo: maaLabel.trailingAnchor, constant: 15),
       reentryLabel.topAnchor.constraint(equalTo: maaLabel.bottomAnchor),
-      reentryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      reentryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       inFieldReentryDelayLabel.topAnchor.constraint(equalTo: maaIDLabel.bottomAnchor),
       inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15),
-      starImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      starImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
       starImageView.heightAnchor.constraint(equalToConstant: 20),
-      starImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      starImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       starImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }

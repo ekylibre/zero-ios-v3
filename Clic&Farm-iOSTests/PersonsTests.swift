@@ -19,7 +19,7 @@ class PersonsTests: XCTestCase {
     return managedObjectModel
   }()
   lazy var mockPersistentContainer: NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: self.managedObjectModel)
+    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: managedObjectModel)
     let description = NSPersistentStoreDescription()
     description.type = NSInMemoryStoreType
     description.shouldAddStoreAsynchronously = false

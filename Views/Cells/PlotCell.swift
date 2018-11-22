@@ -45,8 +45,8 @@ class PlotCell: UITableViewCell {
   }
 
   private func setupCell() {
-    self.clipsToBounds = true
-    self.selectionStyle = .none
+    clipsToBounds = true
+    selectionStyle = .none
     contentView.addSubview(checkboxButton)
     contentView.addSubview(nameLabel)
     contentView.addSubview(surfaceAreaLabel)
@@ -56,9 +56,9 @@ class PlotCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      checkboxButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 17.5),
+      checkboxButton.topAnchor.constraint(equalTo: topAnchor, constant: 17.5),
       checkboxButton.heightAnchor.constraint(equalToConstant: 25),
-      checkboxButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17.5),
+      checkboxButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 17.5),
       checkboxButton.widthAnchor.constraint(equalToConstant: 25),
       nameLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 15),
@@ -66,7 +66,7 @@ class PlotCell: UITableViewCell {
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: expandCollapseImageView.leadingAnchor, constant: -25),
       expandCollapseImageView.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
       expandCollapseImageView.heightAnchor.constraint(equalToConstant: 16),
-      expandCollapseImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      expandCollapseImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
       expandCollapseImageView.widthAnchor.constraint(equalToConstant: 16)
       ])
   }

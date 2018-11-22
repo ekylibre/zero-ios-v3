@@ -127,44 +127,44 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.addSubview(titleLabel)
-    self.addSubview(nameTextField)
-    self.addSubview(firmNameTextField)
-    self.addSubview(maaTextField)
-    self.addSubview(reentryDelayTextField)
-    self.addSubview(unitLabel)
-    self.addSubview(cancelButton)
-    self.addSubview(createButton)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    isHidden = true
+    addSubview(titleLabel)
+    addSubview(nameTextField)
+    addSubview(firmNameTextField)
+    addSubview(maaTextField)
+    addSubview(reentryDelayTextField)
+    addSubview(unitLabel)
+    addSubview(cancelButton)
+    addSubview(createButton)
     setupLayout()
     setupActions()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firmNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
-      firmNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      firmNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firmNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      firmNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       maaTextField.topAnchor.constraint(equalTo: firmNameTextField.bottomAnchor, constant: 35),
-      maaTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      maaTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      maaTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      maaTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       reentryDelayTextField.topAnchor.constraint(equalTo: maaTextField.bottomAnchor, constant: 35),
-      reentryDelayTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      reentryDelayTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      reentryDelayTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      reentryDelayTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       unitLabel.topAnchor.constraint(equalTo: reentryDelayTextField.bottomAnchor, constant: 5),
-      unitLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      unitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15)
       ])
   }
 
@@ -206,13 +206,13 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
   // MARK: - Actions
 
   @objc private func closeView(sender: UIButton) {
-    for subview in self.subviews {
+    for subview in subviews {
       if sender == cancelButton && subview is UITextField {
         let textField = subview as! UITextField
         textField.resignFirstResponder()
         textField.text = ""
       }
     }
-    self.isHidden = true
+    isHidden = true
   }
 }

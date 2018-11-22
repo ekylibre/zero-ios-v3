@@ -265,20 +265,20 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     super.viewDidLayoutSubviews()
 
     // Changes inputsSelectionView frame and position
-    let guide = self.view.safeAreaLayoutGuide
+    let guide = view.safeAreaLayoutGuide
     let height = guide.layoutFrame.size.height
 
-    cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
-    cropsView.center.x = self.view.center.x
+    cropsView.frame = CGRect(x: 0, y: 0, width: view.frame.width - 30, height: height - 30)
+    cropsView.center.x = view.center.x
     cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
   }
 
   @objc func showList() {
-    self.performSegue(withIdentifier: "showSpecies", sender: self)
+    performSegue(withIdentifier: "showSpecies", sender: self)
   }
 
   @objc func showAlert() {
-    self.present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
+    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
   // MARK: - Table view data source

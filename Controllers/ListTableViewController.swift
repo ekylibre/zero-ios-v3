@@ -66,6 +66,6 @@ class ListTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     delegate?.writeValueBack(tag: tag, value: rawStrings[indexPath.row])
-    self.dismiss(animated: true, completion: nil)
+    dismiss(animated: true, completion: nil)
   }
 }

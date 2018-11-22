@@ -187,63 +187,63 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.addSubview(titleLabel)
-    self.addSubview(typeImageView)
-    self.addSubview(typeLabel)
-    self.addSubview(typeButton)
-    self.addSubview(nameTextField)
-    self.addSubview(errorLabel)
-    self.addSubview(numberTextField)
-    self.addSubview(firstEquipmentParameter)
-    self.addSubview(firstParameterUnit)
-    self.addSubview(secondEquipmentParameter)
-    self.addSubview(secondParameterUnit)
-    self.addSubview(cancelButton)
-    self.addSubview(createButton)
-    self.addConstraint(heighConstraint)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    isHidden = true
+    addSubview(titleLabel)
+    addSubview(typeImageView)
+    addSubview(typeLabel)
+    addSubview(typeButton)
+    addSubview(nameTextField)
+    addSubview(errorLabel)
+    addSubview(numberTextField)
+    addSubview(firstEquipmentParameter)
+    addSubview(firstParameterUnit)
+    addSubview(secondEquipmentParameter)
+    addSubview(secondParameterUnit)
+    addSubview(cancelButton)
+    addSubview(createButton)
+    addConstraint(heighConstraint)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
       typeImageView.heightAnchor.constraint(equalToConstant: 50),
-      typeImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      typeImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
       typeImageView.widthAnchor.constraint(equalToConstant: 50),
       typeLabel.topAnchor.constraint(equalTo: typeImageView.bottomAnchor, constant: 10),
-      typeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor),
-      typeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      typeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      typeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      typeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       nameTextField.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 35),
-      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       numberTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
-      numberTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      numberTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      firstEquipmentParameter.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      firstEquipmentParameter.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      numberTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      numberTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      firstEquipmentParameter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      firstEquipmentParameter.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firstEquipmentParameter.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: 35),
-      firstParameterUnit.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      firstParameterUnit.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       firstParameterUnit.topAnchor.constraint(equalTo: firstEquipmentParameter.bottomAnchor, constant: 10),
-      secondEquipmentParameter.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      secondEquipmentParameter.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      secondEquipmentParameter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      secondEquipmentParameter.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       secondEquipmentParameter.topAnchor.constraint(equalTo: firstParameterUnit.bottomAnchor, constant: 35),
-      secondParameterUnit.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      secondParameterUnit.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       secondParameterUnit.topAnchor.constraint(equalTo: secondEquipmentParameter.bottomAnchor, constant: 10),
-      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15)
       ])
   }
 
