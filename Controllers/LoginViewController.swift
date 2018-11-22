@@ -62,8 +62,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
       } else {
         let alert = UIAlertController(
-          title: nil,
-          message: "login_failure".localized,
+          title: "login_failure".localized,
+          message: nil,
           preferredStyle: .alert
         )
 

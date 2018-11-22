@@ -473,7 +473,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Logout
 
   @objc private func presentLogoutAlert() {
-    let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
+    let alert = UIAlertController(title: "disconnect_prompt".localized, message: nil, preferredStyle: .actionSheet)
     let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
     let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
       self.logoutUser()

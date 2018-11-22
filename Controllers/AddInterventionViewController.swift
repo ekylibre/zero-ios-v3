@@ -761,8 +761,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       for selectedCrop in selectedCrops {
         if selectedCrop.species != firstCrop {
           let alert = UIAlertController(
-            title: "",
-            message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+            title: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+            message: nil,
             preferredStyle: .alert)
 
           alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
