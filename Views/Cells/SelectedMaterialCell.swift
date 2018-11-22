@@ -84,8 +84,8 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
   }
 
   private func setupCell() {
-    self.backgroundColor = AppColor.CellColors.LightGray
-    self.selectionStyle = .none
+    backgroundColor = AppColor.CellColors.LightGray
+    selectionStyle = .none
     contentView.addSubview(materialImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(deleteButton)
@@ -97,14 +97,14 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      materialImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      materialImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
       materialImageView.heightAnchor.constraint(equalToConstant: 24),
-      materialImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      materialImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
       materialImageView.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: materialImageView.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: materialImageView.trailingAnchor, constant: 10),
-      quantityLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      quantityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      quantityLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      quantityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       quantityTextField.heightAnchor.constraint(equalToConstant: 30),
       quantityTextField.leadingAnchor.constraint(equalTo: quantityLabel.trailingAnchor, constant: 15),
@@ -113,9 +113,9 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
       unitButton.heightAnchor.constraint(equalToConstant: 30),
       unitButton.leadingAnchor.constraint(equalTo: quantityTextField.trailingAnchor, constant: 10),
       unitButton.widthAnchor.constraint(equalToConstant: 70),
-      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      deleteButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+      deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
       deleteButton.widthAnchor.constraint(equalToConstant: 20),
       deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor,
                                             multiplier: 1)

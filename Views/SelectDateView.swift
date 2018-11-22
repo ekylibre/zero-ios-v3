@@ -37,22 +37,22 @@ class SelectDateView: UIView {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 3
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(datePicker)
-    self.addSubview(validateButton)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 3
+    clipsToBounds = true
+    isHidden = true
+    translatesAutoresizingMaskIntoConstraints = false
+    addSubview(datePicker)
+    addSubview(validateButton)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      datePicker.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-      datePicker.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      validateButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      validateButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
+      datePicker.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+      datePicker.centerXAnchor.constraint(equalTo: centerXAnchor),
+      validateButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+      validateButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
       validateButton.heightAnchor.constraint(equalToConstant: 30),
       validateButton.widthAnchor.constraint(equalToConstant: 100)
       ])

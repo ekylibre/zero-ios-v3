@@ -44,13 +44,13 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   private func setupCreationView() {
-    self.addSubview(creationView)
+    addSubview(creationView)
 
     NSLayoutConstraint.activate([
       creationView.heightAnchor.constraint(equalToConstant: 250),
-      creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      creationView.leftAnchor.constraint(equalTo: leftAnchor),
+      creationView.rightAnchor.constraint(equalTo: rightAnchor),
       ])
   }
 
@@ -224,6 +224,6 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

@@ -27,7 +27,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationUnitButton.layer.cornerRadius = 5
     irrigationUnitButton.clipsToBounds = false
     irrigationUnitButton.setTitle("m³", for: .normal)
-    irrigationPickerView = CustomPickerView(frame: frame, units, superview: self.view)
+    irrigationPickerView = CustomPickerView(frame: frame, units, superview: view)
     irrigationPickerView.reference = self
     setupActions()
   }
@@ -69,7 +69,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
 
-      self.irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
+      irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
       selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
       updateInfoLabel(volume, unit)
       irrigationPickerView.isHidden = true

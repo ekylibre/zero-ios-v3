@@ -84,42 +84,42 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   init(firstSpecie: String, frame: CGRect) {
     self.firstSpecie = firstSpecie
-    self.rawSpecie = firstSpecie
+    rawSpecie = firstSpecie
     super.init(frame: frame)
     setupView()
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.addSubview(titleLabel)
-    self.addSubview(specieLabel)
-    self.addSubview(specieButton)
-    self.addSubview(varietyTextField)
-    self.addSubview(cancelButton)
-    self.addSubview(createButton)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    isHidden = true
+    addSubview(titleLabel)
+    addSubview(specieLabel)
+    addSubview(specieButton)
+    addSubview(varietyTextField)
+    addSubview(cancelButton)
+    addSubview(createButton)
     setupLayout()
     setupActions()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       specieLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-      specieLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      specieLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       specieButton.topAnchor.constraint(equalTo: specieLabel.bottomAnchor),
-      specieButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      specieButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 60),
+      specieButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      specieButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 60),
       varietyTextField.topAnchor.constraint(equalTo: specieButton.bottomAnchor, constant: 50),
-      varietyTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      varietyTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      varietyTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      varietyTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15)
       ])
   }
 
@@ -156,6 +156,6 @@ class SeedCreationView: UIView, UITextFieldDelegate {
       specieButton.setTitle(firstSpecie.localized, for: .normal)
       varietyTextField.text = ""
     }
-    self.isHidden = true
+    isHidden = true
   }
 }

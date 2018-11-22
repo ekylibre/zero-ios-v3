@@ -80,7 +80,7 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
     })
 
     alert.addAction(cancelAction)
-    self.present(alert, animated: true, completion: nil)
+    present(alert, animated: true, completion: nil)
   }
 
   private func requestAuthorization() {
@@ -94,6 +94,6 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
 
     alert.addAction(cancelAction)
     alert.addAction(settingsAction)
-    self.present(alert, animated: true, completion: nil)
+    present(alert, animated: true, completion: nil)
   }
 }

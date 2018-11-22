@@ -49,7 +49,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
       if appDelegate.entityIsEmpty(entity: "User") && authentificationService?.oauth2.accessToken != nil {
         authentificationService?.logout()
       }
-      self.authentifyUser()
+      authentifyUser()
       staticIndex.firstLaunch = true
     }
   }
@@ -68,7 +68,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         )
 
         alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
-        self.present(alert, animated: true)
+        present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)

@@ -106,18 +106,18 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupView() {
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.addSubview(segmentedControl)
-    self.addSubview(searchBar)
-    self.addSubview(createButton)
-    self.addSubview(tableView)
-    self.addSubview(dimView)
-    self.addSubview(seedView)
-    self.addSubview(phytoView)
-    self.addSubview(fertilizerView)
+    isHidden = true
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    addSubview(segmentedControl)
+    addSubview(searchBar)
+    addSubview(createButton)
+    addSubview(tableView)
+    addSubview(dimView)
+    addSubview(seedView)
+    addSubview(phytoView)
+    addSubview(fertilizerView)
     setupLayout()
     setupActions()
   }
@@ -126,18 +126,18 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
 
     NSLayoutConstraint.activate([
-      segmentedControl.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      segmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      segmentedControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
-      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
       createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
-      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      createButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       tableViewTopAnchor,
-      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
+      tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      tableView.leftAnchor.constraint(equalTo: leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: rightAnchor)
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
@@ -156,9 +156,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     NSLayoutConstraint.activate([
       customHeightAnchor,
-      view.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      view.widthAnchor.constraint(equalTo: self.widthAnchor),
-      view.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      view.centerYAnchor.constraint(equalTo: centerYAnchor),
+      view.widthAnchor.constraint(equalTo: widthAnchor),
+      view.centerXAnchor.constraint(equalTo: centerXAnchor),
       ])
   }
 
@@ -488,6 +488,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

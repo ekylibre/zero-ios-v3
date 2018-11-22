@@ -100,40 +100,40 @@ class PersonCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.addSubview(titleLabel)
-    self.addSubview(firstNameTextField)
-    self.addSubview(firstNameErrorLabel)
-    self.addSubview(lastNameTextField)
-    self.addSubview(lastNameErrorLabel)
-    self.addSubview(cancelButton)
-    self.addSubview(createButton)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    isHidden = true
+    addSubview(titleLabel)
+    addSubview(firstNameTextField)
+    addSubview(firstNameErrorLabel)
+    addSubview(lastNameTextField)
+    addSubview(lastNameErrorLabel)
+    addSubview(cancelButton)
+    addSubview(createButton)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       firstNameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
-      firstNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      firstNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firstNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      firstNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firstNameErrorLabel.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 5),
-      firstNameErrorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      firstNameErrorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      firstNameErrorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      firstNameErrorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 35),
-      lastNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      lastNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      lastNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      lastNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       lastNameErrorLabel.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 5),
-      lastNameErrorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      lastNameErrorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      lastNameErrorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      lastNameErrorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15)
       ])
   }
 
