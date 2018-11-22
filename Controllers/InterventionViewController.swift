@@ -359,7 +359,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func updateCropsLabel(_ targets: NSSet) -> String {
-    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
+    let cropString = targets.count < 2 ? "crop".localized : String(format: "crops".localized, targets.count)
     var totalSurfaceArea: Float = 0
 
     for case let target as Target in targets {
@@ -367,7 +367,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       totalSurfaceArea += crop.surfaceArea
     }
-    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
+    return cropString + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
   func transformDate(date: Date) -> String {

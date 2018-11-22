@@ -208,6 +208,10 @@
 "UREA_46_FERTILIZER" = "Urea 46 %";
 "WINE_VINASSE" = "Wine vinasse";
 
+// Fetilizer natures
+"organic" = "Organic";
+"mineral" = "Mineral";
+
 // Equipments
 "AIRPLANTER" = "Air planter";
 "BALER_WRAPPER" = "Baler wrapper";
@@ -254,18 +258,18 @@
 // Plurals
 "crop" = "1 crop";
 "crops" = "%d crops";
+"hour" = "hour";
+"hours" = "hours";
 "input" = "1 input";
 "inputs" = "%d inputs";
+"load" = "1 load";
+"loads" = "%d loads";
 "material" = "1 material";
 "materials" = "%d materials";
 "equipment" = "1 equipment";
 "equipments" = "%d equipments";
 "person" = "1 person";
 "persons" = "%d persons";
-"load" = "1 load";
-"loads" = "%d loads";
-"hour" = "hour";
-"hours" = "hours";
 
 // Volume units
 "LITER" = "l";
@@ -318,11 +322,6 @@
 "HEAP" = "Heap";
 "SILO" = "Silo";
 "BUILDING" = "Building";
-
-// Fetilizer nature
-
-"organic" = "Organic";
-"mineral" = "Mineral";
 
 // App strings
 "welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account…";

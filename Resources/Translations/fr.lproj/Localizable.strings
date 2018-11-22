@@ -208,6 +208,10 @@
 "UREA_46_FERTILIZER" = "Urée 46 %";
 "WINE_VINASSE" = "Vinasse de distillerie";
 
+// Fetilizer natures
+"organic" = "Organique";
+"mineral" = "Minéral";
+
 // Equipments
 "AIRPLANTER" = "Semoir monograines";
 "BALER_WRAPPER" = "Presse enrubanneuse";
@@ -252,20 +256,20 @@
 "WRAPPER" = "Enrubanneuse";
 
 // Plurals
-"crop" = "%d culture";
+"crop" = "1 culture";
 "crops" = "%d cultures";
+"hour" = "heure";
+"hours" = "heures";
 "input" = "1 intrant";
 "inputs" = "%d intrants";
+"load" = "1 chargement";
+"loads" = "%d chargements";
 "material" = "1 matériau";
 "materials" = "%d matériaux";
 "equipment" = "1 équipement";
 "equipments" = "%d équipements";
 "person" = "1 opérateur";
 "persons" = "%d opérateurs";
-"load" = "%d chargement";
-"loads" = "%d chargements";
-"hour" = "heure";
-"hours" = "heures";
 
 // Volume units
 "LITER" = "l";
@@ -319,11 +323,6 @@
 "SILO" = "Silo";
 "BUILDING" = "Bâtiment";
 
-// Fetilizer nature
-
-"organic" = "Organique";
-"mineral" = "Minéral";
-
 // App strings
 "welcome_text" = "Bienvenue dans l'application mobile Clic&Farm ! \nPour commencer, identifiez-vous avec votre compte Ekylibre…";
 "menu_logout" = "Me déconnecter";
@@ -340,6 +339,7 @@
 "seeds" = "Semences";
 "fertilizers" = "Fertilisants";
 "phytos" = "Phyto.";
+
 "select_crops" = "+ Sélectionner";
 "no_crop_selected" = "Aucune sélection";
 
