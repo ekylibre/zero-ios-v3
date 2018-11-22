@@ -13,6 +13,7 @@ class FertilizerCell: UITableViewCell {
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+    nameLabel.numberOfLines = 0
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
   }()
@@ -50,15 +51,15 @@ class FertilizerCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
       natureLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-      natureLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      starImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      natureLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+      natureLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       starImageView.heightAnchor.constraint(equalToConstant: 20),
-      starImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      starImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
       starImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }

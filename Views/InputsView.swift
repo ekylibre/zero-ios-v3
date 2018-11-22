@@ -52,6 +52,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.register(SeedCell.self, forCellReuseIdentifier: "SeedCell")
     tableView.register(PhytoCell.self, forCellReuseIdentifier: "PhytoCell")
     tableView.register(FertilizerCell.self, forCellReuseIdentifier: "FertilizerCell")
+    tableView.estimatedRowHeight = 60
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -258,6 +259,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if segmentedControl.selectedSegmentIndex == 1 {
       return 100
+    } else if segmentedControl.selectedSegmentIndex == 2 {
+      return UITableView.automaticDimension
     }
 
     return 60
