@@ -6,6 +6,8 @@
  Copyright © 2018 Ekylibre. All rights reserved.
 */
 
+"locale" = "fr_FR";
+
 // Vegetal species
 "ALLIUM_ASCALONICUM" = "Échalotte";
 "ALLIUM_CEPA" = "Oignon";
@@ -328,6 +330,7 @@
 "menu_logout" = "Me déconnecter";
 "cancel" = "Annuler";
 "validate" = "Valider";
+"create" = "Créer";
 "delete" = "Supprimer";
 "close" = "Fermer";
 
@@ -415,6 +418,7 @@
 "you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
+"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
 
 "location_request_title" = "Services de Localisation Désactivés";
 "location_request_message" = "Veuillez activer les services de localisation.";
@@ -435,11 +439,17 @@
 "thunderstorm" = "Orage";
 "clear_sky" = "Soleil";
 
+// My crops view
+"my_crops_title" = "Mes cultures";
+"filter_by_proximity" = "Filtrer par proximité";
+"from" = "Du";
+"to" = "Au";
+"yield" = "Rendement";
+
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 
 "sync_failure" = "Échec de la synchronisation…";
 "login_failure" = "Identifiant inconnu ou mot de passe incorrect. Veuillez réessayer.";
-"create" = "Créer";
 "volume" = "Volume";
 "volume_cannot_be_null" = "Le volume ne peut être nul";
 "working_width" = "Largeur de\ntravail";
@@ -454,25 +464,13 @@
 "provided_by_collector" = "Fourni par le collecteur";
 "invalid_dose" = "Dose invalide";
 "unauthorized_mixing" = "Mélange non autorisé";
-"my_crops_title" = "Mes cultures";
-"filter_by_proximity" = "Filtrer par proximité";
-"from" = "Du";
-"to" = "Au";
-"yield" = "Rendement";
-
-"locale" = "fr_FR";
 
 // Synchronization
 "today_last_synchronization" = "Dernière synchronisation %02d:%02d";
 "last_synchronization" = "Dernière synchronisation %@";
 "no_synchronization_listed" = "Aucune synchonisation répertoriée";
 
-// Errors
-
-"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
-
 // Working Periods
-
 "working_periods_is_invalid" = "Working periods is invalid";
 "started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
 "started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
