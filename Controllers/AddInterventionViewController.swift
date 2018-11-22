@@ -116,13 +116,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   var newIntervention: Intervention!
   var interventionType: String!
+  var dimView = UIView(frame: CGRect.zero)
+  var cellIndexPath: IndexPath!
   var selectedRow: Int!
   var selectedValue: String!
-  var selectDateView: SelectDateView!
-  var irrigationPickerView: CustomPickerView!
-  var dimView = UIView(frame: CGRect.zero)
   var cropsView: CropsView!
-  var species: [String]!
+  var selectDateView: SelectDateView!
   var inputsSelectionView: InputsView!
   var materialsSelectionView: MaterialsView!
   var equipmentsSelectionView: EquipmentsView!
@@ -132,23 +131,24 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var selectedEquipments = [Equipment]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
+  var species: [String]!
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
-  var massUnitPicker = UIPickerView()
-  var volumeUnitPicker = UIPickerView()
-  var pickerValue: String?
-  var cellIndexPath: IndexPath!
-  var weather: Weather!
-  var weatherIsSelected: Bool = false
   var harvests = [Harvest]()
+  var storages = [Storage]()
+  var harvestSelectedType: String!
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
-  var harvestSelectedType: String!
   var storageCreationView: StorageCreationView!
   var storagesPickerView: CustomPickerView!
   var storagesTypes: CustomPickerView!
-  var storages = [Storage]()
+  var irrigationPickerView: CustomPickerView!
+  var weather: Weather!
+  var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
+  var pickerValue: String?
+  var massUnitPicker = UIPickerView()
+  var volumeUnitPicker = UIPickerView()
   let massUnitMeasure = [
     "GRAM",
     "GRAM_PER_HECTARE",
@@ -321,11 +321,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  // Expand/collapse cell when tapped
-  var selectedIndexPath: IndexPath?
-  var indexPaths: [IndexPath] = []
-
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  func defineTableViewsHeightForRow(_ tableView: UITableView) -> CGFloat {
     switch tableView {
     case harvestTableView:
       return 150
@@ -342,21 +338,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return defineTableViewsHeightForRow(tableView)
+  }
+
   func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    switch tableView {
-    case harvestTableView:
-      return 150
-    case selectedInputsTableView:
-      return 110
-    case selectedMaterialsTableView:
-      return 80
-    case selectedEquipmentsTableView:
-      return 55
-    case selectedPersonsTableView:
-      return 65
-    default:
-      return 60
-    }
+    return defineTableViewsHeightForRow(tableView)
   }
 
   // MARK: - Core Data
