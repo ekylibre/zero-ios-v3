@@ -254,8 +254,6 @@
 // Plurals
 "crop" = "1 crop";
 "crops" = "%d crops";
-"harvest" = "1 harvest";
-"harvests" = "%d harvests";
 "input" = "1 input";
 "inputs" = "%d inputs";
 "material" = "1 material";
