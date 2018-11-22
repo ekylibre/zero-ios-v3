@@ -336,12 +336,13 @@
 "none" = "Aucun";
 "quantity" = "Quantité";
 
+"select_crops" = "+ Sélectionner";
+
+// Selection views
+"no_crop_selected" = "Aucune sélection";
 "seeds" = "Semences";
 "fertilizers" = "Fertilisants";
 "phytos" = "Phyto.";
-
-"select_crops" = "+ Sélectionner";
-"no_crop_selected" = "Aucune sélection";
 
 "selecting_crops" = "Sélectionnez des cultures";
 "selecting_materials" = "Sélectionnez un matériau";
@@ -355,6 +356,7 @@
 "create_new_equipment" = "+ Créer un nouvel équipement";
 "create_new_person" = "+ Créer un opérateur";
 
+// Creation views
 "create_seed_title" = "Création d'une semence";
 "create_phyto_title" = "Création d'un produit phyto";
 "create_ferti_title" = "Création d'un fertilisant";
@@ -362,6 +364,20 @@
 "create_material_title" = "Création d'un matériau";
 "create_equipment_title" = "Création d'un équipement";
 "create_person_title" = "Création d'un opérateur";
+
+"chose_specie" = "Espèce";
+"variety" = "Variété";
+"name" = "Nom";
+"brand" = "Marque";
+"mmaid_number" = "N° AMM";
+"reentry_delay" = "Délai de ré-entrée";
+"in_hours" = "En heures";
+"chose_nature" = "Nature";
+"chose_unit" = "Unité";
+"chose_type" = "Type";
+"number" = "Numéro";
+"first_name" = "Prénom";
+"last_name" = "Nom de famille";
 
 "seed_variety_is_empty" = "La variété de la semence ne peut être vide";
 "phyto_name_is_empty" = "Le nom du phyto ne peut être vide";
@@ -385,11 +401,6 @@
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
-"chose_specie" = "Espèce";
-"chose_nature" = "Nature";
-"chose_type" = "Type";
-"chose_unit" = "Unité";
-
 "not_filled_in" = "Non renseignée";
 "temp" = "Temp.: %@ °C |";
 "wind" = " vent: %@ km/h";
@@ -403,8 +414,6 @@
 "clear_sky" = "Soleil";
 
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
-"number" = "Numéro";
-"name" = "Nom";
 
 "sync_failure" = "Échec de la synchronisation…";
 "login_failure" = "Identifiant inconnu ou mot de passe incorrect. Veuillez réessayer.";
@@ -429,18 +438,11 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
-"first_name" = "Prénom";
-"last_name" = "Nom de famille";
 "driver" = "Conducteur";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
 "you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
 "ok" = "Ok";
-"brand" = "Marque";
-"mmaid_number" = "N° AMM";
-"reentry_delay" = "Délai de ré-entrée";
-"in_hours" = "En heures";
-"variety" = "Variété";
 "provided_by_collector" = "Fourni par le collecteur";
 "invalid_dose" = "Dose invalide";
 "unauthorized_mixing" = "Mélange non autorisé";

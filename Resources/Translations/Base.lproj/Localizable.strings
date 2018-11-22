@@ -336,12 +336,13 @@
 "none" = "None";
 "quantity" = "Quantity";
 
+"select_crops" = "+ Select";
+
+// Selection views
+"no_crop_selected" = "No crop selected";
 "seeds" = "Seeds";
 "fertilizers" = "Fertilizers";
 "phytos" = "Phytos";
-
-"select_crops" = "+ Select";
-"no_crop_selected" = "No crop selected";
 
 "selecting_crops" = "Select a crop";
 "selecting_materials" = "Select a material";
@@ -355,6 +356,7 @@
 "create_new_equipment" = "+ Create new equipment";
 "create_new_person" = "+ Create new person";
 
+// Creation views
 "create_seed_title" = "Create new seed";
 "create_phyto_title" = "Create new phyto";
 "create_ferti_title" = "Create new fertilizer";
@@ -362,6 +364,20 @@
 "create_material_title" = "Create new material";
 "create_equipment_title" = "Create new equipment";
 "create_person_title" = "Create new person";
+
+"chose_specie" = "Specie";
+"variety" = "Variety";
+"name" = "Name";
+"brand" = "Brand";
+"mmaid_number" = "N° MMA";
+"reentry_delay" = "Re-entry delay";
+"in_hours" = "In hours";
+"chose_nature" = "Nature";
+"chose_type" = "Type";
+"chose_unit" = "Unit";
+"number" = "Number";
+"first_name" = "First name";
+"last_name" = "Last name";
 
 "seed_variety_is_empty" = "The seed variety cannot be empty";
 "phyto_name_is_empty" = "The phyto name cannot be empty";
@@ -385,11 +401,6 @@
 "delete_material_prompt" = "Are you sure you want to remove the material?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
 
-"chose_specie" = "Specie";
-"chose_nature" = "Nature";
-"chose_type" = "Type";
-"chose_unit" = "Unit";
-
 "not_filled_in" = "Not filled in";
 "temp" = "Temp.: %@ °C |";
 "wind" = " wind: %@ km/h";
@@ -403,8 +414,6 @@
 "clear_sky" = "Clear sky";
 
 "quantity_cannot_be_null" = "Quantity cannot be null";
-"number" = "Number";
-"name" = "Name";
 
 "sync_failure" = "Sync failure…";
 "login_failure" = "Unknown E-mail or invalid password. Try again.";
@@ -429,18 +438,11 @@
 "you_must_create_a_harvest_load" = "You must add a load to create a crop!";
 "confirm_deleting_intervention" = "Are you sure you want to delete the intervention?";
 "start_online_with_crops" = "You don't have any assolled plots. Go online to get started!";
-"first_name" = "First name";
-"last_name" = "Last name";
 "driver" = "Driver";
 "disconnect_prompt" = "Are you sure you want to log out? Any unsynchronized data will be lost.";
 "sync_help_text" = "To synchronize your interventions, drag the list down.";
 "you_are_in_consult_mode" = "You are in consultation mode, you cannot modify this intervention because it has been validated online.";
 "ok" = "Ok";
-"brand" = "Brand";
-"mmaid_number" = "N° MMA";
-"reentry_delay" = "Re-entry delay";
-"in_hours" = "In hours";
-"variety" = "Variety";
 "provided_by_collector" = "Provided by the collector";
 "invalid_dose" = "Invalid dose";
 "unauthorized_mixing" = "Unauthorized mixing";
