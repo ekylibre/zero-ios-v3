@@ -69,7 +69,7 @@ extension InterventionViewController {
           }
         }
       } else {
-        self.registerFarmID()
+        self.saveFarmID()
         self.checkCropsData(crops: farms.first!.crops)
         self.loadEquipments()
         self.loadStorage()
@@ -86,7 +86,7 @@ extension InterventionViewController {
     }
   }
 
-  private func registerFarmID() {
+  private func saveFarmID() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -96,7 +96,7 @@ extension InterventionViewController {
 
     do {
       let farms = try managedContext.fetch(farmsFetchRequest)
-      appDelegate.farmID = farms.first!.id!
+      farmID = farms.first!.id!
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -120,7 +120,7 @@ extension InterventionViewController {
 
     do {
       try managedContext.save()
-      appDelegate.farmID = farms.first?.id
+      farmID = farms.first?.id
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -258,7 +258,6 @@ extension InterventionViewController {
 
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
     let group = DispatchGroup()
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: name, type: type)
     let _ = apollo.clearCache()
@@ -320,7 +319,6 @@ extension InterventionViewController {
     var id: Int32 = 0
     let group = DispatchGroup()
     let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
     let _ = apollo.clearCache()
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: variety, type: ArticleTypeEnum.seed,
                                        specie: SpecieEnum(rawValue: specie), variety: variety)
@@ -624,7 +622,7 @@ extension InterventionViewController {
     return defineIndicatorIfOnlyOne(indicator)
   }
 
-  private func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment, farmID: String) {
+  private func saveEquipments(fetchedEquipment: FarmQuery.Data.Farm.Equipment) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -633,7 +631,6 @@ extension InterventionViewController {
     let equipment = Equipment(context: managedContext)
     let indicators = defineIndicators(fetchedEquipment.indicators)
 
-    equipment.farmID = farmID
     equipment.type = fetchedEquipment.type?.rawValue
     equipment.name = fetchedEquipment.name
     equipment.number = fetchedEquipment.number
@@ -666,7 +663,7 @@ extension InterventionViewController {
             let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
 
             if self.checkIfNewEntity(entityName: "Equipment", predicate: predicate) {
-              self.saveEquipments(fetchedEquipment: equipment, farmID: farm.id)
+              self.saveEquipments(fetchedEquipment: equipment)
             }
           }
         }
@@ -676,7 +673,7 @@ extension InterventionViewController {
 
   // MARK: Persons
 
-  private func savePersons(fetchedPerson: FarmQuery.Data.Farm.Person, farmID: String) {
+  private func savePersons(fetchedPerson: FarmQuery.Data.Farm.Person) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -684,7 +681,6 @@ extension InterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let person = Person(context: managedContext)
 
-    person.farmID = farmID
     person.firstName = fetchedPerson.firstName
     person.lastName = fetchedPerson.lastName
     person.ekyID = (fetchedPerson.id as NSString).intValue
@@ -717,7 +713,7 @@ extension InterventionViewController {
             let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
 
             if self.checkIfNewEntity(entityName: "Person", predicate: predicate) {
-              self.savePersons(fetchedPerson: person, farmID: farm.id)
+              self.savePersons(fetchedPerson: person)
             }
           }
         }
@@ -735,13 +731,10 @@ extension InterventionViewController {
 
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
     let group = DispatchGroup()
     let _ = apollo.clearCache()
-    let mutation = PushStorageMutation(
-      farmId: farmID,
-      type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
-      name: storage.name!)
+    let mutation = PushStorageMutation(farmId: farmID, type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
+                                       name: storage.name!)
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
@@ -784,20 +777,20 @@ extension InterventionViewController {
     }
   }
 
-  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage, farmID: String){
+  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage){
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
-    let manaedContext = appDelegate.persistentContainer.viewContext
-    let storage = Storage(context: manaedContext)
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let storage = Storage(context: managedContext)
 
     storage.storageID = (fetchedStorage.id as NSString).intValue
     storage.name = fetchedStorage.name
     storage.type = fetchedStorage.type.rawValue
 
     do {
-      try manaedContext.save()
+      try managedContext.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -820,7 +813,7 @@ extension InterventionViewController {
           let predicate = NSPredicate(format: "storageID == %d", (storage.id as NSString).intValue)
 
           if self.checkIfNewEntity(entityName: "Storage", predicate: predicate) {
-            self.saveStorage(fetchedStorage: storage, farmID: farm.id)
+            self.saveStorage(fetchedStorage: storage)
           }
         }
       }
@@ -841,7 +834,6 @@ extension InterventionViewController {
     weather.weatherDescription = fetchedIntervention.weather?.description?.rawValue.lowercased()
     weather.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
     weather.temperature = fetchedIntervention.weather?.temperature as NSNumber?
-    weather.interventionID = (fetchedIntervention.id as NSString).intValue as NSNumber?
     weather.intervention = intervention as? Intervention
 
     do {
@@ -1150,7 +1142,7 @@ extension InterventionViewController {
     return intervention
   }
 
-  private func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, farmID: String) {
+  private func saveIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -1161,7 +1153,6 @@ extension InterventionViewController {
     let status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced :
       InterventionState.Validated).rawValue)
 
-    intervention.farmID = farmID
     intervention.ekyID = (fetchedIntervention.id as NSString).intValue
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
@@ -1229,7 +1220,7 @@ extension InterventionViewController {
           let predicate = NSPredicate(format: "ekyID == %d", (intervention.id as NSString).intValue)
 
           if self.checkIfNewEntity(entityName: "Intervention", predicate: predicate) {
-            self.saveIntervention(fetchedIntervention: intervention, farmID: farm.id)
+            self.saveIntervention(fetchedIntervention: intervention)
           }
           self.updateInterventionStatus(fetchedIntervention: intervention)
         }
@@ -1413,16 +1404,11 @@ extension InterventionViewController {
 
     var id: Int32 = 0
     let apollo = appDelegate.apollo!
-    let farmID = appDelegate.farmID!
     let group = DispatchGroup()
     let _ = apollo.clearCache()
-    let mutation = PushEquipmentMutation(
-      farmId: farmID,
-      type: EquipmentTypeEnum(rawValue: equipment.type!)!,
-      name: equipment.name!,
-      number: equipment.number,
-      indicator1: equipment.indicatorOne,
-      indicator2: equipment.indicatorTwo)
+    let mutation = PushEquipmentMutation(farmId: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
+                                         name: equipment.name!, number: equipment.number,
+                                         indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
     group.enter()
     apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
@@ -1501,7 +1487,7 @@ extension InterventionViewController {
 
   private func setupMutation(_ intervention: Intervention) -> PushInterMutation {
     let mutation = PushInterMutation(
-      farmId: intervention.farmID!,
+      farmId: farmID,
       procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
       cropList: defineTargetAttributesFrom(intervention: intervention),
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),

@@ -384,7 +384,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     newIntervention.type = interventionType
     newIntervention.status = InterventionState.Created.rawValue
     notes ? newIntervention.infos = notesTextView.text : nil
-    newIntervention.farmID = appDelegate.farmID
     changeWaterUnit()
     workingPeriod.intervention = newIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date

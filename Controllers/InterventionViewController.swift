@@ -38,6 +38,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   var farmNameLabel: UILabel!
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
+  var farmID: String!
 
   // MARK: - Initialization
 
