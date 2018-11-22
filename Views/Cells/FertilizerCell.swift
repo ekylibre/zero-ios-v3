@@ -28,12 +28,10 @@ class FertilizerCell: UITableViewCell {
 
   lazy var starImageView: UIImageView = {
     let starImageView = UIImageView(frame: CGRect.zero)
-    let starImage = UIImage(named: "star")!
-    let tintedImage = starImage.withRenderingMode(.alwaysTemplate)
-    starImageView.image = tintedImage
+    starImageView.image = UIImage(named: "star")?.withRenderingMode(.alwaysTemplate)
     starImageView.tintColor = AppColor.BarColors.Green
-    starImageView.translatesAutoresizingMaskIntoConstraints = false
     starImageView.isHidden = true
+    starImageView.translatesAutoresizingMaskIntoConstraints = false
     return starImageView
   }()
 
