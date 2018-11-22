@@ -49,15 +49,15 @@ class EquipmentsTests: XCTestCase {
   }
 
   func test_checkEquipmentName_withValidName_shouldReturnTrue() {
-    //Given
+    // Given
     let name = "Sample equipment"
 
-    //When
+    // When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
     XCTAssertEqual(addInterventionVC.equipmentsSelectionView.equipments.count, 0, "equipments must be empty")
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
                   "checkEquipmentName must return true when the name is valid")
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
@@ -65,15 +65,15 @@ class EquipmentsTests: XCTestCase {
   }
 
   func test_checkEquipmentName_withEmptyName_shouldReturnFalse() {
-    //Given
+    // Given
     let name = ""
 
-    //When
+    // When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
     XCTAssertEqual(addInterventionVC.equipmentsSelectionView.equipments.count, 0, "equipments must be empty")
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
                    "checkEquipmentName must return false when the name is empty")
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
@@ -81,11 +81,11 @@ class EquipmentsTests: XCTestCase {
   }
 
   func test_checkEquipmentName_withUniqueName_shouldReturnTrue() {
-    //Given
+    // Given
     let equipment = sut.insertObject(entityName: "Equipment") as! Equipment
     let name = "Sample"
 
-    //When
+    // When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
     XCTAssertEqual(addInterventionVC.equipmentsSelectionView.equipments.count, 0, "equipments must be empty")
     equipment.name = "Sample equipment"
@@ -94,7 +94,7 @@ class EquipmentsTests: XCTestCase {
                    "equipments must contain newly created equipment")
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
                   "checkEquipmentName must return true when there is not an existing equipment with this same name")
     XCTAssertTrue(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
@@ -102,11 +102,11 @@ class EquipmentsTests: XCTestCase {
   }
 
   func test_checkEquipmentName_withExistingName_shouldReturnFalse() {
-    //Given
+    // Given
     let equipment = sut.insertObject(entityName: "Equipment") as! Equipment
     let name = "Sample equipment"
 
-    //When
+    // When
     addInterventionVC.equipmentsSelectionView.equipments.removeAll()
     XCTAssertEqual(addInterventionVC.equipmentsSelectionView.equipments.count, 0, "equipments must be empty")
     equipment.name = "Sample equipment"
@@ -115,7 +115,7 @@ class EquipmentsTests: XCTestCase {
                    "equipments must contain newly created equipment")
     addInterventionVC.equipmentsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.checkEquipmentName(),
                    "checkEquipmentName must return false when the name is already taken by an equipment")
     XCTAssertFalse(addInterventionVC.equipmentsSelectionView.creationView.errorLabel.isHidden,
@@ -123,22 +123,22 @@ class EquipmentsTests: XCTestCase {
   }
 
   func test_equipmentsCountLabel_withoutSelectedEquipments_shouldBeHidden() {
-    //When
+    // When
     addInterventionVC.selectedEquipments.removeAll()
     XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
     addInterventionVC.tapEquipmentsView()
     addInterventionVC.tapEquipmentsView()
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.equipmentsCountLabel.isHidden,
                   "equipmentsCountLabel must be hidden if selectedEquipments is empty")
   }
 
   func test_equipmentsCountLabel_withSingleSelectedEquipment_shouldBeDisplayed() {
-    //Given
+    // Given
     let equipment = sut.insertObject(entityName: "Equipment") as! Equipment
 
-    //When
+    // When
     addInterventionVC.selectedEquipments.removeAll()
     XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
     addInterventionVC.selectedEquipments.append(equipment)
@@ -146,7 +146,7 @@ class EquipmentsTests: XCTestCase {
     addInterventionVC.tapEquipmentsView()
     addInterventionVC.tapEquipmentsView()
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.equipmentsCountLabel.isHidden,
                    "equipmentsCountLabel must not be hidden if selectedEquipments is not empty")
     XCTAssertEqual(addInterventionVC.equipmentsCountLabel.text, "equipment".localized,
@@ -154,12 +154,12 @@ class EquipmentsTests: XCTestCase {
   }
 
   func test_equipmentsCountLabel_withMultipleSelectedEquipments_shouldBeDisplayed() {
-    //Given
+    // Given
     let firstEquipment = sut.insertObject(entityName: "Equipment") as! Equipment
     let secondEquipment = sut.insertObject(entityName: "Equipment") as! Equipment
     let thirdEquipment = sut.insertObject(entityName: "Equipment") as! Equipment
 
-    //When
+    // When
     addInterventionVC.selectedEquipments.removeAll()
     XCTAssertEqual(addInterventionVC.selectedEquipments.count, 0, "selectedEquipments must be empty")
     addInterventionVC.selectedEquipments.append(firstEquipment)
@@ -169,7 +169,7 @@ class EquipmentsTests: XCTestCase {
     addInterventionVC.tapEquipmentsView()
     addInterventionVC.tapEquipmentsView()
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.equipmentsCountLabel.isHidden,
                    "equipmentsCountLabel must not be hidden if selectedEquipments is not empty")
     XCTAssertEqual(addInterventionVC.equipmentsCountLabel.text, String(format: "equipments".localized, 3),

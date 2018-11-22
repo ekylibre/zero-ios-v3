@@ -96,7 +96,6 @@ class InputsTests: XCTestCase {
     addInterventionVC.selectedInputs.removeAll()
     XCTAssertEqual(addInterventionVC.selectedInputs.count, 0, "selectedInputs must be empty")
     addInterventionVC.tapInputsView()
-    //addInterventionVC.tapInputsView()
 
     // Then
     XCTAssertEqual(addInterventionVC.inputsHeightConstraint.constant, 70,
@@ -175,19 +174,19 @@ class InputsTests: XCTestCase {
   }
 
   func test_inputsCreateButton_withDefaultValue_shouldNotChange() {
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
                    "create_new_seed".localized.uppercased(),
                    "createButton title default value must be 'create_new_seed'")
     addInterventionVC.inputsAddButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
                    "create_new_seed".localized.uppercased(), "createButton title must not change")
   }
 
   func test_inputsCreateButton_withSegmentChangedToPhyto_shouldChange() {
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
                    "create_new_seed".localized.uppercased(),
                    "createButton title default value must be 'create_new_seed'")
@@ -204,7 +203,7 @@ class InputsTests: XCTestCase {
   }
 
   func test_inputsCreateButton_withSegmentChangedToFertilizer_shouldChange() {
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
                    "create_new_seed".localized.uppercased(),
                    "createButton title default value must be 'create_new_seed'")
@@ -214,23 +213,23 @@ class InputsTests: XCTestCase {
     addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
     addInterventionVC.inputsSelectionView.segmentedControl.sendActions(for: .valueChanged)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
                    "create_new_ferti".localized.uppercased(),
                    "createButton title must be 'create_new_ferti' when selectedSegmentIndex is 2")
   }
 
   func test_selectedSegment_withImplantationType_shouldBeFirst() {
-    //Given
+    // Given
     let interventionType = InterventionType.Implantation.rawValue
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first before changing intervnetionType")
     addInterventionVC.interventionType = interventionType
     addInterventionVC.setupViewsAccordingInterventionType()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first for implantation interventions")
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
@@ -239,16 +238,16 @@ class InputsTests: XCTestCase {
   }
 
   func test_selectedSegment_withCropProtectionType_shouldBeSecond() {
-    //Given
+    // Given
     let interventionType = InterventionType.CropProtection.rawValue
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first before changing intervnetionType")
     addInterventionVC.interventionType = interventionType
     addInterventionVC.setupViewsAccordingInterventionType()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 1,
                    "selectedSegment must be second for cropProtection interventions")
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
@@ -257,16 +256,16 @@ class InputsTests: XCTestCase {
   }
 
   func test_selectedSegment_withFertilizationType_shouldBeThird() {
-    //Given
+    // Given
     let interventionType = InterventionType.Fertilization.rawValue
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first before changing intervnetionType")
     addInterventionVC.interventionType = interventionType
     addInterventionVC.setupViewsAccordingInterventionType()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 2,
                    "selectedSegment must be third for fertilization interventions")
     XCTAssertEqual(addInterventionVC.inputsSelectionView.createButton.titleLabel?.text,
