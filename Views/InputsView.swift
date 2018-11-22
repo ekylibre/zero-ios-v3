@@ -257,13 +257,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if segmentedControl.selectedSegmentIndex == 1 {
-      return 100
-    } else if segmentedControl.selectedSegmentIndex == 2 {
-      return UITableView.automaticDimension
-    }
-
-    return 60
+    return segmentedControl.selectedSegmentIndex == 1 ? 100 : UITableView.automaticDimension
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
