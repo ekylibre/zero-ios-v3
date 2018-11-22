@@ -380,27 +380,27 @@
 "seed_variety_is_empty" = "The seed variety cannot be empty";
 "phyto_name_is_empty" = "The phyto name cannot be empty";
 "ferti_name_is_empty" = "The fertilizer name cannot be empty";
+"storage_name_is_empty" = "The storage name cannot be empty";
 "material_name_is_empty" = "The material name cannot be empty";
 "equipment_name_is_empty" = "The name of the equipment cannot be empty";
-"storage_name_is_empty" = "The storage name cannot be empty";
 "person_first_name_is_empty" = "The operator's first name cannot be empty";
 "person_last_name_is_empty" = "The operator's last name cannot be empty";
 
 "seed_variety_not_available" = "This seed variety is not available. Please choose another one";
 "phyto_name_not_available" = "This phyto name is not available. Please choose another one";
 "ferti_name_not_available" = "This fertilizer name is not available. Please choose another one";
+"storage_name_not_available" = "This storage name is not available. Please choose another one";
 "material_name_not_available" = "This material name is not available. Please choose another one";
 "equipment_name_not_available" = "This equipment name is not available. Please choose another one";
-"storage_name_not_available" = "This storage name is not available. Please choose another one";
 
 // Alerts
 "start_online_with_crops" = "You don't have any assolled plots. Go online to get started!";
 "disconnect_prompt" = "Are you sure you want to log out? Any unsynchronized data will be lost.";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
-"delete_harvest_prompt" = "Are you sure you want to remove the harvest?";
-"delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
+"delete_load_prompt" = "Are you sure you want to remove the load?";
 "delete_material_prompt" = "Are you sure you want to remove the material?";
+"delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
 
 "date_not_corresponding_to_crop" = "The intervention date must correspond to the dates of the crops!";

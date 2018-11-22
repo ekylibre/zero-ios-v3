@@ -398,7 +398,7 @@
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
 
 "delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
-"delete_harvest_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
+"delete_load_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
 "delete_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
