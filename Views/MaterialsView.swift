@@ -36,7 +36,8 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     createButton.setTitle("create_new_material".localized.uppercased(), for: .normal)
     searchBar.delegate = self
     tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
-    tableView.rowHeight = 50
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 50
     tableView.delegate = self
     tableView.dataSource = self
     setupCreationView()
