@@ -52,16 +52,16 @@ class PersonCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      personImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      personImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       personImageView.heightAnchor.constraint(equalToConstant: 35),
-      personImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      personImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
       personImageView.widthAnchor.constraint(equalTo: personImageView.heightAnchor),
-      firstNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      firstNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
       firstNameLabel.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 15),
-      firstNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      firstNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      lastNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
       lastNameLabel.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 15),
-      lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
+      lastNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
       ])
   }
 

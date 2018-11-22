@@ -65,16 +65,16 @@ class CropCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      plotNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-      plotNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      plotNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+      plotNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
       distanceLabel.centerYAnchor.constraint(equalTo: plotNameLabel.centerYAnchor),
       distanceLabel.trailingAnchor.constraint(equalTo: surfaceAreaLabel.leadingAnchor, constant: -15),
       surfaceAreaLabel.centerYAnchor.constraint(equalTo: plotNameLabel.centerYAnchor),
-      surfaceAreaLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      surfaceAreaLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
       plotNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: surfaceAreaLabel.leadingAnchor, constant: -15),
-      interventionImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+      interventionImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
       interventionImageView.heightAnchor.constraint(equalToConstant: 20),
-      interventionImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      interventionImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
       interventionImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }

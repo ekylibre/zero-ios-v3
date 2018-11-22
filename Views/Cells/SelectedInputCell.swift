@@ -166,16 +166,16 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      inputImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+      inputImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       inputImageView.heightAnchor.constraint(equalToConstant: 24),
-      inputImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+      inputImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       inputImageView.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: inputImageView.trailingAnchor, constant: 10),
       infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       infoLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
       quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
-      quantityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+      quantityLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       quantityTextField.heightAnchor.constraint(equalToConstant: 30),
       quantityTextField.leadingAnchor.constraint(equalTo: quantityLabel.trailingAnchor, constant: 15),
@@ -191,9 +191,9 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       warningLabel.centerYAnchor.constraint(equalTo: warningImageView.centerYAnchor),
       warningLabel.leadingAnchor.constraint(equalTo: warningImageView.trailingAnchor, constant: 3),
       surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
-      deleteButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       deleteButton.widthAnchor.constraint(equalToConstant: 20),
       deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: infoLabel.trailingAnchor,
                                             multiplier: 1)
