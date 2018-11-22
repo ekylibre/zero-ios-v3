@@ -296,6 +296,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     }
     addInterventionViewController?.selectedInputs[indexPath.row].setValue(
       quantityTextField.text!.floatValue, forKey: "quantity")
-    addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
+    addInterventionViewController?.updateQuantityLabel(indexPath: indexPath)
   }
 }

@@ -269,7 +269,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
 
-  func updateInputQuantity(indexPath: IndexPath) {
+  func updateQuantityLabel(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as? SelectedInputCell
     let quantity = cell?.quantityTextField.text?.floatValue
     let unit = cell?.unitButton.titleLabel?.text
@@ -287,15 +287,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
-  func updateAllInputQuantity() {
-    let totalCellNumber = selectedInputs.count
-    var indexPath: IndexPath!
-
-    if totalCellNumber > 0 {
-      for currentCell in 0..<(totalCellNumber) {
-        indexPath = NSIndexPath(row: currentCell, section: 0) as IndexPath?
-        updateInputQuantity(indexPath: indexPath)
-      }
+  func updateAllQuantityLabels() {
+    for (index, _) in selectedInputs.enumerated() {
+      updateQuantityLabel(indexPath: IndexPath(row: index, section: 0))
     }
   }
 

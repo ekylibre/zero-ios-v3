@@ -65,6 +65,6 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
       cell.unitButton.setTitle(massUnitMeasure[row].localized, for: .normal)
     }
     selectedInputsTableView.reloadData()
-    updateInputQuantity(indexPath: cellIndexPath)
+    updateQuantityLabel(indexPath: cellIndexPath)
   }
 }

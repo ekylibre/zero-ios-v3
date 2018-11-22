@@ -734,7 +734,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     dimView.isHidden = false
     cropsView.isHidden = false
 
-    updateAllInputQuantity()
+    updateAllQuantityLabels()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
@@ -778,7 +778,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     cropsView.isHidden = true
     dimView.isHidden = true
 
-    updateAllInputQuantity()
+    updateAllQuantityLabels()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
