@@ -396,6 +396,14 @@
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
+// Dates
+"date_format" = "yyyy-MM-dd";
+"today_last_synchronization" = "Dernière synchronisation %02d:%02d";
+"last_synchronization" = "Dernière synchronisation %@";
+"no_synchronization_listed" = "Aucune synchonisation répertoriée";
+"today" = "Aujourd'hui";
+"yesterday" = "Hier";
+
 // Alerts
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
@@ -406,6 +414,9 @@
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
+"working_periods_is_invalid" = "Working periods is invalid";
+"started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
+"started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
 "date_not_corresponding_to_crop" = "La date d'intervention doit correspondre aux dates de la culture !";
 "you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
 "you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
@@ -446,8 +457,9 @@
 "to" = "Au";
 "yield" = "Rendement";
 
-"quantity_cannot_be_null" = "Quantité ne peut être nulle";
 
+
+"quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "sync_failure" = "Échec de la synchronisation…";
 "login_failure" = "Identifiant inconnu ou mot de passe incorrect. Veuillez réessayer.";
 "volume" = "Volume";
@@ -464,20 +476,6 @@
 "provided_by_collector" = "Fourni par le collecteur";
 "invalid_dose" = "Dose invalide";
 "unauthorized_mixing" = "Mélange non autorisé";
-
-// Synchronization
-"today_last_synchronization" = "Dernière synchronisation %02d:%02d";
-"last_synchronization" = "Dernière synchronisation %@";
-"no_synchronization_listed" = "Aucune synchonisation répertoriée";
-
-// Working Periods
-"working_periods_is_invalid" = "Working periods is invalid";
-"started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
-"started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
-"today" = "Aujourd'hui";
-"yesterday" = "Hier";
-
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
-
 "forgotten_password" = "Mot de passe oublié ?";

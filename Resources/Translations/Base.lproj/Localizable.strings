@@ -396,6 +396,14 @@
 "material_name_not_available" = "This material name is not available. Please choose another one";
 "equipment_name_not_available" = "This equipment name is not available. Please choose another one";
 
+// Dates
+"date_format" = "yyyy-MM-dd";
+"today_last_synchronization" = "Last synchronization %02d:%02d";
+"last_synchronization" = "Last synchronization %@";
+"no_synchronization_listed" = "No synchonization listed";
+"today" = "Today";
+"yesterday" = "Yesterday";
+
 // Alerts
 "start_online_with_crops" = "You don't have any assolled plots. Go online to get started!";
 "disconnect_prompt" = "Are you sure you want to log out? Any unsynchronized data will be lost.";
@@ -406,6 +414,9 @@
 "delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
 
+"working_periods_is_invalid" = "Working periods is invalid";
+"started_must_be_on_or_after" = "Started must be on or after %@";
+"started_must_be_on_or_before" = "Started must be on or before %@";
 "date_not_corresponding_to_crop" = "The intervention date must correspond to the dates of the crops!";
 "you_have_to_select_a_crop" = "You must select at least one culture!";
 "you_have_to_enter_quantity" = "You must enter a quantity for the product!";
@@ -446,8 +457,9 @@
 "to" = "To";
 "yield" = "Yield";
 
-"quantity_cannot_be_null" = "Quantity cannot be null";
 
+
+"quantity_cannot_be_null" = "Quantity cannot be null";
 "sync_failure" = "Sync failure…";
 "login_failure" = "Unknown E-mail or invalid password. Try again.";
 "volume" = "Volume";
@@ -464,22 +476,6 @@
 "provided_by_collector" = "Provided by the collector";
 "invalid_dose" = "Invalid dose";
 "unauthorized_mixing" = "Unauthorized mixing";
-
-"date_format" = "yyyy-MM-dd";
-
-// Synchronization
-"today_last_synchronization" = "Last synchronization %02d:%02d";
-"last_synchronization" = "Last synchronization %@";
-"no_synchronization_listed" = "No synchonization listed";
-
-// Working Periods
-"working_periods_is_invalid" = "Working periods is invalid";
-"started_must_be_on_or_after" = "Started must be on or after %@";
-"started_must_be_on_or_before" = "Started must be on or before %@";
-"today" = "Today";
-"yesterday" = "Yesterday";
-
 "input_quantity" = "Or %.1f %@";
 "input_quantity_per_surface" = "Or %.1f %@ per hectare";
-
 "forgotten_password" = "Forgotten password?";
