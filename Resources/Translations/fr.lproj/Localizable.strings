@@ -414,10 +414,9 @@
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
-"working_periods_is_invalid" = "Working periods is invalid";
+"date_not_corresponding_to_crop" = "La date d'intervention ne correspond pas aux dates de la culture";
 "started_must_be_on_or_after" = "Débuté le doit être le ou arpès le %@";
 "started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
-"date_not_corresponding_to_crop" = "La date d'intervention doit correspondre aux dates de la culture !";
 "you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
 "you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
 "you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";

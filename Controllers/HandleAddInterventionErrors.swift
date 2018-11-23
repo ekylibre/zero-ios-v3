@@ -129,11 +129,11 @@ extension AddInterventionViewController {
         let message = (selectedDate < startDate! ? String(format: "started_must_be_on_or_after".localized, startDate! as CVarArg) :
           String(format: "started_must_be_on_or_before".localized, stopDate! as CVarArg))
         let alert = UIAlertController(
-          title: "working_periods_is_invalid".localized,
+          title: "date_not_corresponding_to_crop".localized,
           message: message,
           preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         present(alert, animated: true)
         return false
       }

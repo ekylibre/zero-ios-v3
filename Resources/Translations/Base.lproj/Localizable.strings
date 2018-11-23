@@ -414,10 +414,9 @@
 "delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
 "delete_person_prompt" = "Are you sure you want to remove the person?";
 
-"working_periods_is_invalid" = "Working periods is invalid";
+"date_not_corresponding_to_crop" = "The intervention date does not correspond to the dates of the crops";
 "started_must_be_on_or_after" = "Started must be on or after %@";
 "started_must_be_on_or_before" = "Started must be on or before %@";
-"date_not_corresponding_to_crop" = "The intervention date must correspond to the dates of the crops!";
 "you_have_to_select_a_crop" = "You must select at least one culture!";
 "you_have_to_enter_quantity" = "You must enter a quantity for the product!";
 "you_have_to_enter_phyto" = "You must add at least one phytosanitary product!";
