@@ -392,8 +392,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       } else if quantity == 0 {
         cell.quantityTextField.placeholder = "0"
         cell.quantityTextField.text = ""
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
       } else {
         cell.quantityTextField.text = String(format: "%g", quantity)
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
       }
       cell.nameLabel.text = name
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)

@@ -103,7 +103,6 @@ extension AddInterventionViewController {
 
   private func loadMaterials() {
     if let interventionMaterials = currentIntervention?.interventionMaterials {
-
       for case let interventionMaterial as InterventionMaterial in interventionMaterials {
         let material = interventionMaterial.material
         let quantity = interventionMaterial.quantity
@@ -119,7 +118,6 @@ extension AddInterventionViewController {
 
   private func loadHarvest() {
     if let interventionHarvests = currentIntervention?.harvests {
-
       for case let harvest as Harvest in interventionHarvests {
         let storage = harvest.storage
         let type = harvest.type
@@ -127,7 +125,6 @@ extension AddInterventionViewController {
         let unit = harvest.unit
         let quantity = harvest.quantity
 
-        //removeObjectFromCoreData(harvest)
         createHarvest(storage, type, number, unit, quantity)
       }
     }
@@ -140,11 +137,9 @@ extension AddInterventionViewController {
 
   private func loadEquipments() {
     if let interventionEquipments = currentIntervention?.interventionEquipments {
-
       for case let interventionEquipment as InterventionEquipment in interventionEquipments {
         let equipment = interventionEquipment.equipment
 
-        //removeObjectFromCoreData(interventionEquipment)
         if equipment != nil {
           selectEquipment(equipment!)
         }
@@ -155,12 +150,10 @@ extension AddInterventionViewController {
 
   private func loadPersons() {
     let interventionPersons = currentIntervention?.interventionPersons
-
     for case let interventionPerson as InterventionPerson in interventionPersons! {
       let person = interventionPerson.person
       let isDriver = interventionPerson.isDriver
 
-      //removeObjectFromCoreData(interventionPerson)
       if person != nil {
         selectPerson(person!, isDriver)
       }
@@ -168,7 +161,7 @@ extension AddInterventionViewController {
     refreshSelectedPersons()
   }
 
-  private func changeNegativeTemperatureButton() {
+  private func changeTemperatureSignButton() {
     let temperature = weather.temperature
 
     if temperature != nil {
@@ -196,13 +189,13 @@ extension AddInterventionViewController {
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     loadInputs()
-    //loadMaterials()
+    loadMaterials()
     loadIrrigation()
     loadEquipments()
     loadPersons()
     loadHarvest()
     weather = currentIntervention?.weather
-    changeNegativeTemperatureButton()
+    changeTemperatureSignButton()
     loadWeatherInReadOnlyMode()
     disableUserInteraction()
   }
@@ -218,9 +211,9 @@ extension AddInterventionViewController {
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     weather = currentIntervention?.weather
-    changeNegativeTemperatureButton()
+    changeTemperatureSignButton()
     loadInputs()
-    //loadMaterials()
+    loadMaterials()
     loadIrrigation()
     loadEquipments()
     loadPersons()
