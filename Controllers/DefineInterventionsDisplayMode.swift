@@ -11,7 +11,7 @@ import CoreData
 
 extension AddInterventionViewController {
 
-  func disableUserInteraction() {
+  private func disableUserInteraction() {
     if interventionState == InterventionState.Validated.rawValue {
       harvestTableView.isUserInteractionEnabled = false
       harvestType.isUserInteractionEnabled = false
@@ -31,7 +31,7 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadWorkingPeriod() {
+  private func loadWorkingPeriod() {
     let dateFormatter = DateFormatter()
     let selectedDate: String
     let workingPeriods = (currentIntervention.workingPeriods?.allObjects.first as? WorkingPeriod)
@@ -52,7 +52,7 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadIrrigation() {
+  private func loadIrrigation() {
     if interventionType == InterventionType.Irrigation.rawValue {
       irrigationVolumeTextField.text = String(currentIntervention.waterQuantity)
       irrigationUnitButton.setTitle(currentIntervention.waterUnit?.localized, for: .normal)
@@ -64,34 +64,61 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadInputs() {
+  private func loadInputs() {
     let interventionSeeds = currentIntervention.interventionSeeds
     let interventionPhytosanitaries = currentIntervention.interventionPhytosanitaries
     let interventionFertilizers = currentIntervention.interventionFertilizers
 
     for case let interventionSeed as InterventionSeed in interventionSeeds! {
-      selectedInputs.append(interventionSeed)
+      let seed = interventionSeed.seed
+      let quantity = interventionSeed.quantity
+      let unit = interventionSeed.unit
+
+      removeObjectFromCoreData(interventionSeed)
+      if seed != nil {
+        selectInput(seed!, quantity, unit)
+      }
     }
     for case let interventionPhyto as InterventionPhytosanitary in interventionPhytosanitaries! {
-      selectedInputs.append(interventionPhyto)
+      let phyto = interventionPhyto.phyto
+      let quantity = interventionPhyto.quantity
+      let unit = interventionPhyto.unit
+
+      removeObjectFromCoreData(interventionPhyto)
+      if phyto != nil {
+        selectInput(phyto!, quantity, unit)
+      }
     }
     for case let interventionFertilizer as InterventionFertilizer in interventionFertilizers! {
-      selectedInputs.append(interventionFertilizer)
+      let fertilizer = interventionFertilizer.fertilizer
+      let quantity = interventionFertilizer.quantity
+      let unit = interventionFertilizer.unit
+
+      removeObjectFromCoreData(interventionFertilizer)
+      if fertilizer != nil {
+        selectInput(fertilizer!, quantity, unit)
+      }
     }
     refreshSelectedInputs()
   }
 
-  func loadMaterials() {
+  private func loadMaterials() {
     let interventionMaterials = currentIntervention.interventionMaterials
 
     for case let interventionMaterial as InterventionMaterial in interventionMaterials! {
-      selectMaterial(interventionMaterial.material!, quantity: interventionMaterial.quantity,
-                     unit: interventionMaterial.unit!)
+      let material = interventionMaterial.material
+      let quantity = interventionMaterial.quantity
+      let unit = interventionMaterial.unit
+
+      removeObjectFromCoreData(interventionMaterial)
+      if material != nil {
+        selectMaterial(material!, quantity: quantity, unit: unit!)
+      }
     }
     refreshSelectedMaterials()
   }
 
-  func loadHarvest() {
+  private func loadHarvest() {
     let interventionHarvests = currentIntervention.harvests
 
     for case let harvest as Harvest in interventionHarvests! {
@@ -104,7 +131,7 @@ extension AddInterventionViewController {
     }
   }
 
-  func loadEquipments() {
+  private func loadEquipments() {
     let interventionEquipments = currentIntervention.interventionEquipments
 
     for case let interventionEquipment as InterventionEquipment in interventionEquipments! {
@@ -115,7 +142,7 @@ extension AddInterventionViewController {
     refreshSelectedEquipments()
   }
 
-  func loadPersons() {
+  private func loadPersons() {
     let interventionPersons = currentIntervention.interventionPersons
 
     for case let interventionPerson as InterventionPerson in interventionPersons! {
@@ -126,7 +153,7 @@ extension AddInterventionViewController {
     refreshSelectedPersons()
   }
 
-  func changeNegativeTemperatureButton() {
+  private func changeNegativeTemperatureButton() {
     let temperature = weather.temperature
 
     if temperature != nil {
@@ -138,7 +165,7 @@ extension AddInterventionViewController {
       negativeTemperature.setTitleColor(.lightGray, for: .normal) : nil
   }
 
-  func loadInterventionInReadOnlyMode() {
+  private func loadInterventionInReadOnlyMode() {
     dimView.isHidden = true
     cropsView.isHidden = true
     warningView.isHidden = false
@@ -165,7 +192,7 @@ extension AddInterventionViewController {
     disableUserInteraction()
   }
 
-  func loadInterventionInEditableMode() {
+  private func loadInterventionInEditableMode() {
     interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "edit")
     if currentIntervention.infos == "" {

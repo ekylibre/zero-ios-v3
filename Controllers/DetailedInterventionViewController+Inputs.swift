@@ -152,7 +152,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func selectInput(_ input: NSManagedObject) {
+  func selectInput(_ input: NSManagedObject, _ quantity: Float?, _ unit: String?) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -162,18 +162,21 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     switch input {
     case let seed as Seed:
       let selectedSeed = InterventionSeed(context: managedContext)
-      selectedSeed.unit = seed.unit
+      selectedSeed.unit = (unit != nil ? unit : seed.unit)
       selectedSeed.seed = seed
+      quantity != nil ? selectedSeed.quantity = quantity! : nil
       selectedInputs.append(selectedSeed)
     case let phyto as Phyto:
       let selectedPhyto = InterventionPhytosanitary(context: managedContext)
-      selectedPhyto.unit = phyto.unit
+      selectedPhyto.unit = (unit != nil ? unit : phyto.unit)
       selectedPhyto.phyto = phyto
+      quantity != nil ? selectedPhyto.quantity = quantity! : nil
       selectedInputs.append(selectedPhyto)
     case let fertilizer as Fertilizer:
       let selectedFertilizer = InterventionFertilizer(context: managedContext)
-      selectedFertilizer.unit = fertilizer.unit
+      selectedFertilizer.unit = (unit != nil ? unit : fertilizer.unit)
       selectedFertilizer.fertilizer = fertilizer
+      quantity != nil ? selectedFertilizer.quantity = quantity! : nil
       selectedInputs.append(selectedFertilizer)
     default:
       fatalError("Input type not found")
