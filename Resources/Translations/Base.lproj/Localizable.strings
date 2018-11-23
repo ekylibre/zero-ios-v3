@@ -429,7 +429,7 @@
 "you_must_enter_harvest_quantity" = "You must enter a quantity for the harvest!";
 "you_must_create_a_harvest_load" = "You must add a load to create a crop!";
 "confirm_deleting_intervention" = "Are you sure you want to delete the intervention?";
-"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
+"implantation_on_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
 
 "location_request_title" = "Location Services Disabled";
 "location_request_message" = "Please enable location services.";
