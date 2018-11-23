@@ -43,10 +43,10 @@ extension AddInterventionViewController {
       weatherButtons[index].layer.cornerRadius = 5
       weatherButtons[index].tag = index
     }
-    negativeTemperature.backgroundColor = AppColor.ThemeColors.DarkWhite
-    negativeTemperature.layer.borderColor = UIColor.lightGray.cgColor
-    negativeTemperature.layer.borderWidth = 1
-    negativeTemperature.layer.cornerRadius = 4
+    temperatureSign.backgroundColor = AppColor.ThemeColors.DarkWhite
+    temperatureSign.layer.borderColor = UIColor.lightGray.cgColor
+    temperatureSign.layer.borderWidth = 1
+    temperatureSign.layer.cornerRadius = 4
   }
 
   private func setupWeatherActions() {
@@ -57,10 +57,10 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   @IBAction func setTemperatureToNegative(_ sender: UIButton) {
-    if negativeTemperature.title(for: .normal) == "-" {
-      negativeTemperature.setTitle("+", for: .normal)
+    if temperatureSign.title(for: .normal) == "-" {
+      temperatureSign.setTitle("+", for: .normal)
     } else {
-      negativeTemperature.setTitle("-", for: .normal)
+      temperatureSign.setTitle("-", for: .normal)
     }
     saveCurrentWeather()
   }
@@ -76,9 +76,9 @@ extension AddInterventionViewController {
     let temperature = temperatureTextField.text!
 
     if temperature.count > 0 {
-      if negativeTemperature.title(for: .normal) == "-" && !temperatureTextField.text!.contains("-") {
+      if temperatureSign.title(for: .normal) == "-" && !temperatureTextField.text!.contains("-") {
         temperatureTextField.text?.insert("-", at: temperatureTextField.text!.startIndex)
-      } else if negativeTemperature.title(for: .normal) == "+" && temperatureTextField.text!.contains("-") {
+      } else if temperatureSign.title(for: .normal) == "+" && temperatureTextField.text!.contains("-") {
         temperatureTextField.text = String(temperatureTextField.text!.dropFirst())
       }
       resetTemperatureTextFieldIfNotConform()
@@ -91,7 +91,7 @@ extension AddInterventionViewController {
     }
     windSpeedTextField.isHidden = state
     temperatureTextField.isHidden = state
-    negativeTemperature.isHidden = state
+    temperatureSign.isHidden = state
   }
 
   @IBAction func tapWeatherView(_ sender: Any) {

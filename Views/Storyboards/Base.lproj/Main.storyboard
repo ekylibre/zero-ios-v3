@@ -1336,7 +1336,6 @@
                         <outlet property="materialsView" destination="tou-CX-8PL" id="zKL-9o-dkr"/>
                         <outlet property="mist" destination="8Tz-Cl-TTF" id="c5b-on-l8U"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
-                        <outlet property="negativeTemperature" destination="8gD-ba-J2E" id="rB1-Yn-D0E"/>
                         <outlet property="notesTextView" destination="sMy-as-Aui" id="fDN-ce-XaT"/>
                         <outlet property="notesTextViewHeightConstraint" destination="m6V-NU-pXu" id="Zjz-ck-9hO"/>
                         <outlet property="notesViewHeightConstraint" destination="0az-Tl-ybJ" id="aua-lj-ZfX"/>
@@ -1355,6 +1354,7 @@
                         <outlet property="selectedWorkingPeriodLabel" destination="wAO-eJ-lrk" id="5DS-nx-5CO"/>
                         <outlet property="showerRain" destination="rEb-3z-Qyi" id="pHv-Kc-MdO"/>
                         <outlet property="snow" destination="Io4-JY-DOw" id="awp-kR-DQY"/>
+                        <outlet property="temperatureSign" destination="8gD-ba-J2E" id="GZR-KN-zCd"/>
                         <outlet property="temperatureTextField" destination="pOP-WE-pVI" id="oDq-IT-cK4"/>
                         <outlet property="thunderstorm" destination="vcc-mx-nY4" id="GGp-7u-CMA"/>
                         <outlet property="totalLabel" destination="N64-8y-rWg" id="LXl-wm-u9o"/>
