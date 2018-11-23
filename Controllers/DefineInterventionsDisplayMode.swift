@@ -34,7 +34,7 @@ extension AddInterventionViewController {
   private func loadWorkingPeriod() {
     let dateFormatter = DateFormatter()
     let selectedDate: String
-    let workingPeriods = (currentIntervention.workingPeriods?.allObjects.first as? WorkingPeriod)
+    let workingPeriods = (currentIntervention?.workingPeriods?.allObjects.first as? WorkingPeriod)
     let date = workingPeriods?.executionDate
     let duration = workingPeriods?.hourDuration
 
@@ -54,8 +54,10 @@ extension AddInterventionViewController {
 
   private func loadIrrigation() {
     if interventionType == InterventionType.Irrigation.rawValue {
-      irrigationVolumeTextField.text = String(currentIntervention.waterQuantity)
-      irrigationUnitButton.setTitle(currentIntervention.waterUnit?.localized, for: .normal)
+      let waterQuantity = currentIntervention?.waterQuantity
+
+      irrigationVolumeTextField.text = (waterQuantity as NSNumber?)?.stringValue
+      irrigationUnitButton.setTitle(currentIntervention?.waterUnit?.localized, for: .normal)
       updateIrrigation(self)
       if interventionState == InterventionState.Validated.rawValue {
         irrigationExpandImageView.isHidden = true
@@ -65,9 +67,9 @@ extension AddInterventionViewController {
   }
 
   private func loadInputs() {
-    let interventionSeeds = currentIntervention.interventionSeeds
-    let interventionPhytosanitaries = currentIntervention.interventionPhytosanitaries
-    let interventionFertilizers = currentIntervention.interventionFertilizers
+    let interventionSeeds = currentIntervention?.interventionSeeds
+    let interventionPhytosanitaries = currentIntervention?.interventionPhytosanitaries
+    let interventionFertilizers = currentIntervention?.interventionFertilizers
 
     for case let interventionSeed as InterventionSeed in interventionSeeds! {
       let seed = interventionSeed.seed
@@ -100,32 +102,34 @@ extension AddInterventionViewController {
   }
 
   private func loadMaterials() {
-    let interventionMaterials = currentIntervention.interventionMaterials
+    if let interventionMaterials = currentIntervention?.interventionMaterials {
 
-    for case let interventionMaterial as InterventionMaterial in interventionMaterials! {
-      let material = interventionMaterial.material
-      let quantity = interventionMaterial.quantity
-      let unit = interventionMaterial.unit
+      for case let interventionMaterial as InterventionMaterial in interventionMaterials {
+        let material = interventionMaterial.material
+        let quantity = interventionMaterial.quantity
+        let unit = interventionMaterial.unit
 
-      if material != nil {
-        selectMaterial(material!, quantity: quantity, unit: unit!)
+        if material != nil {
+          selectMaterial(material!, quantity: quantity, unit: unit!)
+        }
       }
     }
     refreshSelectedMaterials()
   }
 
   private func loadHarvest() {
-    let interventionHarvests = currentIntervention.harvests
+    if let interventionHarvests = currentIntervention?.harvests {
 
-    for case let harvest as Harvest in interventionHarvests! {
-      let storage = harvest.storage
-      let type = harvest.type
-      let number = harvest.number
-      let unit = harvest.unit
-      let quantity = harvest.quantity
+      for case let harvest as Harvest in interventionHarvests {
+        let storage = harvest.storage
+        let type = harvest.type
+        let number = harvest.number
+        let unit = harvest.unit
+        let quantity = harvest.quantity
 
-      //removeObjectFromCoreData(harvest)
-      createHarvest(storage, type, number, unit, quantity)
+        //removeObjectFromCoreData(harvest)
+        createHarvest(storage, type, number, unit, quantity)
+      }
     }
     addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
     if selectedHarvests.count > 0 {
@@ -135,21 +139,22 @@ extension AddInterventionViewController {
   }
 
   private func loadEquipments() {
-    let interventionEquipments = currentIntervention.interventionEquipments
+    if let interventionEquipments = currentIntervention?.interventionEquipments {
 
-    for case let interventionEquipment as InterventionEquipment in interventionEquipments! {
-      let equipment = interventionEquipment.equipment
+      for case let interventionEquipment as InterventionEquipment in interventionEquipments {
+        let equipment = interventionEquipment.equipment
 
-      //removeObjectFromCoreData(interventionEquipment)
-      if equipment != nil {
-        selectEquipment(equipment!)
+        //removeObjectFromCoreData(interventionEquipment)
+        if equipment != nil {
+          selectEquipment(equipment!)
+        }
       }
     }
     refreshSelectedEquipments()
   }
 
   private func loadPersons() {
-    let interventionPersons = currentIntervention.interventionPersons
+    let interventionPersons = currentIntervention?.interventionPersons
 
     for case let interventionPerson as InterventionPerson in interventionPersons! {
       let person = interventionPerson.person
@@ -180,7 +185,7 @@ extension AddInterventionViewController {
     cropsView.isHidden = true
     warningView.isHidden = false
     warningMessage.text = "you_are_in_consult_mode".localized
-    notesTextField.placeholder = (currentIntervention.infos == "" ? "Notes" : currentIntervention.infos)
+    notesTextField.placeholder = (currentIntervention?.infos == "" ? "Notes" : currentIntervention?.infos)
     bottomBarView.isHidden = true
     bottomView.isHidden = true
     scrollViewBottomConstraint.isActive = false
@@ -191,7 +196,7 @@ extension AddInterventionViewController {
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     loadInputs()
-    loadMaterials()
+    //loadMaterials()
     loadIrrigation()
     loadEquipments()
     loadPersons()
@@ -205,17 +210,17 @@ extension AddInterventionViewController {
   private func loadInterventionInEditableMode() {
     interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "edit")
-    if currentIntervention.infos == "" {
+    if currentIntervention?.infos == "" {
       notesTextField.placeholder = "Notes"
     } else {
-      notesTextField.text = currentIntervention.infos
+      notesTextField.text = currentIntervention?.infos
     }
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     weather = currentIntervention?.weather
     changeNegativeTemperatureButton()
     loadInputs()
-    loadMaterials()
+    //loadMaterials()
     loadIrrigation()
     loadEquipments()
     loadPersons()

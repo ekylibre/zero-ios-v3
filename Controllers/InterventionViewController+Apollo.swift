@@ -911,8 +911,8 @@ extension InterventionViewController {
     let harvest = Harvest(context: managedContext)
 
     harvest.quantity = fetchedOutput.quantity ?? 0
-    harvest.type = fetchedOutput.nature.rawValue.lowercased()
-    harvest.unit = fetchedOutput.unit?.rawValue.lowercased()
+    harvest.type = fetchedOutput.nature.rawValue
+    harvest.unit = fetchedOutput.unit?.rawValue
     harvest.number = fetchedOutput.id
     harvest.intervention = intervention
 
@@ -966,7 +966,7 @@ extension InterventionViewController {
     harvest.type = nature
     harvest.number = fetchedLoad.number
     harvest.quantity = fetchedLoad.quantity
-    harvest.unit = fetchedLoad.unit?.rawValue.lowercased()
+    harvest.unit = fetchedLoad.unit?.rawValue
 
     do {
       try managedContext.save()
@@ -1050,7 +1050,7 @@ extension InterventionViewController {
         intervention.addToHarvests(createLoadIfGlobalOutput(fetchedOutput: fetchedOutput, intervention: intervention))
       } else {
         for load in fetchedOutput.loads! {
-          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue.lowercased()))
+          intervention.addToHarvests(saveLoadToIntervention(fetchedLoad: load, intervention: intervention, nature: fetchedOutput.nature.rawValue))
         }
       }
     }

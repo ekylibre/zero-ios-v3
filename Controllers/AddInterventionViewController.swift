@@ -521,10 +521,10 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     workingPeriod.intervention = currentIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     workingPeriod.hourDuration = duration
-    currentIntervention.type = interventionType
-    currentIntervention.status = InterventionState.Created.rawValue
-    currentIntervention.infos = notesTextField.text
-    currentIntervention.farmID = appDelegate.farmID
+    currentIntervention?.type = interventionType
+    currentIntervention?.status = InterventionState.Created.rawValue
+    currentIntervention?.infos = notesTextField.text
+    currentIntervention?.farmID = appDelegate.farmID
     changeWaterUnit()
     createTargets(currentIntervention)
     createEquipments(currentIntervention)
@@ -551,16 +551,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
     let duration = workingPeriodDurationTextField.text!.floatValue
 
-    currentIntervention.workingPeriods?.setValue(selectDateView.datePicker.date, forKey: "executionDate")
-    currentIntervention.workingPeriods?.setValue(duration, forKey: "hourDuration")
-    currentIntervention.infos = notesTextField.text
+    currentIntervention?.workingPeriods?.setValue(selectDateView.datePicker.date, forKey: "executionDate")
+    currentIntervention?.workingPeriods?.setValue(duration, forKey: "hourDuration")
+    currentIntervention?.infos = notesTextField.text
     changeWaterUnit()
     updateTargets(currentIntervention)
     updateEquipments(currentIntervention)
     updatePersons(currentIntervention)
     updateInputs(currentIntervention)
     updateHarvest(currentIntervention)
-    currentIntervention.status = InterventionState.Created.rawValue
+    currentIntervention?.status = InterventionState.Created.rawValue
     performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
@@ -568,16 +568,16 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     if interventionType == "IRRIGATION" {
       let waterVolume = irrigationVolumeTextField.text!.floatValue
 
-      currentIntervention.waterQuantity = waterVolume
+      currentIntervention?.waterQuantity = waterVolume
       switch irrigationUnitButton.titleLabel?.text {
       case "m³":
-        currentIntervention.waterUnit = "CUBIC_METER"
+        currentIntervention?.waterUnit = "CUBIC_METER"
       case "hl":
-        currentIntervention.waterUnit = "HECTOLITER"
+        currentIntervention?.waterUnit = "HECTOLITER"
       case "l":
-        currentIntervention.waterUnit = "LITER"
+        currentIntervention?.waterUnit = "LITER"
       default:
-        currentIntervention.waterUnit = ""
+        currentIntervention?.waterUnit = ""
       }
     }
   }
@@ -887,6 +887,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       interventionMaterial.intervention = intervention
       interventionMaterial.material = selectedMaterials[0][index] as? Material
+      print("\nCreating intervention material: \(interventionMaterial), material: \(String(describing: interventionMaterial.material))")
     }
 
     do {
