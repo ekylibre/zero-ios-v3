@@ -397,7 +397,7 @@
 "storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 // Dates
-"date_format" = "yyyy-MM-dd";
+"date_format" = "dd/MM/yyyy";
 "today_last_synchronization" = "Dernière synchronisation %02d:%02d";
 "last_synchronization" = "Dernière synchronisation %@";
 "no_synchronization_listed" = "Aucune synchonisation répertoriée";
@@ -414,7 +414,7 @@
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
-"date_not_corresponding_to_crop" = "La date d'intervention ne correspond pas aux dates de la culture";
+"date_not_corresponding_to_crop" = "La date d'intervention ne correspond pas aux dates des cultures";
 "crops_start_date" = "La date de début des cultures sélectionnées est le %@";
 "crops_end_date" = "La date de fin des cultures sélectionnées est le %@";
 "you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";

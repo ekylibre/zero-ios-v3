@@ -397,7 +397,7 @@
 "equipment_name_not_available" = "This equipment name is not available. Please choose another one";
 
 // Dates
-"date_format" = "yyyy-MM-dd";
+"date_format" = "dd/MM/yyyy";
 "today_last_synchronization" = "Last synchronization %02d:%02d";
 "last_synchronization" = "Last synchronization %@";
 "no_synchronization_listed" = "No synchonization listed";
