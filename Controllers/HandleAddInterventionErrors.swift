@@ -23,7 +23,7 @@ extension AddInterventionViewController {
       }
     }
     if alert.message != "" {
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
     }
@@ -43,7 +43,7 @@ extension AddInterventionViewController {
       }
     }
     if alert.message != "" {
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
     }
@@ -63,7 +63,7 @@ extension AddInterventionViewController {
       }
     }
     if alert.message != "" {
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
     }
@@ -83,7 +83,7 @@ extension AddInterventionViewController {
       }
     }
     if alert.message != "" {
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
     }
@@ -96,7 +96,7 @@ extension AddInterventionViewController {
     if selectedCrops.count == 0 {
       let alert = UIAlertController(title: "", message: "you_have_to_select_a_crop".localized, preferredStyle: .alert)
 
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
     }
@@ -107,7 +107,7 @@ extension AddInterventionViewController {
     if irrigationVolumeTextField.text?.floatValue == 0 {
       let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
 
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
     }
