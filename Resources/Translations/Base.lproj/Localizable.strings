@@ -415,8 +415,8 @@
 "delete_person_prompt" = "Are you sure you want to remove the person?";
 
 "date_not_corresponding_to_crop" = "The intervention date does not correspond to the dates of the crops";
-"started_must_be_on_or_after" = "Started must be on or after %@";
-"started_must_be_on_or_before" = "Started must be on or before %@";
+"crops_start_date" = "Selected crops start date is %@";
+"crops_end_date" = "Selected crops end date is %@";
 "you_have_to_select_a_crop" = "You must select at least one culture!";
 "you_have_to_enter_quantity" = "You must enter a quantity for the product!";
 "you_have_to_enter_phyto" = "You must add at least one phytosanitary product!";

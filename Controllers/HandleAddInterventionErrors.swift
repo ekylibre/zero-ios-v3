@@ -116,29 +116,41 @@ extension AddInterventionViewController {
 
   func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
     let selectedCrops = fetchSelectedCrops()
+    guard var startDate = selectedCrops.first?.startDate else { return false }
+    guard var stopDate = selectedCrops.first?.stopDate else { return false }
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "date_format".localized
+      return dateFormatter
+    }()
 
-    if selectedCrops.count > 0 {
-      var startDate = selectedCrops.first?.startDate
-      var stopDate = selectedCrops.first?.stopDate
+    for selectedCrop in selectedCrops {
+      startDate = (selectedCrop.startDate! > startDate ? selectedCrop.startDate! : startDate)
+      stopDate = (selectedCrop.stopDate! < stopDate ? selectedCrop.stopDate! : stopDate)
+    }
 
-      for selectedCrop in selectedCrops {
-        startDate = (selectedCrop.startDate! > startDate! ? selectedCrop.startDate! : startDate)
-        stopDate = (selectedCrop.stopDate! < stopDate! ? selectedCrop.stopDate! : stopDate)
-      }
-      if selectedDate < startDate! || selectedDate > stopDate! {
-        let message = (selectedDate < startDate! ? String(format: "started_must_be_on_or_after".localized, startDate! as CVarArg) :
-          String(format: "started_must_be_on_or_before".localized, stopDate! as CVarArg))
-        let alert = UIAlertController(
-          title: "date_not_corresponding_to_crop".localized,
-          message: message,
-          preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
-        present(alert, animated: true)
-        return false
-      }
+    if selectedDate < startDate {
+      let dateString = dateFormatter.string(from: startDate)
+      let message = String(format: "crops_start_date".localized, dateString)
+      presentWorkingPeriodAlert(message)
+      return false
+    } else if selectedDate > stopDate {
+      let dateString = dateFormatter.string(from: stopDate)
+      let message = String(format: "crops_end_date".localized, dateString)
+      presentWorkingPeriodAlert(message)
+      return false
     }
     return true
+  }
+
+  private func presentWorkingPeriodAlert(_ message: String) {
+    let alert = UIAlertController(title: "date_not_corresponding_to_crop".localized,
+                                  message: message, preferredStyle: .alert)
+    let cancelAction = UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil)
+
+    alert.addAction(cancelAction)
+    present(alert, animated: true)
   }
 
   func checkErrorsAccordingInterventionType() -> Bool {
