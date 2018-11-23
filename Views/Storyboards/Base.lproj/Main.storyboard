@@ -1540,10 +1540,10 @@
             </objects>
             <point key="canvasLocation" x="149.59999999999999" y="-99.400299850074973"/>
         </scene>
-        <!--No Internet On First Connection-->
+        <!--No Internet On First ConnectionVC-->
         <scene sceneID="20c-UI-Xxq">
             <objects>
-                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnection" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnectionVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i5Q-WN-VSA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
