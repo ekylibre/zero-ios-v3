@@ -1317,7 +1317,6 @@ extension InterventionViewController {
       unit: ArticleAllUnitEnum(rawValue: unit)!,
       unitPrice: nil)
 
-    print("\nInput attributes: \(inputAttributes)")
     return inputAttributes
   }
 

@@ -505,15 +505,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   // MARK: - Core Data
 
-  func removeObjectFromCoreData(_ object: NSManagedObject) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    managedContext.delete(object)
-  }
-
   func createIntervention() {
     if !checkErrorsAccordingInterventionType() {
       return

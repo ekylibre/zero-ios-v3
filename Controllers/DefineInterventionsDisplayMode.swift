@@ -74,7 +74,6 @@ extension AddInterventionViewController {
       let quantity = interventionSeed.quantity
       let unit = interventionSeed.unit
 
-      removeObjectFromCoreData(interventionSeed)
       if seed != nil {
         selectInput(seed!, quantity, unit)
       }
@@ -84,7 +83,6 @@ extension AddInterventionViewController {
       let quantity = interventionPhyto.quantity
       let unit = interventionPhyto.unit
 
-      removeObjectFromCoreData(interventionPhyto)
       if phyto != nil {
         selectInput(phyto!, quantity, unit)
       }
@@ -94,7 +92,6 @@ extension AddInterventionViewController {
       let quantity = interventionFertilizer.quantity
       let unit = interventionFertilizer.unit
 
-      removeObjectFromCoreData(interventionFertilizer)
       if fertilizer != nil {
         selectInput(fertilizer!, quantity, unit)
       }
@@ -110,7 +107,6 @@ extension AddInterventionViewController {
       let quantity = interventionMaterial.quantity
       let unit = interventionMaterial.unit
 
-      removeObjectFromCoreData(interventionMaterial)
       if material != nil {
         selectMaterial(material!, quantity: quantity, unit: unit!)
       }
@@ -128,7 +124,7 @@ extension AddInterventionViewController {
       let unit = harvest.unit
       let quantity = harvest.quantity
 
-      removeObjectFromCoreData(harvest)
+      //removeObjectFromCoreData(harvest)
       createHarvest(storage, type, number, unit, quantity)
     }
     addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
@@ -144,7 +140,7 @@ extension AddInterventionViewController {
     for case let interventionEquipment as InterventionEquipment in interventionEquipments! {
       let equipment = interventionEquipment.equipment
 
-      removeObjectFromCoreData(interventionEquipment)
+      //removeObjectFromCoreData(interventionEquipment)
       if equipment != nil {
         selectEquipment(equipment!)
       }
@@ -159,7 +155,7 @@ extension AddInterventionViewController {
       let person = interventionPerson.person
       let isDriver = interventionPerson.isDriver
 
-      removeObjectFromCoreData(interventionPerson)
+      //removeObjectFromCoreData(interventionPerson)
       if person != nil {
         selectPerson(person!, isDriver)
       }
