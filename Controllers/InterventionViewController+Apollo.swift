@@ -445,17 +445,23 @@ extension InterventionViewController {
 
     for article in articles {
       let type = types[article.type.rawValue]!
-      let localArticle = fetchArticle(type: type, ekyID: article.id)
+      let localArticle = fetchArticle(type: type, predicate: NSPredicate(format: "ekyID == %@", article.id))
 
       if let localArticle = localArticle {
         updateArticle(local: localArticle, updated: article)
       } else {
-        insertArticle(type, article)
+        let referenceIDIsNull = (article.referenceId == nil)
+        let referenceIDEqualZero = (article.referenceId == "0")
+        let predicate = NSPredicate(format: "referenceID == %@", article.referenceId!)
+
+        if !referenceIDIsNull && !referenceIDEqualZero && fetchArticle(type: type, predicate: predicate) == nil {
+          insertArticle(type, article)
+        }
       }
     }
   }
 
-  private func fetchArticle(type: String, ekyID: String) -> NSManagedObject? {
+  private func fetchArticle(type: String, predicate: NSPredicate) -> NSManagedObject? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -463,7 +469,6 @@ extension InterventionViewController {
     var articles = [NSManagedObject]()
     let managedContext = appDelegate.persistentContainer.viewContext
     let articlesFetchRequest = NSFetchRequest<NSManagedObject>(entityName: type)
-    let predicate = NSPredicate(format: "ekyID == %@", ekyID)
     articlesFetchRequest.predicate = predicate
 
     do {

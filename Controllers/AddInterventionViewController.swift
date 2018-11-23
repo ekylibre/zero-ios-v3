@@ -889,7 +889,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
       interventionMaterial.intervention = intervention
       interventionMaterial.material = selectedMaterials[0][index] as? Material
-      print("\nCreating intervention material: \(interventionMaterial), material: \(String(describing: interventionMaterial.material))")
     }
 
     do {
