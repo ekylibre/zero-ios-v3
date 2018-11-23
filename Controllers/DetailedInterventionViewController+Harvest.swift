@@ -324,7 +324,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
       harvestTableView.isHidden = false
       harvestAddButton.isHidden = false
       harvestCountLabel.isHidden = true
-      harvestTableView.isHidden = false
       harvestExpandImageView.isHidden = false
       harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 125)
       harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
@@ -358,9 +357,9 @@ extension AddInterventionViewController: HarvestCellDelegate {
     cell.quantity.delegate = cell
     cell.number.text = harvest.number
     cell.number.delegate = cell
+    cell.selectionStyle = .none
     setupObjectsLayer(cell.unit, cell.quantity)
     setupObjectsLayer(cell.storage, cell.number)
-    cell.selectionStyle = .none
     return cell
   }
 }
