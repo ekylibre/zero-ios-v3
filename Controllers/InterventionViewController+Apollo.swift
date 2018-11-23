@@ -533,7 +533,6 @@ extension InterventionViewController {
     }
   }
 
-
   // MARK: - Update
 
   func getLastSyncDate() -> Date? {

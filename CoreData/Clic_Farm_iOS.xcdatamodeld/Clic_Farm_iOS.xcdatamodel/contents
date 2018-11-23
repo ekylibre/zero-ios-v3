@@ -116,7 +116,6 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="referenceID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="used" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="interventionMaterials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionMaterial" inverseName="material" inverseEntity="InterventionMaterial" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
@@ -190,7 +189,7 @@
         <element name="InterventionPerson" positionX="-195.78515625" positionY="16.1015625" width="128" height="90"/>
         <element name="InterventionPhytosanitary" positionX="621.36328125" positionY="1.16796875" width="128" height="105"/>
         <element name="InterventionSeed" positionX="-149.890625" positionY="154.01171875" width="128" height="105"/>
-        <element name="Material" positionX="824.87109375" positionY="-243.19140625" width="128" height="150"/>
+        <element name="Material" positionX="824.87109375" positionY="-243.19140625" width="128" height="135"/>
         <element name="Person" positionX="-522.59765625" positionY="18.86328125" width="128" height="135"/>
         <element name="Phyto" positionX="1030.23828125" positionY="-67.5859375" width="128" height="225"/>
         <element name="Seed" positionX="-386.609375" positionY="189.265625" width="128" height="165"/>

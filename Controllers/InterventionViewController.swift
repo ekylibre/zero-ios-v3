@@ -308,8 +308,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
     let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
 
-    /*cell.selectionStyle = .none
-    cell.typeLabel.text = intervention.type?.localized*/
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)

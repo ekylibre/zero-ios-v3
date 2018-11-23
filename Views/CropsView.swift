@@ -374,20 +374,22 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Actions
 
   @objc func tapCheckbox(_ sender: UIButton) {
-    if interventionState != InterventionState.Validated.rawValue {
-      let cell = sender.superview?.superview as! PlotCell
-      let indexPath = tableView.indexPath(for: cell)!
-      let crops = self.crops[indexPath.row]
-
-      if !sender.isSelected {
-        sender.isSelected = true
-        selectPlot(crops, indexPath)
-      } else {
-        sender.isSelected = false
-        deselectPlot(crops, cell)
-      }
-      updateSelectedCropsLabel()
+    if interventionState == InterventionState.Validated.rawValue {
+      return
     }
+    
+    let cell = sender.superview?.superview as! PlotCell
+    let indexPath = tableView.indexPath(for: cell)!
+    let crops = self.crops[indexPath.row]
+
+    if !sender.isSelected {
+      sender.isSelected = true
+      selectPlot(crops, indexPath)
+    } else {
+      sender.isSelected = false
+      deselectPlot(crops, cell)
+    }
+    updateSelectedCropsLabel()
   }
 
   private func selectPlot(_ crops: [Crop], _ indexPath: IndexPath) {
@@ -425,23 +427,25 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   @objc func tapCropView(sender: UIGestureRecognizer) {
-    if interventionState != InterventionState.Validated.rawValue {
-      let cell = sender.view?.superview?.superview as! PlotCell
-      let plotIndex = tableView.indexPath(for: cell)!.row
-      let view = sender.view as! CropView
-      let cropIndex = cropViews[plotIndex].firstIndex(of: view)!
-      let crops = self.crops[plotIndex]
-      let crop = crops[cropIndex]
-
-      if !view.checkboxImageView.isHighlighted {
-        view.checkboxImageView.isHighlighted = true
-        selectCrop(crop, cell)
-      } else {
-        view.checkboxImageView.isHighlighted = false
-        deselectCrop(crop, crops, cell)
-      }
-      updateSelectedCropsLabel()
+    if interventionState == InterventionState.Validated.rawValue {
+      return
     }
+
+    let cell = sender.view?.superview?.superview as! PlotCell
+    let plotIndex = tableView.indexPath(for: cell)!.row
+    let view = sender.view as! CropView
+    let cropIndex = cropViews[plotIndex].firstIndex(of: view)!
+    let crops = self.crops[plotIndex]
+    let crop = crops[cropIndex]
+
+    if !view.checkboxImageView.isHighlighted {
+      view.checkboxImageView.isHighlighted = true
+      selectCrop(crop, cell)
+    } else {
+      view.checkboxImageView.isHighlighted = false
+      deselectCrop(crop, crops, cell)
+    }
+    updateSelectedCropsLabel()
   }
 
   private func selectCrop(_ crop: Crop, _ cell: PlotCell) {
