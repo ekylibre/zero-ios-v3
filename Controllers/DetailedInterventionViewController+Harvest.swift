@@ -145,7 +145,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.isHidden = !shouldExpand
     harvestAddButton.isHidden = !shouldExpand
     harvestCountLabel.isHidden = shouldExpand
-    harvestTableView.isHidden = !shouldExpand
     harvestExpandImageView.isHidden = (harvests.count == 0)
     harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
     harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 125) : 70
