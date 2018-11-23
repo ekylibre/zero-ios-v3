@@ -370,7 +370,7 @@
 "variety" = "Variety";
 "name" = "Name";
 "brand" = "Brand";
-"mmaid_number" = "N° MMA";
+"mmaid_number" = "No. MMA";
 "reentry_delay" = "Re-entry delay";
 "in_hours" = "In hours";
 "chose_nature" = "Nature";
