@@ -185,7 +185,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return storagesNames
   }
 
-  func createHarvest() {
+  func createHarvest(_ storage: Storage?, _ type: String?, _ number: String?, _ unit: String?, _ quantity: Double?) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -193,10 +193,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
     let managedContext = appDelegate.persistentContainer.viewContext
     let harvest = Harvest(context: managedContext)
 
-    harvest.number = nil
-    harvest.quantity = 0
-    harvest.type = nil
-    harvest.unit = "QUINTAL"
+    harvest.storage = storage
+    harvest.type = type
+    harvest.number = number
+    harvest.unit = (unit != nil ? unit : "QUINTAL")
+    harvest.quantity = (quantity != nil ? quantity! : 0)
     selectedHarvests.append(harvest)
   }
 
@@ -248,7 +249,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction func addHarvest(_ sender: UIButton) {
-    createHarvest()
+    createHarvest(nil, nil, nil, nil, nil)
     harvestNature.isHidden = false
     harvestType.isHidden = false
     harvestTableView.isHidden = false

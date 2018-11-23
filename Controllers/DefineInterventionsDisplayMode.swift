@@ -122,7 +122,14 @@ extension AddInterventionViewController {
     let interventionHarvests = currentIntervention.harvests
 
     for case let harvest as Harvest in interventionHarvests! {
-      selectedHarvests.append(harvest)
+      let storage = harvest.storage
+      let type = harvest.type
+      let number = harvest.number
+      let unit = harvest.unit
+      let quantity = harvest.quantity
+
+      removeObjectFromCoreData(harvest)
+      createHarvest(storage, type, number, unit, quantity)
     }
     addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
     if selectedHarvests.count > 0 {
@@ -135,8 +142,11 @@ extension AddInterventionViewController {
     let interventionEquipments = currentIntervention.interventionEquipments
 
     for case let interventionEquipment as InterventionEquipment in interventionEquipments! {
-      if interventionEquipment.equipment != nil {
-        selectEquipment(interventionEquipment.equipment!)
+      let equipment = interventionEquipment.equipment
+
+      removeObjectFromCoreData(interventionEquipment)
+      if equipment != nil {
+        selectEquipment(equipment!)
       }
     }
     refreshSelectedEquipments()
@@ -146,8 +156,12 @@ extension AddInterventionViewController {
     let interventionPersons = currentIntervention.interventionPersons
 
     for case let interventionPerson as InterventionPerson in interventionPersons! {
-      if interventionPerson.person != nil {
-        selectPerson(interventionPerson.person!, interventionPerson.isDriver)
+      let person = interventionPerson.person
+      let isDriver = interventionPerson.isDriver
+
+      removeObjectFromCoreData(interventionPerson)
+      if person != nil {
+        selectPerson(person!, isDriver)
       }
     }
     refreshSelectedPersons()
@@ -209,6 +223,7 @@ extension AddInterventionViewController {
     loadIrrigation()
     loadEquipments()
     loadPersons()
+    loadHarvest()
     loadWeatherInEditableMode()
     dimView.isHidden = false
   }

@@ -540,7 +540,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     createInterventionPersons(currentIntervention)
     saveInterventionInputs(currentIntervention)
     createMaterials(currentIntervention)
-    createHarvest(currentIntervention)
+    saveHarvest(currentIntervention)
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
@@ -730,14 +730,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
-    print("\nUpdate inputs")
 
     let managedContext = appDelegate.persistentContainer.viewContext
-
-
-    for selectedInput in selectedInputs {
-      print("\nBefore deleting selectedInputs: \(selectedInput)")
-    }
 
     deleteInput(intervention, "InterventionSeed")
     deleteInput(intervention, "InterventionPhytosanitary")
@@ -745,7 +739,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     do {
       for selectedInput in selectedInputs {
-        print("\nAfter deleting SelectedInput: \(selectedInput)")
         switch selectedInput {
         case is InterventionSeed:
           let selectedSeed = selectedInput as! InterventionSeed
@@ -755,7 +748,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           interventionSeed.seed = selectedSeed.seed
           interventionSeed.quantity = selectedSeed.quantity
           interventionSeed.unit = selectedSeed.unit
-          print("\nInterventionSeed: \(interventionSeed), seed: \(String(describing: interventionSeed.seed))")
         case is InterventionPhytosanitary:
           let selectedPhyto = selectedInput as! InterventionPhytosanitary
           let interventionPhyto = InterventionPhytosanitary(context: managedContext)
@@ -764,7 +756,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           interventionPhyto.phyto = selectedPhyto.phyto
           interventionPhyto.quantity = selectedPhyto.quantity
           interventionPhyto.unit = selectedPhyto.unit
-          print("\nIntervention phyto: \(interventionPhyto), phyto: \(String(describing: interventionPhyto.phyto))")
         case is InterventionFertilizer:
           let selectedFertilizer = selectedInput as! InterventionFertilizer
           let interventionFertilizer = InterventionFertilizer(context: managedContext)
@@ -773,7 +764,6 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
           interventionFertilizer.fertilizer = selectedFertilizer.fertilizer
           interventionFertilizer.quantity = selectedFertilizer.quantity
           interventionFertilizer.unit = selectedFertilizer.unit
-          print("\nIntervention Ferti: \(interventionFertilizer), ferti: \(String(describing: interventionFertilizer.fertilizer))")
         default:
           return
         }
@@ -869,7 +859,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createHarvest(_ intervention: Intervention) {
+  func saveHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
