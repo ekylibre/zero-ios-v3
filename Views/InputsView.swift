@@ -123,16 +123,16 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupLayout() {
-    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 40)
 
     NSLayoutConstraint.activate([
       segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
-      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
+      searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10),
+      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 2.5),
       createButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       tableViewTopAnchor,
       tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -285,7 +285,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     })
     isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
-    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableViewTopAnchor.constant = isSearching ? 10 : 40
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {
