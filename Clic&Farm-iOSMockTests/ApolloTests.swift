@@ -97,30 +97,27 @@ class ApolloTests: XCTestCase {
   }
 
   func test_equipmentMutation_withAnEquipment_shouldSaveIt() {
-    if let farmID = getFarmID() {
-      let expectation = self.expectation(description: "Mutating equipment")
-      let mutation = PushEquipmentMutation(
-        farmId: farmID,
-        type: .hayRake,
-        name: "Sample hay rake",
-        number: "42",
-        indicator1: "1.7",
-        indicator2: nil)
+    guard let farmID = getFarmID() else { XCTFail("Could not get farmID"); return }
+    let expectation = self.expectation(description: "Mutating equipment")
+    let mutation = PushEquipmentMutation(
+      farmId: farmID,
+      type: .tractor,
+      name: "tracteur apollo",
+      number: "1000",
+      indicator1: "1",
+      indicator2: nil)
 
-      client.perform(mutation: mutation, resultHandler: { (result, error) in
-        defer { expectation.fulfill() }
+    client.perform(mutation: mutation, resultHandler: { (result, error) in
+      defer { expectation.fulfill() }
 
-        if let error = error {
-          XCTFail("Got an error: \(error)")
-        } else if let resultError = result?.errors {
-          XCTFail("Got an result error: \(resultError)")
-        } else {
-          XCTAssertNotNil(result?.data?.createEquipment?.equipment?.id, "EquipmentID should be populated")
-        }
-      })
-      waitForExpectations(timeout: 30, handler: nil)
-    } else {
-      XCTFail("No farmID")
-    }
+      if let error = error {
+        XCTFail("Got an error: \(error)")
+      } else if let resultError = result?.errors {
+        XCTFail("Got an result error: \(resultError)")
+      } else {
+        XCTAssertNotNil(result?.data?.createEquipment?.equipment?.id, "EquipmentID should be populated")
+      }
+    })
+    waitForExpectations(timeout: 30, handler: nil)
   }
 }
