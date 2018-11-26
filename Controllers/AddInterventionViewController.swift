@@ -109,7 +109,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   // Notes
   @IBOutlet weak var notesTextView: UITextView!
-  @IBOutlet weak var notesTextViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var notesViewHeightConstraint: NSLayoutConstraint!
 
   // MARK: - Properties
@@ -681,32 +680,21 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     notesTextView.textColor = .lightGray
   }
 
-  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-    if notesTextView.textColor == .lightGray {
-      notesTextView.text = ""
-      notesTextView.textColor = .black
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    if textView.textColor == UIColor.lightGray {
+      textView.text = nil
+      textView.textColor = UIColor.black
     }
-    return true
+  }
+
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if textView.text.isEmpty {
+      setTextViewPlaceholder()
+    }
   }
 
   func textViewDidChange(_ textView: UITextView) {
-    if notesTextView.text.count == 0 {
-      setTextViewPlaceholder()
-    }
-  }
-
-  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    if notesTextView.textColor == .lightGray {
-      return false
-    }
-    return true
-  }
-
-  func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-    if notesTextView.text.count == 0 {
-      setTextViewPlaceholder()
-    }
-    return true
+    notesViewHeightConstraint.constant = textView.frame.height + 40
   }
 
   // MARK: - Gesture recognizer

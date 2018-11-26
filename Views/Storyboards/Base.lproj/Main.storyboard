@@ -1182,9 +1182,6 @@
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sMy-as-Aui">
                                                         <rect key="frame" x="20" y="30" width="335" height="33"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" priority="750" constant="30" id="m6V-NU-pXu"/>
-                                                        </constraints>
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -1337,7 +1334,6 @@
                         <outlet property="mist" destination="8Tz-Cl-TTF" id="c5b-on-l8U"/>
                         <outlet property="navigationBar" destination="q3s-Gt-LrC" id="fCW-KX-SAw"/>
                         <outlet property="notesTextView" destination="sMy-as-Aui" id="fDN-ce-XaT"/>
-                        <outlet property="notesTextViewHeightConstraint" destination="m6V-NU-pXu" id="Zjz-ck-9hO"/>
                         <outlet property="notesViewHeightConstraint" destination="0az-Tl-ybJ" id="aua-lj-ZfX"/>
                         <outlet property="personsAddButton" destination="yGb-zU-Lzj" id="sEH-iA-1Gc"/>
                         <outlet property="personsCountLabel" destination="orv-Jv-Mfq" id="wBW-SM-aLH"/>
