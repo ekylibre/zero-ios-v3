@@ -456,8 +456,7 @@
 "to" = "To";
 "yield" = "Yield";
 
-
-
+// Others
 "quantity_cannot_be_null" = "Quantity cannot be null";
 "sync_failure" = "Sync failure…";
 "login_failure" = "Unknown E-mail or invalid password. Try again.";

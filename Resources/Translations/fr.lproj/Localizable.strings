@@ -456,8 +456,7 @@
 "to" = "Au";
 "yield" = "Rendement";
 
-
-
+// Others
 "quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "sync_failure" = "Échec de la synchronisation…";
 "login_failure" = "Identifiant inconnu ou mot de passe incorrect. Veuillez réessayer.";
