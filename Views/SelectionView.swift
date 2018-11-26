@@ -20,20 +20,21 @@ class SelectionView: UIView {
     return titleLabel
   }()
 
+  lazy var cancelButton: UIButton = {
+    let cancelButton = UIButton(frame: CGRect.zero)
+    cancelButton.setTitle("cancel".localized, for: .normal)
+    cancelButton.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
+    cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+    cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    return cancelButton
+  }()
+
   lazy var headerView: UIView = {
     let headerView = UIView(frame: CGRect.zero)
     headerView.backgroundColor = AppColor.BarColors.Green
     headerView.addSubview(titleLabel)
     headerView.translatesAutoresizingMaskIntoConstraints = false
     return headerView
-  }()
-
-  lazy var cancelButton: UIButton = {
-    let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.setTitle("cancel".localized, for: .normal)
-    cancelButton.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
-    cancelButton.translatesAutoresizingMaskIntoConstraints = false
-    return cancelButton
   }()
 
   lazy var searchBar: UISearchBar = {
@@ -101,22 +102,22 @@ class SelectionView: UIView {
   }
 
   private func setupLayout() {
-    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 40)
 
     NSLayoutConstraint.activate([
       titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
       titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
       headerView.topAnchor.constraint(equalTo: topAnchor),
-      headerView.heightAnchor.constraint(equalToConstant: 60),
-      headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
       cancelButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
       cancelButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
       cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-      searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 15),
-      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
+      headerView.heightAnchor.constraint(equalToConstant: 60),
+      headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 10),
+      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 2.5),
       createButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       tableViewTopAnchor,
       tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -135,5 +136,24 @@ class SelectionView: UIView {
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     endEditing(true)
+  }
+
+  // MARK: - Actions
+
+  @objc private func closeView() {
+    guard let parentVC = parentViewController as? AddInterventionViewController else { return }
+    isHidden = true
+    parentVC.dimView.isHidden = true
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    })
+
+    searchBar.endEditing(true)
+    searchBar.text = nil
+    isSearching = false
+    tableViewTopAnchor.constant = 40
+    createButton.isHidden = false
+    tableView.reloadData()
   }
 }

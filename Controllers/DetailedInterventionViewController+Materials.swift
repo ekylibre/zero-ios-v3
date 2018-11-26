@@ -35,7 +35,6 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
     materialsSelectionView.addInterventionViewController = self
-    materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
     materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits),
                                                              for: .touchUpInside)
   }
@@ -53,7 +52,7 @@ extension AddInterventionViewController {
     interventionMaterial.unit = material.unit
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
-    closeSelectionView()
+    materialsSelectionView.cancelButton.sendActions(for: .touchUpInside)
     updateView()
   }
 
@@ -103,20 +102,6 @@ extension AddInterventionViewController {
     } else {
       materialsCountLabel.text = String(format: "materials".localized, selectedMaterials[0].count)
     }
-  }
-
-  @objc private func closeSelectionView() {
-    materialsSelectionView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-
-    materialsSelectionView.searchBar.text = nil
-    materialsSelectionView.searchBar.endEditing(true)
-    materialsSelectionView.isSearching = false
-    materialsSelectionView.tableView.reloadData()
   }
 
   @objc func updateMaterialQuantity(sender: UITextField) {

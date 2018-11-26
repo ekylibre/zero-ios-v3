@@ -35,8 +35,6 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
     equipmentsSelectionView.addInterventionViewController = self
-    equipmentsSelectionView.cancelButton.addTarget(self, action: #selector(closeEquipmentsSelectionView),
-                                                   for: .touchUpInside)
     equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes),
                                                               for: .touchUpInside)
   }
@@ -76,7 +74,7 @@ extension AddInterventionViewController {
 
   func selectEquipment(_ equipment: Equipment) {
     selectedEquipments.append(equipment)
-    closeEquipmentsSelectionView()
+    equipmentsSelectionView.cancelButton.sendActions(for: .touchUpInside)
     updateView()
   }
 
@@ -126,20 +124,6 @@ extension AddInterventionViewController {
     } else {
       equipmentsCountLabel.text = String(format: "equipments".localized, selectedEquipments.count)
     }
-  }
-
-  @objc private func closeEquipmentsSelectionView() {
-    equipmentsSelectionView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-
-    equipmentsSelectionView.searchBar.text = nil
-    equipmentsSelectionView.searchBar.endEditing(true)
-    equipmentsSelectionView.isSearching = false
-    equipmentsSelectionView.tableView.reloadData()
   }
 
   @objc private func showEquipmentTypes() {

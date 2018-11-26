@@ -79,7 +79,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     })
     isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
-    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableViewTopAnchor.constant = isSearching ? 10 : 40
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {

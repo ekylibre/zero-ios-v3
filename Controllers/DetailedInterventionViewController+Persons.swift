@@ -35,7 +35,6 @@ extension AddInterventionViewController {
     selectedPersonsTableView.bounces = false
     selectedPersonsTableView.dataSource = self
     selectedPersonsTableView.delegate = self
-    personsSelectionView.cancelButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
     personsSelectionView.addInterventionViewController = self
   }
 
@@ -52,7 +51,7 @@ extension AddInterventionViewController {
     interventionPerson.isDriver = false
     selectedPersons[0].append(person)
     selectedPersons[1].append(interventionPerson)
-    closePersonsSelectionView()
+    personsSelectionView.cancelButton.sendActions(for: .touchUpInside)
     updateView()
   }
 
@@ -101,20 +100,6 @@ extension AddInterventionViewController {
     } else {
       personsCountLabel.text = String(format: "persons".localized, selectedPersons[0].count)
     }
-  }
-
-  @objc private func closePersonsSelectionView() {
-    personsSelectionView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-
-    personsSelectionView.searchBar.text = nil
-    personsSelectionView.searchBar.endEditing(true)
-    personsSelectionView.isSearching = false
-    personsSelectionView.tableView.reloadData()
   }
 
   @objc func updateIsDriver(sender: UISwitch) {
