@@ -213,7 +213,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
     typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
     typeLabel.textColor = UIColor.white
-    let leftItem = UIBarButtonItem.init(customView: typeLabel)
+    let leftItem = UIBarButtonItem(customView: typeLabel)
 
     navigationItem.leftBarButtonItem = leftItem
     navigationBar.setItems([navigationItem], animated: false)
