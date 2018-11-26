@@ -128,7 +128,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
       tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
       tableView.leftAnchor.constraint(equalTo: leftAnchor),
       tableView.rightAnchor.constraint(equalTo: rightAnchor)
-    ])
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -150,7 +150,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     let intervention = interventions[indexPath.row]
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
     let stateImages: [Int16: UIImage?] = [0: UIImage(named: "created"), 1: UIImage(named: "synced"),
-                                         2: UIImage(named: "validated")]
+                                          2: UIImage(named: "validated")]
 
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized

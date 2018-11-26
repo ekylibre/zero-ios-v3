@@ -30,7 +30,7 @@ class ListTableViewController: UITableViewController {
     rawStrings = rawStrings.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <
-      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
   }
 

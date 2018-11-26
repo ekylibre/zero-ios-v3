@@ -326,7 +326,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       }
       index += 1
     }
-    
+
     selectedCropsCount -= 1
     selectedSurfaceArea -= crop.surfaceArea
     crop.isSelected = false

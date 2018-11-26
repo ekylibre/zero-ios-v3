@@ -157,7 +157,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       cropsByProduction[index] = crops.sorted(by: {
         $0.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
           <
-        $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+          $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       })
     }
   }

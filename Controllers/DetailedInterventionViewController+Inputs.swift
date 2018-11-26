@@ -69,7 +69,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let sortedSpecies = species.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <
-      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
 
     return sortedSpecies.first!
@@ -161,8 +161,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       selectedPhytos.append(selectedPhyto)
     }
     if selectedPhytos.count > 1 && unauthorized {
-        inputsUnauthorizedMixImage.isHidden = false
-        inputsUnauthorizedMixLabel.isHidden = false
+      inputsUnauthorizedMixImage.isHidden = false
+      inputsUnauthorizedMixLabel.isHidden = false
     } else {
       inputsUnauthorizedMixImage.isHidden = true
       inputsUnauthorizedMixLabel.isHidden = true

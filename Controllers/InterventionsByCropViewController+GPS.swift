@@ -85,7 +85,7 @@ extension InterventionsByCropViewController: CLLocationManagerDelegate {
 
   private func requestAuthorization() {
     let alert = UIAlertController(title: "authorization_request_title".localized, message:
-                                  "authorization_request_message".localized, preferredStyle: .alert)
+      "authorization_request_message".localized, preferredStyle: .alert)
     let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
     let settingsAction = UIAlertAction(title: "settings".localized, style: .default, handler: { _ in
       let url = URL(string: UIApplication.openSettingsURLString)!
