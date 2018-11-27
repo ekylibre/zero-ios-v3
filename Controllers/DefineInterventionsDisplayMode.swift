@@ -77,7 +77,7 @@ extension AddInterventionViewController {
       let unit = interventionSeed.unit
 
       if seed != nil {
-        selectInput(seed!, quantity, unit, true)
+        selectInput(seed!, quantity: quantity, unit: unit, calledFromCreatedIntervention: true)
       }
     }
     for case let interventionPhyto as InterventionPhytosanitary in interventionPhytosanitaries! {
@@ -86,7 +86,7 @@ extension AddInterventionViewController {
       let unit = interventionPhyto.unit
 
       if phyto != nil {
-        selectInput(phyto!, quantity, unit, true)
+        selectInput(phyto!, quantity: quantity, unit: unit, calledFromCreatedIntervention: true)
       }
     }
     for case let interventionFertilizer as InterventionFertilizer in interventionFertilizers! {
@@ -95,7 +95,7 @@ extension AddInterventionViewController {
       let unit = interventionFertilizer.unit
 
       if fertilizer != nil {
-        selectInput(fertilizer!, quantity, unit, true)
+        selectInput(fertilizer!, quantity: quantity, unit: unit, calledFromCreatedIntervention: true)
       }
     }
     refreshSelectedInputs()
@@ -109,11 +109,11 @@ extension AddInterventionViewController {
         let unit = interventionMaterial.unit
 
         if material != nil {
-          selectMaterial(material!, quantity: quantity, unit: unit!, true)
+          selectMaterial(material!, quantity: quantity, unit: unit!, calledFromCreatedIntervention: true)
         }
       }
     }
-    updateSelectedMaterialsView(true)
+    updateSelectedMaterialsView(calledFromCreatedIntervention: true)
   }
 
   private func loadHarvest() {
@@ -141,11 +141,11 @@ extension AddInterventionViewController {
         let equipment = interventionEquipment.equipment
 
         if equipment != nil {
-          selectEquipment(equipment!, true)
+          selectEquipment(equipment!, calledFromCreatedIntervention: true)
         }
       }
     }
-    updateSelectedEquipmentsView(true)
+    updateSelectedEquipmentsView(calledFromCreatedIntervention: true)
   }
 
   private func loadPersons() {
@@ -155,10 +155,10 @@ extension AddInterventionViewController {
       let isDriver = interventionPerson.isDriver
 
       if person != nil {
-        selectPerson(person!, isDriver, true)
+        selectPerson(person!, isDriver: isDriver, calledFromCreatedIntervention: true)
       }
     }
-    updateSelectedPersonsView(true)
+    updateSelectedPersonsView(calledFromCreatedIntervention: true)
   }
 
   private func changeTemperatureSignButton() {

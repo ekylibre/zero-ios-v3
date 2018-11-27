@@ -41,7 +41,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectMaterial(_ material: Material, quantity: Float?, unit: String, _ calledFromCreatedIntervention: Bool) {
+  func selectMaterial(_ material: Material, quantity: Float?, unit: String, calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -55,10 +55,10 @@ extension AddInterventionViewController {
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
     materialsSelectionView.cancelButton.sendActions(for: .touchUpInside)
-    updateSelectedMaterialsView(calledFromCreatedIntervention)
+    updateSelectedMaterialsView(calledFromCreatedIntervention: calledFromCreatedIntervention)
   }
 
-  private func checkButtonDisplayStatus(_ shouldExpand: Bool) {
+  private func checkButtonDisplayStatus(shouldExpand: Bool) {
     if interventionState == InterventionState.Validated.rawValue {
       materialsAddButton.isHidden = true
       materialsCountLabel.isHidden = false
@@ -68,7 +68,7 @@ extension AddInterventionViewController {
     }
   }
 
-  func updateSelectedMaterialsView(_ calledFromCreatedIntervention: Bool) {
+  func updateSelectedMaterialsView(calledFromCreatedIntervention: Bool) {
     let shouldExpand = selectedMaterials[0].count > 0
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
@@ -76,7 +76,7 @@ extension AddInterventionViewController {
       materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     }
-    checkButtonDisplayStatus(shouldExpand)
+    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     materialsExpandImageView.isHidden = !shouldExpand
     updateMaterialsCountLabel()
     selectedMaterialsTableView.reloadData()
@@ -171,7 +171,7 @@ extension AddInterventionViewController {
 
     selectedMaterials[0].remove(at: index)
     selectedMaterials[1].remove(at: index)
-    updateSelectedMaterialsView(false)
+    updateSelectedMaterialsView(calledFromCreatedIntervention: false)
     materialsSelectionView.tableView.reloadData()
   }
 

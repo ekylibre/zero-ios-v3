@@ -266,7 +266,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     fromInputs[indexPath.row].setValue(true, forKey: "used")
     tableView.reloadData()
-    addInterventionViewController?.selectInput(fromInputs[indexPath.row], nil, nil, false)
+    addInterventionViewController?.selectInput(
+      fromInputs[indexPath.row], quantity: nil, unit: nil, calledFromCreatedIntervention: false)
   }
 
   // MARK: - Search bar

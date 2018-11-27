@@ -40,7 +40,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectPerson(_ person: Person, _ isDriver: Bool, _ calledFromCreatedIntervention: Bool) {
+  func selectPerson(_ person: Person, isDriver: Bool, calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -53,10 +53,10 @@ extension AddInterventionViewController {
     selectedPersons[0].append(person)
     selectedPersons[1].append(interventionPerson)
     personsSelectionView.cancelButton.sendActions(for: .touchUpInside)
-    updateSelectedPersonsView(calledFromCreatedIntervention)
+    updateSelectedPersonsView(calledFromCreatedIntervention: calledFromCreatedIntervention)
   }
 
-  private func checkButtonDisplayStatus(_ shouldExpand: Bool) {
+  private func checkButtonDisplayStatus(shouldExpand: Bool) {
     if interventionState == InterventionState.Validated.rawValue {
       personsAddButton.isHidden = true
       personsCountLabel.isHidden = false
@@ -66,7 +66,7 @@ extension AddInterventionViewController {
     }
   }
 
-  func updateSelectedPersonsView(_ calledFromCreatedIntervention: Bool) {
+  func updateSelectedPersonsView(calledFromCreatedIntervention: Bool) {
     let shouldExpand = selectedPersons[0].count > 0
     let tableViewHeight = (selectedPersons[0].count > 10) ? 10 * 65 : selectedPersons[0].count * 65
 
@@ -75,7 +75,7 @@ extension AddInterventionViewController {
       personsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     }
     personsExpandImageView.isHidden = !shouldExpand
-    checkButtonDisplayStatus(shouldExpand)
+    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     updatePersonsCountLabel()
     selectedPersonsTableView.reloadData()
   }
@@ -143,7 +143,7 @@ extension AddInterventionViewController {
   private func deletePerson(_ index: Int)  {
     selectedPersons[0].remove(at: index)
     selectedPersons[1].remove(at: index)
-    updateSelectedPersonsView(false)
+    updateSelectedPersonsView(calledFromCreatedIntervention: false)
     personsSelectionView.tableView.reloadData()
   }
 

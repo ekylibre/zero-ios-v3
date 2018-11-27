@@ -77,7 +77,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  private func checkButtonDisplayStatus(_ shouldExpand: Bool) {
+  private func checkButtonDisplayStatus(shouldExpand: Bool) {
     if interventionState == InterventionState.Validated.rawValue {
       inputsAddButton.isHidden = true
       inputsCountLabel.isHidden = false
@@ -90,7 +90,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func refreshSelectedInputs() {
     let shouldExpand = selectedInputs.count > 0
 
-    checkButtonDisplayStatus(shouldExpand)
+    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     inputsExpandImageView.isHidden = !shouldExpand
     updateInputsCountLabel()
     selectedInputsTableView.reloadData()
@@ -202,8 +202,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     return true
   }
 
-  func selectInput(_ input: NSManagedObject, _ quantity: Float?, _ unit: String?,
-                   _ calledFromCreatedIntervention: Bool) {
+  func selectInput(_ input: NSManagedObject, quantity: Float?, unit: String?,
+                   calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

@@ -136,7 +136,7 @@ extension AddInterventionViewController {
     }
   }
 
-  private func hideWeatherItems(_ state: Bool) {
+  private func hideWeatherItems(state: Bool) {
     for index in 0..<weatherButtons.count {
       weatherButtons[index].isHidden = state
     }
@@ -152,7 +152,7 @@ extension AddInterventionViewController {
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
     weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)
-    hideWeatherItems(!shouldExpand)
+    hideWeatherItems(state: !shouldExpand)
     saveCurrentWeather()
   }
 
