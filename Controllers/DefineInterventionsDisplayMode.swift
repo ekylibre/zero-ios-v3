@@ -77,7 +77,7 @@ extension AddInterventionViewController {
       let unit = interventionSeed.unit
 
       if seed != nil {
-        selectInput(seed!, quantity, unit)
+        selectInput(seed!, quantity, unit, true)
       }
     }
     for case let interventionPhyto as InterventionPhytosanitary in interventionPhytosanitaries! {
@@ -86,7 +86,7 @@ extension AddInterventionViewController {
       let unit = interventionPhyto.unit
 
       if phyto != nil {
-        selectInput(phyto!, quantity, unit)
+        selectInput(phyto!, quantity, unit, true)
       }
     }
     for case let interventionFertilizer as InterventionFertilizer in interventionFertilizers! {
@@ -95,7 +95,7 @@ extension AddInterventionViewController {
       let unit = interventionFertilizer.unit
 
       if fertilizer != nil {
-        selectInput(fertilizer!, quantity, unit)
+        selectInput(fertilizer!, quantity, unit, true)
       }
     }
     refreshSelectedInputs()
@@ -109,11 +109,11 @@ extension AddInterventionViewController {
         let unit = interventionMaterial.unit
 
         if material != nil {
-          selectMaterial(material!, quantity: quantity, unit: unit!)
+          selectMaterial(material!, quantity: quantity, unit: unit!, true)
         }
       }
     }
-    refreshSelectedMaterials()
+    updateSelectedMaterialsView(true)
   }
 
   private func loadHarvest() {
@@ -141,11 +141,11 @@ extension AddInterventionViewController {
         let equipment = interventionEquipment.equipment
 
         if equipment != nil {
-          selectEquipment(equipment!)
+          selectEquipment(equipment!, true)
         }
       }
     }
-    refreshSelectedEquipments()
+    updateSelectedEquipmentsView(true)
   }
 
   private func loadPersons() {
@@ -155,10 +155,10 @@ extension AddInterventionViewController {
       let isDriver = interventionPerson.isDriver
 
       if person != nil {
-        selectPerson(person!, isDriver)
+        selectPerson(person!, isDriver, true)
       }
     }
-    refreshSelectedPersons()
+    updateSelectedPersonsView(true)
   }
 
   private func changeTemperatureSignButton() {

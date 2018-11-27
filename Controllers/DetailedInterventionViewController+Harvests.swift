@@ -138,12 +138,14 @@ extension AddInterventionViewController: HarvestCellDelegate {
       return
     }
 
+    if interventionState != InterventionState.Validated.rawValue {
+      harvestAddButton.isHidden = !shouldExpand
+    }
     view.endEditing(true)
     updateHarvestCountLabel()
     harvestNature.isHidden = !shouldExpand
     harvestType.isHidden = !shouldExpand
     harvestTableView.isHidden = !shouldExpand
-    harvestAddButton.isHidden = !shouldExpand
     harvestCountLabel.isHidden = shouldExpand
     harvestExpandImageView.isHidden = (selectedHarvests.count == 0)
     harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
@@ -344,6 +346,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
       harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
       harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
     }
+    showEntitiesNumber(
+      entities: selectedInputs,
+      constraint: inputsHeightConstraint,
+      numberLabel: inputsCountLabel,
+      addEntityButton: inputsAddButton)
   }
 
   private func setupObjectsLayer(_ button: UIButton, _ textField: UITextField) {

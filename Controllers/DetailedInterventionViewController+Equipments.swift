@@ -72,37 +72,37 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectEquipment(_ equipment: Equipment) {
+  func selectEquipment(_ equipment: Equipment, _ calledFromCreatedIntervention: Bool) {
     selectedEquipments.append(equipment)
     equipmentsSelectionView.cancelButton.sendActions(for: .touchUpInside)
-    updateView()
+    updateSelectedEquipmentsView(calledFromCreatedIntervention)
   }
 
-  private func updateView() {
+  private func checkButtonDisplayStatus(_ shouldExpand: Bool) {
+    if interventionState == InterventionState.Validated.rawValue {
+      equipmentsAddButton.isHidden = true
+      equipmentsCountLabel.isHidden = false
+    } else if interventionState != nil {
+      equipmentsCountLabel.isHidden = !shouldExpand
+      equipmentsAddButton.isHidden = !equipmentsCountLabel.isHidden
+    }
+  }
+
+  func updateSelectedEquipmentsView(_ calledFromCreatedIntervention: Bool) {
     let shouldExpand = selectedEquipments.count > 0
     let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 
+    if !calledFromCreatedIntervention {
+      equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+      equipmentsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    }
     equipmentsExpandImageView.isHidden = !shouldExpand
-    equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    equipmentsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    checkButtonDisplayStatus(shouldExpand)
+    updateEquipmentsCountLabel()
     selectedEquipmentsTableView.reloadData()
   }
 
   // MARK: - Actions
-
-  func refreshSelectedEquipments() {
-    tapEquipmentsView()
-    if selectedEquipments.count > 0 {
-      selectedEquipmentsTableView.reloadData()
-      equipmentsExpandImageView.isHidden = false
-    }
-    equipmentsAddButton.isHidden = true
-    showEntitiesNumber(
-      entities: selectedEquipments,
-      constraint: equipmentsHeightConstraint,
-      numberLabel: equipmentsCountLabel,
-      addEntityButton: equipmentsAddButton)
-  }
 
   @IBAction private func openEquipmentsSelectionView(_ sender: Any) {
     selectedValue = getFirstEquipmentType()
@@ -124,6 +124,7 @@ extension AddInterventionViewController {
 
     view.endEditing(true)
     updateEquipmentsCountLabel()
+    equipmentsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     if interventionState != InterventionState.Validated.rawValue {
       equipmentsAddButton.isHidden = !shouldExpand
@@ -131,6 +132,7 @@ extension AddInterventionViewController {
     equipmentsCountLabel.isHidden = shouldExpand
     selectedEquipmentsTableView.isHidden = !shouldExpand
     equipmentsExpandImageView.transform = equipmentsExpandImageView.transform.rotated(by: CGFloat.pi)
+    selectedEquipmentsTableView.reloadData()
   }
 
   func updateEquipmentsCountLabel() {
@@ -161,7 +163,7 @@ extension AddInterventionViewController {
 
   private func deleteEquipment(_ index: Int)  {
     selectedEquipments.remove(at: index)
-    updateView()
+    updateSelectedEquipmentsView(false)
     equipmentsSelectionView.tableView.reloadData()
   }
 

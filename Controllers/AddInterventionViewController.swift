@@ -194,6 +194,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
+    print("\nviewDidLoad")
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
 
     setupNavigationBar()

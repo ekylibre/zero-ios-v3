@@ -41,7 +41,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectMaterial(_ material: Material, quantity: Float?, unit: String) {
+  func selectMaterial(_ material: Material, quantity: Float?, unit: String, _ calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -55,33 +55,34 @@ extension AddInterventionViewController {
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
     materialsSelectionView.cancelButton.sendActions(for: .touchUpInside)
-    updateView()
+    updateSelectedMaterialsView(calledFromCreatedIntervention)
   }
 
-  private func updateView() {
+  private func checkButtonDisplayStatus(_ shouldExpand: Bool) {
+    if interventionState == InterventionState.Validated.rawValue {
+      materialsAddButton.isHidden = true
+      materialsCountLabel.isHidden = false
+    } else if interventionState != nil {
+      materialsCountLabel.isHidden = !shouldExpand
+      materialsAddButton.isHidden = !materialsCountLabel.isHidden
+    }
+  }
+
+  func updateSelectedMaterialsView(_ calledFromCreatedIntervention: Bool) {
     let shouldExpand = selectedMaterials[0].count > 0
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
+    if !calledFromCreatedIntervention {
+      materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+      materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    }
+    checkButtonDisplayStatus(shouldExpand)
     materialsExpandImageView.isHidden = !shouldExpand
-    materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    updateMaterialsCountLabel()
     selectedMaterialsTableView.reloadData()
   }
 
   // MARK: - Actions
-
-  func refreshSelectedMaterials() {
-    tapMaterialsView()
-    if selectedMaterials[1].count > 0 {
-      selectedMaterialsTableView.reloadData()
-      materialsExpandImageView.isHidden = false
-    }
-    showEntitiesNumber(
-      entities: selectedMaterials[1],
-      constraint: materialsHeightConstraint,
-      numberLabel: materialsCountLabel,
-      addEntityButton: materialsAddButton)
-  }
 
   @IBAction private func openMaterialsSelectionView(_ sender: Any) {
     selectedValue = "METER"
@@ -104,6 +105,7 @@ extension AddInterventionViewController {
     view.endEditing(true)
     updateMaterialsCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     if interventionState != InterventionState.Validated.rawValue {
       materialsAddButton.isHidden = !shouldExpand
     }
@@ -169,7 +171,7 @@ extension AddInterventionViewController {
 
     selectedMaterials[0].remove(at: index)
     selectedMaterials[1].remove(at: index)
-    updateView()
+    updateSelectedMaterialsView(false)
     materialsSelectionView.tableView.reloadData()
   }
 

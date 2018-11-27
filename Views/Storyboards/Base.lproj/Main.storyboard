@@ -478,7 +478,7 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-more" translatesAutoresizingMaskIntoConstraints="NO" id="Fba-dj-Hdb">
+                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expand-less" translatesAutoresizingMaskIntoConstraints="NO" id="Fba-dj-Hdb">
                                                         <rect key="frame" x="339" y="27.5" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="16" id="MOg-TH-4Fn"/>
@@ -1704,7 +1704,7 @@
         <image name="warning" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FE4-xp-aKR"/>
-        <segue reference="sUz-8n-dYb"/>
+        <segue reference="uas-Qa-jvK"/>
+        <segue reference="74J-jI-YTr"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -77,17 +77,23 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
-  func refreshSelectedInputs() {
-    if selectedInputs.count > 0 {
-      selectedInputsTableView.reloadData()
-      inputsExpandImageView.isHidden = false
+  private func checkButtonDisplayStatus(_ shouldExpand: Bool) {
+    if interventionState == InterventionState.Validated.rawValue {
+      inputsAddButton.isHidden = true
+      inputsCountLabel.isHidden = false
+    } else if interventionState != nil {
+      inputsCountLabel.isHidden = !shouldExpand
+      inputsAddButton.isHidden = !inputsCountLabel.isHidden
     }
-    inputsAddButton.isHidden = true
-    showEntitiesNumber(
-      entities: selectedInputs,
-      constraint: inputsHeightConstraint,
-      numberLabel: inputsCountLabel,
-      addEntityButton: inputsAddButton)
+  }
+
+  func refreshSelectedInputs() {
+    let shouldExpand = selectedInputs.count > 0
+
+    checkButtonDisplayStatus(shouldExpand)
+    inputsExpandImageView.isHidden = !shouldExpand
+    updateInputsCountLabel()
+    selectedInputsTableView.reloadData()
   }
 
   func saveSelectedRow(_ indexPath: IndexPath) {
@@ -111,13 +117,16 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       return
     }
 
+    if interventionState != InterventionState.Validated.rawValue {
+      inputsAddButton.isHidden = !shouldExpand
+    }
     view.endEditing(true)
     updateInputsCountLabel()
-    //inputsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
-    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
-    inputsAddButton.isHidden = !shouldExpand
     inputsCountLabel.isHidden = shouldExpand
+    inputsExpandImageView.isHidden = (selectedInputs.count == 0)
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+    inputsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
     selectedInputsTableView.isHidden = !shouldExpand
     inputsUnauthorizedMixLabel.isHidden = !shouldExpand
     inputsUnauthorizedMixImage.isHidden = !shouldExpand
@@ -193,7 +202,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     return true
   }
 
-  func selectInput(_ input: NSManagedObject, _ quantity: Float?, _ unit: String?) {
+  func selectInput(_ input: NSManagedObject, _ quantity: Float?, _ unit: String?,
+                   _ calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -225,7 +235,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
 
     selectedInputsTableView.reloadData()
-    closeInputsSelectionView()
+    !calledFromCreatedIntervention ? closeInputsSelectionView() : nil
   }
 
   private func resetInputsUsedAttribute(index: Int) {

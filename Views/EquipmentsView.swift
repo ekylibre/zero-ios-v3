@@ -207,7 +207,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let fromEquipments = isSearching ? filteredEquipments : equipments
 
-    addInterventionViewController?.selectEquipment(fromEquipments[indexPath.row])
+    addInterventionViewController?.selectEquipment(fromEquipments[indexPath.row], false)
     searchBar.text = nil
     searchBar.endEditing(true)
     isSearching = false
