@@ -48,6 +48,6 @@ extension Point: JSONDecodable, JSONEncodable {
   }
 
   public var jsonValue: JSONValue {
-    return String(format: "[%@,%@]", String(self.x), String(self.y))
+    return String(format: "[%@,%@]", String(x), String(y))
   }
 }

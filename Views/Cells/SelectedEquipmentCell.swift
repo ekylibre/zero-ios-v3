@@ -21,6 +21,7 @@ class SelectedEquipmentCell: UITableViewCell {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.lineBreakMode = .byTruncatingTail
     nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -37,6 +38,7 @@ class SelectedEquipmentCell: UITableViewCell {
 
   lazy var infosLabel: UILabel = {
     let infosLabel = UILabel(frame: CGRect.zero)
+    infosLabel.lineBreakMode = .byTruncatingTail
     infosLabel.font = UIFont.systemFont(ofSize: 14)
     infosLabel.textColor = AppColor.TextColors.DarkGray
     infosLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -51,8 +53,8 @@ class SelectedEquipmentCell: UITableViewCell {
   }
 
   private func setupCell() {
-    self.backgroundColor = AppColor.CellColors.LightGray
-    self.selectionStyle = .none
+    backgroundColor = AppColor.CellColors.LightGray
+    selectionStyle = .none
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(deleteButton)
@@ -62,20 +64,21 @@ class SelectedEquipmentCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      typeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       typeImageView.heightAnchor.constraint(equalToConstant: 35),
-      typeImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
-      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      infosLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      infosLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
+      infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      deleteButton.heightAnchor.constraint(equalToConstant: 20),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      deleteButton.widthAnchor.constraint(equalToConstant: 20),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor,
+                                            multiplier: 1)
       ])
   }
 

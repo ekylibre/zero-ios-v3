@@ -26,7 +26,7 @@ class WorkingPeriodTests: XCTestCase {
   }
 
   func test_selectedWorkingPeriodLabel_withDefaultValues_shouldNotChange() {
-    //Given
+    // Given
     let expectedDate: String = {
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "locale".localized)
@@ -34,21 +34,21 @@ class WorkingPeriodTests: XCTestCase {
       return dateFormatter.string(from: Date())
     }()
 
-    //When
+    // When
     var expectedString = String(format: "%@ • 7 h", "today".localized.lowercased())
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "SelectedWorkingPeriodLabel text should be this one before expanding the view")
     addInterventionVC.tapWorkingPeriodView(self)
     addInterventionVC.tapWorkingPeriodView(self)
 
-    //Then
+    // Then
     expectedString = String(format: "%@ • 7 h", expectedDate)
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "Today word must be replaced by today's date with current format: 'd MMM'")
   }
 
   func test_selectedWorkingPeriodLabel_withDurationChanged_shouldChange() {
-    //Given
+    // Given
     let duration = "0,10"
     let expectedDate: String = {
       let dateFormatter = DateFormatter()
@@ -57,7 +57,7 @@ class WorkingPeriodTests: XCTestCase {
       return dateFormatter.string(from: Date())
     }()
 
-    //When
+    // When
     var expectedString = String(format: "%@ • 7 h", "today".localized.lowercased())
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "SelectedWorkingPeriodLabel text should be this one before expanding the view")
@@ -65,14 +65,14 @@ class WorkingPeriodTests: XCTestCase {
     addInterventionVC.tapWorkingPeriodView(self)
     addInterventionVC.tapWorkingPeriodView(self)
 
-    //Then
+    // Then
     expectedString = String(format: "%@ • 0.1 h", expectedDate)
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "Label must contain new duration value")
   }
 
   func test_selectedWorkingPeriodLabel_withDateChanged_shouldChange() {
-    //Given
+    // Given
     let date: Date = {
       let calendar = Calendar(identifier: .gregorian)
       var dateComponents = DateComponents()
@@ -89,7 +89,7 @@ class WorkingPeriodTests: XCTestCase {
       return dateFormatter.string(from: date)
     }()
 
-    //When
+    // When
     var expectedString = String(format: "%@ • 7 h", "today".localized.lowercased())
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "SelectedWorkingPeriodLabel text should be this one before expanding the view")
@@ -97,14 +97,14 @@ class WorkingPeriodTests: XCTestCase {
     addInterventionVC.tapWorkingPeriodView(self)
     addInterventionVC.tapWorkingPeriodView(self)
 
-    //Then
+    // Then
     expectedString = String(format: "%@ • 7 h", dateString)
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "Label must contain new date value")
   }
 
   func test_selectedWorkingPeriodLabel_withDateAndDurationChanged_shouldChange() {
-    //Given
+    // Given
     let date: Date = {
       let calendar = Calendar(identifier: .gregorian)
       var dateComponents = DateComponents()
@@ -122,7 +122,7 @@ class WorkingPeriodTests: XCTestCase {
     }()
     let duration = "3.052"
 
-    //When
+    // When
     var expectedString = String(format: "%@ • 7 h", "today".localized.lowercased())
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "SelectedWorkingPeriodLabel text should be this one before expanding the view")
@@ -131,25 +131,25 @@ class WorkingPeriodTests: XCTestCase {
     addInterventionVC.tapWorkingPeriodView(self)
     addInterventionVC.tapWorkingPeriodView(self)
 
-    //Then
+    // Then
     expectedString = String(format: "%@ • 3.1 h", dateString)
     XCTAssertEqual(addInterventionVC.selectedWorkingPeriodLabel.text, expectedString,
                    "Label must contain new date and duration values")
   }
 
   func test_dateButton_withTouchUpInside_shouldDisplaySelectDateView() {
-    //When
+    // When
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
                   "Select date view must be hidden before sendActions")
     addInterventionVC.workingPeriodDateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.selectDateView.isHidden,
                    "Select date view must not be hidden after sendActions")
   }
 
   func test_selectDateView_withValidateAction_shouldHideView() {
-    //Given
+    // Given
     let expectedDate: String = {
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "locale".localized)
@@ -157,7 +157,7 @@ class WorkingPeriodTests: XCTestCase {
       return dateFormatter.string(from: Date())
     }()
 
-    //When
+    // When
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
                   "Select date view must be hidden before touching dateButton")
     addInterventionVC.workingPeriodDateButton.sendActions(for: .touchUpInside)
@@ -165,7 +165,7 @@ class WorkingPeriodTests: XCTestCase {
                    "Select date view must not be hidden after touching dateButton")
     addInterventionVC.selectDateView.validateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
                   "Select date view must be hidden after touching touching validateButton")
     XCTAssertEqual(addInterventionVC.workingPeriodDateButton.titleLabel?.text, expectedDate,
@@ -173,7 +173,7 @@ class WorkingPeriodTests: XCTestCase {
   }
 
   func test_selectDateView_withDateChanged_shouldUpdateDateButton() {
-    //Given
+    // Given
     let date: Date = {
       let calendar = Calendar(identifier: .gregorian)
       var dateComponents = DateComponents()
@@ -190,7 +190,7 @@ class WorkingPeriodTests: XCTestCase {
       return dateFormatter.string(from: date)
     }()
 
-    //When
+    // When
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
                   "Select date view must be hidden before touching dateButton")
     addInterventionVC.workingPeriodDateButton.sendActions(for: .touchUpInside)
@@ -199,7 +199,7 @@ class WorkingPeriodTests: XCTestCase {
     addInterventionVC.selectDateView.datePicker.date = date
     addInterventionVC.selectDateView.validateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
                   "Select date view must be hidden after touching touching validateButton")
     XCTAssertEqual(addInterventionVC.workingPeriodDateButton.titleLabel?.text, expectedTitle,
@@ -207,31 +207,31 @@ class WorkingPeriodTests: XCTestCase {
   }
 
   func test_unitLabel_withDurationLesserThanOrEqualTo1_shouldBeSingular() {
-    //Given
+    // Given
     let duration = "1.00"
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
                    "Working period unit should be plural before sendActions")
     addInterventionVC.workingPeriodDurationTextField.text = duration
     addInterventionVC.workingPeriodDurationTextField.sendActions(for: .editingChanged)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hour".localized,
                    "Working period unit label not updated correctly when duration is <= 1")
   }
 
   func test_unitLabel_withDurationGreaterThan1_shouldBePlural() {
-    //Given
+    // Given
     let duration = "1000"
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
                    "Working period unit should be plural before sendActions")
     addInterventionVC.workingPeriodDurationTextField.text = duration
     addInterventionVC.workingPeriodDurationTextField.sendActions(for: .editingChanged)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.workingPeriodUnitLabel.text, "hours".localized,
                    "Working period unit label not updated correctly when duration is > 1")
   }

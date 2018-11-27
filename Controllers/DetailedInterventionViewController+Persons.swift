@@ -35,7 +35,6 @@ extension AddInterventionViewController {
     selectedPersonsTableView.bounces = false
     selectedPersonsTableView.dataSource = self
     selectedPersonsTableView.delegate = self
-    personsSelectionView.cancelButton.addTarget(self, action: #selector(closePersonsSelectionView), for: .touchUpInside)
     personsSelectionView.addInterventionViewController = self
   }
 
@@ -52,7 +51,7 @@ extension AddInterventionViewController {
     interventionPerson.isDriver = false
     selectedPersons[0].append(person)
     selectedPersons[1].append(interventionPerson)
-    closePersonsSelectionView()
+    personsSelectionView.cancelButton.sendActions(for: .touchUpInside)
     updateView()
   }
 
@@ -85,6 +84,7 @@ extension AddInterventionViewController {
       return
     }
 
+    view.endEditing(true)
     updatePersonsCountLabel()
     personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     personsAddButton.isHidden = !shouldExpand
@@ -100,20 +100,6 @@ extension AddInterventionViewController {
     } else {
       personsCountLabel.text = String(format: "persons".localized, selectedPersons[0].count)
     }
-  }
-
-  @objc private func closePersonsSelectionView() {
-    personsSelectionView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-
-    personsSelectionView.searchBar.text = nil
-    personsSelectionView.searchBar.endEditing(true)
-    personsSelectionView.isSearching = false
-    personsSelectionView.tableView.reloadData()
   }
 
   @objc func updateIsDriver(sender: UISwitch) {
@@ -132,7 +118,7 @@ extension AddInterventionViewController {
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
       self.deletePerson(indexPath.row)
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   private func deletePerson(_ index: Int)  {
@@ -140,5 +126,18 @@ extension AddInterventionViewController {
     selectedPersons[1].remove(at: index)
     updateView()
     personsSelectionView.tableView.reloadData()
+  }
+
+  func selectedPersonsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedPersonCell {
+    let selectedPerson = selectedPersons[0][indexPath.row]
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath)
+      as! SelectedPersonCell
+
+    cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
+    cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
+    cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
+    cell.driverSwitch.isOn = selectedPersons[1][indexPath.row].value(forKey: "isDriver") as! Bool
+    cell.driverSwitch.addTarget(self, action: #selector(updateIsDriver), for: .valueChanged)
+    return cell
   }
 }

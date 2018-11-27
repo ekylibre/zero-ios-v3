@@ -74,9 +74,9 @@ class InterventionCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      typeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       typeImageView.heightAnchor.constraint(equalToConstant: 55),
-      typeImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
       typeImageView.widthAnchor.constraint(equalToConstant: 55),
       typeLabel.topAnchor.constraint(equalTo: typeImageView.topAnchor),
       typeLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
@@ -85,8 +85,8 @@ class InterventionCell: UITableViewCell {
       stateImageView.leadingAnchor.constraint(equalTo: typeLabel.trailingAnchor, constant: 10),
       stateImageView.widthAnchor.constraint(equalToConstant: 20),
       dateLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor),
-      dateLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      cropsLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      cropsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       cropsLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
       notesLabel.bottomAnchor.constraint(equalTo: typeImageView.bottomAnchor),
       notesLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15)

@@ -26,69 +26,69 @@ class CropsTests: XCTestCase {
   }
 
   func test_selectedCropsLabel_withoutSelection_shouldNotChange() {
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, "no_crop_selected".localized,
                    "Selected crops label should be no_crop_selected before sendActions")
     addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, "no_crop_selected".localized,
                    "Selected crops label should not change if no crop have been selected")
   }
 
   func test_selectedCropsLabel_withASelection_shouldChange() {
-    //Given
+    // Given
     let cropsCount = 1
     let surfaceArea: Float = 23.1
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, "no_crop_selected".localized,
                    "Selected crops label should be no_crop_selected before sendActions")
     addInterventionVC.cropsView.selectedCropsCount = cropsCount
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
 
-    //Then
+    // Then
     let expectedString = String(format: "crop".localized, 1) + " • 23.1 ha"
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, expectedString,
                    "Selected crops label should change if a crop have been selected")
   }
 
   func test_selectedCropsLabel_withMultipleSelection_shouldChange() {
-    //Given
+    // Given
     let cropsCount = 12
     let surfaceArea: Float = 284.225
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, "no_crop_selected".localized,
                    "Selected crops label should be no_crop_selected before sendActions")
     addInterventionVC.cropsView.selectedCropsCount = cropsCount
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
 
-    //Then
+    // Then
     let expectedString = String(format: "crops".localized, 12) + " • 284.2 ha"
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, expectedString,
                    "Selected crops label should change if a crop have been selected")
   }
 
   func test_totalLabel_withoutSelection_shouldNotChange() {
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.totalLabel.text, "select_crops".localized.uppercased(),
                    "Total label should be select_crops before sendActions")
     addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.totalLabel.text, "select_crops".localized.uppercased(),
                    "Total label should not change if no crop have been selected")
   }
 
   func test_totalLabel_withASelection_shouldChange() {
-    //Given
+    // Given
     let cropsCount = 1
     let surfaceArea: Float = 23.1
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.totalLabel.text, "select_crops".localized.uppercased(),
                    "Total label should be select_crops before sendActions")
     addInterventionVC.cropsView.selectedCropsCount = cropsCount
@@ -96,17 +96,17 @@ class CropsTests: XCTestCase {
     addInterventionVC.cropsView.updateSelectedCropsLabel()
     addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.totalLabel.text, addInterventionVC.cropsView.selectedCropsLabel.text,
                    "Total label should change if crops have been selected")
   }
 
   func test_totalLabel_withMultipleSelection_shouldChange() {
-    //Given
+    // Given
     let cropsCount = 12
     let surfaceArea: Float = 284.225
 
-    //When
+    // When
     XCTAssertEqual(addInterventionVC.totalLabel.text, "select_crops".localized.uppercased(),
                    "Total label should be select_crops before sendActions")
     addInterventionVC.cropsView.selectedCropsCount = cropsCount
@@ -114,7 +114,7 @@ class CropsTests: XCTestCase {
     addInterventionVC.cropsView.updateSelectedCropsLabel()
     addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.totalLabel.text, addInterventionVC.cropsView.selectedCropsLabel.text,
                    "Total label should change if crops have been selected")
   }

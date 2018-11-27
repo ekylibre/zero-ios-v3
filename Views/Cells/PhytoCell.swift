@@ -25,6 +25,26 @@ class PhytoCell: UITableViewCell {
     return firmNameLabel
   }()
 
+  lazy var unauthorizedMixingImage: UIImageView = {
+    let unauthorizedMixingImage = UIImageView(frame: CGRect.zero)
+    let warningImage = UIImage(named: "warning")?.withRenderingMode(.alwaysTemplate)
+    unauthorizedMixingImage.image = warningImage
+    unauthorizedMixingImage.tintColor = .red
+    unauthorizedMixingImage.isHidden = true
+    unauthorizedMixingImage.translatesAutoresizingMaskIntoConstraints = false
+    return unauthorizedMixingImage
+  }()
+
+  lazy var unauthorizedMixingLabel: UILabel = {
+    let unauthorizedMixingLabel = UILabel(frame: CGRect.zero)
+    unauthorizedMixingLabel.font = UIFont.systemFont(ofSize: 14)
+    unauthorizedMixingLabel.textColor = .red
+    unauthorizedMixingLabel.text = "unauthorized_mixing".localized
+    unauthorizedMixingLabel.isHidden = true
+    unauthorizedMixingLabel.translatesAutoresizingMaskIntoConstraints = false
+    return unauthorizedMixingLabel
+  }()
+
   lazy var maaLabel: UILabel = {
     let maaLabel = UILabel(frame: CGRect.zero)
     maaLabel.text = "mmaid_number".localized
@@ -59,12 +79,10 @@ class PhytoCell: UITableViewCell {
 
   lazy var starImageView: UIImageView = {
     let starImageView = UIImageView(frame: CGRect.zero)
-    let starImage = UIImage(named: "star")!
-    let tintedImage = starImage.withRenderingMode(.alwaysTemplate)
-    starImageView.image = tintedImage
+    starImageView.image = UIImage(named: "star")?.withRenderingMode(.alwaysTemplate)
     starImageView.tintColor = AppColor.BarColors.Green
-    starImageView.translatesAutoresizingMaskIntoConstraints = false
     starImageView.isHidden = true
+    starImageView.translatesAutoresizingMaskIntoConstraints = false
     return starImageView
   }()
 
@@ -76,6 +94,8 @@ class PhytoCell: UITableViewCell {
   private func setupCell() {
     contentView.addSubview(nameLabel)
     contentView.addSubview(firmNameLabel)
+    contentView.addSubview(unauthorizedMixingImage)
+    contentView.addSubview(unauthorizedMixingLabel)
     contentView.addSubview(maaLabel)
     contentView.addSubview(maaIDLabel)
     contentView.addSubview(reentryLabel)
@@ -86,21 +106,28 @@ class PhytoCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
       firmNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-      firmNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      maaLabel.topAnchor.constraint(equalTo: firmNameLabel.bottomAnchor, constant: 15),
-      maaLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      maaIDLabel.topAnchor.constraint(equalTo: firmNameLabel.bottomAnchor, constant: 15),
+      firmNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      unauthorizedMixingImage.heightAnchor.constraint(equalToConstant: 15),
+      unauthorizedMixingImage.widthAnchor.constraint(equalToConstant: 15),
+      unauthorizedMixingImage.leadingAnchor.constraint(equalTo: firmNameLabel.leadingAnchor),
+      unauthorizedMixingImage.topAnchor.constraint(equalTo: firmNameLabel.bottomAnchor),
+      unauthorizedMixingLabel.centerYAnchor.constraint(equalTo: unauthorizedMixingImage.centerYAnchor),
+      unauthorizedMixingLabel.leadingAnchor.constraint(equalTo: unauthorizedMixingImage.trailingAnchor, constant: 3),
+      maaLabel.topAnchor.constraint(equalTo: unauthorizedMixingImage.bottomAnchor, constant: 5),
+      maaLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      maaIDLabel.centerYAnchor.constraint(equalTo: maaLabel.centerYAnchor),
       maaIDLabel.leadingAnchor.constraint(equalTo: maaLabel.trailingAnchor, constant: 15),
       reentryLabel.topAnchor.constraint(equalTo: maaLabel.bottomAnchor),
-      reentryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      reentryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
       inFieldReentryDelayLabel.topAnchor.constraint(equalTo: maaIDLabel.bottomAnchor),
       inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15),
-      starImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       starImageView.heightAnchor.constraint(equalToConstant: 20),
-      starImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      starImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
       starImageView.widthAnchor.constraint(equalToConstant: 20)
       ])
   }

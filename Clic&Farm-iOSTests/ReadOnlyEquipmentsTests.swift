@@ -27,11 +27,11 @@ class ReadOnlyEquipmentsTests: XCTestCase {
 
 
   func test_updateEquipmentsCountLabelWithoutEquipment_shouldNotChange() {
-    //When
+    // When
     addInterventionVC.selectedEquipments.removeAll()
     addInterventionVC.updateEquipmentsCountLabel()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.equipmentsCountLabel.text, "none".localized, "Should have no equipment")
   }
 }

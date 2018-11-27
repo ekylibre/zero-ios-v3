@@ -28,21 +28,21 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
   }
 
   private func setupView(_ superview: UIView) {
-    self.isHidden = true
-    self.backgroundColor = AppColor.CellColors.LightGray
-    self.delegate = self
-    self.dataSource = self
-    self.translatesAutoresizingMaskIntoConstraints = false
+    isHidden = true
+    backgroundColor = AppColor.CellColors.LightGray
+    delegate = self
+    dataSource = self
+    translatesAutoresizingMaskIntoConstraints = false
     superview.addSubview(self)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      self.bottomAnchor.constraint(equalTo: self.superview!.bottomAnchor),
-      self.heightAnchor.constraint(equalToConstant: 216),
-      self.centerXAnchor.constraint(equalTo: self.superview!.centerXAnchor),
-      self.widthAnchor.constraint(equalTo: self.superview!.widthAnchor)
+      bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
+      heightAnchor.constraint(equalToConstant: 216),
+      centerXAnchor.constraint(equalTo: superview!.centerXAnchor),
+      widthAnchor.constraint(equalTo: superview!.widthAnchor)
       ])
   }
 

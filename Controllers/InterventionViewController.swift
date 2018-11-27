@@ -17,11 +17,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var syncView: UIView!
-  @IBOutlet weak var synchroLabel: UILabel!
+  @IBOutlet weak var syncLabel: UILabel!
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var createInterventionButton: UIButton!
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var bottomBottom: NSLayoutConstraint!
 
   // MARK: - Properties
 
@@ -31,114 +30,43 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       tableView.reloadData()
     }
   }
-
   let navItem = UINavigationItem()
-  let dimView = UIView()
   let refreshControl = UIRefreshControl()
-  var interventionButtons = [UIButton]()
-  var interventionButtonsLabels = [UILabel]()
+  let dimView = UIView(frame: CGRect.zero)
+  var interventionTypeButtons = [UIButton]()
+  var interventionTypeLabels = [UILabel]()
+  var farmNameLabel: UILabel!
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
+  var farmID: String!
 
   // MARK: - Initialization
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    super.hideKeyboardWhenTappedAround()
 
-    setupNavigationBar()
-
-    // Change status bar appearance
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-
-    // Rounded buttons
-    createInterventionButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-    createInterventionButton.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-    createInterventionButton.layer.shadowOpacity = 1.0
-    createInterventionButton.layer.shadowRadius = 0.0
-    createInterventionButton.layer.masksToBounds = false
-    createInterventionButton.layer.cornerRadius = 3
-    //createInterventionButton.clipsToBounds = true
-
-    // Dim view
-    self.view.addSubview(dimView)
-
-    dimView.translatesAutoresizingMaskIntoConstraints = false
-    dimView.backgroundColor = UIColor.black
-    dimView.alpha = 0.6
-    let leadingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
-    let trailingConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: .equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
-    let topConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: .equal, toItem: navigationBar, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
-    let bottomConstraint = NSLayoutConstraint(item: dimView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: .equal, toItem: bottomView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
-    NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
-    dimView.isUserInteractionEnabled = true
-    let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideInterventionAdd))
-    gesture.numberOfTapsRequired = 1
-    dimView.addGestureRecognizer(gesture)
-    dimView.isHidden = true
-
-    updateSynchronisationLabel()
-
-    initialiseInterventionButtons()
-
-    // Load table view
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.refreshControl = refreshControl
+    setupNavigationBar()
+    setupTableView()
+    setupBottomView()
+    updateSyncLabel()
+    setupDimView()
 
     checkLocalData()
+    fetchInterventions()
     if Connectivity.isConnectedToInternet() {
-      fetchInterventions()
-      synchronise(self)
-    } else {
-      fetchInterventions()
-    }
-  }
-
-  func updateSynchronisationLabel() {
-    if let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date {
-      let calendar = Calendar.current
-      let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "locale".localized)
-      dateFormatter.dateFormat = "d MMMM"
-
-      let hour = calendar.component(.hour, from: date)
-      let minute = calendar.component(.minute, from: date)
-      let dateString = dateFormatter.string(from: date)
-
-      if calendar.isDateInToday(date) {
-        synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
-      } else {
-        synchroLabel.text = "last_synchronization".localized + dateString
-      }
-    } else {
-      synchroLabel.text = "no_synchronization_listed".localized
-    }
-
-    initialiseInterventionButtons()
-
-    // Load table view
-    tableView.bringSubviewToFront(syncView)
-    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
-    tableView.rowHeight = 80
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.refreshControl = refreshControl
-
-    checkLocalData()
-    if Connectivity.isConnectedToInternet() {
-      fetchInterventions()
-      synchronise(self)
-    } else {
-      fetchInterventions()
+      tableView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height), animated: true)
+      refreshControl.beginRefreshing()
+      refreshControl.sendActions(for: .valueChanged)
     }
   }
 
   private func setupNavigationBar() {
-    let farmNameLabel = UILabel()
     let cropsButton = UIButton()
     let logoutButton = UIButton()
 
+    navigationController?.navigationBar.isHidden = true
+    farmNameLabel = UILabel()
     farmNameLabel.text = fetchFarmName()
     farmNameLabel.textColor = UIColor.white
     farmNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
@@ -147,7 +75,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
     logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
     logoutButton.tintColor = .white
-    logoutButton.addTarget(self, action: #selector(logoutFromFarm), for: .touchUpInside)
+    logoutButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
 
     NSLayoutConstraint.activate([
       cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
@@ -161,65 +89,122 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     navigationBar.setItems([navItem], animated: true)
   }
 
-  func initialiseInterventionButtons() {
-    for buttonCount in 0...6 {
-      let interventionButton = UIButton(frame: CGRect(x: 30, y: 600, width: bottomView.bounds.width, height: bottomView.bounds.height))
-      let image = UIImage(named: interventionTypes[buttonCount].lowercased().replacingOccurrences(of: "_", with: "-"))
-      let interventionLabel = UILabel()
+  private func setupTableView() {
+    tableView.bringSubviewToFront(syncView)
+    tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.rowHeight = 80
+    tableView.delegate = self
+    tableView.dataSource = self
+    tableView.refreshControl = refreshControl
+    refreshControl.addTarget(self, action: #selector(synchronise), for: .valueChanged)
+  }
 
-      interventionButton.tag = buttonCount
-      interventionButton.backgroundColor = UIColor.white
-      interventionButton.setBackgroundImage(image, for: .normal)
-      interventionButton.layer.cornerRadius = 3
-      interventionButton.isHidden = false
-      interventionLabel.text = interventionTypes[buttonCount].localized
-      interventionLabel.textColor = .white
-      interventionLabel.font = UIFont.systemFont(ofSize: 15)
-      interventionLabel.translatesAutoresizingMaskIntoConstraints = false
-      interventionLabel.isHidden = true
-      interventionButtons.append(interventionButton)
-      interventionButtonsLabels.append(interventionLabel)
-      bottomView.addSubview(interventionButton)
-      bottomView.addSubview(interventionButtonsLabels[interventionButton.tag])
+  private func setupBottomView() {
+    createInterventionButton.layer.shadowColor = UIColor.black.withAlphaComponent(0.25).cgColor
+    createInterventionButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+    createInterventionButton.layer.shadowOpacity = 1
+    createInterventionButton.layer.shadowRadius = 0
+    createInterventionButton.layer.masksToBounds = false
+    createInterventionButton.layer.cornerRadius = 3
+    createInterventionButton.addTarget(self, action: #selector(expandBottomView), for: .touchUpInside)
+
+    setupInterventionTypeButtons()
+    setupInterventionTypeLabels()
+  }
+
+  private func setupInterventionTypeButtons() {
+    for index in 0...6 {
+      let interventionTypeButton = UIButton(frame: CGRect.zero)
+      let assetName = interventionTypes[index].lowercased().replacingOccurrences(of: "_", with: "-")
+      let image = UIImage(named: assetName)
+
+      interventionTypeButton.tag = index
+      interventionTypeButton.backgroundColor = UIColor.white
+      interventionTypeButton.setBackgroundImage(image, for: .normal)
+      interventionTypeButton.layer.cornerRadius = 3
+      interventionTypeButton.isHidden = true
+      interventionTypeButton.addTarget(self, action: #selector(presentAddInterventionVC), for: .touchUpInside)
+      interventionTypeButton.translatesAutoresizingMaskIntoConstraints = false
+      bottomView.addSubview(interventionTypeButton)
+      interventionTypeButtons.append(interventionTypeButton)
+      setupButtonLayout(button: interventionTypeButton, index: CGFloat(index + 1))
     }
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+  private func setupButtonLayout(button: UIButton, index: CGFloat) {
+    let column = index.truncatingRemainder(dividingBy: 4)
+    let gapWidth = (UIScreen.main.bounds.width - 280) / 5
+    let leftConstant = gapWidth + column * (70 + gapWidth)
+    let topConstant: CGFloat = index > 3 ? 120 : 20
+
+    NSLayoutConstraint.activate([
+      button.leftAnchor.constraint(equalTo: bottomView.leftAnchor, constant: leftConstant),
+      button.widthAnchor.constraint(equalToConstant: 70),
+      button.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: topConstant),
+      button.heightAnchor.constraint(equalToConstant: 70)
+      ])
   }
 
-  private func fetchInterventions() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+  private func setupInterventionTypeLabels() {
+    for index in 0...6 {
+      let interventionTypeLabel = UILabel()
+
+      interventionTypeLabel.text = interventionTypes[index].localized
+      interventionTypeLabel.textColor = .white
+      interventionTypeLabel.font = UIFont.systemFont(ofSize: 15)
+      interventionTypeLabel.isHidden = true
+      interventionTypeLabel.translatesAutoresizingMaskIntoConstraints = false
+      bottomView.addSubview(interventionTypeLabel)
+      interventionTypeLabels.append(interventionTypeLabel)
+
+      NSLayoutConstraint.activate([
+        interventionTypeLabel.centerXAnchor.constraint(equalTo: interventionTypeButtons[index].centerXAnchor),
+        interventionTypeLabel.topAnchor.constraint(equalTo: interventionTypeButtons[index].bottomAnchor, constant: 5)
+        ])
+    }
+  }
+
+  private func updateSyncLabel() {
+    guard let date = UserDefaults.standard.value(forKey: "lastSyncDate") as? Date else {
+      syncLabel.text = "no_synchronization_listed".localized
       return
     }
+    let calendar = Calendar.current
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
+    if calendar.isDateInToday(date) {
+      let hour = calendar.component(.hour, from: date)
+      let minute = calendar.component(.minute, from: date)
 
-    do {
-      interventions = try managedContext.fetch(interventionsFetchRequest)
-      sortInterventionByDate()
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+      syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+    } else {
+      let dateFormatter = DateFormatter()
+
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMMM"
+      syncLabel.text = String(format: "last_synchronization".localized, dateFormatter.string(from: date))
     }
   }
 
-  func sortInterventionByDate() {
-    interventions = interventions.sorted(by: {
-      let result: Bool!
+  private func setupDimView() {
+    let gesture = UITapGestureRecognizer(target: self, action: #selector(collapseBottomView))
 
-      if ($0.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil && ($1.workingPeriods?.anyObject() as? WorkingPeriod)?.executionDate != nil {
-        result = ($0.workingPeriods?.anyObject() as! WorkingPeriod).executionDate! >
-          ($1.workingPeriods?.anyObject() as! WorkingPeriod).executionDate!
-        return result
-      }
-      return true
-    })
+    dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    dimView.addGestureRecognizer(gesture)
+    dimView.isHidden = true
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(dimView)
+
+    NSLayoutConstraint.activate([
+      dimView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+      dimView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+      dimView.bottomAnchor.constraint(equalTo: bottomView.topAnchor)
+      ])
   }
 
-  // MARK: - Apollo
+  // MARK: - Core Data
 
-  func fetchFarmName() -> String? {
+  private func fetchFarmName() -> String? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -236,76 +221,58 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return nil
   }
 
-  // MARK: - Logout
-
-  func emptyCoreData(entityName: String) {
+  private func fetchInterventions() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let request = NSBatchDeleteRequest(fetchRequest: fetch)
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
 
     do {
-      try managedContext.execute(request)
+      interventions = try managedContext.fetch(interventionsFetchRequest)
+      sortInterventionsByDate()
     } catch let error as NSError {
-      print("Could not remove data. \(error), \(error.userInfo)")
+      print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
-  func emptyAllCoreData() {
-    let entitiesNames = [
-      "Crop",
-      "Equipment",
-      "Farm",
-      "Fertilizer",
-      "Harvest",
-      "InterventionEquipment",
-      "InterventionFertilizer",
-      "InterventionMaterial",
-      "InterventionPerson",
-      "InterventionPhytosanitary",
-      "Intervention",
-      "InterventionSeed",
-      "Material",
-      "Person",
-      "Phyto",
-      "Seed",
-      "Storage",
-      "User",
-      "Weather",
-      "WorkingPeriod"]
+  private func sortInterventionsByDate() {
+    interventions = interventions.sorted(by: {
+      let firstWorkingPeriod = $0.workingPeriods?.anyObject() as! WorkingPeriod
+      let secondWorkingPeriod = $1.workingPeriods?.anyObject() as! WorkingPeriod
 
-    for entityName in entitiesNames {
-      emptyCoreData(entityName: entityName)
+      return firstWorkingPeriod.executionDate! > secondWorkingPeriod.executionDate!
+    })
+  }
+
+  private func checkCropsData() -> Bool {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return false
     }
+
+    var crops: [Crop]!
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
+
+    do {
+      crops = try managedContext.fetch(cropsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    if crops.count == 0 {
+      let alert = UIAlertController(title: "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
+      let action = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
+
+      alert.addAction(action)
+      present(alert, animated: true)
+      return false
+    }
+    return true
   }
 
-  @objc func logoutFromFarm(_ sender: Any) {
-    let alert = UIAlertController(title: "", message: "disconnect_prompt".localized, preferredStyle: .actionSheet)
-
-    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
-      let authentificationService = AuthentificationService(username: "", password: "")
-
-      authentificationService.logout()
-      UserDefaults.standard.set(false, forKey: "hasBeenLaunchedBefore")
-      UserDefaults.standard.set(0, forKey: "lastSyncDate")
-      UserDefaults.standard.synchronize()
-      self.emptyAllCoreData()
-      self.navigationController?.popViewController(animated: true)
-    }))
-    present(alert, animated: true)
-  }
-
-  // MARK: - Interventions by crop
-
-  @objc private func presentInterventionsByCrop(_ sender: Any) {
-    self.performSegue(withIdentifier: "showInterventionsByCrop", sender: self)
-  }
-
-  // MARK: - Table view data source
+  // MARK: - Table view
   
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -316,66 +283,36 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as? InterventionCell else {
-      fatalError("The dequeued cell is not an instance of InterventionCell")
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath)
+      as? InterventionCell else {
+        fatalError("The dequeued cell is not an instance of InterventionCell")
     }
 
     let intervention = interventions[indexPath.row]
-    let workingPeriod = fetchWorkingPeriod(intervention)
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
-    let stateTintColors: [Int16: UIColor] = [0: UIColor.orange, 1: UIColor.green, 2: UIColor.green]
+    let stateImages: [Int16: UIImage?] = [0: UIImage(named: "created"), 1: UIImage(named: "synced"),
+                                          2: UIImage(named: "validated")]
 
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized
-    cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
-    cell.stateImageView.tintColor = stateTintColors[intervention.status]
+    cell.stateImageView.image = stateImages[intervention.status]??.withRenderingMode(.alwaysTemplate)
+    cell.stateImageView.tintColor = (intervention.status == 0) ? UIColor.orange : UIColor.green
+    cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
     cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
     cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
-    if workingPeriod?.executionDate != nil {
-      cell.dateLabel.text = transformDate(date: (workingPeriod?.executionDate)!)
-    }
     return cell
   }
 
-  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-    workingPeriodsFetchRequest.predicate = predicate
-
-    do {
-      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
-      return workingPeriods.first
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  private func updateCropsLabel(_ targets: NSSet) -> String {
-    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
-    var totalSurfaceArea: Float = 0
-
-    for case let target as Target in targets {
-      let crop = target.crop!
-
-      totalSurfaceArea += crop.surfaceArea
-    }
-    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
-  }
-
-  func transformDate(date: Date) -> String {
+  private func updateDateLabel(_ workingPeriods: NSSet) -> String {
+    let date = (workingPeriods.allObjects as! [WorkingPeriod]).first!.executionDate!
     let calendar = Calendar.current
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "locale".localized)
-    dateFormatter.dateFormat = "d MMMM"
-
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMM"
+      return dateFormatter
+    }()
     var dateString = dateFormatter.string(from: date)
     let year = calendar.component(.year, from: date)
 
@@ -391,26 +328,22 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func createIntervention(type: String, infos: String, status: Int16, executionDate: Date) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
+  private func updateCropsLabel(_ targets: NSSet) -> String {
+    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
+    var totalSurfaceArea: Float = 0
+
+    for case let target as Target in targets {
+      let crop = target.crop!
+
+      totalSurfaceArea += crop.surfaceArea
     }
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
+  }
 
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let intervention = Intervention(context: managedContext)
-    let workingPeriod = WorkingPeriod(context: managedContext)
-
-    intervention.type = type
-    intervention.infos = infos
-    intervention.status = status
-    workingPeriod.intervention = intervention
-    workingPeriod.executionDate = executionDate
-
-    do {
-      try managedContext.save()
-      interventions.append(intervention)
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
+      refreshControl.beginRefreshing()
+      refreshControl.sendActions(for: .valueChanged)
     }
   }
 
@@ -428,28 +361,37 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
+  @IBAction private func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) {
     if segue.source is AddInterventionViewController {
       fetchInterventions()
     }
   }
 
-  func makeDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
-    let calendar = Calendar(identifier: .gregorian)
-    let components = DateComponents(year: year, month: month, day: day, hour: hour, minute: minute, second: second)
-    return calendar.date(from: components)!
+  @objc private func presentAddInterventionVC(sender: UIButton) {
+    performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
+    collapseBottomView()
+  }
+
+  @objc private func presentInterventionsByCrop(_ sender: Any) {
+    if !checkCropsData() {
+      return
+    }
+
+    performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
+    collapseBottomView()
   }
 
   // MARK: - Actions
 
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
-      refreshControl.beginRefreshing()
-      synchronise(self)
+  private func updateFarmNameLabel() {
+    if farmNameLabel?.text == nil {
+      farmNameLabel?.text = fetchFarmName()
+      navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
+      navigationBar.setItems([navItem], animated: true)
     }
   }
 
-  @IBAction func synchronise(_ sender: Any) {
+  @objc private func synchronise() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -459,11 +401,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let calendar = Calendar.current
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
-    let farmNameLabel = navItem.leftBarButtonItem?.customView as? UILabel
 
     queryFarms { (success) in
       if success {
-        farmNameLabel?.text = self.fetchFarmName()
+        self.updateFarmNameLabel()
         self.pushStoragesIfNeeded()
         self.pushInterventionIfNeeded()
         self.fetchInterventions()
@@ -473,18 +414,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         } catch let error as NSError {
           print("Could not save. \(error), \(error.userInfo)")
         }
-        self.synchroLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
+        self.syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
         UserDefaults.standard.synchronize()
       } else {
-        self.synchroLabel.text = "sync_failure".localized
+        self.syncLabel.text = "sync_failure".localized
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()
     }
   }
 
-  func pushInterventionIfNeeded() {
+  private func pushInterventionIfNeeded() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -510,75 +451,79 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func fetchCrops() -> [Crop] {
+  @objc private func expandBottomView() {
+    if !checkCropsData() {
+      return
+    }
+
+    createInterventionButton.isHidden = true
+    heightConstraint.constant = 220
+    dimView.isHidden = false
+
+    for index in 0...6 {
+      interventionTypeButtons[index].isHidden = false
+      interventionTypeLabels[index].isHidden = false
+    }
+  }
+
+  @objc func collapseBottomView() {
+    for index in 0...6 {
+      interventionTypeButtons[index].isHidden = true
+      interventionTypeLabels[index].isHidden = true
+    }
+
+    dimView.isHidden = true
+    heightConstraint.constant = 60
+    createInterventionButton.isHidden = false
+  }
+
+  // MARK: - Logout
+
+  @objc private func presentLogoutAlert() {
+    let alert = UIAlertController(title: "disconnect_prompt".localized, message: nil, preferredStyle: .actionSheet)
+    let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
+    let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
+      self.logoutUser()
+    })
+
+    alert.addAction(cancelAction)
+    alert.addAction(logoutAction)
+    present(alert, animated: true)
+  }
+
+  private func logoutUser() {
+    let authentificationService = AuthentificationService(username: "", password: "")
+
+    authentificationService.logout()
+    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    UserDefaults.standard.synchronize()
+    emptyAllCoreData()
+    navigationController?.popViewController(animated: true)
+  }
+
+  private func emptyAllCoreData() {
+    let entityNames = appDelegate.persistentContainer.managedObjectModel.entities.map({ (entity) -> String in
+      return entity.name!
+    })
+
+    for entityName in entityNames {
+      batchDeleteEntity(name: entityName)
+    }
+  }
+
+  private func batchDeleteEntity(name: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crop]()
+      return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
+    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+    let request = NSBatchDeleteRequest(fetchRequest: fetch)
 
     do {
-      let crops = try managedContext.fetch(cropsFetchRequest)
-
-      return crops
+      try managedContext.execute(request)
     } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return [Crop]()
-  }
-
-  @objc func action(sender: UIButton) {
-      hideInterventionAdd()
-      performSegue(withIdentifier: "showAddInterventionVC", sender: sender)
-  }
-
-  @objc func hideInterventionAdd() {
-    for interventionButton in interventionButtons {
-      interventionButton.isHidden = true
-      interventionButtonsLabels[interventionButton.tag].isHidden = true
-    }
-
-    createInterventionButton.isHidden = false
-    heightConstraint.constant = 60
-    dimView.isHidden = true
-  }
-
-  @IBAction func addIntervention(_ sender: Any) {
-    let crops = fetchCrops()
-
-    if crops.count ==  0 {
-      let alert = UIAlertController(title: "", message: "start_online_with_crops".localized, preferredStyle: .alert)
-
-      alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
-      present(alert, animated: true)
-    } else {
-      self.heightConstraint.constant = 220
-      createInterventionButton.isHidden = true
-      bottomView.layoutIfNeeded()
-      var index: CGFloat = 1
-      var column: CGFloat = 1
-      var line: CGFloat = 0
-      let width = bottomView.frame.size.width
-
-      for interventionButton in interventionButtons {
-        interventionButton.isHidden = false
-        interventionButton.frame = CGRect(x: column * width/5.357 + (column + 1) * width/19.737, y: 20 + line * 100, width: 70, height: 70)
-        interventionButton.titleEdgeInsets = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
-        interventionButton.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
-        interventionButtonsLabels[interventionButton.tag].isHidden = false
-        NSLayoutConstraint.activate([
-          interventionButtonsLabels[interventionButton.tag].topAnchor.constraint(equalTo: interventionButton.bottomAnchor, constant: 5),
-          interventionButtonsLabels[interventionButton.tag].centerXAnchor.constraint(equalTo: interventionButton.centerXAnchor)
-          ])
-
-        bottomView.layoutIfNeeded()
-
-        index += 1
-        column = index.truncatingRemainder(dividingBy: 4)
-        line = floor(index / 4)
-      }
-      dimView.isHidden = false
+      print("Could not remove data. \(error), \(error.userInfo)")
     }
   }
 }

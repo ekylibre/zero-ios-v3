@@ -52,27 +52,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       if appDelegate.entityIsEmpty(entity: "User") && authentificationService?.oauth2.accessToken != nil {
         authentificationService?.logout()
       }
-      self.authentifyUser()
+      authentifyUser()
       staticIndex.firstLaunch = true
     }
   }
 
   // MARK: - Navigation
 
-  func checkLoggedStatus(token: String?) {
+  private func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
         navigationController?.navigationBar.isHidden = false
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
       } else {
         let alert = UIAlertController(
-          title: nil,
-          message: "login_failure".localized,
+          title: "login_failure".localized,
+          message: nil,
           preferredStyle: .alert
         )
 
         alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
-        self.present(alert, animated: true)
+        present(alert, animated: true)
       }
     } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -103,7 +103,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
 
   // MARK: - Actions
 
-  func authentifyUser() {
+  private func authentifyUser() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -118,7 +118,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       }
       if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController") as UIViewController
+        let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController")
+          as UIViewController
 
         navigationController?.pushViewController(interventionVC, animated: false)
       }
@@ -141,12 +142,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       keys = NSDictionary(contentsOfFile: path)
     }
     if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
-      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!,
+                                options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
+                                completionHandler: nil)
     }
   }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any])
+  -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {
+      key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)
+    })
 }
