@@ -197,7 +197,7 @@ extension AddInterventionViewController {
       }
       cell.nameLabel.text = name
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
+      //cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       return cell

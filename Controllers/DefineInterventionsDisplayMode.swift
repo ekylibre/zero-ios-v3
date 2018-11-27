@@ -21,6 +21,7 @@ extension AddInterventionViewController {
       irrigationTapGesture.isEnabled = false
       selectedEquipmentsTableView.isUserInteractionEnabled = false
       selectedPersonsTableView.isUserInteractionEnabled = false
+      selectedMaterialsTableView.isUserInteractionEnabled = false
       temperatureTextField.isUserInteractionEnabled = false
       windSpeedTextField.isUserInteractionEnabled = false
       temperatureSign.isUserInteractionEnabled = false
