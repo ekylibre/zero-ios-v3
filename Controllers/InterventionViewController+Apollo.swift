@@ -447,14 +447,8 @@ extension InterventionViewController {
 
       if let localArticle = localArticle {
         updateArticle(local: localArticle, updated: article)
-      } else {
-        let referenceIDIsNull = (article.referenceId == nil)
-        let referenceIDEqualZero = (article.referenceId == "0")
-        let predicate = NSPredicate(format: "referenceID == %@", article.referenceId!)
-
-        if !referenceIDIsNull && !referenceIDEqualZero && fetchArticle(type: type, predicate: predicate) == nil {
-          insertArticle(type, article)
-        }
+      } else if article.referenceId == nil {
+        insertArticle(type, article)
       }
     }
   }
