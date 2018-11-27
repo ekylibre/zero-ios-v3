@@ -18,7 +18,13 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var saveInterventionButton: UIButton!
   @IBOutlet weak var totalLabel: UILabel!
 
+  // Validated Intervention
+  @IBOutlet weak var interventionLogo: UIImageView!
+  @IBOutlet weak var warningView: UIView!
+  @IBOutlet weak var warningMessage: UILabel!
+
   // Working period
+  @IBOutlet var workingPeriodTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var workingPeriodHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var selectedWorkingPeriodLabel: UILabel!
   @IBOutlet weak var workingPeriodExpandImageView: UIImageView!
@@ -27,6 +33,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var workingPeriodUnitLabel: UILabel!
 
   // Irrigation
+  @IBOutlet var irrigationTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var irrigationView: UIView!
   @IBOutlet weak var irrigationHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var selectedIrrigationLabel: UILabel!
@@ -111,9 +118,18 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var notesTextView: UITextView!
   @IBOutlet weak var notesViewHeightConstraint: NSLayoutConstraint!
 
+  // Scroll view
+  @IBOutlet weak var scrollView: UIScrollView!
+  @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+
+  // Bottom views
+  @IBOutlet weak var bottomBarView: UIView!
+  @IBOutlet weak var bottomView: UIView!
+
   // MARK: - Properties
 
-  var newIntervention: Intervention!
+  var interventionState: InterventionState.RawValue!
+  var currentIntervention: Intervention!
   var interventionType: String!
   var dimView = UIView(frame: CGRect.zero)
   var cellIndexPath: IndexPath!
@@ -133,7 +149,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var species: [String]!
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
-  var harvests = [Harvest]()
+  var selectedHarvests = [Harvest]()
   var storages = [Storage]()
   var harvestSelectedType: String!
   var harvestNaturePickerView: CustomPickerView!
@@ -179,14 +195,10 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
+
     setupNavigationBar()
     setupDimView()
     saveInterventionButton.layer.cornerRadius = 3
-
-    cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
-    view.addSubview(cropsView)
-    cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
-
     setupWorkingPeriodView()
     setupIrrigationView()
     setupInputsView()
@@ -195,6 +207,19 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     setupEquipmentsView()
     setupPersonsView()
     setupWeatherView()
+
+    cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    cropsView.currentIntervention = currentIntervention
+    cropsView.interventionState = interventionState
+    loadInterventionInAppropriateMode()
+    cropsView.fetchCrops()
+    cropsView.validateButton.addTarget(self, action: #selector(validateCrops), for: .touchUpInside)
+    view.addSubview(cropsView)
+
+    if interventionState != nil {
+      totalLabel.text = cropsView.selectedCropsLabel.text
+      totalLabel.textColor = AppColor.TextColors.DarkGray
+    }
 
     initUnitMeasurePickerViews()
 
@@ -205,18 +230,31 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   private func setupNavigationBar() {
+    var barButtonItems = [UIBarButtonItem]()
     let navigationItem = UINavigationItem(title: "")
     let typeLabel = UILabel()
 
     if interventionType != nil {
       typeLabel.text = interventionType.localized
     }
-    typeLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
-    typeLabel.textColor = UIColor.white
-    let leftItem = UIBarButtonItem(customView: typeLabel)
+    typeLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+    typeLabel.textColor = .white
+    let typeItem = UIBarButtonItem.init(customView: typeLabel)
 
-    navigationItem.leftBarButtonItem = leftItem
-    navigationBar.setItems([navigationItem], animated: false)
+    if interventionState == InterventionState.Validated.rawValue {
+      let backButton = UIButton()
+      let buttonImage = UIImage(named: "exit-arrow")?.withRenderingMode(.alwaysTemplate)
+
+      backButton.setImage(buttonImage, for: .normal)
+      backButton.tintColor = .white
+      backButton.addTarget(self, action: #selector(goBackToInterventionViewController), for: .touchUpInside)
+      let backItem = UIBarButtonItem.init(customView: backButton)
+
+      barButtonItems.append(backItem)
+    }
+    barButtonItems.append(typeItem)
+    navigationItem.leftBarButtonItems = barButtonItems
+    navigationBar.setItems([navigationItem], animated: true)
   }
 
   private func setupDimView() {
@@ -298,9 +336,21 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     case selectedPersonsTableView:
       return selectedPersons[0].count
     case harvestTableView:
-      return harvests.count
+      return selectedHarvests.count
     default:
       return 1
+    }
+  }
+
+  func displayInputQuantityInReadOnlyMode(quantity: String?, unit: String?, cell: SelectedInputCell) {
+    if interventionState == InterventionState.Validated.rawValue {
+      cell.quantityTextField.placeholder = quantity
+      cell.unitButton.setTitle(unit?.localized, for: .normal)
+      cell.unitButton.setTitleColor(.lightGray, for: .normal)
+    } else if quantity == "0" || quantity == nil {
+      cell.quantityTextField.placeholder = "0"
+    } else {
+      cell.quantityTextField.text = quantity
     }
   }
 
@@ -348,25 +398,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   // MARK: - Core Data
 
-  private func changeWaterUnit() {
-    if interventionType == "IRRIGATION" {
-      let waterVolume = irrigationVolumeTextField.text!.floatValue
-
-      newIntervention.waterQuantity = waterVolume
-      switch irrigationUnitButton.titleLabel?.text {
-      case "m³":
-        newIntervention.waterUnit = "CUBIC_METER"
-      case "hl":
-        newIntervention.waterUnit = "HECTOLITER"
-      case "l":
-        newIntervention.waterUnit = "LITER"
-      default:
-        newIntervention.waterUnit = ""
-      }
-    }
-  }
-
-  @IBAction func createIntervention() {
+  func createIntervention() {
     if !checkErrorsAccordingInterventionType() {
       return
     }
@@ -379,20 +411,20 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let duration = workingPeriodDurationTextField.text!.floatValue
     let notes = (notesTextView.text != "notes".localized)
 
-    newIntervention = Intervention(context: managedContext)
-    newIntervention.type = interventionType
-    newIntervention.status = InterventionState.Created.rawValue
-    notes ? newIntervention.infos = notesTextView.text : nil
+    currentIntervention = Intervention(context: managedContext)
+    currentIntervention.type = interventionType
+    currentIntervention.status = InterventionState.Created.rawValue
+    notes ? currentIntervention.infos = notesTextView.text : nil
     changeWaterUnit()
-    workingPeriod.intervention = newIntervention
+    workingPeriod.intervention = currentIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     workingPeriod.hourDuration = duration
-    createTargets(intervention: newIntervention)
-    createMaterials(intervention: newIntervention)
-    createEquipments(intervention: newIntervention)
-    saveHarvest(intervention: newIntervention)
-    saveInterventionInputs(intervention: newIntervention)
-    saveWeather(intervention: newIntervention)
+    createTargets(currentIntervention)
+    createMaterials(currentIntervention)
+    createEquipments(currentIntervention)
+    saveHarvest(currentIntervention)
+    saveInterventionInputs(currentIntervention)
+    saveWeather(currentIntervention)
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
@@ -403,6 +435,228 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       print("Could not save. \(error), \(error.userInfo)")
     }
     performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
+  }
+
+  func updateIntervention() {
+    if !checkErrorsAccordingInterventionType() {
+      return
+    }
+    let duration = workingPeriodDurationTextField.text!.floatValue
+    let notes = (notesTextView.text != "notes".localized)
+
+    currentIntervention?.workingPeriods?.setValue(selectDateView.datePicker.date, forKey: "executionDate")
+    currentIntervention?.workingPeriods?.setValue(duration, forKey: "hourDuration")
+    notes ? currentIntervention.infos = notesTextView.text : nil
+    changeWaterUnit()
+    updateTargets(currentIntervention)
+    updateEquipments(currentIntervention)
+    updatePersons(currentIntervention)
+    updateInputs(currentIntervention)
+    updateHarvest(currentIntervention)
+    currentIntervention?.status = InterventionState.Created.rawValue
+    performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
+  }
+
+  private func changeWaterUnit() {
+    if interventionType == "IRRIGATION" {
+      let waterVolume = irrigationVolumeTextField.text!.floatValue
+
+      currentIntervention?.waterQuantity = waterVolume
+      switch irrigationUnitButton.titleLabel?.text {
+      case "m³":
+        currentIntervention?.waterUnit = "CUBIC_METER"
+      case "hl":
+        currentIntervention?.waterUnit = "HECTOLITER"
+      case "l":
+        currentIntervention?.waterUnit = "LITER"
+      default:
+        currentIntervention?.waterUnit = ""
+      }
+    }
+  }
+
+  func updateEquipments(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let equipmentsFetchRequest: NSFetchRequest<InterventionEquipment> = InterventionEquipment.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+
+    equipmentsFetchRequest.predicate = predicate
+    do {
+      let interventionEquipments = try managedContext.fetch(equipmentsFetchRequest)
+
+      for interventionEquipment in interventionEquipments {
+        managedContext.delete(interventionEquipment)
+      }
+      for selectedEquipment in selectedEquipments {
+        let interventionEquipment = InterventionEquipment(context: managedContext)
+
+        interventionEquipment.intervention = intervention
+        interventionEquipment.equipment = selectedEquipment
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateTargets(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+
+    targetsFetchRequest.predicate = predicate
+    do {
+      let targets = try managedContext.fetch(targetsFetchRequest)
+
+      for target in targets {
+        managedContext.delete(target)
+      }
+      createTargets(intervention)
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updatePersons(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionPersonsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+
+
+    interventionPersonsFetchRequest.predicate = predicate
+    do {
+      let interventionPersons = try managedContext.fetch(interventionPersonsFetchRequest)
+
+      for interventionPerson in interventionPersons {
+        managedContext.delete(interventionPerson)
+      }
+      for selectedPerson in selectedPersons[1] {
+        let person = InterventionPerson(context: managedContext)
+
+        person.intervention = intervention
+        person.isDriver = (selectedPerson as! InterventionPerson).isDriver
+        person.person = (selectedPerson as! InterventionPerson).person
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not fetch or save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateHarvest(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let harvestsFetchRequest: NSFetchRequest<Harvest> = Harvest.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+
+    harvestsFetchRequest.predicate = predicate
+
+    do {
+      let fetchedHarvests = try managedContext.fetch(harvestsFetchRequest)
+
+      for harvest in fetchedHarvests {
+        managedContext.delete(harvest)
+      }
+      for harvestEntity in selectedHarvests {
+        let harvest = Harvest(context: managedContext)
+        let type = harvestType.titleLabel?.text
+
+        harvest.intervention = intervention
+        harvest.type = type
+        harvest.number = harvestEntity.number
+        harvest.quantity = harvestEntity.quantity
+        harvest.unit = harvestEntity.unit
+        harvest.storage = harvestEntity.storage
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func deleteInput(_ intervention: Intervention, _ inputName: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: inputName)
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+
+    inputsFetchRequest.predicate = predicate
+
+    do {
+      let inputs = try managedContext.fetch(inputsFetchRequest)
+
+      for input in inputs {
+        managedContext.delete(input as! NSManagedObject)
+      }
+    } catch let error as NSError {
+      print("Could not delete. \(error), \(error.userInfo)")
+    }
+  }
+
+  func updateInputs(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    deleteInput(intervention, "InterventionSeed")
+    deleteInput(intervention, "InterventionPhytosanitary")
+    deleteInput(intervention, "InterventionFertilizer")
+
+    do {
+      for selectedInput in selectedInputs {
+        switch selectedInput {
+        case is InterventionSeed:
+          let selectedSeed = selectedInput as! InterventionSeed
+          let interventionSeed = InterventionSeed(context: managedContext)
+
+          interventionSeed.intervention = intervention
+          interventionSeed.seed = selectedSeed.seed
+          interventionSeed.quantity = selectedSeed.quantity
+          interventionSeed.unit = selectedSeed.unit
+        case is InterventionPhytosanitary:
+          let selectedPhyto = selectedInput as! InterventionPhytosanitary
+          let interventionPhyto = InterventionPhytosanitary(context: managedContext)
+
+          interventionPhyto.intervention = intervention
+          interventionPhyto.phyto = selectedPhyto.phyto
+          interventionPhyto.quantity = selectedPhyto.quantity
+          interventionPhyto.unit = selectedPhyto.unit
+        case is InterventionFertilizer:
+          let selectedFertilizer = selectedInput as! InterventionFertilizer
+          let interventionFertilizer = InterventionFertilizer(context: managedContext)
+
+          interventionFertilizer.intervention = intervention
+          interventionFertilizer.fertilizer = selectedFertilizer.fertilizer
+          interventionFertilizer.quantity = selectedFertilizer.quantity
+          interventionFertilizer.unit = selectedFertilizer.unit
+        default:
+          return
+        }
+      }
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   private func resetInputsAttributes(entity: String) {
@@ -428,7 +682,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  private func saveInterventionInputs(intervention: Intervention) {
+  private func saveInterventionInputs(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -446,38 +700,18 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func fetchSelectedCrops() -> [Crop] {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return [Crop]()
-    }
-
-    var crops: [Crop]!
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
-    let predicate = NSPredicate(format: "isSelected == true")
-
-    cropsFetchRequest.predicate = predicate
-    do {
-      crops = try managedContext.fetch(cropsFetchRequest)
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return crops
-  }
-
-  private func createTargets(intervention: Intervention) {
+  func createTargets(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
-    let selectedCrops = fetchSelectedCrops()
 
-    for crop in selectedCrops {
+    for selectedCrop in cropsView.selectedCrops {
       let target = Target(context: managedContext)
 
       target.intervention = intervention
-      target.crop = crop
+      target.crop = selectedCrop
       target.workAreaPercentage = 100
     }
 
@@ -488,14 +722,36 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  private func saveHarvest(intervention: Intervention) {
+  func createInterventionPersons(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
 
     let managedContext = appDelegate.persistentContainer.viewContext
 
-    for harvestEntity in harvests {
+    for selectedPerson in selectedPersons[1] {
+      let interventionPerson = InterventionPerson(context: managedContext)
+
+      interventionPerson.intervention = intervention
+      interventionPerson.isDriver = (selectedPerson as! InterventionPerson).isDriver
+      interventionPerson.person = (selectedPerson as! InterventionPerson).person
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func saveHarvest(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for harvestEntity in selectedHarvests {
       let harvest = Harvest(context: managedContext)
 
       harvest.type = harvestSelectedType
@@ -513,7 +769,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  private func createMaterials(intervention: Intervention) {
+  private func createMaterials(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -534,7 +790,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  private func createEquipments(intervention: Intervention) {
+  private func createEquipments(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -571,7 +827,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     searchedEntity = entity
   }
 
-  private func saveWeather(intervention: Intervention) {
+  private func saveWeather(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -590,6 +846,15 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   // MARK: - Navigation
+
+  @IBAction func saveOrUpdateIntervention() {
+    if interventionState == nil {
+      createIntervention()
+    } else if interventionState == InterventionState.Created.rawValue ||
+      interventionState == InterventionState.Synced.rawValue {
+      updateIntervention()
+    }
+  }
 
   // INFO: Needed to perform the unwind segue
   @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
@@ -624,6 +889,10 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     default:
       return
     }
+  }
+
+  @objc func goBackToInterventionViewController() {
+    dismiss(animated: true, completion: nil)
   }
 
   func writeValueBack(tag: Int, value: String) {
@@ -730,7 +999,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   private func checkCropsProduction() -> Bool {
     if interventionType == InterventionType.Harvest.rawValue ||
       interventionType == InterventionType.Implantation.rawValue {
-      let selectedCrops = fetchSelectedCrops()
+      let selectedCrops = cropsView.selectedCrops
       let firstCrop = selectedCrops.first?.species
 
       for selectedCrop in selectedCrops {
@@ -774,5 +1043,36 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
     dismiss(animated: true, completion: nil)
+  }
+
+  func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
+                          numberLabel: UILabel, addEntityButton: UIButton) {
+    if entities.count > 0 && constraint.constant == 70 {
+      addEntityButton.isHidden = true
+      numberLabel.isHidden = false
+      switch entities {
+      case selectedInputs:
+        numberLabel.text = (entities.count == 1 ? "input".localized :
+          String(format: "inputs".localized, entities.count))
+      case selectedMaterials[1]:
+        numberLabel.text = (entities.count == 1 ? "material".localized :
+          String(format: "materials".localized, entities.count))
+      case selectedEquipments:
+        numberLabel.text = (entities.count == 1 ? "equipment".localized :
+          String(format: "equipments".localized, entities.count))
+      case selectedPersons[1]:
+        numberLabel.text = (entities.count == 1 ? "person".localized :
+          String(format: "persons".localized, entities.count))
+      default:
+        return
+      }
+    } else if interventionState == InterventionState.Validated.rawValue {
+      addEntityButton.isHidden = true
+      numberLabel.isHidden = (constraint.constant != 70)
+      numberLabel.text = "none".localized
+    } else {
+      numberLabel.isHidden = true
+      addEntityButton.isHidden = false
+    }
   }
 }

@@ -76,9 +76,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return bottomView
   }()
 
+  var currentIntervention: Intervention?
+  var interventionState: InterventionState.RawValue!
   var crops = [[Crop]]()
+  var selectedCrops = [Crop]()
   var cropViews = [[CropView]]()
-  var selectedCropsCount: Int = 0
   var selectedSurfaceArea: Float = 0
 
   // MARK: - Initialization
@@ -86,7 +88,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
-    fetchCrops()
   }
 
   private func setupView() {
@@ -157,6 +158,15 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.nameLabel.sizeToFit()
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
+    cell.selectionStyle = UITableViewCell.SelectionStyle.none
+    if interventionState != nil {
+      for crop in crops {
+        if selectedCrops.contains(crop) {
+          cell.checkboxButton.isSelected = true
+          break
+        }
+      }
+    }
     return cell
   }
 
@@ -167,6 +177,19 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       surfaceArea += crop.surfaceArea
     }
     return surfaceArea
+  }
+
+  func showPlotIfReadOnly() {
+    if interventionState == InterventionState.Validated.rawValue {
+      for index in 0..<selectedCrops.count {
+        let indexPath = IndexPath.init(row: index, section: 0)
+
+        selectedIndexPath = indexPath
+        if !indexPaths.contains(selectedIndexPath!) {
+          indexPaths += [selectedIndexPath!]
+        }
+      }
+    }
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -206,10 +229,54 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     do {
       let crops = try managedContext.fetch(cropsFetchRequest)
-      organizeCropsByPlot(crops)
+
+      if interventionState == InterventionState.Validated.rawValue {
+        loadSelectedTargets()
+      } else if interventionState == InterventionState.Created.rawValue ||
+        interventionState == InterventionState.Synced.rawValue {
+        loadAllTargetAndSelectThem(crops)
+      } else {
+        organizeCropsByPlot(crops)
+      }
       createCropViews()
+      showPlotIfReadOnly()
     } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
+      print("Could not fetch: \(error), \(error.userInfo)")
+    }
+  }
+
+  private func loadSelectedTargets() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", currentIntervention!)
+
+    targetsFetchRequest.predicate = predicate
+
+    do {
+      let targets = try managedContext.fetch(targetsFetchRequest)
+
+      var cropsFromSamePlot = [Crop]()
+      var name: String!
+      for target in targets {
+        if name == nil {
+          name = target.crop?.plotName
+        }
+        if target.crop?.plotName != name {
+          name = target.crop?.plotName
+          self.crops.append(cropsFromSamePlot)
+          cropsFromSamePlot = [Crop]()
+        }
+        selectedSurfaceArea += (target.crop?.surfaceArea)!
+        selectedCrops.append(target.crop!)
+        cropsFromSamePlot.append(target.crop!)
+      }
+      self.crops.append(cropsFromSamePlot)
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
     }
   }
 
@@ -228,16 +295,74 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     self.crops.append(cropsFromSamePlot)
   }
 
+  private func checkIfTargetMatch() -> [Target]? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", currentIntervention!)
+
+    targetsFetchRequest.predicate = predicate
+    do {
+      return try managedContext.fetch(targetsFetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  private func loadAllTargetAndSelectThem(_ crops: [Crop]) {
+    let targets = checkIfTargetMatch()
+    var cropsFromSamePlot = [Crop]()
+    var name = crops.first?.plotName
+
+    for crop in crops {
+      if crop.plotName != name {
+        name = crop.plotName
+        self.crops.append(cropsFromSamePlot)
+        cropsFromSamePlot = [Crop]()
+      }
+      for target in targets! {
+        if crop == target.crop {
+          selectedSurfaceArea += crop.surfaceArea
+          selectedCrops.append(crop)
+          break
+        }
+      }
+      cropsFromSamePlot.append(crop)
+    }
+    self.crops.append(cropsFromSamePlot)
+  }
+
   private func createCropViews() {
     var frame: CGRect
     var cropViews = [CropView]()
     var view: CropView
+    var targets: [Target]?
+
+    if interventionState != nil {
+      targets = checkIfTargetMatch()
+    }
 
     for crops in crops {
       for (index, crop) in crops.enumerated() {
         frame = CGRect(x: 15, y: 60 + index * 60, width: 0, height: 60)
         view = CropView(frame: frame, crop)
         view.gesture.addTarget(self, action: #selector(tapCropView))
+        if targets != nil {
+          var matched = false
+          for target in targets! {
+            if view.crop == target.crop {
+              matched = true
+            }
+          }
+          if !matched, let index = selectedCrops.firstIndex(of: view.crop) {
+            selectedCrops.remove(at: index)
+          }
+        }
+        initCropsViewInAppropriateMode(view: view)
         cropViews.append(view)
       }
       self.cropViews.append(cropViews)
@@ -249,6 +374,9 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Actions
 
   @objc private func tapCheckbox(_ sender: UIButton) {
+    if interventionState == InterventionState.Validated.rawValue {
+      return
+    }
     let cell = sender.superview?.superview as! PlotCell
     let indexPath = tableView.indexPath(for: cell)!
     let crops = self.crops[indexPath.row]
@@ -264,12 +392,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func selectPlot(_ crops: [Crop], _ indexPath: IndexPath) {
-    selectedCropsCount += crops.count
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
     for (index, crop) in crops.enumerated() {
       cropViews[indexPath.row][index].checkboxImageView.isHighlighted = true
-      crop.isSelected = true
+      selectedCrops.append(crop)
     }
   }
 
@@ -279,15 +406,29 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     for case let view as CropView in cell.contentView.subviews {
       if view.checkboxImageView.isHighlighted {
         view.checkboxImageView.isHighlighted = false
-        selectedCropsCount -= 1
         selectedSurfaceArea -= crops[index].surfaceArea
-        crops[index].isSelected = false
+
+        if let index = selectedCrops.firstIndex(of: crops[index]) {
+          selectedCrops.remove(at: index)
+        }
       }
       index += 1
     }
   }
 
+  func initCropsViewInAppropriateMode(view: CropView) {
+    if interventionState != nil {
+      if selectedCrops.contains(view.crop) {
+        view.checkboxImageView.isHighlighted = true
+      }
+      updateSelectedCropsLabel()
+    }
+  }
+
   @objc private func tapCropView(sender: UIGestureRecognizer) {
+    if interventionState == InterventionState.Validated.rawValue {
+      return
+    }
     let cell = sender.view?.superview?.superview as! PlotCell
     let plotIndex = tableView.indexPath(for: cell)!.row
     let view = sender.view as! CropView
@@ -310,9 +451,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       cell.checkboxButton.isSelected = true
     }
 
-    selectedCropsCount += 1
     selectedSurfaceArea += crop.surfaceArea
-    crop.isSelected = true
+    selectedCrops.append(crop)
   }
 
   private func deselectCrop(_ crop: Crop, _ crops: [Crop], _ cell: PlotCell) {
@@ -327,16 +467,19 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       index += 1
     }
 
-    selectedCropsCount -= 1
     selectedSurfaceArea -= crop.surfaceArea
-    crop.isSelected = false
+
+    if let index = selectedCrops.firstIndex(of: crop) {
+      selectedCrops.remove(at: index)
+    }
   }
 
   func updateSelectedCropsLabel() {
-    if selectedCropsCount == 0 {
+    if selectedCrops.count == 0 {
       selectedCropsLabel.text = "no_crop_selected".localized
     } else {
-      let cropString = selectedCropsCount < 2 ? "crop".localized : String(format: "crops".localized, selectedCropsCount)
+      let cropString = selectedCrops.count < 2 ? "crop".localized :
+        String(format: "crops".localized, selectedCrops.count)
 
       selectedCropsLabel.text = cropString + String(format: " • %.1f ha", selectedSurfaceArea)
     }

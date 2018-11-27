@@ -266,7 +266,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     fromInputs[indexPath.row].setValue(true, forKey: "used")
     tableView.reloadData()
-    addInterventionViewController?.selectInput(fromInputs[indexPath.row])
+    addInterventionViewController?.selectInput(
+      fromInputs[indexPath.row], quantity: nil, unit: nil, calledFromCreatedIntervention: false)
   }
 
   // MARK: - Search bar
@@ -452,13 +453,64 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
+  private func checkSeedName() -> Bool {
+    if seedView.varietyTextField.text!.isEmpty {
+      seedView.errorLabel.text = "seed_variety_is_empty".localized
+      seedView.errorLabel.isHidden = false
+      return false
+    } else if seeds.contains(where: { $0.variety?.lowercased() == seedView.varietyTextField.text?.lowercased() }) {
+      seedView.errorLabel.text = "seed_variety_not_available".localized
+      seedView.errorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
+  private func checkPhytoName() -> Bool {
+    if phytoView.nameTextField.text!.isEmpty {
+      phytoView.errorLabel.text = "phyto_name_is_empty".localized
+      phytoView.errorLabel.isHidden = false
+      return false
+    } else if phytos.contains(where: { $0.name?.lowercased() == phytoView.nameTextField.text?.lowercased() }) {
+      phytoView.errorLabel.text = "phyto_name_not_available".localized
+      phytoView.errorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
+  private func checkFertilizerName() -> Bool {
+    if fertilizerView.nameTextField.text!.isEmpty {
+      fertilizerView.errorLabel.text = "ferti_name_is_empty".localized
+      fertilizerView.errorLabel.isHidden = false
+      return false
+    } else if fertilizers.contains(where: { $0.name?.lowercased() == fertilizerView.nameTextField.text?.lowercased() }) {
+      fertilizerView.errorLabel.text = "ferti_name_not_available".localized
+      fertilizerView.errorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
   @objc func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
+      if !checkSeedName() {
+        return
+      }
+
       createSeed(variety: seedView.varietyTextField.text!, specie: seedView.rawSpecie)
       seedView.specieButton.setTitle(firstSpecie.localized, for: .normal)
       seedView.varietyTextField.text = ""
+      sortInputs()
+      dimView.isHidden = true
+      seedView.errorLabel.isHidden = true
+      seedView.isHidden = true
     case 1:
+      if !checkPhytoName() {
+        return
+      }
+
       let reentryDelay = Int(phytoView.reentryDelayTextField.text!)
       let maaID = phytoView.maaTextField.text!.isEmpty ? "0" : phytoView.maaTextField.text!
       let inFieldReentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : reentryDelay
@@ -471,10 +523,22 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
           textField.text = ""
         }
       }
+      sortInputs()
+      dimView.isHidden = true
+      phytoView.errorLabel.isHidden = true
+      phytoView.isHidden = true
     case 2:
+      if !checkFertilizerName() {
+        return
+      }
+
       createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
       fertilizerView.nameTextField.text = ""
       fertilizerView.natureButton.setTitle("organic".localized, for: .normal)
+      sortInputs()
+      dimView.isHidden = true
+      fertilizerView.errorLabel.isHidden = true
+      fertilizerView.isHidden = true
     default:
       return
     }

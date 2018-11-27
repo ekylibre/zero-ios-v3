@@ -58,6 +58,14 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     return varietyTextField
   }()
 
+  lazy var errorLabel: UILabel = {
+    let errorLabel = UILabel(frame: CGRect.zero)
+    errorLabel.font = UIFont.systemFont(ofSize: 13)
+    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return errorLabel
+  }()
+
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
@@ -98,6 +106,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     addSubview(specieLabel)
     addSubview(specieButton)
     addSubview(varietyTextField)
+    addSubview(errorLabel)
     addSubview(cancelButton)
     addSubview(createButton)
     setupLayout()
@@ -116,6 +125,9 @@ class SeedCreationView: UIView, UITextFieldDelegate {
       varietyTextField.topAnchor.constraint(equalTo: specieButton.bottomAnchor, constant: 50),
       varietyTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       varietyTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      errorLabel.topAnchor.constraint(equalTo: varietyTextField.bottomAnchor, constant: 5),
+      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
@@ -124,8 +136,8 @@ class SeedCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupActions() {
+    varietyTextField.addTarget(self, action: #selector(varietyDidChange), for: .editingChanged)
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -150,12 +162,16 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
+  @objc private func varietyDidChange(_ textField: UITextField) {
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
+  }
+
   @objc private func closeView(sender: UIButton) {
     varietyTextField.resignFirstResponder()
-    if sender == cancelButton {
-      specieButton.setTitle(firstSpecie.localized, for: .normal)
-      varietyTextField.text = ""
-    }
-    isHidden = true
+    specieButton.setTitle(firstSpecie.localized, for: .normal)
+    varietyTextField.text = ""
+    self.isHidden = true
   }
 }

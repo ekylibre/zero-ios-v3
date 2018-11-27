@@ -79,13 +79,13 @@ class AddInterventionVCTableViewTests: XCTestCase {
 
   func test_tableViewNumberOfRowsInSection_withHarvestTableViewAndNoData_shouldReturnZero() {
     // When
-    addInterventionVC.harvests.removeAll()
+    addInterventionVC.selectedHarvests.removeAll()
     addInterventionVC.harvestTableView.reloadData()
 
     // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       addInterventionVC.harvestTableView,
-      numberOfRowsInSection: addInterventionVC.harvests.count)
+      numberOfRowsInSection: addInterventionVC.selectedHarvests.count)
 
     XCTAssertEqual(numberOfRowsInSection, 0, "Should have no harvests")
   }

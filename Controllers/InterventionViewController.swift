@@ -304,6 +304,60 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     return cell
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    performSegue(withIdentifier: "updateIntervention", sender: self)
+  }
+
+  func fetchTargets(_ intervention: Intervention) -> [Target]? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+    targetsFetchRequest.predicate = predicate
+
+    do {
+      let targets = try managedContext.fetch(targetsFetchRequest)
+      return targets
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return nil
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
+    let predicate = NSPredicate(format: "intervention == %@", intervention)
+    workingPeriodsFetchRequest.predicate = predicate
+
+    do {
+      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
+      return workingPeriods.first
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+  private func updateCropsLabel(_ targets: NSSet) -> String {
+    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
+    var totalSurfaceArea: Float = 0
+
+    for case let target as Target in targets {
+      let crop = target.crop!
+
+      totalSurfaceArea += crop.surfaceArea
+    }
+    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
+  }
+
   private func updateDateLabel(_ workingPeriods: NSSet) -> String {
     let date = (workingPeriods.allObjects as! [WorkingPeriod]).first!.executionDate!
     let calendar = Calendar.current
@@ -327,19 +381,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       return dateString
     }
   }
-
-  private func updateCropsLabel(_ targets: NSSet) -> String {
-    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
-    var totalSurfaceArea: Float = 0
-
-    for case let target as Target in targets {
-      let crop = target.crop!
-
-      totalSurfaceArea += crop.surfaceArea
-    }
-    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
-  }
-
+  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()
@@ -356,6 +398,18 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let type = interventionTypes[((sender as? UIButton)?.tag)!]
 
       destVC.interventionType = type
+      destVC.interventionState = nil
+      destVC.currentIntervention = nil
+    case "updateIntervention":
+      let destVC = segue.destination as! AddInterventionViewController
+      let indexPath = tableView.indexPathForSelectedRow
+
+      if indexPath != nil {
+        let intervention = interventions[(indexPath?.row)!]
+
+        destVC.currentIntervention = intervention
+        destVC.interventionState = intervention.status
+      }
     default:
       return
     }
@@ -405,8 +459,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     queryFarms { (success) in
       if success {
         self.updateFarmNameLabel()
-        self.pushStoragesIfNeeded()
+        self.pushEntities()
         self.pushInterventionIfNeeded()
+        self.updateInterventionIfNeeded()
+        self.updateInterventionIfChangedOnApi()
         self.fetchInterventions()
 
         do {
@@ -433,9 +489,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let predicate = NSPredicate(format: "ekyID == %d", 0)
+    let group = DispatchGroup()
 
     interventionsFetchRequest.predicate = predicate
-
+    group.enter()
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
@@ -444,11 +501,43 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         if intervention.ekyID != 0 {
           intervention.status = Int16(InterventionState.Synced.rawValue)
         }
-        try managedContext.save()
       }
+      group.leave()
+      try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
+      group.leave()
     }
+    group.wait()
+  }
+
+  func updateInterventionIfNeeded() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+    let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
+    let ekyIDPredicate = NSPredicate(format: "ekyID != %d", 0)
+    let statusPredicate = NSPredicate(format: "status == %d", InterventionState.Created.rawValue)
+    let predicates = NSCompoundPredicate(type: .and, subpredicates: [ekyIDPredicate, statusPredicate])
+    let group = DispatchGroup()
+
+    interventionsFetchRequest.predicate = predicates
+    group.enter()
+    do {
+      let interventions = try managedContext.fetch(interventionsFetchRequest)
+
+      for intervention in interventions {
+        pushUpdatedIntervention(intervention: intervention)
+      }
+      try managedContext.save()
+      group.leave()
+    } catch let error as NSError {
+      print("Could not fetch: \(error), \(error.userInfo)")
+      group.leave()
+    }
+    group.wait()
   }
 
   @objc private func expandBottomView() {

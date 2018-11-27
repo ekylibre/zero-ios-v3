@@ -50,7 +50,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       harvestNaturePickerView.isHidden = true
       dimView.isHidden = true
     case harvestUnitPickerView:
-      harvests[cellIndexPath.row].unit = unit
+      selectedHarvests[cellIndexPath.row].unit = unit
       harvestUnitPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
@@ -58,7 +58,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       let predicate = NSPredicate(format: "name == %@", unit)
       let searchedStorage = fetchStorages(predicate: predicate)
 
-      harvests[cellIndexPath.row].storage = searchedStorage?.first
+      selectedHarvests[cellIndexPath.row].storage = searchedStorage?.first
       storagesPickerView.isHidden = true
       dimView.isHidden = true
       harvestTableView.reloadData()
@@ -92,7 +92,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationExpandImageView.transform = irrigationExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  @objc private func updateIrrigation() {
+  @objc func updateIrrigation() {
     let volume = irrigationVolumeTextField.text!.floatValue
     let unit = irrigationUnitButton.title(for: .normal)
 

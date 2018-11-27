@@ -394,6 +394,7 @@
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"equipment_number_not_available" = "Ce numéro d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 // Dates
@@ -469,7 +470,11 @@
 "notes" = "Notes";
 "driver" = "Conducteur";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
-"you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
+"you_are_in_consult_mode" = "Vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
+"non_authorized_mix" = "Mélange non autorisé";
+"nature" = "Nature";
+"celsius" = "°C";
+"km_per_hour" = "km/h";
 "ok" = "Ok";
 "provided_by_collector" = "Fourni par le collecteur";
 "invalid_dose" = "Dose invalide";

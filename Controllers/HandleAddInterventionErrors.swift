@@ -73,10 +73,10 @@ extension AddInterventionViewController {
   private func harvestErrorHandler() -> Bool {
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
-    if harvests.count == 0 {
+    if selectedHarvests.count == 0 {
       alert.title = "you_must_create_a_harvest_load".localized
     } else {
-      for harvest in harvests {
+      for harvest in selectedHarvests {
         if harvest.quantity == 0 {
           alert.title = "you_must_enter_harvest_quantity".localized
         }
@@ -91,9 +91,7 @@ extension AddInterventionViewController {
   }
 
   private func cropErrorHandler() -> Bool {
-    let selectedCrops = fetchSelectedCrops()
-
-    if selectedCrops.count == 0 {
+    if cropsView.selectedCrops.count == 0 {
       let alert = UIAlertController(title: "you_have_to_select_a_crop".localized, message: nil, preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
@@ -104,10 +102,24 @@ extension AddInterventionViewController {
   }
 
   private func irrigationErrorHandler() -> Bool {
-    if irrigationVolumeTextField.text?.floatValue == 0 {
-      let alert = UIAlertController(title: "you_must_enter_a_water_volume".localized, message: nil,
-                                    preferredStyle: .alert)
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+    let errorMessage: [Int: String] = [0: "you_have_to_enter_seed_quantity", 1: "you_have_to_enter_a_product_quantity",
+                                       2: "you_have_to_enter_a_product_quantity"]
 
+    if irrigationVolumeTextField.text?.floatValue == 0 {
+      alert.title = "you_must_enter_a_water_volume".localized
+    } else if selectedInputs.count == 1 {
+      for selectedInput in selectedInputs {
+        if (selectedInput.value(forKey: "quantity") as? Double) == 0 {
+          alert.title = errorMessage[inputsSelectionView.segmentedControl.selectedSegmentIndex]?.localized
+        }
+      }
+    } else {
+      if selectedInputs.count > 1 {
+        alert.title = "you_have_to_enter_inputs_quantities".localized
+      }
+    }
+    if alert.title != nil {
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
@@ -116,7 +128,7 @@ extension AddInterventionViewController {
   }
 
   private func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
-    let selectedCrops = fetchSelectedCrops()
+    let selectedCrops = cropsView.selectedCrops
     guard var startDate = selectedCrops.first?.startDate else { return false }
     guard var stopDate = selectedCrops.first?.stopDate else { return false }
     let dateFormatter: DateFormatter = {
@@ -155,9 +167,7 @@ extension AddInterventionViewController {
   }
 
   func checkErrorsAccordingInterventionType() -> Bool {
-    if !cropErrorHandler() {
-      return false
-    } else if !checkIfSelectedDateMatchProductionPeriod(selectedDate: selectDateView.datePicker.date) {
+    if !cropErrorHandler() || !checkIfSelectedDateMatchProductionPeriod(selectedDate: selectDateView.datePicker.date) {
       return false
     }
     switch interventionType {
