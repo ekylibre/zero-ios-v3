@@ -207,7 +207,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let fromEquipments = isSearching ? filteredEquipments : equipments
 
-    addInterventionViewController?.selectEquipment(fromEquipments[indexPath.row])
+    addInterventionViewController?.selectEquipment(fromEquipments[indexPath.row], calledFromCreatedIntervention: false)
     searchBar.text = nil
     searchBar.endEditing(true)
     isSearching = false
@@ -295,7 +295,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   @objc private func validateCreation() {
     let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
 
-    if !checkEquipmentName() {
+    if !checkEquipmentName() || !checkEquipmentNumber() {
       return
     }
 
@@ -321,6 +321,21 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.numberTextField.text = ""
     creationView.firstEquipmentParameter.text = nil
     creationView.secondEquipmentParameter.text = nil
+  }
+
+  private func checkEquipmentNumber() -> Bool {
+    let equipmentsWithSameNumber = equipments.filter({(equipment: Equipment) -> Bool in
+      let number = equipment.number
+
+      return number?.range(of: creationView.numberTextField.text!, options: .caseInsensitive) != nil
+    })
+
+    if equipmentsWithSameNumber.count > 0 {
+      creationView.errorLabel.text = "equipment_number_not_available".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    }
+    return true
   }
 
   func checkEquipmentName() -> Bool {
