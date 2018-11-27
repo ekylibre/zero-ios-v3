@@ -26,11 +26,11 @@ class AddInterventionVCTableViewTests: XCTestCase {
   }
 
   func test_tableViewNumberOfRowsInSection_withSelectedInputsTableViewAndNoData_shouldReturnZero() {
-    //When
+    // When
     addInterventionVC.selectedInputs.removeAll()
     addInterventionVC.selectedInputsTableView.reloadData()
 
-    //Then
+    // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       addInterventionVC.selectedInputsTableView,
       numberOfRowsInSection: addInterventionVC.selectedInputs.count)
@@ -39,11 +39,11 @@ class AddInterventionVCTableViewTests: XCTestCase {
   }
 
   func test_tableViewNumberOfRowsInSection_withSelectedMaterialsTableViewAndNoData_shouldReturnZero() {
-    //When
+    // When
     addInterventionVC.selectedMaterials[0].removeAll()
     addInterventionVC.selectedMaterialsTableView.reloadData()
 
-    //Then
+    // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       addInterventionVC.selectedMaterialsTableView,
       numberOfRowsInSection: addInterventionVC.selectedMaterials[0].count)
@@ -52,11 +52,11 @@ class AddInterventionVCTableViewTests: XCTestCase {
   }
 
   func test_tableViewNumberOfRowsInSection_withSelectedEquipmentsTableViewAndNoData_shouldReturnZero() {
-    //When
+    // When
     addInterventionVC.selectedEquipments.removeAll()
     addInterventionVC.selectedEquipmentsTableView.reloadData()
 
-    //Then
+    // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       addInterventionVC.selectedEquipmentsTableView,
       numberOfRowsInSection: addInterventionVC.selectedEquipments.count)
@@ -65,11 +65,11 @@ class AddInterventionVCTableViewTests: XCTestCase {
   }
 
   func test_tableViewNumberOfRowsInSection_withSelectedPersonsTableViewAndNoData_shouldReturnZero() {
-    //When
+    // When
     addInterventionVC.selectedPersons[0].removeAll()
     addInterventionVC.selectedPersonsTableView.reloadData()
 
-    //Then
+    // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       addInterventionVC.selectedPersonsTableView,
       numberOfRowsInSection: addInterventionVC.selectedPersons[0].count)
@@ -78,11 +78,11 @@ class AddInterventionVCTableViewTests: XCTestCase {
   }
 
   func test_tableViewNumberOfRowsInSection_withHarvestTableViewAndNoData_shouldReturnZero() {
-    //When
+    // When
     addInterventionVC.harvests.removeAll()
     addInterventionVC.harvestTableView.reloadData()
 
-    //Then
+    // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       addInterventionVC.harvestTableView,
       numberOfRowsInSection: addInterventionVC.harvests.count)
@@ -91,10 +91,10 @@ class AddInterventionVCTableViewTests: XCTestCase {
   }
 
   func test_tableViewNumberOfRowsInSection_withRandomTableViewAndNoData_shouldReturnOne() {
-    //Given
+    // Given
     let tableView = UITableView()
 
-    //Then
+    // Then
     let numberOfRowsInSection = addInterventionVC.tableView(
       tableView,
       numberOfRowsInSection: 0)

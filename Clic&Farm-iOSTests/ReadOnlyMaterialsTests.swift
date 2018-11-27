@@ -26,11 +26,11 @@ class ReadOnlyMaterialsTests: XCTestCase {
   }
 
   func test_updateMaterialsCountLabelWithoutEquipment_shouldNotChange() {
-    //When
+    // When
     addInterventionVC.selectedMaterials[0].removeAll()
     addInterventionVC.updateMaterialsCountLabel()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.materialsCountLabel.text, "none".localized, "Should have no material")
   }
 }

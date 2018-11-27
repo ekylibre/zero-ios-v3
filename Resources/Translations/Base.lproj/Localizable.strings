@@ -254,6 +254,8 @@
 // Plurals
 "crop" = "1 crop";
 "crops" = "%d crops";
+"harvest" = "1 harvest";
+"harvests" = "%d harvests";
 "input" = "1 input";
 "inputs" = "%d inputs";
 "material" = "1 material";
@@ -262,7 +264,7 @@
 "equipments" = "%d equipments";
 "person" = "1 person";
 "persons" = "%d persons";
-"load" = "%d load";
+"load" = "1 load";
 "loads" = "%d loads";
 "day" = "%d day";
 "days" = "%d days";
@@ -531,7 +533,9 @@
 "authorization_request_message" = "Please enable location services for this app.";
 "settings" = "Settings";
 
+// Date
 "locale" = "en_EN";
+"date_format" = "yyyy-MM-dd";
 
 // Synchronization
 "today_last_synchronization" = "Last synchronization %02d:%02d";
