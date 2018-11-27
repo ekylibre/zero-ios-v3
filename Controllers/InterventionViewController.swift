@@ -407,6 +407,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if indexPath != nil {
         let intervention = interventions[(indexPath?.row)!]
 
+        destVC.interventionType = intervention.type
         destVC.currentIntervention = intervention
         destVC.interventionState = intervention.status
       }
