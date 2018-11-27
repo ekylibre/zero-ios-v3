@@ -181,7 +181,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-Fk-VZ0">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="493"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-fY-myQ" userLabel="Plots View">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-fY-myQ" userLabel="Plots View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Crops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLR-hS-kBq">
@@ -218,7 +218,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="Z5A-HC-vOt"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWi-dt-aMV" userLabel="Working Period View">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWi-dt-aMV" userLabel="Working Period View">
                                                 <rect key="frame" x="0.0" y="70.5" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Working period" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tS7-0f-DOT">
@@ -318,7 +318,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="JY7-We-Dlu"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFL-Ez-GIj" userLabel="Irrigation View">
+                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFL-Ez-GIj" userLabel="Irrigation View">
                                                 <rect key="frame" x="0.0" y="141" width="375" height="140"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Irrigation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4J-0E-41M">
@@ -408,7 +408,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="RXa-M5-JaG"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e04-dp-jck" userLabel="Inputs View">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e04-dp-jck" userLabel="Inputs View">
                                                 <rect key="frame" x="0.0" y="141" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inputs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUf-in-lcY">
@@ -498,7 +498,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="RDb-Y3-7a9"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ygo-6L-lF7" userLabel="Harvest View">
+                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ygo-6L-lF7" userLabel="Harvest View">
                                                 <rect key="frame" x="0.0" y="211.5" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harvest" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWF-bA-PFJ">
@@ -729,7 +729,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="ATG-Yx-NIe"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tou-CX-8PL" userLabel="Materials View">
+                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tou-CX-8PL" userLabel="Materials View">
                                                 <rect key="frame" x="0.0" y="211.5" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Matériaux" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nH8-ec-yWg">
@@ -800,7 +800,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="83c-a8-Yx3"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-qs-cOy" userLabel="Equipments View">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-qs-cOy" userLabel="Equipments View">
                                                 <rect key="frame" x="0.0" y="211.5" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Equipments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4G-sV-gkh">
@@ -871,7 +871,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="vlj-vh-Dhb"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-Ro-sdH" userLabel="Persons View">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-Ro-sdH" userLabel="Persons View">
                                                 <rect key="frame" x="0.0" y="282" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Persons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAh-c6-yzZ">
@@ -941,7 +941,7 @@
                                                     <constraint firstAttribute="height" constant="0.5" id="6fu-ES-aIG"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-HU-750" userLabel="Weather View">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-HU-750" userLabel="Weather View">
                                                 <rect key="frame" x="0.0" y="352.5" width="375" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJi-KE-5Mc">
