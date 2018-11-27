@@ -422,6 +422,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     createTargets(currentIntervention)
     createMaterials(currentIntervention)
     createEquipments(currentIntervention)
+    createPersons(currentIntervention)
     saveHarvest(currentIntervention)
     saveInterventionInputs(currentIntervention)
     saveWeather(currentIntervention)
@@ -722,28 +723,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func createInterventionPersons(_ intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for selectedPerson in selectedPersons[1] {
-      let interventionPerson = InterventionPerson(context: managedContext)
-
-      interventionPerson.intervention = intervention
-      interventionPerson.isDriver = (selectedPerson as! InterventionPerson).isDriver
-      interventionPerson.person = (selectedPerson as! InterventionPerson).person
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
   private func saveHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -801,6 +780,27 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
       interventionEquipment.intervention = intervention
       interventionEquipment.equipment = selectedEquipment
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func createPersons(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for case let interventionPerson as InterventionPerson in selectedPersons[1] {
+      let index = selectedPersons[1].firstIndex(of: interventionPerson)!
+
+      interventionPerson.intervention = intervention
+      interventionPerson.person = selectedPersons[0][index] as? Person
     }
 
     do {
