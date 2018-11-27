@@ -51,6 +51,30 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     addInterventionController?.storageCreationView.isHidden = false
   }
 
+
+  // MARK: - Text field
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+      return true
+    }
+
+    if textField.keyboardType == .default {
+      return oldText.replacingCharacters(in: r, with: string).count <= 500
+    }
+
+    let newText = oldText.replacingCharacters(in: r, with: string)
+    var numberOfDecimalDigits = 0
+
+    if newText.components(separatedBy: ".").count > 2 || newText.components(separatedBy: ",").count > 2 {
+      return false
+    } else if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+      numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+    }
+    return numberOfDecimalDigits <= 2 && newText.count <= 16
+  }
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     switch textField {

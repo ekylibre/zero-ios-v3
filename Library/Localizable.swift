@@ -42,18 +42,18 @@ extension UIButton: XIBLocalizable {
 
 extension UIButton {
   func underline() {
-    guard let text = self.titleLabel?.text else { return }
+    guard let text = titleLabel?.text else { return }
 
     let attributedString = NSMutableAttributedString(string: text)
     attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: text.count))
 
-    self.setAttributedTitle(attributedString, for: .normal)
+    setAttributedTitle(attributedString, for: .normal)
   }
 }
 
 extension UILabel {
   func underline() {
-    if let textString = self.text {
+    if let textString = text {
       let attributedString = NSMutableAttributedString(string: textString)
       attributedString.addAttribute(kCTUnderlineStyleAttributeName as NSAttributedString.Key, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length - 1))
       attributedText = attributedString

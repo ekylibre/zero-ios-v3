@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crop" representedClassName="Crop" syncable="YES" codeGenerationType="class">
         <attribute name="centroid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productionID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="productionMode" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,8 +15,6 @@
     </entity>
     <entity name="Equipment" representedClassName="Equipment" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="equipmentID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="indicatorOne" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="indicatorTwo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -57,7 +54,6 @@
     </entity>
     <entity name="Intervention" representedClassName="Intervention" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="farmID" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="infos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="output" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -112,7 +108,6 @@
     </entity>
     <entity name="Material" representedClassName="Material" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="materialDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="referenceID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
@@ -120,10 +115,8 @@
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="farmID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="interventionPersons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InterventionPerson" inverseName="person" inverseEntity="InterventionPerson" syncable="YES"/>
     </entity>
     <entity name="Phyto" representedClassName="Phyto" syncable="YES" codeGenerationType="class">
@@ -165,7 +158,6 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Weather" representedClassName="Weather" syncable="YES" codeGenerationType="class">
-        <attribute name="interventionID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="temperature" optional="YES" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="weatherDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="windSpeed" optional="YES" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
@@ -177,26 +169,26 @@
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="workingPeriods" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="240"/>
-        <element name="Equipment" positionX="627.27734375" positionY="-479.38671875" width="128" height="180"/>
+        <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="225"/>
+        <element name="Equipment" positionX="627.27734375" positionY="-479.38671875" width="128" height="150"/>
         <element name="Farm" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
         <element name="Fertilizer" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
         <element name="Harvest" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
-        <element name="Intervention" positionX="160" positionY="-252" width="128" height="330"/>
+        <element name="Intervention" positionX="160" positionY="-252" width="128" height="315"/>
         <element name="InterventionEquipment" positionX="376.83203125" positionY="-222.34765625" width="128" height="75"/>
         <element name="InterventionFertilizer" positionX="-208.0703125" positionY="-228.78515625" width="128" height="105"/>
-        <element name="InterventionMaterial" positionX="578.0703125" positionY="-161.76953125" width="128" height="120"/>
+        <element name="InterventionMaterial" positionX="578.0703125" positionY="-161.76953125" width="128" height="105"/>
         <element name="InterventionPerson" positionX="-195.78515625" positionY="16.1015625" width="128" height="90"/>
         <element name="InterventionPhytosanitary" positionX="621.36328125" positionY="1.16796875" width="128" height="105"/>
         <element name="InterventionSeed" positionX="-149.890625" positionY="154.01171875" width="128" height="105"/>
-        <element name="Material" positionX="824.87109375" positionY="-243.19140625" width="128" height="135"/>
-        <element name="Person" positionX="-522.59765625" positionY="18.86328125" width="128" height="135"/>
+        <element name="Material" positionX="824.87109375" positionY="-243.19140625" width="128" height="120"/>
+        <element name="Person" positionX="-522.59765625" positionY="18.86328125" width="128" height="105"/>
         <element name="Phyto" positionX="1030.23828125" positionY="-67.5859375" width="128" height="225"/>
         <element name="Seed" positionX="-386.609375" positionY="189.265625" width="128" height="165"/>
         <element name="Storage" positionX="-388.83203125" positionY="-467.73046875" width="128" height="105"/>
         <element name="Target" positionX="581.33984375" positionY="207.44921875" width="128" height="90"/>
         <element name="User" positionX="163.37890625" positionY="350.79296875" width="128" height="60"/>
-        <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="120"/>
+        <element name="Weather" positionX="-69.109375" positionY="288.3046875" width="128" height="105"/>
         <element name="WorkingPeriod" positionX="395.28515625" positionY="318.12890625" width="128" height="90"/>
     </elements>
 </model>

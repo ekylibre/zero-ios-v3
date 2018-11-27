@@ -9,13 +9,13 @@
 import UIKit
 import CoreData
 
-class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate {
+class AddInterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,
+UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextViewDelegate {
 
   // MARK: - Outlets
 
   @IBOutlet weak var navigationBar: UINavigationBar!
   @IBOutlet weak var saveInterventionButton: UIButton!
-  @IBOutlet weak var dimView: UIView!
   @IBOutlet weak var totalLabel: UILabel!
 
   // Validated Intervention
@@ -53,6 +53,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var selectedInputsTableView: UITableView!
   @IBOutlet weak var inputsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var inputsSeparatorView: UIView!
+  @IBOutlet weak var inputsUnauthorizedMixImage: UIImageView!
+  @IBOutlet weak var inputsUnauthorizedMixLabel: UILabel!
+
+  // Harvest
+  @IBOutlet var harvestTapGesture: UITapGestureRecognizer!
+  @IBOutlet weak var harvestView: UIView!
+  @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestAddButton: UIButton!
+  @IBOutlet weak var harvestCountLabel: UILabel!
+  @IBOutlet weak var harvestExpandImageView: UIImageView!
+  @IBOutlet weak var harvestNature: UILabel!
+  @IBOutlet weak var harvestType: UIButton!
+  @IBOutlet weak var harvestTableView: UITableView!
+  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestSeparatorView: UIView!
 
   // Materials
   @IBOutlet var materialsTapGesture: UITapGestureRecognizer!
@@ -87,7 +102,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var weatherViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var currentWeatherLabel: UILabel!
   @IBOutlet weak var weatherExpandImageView: UIImageView!
-  @IBOutlet weak var negativeTemperature: UIButton!
+  @IBOutlet weak var temperatureSign: UIButton!
   @IBOutlet weak var temperatureTextField: UITextField!
   @IBOutlet weak var windSpeedTextField: UITextField!
   @IBOutlet weak var brokenClouds: UIButton!
@@ -100,7 +115,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var thunderstorm: UIButton!
 
   // Notes
-  @IBOutlet weak var notesTextField: UITextField!
+  @IBOutlet weak var notesTextView: UITextView!
+  @IBOutlet weak var notesViewHeightConstraint: NSLayoutConstraint!
 
   // Scroll view
   @IBOutlet weak var scrollView: UIScrollView!
@@ -110,27 +126,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   @IBOutlet weak var bottomBarView: UIView!
   @IBOutlet weak var bottomView: UIView!
 
-  // Harvest
-  @IBOutlet weak var harvestView: UIView!
-  @IBOutlet weak var harvestTableView: UITableView!
-  @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var harvestNature: UILabel!
-  @IBOutlet weak var harvestType: UIButton!
-  @IBOutlet weak var harvestSeparatorView: UIView!
-  @IBOutlet weak var addALoad: UIButton!
-
   // MARK: - Properties
 
   var interventionState: InterventionState.RawValue!
   var currentIntervention: Intervention!
   var interventionType: String!
+  var dimView = UIView(frame: CGRect.zero)
+  var cellIndexPath: IndexPath!
   var selectedRow: Int!
   var selectedValue: String!
-  var selectDateView: SelectDateView!
-  var irrigationPickerView: CustomPickerView!
   var cropsView: CropsView!
-  var species: [String]!
+  var selectDateView: SelectDateView!
   var inputsSelectionView: InputsView!
   var materialsSelectionView: MaterialsView!
   var equipmentsSelectionView: EquipmentsView!
@@ -140,23 +146,24 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   var selectedEquipments = [Equipment]()
   var selectedPersons = [[NSManagedObject]]()
   var equipmentTypes: [String]!
+  var species: [String]!
   var createdSeed = [NSManagedObject]()
   var selectedInputs = [NSManagedObject]()
-  var massUnitPicker = UIPickerView()
-  var volumeUnitPicker = UIPickerView()
-  var pickerValue: String?
-  var cellIndexPath: IndexPath!
-  var weather: Weather!
-  var weatherIsSelected: Bool = false
   var selectedHarvests = [Harvest]()
+  var storages = [Storage]()
+  var harvestSelectedType: String!
   var harvestNaturePickerView: CustomPickerView!
   var harvestUnitPickerView: CustomPickerView!
-  var harvestSelectedType: String!
   var storageCreationView: StorageCreationView!
   var storagesPickerView: CustomPickerView!
   var storagesTypes: CustomPickerView!
-  var storages = [Storage]()
+  var irrigationPickerView: CustomPickerView!
+  var weather: Weather!
+  var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
+  var pickerValue: String?
+  var massUnitPicker = UIPickerView()
+  var volumeUnitPicker = UIPickerView()
   let massUnitMeasure = [
     "GRAM",
     "GRAM_PER_HECTARE",
@@ -189,18 +196,17 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
 
-    initUnitMeasurePickerView()
-
+    setupNavigationBar()
+    setupDimView()
     saveInterventionButton.layer.cornerRadius = 3
     setupWorkingPeriodView()
     setupIrrigationView()
     setupInputsView()
+    setupHarvestView()
     setupMaterialsView()
     setupEquipmentsView()
     setupPersonsView()
-    initHarvestView()
-    initWeatherView()
-    notesTextField.delegate = self
+    setupWeatherView()
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
@@ -215,61 +221,15 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
 
-    initializeBarButtonItems()
+    initUnitMeasurePickerViews()
+
+    notesTextView.delegate = self
+    setTextViewPlaceholder()
 
     setupViewsAccordingInterventionType()
   }
 
-  func setupViewsAccordingInterventionType() {
-    switch interventionType {
-    case InterventionType.Care.rawValue:
-      materialsView.isHidden = false
-      materialsSeparatorView.isHidden = false
-    case InterventionType.CropProtection.rawValue:
-      inputsSelectionView.segmentedControl.selectedSegmentIndex = 1
-      inputsSelectionView.createButton.setTitle("create_new_phyto".localized.uppercased(), for: .normal)
-    case InterventionType.Fertilization.rawValue:
-      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
-      inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
-    case InterventionType.GroundWork.rawValue:
-      inputsView.isHidden = true
-      inputsSeparatorView.isHidden = true
-    case InterventionType.Harvest.rawValue:
-      harvestView.isHidden = false
-      harvestSeparatorView.isHidden = false
-      inputsView.isHidden = true
-      inputsSeparatorView.isHidden = true
-    case InterventionType.Irrigation.rawValue:
-      irrigationView.isHidden = false
-      irrigationSeparatorView.isHidden = false
-    default:
-      return
-    }
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-
-    // Changes inputsSelectionView frame and position
-    let guide = self.view.safeAreaLayoutGuide
-    let height = guide.layoutFrame.size.height
-
-    cropsView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height - 30)
-    cropsView.center.x = self.view.center.x
-    cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
-  }
-
-  @objc func showList() {
-    performSegue(withIdentifier: "showSpecies", sender: self)
-  }
-
-  @objc func showAlert() {
-    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
-  }
-
-  // MARK: Bar button
-
-  func initializeBarButtonItems() {
+  private func setupNavigationBar() {
     var barButtonItems = [UIBarButtonItem]()
     let navigationItem = UINavigationItem(title: "")
     let typeLabel = UILabel()
@@ -295,6 +255,68 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     barButtonItems.append(typeItem)
     navigationItem.leftBarButtonItems = barButtonItems
     navigationBar.setItems([navigationItem], animated: true)
+  }
+
+  private func setupDimView() {
+    dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(dimView)
+
+    NSLayoutConstraint.activate([
+      dimView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+      dimView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      ])
+  }
+
+  func setupViewsAccordingInterventionType() {
+    switch interventionType {
+    case InterventionType.Care.rawValue:
+      materialsView.isHidden = false
+      materialsSeparatorView.isHidden = false
+    case InterventionType.CropProtection.rawValue:
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 1
+      inputsSelectionView.createButton.setTitle("create_new_phyto".localized.uppercased(), for: .normal)
+    case InterventionType.Fertilization.rawValue:
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
+      inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
+    case InterventionType.GroundWork.rawValue:
+      inputsView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case InterventionType.Harvest.rawValue:
+      harvestView.isHidden = false
+      harvestSeparatorView.isHidden = false
+      inputsView.isHidden = true
+      inputsSeparatorView.isHidden = true
+    case InterventionType.Irrigation.rawValue:
+      irrigationView.isHidden = false
+      irrigationSeparatorView.isHidden = false
+      inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
+      inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
+    default:
+      return
+    }
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    // Changes inputsSelectionView frame and position
+    let guide = view.safeAreaLayoutGuide
+    let height = guide.layoutFrame.size.height
+
+    cropsView.frame = CGRect(x: 0, y: 0, width: view.frame.width - 30, height: height - 30)
+    cropsView.center.x = view.center.x
+    cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
+  }
+
+  @objc func showList() {
+    performSegue(withIdentifier: "showSpecies", sender: self)
+  }
+
+  @objc func showAlert() {
+    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
   }
 
   // MARK: - Table view data source
@@ -335,152 +357,21 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch tableView {
     case selectedInputsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
-
-      if selectedInputs.count > indexPath.row {
-        let selectedInput = selectedInputs[indexPath.row]
-        let unit = selectedInput.value(forKey: "unit") as? String
-
-        cell.cellDelegate = self
-        cell.addInterventionViewController = self
-        cell.indexPath = indexPath
-        cell.unitButton.setTitle(unit?.localized, for: .normal)
-
-        switch selectedInput {
-        case is InterventionSeed:
-          let interventionSeed = selectedInput as! InterventionSeed
-
-          cell.nameLabel.text = interventionSeed.seed?.specie?.localized
-          cell.infoLabel.text = interventionSeed.seed?.variety
-          cell.type = "Seed"
-          cell.inputImageView.image = UIImage(named: "seed")
-          displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber?)?.stringValue,
-                                             unit: interventionSeed.unit, cell: cell)
-        case is InterventionPhytosanitary:
-          let interventionPhyto = selectedInput as! InterventionPhytosanitary
-
-          cell.nameLabel.text = interventionPhyto.phyto?.name
-          cell.infoLabel.text = interventionPhyto.phyto?.firmName
-          cell.type = "Phyto"
-          cell.inputImageView.image = UIImage(named: "phytosanitary")
-          displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber?)?.stringValue,
-                                             unit: interventionPhyto.unit, cell: cell)
-        case is InterventionFertilizer:
-          let interventionFertilizer = selectedInput as! InterventionFertilizer
-
-          cell.nameLabel.text = interventionFertilizer.fertilizer?.name?.localized
-          cell.infoLabel.text = interventionFertilizer.fertilizer?.nature?.localized
-          cell.type = "Fertilizer"
-          cell.inputImageView.image = UIImage(named: "fertilizer")
-          displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber?)?.stringValue,
-                                             unit: interventionFertilizer.unit, cell: cell)
-        default:
-          fatalError("Unknown input type for: \(String(describing: selectedInput))")
-        }
-      }
-      return cell
+      return selectedInputsTableViewCellForRowAt(tableView, indexPath)
     case selectedMaterialsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath) as! SelectedMaterialCell
-      let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
-      let quantity = selectedMaterials[1][indexPath.row].value(forKey: "quantity") as! Float
-      let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
-
-      if interventionState == InterventionState.Validated.rawValue {
-        cell.quantityTextField.placeholder = String(format: "%g", quantity)
-        cell.unitButton.setTitle(unit?.localized, for: .normal)
-        cell.unitButton.setTitleColor(.lightGray, for: .normal)
-      } else if quantity == 0 {
-        cell.quantityTextField.placeholder = "0"
-        cell.quantityTextField.text = ""
-        cell.unitButton.setTitle(unit?.localized, for: .normal)
-      } else {
-        cell.quantityTextField.text = String(format: "%g", quantity)
-        cell.unitButton.setTitle(unit?.localized, for: .normal)
-      }
-      cell.nameLabel.text = name
-      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
-      cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
-      return cell
+      return selectedMaterialsTableViewCellForRowAt(tableView, indexPath)
     case selectedEquipmentsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath) as! SelectedEquipmentCell
-      let selectedEquipment = selectedEquipments[indexPath.row]
-      let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-
-      cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-      cell.nameLabel.text = selectedEquipment.name
-      cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
-      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
-      return cell
+      return selectedEquipmentsTableViewCellForRowAt(tableView, indexPath)
     case selectedPersonsTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath) as! SelectedPersonCell
-      let selectedPerson = selectedPersons[0][indexPath.row]
-
-      if interventionState != nil {
-        cell.driverSwitch.isOn = selectedPersons[1][indexPath.row].value(forKey: "isDriver") as! Bool
-      }
-      cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
-      cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
-      cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
-      cell.driverSwitch.addTarget(self, action: #selector(updateIsDriver), for: .valueChanged)
-      return cell
+      return selectedPersonsTableViewCellForRowAt(tableView, indexPath)
     case harvestTableView:
-      let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
-      let harvest = selectedHarvests[indexPath.row]
-      let unit = harvest.unit
-
-      cell.addInterventionController = self
-      cell.cellDelegate = self
-      cell.indexPath = indexPath
-      cell.unit.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-      cell.unit.layer.borderWidth = 1
-      cell.unit.layer.cornerRadius = 5
-      cell.unit.setTitle(unit?.localized, for: .normal)
-      cell.storage.backgroundColor = AppColor.ThemeColors.White
-      cell.storage.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-      cell.storage.layer.borderWidth = 1
-      cell.storage.layer.cornerRadius = 5
-      cell.storage.setTitle(selectedHarvests[indexPath.row].storage?.name ?? "---", for: .normal)
-      cell.quantity.keyboardType = .decimalPad
-      cell.quantity.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-      cell.quantity.layer.borderWidth = 1
-      cell.quantity.layer.cornerRadius = 5
-      if interventionState == InterventionState.Validated.rawValue {
-        cell.quantity.placeholder = String(harvest.quantity)
-        cell.number.placeholder = harvest.number
-      } else if harvest.quantity == 0 {
-        cell.quantity.placeholder = "0"
-        cell.number.text = harvest.number
-      } else {
-        cell.quantity.text = String(harvest.quantity)
-        cell.number.text = harvest.number
-      }
-      cell.quantity.delegate = cell
-      cell.number.layer.borderColor =  AppColor.CellColors.LightGray.cgColor
-      cell.number.layer.borderWidth = 1
-      cell.number.layer.cornerRadius = 5
-      cell.number.delegate = cell
-      cell.selectionStyle = .none
-      return cell
+      return harvestTableViewCellForRowAt(tableView, indexPath)
     default:
       fatalError("Unknown tableView: \(tableView)")
     }
   }
 
-  private func getSelectedEquipmentInfos(_ equipment: Equipment) -> String {
-    let type = equipment.type!.localized
-    guard let number = equipment.number else {
-      return type
-    }
-
-    return String(format: "%@ #%@", type, number)
-  }
-
-  // Expand/collapse cell when tapped
-  var selectedIndexPath: IndexPath?
-  var indexPaths: [IndexPath] = []
-
-  func defineTableViewSize(_ tableView: UITableView) -> CGFloat {
+  func defineTableViewsHeightForRow(_ tableView: UITableView) -> CGFloat {
     switch tableView {
     case harvestTableView:
       return 150
@@ -498,11 +389,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return defineTableViewSize(tableView)
+    return defineTableViewsHeightForRow(tableView)
   }
 
   func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    return defineTableViewSize(tableView)
+    return defineTableViewsHeightForRow(tableView)
   }
 
   // MARK: - Core Data
@@ -518,26 +409,25 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriod = WorkingPeriod(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
+    let notes = (notesTextView.text != "notes".localized)
 
     currentIntervention = Intervention(context: managedContext)
+    currentIntervention.type = interventionType
+    currentIntervention.status = InterventionState.Created.rawValue
+    notes ? currentIntervention.infos = notesTextView.text : nil
+    changeWaterUnit()
     workingPeriod.intervention = currentIntervention
     workingPeriod.executionDate = selectDateView.datePicker.date
     workingPeriod.hourDuration = duration
-    currentIntervention?.type = interventionType
-    currentIntervention?.status = InterventionState.Created.rawValue
-    currentIntervention?.infos = notesTextField.text
-    currentIntervention?.farmID = appDelegate.farmID
-    changeWaterUnit()
     createTargets(currentIntervention)
-    createEquipments(currentIntervention)
-    createInterventionPersons(currentIntervention)
-    saveInterventionInputs(currentIntervention)
     createMaterials(currentIntervention)
+    createEquipments(currentIntervention)
     saveHarvest(currentIntervention)
+    saveInterventionInputs(currentIntervention)
+    saveWeather(currentIntervention)
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
-    saveWeather(currentIntervention)
 
     do {
       try managedContext.save()
@@ -552,10 +442,11 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
       return
     }
     let duration = workingPeriodDurationTextField.text!.floatValue
+    let notes = (notesTextView.text != "notes".localized)
 
     currentIntervention?.workingPeriods?.setValue(selectDateView.datePicker.date, forKey: "executionDate")
     currentIntervention?.workingPeriods?.setValue(duration, forKey: "hourDuration")
-    currentIntervention?.infos = notesTextField.text
+    notes ? currentIntervention.infos = notesTextView.text : nil
     changeWaterUnit()
     updateTargets(currentIntervention)
     updateEquipments(currentIntervention)
@@ -566,7 +457,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
-  func changeWaterUnit() {
+  private func changeWaterUnit() {
     if interventionType == "IRRIGATION" {
       let waterVolume = irrigationVolumeTextField.text!.floatValue
 
@@ -642,6 +533,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPersonsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
+
 
     interventionPersonsFetchRequest.predicate = predicate
     do {
@@ -767,7 +659,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func resetInputsAttributes(entity: String) {
+  private func resetInputsAttributes(entity: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -790,7 +682,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveInterventionInputs(_ intervention: Intervention) {
+  private func saveInterventionInputs(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -852,7 +744,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func saveHarvest(_ intervention: Intervention) {
+  private func saveHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -877,7 +769,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createMaterials(_ intervention: Intervention) {
+  private func createMaterials(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -898,7 +790,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func createEquipments(_ intervention: Intervention) {
+  private func createEquipments(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -918,7 +810,8 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
 
-  func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject], entity: inout [NSManagedObject]) {
+  private func fetchEntity(entityName: String, searchedEntity: inout [NSManagedObject],
+                           entity: inout [NSManagedObject]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -934,7 +827,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     searchedEntity = entity
   }
 
-  func saveWeather(_ intervention: Intervention) {
+  private func saveWeather(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -972,6 +865,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showSpecies":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
+      destVC.lastSelectedValue = inputsSelectionView.seedView.specieButton.titleLabel?.text
       destVC.rawStrings = species
       destVC.tag = 0
     case "showMaterialUnits":
@@ -989,6 +883,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
+      destVC.lastSelectedValue = equipmentsSelectionView.creationView.typeButton.titleLabel?.text
       destVC.rawStrings = equipmentTypes
       destVC.tag = 3
     default:
@@ -1027,44 +922,48 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
-    var invalidCharacters: CharacterSet!
-
-    if containsADot || textField.text?.count == 0 {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
-    } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
-    }
-
-    switch textField {
-    case temperatureTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    case windSpeedTextField:
-      return string.rangeOfCharacter(
-        from: invalidCharacters,
-        options: [],
-        range: string.startIndex ..< string.endIndex
-        ) == nil
-    default:
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
       return true
     }
+
+    let newText = oldText.replacingCharacters(in: r, with: string)
+    var numberOfDecimalDigits = 0
+
+    if newText.components(separatedBy: ".").count > 2 || newText.components(separatedBy: ",").count > 2 {
+      return false
+    } else if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+      numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+    }
+    return numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    switch textField {
-    case temperatureTextField:
-      saveCurrentWeather(self)
-    case windSpeedTextField:
-      saveCurrentWeather(self)
-    default:
-      return false
-    }
     return false
+  }
+
+  // MARK: - Text View Delegate
+
+  private func setTextViewPlaceholder() {
+    notesTextView.text = "notes".localized
+    notesTextView.textColor = .lightGray
+  }
+
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    if textView.textColor == UIColor.lightGray {
+      textView.text = nil
+      textView.textColor = UIColor.black
+    }
+  }
+
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if textView.text.isEmpty {
+      setTextViewPlaceholder()
+    }
+  }
+
+  func textViewDidChange(_ textView: UITextView) {
+    notesViewHeightConstraint.constant = textView.frame.height + 40
   }
 
   // MARK: - Gesture recognizer
@@ -1087,22 +986,27 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
   // MARK: - Actions
 
   @IBAction func selectCrops(_ sender: Any) {
+    view.endEditing(true)
     dimView.isHidden = false
     cropsView.isHidden = false
 
-    updateAllInputQuantity()
+    updateAllQuantityLabels()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
   }
 
-  func checkCropsProduction() -> Bool {
-    if interventionType == "harvest" || interventionType == "implantation" {
-      for selectedCrop in cropsView.selectedCrops {
-        if selectedCrop.species != cropsView.selectedCrops.first!.species {
+  private func checkCropsProduction() -> Bool {
+    if interventionType == InterventionType.Harvest.rawValue ||
+      interventionType == InterventionType.Implantation.rawValue {
+      let selectedCrops = cropsView.selectedCrops
+      let firstCrop = selectedCrops.first?.species
+
+      for selectedCrop in selectedCrops {
+        if selectedCrop.species != firstCrop {
           let alert = UIAlertController(
-            title: "",
-            message: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+            title: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
+            message: nil,
             preferredStyle: .alert)
 
           alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -1114,7 +1018,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     return true
   }
 
-  @objc func validateCrops(_ sender: Any) {
+  @objc private func validateCrops(_ sender: Any) {
     if !checkCropsProduction() {
       return
     } else if cropsView.selectedCropsLabel.text == "no_crop_selected".localized {
@@ -1130,7 +1034,7 @@ class AddInterventionViewController: UIViewController, UITableViewDelegate, UITa
     cropsView.isHidden = true
     dimView.isHidden = true
 
-    updateAllInputQuantity()
+    updateAllQuantityLabels()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })

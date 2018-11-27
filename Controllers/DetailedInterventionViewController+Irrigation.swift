@@ -16,15 +16,18 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
 
+    irrigationVolumeTextField.delegate = self
     irrigationVolumeTextField.layer.borderWidth = 0.5
     irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
     irrigationVolumeTextField.layer.cornerRadius = 5
+    irrigationVolumeTextField.placeholder = "0"
     irrigationVolumeTextField.clipsToBounds = false
     irrigationUnitButton.layer.borderWidth = 0.5
     irrigationUnitButton.layer.borderColor = UIColor.lightGray.cgColor
     irrigationUnitButton.layer.cornerRadius = 5
     irrigationUnitButton.clipsToBounds = false
-    irrigationPickerView = CustomPickerView(frame: frame, units, superview: self.view)
+    irrigationUnitButton.setTitle("m³", for: .normal)
+    irrigationPickerView = CustomPickerView(frame: frame, units, superview: view)
     irrigationPickerView.reference = self
     setupActions()
   }
@@ -66,7 +69,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
 
-      self.irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
+      irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
       selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
       updateInfoLabel(volume, unit)
       irrigationPickerView.isHidden = true
@@ -81,6 +84,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   @IBAction func tapIrrigationView(_ sender: Any) {
     let shouldExpand: Bool = (irrigationHeightConstraint.constant == 70)
 
+    view.endEditing(true)
     irrigationHeightConstraint.constant = shouldExpand ? 140 : 70
     selectedIrrigationLabel.isHidden = shouldExpand
     irrigationVolumeTextField.isHidden = !shouldExpand
@@ -88,7 +92,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationExpandImageView.transform = irrigationExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
-  @objc func updateIrrigation(_ sender: Any) {
+  @objc func updateIrrigation() {
     let volume = irrigationVolumeTextField.text!.floatValue
     let unit = irrigationUnitButton.title(for: .normal)
 

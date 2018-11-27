@@ -36,7 +36,8 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     createButton.setTitle("create_new_material".localized.uppercased(), for: .normal)
     searchBar.delegate = self
     tableView.register(MaterialCell.self, forCellReuseIdentifier: "MaterialCell")
-    tableView.rowHeight = 50
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 50
     tableView.delegate = self
     tableView.dataSource = self
     setupCreationView()
@@ -44,13 +45,13 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   private func setupCreationView() {
-    self.addSubview(creationView)
+    addSubview(creationView)
 
     NSLayoutConstraint.activate([
       creationView.heightAnchor.constraint(equalToConstant: 250),
-      creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      creationView.leftAnchor.constraint(equalTo: leftAnchor),
+      creationView.rightAnchor.constraint(equalTo: rightAnchor),
       ])
   }
 
@@ -78,7 +79,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     })
     isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
-    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableViewTopAnchor.constant = isSearching ? 10 : 40
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {
@@ -131,11 +132,11 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     do {
       materials = try managedContext.fetch(materialsFetchRequest)
       materials = materials.sorted(by: {
-        let nameOne = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        let nameTwo = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
 
-        if nameOne != nil && nameTwo != nil {
-          return nameOne! < nameTwo!
+        if firstName != nil && secondName != nil {
+          return firstName! < secondName!
         }
         return true
       })
@@ -144,7 +145,7 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     }
   }
 
-  func createMaterial(name: String, unit: String) {
+  private func createMaterial(name: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -193,11 +194,11 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
     creationView.nameTextField.resignFirstResponder()
     createMaterial(name: creationView.nameTextField.text!, unit: addInterventionViewController!.selectedValue)
     materials = materials.sorted(by: {
-      let nameOne = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      let nameTwo = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
 
-      if nameOne != nil && nameTwo != nil {
-        return nameOne! < nameTwo!
+      if firstName != nil && secondName != nil {
+        return firstName! < secondName!
       }
       return true
     })
@@ -224,6 +225,6 @@ class MaterialsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, 
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

@@ -23,7 +23,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
 
-  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+  private func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
     if let asset = NSDataAsset(name: "equipment-types") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
@@ -49,7 +49,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return [String]()
   }
 
-  func defineIndicatorsUnits(_ key: String) -> String? {
+  private func defineIndicatorsUnits(_ key: String, _ textField: UITextField) -> String? {
     let units = [
       "plowshare_count": "UNITY",
       "motor_power": "FRENCH_HORSEPOWER",
@@ -61,6 +61,11 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       "width": "METER",
       "length": "METER"]
 
+    if units[key] == "UNITY" {
+      textField.keyboardType = .numberPad
+    } else {
+      textField.keyboardType = .decimalPad
+    }
     return units[key]
   }
 
@@ -69,19 +74,24 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     switch indicators.count {
     case 2:
+      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+      let indicatorTwo = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
+
       creationView.heighConstraint.constant = 475
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
-      creationView.secondParameterUnit.text = defineIndicatorsUnits(indicators[1])?.localized
+      creationView.firstParameterUnit.text = indicatorOne
+      creationView.secondParameterUnit.text = indicatorTwo
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = false
       creationView.secondParameterUnit.isHidden = false
     case 1:
+      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+
       creationView.heighConstraint.constant = 400
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = defineIndicatorsUnits(indicators[0])?.localized
+      creationView.firstParameterUnit.text = indicatorOne
       creationView.firstEquipmentParameter.isHidden = false
       creationView.firstParameterUnit.isHidden = false
       creationView.secondEquipmentParameter.isHidden = true
@@ -98,7 +108,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   // MARK: - Initialization
 
   init(firstType: String, frame: CGRect) {
-    self.firstEquipmentType = firstType
+    firstEquipmentType = firstType
     super.init(frame: frame)
     setupView()
     fetchEquipments()
@@ -119,12 +129,12 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func setupCreationView() {
-    self.addSubview(creationView)
+    addSubview(creationView)
 
     NSLayoutConstraint.activate([
-      creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      creationView.leftAnchor.constraint(equalTo: leftAnchor),
+      creationView.rightAnchor.constraint(equalTo: rightAnchor),
       ])
   }
 
@@ -152,7 +162,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     })
     isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
-    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableViewTopAnchor.constant = isSearching ? 10 : 40
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {
@@ -217,11 +227,11 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     do {
       equipments = try managedContext.fetch(equipmentsFetchRequest)
       equipments = equipments.sorted(by: {
-        let nameOne = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        let nameTwo = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
 
-        if nameOne != nil && nameTwo != nil {
-          return nameOne! < nameTwo!
+        if firstName != nil && secondName != nil {
+          return firstName! < secondName!
         }
         return true
       })
@@ -230,7 +240,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     }
   }
 
-  func createEquipment(name: String, number: String) {
+  private func createEquipment(name: String, number: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -241,8 +251,10 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     equipment.type = addInterventionViewController!.selectedValue
     equipment.name = name
     equipment.number = number.isEmpty ? nil : number
-    equipment.indicatorOne = (creationView.firstEquipmentParameter.text != "" ? creationView.firstEquipmentParameter.text : nil)
-    equipment.indicatorTwo = (creationView.secondEquipmentParameter.text != "" ? creationView.secondEquipmentParameter.text : nil)
+    equipment.indicatorOne = (creationView.firstEquipmentParameter.text != "" ?
+      creationView.firstEquipmentParameter.text : nil)
+    equipment.indicatorTwo = (creationView.secondEquipmentParameter.text != "" ?
+      creationView.secondEquipmentParameter.text : nil)
     equipments.append(equipment)
 
     do {
@@ -259,7 +271,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.isHidden = false
   }
 
-  @objc private func nameDidChange(_ textfield: UITextField) {
+  @objc private func nameDidChange() {
     if !creationView.errorLabel.isHidden {
       creationView.errorLabel.isHidden = true
     }
@@ -290,11 +302,11 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.nameTextField.resignFirstResponder()
     createEquipment(name: creationView.nameTextField.text!, number: creationView.numberTextField.text!)
     equipments = equipments.sorted(by: {
-      let nameOne = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      let nameTwo = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let firstName = $0.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let secondName = $1.name?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
 
-      if nameOne != nil && nameTwo != nil {
-        return nameOne! < nameTwo!
+      if firstName != nil && secondName != nil {
+        return firstName! < secondName!
       }
       return true
     })
@@ -340,6 +352,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

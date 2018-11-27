@@ -30,6 +30,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
+    nameLabel.lineBreakMode = .byTruncatingTail
     nameLabel.font = UIFont.systemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -37,6 +38,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var infoLabel: UILabel = {
     let infoLabel = UILabel(frame: CGRect.zero)
+    infoLabel.lineBreakMode = .byTruncatingTail
     infoLabel.font = UIFont.boldSystemFont(ofSize: 14)
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
     return infoLabel
@@ -46,7 +48,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let deleteButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
     deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.addTarget(self, action: #selector(self.removeCell(sender:)), for: .touchUpInside)
+    deleteButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
     deleteButton.tintColor = UIColor.red
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
@@ -87,7 +89,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     unitButton.layer.borderColor = UIColor.lightGray.cgColor
     unitButton.layer.cornerRadius = 5
     unitButton.clipsToBounds = false
-    unitButton.addTarget(self, action: #selector(self.showUnitMeasure(sender:)), for: .touchUpInside)
+    unitButton.addTarget(self, action: #selector(showUnitMeasure), for: .touchUpInside)
     unitButton.translatesAutoresizingMaskIntoConstraints = false
     return unitButton
   }()
@@ -107,7 +109,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let warningImageView = UIImageView(frame: CGRect.zero)
 
     warningImageView.isHidden = true
-    warningImageView.image = UIImage(named: "filled-circle")
+    warningImageView.image = UIImage(named: "warning")
+    warningImageView.tintColor = .red
     warningImageView.translatesAutoresizingMaskIntoConstraints = false
     return warningImageView
   }()
@@ -117,10 +120,24 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
-    warningLabel.textColor = AppColor.TextColors.Red
-    warningLabel.text = "unauthorized_mixing".localized
+    warningLabel.textColor = .red
+    warningLabel.text = "invalid_dose".localized
     warningLabel.translatesAutoresizingMaskIntoConstraints = false
     return warningLabel
+  }()
+
+  lazy var surfaceQuantityTopConstraint: NSLayoutConstraint = {
+    let surfaceQuantityTopConstraint = NSLayoutConstraint(
+      item: surfaceQuantity,
+      attribute: .top,
+      relatedBy: .equal,
+      toItem: quantityTextField,
+      attribute: .bottom,
+      multiplier: 1,
+      constant: 5)
+
+    surfaceQuantityTopConstraint.isActive = true
+    return surfaceQuantityTopConstraint
   }()
 
   // MARK: - Initialization
@@ -131,8 +148,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   private func setupCell() {
-    self.backgroundColor = AppColor.CellColors.LightGray
-    self.selectionStyle = .none
+    backgroundColor = AppColor.CellColors.LightGray
+    selectionStyle = .none
     contentView.addSubview(inputImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(infoLabel)
@@ -143,25 +160,22 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(warningImageView)
     contentView.addSubview(warningLabel)
     contentView.addSubview(surfaceQuantity)
+    contentView.addConstraint(surfaceQuantityTopConstraint)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      inputImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      inputImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       inputImageView.heightAnchor.constraint(equalToConstant: 24),
-      inputImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      inputImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       inputImageView.widthAnchor.constraint(equalToConstant: 24),
       nameLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       nameLabel.leadingAnchor.constraint(equalTo: inputImageView.trailingAnchor, constant: 10),
       infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       infoLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
-      deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
       quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
-      quantityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      quantityLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       quantityTextField.heightAnchor.constraint(equalToConstant: 30),
       quantityTextField.leadingAnchor.constraint(equalTo: quantityLabel.trailingAnchor, constant: 15),
@@ -170,75 +184,118 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       unitButton.heightAnchor.constraint(equalToConstant: 30),
       unitButton.leadingAnchor.constraint(equalTo: quantityTextField.trailingAnchor, constant: 10),
       unitButton.widthAnchor.constraint(equalToConstant: 70),
-
+      warningImageView.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 5),
       warningImageView.heightAnchor.constraint(equalToConstant: 10),
       warningImageView.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
       warningImageView.widthAnchor.constraint(equalToConstant: 10),
+      warningLabel.centerYAnchor.constraint(equalTo: warningImageView.centerYAnchor),
       warningLabel.leadingAnchor.constraint(equalTo: warningImageView.trailingAnchor, constant: 3),
-      surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor)
-      ])
+      surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      deleteButton.heightAnchor.constraint(equalToConstant: 20),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      deleteButton.widthAnchor.constraint(equalToConstant: 20),
+      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: infoLabel.trailingAnchor,
+                                            multiplier: 1)
+      ]
+    )
+  }
 
-    if warningImageView.isHidden {
-      NSLayoutConstraint.activate([
-        surfaceQuantity.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 1)
-        ]
-      )
-    } else {
-      NSLayoutConstraint.activate([
-        warningImageView.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 5),
-        warningLabel.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 2),
-        surfaceQuantity.topAnchor.constraint(equalTo: warningImageView.bottomAnchor, constant: 1)
-        ]
-      )
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Text field
+
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+      return true
     }
+
+    let newText = oldText.replacingCharacters(in: r, with: string)
+    var numberOfDecimalDigits = 0
+
+    if newText.components(separatedBy: ".").count > 2 || newText.components(separatedBy: ",").count > 2 {
+      return false
+    } else if let dotIndex = (newText.contains(",") ? newText.index(of: ",") : newText.index(of: ".")) {
+      numberOfDecimalDigits = newText.distance(from: dotIndex, to: newText.endIndex) - 1
+    }
+    return numberOfDecimalDigits <= 2 && newText.count <= 16
   }
 
   // MARK: - Actions
 
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
-                 replacementString string: String) -> Bool {
-    let containsADot = ((textField.text?.contains("."))! || (textField.text?.contains(","))!)
-    var invalidCharacters: CharacterSet!
+  @objc private func showUnitMeasure(sender: UIButton) {
 
-    if containsADot || textField.text?.count == 0 {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789").inverted
-    } else {
-      invalidCharacters = NSCharacterSet(charactersIn: "0123456789.,").inverted
-    }
-    return string.rangeOfCharacter(
-      from: invalidCharacters,
-      options: [],
-      range: string.startIndex ..< string.endIndex
-      ) == nil
-  }
-
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    saveQuantity(self)
-    return false
-  }
-
-  @objc func showUnitMeasure(sender: UIButton) {
     addInterventionViewController?.dimView.isHidden = false
     if type == "Phyto" {
+      let title = sender.titleLabel?.text
+      for index in 0..<addInterventionViewController!.volumeUnitMeasure.count {
+        if title == addInterventionViewController?.volumeUnitMeasure[index].localized {
+          addInterventionViewController?.volumeUnitPicker.selectRow(index, inComponent: 0, animated: false)
+          break
+        }
+      }
       addInterventionViewController?.volumeUnitPicker.isHidden = false
     } else {
+      let title = sender.titleLabel?.text
+      for index in 0..<addInterventionViewController!.massUnitMeasure.count {
+        if title == addInterventionViewController?.massUnitMeasure[index].localized {
+          addInterventionViewController?.massUnitPicker.selectRow(index, inComponent: 0, animated: false)
+          break
+        }
+      }
       addInterventionViewController?.massUnitPicker.isHidden = false
     }
     cellDelegate?.saveSelectedRow(indexPath)
   }
 
-  @objc func removeCell(sender: UIButton) {
+  @objc func removeCell() {
     cellDelegate?.removeInputCell(indexPath)
   }
 
-  @objc func saveQuantity(_ sender: Any) {
-    addInterventionViewController?.selectedInputs[indexPath.row].setValue(
-      (quantityTextField.text!).floatValue, forKey: "quantity")
-    addInterventionViewController?.updateInputQuantity(indexPath: indexPath)
+  private func checkPhytosanitaryDoses(_ phytoID: Int32, _ quantity: Float) -> Bool {
+    if let asset = NSDataAsset(name: "phytosanitary-doses") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let phytosanitaryDoses = jsonResult as? [[String: Any]]
+
+        for phytosanitaryDose in phytosanitaryDoses! {
+          let productID = phytosanitaryDose["product_id"] as! NSNumber
+
+          if Int(truncating: productID) == phytoID {
+            let dose = phytosanitaryDose["dose"] as! NSNumber
+
+            return quantity <= Float(truncating: dose)
+          }
+        }
+      } catch let error as NSError {
+        print("Lexicon fetch failed. \(error)")
+      }
+    } else {
+      print("phytosanitary-doses.json not found")
+    }
+    return true
   }
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  @objc private func saveQuantity() {
+    if addInterventionViewController?.selectedInputs[indexPath.row] is InterventionPhytosanitary {
+      let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as!
+        InterventionPhytosanitary).phyto?.referenceID
+
+      if !checkPhytosanitaryDoses(phytoID!, quantityTextField.text!.floatValue) {
+        warningLabel.isHidden = false
+        warningImageView.isHidden = false
+        surfaceQuantityTopConstraint.constant = 20
+      } else {
+        warningLabel.isHidden = true
+        warningImageView.isHidden = true
+        surfaceQuantityTopConstraint.constant = 5
+      }
+    }
+    addInterventionViewController?.selectedInputs[indexPath.row].setValue(
+      quantityTextField.text!.floatValue, forKey: "quantity")
+    addInterventionViewController?.updateQuantityLabel(indexPath: indexPath)
   }
 }

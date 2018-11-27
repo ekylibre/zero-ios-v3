@@ -19,7 +19,7 @@ class Clic_Farm_iOSTests: XCTestCase {
   }()
 
   lazy var mockPersistentContainer: NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: self.managedObjectModel)
+    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: managedObjectModel)
     let description = NSPersistentStoreDescription()
     description.type = NSInMemoryStoreType
     description.shouldAddStoreAsynchronously = false
@@ -82,44 +82,44 @@ class Clic_Farm_iOSTests: XCTestCase {
   }
 
   func test_insertPerson() {
-    //Given
+    // Given
     let firstName = "Z"
     let lastName = "26"
 
-    //When
+    // When
     let person = sut.insertObject(entityName: "Person") as! Person
     person.firstName = firstName
     person.lastName = lastName
 
-    //Then
+    // Then
     XCTAssertNotNil(person, "person must not be nil")
   }
 
   func test_fetchAllPersons() {
-    //When
+    // When
     let results = sut.fetchAllObjects(entityName: "Person")
 
-    //Then
+    // Then
     XCTAssertEqual(results.count, 5, "results must contain the 5 sample persons")
   }
 
   func test_removePerson() {
-    //Given
+    // Given
     let persons = sut.fetchAllObjects(entityName: "Person")
     let person = persons[0]
     let numberOfPersons = persons.count
 
-    //When
+    // When
     sut.remove(objectID: person.objectID)
     sut.save()
 
-    //Then
+    // Then
     XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfPersons - 1,
                    "persistent store must not contain deleted person")
   }
 
   func test_save() {
-    //Given
+    // Given
     let firstName = "Y"
     let lastName = "25"
 
@@ -129,18 +129,18 @@ class Clic_Farm_iOSTests: XCTestCase {
       expect.fulfill()
     }
 
-    //When
+    // When
     let person = sut.insertObject(entityName: "Person") as! Person
     person.firstName = firstName
     person.lastName = lastName
     XCTAssertNotNil(person, "person must not be nil")
     sut.save()
 
-    //Assert
+    // Assert
     waitForExpectations(timeout: 1, handler: nil)
   }
 
-  //Convenient method for getting the number of data in store now
+  // Convenient method for getting the number of data in store now
   func numberOfItemsInPersistentStore() -> Int {
     let request: NSFetchRequest<Person> = Person.fetchRequest()
     let results = try! mockPersistentContainer.viewContext.fetch(request)

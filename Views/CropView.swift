@@ -15,9 +15,7 @@ class CropView: UIView {
 
   lazy var cropImageView: UIImageView = {
     let cropImageView = UIImageView(frame: CGRect.zero)
-    let cropImage = UIImage(named: "plots")!
-    let tintedImage = cropImage.withRenderingMode(.alwaysTemplate)
-    cropImageView.image = tintedImage
+    cropImageView.image = UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate)
     cropImageView.tintColor = UIColor.darkGray
     cropImageView.backgroundColor = UIColor.lightGray
     cropImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,33 +68,33 @@ class CropView: UIView {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.borderColor = UIColor.lightGray.cgColor
-    self.layer.borderWidth = 0.5
-    self.addSubview(cropImageView)
-    self.addSubview(checkboxImageView)
-    self.addSubview(nameLabel)
-    self.addSubview(surfaceAreaLabel)
-    self.addGestureRecognizer(gesture)
+    backgroundColor = UIColor.white
+    layer.borderColor = UIColor.lightGray.cgColor
+    layer.borderWidth = 0.5
+    addSubview(cropImageView)
+    addSubview(checkboxImageView)
+    addSubview(nameLabel)
+    addSubview(surfaceAreaLabel)
+    addGestureRecognizer(gesture)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      cropImageView.topAnchor.constraint(equalTo: self.topAnchor),
-      cropImageView.heightAnchor.constraint(equalTo: self.heightAnchor),
-      cropImageView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      cropImageView.widthAnchor.constraint(equalTo: self.heightAnchor),
-      checkboxImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+      cropImageView.topAnchor.constraint(equalTo: topAnchor),
+      cropImageView.heightAnchor.constraint(equalTo: heightAnchor),
+      cropImageView.leftAnchor.constraint(equalTo: leftAnchor),
+      cropImageView.widthAnchor.constraint(equalTo: heightAnchor),
+      checkboxImageView.topAnchor.constraint(equalTo: topAnchor, constant: 2.5),
       checkboxImageView.heightAnchor.constraint(equalToConstant: 25),
-      checkboxImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
+      checkboxImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 2.5),
       checkboxImageView.widthAnchor.constraint(equalToConstant: 25),
-      nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
       nameLabel.leftAnchor.constraint(equalTo: cropImageView.rightAnchor, constant: 10),
-      nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
-      surfaceAreaLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+      nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
+      surfaceAreaLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
       surfaceAreaLabel.leftAnchor.constraint(equalTo: cropImageView.rightAnchor, constant: 10),
-      surfaceAreaLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10)
+      surfaceAreaLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10)
       ])
   }
 

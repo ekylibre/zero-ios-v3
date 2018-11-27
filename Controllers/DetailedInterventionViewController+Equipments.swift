@@ -34,9 +34,9 @@ extension AddInterventionViewController {
     selectedEquipmentsTableView.bounces = false
     selectedEquipmentsTableView.dataSource = self
     selectedEquipmentsTableView.delegate = self
-    equipmentsSelectionView.cancelButton.addTarget(self, action: #selector(closeEquipmentsSelectionView), for: .touchUpInside)
-    equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes), for: .touchUpInside)
     equipmentsSelectionView.addInterventionViewController = self
+    equipmentsSelectionView.creationView.typeButton.addTarget(self, action: #selector(showEquipmentTypes),
+                                                              for: .touchUpInside)
   }
 
   private func loadEquipmentTypes() -> [String] {
@@ -64,7 +64,7 @@ extension AddInterventionViewController {
     let sortedEquipmentTypes = equipmentTypes.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <
-      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
 
     return sortedEquipmentTypes.first!
@@ -74,7 +74,7 @@ extension AddInterventionViewController {
 
   func selectEquipment(_ equipment: Equipment) {
     selectedEquipments.append(equipment)
-    closeEquipmentsSelectionView()
+    equipmentsSelectionView.cancelButton.sendActions(for: .touchUpInside)
     updateView()
   }
 
@@ -122,6 +122,7 @@ extension AddInterventionViewController {
       return
     }
 
+    view.endEditing(true)
     updateEquipmentsCountLabel()
     equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     if interventionState != InterventionState.Validated.rawValue {
@@ -142,22 +143,8 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc private func closeEquipmentsSelectionView() {
-    equipmentsSelectionView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-
-    equipmentsSelectionView.searchBar.text = nil
-    equipmentsSelectionView.searchBar.endEditing(true)
-    equipmentsSelectionView.isSearching = false
-    equipmentsSelectionView.tableView.reloadData()
-  }
-
   @objc private func showEquipmentTypes() {
-    self.performSegue(withIdentifier: "showEquipmentTypes", sender: self)
+    performSegue(withIdentifier: "showEquipmentTypes", sender: self)
   }
 
   @objc func tapEquipmentsDeleteButton(sender: UIButton) {
@@ -176,5 +163,29 @@ extension AddInterventionViewController {
     selectedEquipments.remove(at: index)
     updateView()
     equipmentsSelectionView.tableView.reloadData()
+  }
+
+  private func getSelectedEquipmentInfos(_ equipment: Equipment) -> String {
+    let type = equipment.type!.localized
+    guard let number = equipment.number else {
+      return type
+    }
+
+    return String(format: "%@ #%@", type, number)
+  }
+
+  func selectedEquipmentsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath)
+    -> SelectedEquipmentCell {
+      let selectedEquipment = selectedEquipments[indexPath.row]
+      let imageName = selectedEquipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath)
+        as! SelectedEquipmentCell
+
+
+      cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+      cell.nameLabel.text = selectedEquipment.name
+      cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
+      cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
+      return cell
   }
 }

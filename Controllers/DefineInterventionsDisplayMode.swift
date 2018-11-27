@@ -23,8 +23,8 @@ extension AddInterventionViewController {
       selectedPersonsTableView.isUserInteractionEnabled = false
       temperatureTextField.isUserInteractionEnabled = false
       windSpeedTextField.isUserInteractionEnabled = false
-      negativeTemperature.isUserInteractionEnabled = false
-      notesTextField.isUserInteractionEnabled = false
+      temperatureSign.isUserInteractionEnabled = false
+      notesTextView.isUserInteractionEnabled = false
       for weatherButton in weatherButtons {
         weatherButton.isUserInteractionEnabled = false
       }
@@ -58,7 +58,7 @@ extension AddInterventionViewController {
 
       irrigationVolumeTextField.text = (waterQuantity as NSNumber?)?.stringValue
       irrigationUnitButton.setTitle(currentIntervention?.waterUnit?.localized, for: .normal)
-      updateIrrigation(self)
+      updateIrrigation()
       if interventionState == InterventionState.Validated.rawValue {
         irrigationExpandImageView.isHidden = true
       }
@@ -128,7 +128,7 @@ extension AddInterventionViewController {
         createHarvest(storage, type, number, unit, quantity)
       }
     }
-    addALoad.isHidden = (interventionState == InterventionState.Validated.rawValue)
+    harvestAddButton.isHidden = (interventionState == InterventionState.Validated.rawValue)
     if selectedHarvests.count > 0 {
       harvestType.setTitle(selectedHarvests.first?.type, for: .normal)
       refreshHarvestView()
@@ -165,12 +165,12 @@ extension AddInterventionViewController {
     let temperature = weather.temperature
 
     if temperature != nil {
-      negativeTemperature.setTitle((Int(truncating: temperature!) > 0 ? "+" : "-"), for: .normal)
+      temperatureSign.setTitle((Int(truncating: temperature!) > 0 ? "+" : "-"), for: .normal)
     } else {
-      negativeTemperature.setTitle("+", for: .selected)
+      temperatureSign.setTitle("+", for: .selected)
     }
     interventionState == InterventionState.Validated.rawValue ?
-      negativeTemperature.setTitleColor(.lightGray, for: .normal) : nil
+      temperatureSign.setTitleColor(.lightGray, for: .normal) : nil
   }
 
   private func loadInterventionInReadOnlyMode() {
@@ -178,7 +178,8 @@ extension AddInterventionViewController {
     cropsView.isHidden = true
     warningView.isHidden = false
     warningMessage.text = "you_are_in_consult_mode".localized
-    notesTextField.placeholder = (currentIntervention?.infos == "" ? "Notes" : currentIntervention?.infos)
+    notesTextView.text = (currentIntervention?.infos == "" ? "notes".localized : currentIntervention?.infos)
+    notesTextView.textColor = .lightGray
     bottomBarView.isHidden = true
     bottomView.isHidden = true
     scrollViewBottomConstraint.isActive = false
@@ -203,11 +204,8 @@ extension AddInterventionViewController {
   private func loadInterventionInEditableMode() {
     interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "edit")
-    if currentIntervention?.infos == "" {
-      notesTextField.placeholder = "Notes"
-    } else {
-      notesTextField.text = currentIntervention?.infos
-    }
+    notesTextView.text = (currentIntervention?.infos == "" ? "notes".localized : currentIntervention?.infos)
+    notesTextView.textColor = .lightGray
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     weather = currentIntervention?.weather

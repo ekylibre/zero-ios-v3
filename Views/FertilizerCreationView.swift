@@ -99,40 +99,40 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.addSubview(titleLabel)
-    self.addSubview(nameTextField)
-    self.addSubview(errorLabel)
-    self.addSubview(natureLabel)
-    self.addSubview(natureButton)
-    self.addSubview(cancelButton)
-    self.addSubview(createButton)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    isHidden = true
+    addSubview(titleLabel)
+    addSubview(nameTextField)
+    addSubview(errorLabel)
+    addSubview(natureLabel)
+    addSubview(natureButton)
+    addSubview(cancelButton)
+    addSubview(createButton)
     setupLayout()
     setupActions()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
-      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       natureLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
-      natureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      natureLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       natureButton.topAnchor.constraint(equalTo: natureLabel.bottomAnchor),
-      natureButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      natureButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -60),
-      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      natureButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      natureButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
+      cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15)
       ])
   }
 
@@ -154,6 +154,15 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Text field
 
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
+    guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+      return true
+    }
+
+    return oldText.replacingCharacters(in: r, with: string).count <= 500
+  }
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
@@ -167,7 +176,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     }
   }
 
-  @objc func closeView(sender: UIButton) {
+  @objc private func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
     nameTextField.text = ""
     natureButton.setTitle("organic".localized, for: .normal)
