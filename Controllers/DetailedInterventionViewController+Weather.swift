@@ -85,23 +85,15 @@ extension AddInterventionViewController {
     }
   }
 
-  private func hideWeatherItems(_ state: Bool) {
-    for index in 0..<weatherButtons.count {
-      weatherButtons[index].isHidden = state
-    }
-    windSpeedTextField.isHidden = state
-    temperatureTextField.isHidden = state
-    temperatureSign.isHidden = state
-  }
-
   @IBAction func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
     view.endEditing(true)
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
+    temperatureSign.isHidden = !shouldExpand
+    temperatureTextField.isHidden = !shouldExpand
     weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)
-    hideWeatherItems(!shouldExpand)
     saveCurrentWeather()
   }
 
