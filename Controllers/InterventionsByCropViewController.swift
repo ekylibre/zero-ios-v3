@@ -328,6 +328,14 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     cropDetailedView.tableView.reloadData()
   }
 
+  // MARK: - Navigation
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    let destVC = segue.destination as? AddInterventionViewController
+    destVC?.currentIntervention = cropDetailedView.toUpdateIntervention
+    destVC?.interventionState = cropDetailedView.toUpdateIntervention?.status
+  }
+
   // MARK: - Actions
 
   @objc private func dismissViewController() {

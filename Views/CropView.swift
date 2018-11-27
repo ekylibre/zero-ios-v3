@@ -1,3 +1,4 @@
+
 //
 //  CropView.swift
 //  Clic&Farm-iOS

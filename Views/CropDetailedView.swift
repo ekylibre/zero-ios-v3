@@ -85,6 +85,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   }()
 
   var interventions = [Intervention]()
+  var toUpdateIntervention: Intervention?
 
   // MARK: - Initialization
 
@@ -136,6 +137,15 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   // MARK: - Table view
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let interventionsByCropVC = parentViewController as? InterventionsByCropViewController else {
+      return
+    }
+
+    toUpdateIntervention = interventions[indexPath.row]
+    interventionsByCropVC.performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
+  }
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1

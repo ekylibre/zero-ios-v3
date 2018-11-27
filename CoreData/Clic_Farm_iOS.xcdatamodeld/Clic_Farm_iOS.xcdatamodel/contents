@@ -2,7 +2,6 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crop" representedClassName="Crop" syncable="YES" codeGenerationType="class">
         <attribute name="centroid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isSelected" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="plotName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productionID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="productionMode" optional="YES" attributeType="String" syncable="YES"/>
@@ -78,13 +77,14 @@
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="interventionEquipments" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <entity name="InterventionFertilizer" representedClassName="InterventionFertilizer" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="fertilizer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fertilizer" inverseName="interventionFertilizers" inverseEntity="Fertilizer" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="interventionFertilizers" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <entity name="InterventionMaterial" representedClassName="InterventionMaterial" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="approximativeValue" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="interventionMaterials" inverseEntity="Intervention" syncable="YES"/>
         <relationship name="material" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Material" inverseName="interventionMaterials" inverseEntity="Material" syncable="YES"/>
@@ -95,13 +95,13 @@
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="interventionPersons" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="InterventionPhytosanitary" representedClassName="InterventionPhytosanitary" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="interventionPhytosanitaries" inverseEntity="Intervention" syncable="YES"/>
         <relationship name="phyto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Phyto" inverseName="interventionPhytosanitaries" inverseEntity="Phyto" syncable="YES"/>
     </entity>
     <entity name="InterventionSeed" representedClassName="InterventionSeed" syncable="YES" codeGenerationType="class">
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="interventionSeeds" inverseEntity="Intervention" syncable="YES"/>
         <relationship name="seed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Seed" inverseName="interventionSeeds" inverseEntity="Seed" syncable="YES"/>
@@ -158,9 +158,9 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Weather" representedClassName="Weather" syncable="YES" codeGenerationType="class">
-        <attribute name="temperature" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="weatherDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="windSpeed" optional="YES" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="intervention" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Intervention" inverseName="weather" inverseEntity="Intervention" syncable="YES"/>
     </entity>
     <entity name="WorkingPeriod" representedClassName="WorkingPeriod" syncable="YES" codeGenerationType="class">

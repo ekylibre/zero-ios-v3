@@ -52,7 +52,6 @@ extension AddInterventionViewController: UIPickerViewDelegate, UIPickerViewDataS
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     dimView.isHidden = true
-
     let cell = selectedInputsTableView.cellForRow(at: cellIndexPath) as! SelectedInputCell
 
     if pickerView == volumeUnitPicker {

@@ -77,6 +77,29 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
+  private func checkButtonDisplayStatus(shouldExpand: Bool) {
+    if interventionState == InterventionState.Validated.rawValue {
+      inputsAddButton.isHidden = true
+      inputsCountLabel.isHidden = false
+    } else if interventionState != nil {
+      inputsCountLabel.isHidden = !shouldExpand
+      inputsAddButton.isHidden = !inputsCountLabel.isHidden
+    }
+  }
+
+  func refreshSelectedInputs() {
+    let shouldExpand = selectedInputs.count > 0
+
+    checkButtonDisplayStatus(shouldExpand: shouldExpand)
+    inputsExpandImageView.isHidden = !shouldExpand
+    updateInputsCountLabel()
+    selectedInputsTableView.reloadData()
+  }
+
+  func saveSelectedRow(_ indexPath: IndexPath) {
+    cellIndexPath = indexPath
+  }
+
   @IBAction func openInputsSelectionView(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
@@ -94,12 +117,16 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       return
     }
 
+    if interventionState != InterventionState.Validated.rawValue {
+      inputsAddButton.isHidden = !shouldExpand
+    }
     view.endEditing(true)
     updateInputsCountLabel()
-    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
-    inputsAddButton.isHidden = !shouldExpand
     inputsCountLabel.isHidden = shouldExpand
+    inputsExpandImageView.isHidden = (selectedInputs.count == 0)
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+    inputsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
     selectedInputsTableView.isHidden = !shouldExpand
     inputsUnauthorizedMixLabel.isHidden = !shouldExpand
     inputsUnauthorizedMixImage.isHidden = !shouldExpand
@@ -117,9 +144,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   // MARK: -
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-  }
 
   private func closeInputsSelectionView() {
     dimView.isHidden = true
@@ -178,7 +202,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     return true
   }
 
-  func selectInput(_ input: NSManagedObject) {
+  func selectInput(_ input: NSManagedObject, quantity: Float?, unit: String?,
+                   calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -188,26 +213,29 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     switch input {
     case let seed as Seed:
       let selectedSeed = InterventionSeed(context: managedContext)
-      selectedSeed.unit = seed.unit
+      selectedSeed.unit = (unit != nil ? unit : seed.unit)
       selectedSeed.seed = seed
+      quantity != nil ? selectedSeed.quantity = quantity! : nil
       selectedInputs.append(selectedSeed)
     case let phyto as Phyto:
       let selectedPhyto = InterventionPhytosanitary(context: managedContext)
-      selectedPhyto.unit = phyto.unit
+      selectedPhyto.unit = (unit != nil ? unit : phyto.unit)
       selectedPhyto.phyto = phyto
+      quantity != nil ? selectedPhyto.quantity = quantity! : nil
       selectedInputs.append(selectedPhyto)
       checkAllMixCategoryCode()
     case let fertilizer as Fertilizer:
       let selectedFertilizer = InterventionFertilizer(context: managedContext)
-      selectedFertilizer.unit = fertilizer.unit
+      selectedFertilizer.unit = (unit != nil ? unit : fertilizer.unit)
       selectedFertilizer.fertilizer = fertilizer
+      quantity != nil ? selectedFertilizer.quantity = quantity! : nil
       selectedInputs.append(selectedFertilizer)
     default:
       fatalError("Input type not found")
     }
 
     selectedInputsTableView.reloadData()
-    closeInputsSelectionView()
+    !calledFromCreatedIntervention ? closeInputsSelectionView() : nil
   }
 
   private func resetInputsUsedAttribute(index: Int) {
@@ -271,7 +299,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func updateQuantityLabel(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as? SelectedInputCell
-    let quantity = cell?.quantityTextField.text?.floatValue
+    let isValidated = (interventionState == InterventionState.Validated.rawValue)
+    let quantity = (isValidated ? cell?.quantityTextField.placeholder?.floatValue : cell?.quantityTextField.text?.floatValue)
     let unit = cell?.unitButton.titleLabel?.text
 
     cell?.surfaceQuantity.isHidden = false
@@ -307,26 +336,32 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
       switch selectedInput {
       case is InterventionSeed:
-        let seed = selectedInput.value(forKey: "seed") as! Seed
+        let interventionSeed = selectedInput as! InterventionSeed
 
+        cell.nameLabel.text = interventionSeed.seed?.specie?.localized
+        cell.infoLabel.text = interventionSeed.seed?.variety
         cell.type = "Seed"
-        cell.nameLabel.text = seed.specie?.localized
-        cell.infoLabel.text = seed.variety
         cell.inputImageView.image = UIImage(named: "seed")
+        displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber?)?.stringValue,
+                                           unit: interventionSeed.unit, cell: cell)
       case is InterventionPhytosanitary:
-        let phyto = selectedInput.value(forKey: "phyto") as! Phyto
+        let interventionPhyto = selectedInput as! InterventionPhytosanitary
 
+        cell.nameLabel.text = interventionPhyto.phyto?.name
+        cell.infoLabel.text = interventionPhyto.phyto?.firmName
         cell.type = "Phyto"
-        cell.nameLabel.text = phyto.name
-        cell.infoLabel.text = phyto.firmName
         cell.inputImageView.image = UIImage(named: "phytosanitary")
+        displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber?)?.stringValue,
+                                           unit: interventionPhyto.unit, cell: cell)
       case is InterventionFertilizer:
-        let fertilizer = selectedInput.value(forKey: "fertilizer") as! Fertilizer
+        let interventionFertilizer = selectedInput as! InterventionFertilizer
 
+        cell.nameLabel.text = interventionFertilizer.fertilizer?.name?.localized
+        cell.infoLabel.text = interventionFertilizer.fertilizer?.nature?.localized
         cell.type = "Fertilizer"
-        cell.nameLabel.text = fertilizer.name?.localized
-        cell.infoLabel.text = nil
         cell.inputImageView.image = UIImage(named: "fertilizer")
+        displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber?)?.stringValue,
+                                           unit: interventionFertilizer.unit, cell: cell)
       default:
         fatalError("Unknown input type for: \(String(describing: selectedInput))")
       }

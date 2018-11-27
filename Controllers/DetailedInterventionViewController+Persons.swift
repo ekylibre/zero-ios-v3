@@ -40,7 +40,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectPerson(_ person: Person) {
+  func selectPerson(_ person: Person, isDriver: Bool, calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -48,20 +48,35 @@ extension AddInterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPerson = InterventionPerson(context: managedContext)
 
-    interventionPerson.isDriver = false
+    interventionPerson.isDriver = isDriver
+    interventionPerson.person = person
     selectedPersons[0].append(person)
     selectedPersons[1].append(interventionPerson)
     personsSelectionView.cancelButton.sendActions(for: .touchUpInside)
-    updateView()
+    updateSelectedPersonsView(calledFromCreatedIntervention: calledFromCreatedIntervention)
   }
 
-  private func updateView() {
+  private func checkButtonDisplayStatus(shouldExpand: Bool) {
+    if interventionState == InterventionState.Validated.rawValue {
+      personsAddButton.isHidden = true
+      personsCountLabel.isHidden = false
+    } else if interventionState != nil {
+      personsCountLabel.isHidden = !shouldExpand
+      personsAddButton.isHidden = !personsCountLabel.isHidden
+    }
+  }
+
+  func updateSelectedPersonsView(calledFromCreatedIntervention: Bool) {
     let shouldExpand = selectedPersons[0].count > 0
     let tableViewHeight = (selectedPersons[0].count > 10) ? 10 * 65 : selectedPersons[0].count * 65
 
+    if !calledFromCreatedIntervention {
+      personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+      personsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    }
     personsExpandImageView.isHidden = !shouldExpand
-    personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    personsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    checkButtonDisplayStatus(shouldExpand: shouldExpand)
+    updatePersonsCountLabel()
     selectedPersonsTableView.reloadData()
   }
 
@@ -87,8 +102,12 @@ extension AddInterventionViewController {
     view.endEditing(true)
     updatePersonsCountLabel()
     personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    personsAddButton.isHidden = !shouldExpand
+    personsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    if interventionState != InterventionState.Validated.rawValue {
+      personsAddButton.isHidden = (!shouldExpand)
+    }
     personsCountLabel.isHidden = shouldExpand
+    selectedPersonsTableView.isHidden = !shouldExpand
     personsExpandImageView.transform = personsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
@@ -124,7 +143,7 @@ extension AddInterventionViewController {
   private func deletePerson(_ index: Int)  {
     selectedPersons[0].remove(at: index)
     selectedPersons[1].remove(at: index)
-    updateView()
+    updateSelectedPersonsView(calledFromCreatedIntervention: false)
     personsSelectionView.tableView.reloadData()
   }
 
@@ -133,10 +152,12 @@ extension AddInterventionViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedPersonCell", for: indexPath)
       as! SelectedPersonCell
 
+    if interventionState != nil {
+      cell.driverSwitch.isOn = selectedPersons[1][indexPath.row].value(forKey: "isDriver") as! Bool
+    }
     cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
     cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
     cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
-    cell.driverSwitch.isOn = selectedPersons[1][indexPath.row].value(forKey: "isDriver") as! Bool
     cell.driverSwitch.addTarget(self, action: #selector(updateIsDriver), for: .valueChanged)
     return cell
   }
