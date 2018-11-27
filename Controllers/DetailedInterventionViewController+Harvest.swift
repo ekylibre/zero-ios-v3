@@ -13,7 +13,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   
   // MARK: - Initialization
 
-  func initHarvestView() {
+  func setupHarvestView() {
     let fetchedStorages = fetchStorages(predicate: nil)
 
     fetchedStorages != nil ? storages = fetchedStorages! : nil
@@ -31,18 +31,40 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   func defineUnit(_ indexPath: IndexPath) {
+    let unit = ["KILOGRAM", "QUINTAL", "TON"]
+    let cell = harvestTableView.cellForRow(at: indexPath) as? HarvestCell
+    let title = cell?.unit.titleLabel?.text
+
+    for index in 0..<unit.count {
+      if title == unit[index].localized {
+        harvestUnitPickerView.selectRow(index, inComponent: 0, animated: false)
+        break
+      }
+    }
     cellIndexPath = indexPath
     dimView.isHidden = false
     harvestUnitPickerView.isHidden = false
   }
 
   func defineStorage(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-    dimView.isHidden = false
-    storagesPickerView.isHidden = false
+    if storages.count > 0 {
+      let storagesName = fetchStoragesName()
+      let cell = harvestTableView.cellForRow(at: indexPath) as? HarvestCell
+      let title = cell?.storage.titleLabel?.text
+
+      for index in 0..<storagesName!.count {
+        if title == storagesName?[index].localized {
+          storagesPickerView.selectRow(index, inComponent: 0, animated: false)
+          break
+        }
+      }
+      cellIndexPath = indexPath
+      dimView.isHidden = false
+      storagesPickerView.isHidden = false
+    }
   }
 
-  func initializeHarvestTableView() {
+  private func initializeHarvestTableView() {
     harvestTableView.layer.borderWidth  = 0.5
     harvestTableView.layer.borderColor = UIColor.lightGray.cgColor
     harvestTableView.layer.cornerRadius = 4
@@ -50,34 +72,37 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.delegate = self
   }
 
-  func initHarvestUnitPickerView () {
-    let unit = ["QUINTAL", "TON", "KILOGRAM"]
+  private func initHarvestUnitPickerView () {
+    let unit = ["KILOGRAM", "QUINTAL", "TON"]
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    harvestUnitPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
+    harvestUnitPickerView = CustomPickerView(frame: frame, unit, superview: view)
     harvestUnitPickerView.reference = self
     harvestUnitPickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestUnitPickerView)
   }
 
-  func initHarvestNaturePickerView() {
-    let unit = ["STRAW", "GRAIN", "SILAGE"]
+  private func initHarvestNaturePickerView() {
+    let unit = ["GRAIN", "SILAGE", "STRAW"]
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    harvestNaturePickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), unit, superview: view)
+    harvestNaturePickerView = CustomPickerView(frame: frame, unit, superview: view)
     harvestNaturePickerView.reference = self
     harvestNaturePickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestNaturePickerView)
   }
 
-  func initStoragesPickerView() {
+  private func initStoragesPickerView() {
     let storages = fetchStoragesName()
+    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    storagesPickerView = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), storages ?? ["---"], superview: view)
+    storagesPickerView = CustomPickerView(frame: frame, storages ?? ["---"], superview: view)
     storagesPickerView.reference = self
     storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesPickerView)
   }
 
-  func initStoragesTypesPickerView() {
+  private func initStoragesTypesPickerView() {
     let types = ["BUILDING", "HEAP", "SILO"]
 
     storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
@@ -86,7 +111,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     view.addSubview(storagesTypes)
   }
 
-  func setupStorageCreationView() {
+  private func setupStorageCreationView() {
     storageCreationView = StorageCreationView(frame: CGRect.zero)
     storageCreationView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storageCreationView)
@@ -103,15 +128,46 @@ extension AddInterventionViewController: HarvestCellDelegate {
     storageCreationView.typeButton.addTarget(self, action: #selector(showStorageTypes), for: .touchUpInside)
   }
 
-
   // MARK: - Actions
+
+  @IBAction func tapHarvestView() {
+    let shouldExpand = (harvestViewHeightConstraint.constant == 70)
+    let tableViewHeight = (harvests.count > 10) ? 10 * 150 : harvests.count * 150
+
+    if harvests.count == 0 {
+      return
+    }
+
+    view.endEditing(true)
+    updateHarvestCountLabel()
+    harvestNature.isHidden = !shouldExpand
+    harvestType.isHidden = !shouldExpand
+    harvestTableView.isHidden = !shouldExpand
+    harvestAddButton.isHidden = !shouldExpand
+    harvestCountLabel.isHidden = shouldExpand
+    harvestExpandImageView.isHidden = (harvests.count == 0)
+    harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
+    harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 125) : 70
+    harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+  }
+
+  private func updateHarvestCountLabel() {
+    if harvests.count == 1 {
+      harvestCountLabel.text = "load".localized
+    } else if harvests.count > 1 {
+      harvestCountLabel.text = String(format: "loads".localized, harvests.count)
+    } else {
+      harvestCountLabel.text = "none".localized
+    }
+  }
 
   private func checkStorageName() -> Bool {
     if storageCreationView.nameTextField.text!.isEmpty {
       storageCreationView.errorLabel.text = "storage_name_is_empty".localized
       storageCreationView.errorLabel.isHidden = false
       return false
-    } else if storages.contains(where: { $0.name?.lowercased() == storageCreationView.nameTextField.text?.lowercased() }) {
+    } else if storages.contains(where:
+      { $0.name?.lowercased() == storageCreationView.nameTextField.text?.lowercased() }) {
       storageCreationView.errorLabel.text = "storage_name_not_available".localized
       storageCreationView.errorLabel.isHidden = false
       return false
@@ -119,14 +175,16 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return true
   }
 
-  @objc func cancelStorageCreation(_ sender: Any) {
+  @objc private func cancelStorageCreation() {
+
+    storagesTypes.selectRow(0, inComponent: 0, animated: false)
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
     storageCreationView.nameTextField.text = ""
     dimView.isHidden = true
     storageCreationView.isHidden = true
   }
 
-  @objc func createNewStorage(_ sender: Any) {
+  @objc private func createNewStorage() {
     if !checkStorageName() {
       return
     }
@@ -137,10 +195,10 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     storagesPickerView.values = (storages != nil ? storages! : ["---"])
     storagesPickerView.reloadComponent(0)
-    cancelStorageCreation(self)
+    cancelStorageCreation()
   }
 
-  @objc func showStorageTypes(_ sender: Any) {
+  @objc private func showStorageTypes() {
     storagesTypes.isHidden = false
   }
 
@@ -182,10 +240,10 @@ extension AddInterventionViewController: HarvestCellDelegate {
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
-    return storagesNames
+    return storagesNames.sorted()
   }
 
-  func createHarvest() {
+  private func createHarvest() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -200,7 +258,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvests.append(harvest)
   }
 
-  func createStorage(name: String, type: String) {
+  private func createStorage(name: String, type: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -220,6 +278,14 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction func changeHarvestNature(_ sender: UIButton) {
+    let unit = ["GRAIN", "SILAGE", "STRAW"]
+
+    for index in 0..<unit.count {
+      if harvestNature.text == unit[index].localized {
+        harvestNaturePickerView.selectRow(index, inComponent: 0, animated: false)
+        break
+      }
+    }
     dimView.isHidden = false
     harvestNaturePickerView.isHidden = false
   }
@@ -232,6 +298,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
       self.harvests.remove(at: indexPath.row)
       self.harvestTableView.reloadData()
       if self.harvests.count == 0 {
+        self.harvestExpandImageView.isHidden = true
         self.harvestTableView.isHidden = true
         self.harvestType.isHidden = true
         self.harvestNature.isHidden = true
@@ -249,13 +316,50 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   @IBAction func addHarvest(_ sender: UIButton) {
     createHarvest()
-    harvestNature.isHidden = false
-    harvestType.isHidden = false
-    harvestTableView.isHidden = false
-    harvestTableView.reloadData()
-    if harvests.count < 4 {
-      harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
-      harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
+    if harvests.count > 0 {
+      let tableViewHeight = (harvests.count > 10) ? 10 * 150 : harvests.count * 150
+
+      harvestNature.isHidden = false
+      harvestType.isHidden = false
+      harvestTableView.isHidden = false
+      harvestAddButton.isHidden = false
+      harvestCountLabel.isHidden = true
+      harvestExpandImageView.isHidden = false
+      harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 125)
+      harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      view.layoutIfNeeded()
     }
+    harvestTableView.reloadData()
+  }
+
+  private func setupObjectsLayer(_ button: UIButton, _ textField: UITextField) {
+    button.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    button.layer.borderWidth = 1
+    button.layer.cornerRadius = 5
+    textField.layer.borderColor = AppColor.CellColors.LightGray.cgColor
+    textField.layer.borderWidth = 1
+    textField.layer.cornerRadius = 5
+  }
+
+  func harvestTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> HarvestCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
+    let harvest = harvests[indexPath.row]
+    let unit = harvest.unit
+
+    cell.addInterventionController = self
+    cell.cellDelegate = self
+    cell.indexPath = indexPath
+    cell.unit.setTitle(unit?.localized, for: .normal)
+    cell.storage.backgroundColor = AppColor.ThemeColors.White
+    cell.storage.setTitle(harvests[indexPath.row].storage?.name ?? "---", for: .normal)
+    cell.quantity.keyboardType = .decimalPad
+    cell.quantity.text = String(harvest.quantity)
+    cell.quantity.delegate = cell
+    cell.number.text = harvest.number
+    cell.number.delegate = cell
+    cell.selectionStyle = .none
+    setupObjectsLayer(cell.unit, cell.quantity)
+    setupObjectsLayer(cell.storage, cell.number)
+    return cell
   }
 }

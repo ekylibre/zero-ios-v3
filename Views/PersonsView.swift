@@ -44,13 +44,13 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
   }
 
   private func setupCreationView() {
-    self.addSubview(creationView)
+    addSubview(creationView)
 
     NSLayoutConstraint.activate([
       creationView.heightAnchor.constraint(equalToConstant: 250),
-      creationView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      creationView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      creationView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      creationView.leftAnchor.constraint(equalTo: leftAnchor),
+      creationView.rightAnchor.constraint(equalTo: rightAnchor),
       ])
   }
 
@@ -79,7 +79,7 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
     })
     isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
-    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableViewTopAnchor.constant = isSearching ? 10 : 40
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {
@@ -132,8 +132,15 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
     do {
       persons = try managedContext.fetch(personsFetchRequest)
-      persons = persons.sorted(by: { $0.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-        < $1.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+      persons = persons.sorted(by: {
+        let firstName = $0.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        let secondName = $1.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+        if firstName != nil && secondName != nil {
+          return firstName! < secondName!
+        }
+        return true
+      })
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -194,8 +201,15 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
     creationView.firstNameTextField.resignFirstResponder()
     createPerson(firstName: creationView.firstNameTextField.text!, lastName: creationView.lastNameTextField.text!)
-    persons = persons.sorted(by: { $0.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
-      < $1.firstName!.lowercased().folding(options: .diacriticInsensitive, locale: .current) })
+    persons = persons.sorted(by: {
+      let firstName = $0.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+      let secondName = $1.firstName?.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+
+      if firstName != nil && secondName != nil {
+        return firstName! < secondName!
+      }
+      return true
+    })
     tableView.reloadData()
     creationView.isHidden = true
     dimView.isHidden = true
@@ -216,6 +230,6 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

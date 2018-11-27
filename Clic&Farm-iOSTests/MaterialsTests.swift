@@ -19,7 +19,7 @@ class MaterialsTests: XCTestCase {
     return managedObjectModel
   }()
   lazy var mockPersistentContainer: NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: self.managedObjectModel)
+    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: managedObjectModel)
     let description = NSPersistentStoreDescription()
     description.type = NSInMemoryStoreType
     description.shouldAddStoreAsynchronously = false
@@ -49,15 +49,15 @@ class MaterialsTests: XCTestCase {
   }
 
   func test_checkMaterialName_withValidName_shouldReturnTrue() {
-    //Given
+    // Given
     let name = "Sample material"
 
-    //When
+    // When
     addInterventionVC.materialsSelectionView.materials.removeAll()
     XCTAssertEqual(addInterventionVC.materialsSelectionView.materials.count, 0, "materials must be empty")
     addInterventionVC.materialsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.materialsSelectionView.checkMaterialName(),
                   "checkMaterialName must return true when the name is valid")
     XCTAssertTrue(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
@@ -65,15 +65,15 @@ class MaterialsTests: XCTestCase {
   }
 
   func test_checkMaterialName_withEmptyName_shouldReturnFalse() {
-    //Given
+    // Given
     let name = ""
 
-    //When
+    // When
     addInterventionVC.materialsSelectionView.materials.removeAll()
     XCTAssertEqual(addInterventionVC.materialsSelectionView.materials.count, 0, "materials must be empty")
     addInterventionVC.materialsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.materialsSelectionView.checkMaterialName(),
                    "checkMaterialName must return true when the name is empty")
     XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
@@ -81,11 +81,11 @@ class MaterialsTests: XCTestCase {
   }
 
   func test_checkMaterialName_withUniqueName_shouldReturnTrue() {
-    //Given
+    // Given
     let material = sut.insertObject(entityName: "Material") as! Material
     let name = "Sample"
 
-    //When
+    // When
     addInterventionVC.materialsSelectionView.materials.removeAll()
     XCTAssertEqual(addInterventionVC.materialsSelectionView.materials.count, 0, "materials must be empty")
     material.name = "Sample material"
@@ -94,7 +94,7 @@ class MaterialsTests: XCTestCase {
                    "materials must contain newly created material")
     addInterventionVC.materialsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.materialsSelectionView.checkMaterialName(),
                   "checkMaterialName must return true when there is not an existing material with this same name")
     XCTAssertTrue(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
@@ -102,11 +102,11 @@ class MaterialsTests: XCTestCase {
   }
 
   func test_checkMaterialName_withExistingName_shouldReturnFalse() {
-    //Given
+    // Given
     let material = sut.insertObject(entityName: "Material") as! Material
     let name = "Sample material"
 
-    //When
+    // When
     addInterventionVC.materialsSelectionView.materials.removeAll()
     XCTAssertEqual(addInterventionVC.materialsSelectionView.materials.count, 0, "materials must be empty")
     material.name = "Sample material"
@@ -115,7 +115,7 @@ class MaterialsTests: XCTestCase {
                    "materials must contain newly created material")
     addInterventionVC.materialsSelectionView.creationView.nameTextField.text = name
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.materialsSelectionView.checkMaterialName(),
                    "checkMaterialName must return false when the name is already taken by a material")
     XCTAssertFalse(addInterventionVC.materialsSelectionView.creationView.errorLabel.isHidden,
@@ -135,22 +135,22 @@ class MaterialsTests: XCTestCase {
   }
 
   func test_materialsCountLabel_withoutSelectedMaterials_shouldBeHidden() {
-    //When
+    // When
     addInterventionVC.selectedMaterials[0].removeAll()
     XCTAssertEqual(addInterventionVC.selectedMaterials[0].count, 0, "selectedMaterials must be empty")
     addInterventionVC.tapMaterialsView()
     addInterventionVC.tapMaterialsView()
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.materialsCountLabel.isHidden,
                   "materialsCountLabel must be hidden if selectedMaterials is empty")
   }
 
   func test_materialsCountLabel_withSingleSelectedMaterial_shouldBeDisplayed() {
-    //Given
+    // Given
     let material = sut.insertObject(entityName: "Material") as! Material
 
-    //When
+    // When
     addInterventionVC.selectedMaterials[0].removeAll()
     XCTAssertEqual(addInterventionVC.selectedMaterials[0].count, 0, "selectedMaterials must be empty")
     addInterventionVC.selectedMaterials[0].append(material)
@@ -158,7 +158,7 @@ class MaterialsTests: XCTestCase {
     addInterventionVC.tapMaterialsView()
     addInterventionVC.tapMaterialsView()
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.materialsCountLabel.isHidden,
                    "materialsCountLabel must not be hidden if selectedMaterials is not empty")
     XCTAssertEqual(addInterventionVC.materialsCountLabel.text, "material".localized,
@@ -166,11 +166,11 @@ class MaterialsTests: XCTestCase {
   }
 
   func test_materialsCountLabel_withMultipleSelectedMaterials_shouldBeDisplayed() {
-    //Given
+    // Given
     let firstMaterial = sut.insertObject(entityName: "Material") as! Material
     let secondMaterial = sut.insertObject(entityName: "Material") as! Material
 
-    //When
+    // When
     addInterventionVC.selectedMaterials[0].removeAll()
     XCTAssertEqual(addInterventionVC.selectedMaterials[0].count, 0, "selectedMaterials must be empty")
     addInterventionVC.selectedMaterials[0].append(firstMaterial)
@@ -179,7 +179,7 @@ class MaterialsTests: XCTestCase {
     addInterventionVC.tapMaterialsView()
     addInterventionVC.tapMaterialsView()
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.materialsCountLabel.isHidden,
                    "materialsCountLabel must not be hidden if selectedMaterials is not empty")
     XCTAssertEqual(addInterventionVC.materialsCountLabel.text, String(format: "materials".localized, 2),

@@ -26,6 +26,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       inputsSelectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30)
       ])
 
+    inputsUnauthorizedMixImage.tintColor = .red
+
     inputsTapGesture.delegate = self
     selectedInputsTableView.layer.borderWidth  = 0.5
     selectedInputsTableView.layer.borderColor = UIColor.lightGray.cgColor
@@ -54,8 +56,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
             species.append(specie.uppercased())
           }
         }
-      } catch {
-        print("Lexicon error")
+      } catch let error as NSError {
+        print("Lexicon fetch failed. \(error)")
       }
     } else {
       print("production_natures.json not found")
@@ -67,7 +69,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     let sortedSpecies = species.sorted(by: {
       $0.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
         <
-      $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+        $1.localized.lowercased().folding(options: .diacriticInsensitive, locale: .current)
     })
 
     return sortedSpecies.first!
@@ -78,7 +80,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   @IBAction func openInputsSelectionView(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
-
+    inputsSelectionView.tableView.reloadData()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
@@ -92,11 +94,16 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       return
     }
 
+    view.endEditing(true)
     updateInputsCountLabel()
-    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+    inputsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 100) : 70
     inputsAddButton.isHidden = !shouldExpand
     inputsCountLabel.isHidden = shouldExpand
     inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi)
+    selectedInputsTableView.isHidden = !shouldExpand
+    inputsUnauthorizedMixLabel.isHidden = !shouldExpand
+    inputsUnauthorizedMixImage.isHidden = !shouldExpand
+    shouldExpand ? checkAllMixCategoryCode() : nil
   }
 
   func updateInputsCountLabel() {
@@ -114,7 +121,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     cellIndexPath = indexPath
   }
 
-  func closeInputsSelectionView() {
+  private func closeInputsSelectionView() {
     dimView.isHidden = true
     inputsSelectionView.isHidden = true
 
@@ -131,6 +138,44 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       view.layoutIfNeeded()
     }
     selectedInputsTableView.reloadData()
+  }
+
+  private func checkAllMixCategoryCode() {
+    var firstMixCategoryCode: String?
+    var unauthorized = false
+
+    for case let selectedInput as InterventionPhytosanitary in selectedInputs {
+      if selectedInput.phyto?.mixCategoryCode != nil {
+        firstMixCategoryCode == nil ? firstMixCategoryCode = selectedInput.phyto?.mixCategoryCode : nil
+        if firstMixCategoryCode != nil {
+          if !checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, firstMixCategoryCode!) {
+            unauthorized = true
+            break
+          }
+        }
+      }
+    }
+    var selectedPhytos = [InterventionPhytosanitary]()
+
+    for case let selectedPhyto as InterventionPhytosanitary in selectedInputs {
+      selectedPhytos.append(selectedPhyto)
+    }
+    if selectedPhytos.count > 1 && unauthorized {
+      inputsUnauthorizedMixImage.isHidden = false
+      inputsUnauthorizedMixLabel.isHidden = false
+    } else {
+      inputsUnauthorizedMixImage.isHidden = true
+      inputsUnauthorizedMixLabel.isHidden = true
+    }
+  }
+
+  func checkMixCategoryCode(_ firstMixCode: String, _ secondMixCode: String) -> Bool {
+    let autorizedMix = ["1":"1234", "2":"134", "3":"14", "4":"14", "5":""]
+
+    if !autorizedMix[firstMixCode]!.contains(secondMixCode) {
+      return false
+    }
+    return true
   }
 
   func selectInput(_ input: NSManagedObject) {
@@ -151,6 +196,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       selectedPhyto.unit = phyto.unit
       selectedPhyto.phyto = phyto
       selectedInputs.append(selectedPhyto)
+      checkAllMixCategoryCode()
     case let fertilizer as Fertilizer:
       let selectedFertilizer = InterventionFertilizer(context: managedContext)
       selectedFertilizer.unit = fertilizer.unit
@@ -164,7 +210,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     closeInputsSelectionView()
   }
 
-  func resetInputsUsedAttribute(index: Int) {
+  private func resetInputsUsedAttribute(index: Int) {
     switch selectedInputs[index] {
     case is InterventionSeed:
       (selectedInputs[index] as! InterventionSeed).seed?.used = false
@@ -184,6 +230,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.resetInputsUsedAttribute(index: indexPath.row)
       self.selectedInputs.remove(at: indexPath.row)
+      self.checkAllMixCategoryCode()
       self.selectedInputsTableView.reloadData()
       if self.selectedInputs.count == 0 {
         self.selectedInputsTableView.isHidden = true
@@ -198,7 +245,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     present(alert, animated: true)
   }
 
-  func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
+  private func defineQuantityInFunctionOfSurface(unit: String, quantity: Float, indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
     let surfaceArea = cropsView.selectedSurfaceArea
     var efficiency: Float = 0
@@ -213,7 +260,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       default:
         return
       }
-      cell.surfaceQuantity.text = String(format: "input_quantity".localized, efficiency, (unit.components(separatedBy: "/")[0]))
+      cell.surfaceQuantity.text = String(format: "input_quantity".localized, efficiency,
+                                         (unit.components(separatedBy: "/")[0]))
     } else {
       efficiency = quantity / surfaceArea
       cell.surfaceQuantity.text = String(format: "input_quantity_per_surface".localized, efficiency, unit)
@@ -221,33 +269,68 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     cell.surfaceQuantity.textColor = AppColor.TextColors.DarkGray
   }
 
-  func updateInputQuantity(indexPath: IndexPath) {
-    let cell = selectedInputsTableView.cellForRow(at: indexPath) as! SelectedInputCell
-    let quantity = cell.quantityTextField.text?.floatValue
-    let unit = cell.unitButton.titleLabel?.text
+  func updateQuantityLabel(indexPath: IndexPath) {
+    let cell = selectedInputsTableView.cellForRow(at: indexPath) as? SelectedInputCell
+    let quantity = cell?.quantityTextField.text?.floatValue
+    let unit = cell?.unitButton.titleLabel?.text
 
-    cell.surfaceQuantity.isHidden = false
+    cell?.surfaceQuantity.isHidden = false
     if quantity == 0 || quantity == nil {
-      let error = (cell.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
-      cell.surfaceQuantity.text = error
-      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      let error = (cell?.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
+      cell?.surfaceQuantity.text = error
+      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else if totalLabel.text == "select_crops".localized.uppercased() {
-      cell.surfaceQuantity.text = "no_crop_selected".localized
-      cell.surfaceQuantity.textColor = AppColor.TextColors.Red
+      cell?.surfaceQuantity.text = "no_crop_selected".localized
+      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
     } else {
       defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }
   }
 
-  func updateAllInputQuantity() {
-    let totalCellNumber = selectedInputs.count
-    var indexPath: IndexPath!
+  func updateAllQuantityLabels() {
+    for (index, _) in selectedInputs.enumerated() {
+      updateQuantityLabel(indexPath: IndexPath(row: index, section: 0))
+    }
+  }
 
-    if totalCellNumber > 0 {
-      for currentCell in 0..<(totalCellNumber) {
-        indexPath = NSIndexPath(row: currentCell, section: 0) as IndexPath?
-        updateInputQuantity(indexPath: indexPath)
+  func selectedInputsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedInputCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
+
+    if selectedInputs.count > indexPath.row {
+      let selectedInput = selectedInputs[indexPath.row]
+      let unit = selectedInput.value(forKey: "unit") as? String
+
+      cell.cellDelegate = self
+      cell.addInterventionViewController = self
+      cell.indexPath = indexPath
+      cell.unitButton.setTitle(unit?.localized, for: .normal)
+
+      switch selectedInput {
+      case is InterventionSeed:
+        let seed = selectedInput.value(forKey: "seed") as! Seed
+
+        cell.type = "Seed"
+        cell.nameLabel.text = seed.specie?.localized
+        cell.infoLabel.text = seed.variety
+        cell.inputImageView.image = UIImage(named: "seed")
+      case is InterventionPhytosanitary:
+        let phyto = selectedInput.value(forKey: "phyto") as! Phyto
+
+        cell.type = "Phyto"
+        cell.nameLabel.text = phyto.name
+        cell.infoLabel.text = phyto.firmName
+        cell.inputImageView.image = UIImage(named: "phytosanitary")
+      case is InterventionFertilizer:
+        let fertilizer = selectedInput.value(forKey: "fertilizer") as! Fertilizer
+
+        cell.type = "Fertilizer"
+        cell.nameLabel.text = fertilizer.name?.localized
+        cell.infoLabel.text = nil
+        cell.inputImageView.image = UIImage(named: "fertilizer")
+      default:
+        fatalError("Unknown input type for: \(String(describing: selectedInput))")
       }
     }
+    return cell
   }
 }

@@ -93,39 +93,39 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.isHidden = true
-    self.addSubview(titleLabel)
-    self.addSubview(nameTextField)
-    self.addSubview(errorLabel)
-    self.addSubview(unitLabel)
-    self.addSubview(unitButton)
-    self.addSubview(cancelButton)
-    self.addSubview(createButton)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    isHidden = true
+    addSubview(titleLabel)
+    addSubview(nameTextField)
+    addSubview(errorLabel)
+    addSubview(unitLabel)
+    addSubview(unitButton)
+    addSubview(cancelButton)
+    addSubview(createButton)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
-      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-      errorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      errorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       unitLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
-      unitLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      unitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
-      unitButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      unitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      cancelButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      unitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
-      createButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15)
       ])
   }
 

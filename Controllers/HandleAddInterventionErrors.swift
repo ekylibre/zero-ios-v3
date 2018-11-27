@@ -10,19 +10,19 @@ import UIKit
 
 extension AddInterventionViewController {
 
-  func implantationErrorHandler() -> Bool {
-    let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+  private func implantationErrorHandler() -> Bool {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
     if selectedInputs.count == 0 {
-      alert.message = "you_must_select_seed".localized
+      alert.title = "you_must_select_seed".localized
     } else {
       for selectedInput in selectedInputs {
         if (selectedInput.value(forKey: "quantity") as? Double) == 0 {
-          alert.message = "you_have_to_enter_seed_quantity".localized
+          alert.title = "you_have_to_enter_seed_quantity".localized
         }
       }
     }
-    if alert.message != "" {
+    if alert.title != nil {
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
@@ -30,19 +30,19 @@ extension AddInterventionViewController {
     return true
   }
 
-  func cropProtectionErrorHandler() -> Bool {
-    let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+  private func cropProtectionErrorHandler() -> Bool {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
     if selectedInputs.count == 0 {
-      alert.message = "you_have_to_enter_phyto".localized
+      alert.title = "you_have_to_enter_phyto".localized
     } else {
       for selectedInput in selectedInputs {
         if (selectedInput.value(forKey: "quantity") as? Double) == 0 {
-          alert.message = "you_have_to_enter_a_product_quantity".localized
+          alert.title = "you_have_to_enter_a_product_quantity".localized
         }
       }
     }
-    if alert.message != "" {
+    if alert.title != nil {
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
@@ -50,19 +50,19 @@ extension AddInterventionViewController {
     return true
   }
 
-  func fertilizationErrorHandler() -> Bool {
-    let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+  private func fertilizationErrorHandler() -> Bool {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
     if selectedInputs.count == 0 {
-      alert.message = "you_must_select_a_fertilizer".localized
+      alert.title = "you_must_select_a_fertilizer".localized
     } else {
       for selectedInput in selectedInputs {
         if (selectedInput.value(forKey: "quantity") as? Double) == 0 {
-          alert.message = "you_have_to_enter_a_product_quantity".localized
+          alert.title = "you_have_to_enter_a_product_quantity".localized
         }
       }
     }
-    if alert.message != "" {
+    if alert.title != nil {
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
@@ -70,19 +70,19 @@ extension AddInterventionViewController {
     return true
   }
 
-  func harvestErrorHandler() -> Bool {
-    let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+  private func harvestErrorHandler() -> Bool {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
     if harvests.count == 0 {
-      alert.message = "you_must_create_a_harvest_load".localized
+      alert.title = "you_must_create_a_harvest_load".localized
     } else {
       for harvest in harvests {
         if harvest.quantity == 0 {
-          alert.message = "you_must_enter_harvest_quantity".localized
+          alert.title = "you_must_enter_harvest_quantity".localized
         }
       }
     }
-    if alert.message != "" {
+    if alert.title != nil {
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
       return false
@@ -90,11 +90,11 @@ extension AddInterventionViewController {
     return true
   }
 
-  func cropErrorHandler() -> Bool {
+  private func cropErrorHandler() -> Bool {
     let selectedCrops = fetchSelectedCrops()
 
     if selectedCrops.count == 0 {
-      let alert = UIAlertController(title: "", message: "you_have_to_select_a_crop".localized, preferredStyle: .alert)
+      let alert = UIAlertController(title: "you_have_to_select_a_crop".localized, message: nil, preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
@@ -103,9 +103,10 @@ extension AddInterventionViewController {
     return true
   }
 
-  func irrigationErrorHandler() -> Bool {
+  private func irrigationErrorHandler() -> Bool {
     if irrigationVolumeTextField.text?.floatValue == 0 {
-      let alert = UIAlertController(title: "", message: "you_must_enter_a_water_volume".localized, preferredStyle: .alert)
+      let alert = UIAlertController(title: "you_must_enter_a_water_volume".localized, message: nil,
+                                    preferredStyle: .alert)
 
       alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
       present(alert, animated: true)
@@ -114,7 +115,7 @@ extension AddInterventionViewController {
     return true
   }
 
-  func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
+  private func checkIfSelectedDateMatchProductionPeriod(selectedDate: Date) -> Bool {
     let selectedCrops = fetchSelectedCrops()
     guard var startDate = selectedCrops.first?.startDate else { return false }
     guard var stopDate = selectedCrops.first?.stopDate else { return false }

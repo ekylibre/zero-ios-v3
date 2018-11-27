@@ -26,11 +26,11 @@ class ReadOnlyInputsTests: XCTestCase {
   }
 
   func test_updateInputsCountLabelWithoutEquipment_shouldNotChange() {
-    //When
+    // When
     addInterventionVC.selectedInputs.removeAll()
     addInterventionVC.updateInputsCountLabel()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.inputsCountLabel.text, "none".localized, "Should have no input")
   }
 }

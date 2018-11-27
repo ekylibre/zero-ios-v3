@@ -15,8 +15,8 @@ class StorageManager {
   lazy var backgroundContext = persistentContainer.newBackgroundContext()
 
   init(container: NSPersistentContainer) {
-    self.persistentContainer = container
-    self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+    persistentContainer = container
+    persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
   }
 
   convenience init() {

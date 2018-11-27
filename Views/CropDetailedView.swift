@@ -94,14 +94,14 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func setupView() {
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
+    isHidden = true
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
     tableView.separatorStyle = .none
     tableView.tableFooterView = UIView()
-    self.addSubview(headerView)
-    self.addSubview(tableView)
+    addSubview(headerView)
+    addSubview(tableView)
     setupLayout()
   }
 
@@ -120,15 +120,15 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
       surfaceAreaLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
       yieldLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
       yieldLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      headerView.topAnchor.constraint(equalTo: self.topAnchor),
+      headerView.topAnchor.constraint(equalTo: topAnchor),
       headerView.heightAnchor.constraint(equalToConstant: 120),
-      headerView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      headerView.rightAnchor.constraint(equalTo: self.rightAnchor),
+      headerView.leftAnchor.constraint(equalTo: leftAnchor),
+      headerView.rightAnchor.constraint(equalTo: rightAnchor),
       tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
-    ])
+      tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      tableView.leftAnchor.constraint(equalTo: leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: rightAnchor)
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -149,11 +149,12 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     let cell = tableView.dequeueReusableCell(withIdentifier: "InterventionCell", for: indexPath) as! InterventionCell
     let intervention = interventions[indexPath.row]
     let assetName = intervention.type!.lowercased().replacingOccurrences(of: "_", with: "-")
-    let stateImages: [Int16: UIImage] = [0: UIImage(named: "created")!, 1: UIImage(named: "synced")!, 2: UIImage(named: "validated")!]
+    let stateImages: [Int16: UIImage?] = [0: UIImage(named: "created"), 1: UIImage(named: "synced"),
+                                          2: UIImage(named: "validated")]
 
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized
-    cell.stateImageView.image = stateImages[intervention.status]?.withRenderingMode(.alwaysTemplate)
+    cell.stateImageView.image = stateImages[intervention.status]??.withRenderingMode(.alwaysTemplate)
     cell.stateImageView.tintColor = (intervention.status == 0) ? UIColor.orange : UIColor.green
     cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
     cell.cropsLabel.text = updateCropsLabel(intervention.targets!)

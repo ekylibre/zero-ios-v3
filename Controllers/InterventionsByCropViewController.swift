@@ -68,7 +68,8 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
   private func setupNavigationBar() {
     let titleLabel = UILabel()
-    let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(dismissViewController))
+    let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil,
+                                       action: #selector(dismissViewController))
 
     titleLabel.text = "my_crops_title".localized
     titleLabel.textColor = UIColor.white
@@ -115,9 +116,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let cropsFetchRequest: NSFetchRequest<Crop> = Crop.fetchRequest()
-    let predicate = NSPredicate(format: "targets.@count > 0")
     let sort = NSSortDescriptor(key: "productionID", ascending: true)
-    cropsFetchRequest.predicate = predicate
     cropsFetchRequest.sortDescriptors = [sort]
 
     do {
@@ -158,7 +157,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       cropsByProduction[index] = crops.sorted(by: {
         $0.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
           <
-        $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+          $1.plotName!.lowercased().folding(options: .diacriticInsensitive, locale: .current)
       })
     }
   }
@@ -170,7 +169,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
       guard let firstNearestCropLocation = getLocation(string: $0.first!.centroid!) else { return true }
       guard let secondNearestCropLocation = getLocation(string: $1.first!.centroid!) else { return true }
       guard let firstDistance = locationManager.location?.distance(from: firstNearestCropLocation) else { return true }
-      guard let secondDistance = locationManager.location?.distance(from: secondNearestCropLocation) else { return true }
+      guard let secondDistance = locationManager.location?.distance(from: secondNearestCropLocation) else {
+        return true
+      }
 
       return firstDistance < secondDistance
     })
@@ -330,7 +331,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   // MARK: - Actions
 
   @objc private func dismissViewController() {
-    self.dismiss(animated: true, completion: nil)
+    dismiss(animated: true, completion: nil)
   }
 
   @objc private func hideCropDetailedView() {

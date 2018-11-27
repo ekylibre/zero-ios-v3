@@ -90,12 +90,12 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func setupView() {
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 3
-    self.clipsToBounds = true
-    self.addSubview(headerView)
-    self.addSubview(tableView)
-    self.addSubview(bottomView)
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 3
+    clipsToBounds = true
+    addSubview(headerView)
+    addSubview(tableView)
+    addSubview(bottomView)
     setupLayout()
   }
 
@@ -103,24 +103,24 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     NSLayoutConstraint.activate([
       titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
       titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-      headerView.topAnchor.constraint(equalTo: self.topAnchor),
+      headerView.topAnchor.constraint(equalTo: topAnchor),
       headerView.heightAnchor.constraint(equalToConstant: 60),
-      headerView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      headerView.widthAnchor.constraint(equalTo: self.widthAnchor),
+      headerView.leftAnchor.constraint(equalTo: leftAnchor),
+      headerView.widthAnchor.constraint(equalTo: widthAnchor),
       tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
       tableView.bottomAnchor.constraint(equalTo: bottomView.topAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.widthAnchor.constraint(equalTo: self.widthAnchor),
+      tableView.leftAnchor.constraint(equalTo: leftAnchor),
+      tableView.widthAnchor.constraint(equalTo: widthAnchor),
       selectedCropsLabel.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
       selectedCropsLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 30),
       validateButton.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 13),
       validateButton.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -13),
       validateButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -13),
       validateButton.widthAnchor.constraint(equalToConstant: 100),
-      bottomView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
       bottomView.heightAnchor.constraint(equalToConstant: 60),
-      bottomView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      bottomView.widthAnchor.constraint(equalTo: self.widthAnchor)
+      bottomView.leftAnchor.constraint(equalTo: leftAnchor),
+      bottomView.widthAnchor.constraint(equalTo: widthAnchor)
       ])
   }
 
@@ -148,8 +148,8 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     for (index, _) in crops.enumerated() {
-      self.cropViews[indexPath.row][index].frame.size.width = cell.frame.size.width - 30
-      cell.contentView.addSubview(self.cropViews[indexPath.row][index])
+      cropViews[indexPath.row][index].frame.size.width = cell.frame.size.width - 30
+      cell.contentView.addSubview(cropViews[indexPath.row][index])
     }
 
     cell.checkboxButton.addTarget(self, action: #selector(tapCheckbox), for: .touchUpInside)
@@ -233,7 +233,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     var cropViews = [CropView]()
     var view: CropView
 
-    for crops in self.crops {
+    for crops in crops {
       for (index, crop) in crops.enumerated() {
         frame = CGRect(x: 15, y: 60 + index * 60, width: 0, height: 60)
         view = CropView(frame: frame, crop)
@@ -248,7 +248,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Actions
 
-  @objc func tapCheckbox(_ sender: UIButton) {
+  @objc private func tapCheckbox(_ sender: UIButton) {
     let cell = sender.superview?.superview as! PlotCell
     let indexPath = tableView.indexPath(for: cell)!
     let crops = self.crops[indexPath.row]
@@ -287,7 +287,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  @objc func tapCropView(sender: UIGestureRecognizer) {
+  @objc private func tapCropView(sender: UIGestureRecognizer) {
     let cell = sender.view?.superview?.superview as! PlotCell
     let plotIndex = tableView.indexPath(for: cell)!.row
     let view = sender.view as! CropView
