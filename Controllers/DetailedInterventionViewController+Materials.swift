@@ -34,9 +34,9 @@ extension AddInterventionViewController {
     selectedMaterialsTableView.bounces = false
     selectedMaterialsTableView.dataSource = self
     selectedMaterialsTableView.delegate = self
-    materialsSelectionView.cancelButton.addTarget(self, action: #selector(closeSelectionView), for: .touchUpInside)
-    materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits), for: .touchUpInside)
     materialsSelectionView.addInterventionViewController = self
+    materialsSelectionView.creationView.unitButton.addTarget(self, action: #selector(showMaterialUnits),
+                                                             for: .touchUpInside)
   }
 
   // MARK: - Selection
@@ -52,7 +52,7 @@ extension AddInterventionViewController {
     interventionMaterial.unit = material.unit
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
-    closeSelectionView()
+    materialsSelectionView.cancelButton.sendActions(for: .touchUpInside)
     updateView()
   }
 
@@ -86,6 +86,7 @@ extension AddInterventionViewController {
       return
     }
 
+    view.endEditing(true)
     updateMaterialsCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
     materialsAddButton.isHidden = !shouldExpand
@@ -103,20 +104,6 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc private func closeSelectionView() {
-    materialsSelectionView.isHidden = true
-    dimView.isHidden = true
-
-    UIView.animate(withDuration: 0.5, animations: {
-      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
-    })
-
-    materialsSelectionView.searchBar.text = nil
-    materialsSelectionView.searchBar.endEditing(true)
-    materialsSelectionView.isSearching = false
-    materialsSelectionView.tableView.reloadData()
-  }
-
   @objc func updateMaterialQuantity(sender: UITextField) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)
@@ -128,11 +115,11 @@ extension AddInterventionViewController {
     let cell = sender.superview?.superview as! SelectedMaterialCell
 
     selectedRow = selectedMaterialsTableView.indexPath(for: cell)!.row
-    self.performSegue(withIdentifier: "showSelectedMaterialUnits", sender: self)
+    performSegue(withIdentifier: "showSelectedMaterialUnits", sender: self)
   }
 
   @objc private func showMaterialUnits() {
-    self.performSegue(withIdentifier: "showMaterialUnits", sender: self)
+    performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
 
   @objc func tapDeleteButton(sender: UIButton) {
@@ -144,7 +131,7 @@ extension AddInterventionViewController {
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
       self.deleteMaterial(indexPath.row)
     }))
-    self.present(alert, animated: true)
+    present(alert, animated: true)
   }
 
   private func deleteMaterial(_ index: Int)  {
@@ -166,5 +153,21 @@ extension AddInterventionViewController {
     selectedMaterials[1].remove(at: index)
     updateView()
     materialsSelectionView.tableView.reloadData()
+  }
+
+  func selectedMaterialsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath)
+    -> SelectedMaterialCell {
+      let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
+      let quantity = selectedMaterials[1][indexPath.row].value(forKey: "quantity") as! Float
+      let unit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String
+      let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath)
+        as! SelectedMaterialCell
+
+      cell.nameLabel.text = name
+      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
+      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
+      cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
+      cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
+      return cell
   }
 }

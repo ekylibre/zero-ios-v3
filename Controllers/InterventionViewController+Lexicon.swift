@@ -42,7 +42,7 @@ extension InterventionViewController {
     return assets
   }
 
-  func saveSeeds(_ registeredSeeds: [RegisteredSeed]) {
+  private func saveSeeds(_ registeredSeeds: [RegisteredSeed]) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

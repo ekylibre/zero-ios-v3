@@ -38,7 +38,7 @@ open class AuthentificationService {
 
   // MARK: - Actions
 
-  func emptyUsersList() {
+  private func emptyUsersList() {
     let context = appDelegate.persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
 

@@ -52,6 +52,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.register(SeedCell.self, forCellReuseIdentifier: "SeedCell")
     tableView.register(PhytoCell.self, forCellReuseIdentifier: "PhytoCell")
     tableView.register(FertilizerCell.self, forCellReuseIdentifier: "FertilizerCell")
+    tableView.estimatedRowHeight = 60
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,38 +106,38 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   private func setupView() {
-    self.isHidden = true
-    self.backgroundColor = UIColor.white
-    self.layer.cornerRadius = 5
-    self.clipsToBounds = true
-    self.addSubview(segmentedControl)
-    self.addSubview(searchBar)
-    self.addSubview(createButton)
-    self.addSubview(tableView)
-    self.addSubview(dimView)
-    self.addSubview(seedView)
-    self.addSubview(phytoView)
-    self.addSubview(fertilizerView)
+    isHidden = true
+    backgroundColor = UIColor.white
+    layer.cornerRadius = 5
+    clipsToBounds = true
+    addSubview(segmentedControl)
+    addSubview(searchBar)
+    addSubview(createButton)
+    addSubview(tableView)
+    addSubview(dimView)
+    addSubview(seedView)
+    addSubview(phytoView)
+    addSubview(fertilizerView)
     setupLayout()
     setupActions()
   }
 
   private func setupLayout() {
-    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60)
+    tableViewTopAnchor = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 40)
 
     NSLayoutConstraint.activate([
-      segmentedControl.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      segmentedControl.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      segmentedControl.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-      searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
-      searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-      searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
-      createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+      segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+      segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10),
+      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      createButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 2.5),
+      createButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       tableViewTopAnchor,
-      tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-      tableView.leftAnchor.constraint(equalTo: self.leftAnchor),
-      tableView.rightAnchor.constraint(equalTo: self.rightAnchor)
+      tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      tableView.leftAnchor.constraint(equalTo: leftAnchor),
+      tableView.rightAnchor.constraint(equalTo: rightAnchor)
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
@@ -155,9 +156,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     NSLayoutConstraint.activate([
       customHeightAnchor,
-      view.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      view.widthAnchor.constraint(equalTo: self.widthAnchor),
-      view.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      view.centerYAnchor.constraint(equalTo: centerYAnchor),
+      view.widthAnchor.constraint(equalTo: widthAnchor),
+      view.centerXAnchor.constraint(equalTo: centerXAnchor),
       ])
   }
 
@@ -191,6 +192,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
   }
 
+  func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
+    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
+      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
+        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
@@ -213,7 +225,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
       let unit: String = inFieldReentryDelay > 1 ? "hours".localized : "hour".localized
       let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
+      let authorized = checkPhytoMixCategoryCode((fromPhytos[indexPath.row] as! Phyto))
 
+      cell.unauthorizedMixingLabel.isHidden = authorized
+      cell.unauthorizedMixingImage.isHidden = authorized
       cell.isUserInteractionEnabled = !used
       cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
@@ -242,11 +257,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if segmentedControl.selectedSegmentIndex == 1 {
-      return 100
-    }
-
-    return 60
+    return segmentedControl.selectedSegmentIndex == 1 ? 100 : UITableView.automaticDimension
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -274,11 +285,11 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     })
     isSearching = !searchText.isEmpty
     createButton.isHidden = isSearching
-    tableViewTopAnchor.constant = isSearching ? 15 : 60
+    tableViewTopAnchor.constant = isSearching ? 10 : 40
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {
-        self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
       }
     }
   }
@@ -406,7 +417,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Actions
 
-  @objc func changeSegment() {
+  @objc private func changeSegment() {
     let searchText = searchBar.text!
     let createButtonTitles = [
       0: "create_new_seed".localized.uppercased(),
@@ -425,12 +436,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     tableView.reloadData()
     DispatchQueue.main.async {
       if self.tableView.numberOfRows(inSection: 0) > 0 {
-        self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
       }
     }
   }
 
-  @objc func tapCreateButton() {
+  @objc private func tapCreateButton() {
     dimView.isHidden = false
     if segmentedControl.selectedSegmentIndex == 0 {
       seedView.isHidden = false
@@ -448,9 +459,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       seedView.specieButton.setTitle(firstSpecie.localized, for: .normal)
       seedView.varietyTextField.text = ""
     case 1:
+      let reentryDelay = Int(phytoView.reentryDelayTextField.text!)
       let maaID = phytoView.maaTextField.text!.isEmpty ? "0" : phytoView.maaTextField.text!
-      let inFieldReentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : Int(phytoView.reentryDelayTextField.text!)
-      createPhyto(name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID, inFieldReentryDelay!)
+      let inFieldReentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : reentryDelay
+
+      createPhyto(name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID,
+                  inFieldReentryDelay!)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
@@ -465,14 +479,15 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       return
     }
     sortInputs()
+    tableView.reloadData()
     dimView.isHidden = true
   }
 
-  @objc func hideDimView() {
+  @objc private func hideDimView() {
     dimView.isHidden = true
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.endEditing(true)
+    endEditing(true)
   }
 }

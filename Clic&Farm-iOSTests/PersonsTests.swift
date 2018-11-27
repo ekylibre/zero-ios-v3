@@ -19,7 +19,7 @@ class PersonsTests: XCTestCase {
     return managedObjectModel
   }()
   lazy var mockPersistentContainer: NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: self.managedObjectModel)
+    let container = NSPersistentContainer(name: "MockedContainer", managedObjectModel: managedObjectModel)
     let description = NSPersistentStoreDescription()
     description.type = NSInMemoryStoreType
     description.shouldAddStoreAsynchronously = false
@@ -49,17 +49,17 @@ class PersonsTests: XCTestCase {
   }
 
   func test_checkPersonName_withValidNames_shouldReturnTrue() {
-    //Given
+    // Given
     let firstName = "Sample first name"
     let lastName = "Sample last name"
 
-    //When
+    // When
     addInterventionVC.personsSelectionView.persons.removeAll()
     XCTAssertEqual(addInterventionVC.personsSelectionView.persons.count, 0, "persons must be empty")
     addInterventionVC.personsSelectionView.creationView.firstNameTextField.text = firstName
     addInterventionVC.personsSelectionView.creationView.lastNameTextField.text = lastName
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.personsSelectionView.checkPersonName(),
                   "checkPersonName must return true when firstName and lastName are valid")
     XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.firstNameErrorLabel.isHidden,
@@ -69,17 +69,17 @@ class PersonsTests: XCTestCase {
   }
 
   func test_checkPersonName_withEmptyFirstName_shouldReturnFalse() {
-    //Given
+    // Given
     let firstName = ""
     let lastName = "Sample last name"
 
-    //When
+    // When
     addInterventionVC.personsSelectionView.persons.removeAll()
     XCTAssertEqual(addInterventionVC.personsSelectionView.persons.count, 0, "persons must be empty")
     addInterventionVC.personsSelectionView.creationView.firstNameTextField.text = firstName
     addInterventionVC.personsSelectionView.creationView.lastNameTextField.text = lastName
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.personsSelectionView.checkPersonName(),
                    "checkPersonName must return false when fistName is empty")
     XCTAssertFalse(addInterventionVC.personsSelectionView.creationView.firstNameErrorLabel.isHidden,
@@ -89,17 +89,17 @@ class PersonsTests: XCTestCase {
   }
 
   func test_checkPersonName_withEmptyLastName_shouldReturnFalse() {
-    //Given
+    // Given
     let firstName = "Sample first name"
     let lastName = ""
 
-    //When
+    // When
     addInterventionVC.personsSelectionView.persons.removeAll()
     XCTAssertEqual(addInterventionVC.personsSelectionView.persons.count, 0, "persons must be empty")
     addInterventionVC.personsSelectionView.creationView.firstNameTextField.text = firstName
     addInterventionVC.personsSelectionView.creationView.lastNameTextField.text = lastName
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.personsSelectionView.checkPersonName(), false,
                    "checkPersonName must return false when lastName is empty")
     XCTAssertTrue(addInterventionVC.personsSelectionView.creationView.firstNameErrorLabel.isHidden,
@@ -109,17 +109,17 @@ class PersonsTests: XCTestCase {
   }
 
   func test_checkPersonName_withEmptyNames_shouldReturnFalse() {
-    //Given
+    // Given
     let firstName = ""
     let lastName = ""
 
-    //When
+    // When
     addInterventionVC.personsSelectionView.persons.removeAll()
     XCTAssertEqual(addInterventionVC.personsSelectionView.persons.count, 0, "persons must be empty")
     addInterventionVC.personsSelectionView.creationView.firstNameTextField.text = firstName
     addInterventionVC.personsSelectionView.creationView.lastNameTextField.text = lastName
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.personsSelectionView.checkPersonName(),
                    "checkPersonName must return false when firstName and lastName are empty")
     XCTAssertFalse(addInterventionVC.personsSelectionView.creationView.firstNameErrorLabel.isHidden,
@@ -182,22 +182,22 @@ class PersonsTests: XCTestCase {
   }
 
   func test_personsCountLabel_withoutSelectedPersons_shouldBeHidden() {
-    //When
+    // When
     addInterventionVC.selectedPersons[0].removeAll()
     XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 0, "selectedPersons must be empty")
     addInterventionVC.tapPersonsView()
     addInterventionVC.tapPersonsView()
 
-    //Then
+    // Then
     XCTAssertTrue(addInterventionVC.personsCountLabel.isHidden,
                   "personsCountLabel must be hidden if selectedPersons is empty")
   }
 
   func test_personsCountLabel_withSingleSelectedPerson_shouldBeDisplayed() {
-    //Given
+    // Given
     let person = sut.insertObject(entityName: "Person") as! Person
 
-    //When
+    // When
     addInterventionVC.selectedPersons[0].removeAll()
     XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 0, "selectedPersons must be empty")
     addInterventionVC.selectedPersons[0].append(person)
@@ -205,7 +205,7 @@ class PersonsTests: XCTestCase {
     addInterventionVC.tapPersonsView()
     addInterventionVC.tapPersonsView()
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.personsCountLabel.isHidden,
                    "personsCountLabel must not be hidden if selectedPersons is not empty")
     XCTAssertEqual(addInterventionVC.personsCountLabel.text, "person".localized,
@@ -213,13 +213,13 @@ class PersonsTests: XCTestCase {
   }
 
   func test_personsCountLabel_withMultipleSelectedPersons_shouldBeDisplayed() {
-    //Given
+    // Given
     let firstPerson = sut.insertObject(entityName: "Person") as! Person
     let secondPerson = sut.insertObject(entityName: "Person") as! Person
     let thirdPerson = sut.insertObject(entityName: "Person") as! Person
     let fourthPerson = sut.insertObject(entityName: "Person") as! Person
 
-    //When
+    // When
     addInterventionVC.selectedPersons[0].removeAll()
     XCTAssertEqual(addInterventionVC.selectedPersons[0].count, 0, "selectedPersons must be empty")
     addInterventionVC.selectedPersons[0].append(firstPerson)
@@ -230,7 +230,7 @@ class PersonsTests: XCTestCase {
     addInterventionVC.tapPersonsView()
     addInterventionVC.tapPersonsView()
 
-    //Then
+    // Then
     XCTAssertFalse(addInterventionVC.personsCountLabel.isHidden,
                    "personsCountLabel must not be hidden if selectedPersons is not empty")
     XCTAssertEqual(addInterventionVC.personsCountLabel.text, String(format: "persons".localized, 4),

@@ -26,11 +26,11 @@ class ReadOnlyPersonsTests: XCTestCase {
   }
 
   func test_updatePersonsCountLabelWithoutEquipment_shouldNotChange() {
-    //When
+    // When
     addInterventionVC.selectedPersons[0].removeAll()
     addInterventionVC.updatePersonsCountLabel()
 
-    //Then
+    // Then
     XCTAssertEqual(addInterventionVC.personsCountLabel.text, "none".localized, "Should have no person")
   }
 }
