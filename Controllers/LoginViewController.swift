@@ -10,7 +10,7 @@ import UIKit
 import OAuth2
 import CoreData
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
 
   // MARK: - Properties
 
@@ -24,6 +24,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
   // MARK: - Initialization
 
+  override func viewWillAppear(_ animated: Bool) {
+    navigationController?.navigationBar.isHidden = true
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
@@ -32,8 +36,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
       return
     }
 
-    navigationController?.navigationBar.tintColor = AppColor.BarColors.Blue
-    //navigationController?.navigationBar.isHidden = true
+    UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     tfUsername.delegate = self
     tfPassword.delegate = self
@@ -59,6 +62,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
   private func checkLoggedStatus(token: String?) {
     if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
+        navigationController?.navigationBar.isHidden = false
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
       } else {
         let alert = UIAlertController(
