@@ -339,6 +339,7 @@
 "action_sign_in" = "Sign in";
 "menu_logout" = "Log out";
 "cancel" = "Cancel";
+"done" = "Done";
 "validate" = "Validate";
 "delete" = "Delete";
 "close" = "Close";

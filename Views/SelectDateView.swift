@@ -44,7 +44,7 @@ class SelectDateView: UIView {
     doneButton.setTitle("done".localized, for: .normal)
     doneButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
     doneButton.setTitleColor(AppColor.TextColors.LightBlue, for: .highlighted)
-    doneButton.titleLabel!.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+    doneButton.titleLabel!.font = UIFont.systemFont(ofSize: 17)
     return doneButton
   }()
 

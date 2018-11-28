@@ -337,6 +337,7 @@
 "action_sign_in" = "Connexion";
 "menu_logout" = "Me déconnecter";
 "cancel" = "Annuler";
+"done" = "OK";
 "validate" = "Valider";
 "delete" = "Supprimer";
 "close" = "Fermer";
