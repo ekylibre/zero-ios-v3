@@ -19,7 +19,7 @@ class AuthentificationService {
 
   // MARK: - Initialization
 
-  func setupOauthPasswordGrant(username: String?, password: String?) {
+  public func setupOauthPasswordGrant(username: String?, password: String?) {
     var keys: NSDictionary!
 
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
@@ -40,47 +40,22 @@ class AuthentificationService {
 
   // MARK: - Actions
 
-  private func emptyUsersList() {
-    let context = appDelegate.persistentContainer.viewContext
-    let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
-
-    userFetchRequest.returnsObjectsAsFaults = false
-    do {
-      let result = try context.fetch(userFetchRequest)
-
-      for data in result {
-        context.delete(data)
-      }
-      try context.save()
-    } catch {
-      print("Remove failed")
-    }
-  }
-
-  func addNewUser(userName: String) {
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let name = User(context: managedContext)
-
-    name.userName = userName
-
-    do {
-      try managedContext.save()
-    } catch {
-      print("Save failed")
-    }
-  }
-
   public func authorize(presenting view: UIViewController) {
     oauth2?.authorizeEmbedded(from: view) { (authParameters, error) in
       if let oauthError = error {
+        UserDefaults.standard.set(false, forKey: "userIsLogged")
         print("Authorization was canceled or went wrong: \(String(describing: oauthError.description))")
+      } else {
+        UserDefaults.standard.set(true, forKey: "userIsLogged")
       }
+      UserDefaults.standard.synchronize()
       self.appDelegate.saveContext()
     }
   }
 
   public func logout() {
-    emptyUsersList()
+    UserDefaults.standard.set(false, forKey: "userIsLogged")
+    UserDefaults.standard.synchronize()
     oauth2?.username = nil
     oauth2?.password = nil
     oauth2?.forgetTokens()
