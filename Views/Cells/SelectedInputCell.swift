@@ -239,26 +239,32 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return contains
   }
 
-  private func defineInputsUnitsInFunctionOfCreatedUnit(unit: String) -> [String]? {
-    let generalMassUnits = ["GRAM", "QUINTAL", "TON"]
+  private func defineInputsPerSurface(units: [String]) -> [String] {
+    var unitsPerSurface = [String]()
+
+    for unit in units {
+      let unitPerHectare = unit + "_PER_HECTARE"
+      let unitPerSquareMeter = unit + "_PER_SQUARE_METER"
+
+      unitsPerSurface.append(unit)
+      unitsPerSurface.append(unitPerHectare)
+      unitsPerSurface.append(unitPerSquareMeter)
+    }
+    return unitsPerSurface
+  }
+
+  private func defineInputsUnitsBasedOnCreatedUnit(unit: String) -> [String]? {
+    let generalMassUnits = ["GRAM", "KILOGRAM", "QUINTAL", "TON"]
     let generalCountUnits = ["UNITY", "THOUSAND"]
-    let generalVolumeUnits = ["LITER", "CUBIC_METER"]
-    let countUnits = ["UNITY", "UNITY_PER_HECTARE", "UNITY_PER_SQUARE_METER",
-                      "THOUSAND", "THOUSAND_PER_HECTARE", "THOUSAND_PER_SQUARE_METER"]
-    let massUnits = ["GRAM", "GRAM_PER_HECTARE", "GRAM_PER_SQUARE_METER", "KILOGRAM", "KILOGRAM_PER_HECTARE",
-                     "KILOGRAM_PER_SQUARE_METER", "QUINTAL", "QUINTAL_PER_HECTARE", "QUINTAL_PER_SQUARE_METER",
-                     "TON", "TON_PER_HECTARE", "TON_PER_SQUARE_METER"]
-    let volumeUnits = ["LITER", "LITER_PER_HECTARE", "LITER_PER_SQUARE_METER",
-                       "HECTOLITER", "HECTOLITER_PER_HECTARE", "HECTOLITER_PER_SQUARE_METER",
-                       "CUBIC_METER", "CUBIC_METER_PER_HECTARE", "CUBIC_METER_PER_SQUARE_METER"]
+    let generalVolumeUnits = ["LITER", "HECTOLITER", "CUBIC_METER"]
 
     if checkIfUnitContains(unit: unit, generalUnits: generalMassUnits) {
-      return massUnits
+      return defineInputsPerSurface(units: generalMassUnits)
     } else if checkIfUnitContains(unit: unit, generalUnits: generalCountUnits) {
-      return countUnits
+      return defineInputsPerSurface(units: generalCountUnits)
     } else {
       if checkIfUnitContains(unit: unit, generalUnits: generalVolumeUnits) {
-        return volumeUnits
+        return defineInputsPerSurface(units: generalVolumeUnits)
       } else {
         return [unit]
       }
@@ -266,7 +272,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @objc private func showUnitMeasure(sender: UIButton) {
-    let units = defineInputsUnitsInFunctionOfCreatedUnit(unit: inputUnit)
+    let units = defineInputsUnitsBasedOnCreatedUnit(unit: inputUnit)
 
     if units != nil && units!.count > 1 {
       addInterventionViewController?.inputsUnitPickerView.values = units!

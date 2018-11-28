@@ -836,11 +836,11 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     //super.prepare(for: segue, sender: sender)
     switch segue.identifier {
     case "showSpecies":
-        let destVC = segue.destination as! ListTableViewController
-        destVC.delegate = self
-        destVC.lastSelectedValue = inputsSelectionView.seedView.specieButton.titleLabel?.text
-        destVC.rawStrings = species
-        destVC.tag = 0
+      let destVC = segue.destination as! ListTableViewController
+      destVC.delegate = self
+      destVC.lastSelectedValue = inputsSelectionView.seedView.specieButton.titleLabel?.text
+      destVC.rawStrings = species
+      destVC.tag = 0
     case "showMaterialUnits":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self

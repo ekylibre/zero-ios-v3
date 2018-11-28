@@ -44,7 +44,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
-    unitLabel.text = "unit".localized
+    unitLabel.text = "chose_unit".localized
     unitLabel.font = UIFont.systemFont(ofSize: 15)
     unitLabel.textColor = AppColor.TextColors.DarkGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
 
   lazy var unitButton: UIButton = {
     let unitButton = UIButton(frame: CGRect.zero)
-    unitButton.setTitle("KILOGRAM_PER_HECTARE".localized, for: .normal)
+    unitButton.setTitle("KILOGRAM".localized, for: .normal)
     unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     unitButton.setTitleColor(UIColor.black, for: .normal)
     unitButton.contentHorizontalAlignment = .leading
@@ -107,7 +107,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
   }()
 
   var firstSpecie: String
-  var rawUnit = "KILOGRAM_PER_HECTARE"
+  var rawUnit = "KILOGRAM"
 
   // MARK: - Initialization
 

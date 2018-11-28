@@ -307,7 +307,6 @@
 "THOUSAND_PER_HECTARE" = "Thousand/ha";
 "THOUSAND_PER_SQUARE_METER" = "Thousand/m²";
 "FRENCH_HORSEPOWER" = "French horsepower";
-"unit" = "Unit";
 
 // Equipment indicators
 "plowshare_count" = "Number of plowshares";

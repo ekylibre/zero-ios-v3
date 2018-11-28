@@ -109,7 +109,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
 
   lazy var unitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
-    unitLabel.text = "unit".localized
+    unitLabel.text = "chose_unit".localized
     unitLabel.font = UIFont.systemFont(ofSize: 15)
     unitLabel.textColor = AppColor.TextColors.DarkGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -118,7 +118,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
 
   lazy var unitButton: UIButton = {
     let unitButton = UIButton(frame: CGRect.zero)
-    unitButton.setTitle("LITER_PER_HECTARE".localized, for: .normal)
+    unitButton.setTitle("LITER".localized, for: .normal)
     unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     unitButton.setTitleColor(UIColor.black, for: .normal)
     unitButton.contentHorizontalAlignment = .leading
@@ -147,7 +147,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
-  var rawUnit = "LITER_PER_HECTARE"
+  var rawUnit = "LITER"
 
   // MARK: - Initialization
 
