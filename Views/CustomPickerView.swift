@@ -12,7 +12,7 @@ protocol CustomPickerViewProtocol {
   func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?)
 }
 
-class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
+class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
 
   // MARK: - Properties
 
@@ -35,6 +35,7 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
     translatesAutoresizingMaskIntoConstraints = false
     superview.addSubview(self)
     setupLayout()
+    setupGestureRecognizers()
   }
 
   private func setupLayout() {
@@ -46,11 +47,18 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
       ])
   }
 
+  private func setupGestureRecognizers() {
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pickerTapped))
+
+    tapGesture.delegate = self
+    addGestureRecognizer(tapGesture)
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Data source
+  // MARK: - Picker view
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -60,15 +68,29 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
     return values.count
   }
 
-  // MARK: - Delegate
-
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return values[row].localized
   }
 
-  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    let selectedValue = values[row]
+  // MARK: - Gesture recognizer
 
-    reference?.customPickerDidSelectRow(pickerView, selectedValue)
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return true
+  }
+
+  // MARK: - Actions
+
+  @objc private func pickerTapped(tapRecognizer: UITapGestureRecognizer) {
+    if tapRecognizer.state != .ended { return }
+    let rowHeight = rowSize(forComponent: 0).height
+    let selectedRowFrame = bounds.insetBy(dx: 0, dy: (frame.height - rowHeight) / 2)
+    let userTappedOnSelectedRow = selectedRowFrame.contains(tapRecognizer.location(in: self))
+
+    if userTappedOnSelectedRow {
+      let selectedRow = self.selectedRow(inComponent: 0)
+      let selectedValue = values[selectedRow]
+
+      reference?.customPickerDidSelectRow(self, selectedValue)
+    }
   }
 }
