@@ -37,7 +37,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     for index in 0..<unit.count {
       if title == unit[index].localized {
-        harvestUnitPickerView.selectRow(index, inComponent: 0, animated: false)
+        harvestUnitPickerView.pickerView.selectRow(index, inComponent: 0, animated: false)
         break
       }
     }
@@ -54,7 +54,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
       for index in 0..<storagesName!.count {
         if title == storagesName?[index].localized {
-          storagesPickerView.selectRow(index, inComponent: 0, animated: false)
+          storagesPickerView.pickerView.selectRow(index, inComponent: 0, animated: false)
           break
         }
       }
@@ -74,9 +74,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   private func initHarvestUnitPickerView () {
     let unit = ["KILOGRAM", "QUINTAL", "TON"]
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    harvestUnitPickerView = CustomPickerView(frame: frame, unit, superview: view)
+    harvestUnitPickerView = CustomPickerView(values: unit, superview: view)
     harvestUnitPickerView.reference = self
     harvestUnitPickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestUnitPickerView)
@@ -84,9 +83,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   private func initHarvestNaturePickerView() {
     let unit = ["GRAIN", "SILAGE", "STRAW"]
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    harvestNaturePickerView = CustomPickerView(frame: frame, unit, superview: view)
+    harvestNaturePickerView = CustomPickerView(values: unit, superview: view)
     harvestNaturePickerView.reference = self
     harvestNaturePickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(harvestNaturePickerView)
@@ -94,9 +92,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   private func initStoragesPickerView() {
     let storages = fetchStoragesName()
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
-    storagesPickerView = CustomPickerView(frame: frame, storages ?? ["---"], superview: view)
+    storagesPickerView = CustomPickerView(values: storages ?? ["---"], superview: view)
     storagesPickerView.reference = self
     storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesPickerView)
@@ -105,7 +102,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
   private func initStoragesTypesPickerView() {
     let types = ["BUILDING", "HEAP", "SILO"]
 
-    storagesTypes = CustomPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), types, superview: view)
+    storagesTypes = CustomPickerView(values: types, superview: view)
     storagesTypes.reference = self
     storagesTypes.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(storagesTypes)
@@ -179,7 +176,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   @objc private func cancelStorageCreation() {
 
-    storagesTypes.selectRow(0, inComponent: 0, animated: false)
+    storagesTypes.pickerView.selectRow(0, inComponent: 0, animated: false)
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
     storageCreationView.nameTextField.text = ""
     dimView.isHidden = true
@@ -196,7 +193,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     let storages = fetchStoragesName()
 
     storagesPickerView.values = (storages != nil ? storages! : ["---"])
-    storagesPickerView.reloadComponent(0)
+    storagesPickerView.pickerView.reloadComponent(0)
     cancelStorageCreation()
   }
 
@@ -285,7 +282,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     for index in 0..<unit.count {
       if harvestNature.text == unit[index].localized {
-        harvestNaturePickerView.selectRow(index, inComponent: 0, animated: false)
+        harvestNaturePickerView.pickerView.selectRow(index, inComponent: 0, animated: false)
         break
       }
     }

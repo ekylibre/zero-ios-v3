@@ -13,7 +13,6 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   // MARK: - Initialization
 
   func setupIrrigationView() {
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
 
     irrigationVolumeTextField.delegate = self
@@ -27,7 +26,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationUnitButton.layer.cornerRadius = 5
     irrigationUnitButton.clipsToBounds = false
     irrigationUnitButton.setTitle("m³", for: .normal)
-    irrigationPickerView = CustomPickerView(frame: frame, units, superview: view)
+    irrigationPickerView = CustomPickerView(values: units, superview: view)
     irrigationPickerView.reference = self
     setupActions()
   }
@@ -38,7 +37,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   // MARK: - Picker view
 
-  func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?) {
+  func customPickerDidSelectRow(_ pickerView: CustomPickerView, _ selectedValue: String?) {
     guard let unit = selectedValue else {
       return
     }

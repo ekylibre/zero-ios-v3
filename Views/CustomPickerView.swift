@@ -9,30 +9,45 @@
 import UIKit
 
 protocol CustomPickerViewProtocol {
-  func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?)
+  func customPickerDidSelectRow(_ pickerView: CustomPickerView, _ selectedValue: String?)
 }
 
-class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
+class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
 
   // MARK: - Properties
 
   var reference: CustomPickerViewProtocol?
   var values: [String]
 
+  lazy var dimView: UIView = {
+    let dimView = UIView(frame: CGRect.zero)
+    dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    return dimView
+  }()
+
+  lazy var pickerView: UIPickerView = {
+    let pickerView = UIPickerView(frame: CGRect.zero)
+    pickerView.backgroundColor = AppColor.CellColors.LightGray
+    pickerView.delegate = self
+    pickerView.dataSource = self
+    pickerView.translatesAutoresizingMaskIntoConstraints = false
+    return pickerView
+  }()
+
   // MARK: - Initialization
 
-  init(frame: CGRect, _ values: [String], superview: UIView) {
+  init(values: [String], superview: UIView) {
     self.values = values
-    super.init(frame: frame)
+    super.init(frame: CGRect.zero)
     setupView(superview)
   }
 
   private func setupView(_ superview: UIView) {
     isHidden = true
-    backgroundColor = AppColor.CellColors.LightGray
-    delegate = self
-    dataSource = self
     translatesAutoresizingMaskIntoConstraints = false
+    addSubview(dimView)
+    addSubview(pickerView)
     superview.addSubview(self)
     setupLayout()
     setupGestureRecognizers()
@@ -40,10 +55,18 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
+      leftAnchor.constraint(equalTo: superview!.leftAnchor),
+      rightAnchor.constraint(equalTo: superview!.rightAnchor),
+      topAnchor.constraint(equalTo: superview!.topAnchor),
       bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
-      heightAnchor.constraint(equalToConstant: 216),
-      centerXAnchor.constraint(equalTo: superview!.centerXAnchor),
-      widthAnchor.constraint(equalTo: superview!.widthAnchor)
+      dimView.leftAnchor.constraint(equalTo: leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: rightAnchor),
+      dimView.topAnchor.constraint(equalTo: topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
+      pickerView.leftAnchor.constraint(equalTo: leftAnchor),
+      pickerView.rightAnchor.constraint(equalTo: rightAnchor),
+      pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      pickerView.heightAnchor.constraint(equalToConstant: 216)
       ])
   }
 
@@ -51,7 +74,7 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pickerTapped))
 
     tapGesture.delegate = self
-    addGestureRecognizer(tapGesture)
+    pickerView.addGestureRecognizer(tapGesture)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -82,14 +105,15 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
 
   @objc private func pickerTapped(tapRecognizer: UITapGestureRecognizer) {
     if tapRecognizer.state != .ended { return }
-    let rowHeight = rowSize(forComponent: 0).height
-    let selectedRowFrame = bounds.insetBy(dx: 0, dy: (frame.height - rowHeight) / 2)
-    let userTappedOnSelectedRow = selectedRowFrame.contains(tapRecognizer.location(in: self))
+    let rowHeight = pickerView.rowSize(forComponent: 0).height
+    let selectedRowFrame = pickerView.bounds.insetBy(dx: 0, dy: (pickerView.frame.height - rowHeight) / 2)
+    let userTappedOnSelectedRow = selectedRowFrame.contains(tapRecognizer.location(in: pickerView))
 
     if userTappedOnSelectedRow {
-      let selectedRow = self.selectedRow(inComponent: 0)
+      let selectedRow = pickerView.selectedRow(inComponent: 0)
       let selectedValue = values[selectedRow]
-
+      print("selectedValue:", selectedValue)
+      pickerView.reloadAllComponents()
       reference?.customPickerDidSelectRow(self, selectedValue)
     }
   }
