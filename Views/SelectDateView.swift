@@ -32,19 +32,19 @@ class SelectDateView: UIView {
 
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
-    cancelButton.backgroundColor = UIColor.white
     cancelButton.setTitle("cancel".localized, for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
     cancelButton.setTitleColor(AppColor.TextColors.LightBlue, for: .highlighted)
+    cancelButton.titleLabel!.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     return cancelButton
   }()
 
   lazy var doneButton: UIButton = {
     let doneButton = UIButton(frame: CGRect.zero)
-    doneButton.backgroundColor = UIColor.white
     doneButton.setTitle("done".localized, for: .normal)
     doneButton.setTitleColor(AppColor.TextColors.Blue, for: .normal)
     doneButton.setTitleColor(AppColor.TextColors.LightBlue, for: .highlighted)
+    doneButton.titleLabel!.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     return doneButton
   }()
 
