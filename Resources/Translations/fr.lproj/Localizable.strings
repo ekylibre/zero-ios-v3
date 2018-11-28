@@ -299,7 +299,11 @@
 // Other units
 "METER" = "Mètre";
 "UNITY" = "Unité";
+"UNITY_PER_HECTARE" = "Unité/ha";
+"UNITY_PER_SQUARE_METER" = "Unité/m²";
 "THOUSAND" = "Millier";
+"THOUSAND_PER_HECTARE" = "Millier/ha";
+"THOUSAND_PER_SQUARE_METER" = "Millier/m²";
 "FRENCH_HORSEPOWER" = "Cheval-vapeur français (ch)";
 
 // Equipment indicators
