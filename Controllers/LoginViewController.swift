@@ -50,7 +50,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   // MARK: - Navigation
 
   private func checkLoggedStatus(token: String?) {
-    print("\nToken: \(String(describing: token))")
     if token == nil || !(authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
         navigationController?.navigationBar.isHidden = false
