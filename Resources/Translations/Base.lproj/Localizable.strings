@@ -303,6 +303,7 @@
 "UNITY" = "Unity";
 "THOUSAND" = "Thousand";
 "FRENCH_HORSEPOWER" = "French horsepower";
+"units" = "Units";
 
 // Equipment indicators
 "plowshare_count" = "Number of plowshares";
