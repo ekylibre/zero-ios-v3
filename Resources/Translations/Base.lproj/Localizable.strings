@@ -426,6 +426,7 @@
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
+"equipment_number_not_avaible" = "Ce numéro d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 "delete_input_prompt" = "Are you sure you want to remove the input?";
@@ -441,7 +442,7 @@
 
 "temperature" = "Temperature";
 "temp" = "Temp.: %@ °C |";
-"wind" = "Wind";
+"wind_label" = "Wind";
 "wind" = " wind: %@ km/h";
 "wind_speed" = "Wind speed";
 
@@ -487,6 +488,7 @@
 "you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
 "implantation_have_to_be_on_same_crop_nature" = "Vous ne pouvez pas semer sur des productions de natures différentes !";
 "you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
+"you_have_to_enter_inputs_quantities" = "Vous devez rentrer une quantité pour les intrants";
 "you_must_select_seed" = "Vous devez ajouter au moins une semence !";
 "you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
 "you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
@@ -506,7 +508,8 @@
 "no_parcells" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "no_internet_try_later" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
-"you_are_in_consult_mode" = "Vous êtes en mode consultation, vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
+"you_are_in_consult_mode" = "Vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
+"non_authorized_mix" = "Mélange non autorisé";
 "nature" = "Nature";
 "celsius" = "°C";
 "km_per_hour" = "km/h";

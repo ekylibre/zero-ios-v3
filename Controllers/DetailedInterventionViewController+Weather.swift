@@ -21,6 +21,8 @@ extension AddInterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let weather = Weather(context: managedContext)
 
+    weather.windSpeed = nil
+    weather.temperature = nil
     self.weather = weather
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
@@ -56,6 +58,55 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
+  func loadWeatherInEditableMode() {
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+
+    for index in 0..<weatherDescriptions.count {
+      if weather.weatherDescription == weatherDescriptions[index] {
+        weatherButtons[index].layer.borderColor = AppColor.BarColors.Green.cgColor
+        weatherButtons[index].layer.borderWidth = 3
+        weatherIsSelected = true
+      }
+    }
+    if weather.temperature != nil {
+      temperatureTextField.text = (weather.temperature as NSNumber?)?.stringValue
+    }
+    if weather.windSpeed != nil {
+      windSpeedTextField.text = (weather.windSpeed as NSNumber?)?.stringValue
+    }
+    saveCurrentWeather()
+  }
+
+  func loadWeatherInReadOnlyMode() {
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+
+    temperatureTextField.placeholder = (weather.temperature as NSNumber?)?.stringValue
+    windSpeedTextField.placeholder = (weather.windSpeed as NSNumber?)?.stringValue
+
+    for index in 0..<weatherDescriptions.count {
+      if weather.weatherDescription?.uppercased() == weatherDescriptions[index] {
+        weatherButtons[index].layer.borderColor = AppColor.BarColors.Green.cgColor
+        weatherButtons[index].layer.borderWidth = 3
+        weatherIsSelected = true
+      }
+    }
+    if temperatureTextField.placeholder == nil && windSpeedTextField.placeholder == nil {
+      currentWeatherLabel.text = "not_filled_in".localized
+    } else {
+      let temperature = (temperatureTextField.placeholder != nil ? temperatureTextField.placeholder : "--")
+      let wind = (windSpeedTextField.placeholder != nil ? windSpeedTextField.placeholder : "--")
+      let currentTemperature = String(format: "temp".localized, temperature!)
+      let currentWind = String(format: "wind".localized, wind!)
+      currentWeatherLabel.text = currentTemperature + currentWind
+    }
+    if temperatureTextField.placeholder != nil {
+      weather.temperature = (temperatureTextField.placeholder! as NSString).doubleValue as NSNumber
+    }
+    if windSpeedTextField.placeholder != nil {
+      weather.windSpeed = (windSpeedTextField.placeholder! as NSString).doubleValue as NSNumber
+    }
+  }
+
   @IBAction func setTemperatureToNegative(_ sender: UIButton) {
     if temperatureSign.title(for: .normal) == "-" {
       temperatureSign.setTitle("+", for: .normal)
@@ -85,7 +136,7 @@ extension AddInterventionViewController {
     }
   }
 
-  private func hideWeatherItems(_ state: Bool) {
+  private func hideWeatherItems(state: Bool) {
     for index in 0..<weatherButtons.count {
       weatherButtons[index].isHidden = state
     }
@@ -101,7 +152,7 @@ extension AddInterventionViewController {
     weatherViewHeightConstraint.constant = shouldExpand ? 350 : 70
     currentWeatherLabel.isHidden = shouldExpand
     weatherExpandImageView.transform = weatherExpandImageView.transform.rotated(by: CGFloat.pi)
-    hideWeatherItems(!shouldExpand)
+    hideWeatherItems(state: !shouldExpand)
     saveCurrentWeather()
   }
 
@@ -144,8 +195,8 @@ extension AddInterventionViewController {
       let currentWind = String(format: "wind".localized, wind!)
 
       currentWeatherLabel.text = currentTemperature + currentWind
+      weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
+      weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
     }
-    weather.temperature = (temperatureTextField.text! as NSString).doubleValue as NSNumber
-    weather.windSpeed = (windSpeedTextField.text! as NSString).doubleValue as NSNumber
   }
 }

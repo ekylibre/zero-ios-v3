@@ -41,7 +41,7 @@ extension AddInterventionViewController {
 
   // MARK: - Selection
 
-  func selectMaterial(_ material: Material) {
+  func selectMaterial(_ material: Material, quantity: Float?, unit: String, calledFromCreatedIntervention: Bool) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -49,20 +49,36 @@ extension AddInterventionViewController {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionMaterial = InterventionMaterial(context: managedContext)
 
-    interventionMaterial.unit = material.unit
+    interventionMaterial.material = material
+    quantity != nil ? interventionMaterial.quantity = quantity! : nil
+    interventionMaterial.unit = unit
     selectedMaterials[0].append(material)
     selectedMaterials[1].append(interventionMaterial)
     materialsSelectionView.cancelButton.sendActions(for: .touchUpInside)
-    updateView()
+    updateSelectedMaterialsView(calledFromCreatedIntervention: calledFromCreatedIntervention)
   }
 
-  private func updateView() {
+  private func checkButtonDisplayStatus(shouldExpand: Bool) {
+    if interventionState == InterventionState.Validated.rawValue {
+      materialsAddButton.isHidden = true
+      materialsCountLabel.isHidden = false
+    } else if interventionState != nil {
+      materialsCountLabel.isHidden = !shouldExpand
+      materialsAddButton.isHidden = !materialsCountLabel.isHidden
+    }
+  }
+
+  func updateSelectedMaterialsView(calledFromCreatedIntervention: Bool) {
     let shouldExpand = selectedMaterials[0].count > 0
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
+    if !calledFromCreatedIntervention {
+      materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
+      materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    }
+    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     materialsExpandImageView.isHidden = !shouldExpand
-    materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    updateMaterialsCountLabel()
     selectedMaterialsTableView.reloadData()
   }
 
@@ -89,8 +105,12 @@ extension AddInterventionViewController {
     view.endEditing(true)
     updateMaterialsCountLabel()
     materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
-    materialsAddButton.isHidden = !shouldExpand
+    materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    if interventionState != InterventionState.Validated.rawValue {
+      materialsAddButton.isHidden = !shouldExpand
+    }
     materialsCountLabel.isHidden = shouldExpand
+    selectedMaterialsTableView.isHidden = !shouldExpand
     materialsExpandImageView.transform = materialsExpandImageView.transform.rotated(by: CGFloat.pi)
   }
 
@@ -151,7 +171,7 @@ extension AddInterventionViewController {
 
     selectedMaterials[0].remove(at: index)
     selectedMaterials[1].remove(at: index)
-    updateView()
+    updateSelectedMaterialsView(calledFromCreatedIntervention: false)
     materialsSelectionView.tableView.reloadData()
   }
 
@@ -163,6 +183,18 @@ extension AddInterventionViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedMaterialCell", for: indexPath)
         as! SelectedMaterialCell
 
+      if interventionState == InterventionState.Validated.rawValue {
+        cell.quantityTextField.placeholder = String(format: "%g", quantity)
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
+        cell.unitButton.setTitleColor(.lightGray, for: .normal)
+      } else if quantity == 0 {
+        cell.quantityTextField.placeholder = "0"
+        cell.quantityTextField.text = ""
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
+      } else {
+        cell.quantityTextField.text = String(format: "%g", quantity)
+        cell.unitButton.setTitle(unit?.localized, for: .normal)
+      }
       cell.nameLabel.text = name
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)

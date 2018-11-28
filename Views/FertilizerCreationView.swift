@@ -63,6 +63,14 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     return natureAlertController
   }()
 
+  lazy var errorLabel: UILabel = {
+    let errorLabel = UILabel(frame: CGRect.zero)
+    errorLabel.font = UIFont.systemFont(ofSize: 13)
+    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return errorLabel
+  }()
+
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
@@ -97,6 +105,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     isHidden = true
     addSubview(titleLabel)
     addSubview(nameTextField)
+    addSubview(errorLabel)
     addSubview(natureLabel)
     addSubview(natureButton)
     addSubview(cancelButton)
@@ -112,6 +121,9 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
       nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       natureLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
       natureLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       natureButton.topAnchor.constraint(equalTo: natureLabel.bottomAnchor),
@@ -132,8 +144,8 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
       self.natureButton.setTitle("mineral".localized, for: .normal)
     }))
     natureAlertController.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
     cancelButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-    createButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -158,12 +170,16 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
+  @objc private func nameDidChange(_ textField: UITextField) {
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
+  }
+
   @objc private func closeView(sender: UIButton) {
     nameTextField.resignFirstResponder()
-    if sender == cancelButton {
-      nameTextField.text = ""
-      natureButton.setTitle("organic".localized, for: .normal)
-    }
-    isHidden = true
+    nameTextField.text = ""
+    natureButton.setTitle("organic".localized, for: .normal)
+    self.isHidden = true
   }
 }
