@@ -1426,6 +1426,7 @@
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showEquipmentTypes" id="EKH-vj-NkS"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSelectedMaterialUnits" id="FE4-xp-aKR"/>
                         <segue destination="1rQ-td-wpq" kind="unwind" identifier="unwindToInterventionVC" unwindAction="unwindToInterventionVCWithSegue:" id="DXp-2Y-Sxs"/>
+                        <segue destination="mHI-gi-QLg" kind="show" identifier="showInputsCreationUnits" id="Loh-BY-grD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvN-DX-w0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1704,7 +1705,7 @@
         <image name="warning" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uas-Qa-jvK"/>
+        <segue reference="Loh-BY-grD"/>
         <segue reference="74J-jI-YTr"/>
     </inferredMetricsTieBreakers>
 </document>

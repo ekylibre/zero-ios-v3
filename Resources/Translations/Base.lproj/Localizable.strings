@@ -301,9 +301,13 @@
 // Other units
 "METER" = "Meter";
 "UNITY" = "Unity";
+"UNITY_PER_HECTARE" = "Unity/ha";
+"UNITY_PER_SQUARE_METER" = "Unity/m²";
 "THOUSAND" = "Thousand";
+"THOUSAND_PER_HECTARE" = "Thousand/ha";
+"THOUSAND_PER_SQUARE_METER" = "Thousand/m²";
 "FRENCH_HORSEPOWER" = "French horsepower";
-"units" = "Units";
+"unit" = "Unit";
 
 // Equipment indicators
 "plowshare_count" = "Number of plowshares";

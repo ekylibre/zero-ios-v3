@@ -140,6 +140,8 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return surfaceQuantityTopConstraint
   }()
 
+  var inputUnit: String!
+
   // MARK: - Initialization
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -226,29 +228,53 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   // MARK: - Actions
 
-  @objc private func showUnitMeasure(sender: UIButton) {
+  private func checkIfUnitContains(unit: String, generalUnits: [String]) -> Bool {
+    var contains = false
 
-    addInterventionViewController?.dimView.isHidden = false
-    if type == "Phyto" {
-      let title = sender.titleLabel?.text
-      for index in 0..<addInterventionViewController!.volumeUnitMeasure.count {
-        if title == addInterventionViewController?.volumeUnitMeasure[index].localized {
-          addInterventionViewController?.volumeUnitPicker.selectRow(index, inComponent: 0, animated: false)
-          break
-        }
+    for generalUnit in generalUnits {
+      if unit.contains(generalUnit) {
+        contains = true
       }
-      addInterventionViewController?.volumeUnitPicker.isHidden = false
-    } else {
-      let title = sender.titleLabel?.text
-      for index in 0..<addInterventionViewController!.massUnitMeasure.count {
-        if title == addInterventionViewController?.massUnitMeasure[index].localized {
-          addInterventionViewController?.massUnitPicker.selectRow(index, inComponent: 0, animated: false)
-          break
-        }
-      }
-      addInterventionViewController?.massUnitPicker.isHidden = false
     }
-    cellDelegate?.saveSelectedRow(indexPath)
+    return contains
+  }
+
+  private func defineInputsUnitsInFunctionOfCreatedUnit(unit: String) -> [String]? {
+    let generalMassUnits = ["GRAM", "QUINTAL", "TON"]
+    let generalCountUnits = ["UNITY", "THOUSAND"]
+    let generalVolumeUnits = ["LITER", "CUBIC_METER"]
+    let countUnits = ["UNITY", "UNITY_PER_HECTARE", "UNITY_PER_SQUARE_METER",
+                      "THOUSAND", "THOUSAND_PER_HECTARE", "THOUSAND_PER_SQUARE_METER"]
+    let massUnits = ["GRAM", "GRAM_PER_HECTARE", "GRAM_PER_SQUARE_METER", "KILOGRAM", "KILOGRAM_PER_HECTARE",
+                     "KILOGRAM_PER_SQUARE_METER", "QUINTAL", "QUINTAL_PER_HECTARE", "QUINTAL_PER_SQUARE_METER",
+                     "TON", "TON_PER_HECTARE", "TON_PER_SQUARE_METER"]
+    let volumeUnits = ["LITER", "LITER_PER_HECTARE", "LITER_PER_SQUARE_METER",
+                       "HECTOLITER", "HECTOLITER_PER_HECTARE", "HECTOLITER_PER_SQUARE_METER",
+                       "CUBIC_METER", "CUBIC_METER_PER_HECTARE", "CUBIC_METER_PER_SQUARE_METER"]
+
+    if checkIfUnitContains(unit: unit, generalUnits: generalMassUnits) {
+      return massUnits
+    } else if checkIfUnitContains(unit: unit, generalUnits: generalCountUnits) {
+      return countUnits
+    } else {
+      if checkIfUnitContains(unit: unit, generalUnits: generalVolumeUnits) {
+        return volumeUnits
+      } else {
+        return [unit]
+      }
+    }
+  }
+
+  @objc private func showUnitMeasure(sender: UIButton) {
+    let units = defineInputsUnitsInFunctionOfCreatedUnit(unit: inputUnit)
+
+    if units != nil && units!.count > 1 {
+      addInterventionViewController?.inputsUnitPickerView.values = units!
+      addInterventionViewController?.inputsUnitPickerView.isHidden = false
+      addInterventionViewController?.dimView.isHidden = false
+      addInterventionViewController?.inputsUnitPickerView.reloadAllComponents()
+      cellDelegate?.saveSelectedRow(indexPath)
+    }
   }
 
   @objc func removeCell() {

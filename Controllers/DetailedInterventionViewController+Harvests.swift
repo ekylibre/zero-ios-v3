@@ -72,7 +72,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.delegate = self
   }
 
-  private func initHarvestUnitPickerView () {
+  private func initHarvestUnitPickerView() {
     let unit = ["KILOGRAM", "QUINTAL", "TON"]
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 

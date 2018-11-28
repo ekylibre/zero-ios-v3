@@ -141,9 +141,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
-    bindFrameToSuperViewBounds(seedView, height: 250)
-    bindFrameToSuperViewBounds(phytoView, height: 340)
-    bindFrameToSuperViewBounds(fertilizerView, height: 230)
+    bindFrameToSuperViewBounds(seedView, height: 260)
+    bindFrameToSuperViewBounds(phytoView, height: 400)
+    bindFrameToSuperViewBounds(fertilizerView, height: 300)
   }
 
   private func bindFrameToSuperViewBounds(_ view: UIView, height: CGFloat) {
@@ -341,7 +341,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createSeed(variety: String, specie: String) {
+  private func createSeed(variety: String, specie: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -355,7 +355,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.referenceID = 0
     seed.specie = formattedSpecie
     seed.variety = variety
-    seed.unit = "KILOGRAM_PER_HECTARE"
+    seed.unit = unit
     seed.used = false
     seeds.append(seed)
 
@@ -366,7 +366,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createPhyto(name: String, firmName: String, _ maaID: String, _ inFieldReentryDelay: Int) {
+  private func createPhyto(name: String, firmName: String, _ maaID: String, _ inFieldReentryDelay: Int, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -381,7 +381,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.firmName = firmName
     phyto.maaID = maaID
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
-    phyto.unit = "LITER_PER_HECTARE"
+    phyto.unit = unit
     phyto.used = false
     phytos.append(phyto)
 
@@ -392,7 +392,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createFertilizer(name: String, nature: String) {
+  private func createFertilizer(name: String, nature: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -405,7 +405,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.referenceID = 0
     fertilizer.name = name
     fertilizer.nature = nature
-    fertilizer.unit = "KILOGRAM_PER_HECTARE"
+    fertilizer.unit = unit
     fertilizer.used = false
     fertilizers.append(fertilizer)
 
@@ -499,7 +499,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         return
       }
 
-      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.rawSpecie)
+      createSeed(
+        variety: seedView.varietyTextField.text!,
+        specie: seedView.rawSpecie,
+        unit: seedView.rawUnit)
       seedView.specieButton.setTitle(firstSpecie.localized, for: .normal)
       seedView.varietyTextField.text = ""
       sortInputs()
@@ -515,8 +518,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let maaID = phytoView.maaTextField.text!.isEmpty ? "0" : phytoView.maaTextField.text!
       let inFieldReentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : reentryDelay
 
-      createPhyto(name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID,
-                  inFieldReentryDelay!)
+      createPhyto(
+        name: phytoView.nameTextField.text!,
+        firmName: phytoView.firmNameTextField.text!,
+        maaID,
+        inFieldReentryDelay!,
+        unit: phytoView.rawUnit)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
@@ -532,7 +539,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         return
       }
 
-      createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
+      createFertilizer(
+        name: fertilizerView.nameTextField.text!,
+        nature: fertilizerView.natureButton.titleLabel!.text!,
+        unit: fertilizerView.rawUnit)
       fertilizerView.nameTextField.text = ""
       fertilizerView.natureButton.setTitle("organic".localized, for: .normal)
       sortInputs()

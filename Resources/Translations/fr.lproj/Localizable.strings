@@ -301,7 +301,7 @@
 "UNITY" = "Unité";
 "THOUSAND" = "Millier";
 "FRENCH_HORSEPOWER" = "Cheval-vapeur français (ch)";
-"units" = "Unités";
+"unit" = "Unité";
 
 // Equipment indicators
 "plowshare_count" = "Nombre de socs";

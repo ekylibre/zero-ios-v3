@@ -74,6 +74,11 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
       updateInfoLabel(volume, unit)
       irrigationPickerView.isHidden = true
       dimView.isHidden = true
+    case inputsUnitPickerView:
+      selectedInputs[cellIndexPath.row].setValue(unit, forKey: "unit")
+      selectedInputsTableView.reloadData()
+      inputsUnitPickerView.isHidden = true
+      dimView.isHidden = true
     default:
       return
     }
