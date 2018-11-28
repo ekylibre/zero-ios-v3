@@ -48,8 +48,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       static var firstLaunch = false
     }
     if !staticIndex.firstLaunch {
-      authentificationService = AuthentificationService(username: "", password: "")
-      if appDelegate.entityIsEmpty(entity: "User") && authentificationService?.oauth2.accessToken != nil {
+      authentificationService = AuthentificationService()
+      authentificationService?.setupOauthPasswordGrant(username: nil, password: nil)
+      if appDelegate.entityIsEmpty(entity: "User") && authentificationService?.oauth2?.accessToken != nil {
         authentificationService?.logout()
       }
       authentifyUser()
@@ -60,7 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   // MARK: - Navigation
 
   private func checkLoggedStatus(token: String?) {
-    if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
+    if token == nil || !(authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
         navigationController?.navigationBar.isHidden = false
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
@@ -74,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         present(alert, animated: true)
       }
-    } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
+    } else if token != nil && (authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
       let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
       let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController") as UIViewController
 
@@ -110,13 +111,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
 
     if !appDelegate.entityIsEmpty(entity: "User") {
       authentificationService?.authorize(presenting: self)
-      var token = authentificationService?.oauth2.accessToken
+      var token = authentificationService?.oauth2?.accessToken
 
-      authentificationService?.oauth2.afterAuthorizeOrFail = { authParameters, error in
-        token = self.authentificationService?.oauth2.accessToken
+      authentificationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
+        token = self.authentificationService?.oauth2?.accessToken
         self.checkLoggedStatus(token: token)
       }
-      if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
+      if token != nil && (authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController")
           as UIViewController
@@ -131,7 +132,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
 
   @IBAction func checkAuthentification(sender: Any) {
     buttonIsPressed = true
-    authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
+    authentificationService = AuthentificationService()
+    authentificationService?.setupOauthPasswordGrant(username: tfUsername.text, password: tfPassword.text)
     authentifyUser()
     buttonIsPressed = false
   }

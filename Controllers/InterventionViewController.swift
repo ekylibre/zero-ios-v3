@@ -407,6 +407,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if indexPath != nil {
         let intervention = interventions[(indexPath?.row)!]
 
+        destVC.interventionType = intervention.type
         destVC.currentIntervention = intervention
         destVC.interventionState = intervention.status
       }
@@ -581,7 +582,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   private func logoutUser() {
-    let authentificationService = AuthentificationService(username: "", password: "")
+    let authentificationService = AuthentificationService()
+    authentificationService.setupOauthPasswordGrant(username: nil, password: nil)
 
     authentificationService.logout()
     UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)

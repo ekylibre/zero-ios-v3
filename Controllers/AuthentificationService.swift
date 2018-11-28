@@ -10,42 +10,45 @@ import UIKit
 import OAuth2
 import CoreData
 
-open class AuthentificationService {
+class AuthentificationService {
 
   // MARK: - Properties
 
-  public var oauth2: OAuth2PasswordGrant
+  public var oauth2: OAuth2PasswordGrant?
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
   // MARK: - Initialization
 
-  public init(username: String, password: String) {
+  func setupOauthPasswordGrant(username: String?, password: String?) {
     var keys: NSDictionary!
+
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
       keys = NSDictionary(contentsOfFile: path)
+      oauth2 = OAuth2PasswordGrant(settings: [
+        "client_id": keys["parseClientId"]!,
+        "client_secret": keys["parseClientSecret"]!,
+        "token_uri": "\(keys["parseUrl"]!)/oauth/token",
+        "username": username as Any,
+        "password": password as Any,
+        "grant_type": "password",
+        "scope": "public read:profile read:lexicon read:plots read:crops read:interventions write:interventions read:equipment write:equipment read:articles write:articles read:person write:person",
+        "verbose": true
+        ] as OAuth2JSON
+      )
     }
-    oauth2 = OAuth2PasswordGrant(settings: [
-      "client_id": keys["parseClientId"]!,
-      "client_secret": keys["parseClientSecret"]!,
-      "token_uri": "\(keys["parseUrl"]!)/oauth/token",
-      "username": username,
-      "password": password,
-      "grant_type": "password",
-      "scope": "public read:profile read:lexicon read:plots read:crops read:interventions write:interventions read:equipment write:equipment read:articles write:articles read:person write:person",
-      "verbose": true
-      ] as OAuth2JSON)
   }
 
   // MARK: - Actions
 
   private func emptyUsersList() {
     let context = appDelegate.persistentContainer.viewContext
-    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+    let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
 
-    request.returnsObjectsAsFaults = false
+    userFetchRequest.returnsObjectsAsFaults = false
     do {
-      let result = try context.fetch(request)
-      for data in result as! [NSManagedObject] {
+      let result = try context.fetch(userFetchRequest)
+
+      for data in result {
         context.delete(data)
       }
       try context.save()
@@ -68,7 +71,7 @@ open class AuthentificationService {
   }
 
   public func authorize(presenting view: UIViewController) {
-    oauth2.authorizeEmbedded(from: view) { (authParameters, error) in
+    oauth2?.authorizeEmbedded(from: view) { (authParameters, error) in
       if let oauthError = error {
         print("Authorization was canceled or went wrong: \(String(describing: oauthError.description))")
       }
@@ -78,8 +81,8 @@ open class AuthentificationService {
 
   public func logout() {
     emptyUsersList()
-    oauth2.username = nil
-    oauth2.password = nil
-    oauth2.forgetTokens()
+    oauth2?.username = nil
+    oauth2?.password = nil
+    oauth2?.forgetTokens()
   }
 }
