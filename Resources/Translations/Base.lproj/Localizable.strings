@@ -391,6 +391,7 @@
 "no_crop_selected" = "No crop selected";
 
 "selecting_crops" = "Select a crop";
+"selecting_date" = "Select a date";
 "selecting_materials" = "Select a material";
 "selecting_equipments" = "Select an equipment";
 "selecting_persons" = "Select a person";

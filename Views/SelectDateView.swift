@@ -16,8 +16,8 @@ class SelectDateView: UIView {
 
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect(x: 10, y: 10, width: 280, height: 30))
-    titleLabel.text = "This is a test"
-    titleLabel.font = UIFont.systemFont(ofSize: 17)
+    titleLabel.text = "selecting_date".localized
+    titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     titleLabel.textAlignment = .center
     return titleLabel
   }()

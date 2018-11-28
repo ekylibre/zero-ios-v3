@@ -389,6 +389,7 @@
 "no_crop_selected" = "Aucune sélection";
 
 "selecting_crops" = "Sélectionnez des cultures";
+"selecting_date" = "Sélectionnez une date";
 "selecting_materials" = "Sélectionnez un matériau";
 "selecting_equipments" = "Sélectionnez un équipement";
 "selecting_persons" = "Sélectionnez un opérateur";
