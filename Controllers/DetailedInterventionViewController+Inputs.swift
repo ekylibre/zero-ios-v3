@@ -77,6 +77,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   // MARK: - Actions
 
+  @objc private func showList() {
+    performSegue(withIdentifier: "showSpecies", sender: self)
+  }
+
+  @objc private func showAlert() {
+    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
+  }
+
   private func checkButtonDisplayStatus(shouldExpand: Bool) {
     if interventionState == InterventionState.Validated.rawValue {
       inputsAddButton.isHidden = true

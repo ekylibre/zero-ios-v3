@@ -311,14 +311,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
   }
 
-  @objc func showList() {
-    performSegue(withIdentifier: "showSpecies", sender: self)
-  }
-
-  @objc func showAlert() {
-    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
-  }
-
   // MARK: - Table view data source
 
   func numberOfSections(in tableView: UITableView) -> Int {
