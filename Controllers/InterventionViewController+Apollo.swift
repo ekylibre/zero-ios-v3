@@ -967,18 +967,31 @@ extension InterventionViewController {
 
   // MARK: Inputs
 
+  private func ifEntityIsEmptySearchWithReferenceID(
+    entity: NSManagedObject?, referenceID: String?, entityName: String) -> NSManagedObject? {
+    if entity == nil {
+      let predicate: NSPredicate!
+
+      predicate = (referenceID == nil ? nil : NSPredicate(format: "referenceID == %d", Int32(referenceID!)!))
+      return returnEntityIfSame(entityName: entityName, predicate: predicate)
+    }
+    return entity
+  }
+
   private func saveInputsInIntervention(fetchedInput: InterventionQuery.Data.Farm.Intervention.Input,
                                         intervention: Intervention) -> Intervention {
     let managedContext = appDelegate.persistentContainer.viewContext
-    let id = fetchedInput.article?.id
+    let ekyID = fetchedInput.article?.id
+    let referenceID = fetchedInput.article?.referenceId
     let predicate: NSPredicate!
 
-    predicate = (id == nil ? nil : NSPredicate(format: "ekyID == %d", Int32(id!)!))
+    predicate = (ekyID == nil ? nil : NSPredicate(format: "ekyID == %d", Int32(ekyID!)!))
     switch fetchedInput.article?.type.rawValue {
     case "SEED":
       let interventionSeed = InterventionSeed(context: managedContext)
-      let seed = returnEntityIfSame(entityName: "Seed", predicate: predicate)
+      var seed = returnEntityIfSame(entityName: "Seed", predicate: predicate)
 
+      seed = ifEntityIsEmptySearchWithReferenceID(entity: seed, referenceID: referenceID, entityName: "Seed")
       interventionSeed.unit = fetchedInput.unit.rawValue
       fetchedInput.quantity != nil ? interventionSeed.quantity = Float(fetchedInput.quantity!) : nil
       interventionSeed.seed = (seed as? Seed)
@@ -986,8 +999,10 @@ extension InterventionViewController {
       intervention.addToInterventionSeeds(interventionSeed)
     case "FERTILIZER":
       let interventionFertilizer = InterventionFertilizer(context: managedContext)
-      let fertilizer = returnEntityIfSame(entityName: "Fertilizer", predicate: predicate)
+      var fertilizer = returnEntityIfSame(entityName: "Fertilizer", predicate: predicate)
 
+      fertilizer = ifEntityIsEmptySearchWithReferenceID(
+        entity: fertilizer, referenceID: referenceID, entityName: "Fertilizer")
       interventionFertilizer.unit = fetchedInput.unit.rawValue
       fetchedInput.quantity != nil ? interventionFertilizer.quantity = Float(fetchedInput.quantity!) : nil
       interventionFertilizer.fertilizer = (fertilizer as? Fertilizer)
@@ -995,8 +1010,9 @@ extension InterventionViewController {
       intervention.addToInterventionFertilizers(interventionFertilizer)
     case "CHEMICAL":
       let interventionPhyto = InterventionPhytosanitary(context: managedContext)
-      let phyto = returnEntityIfSame(entityName: "Phyto", predicate: predicate)
+      var phyto = returnEntityIfSame(entityName: "Phyto", predicate: predicate)
 
+      phyto = ifEntityIsEmptySearchWithReferenceID(entity: phyto, referenceID: referenceID, entityName: "Phyto")
       interventionPhyto.unit = fetchedInput.unit.rawValue
       fetchedInput.quantity != nil ? interventionPhyto.quantity = Float(fetchedInput.quantity!) : nil
       interventionPhyto.phyto = (phyto as? Phyto)
@@ -1004,8 +1020,10 @@ extension InterventionViewController {
       intervention.addToInterventionPhytosanitaries(interventionPhyto)
     case "MATERIAL":
       let interventionMaterial = InterventionMaterial(context: managedContext)
-      let material = returnEntityIfSame(entityName: "Material", predicate: predicate)
+      var material = returnEntityIfSame(entityName: "Material", predicate: predicate)
 
+      material = ifEntityIsEmptySearchWithReferenceID(
+        entity: material, referenceID: referenceID, entityName: "Material")
       interventionMaterial.unit = fetchedInput.unit.rawValue
       fetchedInput.quantity != nil ? interventionMaterial.quantity = Float(fetchedInput.quantity!) : nil
       interventionMaterial.material = (material as? Material)
