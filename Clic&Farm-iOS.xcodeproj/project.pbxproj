@@ -97,8 +97,6 @@
 		6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11318B219C6791002272F0 /* WeatherTests.swift */; };
 		6B28441C219D877500DED846 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28441B219D877500DED846 /* StorageManager.swift */; };
 		6B491D1521ABEABD00EADC22 /* ApolloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B491D1421ABEABD00EADC22 /* ApolloTests.swift */; };
-		6B4CA89F214F9B560052073D /* queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89C214F9B560052073D /* queries.graphql */; };
-		6B4CA8A0214F9B560052073D /* mutations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 6B4CA89D214F9B560052073D /* mutations.graphql */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B6866A42194691400D5645B /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6866A32194691300D5645B /* String+Error.swift */; };
 		6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084B2193142200F54D29 /* sample_location.gpx */; };
@@ -232,8 +230,6 @@
 		6B491D1221ABEABD00EADC22 /* Clic&Farm-iOSMockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clic&Farm-iOSMockTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B491D1421ABEABD00EADC22 /* ApolloTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloTests.swift; sourceTree = "<group>"; };
 		6B491D1621ABEABD00EADC22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6B4CA89C214F9B560052073D /* queries.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
-		6B4CA89D214F9B560052073D /* mutations.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B6866A32194691300D5645B /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
 		6B6C084B2193142200F54D29 /* sample_location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_location.gpx; sourceTree = "<group>"; };
@@ -457,18 +453,6 @@
 				6B491D1621ABEABD00EADC22 /* Info.plist */,
 			);
 			path = "Clic&Farm-iOSMockTests";
-			sourceTree = "<group>";
-		};
-		6B4CA89B214F9B560052073D /* GraphQL */ = {
-			isa = PBXGroup;
-			children = (
-				04269C4D2179D49D00E0160C /* API.swift */,
-				6B85D17621919B5F00E43046 /* CustomTypes.swift */,
-				6B4CA89D214F9B560052073D /* mutations.graphql */,
-				6B4CA89C214F9B560052073D /* queries.graphql */,
-				0410A5FB2166192700529DA1 /* schema.json */,
-			);
-			path = GraphQL;
 			sourceTree = "<group>";
 		};
 		6BA3713D213963230086DF9B /* Resources */ = {
@@ -1076,7 +1060,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.Clic-Farm-iOS";
-				PRODUCT_MODULE_NAME = clic_and_farm;
+				PRODUCT_MODULE_NAME = Clic_Farm_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1100,7 +1084,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.Clic-Farm-iOS";
-				PRODUCT_MODULE_NAME = clic_and_farm;
+				PRODUCT_MODULE_NAME = Clic_Farm_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

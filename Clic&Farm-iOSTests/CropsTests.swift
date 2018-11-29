@@ -38,13 +38,13 @@ class CropsTests: XCTestCase {
 
   func test_selectedCropsLabel_withASelection_shouldChange() {
     // Given
-    let cropsCount = 1
+    let crop = Crop()
     let surfaceArea: Float = 23.1
 
     // When
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, "no_crop_selected".localized,
                    "Selected crops label should be no_crop_selected before sendActions")
-    addInterventionVC.cropsView.selectedCropsCount = cropsCount
+    addInterventionVC.cropsView.selectedCrops.append(crop)
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
 
@@ -56,18 +56,22 @@ class CropsTests: XCTestCase {
 
   func test_selectedCropsLabel_withMultipleSelection_shouldChange() {
     // Given
-    let cropsCount = 12
+    let crop = Crop()
+    var index = 0
     let surfaceArea: Float = 284.225
 
     // When
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, "no_crop_selected".localized,
                    "Selected crops label should be no_crop_selected before sendActions")
-    addInterventionVC.cropsView.selectedCropsCount = cropsCount
+    while index != 16 {
+      addInterventionVC.cropsView.selectedCrops.append(crop)
+      index += 1
+    }
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
 
     // Then
-    let expectedString = String(format: "crops".localized, 12) + " • 284.2 ha"
+    let expectedString = String(format: "crops".localized, 16) + " • 284.2 ha"
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, expectedString,
                    "Selected crops label should change if a crop have been selected")
   }
@@ -85,13 +89,13 @@ class CropsTests: XCTestCase {
 
   func test_totalLabel_withASelection_shouldChange() {
     // Given
-    let cropsCount = 1
+    let crop = Crop()
     let surfaceArea: Float = 23.1
 
     // When
     XCTAssertEqual(addInterventionVC.totalLabel.text, "select_crops".localized.uppercased(),
                    "Total label should be select_crops before sendActions")
-    addInterventionVC.cropsView.selectedCropsCount = cropsCount
+    addInterventionVC.cropsView.selectedCrops.append(crop)
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
     addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
@@ -103,13 +107,17 @@ class CropsTests: XCTestCase {
 
   func test_totalLabel_withMultipleSelection_shouldChange() {
     // Given
-    let cropsCount = 12
+    let crop = Crop()
+    var index = 0
     let surfaceArea: Float = 284.225
 
     // When
     XCTAssertEqual(addInterventionVC.totalLabel.text, "select_crops".localized.uppercased(),
                    "Total label should be select_crops before sendActions")
-    addInterventionVC.cropsView.selectedCropsCount = cropsCount
+    while index != 12 {
+      addInterventionVC.cropsView.selectedCrops.append(crop)
+      index += 1
+    }
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
     addInterventionVC.cropsView.validateButton.sendActions(for: .touchUpInside)
