@@ -99,7 +99,8 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
 
   // MARK: - Gesture recognizer
 
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     return true
   }
 
