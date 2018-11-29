@@ -398,7 +398,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   // MARK: - Core Data
 
-  func createIntervention() {
+  private func createIntervention() {
     if !checkErrorsAccordingInterventionType() {
       return
     }
@@ -438,7 +438,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     performSegue(withIdentifier: "unwindToInterventionVC", sender: self)
   }
 
-  func updateIntervention() {
+  private func updateIntervention() {
     if !checkErrorsAccordingInterventionType() {
       return
     }
