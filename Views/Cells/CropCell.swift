@@ -10,7 +10,7 @@ import UIKit
 
 class CropCell: UITableViewCell {
 
-  // MARK:- Properties
+  // MARK: - Properties
 
   lazy var plotNameLabel: UILabel = {
     let plotNameLabel = UILabel(frame: CGRect.zero)
