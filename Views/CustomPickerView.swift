@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CustomPickerViewProtocol {
-  func customPickerDidSelectValue(_ pickerView: CustomPickerView, _ value: String)
+  func customPickerDidSelectValue(_ pickerView: CustomPickerView, value: String)
 }
 
 class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
@@ -113,7 +113,7 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
       let selectedRow = pickerView.selectedRow(inComponent: 0)
       let selectedValue = values[selectedRow]
 
-      reference?.customPickerDidSelectValue(self, selectedValue)
+      reference?.customPickerDidSelectValue(self, value: selectedValue)
     }
   }
 }

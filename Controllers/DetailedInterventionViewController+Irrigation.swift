@@ -37,7 +37,7 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
 
   // MARK: - Picker view
 
-  func customPickerDidSelectValue(_ pickerView: CustomPickerView, _ value: String) {
+  func customPickerDidSelectValue(_ pickerView: CustomPickerView, value: String) {
     switch pickerView {
     case harvestNaturePickerView:
       harvestType.setTitle(value.localized, for: .normal)
