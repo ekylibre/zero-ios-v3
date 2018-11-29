@@ -26,8 +26,10 @@ extension AddInterventionViewController {
     self.weather = weather
     temperatureTextField.delegate = self
     temperatureTextField.keyboardType = .decimalPad
+    temperatureTextField.placeholder = "0"
     windSpeedTextField.delegate = self
     windSpeedTextField.keyboardType = .decimalPad
+    windSpeedTextField.placeholder = "0"
     initializeWeatherButtons()
     setupWeatherActions()
   }
