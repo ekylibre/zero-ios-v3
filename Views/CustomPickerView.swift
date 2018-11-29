@@ -71,10 +71,12 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
   }
 
   private func setupGestureRecognizers() {
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pickerTapped))
+    let dimViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(dimViewTapped))
+    let pickerTapGesture = UITapGestureRecognizer(target: self, action: #selector(pickerTapped))
 
-    tapGesture.delegate = self
-    pickerView.addGestureRecognizer(tapGesture)
+    dimView.addGestureRecognizer(dimViewTapGesture)
+    pickerTapGesture.delegate = self
+    pickerView.addGestureRecognizer(pickerTapGesture)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -102,6 +104,13 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
   }
 
   // MARK: - Actions
+
+  @objc private func dimViewTapped() {
+    let selectedRow = pickerView.selectedRow(inComponent: 0)
+    let selectedValue = values[selectedRow]
+
+    reference?.customPickerDidSelectValue(self, value: selectedValue)
+  }
 
   @objc private func pickerTapped(tapRecognizer: UITapGestureRecognizer) {
     if tapRecognizer.state != .ended { return }
