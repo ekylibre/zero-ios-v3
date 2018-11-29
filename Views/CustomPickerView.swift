@@ -8,16 +8,14 @@
 
 import UIKit
 
-protocol CustomPickerViewProtocol {
-  func customPickerDidSelectValue(_ pickerView: CustomPickerView, value: String)
-}
-
 class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
 
   // MARK: - Properties
 
-  var reference: CustomPickerViewProtocol?
-  var values: [String]
+  var values: [String]! = ["initial value"]
+  var closure: (_ value: String) -> Void = { _ in
+    print("initial closure")
+  }
 
   lazy var dimView: UIView = {
     let dimView = UIView(frame: CGRect.zero)
@@ -37,8 +35,7 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
 
   // MARK: - Initialization
 
-  init(values: [String], superview: UIView) {
-    self.values = values
+  init(superview: UIView) {
     super.init(frame: CGRect.zero)
     setupView(superview)
   }
@@ -110,7 +107,8 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
     let selectedRow = pickerView.selectedRow(inComponent: 0)
     let selectedValue = values[selectedRow]
 
-    reference?.customPickerDidSelectValue(self, value: selectedValue)
+    closure(selectedValue)
+    isHidden = true
   }
 
   @objc private func pickerTapped(tapRecognizer: UITapGestureRecognizer) {
@@ -123,7 +121,8 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
       let selectedRow = pickerView.selectedRow(inComponent: 0)
       let selectedValue = values[selectedRow]
 
-      reference?.customPickerDidSelectValue(self, value: selectedValue)
+      closure(selectedValue)
+      isHidden = true
     }
   }
 }

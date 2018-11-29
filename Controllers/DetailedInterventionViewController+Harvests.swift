@@ -23,42 +23,33 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestType.layer.borderWidth = 1
     harvestType.layer.cornerRadius = 5
     initializeHarvestTableView()
-    initHarvestNaturePickerView()
-    initHarvestUnitPickerView()
-    initStoragesPickerView()
     setupStorageCreationView()
-    initStoragesTypesPickerView()
   }
 
   func defineUnit(_ indexPath: IndexPath) {
-    let unit = ["KILOGRAM", "QUINTAL", "TON"]
-    let cell = harvestTableView.cellForRow(at: indexPath) as? HarvestCell
-    let title = cell?.unit.titleLabel?.text
-
-    for index in 0..<unit.count {
-      if title == unit[index].localized {
-        harvestUnitPickerView.pickerView.selectRow(index, inComponent: 0, animated: false)
-        break
-      }
+    customPickerView.values = ["KILOGRAM", "QUINTAL", "TON"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      self.selectedHarvests[self.cellIndexPath.row].unit = value
+      self.harvestTableView.reloadData()
     }
+    customPickerView.isHidden = false
     cellIndexPath = indexPath
-    harvestUnitPickerView.isHidden = false
   }
 
   func defineStorage(_ indexPath: IndexPath) {
     if storages.count > 0 {
-      let storagesName = fetchStoragesName()
-      let cell = harvestTableView.cellForRow(at: indexPath) as? HarvestCell
-      let title = cell?.storage.titleLabel?.text
+      customPickerView.values = fetchStoragesName()
+      customPickerView.pickerView.reloadComponent(0)
+      customPickerView.closure = { (_ value: String) in
+        let predicate = NSPredicate(format: "name == %@", value)
+        let searchedStorage = self.fetchStorages(predicate: predicate)
 
-      for index in 0..<storagesName!.count {
-        if title == storagesName?[index].localized {
-          storagesPickerView.pickerView.selectRow(index, inComponent: 0, animated: false)
-          break
-        }
+        self.selectedHarvests[self.cellIndexPath.row].storage = searchedStorage?.first
+        self.harvestTableView.reloadData()
       }
+      customPickerView.isHidden = false
       cellIndexPath = indexPath
-      storagesPickerView.isHidden = false
     }
   }
 
@@ -68,34 +59,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.layer.cornerRadius = 4
     harvestTableView.dataSource = self
     harvestTableView.delegate = self
-  }
-
-  private func initHarvestUnitPickerView () {
-    let unit = ["KILOGRAM", "QUINTAL", "TON"]
-
-    harvestUnitPickerView = CustomPickerView(values: unit, superview: view)
-    harvestUnitPickerView.reference = self
-  }
-
-  private func initHarvestNaturePickerView() {
-    let unit = ["GRAIN", "SILAGE", "STRAW"]
-
-    harvestNaturePickerView = CustomPickerView(values: unit, superview: view)
-    harvestNaturePickerView.reference = self
-  }
-
-  private func initStoragesPickerView() {
-    let storages = fetchStoragesName()
-
-    storagesPickerView = CustomPickerView(values: storages ?? ["---"], superview: view)
-    storagesPickerView.reference = self
-  }
-
-  private func initStoragesTypesPickerView() {
-    let types = ["BUILDING", "HEAP", "SILO"]
-
-    storagesTypes = CustomPickerView(values: types, superview: view)
-    storagesTypes.reference = self
   }
 
   private func setupStorageCreationView() {
@@ -165,8 +128,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @objc private func cancelStorageCreation() {
-
-    storagesTypes.pickerView.selectRow(0, inComponent: 0, animated: false)
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
     storageCreationView.nameTextField.text = ""
     dimView.isHidden = true
@@ -180,15 +141,17 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     storageCreationView.nameTextField.resignFirstResponder()
     createStorage(name: storageCreationView.nameTextField.text!, type: storageCreationView.selectedType!)
-    let storages = fetchStoragesName()
-
-    storagesPickerView.values = (storages != nil ? storages! : ["---"])
-    storagesPickerView.pickerView.reloadComponent(0)
     cancelStorageCreation()
   }
 
   @objc private func showStorageTypes() {
-    storagesTypes.isHidden = false
+    customPickerView.values = ["BUILDING", "HEAP", "SILO"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      self.storageCreationView.typeButton.setTitle(value.localized, for: .normal)
+      self.storageCreationView.selectedType = value
+    }
+    customPickerView.isHidden = false
   }
 
   func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
@@ -268,15 +231,13 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction func changeHarvestNature(_ sender: UIButton) {
-    let unit = ["GRAIN", "SILAGE", "STRAW"]
-
-    for index in 0..<unit.count {
-      if harvestNature.text == unit[index].localized {
-        harvestNaturePickerView.pickerView.selectRow(index, inComponent: 0, animated: false)
-        break
-      }
+    customPickerView.values = ["GRAIN", "SILAGE", "STRAW"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      self.harvestType.setTitle(value.localized, for: .normal)
+      self.harvestSelectedType = value
     }
-    harvestNaturePickerView.isHidden = false
+    customPickerView.isHidden = false
   }
 
   func removeHarvestCell(_ indexPath: IndexPath) {

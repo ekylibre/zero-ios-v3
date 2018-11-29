@@ -8,13 +8,11 @@
 
 import UIKit
 
-extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewProtocol {
+extension AddInterventionViewController: UITextFieldDelegate {
 
   // MARK: - Initialization
 
   func setupIrrigationView() {
-    let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
-
     irrigationVolumeTextField.delegate = self
     irrigationVolumeTextField.layer.borderWidth = 0.5
     irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
@@ -26,45 +24,11 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationUnitButton.layer.cornerRadius = 5
     irrigationUnitButton.clipsToBounds = false
     irrigationUnitButton.setTitle("m³", for: .normal)
-    irrigationPickerView = CustomPickerView(values: units, superview: view)
-    irrigationPickerView.reference = self
     setupActions()
   }
 
   private func setupActions() {
     irrigationVolumeTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
-  }
-
-  // MARK: - Picker view
-
-  func customPickerDidSelectValue(_ pickerView: CustomPickerView, value: String) {
-    switch pickerView {
-    case harvestNaturePickerView:
-      harvestType.setTitle(value.localized, for: .normal)
-      harvestSelectedType = value
-    case harvestUnitPickerView:
-      selectedHarvests[cellIndexPath.row].unit = value
-      harvestTableView.reloadData()
-    case storagesPickerView:
-      let predicate = NSPredicate(format: "name == %@", value)
-      let searchedStorage = fetchStorages(predicate: predicate)
-
-      selectedHarvests[cellIndexPath.row].storage = searchedStorage?.first
-      harvestTableView.reloadData()
-    case storagesTypes:
-      storageCreationView.typeButton.setTitle(value.localized, for: .normal)
-      storageCreationView.selectedType = value
-    case irrigationPickerView:
-      let volume = irrigationVolumeTextField.text!.floatValue
-
-      irrigationUnitButton.setTitle(value.localized, for: .normal)
-      selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, value.localized)
-      updateInfoLabel(volume, value)
-    default:
-      return
-    }
-
-    pickerView.isHidden = true
   }
 
   // MARK: - Actions
@@ -104,6 +68,15 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   }
 
   @IBAction func tapUnit() {
-    irrigationPickerView.isHidden = false
+    customPickerView.values = ["CUBIC_METER", "LITER", "HECTOLITER"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      let volume = self.irrigationVolumeTextField.text!.floatValue
+
+      self.irrigationUnitButton.setTitle(value.localized, for: .normal)
+      self.selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, value.localized)
+      self.updateInfoLabel(volume, value)
+    }
+    customPickerView.isHidden = false
   }
 }
