@@ -1301,6 +1301,7 @@ extension InterventionViewController {
         cropId: (target.crop?.uuid)?.uuidString,
         workAreaPercentage: Int(target.workAreaPercentage))
 
+      print("\nTarget Attributes: \(targetAttributes)")
       targetsAttributes.append(targetAttributes)
     }
     return targetsAttributes
