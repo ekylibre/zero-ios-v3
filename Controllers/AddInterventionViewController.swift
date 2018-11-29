@@ -191,7 +191,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-    customPickerView = CustomPickerView(superview: view)
     setupNavigationBar()
     setupDimView()
     saveInterventionButton.layer.cornerRadius = 3
@@ -203,6 +202,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     setupEquipmentsView()
     setupPersonsView()
     setupWeatherView()
+    customPickerView = CustomPickerView(superview: view)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
