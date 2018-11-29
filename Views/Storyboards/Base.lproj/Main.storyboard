@@ -1029,7 +1029,7 @@
                                                             <action selector="setTemperatureToNegative:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="yqk-yb-eMx"/>
                                                         </connections>
                                                     </button>
-                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pOP-WE-pVI" userLabel="Temperature Text Field">
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pOP-WE-pVI" userLabel="Temperature Text Field">
                                                         <rect key="frame" x="147.5" y="59.5" width="75" height="35"/>
                                                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -1037,8 +1037,8 @@
                                                             <constraint firstAttribute="height" constant="35" id="vcM-zb-GX5"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="as1-Zg-NLq">
                                                         <rect key="frame" x="227.5" y="68" width="127.5" height="18"/>
@@ -1052,7 +1052,7 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzs-kF-ytJ" userLabel="Wind speed Text Field">
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzs-kF-ytJ" userLabel="Wind speed Text Field">
                                                         <rect key="frame" x="147.5" y="109.5" width="75" height="35"/>
                                                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -1060,8 +1060,8 @@
                                                             <constraint firstAttribute="height" constant="35" id="Zqq-Fp-Rh0"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="km/h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1a-qv-ooU">
                                                         <rect key="frame" x="227.5" y="118" width="127.5" height="18"/>

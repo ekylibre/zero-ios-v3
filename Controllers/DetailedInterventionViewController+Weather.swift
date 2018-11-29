@@ -24,12 +24,16 @@ extension AddInterventionViewController {
     weather.windSpeed = nil
     weather.temperature = nil
     self.weather = weather
+    temperatureTextField.layer.borderWidth = 0.5
+    temperatureTextField.layer.borderColor = UIColor.lightGray.cgColor
+    temperatureTextField.layer.cornerRadius = 5
+    temperatureTextField.clipsToBounds = true
     temperatureTextField.delegate = self
-    temperatureTextField.keyboardType = .decimalPad
-    temperatureTextField.placeholder = "0"
+    windSpeedTextField.layer.borderWidth = 0.5
+    windSpeedTextField.layer.borderColor = UIColor.lightGray.cgColor
+    windSpeedTextField.layer.cornerRadius = 5
+    windSpeedTextField.clipsToBounds = true
     windSpeedTextField.delegate = self
-    windSpeedTextField.keyboardType = .decimalPad
-    windSpeedTextField.placeholder = "0"
     initializeWeatherButtons()
     setupWeatherActions()
   }
