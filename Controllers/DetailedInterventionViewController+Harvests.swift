@@ -75,8 +75,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     harvestUnitPickerView = CustomPickerView(values: unit, superview: view)
     harvestUnitPickerView.reference = self
-    harvestUnitPickerView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(harvestUnitPickerView)
   }
 
   private func initHarvestNaturePickerView() {
@@ -84,8 +82,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     harvestNaturePickerView = CustomPickerView(values: unit, superview: view)
     harvestNaturePickerView.reference = self
-    harvestNaturePickerView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(harvestNaturePickerView)
   }
 
   private func initStoragesPickerView() {
@@ -93,8 +89,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     storagesPickerView = CustomPickerView(values: storages ?? ["---"], superview: view)
     storagesPickerView.reference = self
-    storagesPickerView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(storagesPickerView)
   }
 
   private func initStoragesTypesPickerView() {
@@ -102,8 +96,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
     storagesTypes = CustomPickerView(values: types, superview: view)
     storagesTypes.reference = self
-    storagesTypes.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(storagesTypes)
   }
 
   private func setupStorageCreationView() {
