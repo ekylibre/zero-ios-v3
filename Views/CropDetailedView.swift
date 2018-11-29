@@ -165,7 +165,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]??.withRenderingMode(.alwaysTemplate)
-    cell.stateImageView.tintColor = (intervention.status == 0) ? UIColor.orange : UIColor.green
+    cell.stateImageView.tintColor = (intervention.status > 0) ? AppColor.AppleColors.Green : AppColor.AppleColors.Orange
     cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
     cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
     cell.notesLabel.text = intervention.infos
