@@ -42,36 +42,29 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     case harvestNaturePickerView:
       harvestType.setTitle(value.localized, for: .normal)
       harvestSelectedType = value
-      harvestNaturePickerView.isHidden = true
-      dimView.isHidden = true
     case harvestUnitPickerView:
       selectedHarvests[cellIndexPath.row].unit = value
-      harvestUnitPickerView.isHidden = true
-      dimView.isHidden = true
       harvestTableView.reloadData()
     case storagesPickerView:
       let predicate = NSPredicate(format: "name == %@", value)
       let searchedStorage = fetchStorages(predicate: predicate)
 
       selectedHarvests[cellIndexPath.row].storage = searchedStorage?.first
-      storagesPickerView.isHidden = true
-      dimView.isHidden = true
       harvestTableView.reloadData()
     case storagesTypes:
       storageCreationView.typeButton.setTitle(value.localized, for: .normal)
       storageCreationView.selectedType = value
-      storagesTypes.isHidden = true
     case irrigationPickerView:
       let volume = irrigationVolumeTextField.text!.floatValue
 
       irrigationUnitButton.setTitle(value.localized, for: .normal)
       selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, value.localized)
       updateInfoLabel(volume, value)
-      irrigationPickerView.isHidden = true
-      dimView.isHidden = true
     default:
       return
     }
+
+    pickerView.isHidden = true
   }
 
   // MARK: - Actions
@@ -111,7 +104,6 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   }
 
   @IBAction func tapUnit() {
-    dimView.isHidden = false
     irrigationPickerView.isHidden = false
   }
 }

@@ -42,7 +42,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
       }
     }
     cellIndexPath = indexPath
-    dimView.isHidden = false
     harvestUnitPickerView.isHidden = false
   }
 
@@ -59,7 +58,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
         }
       }
       cellIndexPath = indexPath
-      dimView.isHidden = false
       storagesPickerView.isHidden = false
     }
   }
@@ -286,7 +284,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
         break
       }
     }
-    dimView.isHidden = false
     harvestNaturePickerView.isHidden = false
   }
 
