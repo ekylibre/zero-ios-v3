@@ -92,7 +92,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   private func setupTableView() {
     tableView.bringSubviewToFront(syncView)
     tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
-    tableView.rowHeight = 80
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 80
     tableView.delegate = self
     tableView.dataSource = self
     tableView.refreshControl = refreshControl

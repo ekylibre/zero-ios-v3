@@ -76,7 +76,8 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   lazy var tableView: UITableView = {
     let tableView = UITableView(frame: CGRect.zero)
-    tableView.rowHeight = 80
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 80
     tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
     tableView.delegate = self
     tableView.dataSource = self

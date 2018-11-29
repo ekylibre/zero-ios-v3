@@ -51,6 +51,7 @@ class InterventionCell: UITableViewCell {
   lazy var notesLabel: UILabel = {
     let notesLabel = UILabel(frame: CGRect.zero)
     notesLabel.font = UIFont.systemFont(ofSize: 14)
+    notesLabel.numberOfLines = 0
     notesLabel.translatesAutoresizingMaskIntoConstraints = false
     return notesLabel
   }()
@@ -73,24 +74,30 @@ class InterventionCell: UITableViewCell {
   }
 
   private func setupLayout() {
+    let contentHeightAnchor = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 80)
+
+    contentHeightAnchor.priority = UILayoutPriority(999)
+
     NSLayoutConstraint.activate([
-      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      typeImageView.heightAnchor.constraint(equalToConstant: 55),
-      typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      contentHeightAnchor,
+      typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.5),
       typeImageView.widthAnchor.constraint(equalToConstant: 55),
-      typeLabel.topAnchor.constraint(equalTo: typeImageView.topAnchor),
+      typeImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12.5),
+      typeImageView.heightAnchor.constraint(equalToConstant: 55),
       typeLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      stateImageView.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor),
-      stateImageView.heightAnchor.constraint(equalToConstant: 20),
+      typeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12.5),
       stateImageView.leadingAnchor.constraint(equalTo: typeLabel.trailingAnchor, constant: 10),
       stateImageView.widthAnchor.constraint(equalToConstant: 20),
-      dateLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor),
+      stateImageView.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor),
+      stateImageView.heightAnchor.constraint(equalToConstant: 20),
       dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-      cropsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      dateLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor),
       cropsLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      notesLabel.bottomAnchor.constraint(equalTo: typeImageView.bottomAnchor),
+      cropsLabel.centerYAnchor.constraint(equalTo: typeImageView.centerYAnchor),
       notesLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      notesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+      notesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      notesLabel.topAnchor.constraint(equalTo: cropsLabel.bottomAnchor, constant: 2),
+      notesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12.5)
       ])
   }
 
