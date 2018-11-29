@@ -89,7 +89,8 @@ class InterventionCell: UITableViewCell {
       cropsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       cropsLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
       notesLabel.bottomAnchor.constraint(equalTo: typeImageView.bottomAnchor),
-      notesLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15)
+      notesLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
+      notesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
       ])
   }
 
