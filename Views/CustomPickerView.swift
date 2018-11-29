@@ -49,16 +49,16 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
     addSubview(dimView)
     addSubview(pickerView)
     superview.addSubview(self)
-    setupLayout()
+    setupLayout(superview)
     setupGestureRecognizers()
   }
 
-  private func setupLayout() {
+  private func setupLayout(_ superview: UIView) {
     NSLayoutConstraint.activate([
-      leftAnchor.constraint(equalTo: superview!.leftAnchor),
-      rightAnchor.constraint(equalTo: superview!.rightAnchor),
-      topAnchor.constraint(equalTo: superview!.topAnchor),
-      bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
+      leftAnchor.constraint(equalTo: superview.leftAnchor),
+      rightAnchor.constraint(equalTo: superview.rightAnchor),
+      topAnchor.constraint(equalTo: superview.topAnchor),
+      bottomAnchor.constraint(equalTo: superview.bottomAnchor),
       dimView.leftAnchor.constraint(equalTo: leftAnchor),
       dimView.rightAnchor.constraint(equalTo: rightAnchor),
       dimView.topAnchor.constraint(equalTo: topAnchor),
