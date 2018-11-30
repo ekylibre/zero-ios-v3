@@ -121,8 +121,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       interventionTypeButton.tag = index
       interventionTypeButton.backgroundColor = UIColor.white
-      interventionTypeButton.setBackgroundImage(image, for: .normal)
+      interventionTypeButton.setImage(image, for: .normal)
       interventionTypeButton.layer.cornerRadius = 3
+      interventionTypeButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
       interventionTypeButton.isHidden = true
       interventionTypeButton.addTarget(self, action: #selector(presentAddInterventionVC), for: .touchUpInside)
       interventionTypeButton.translatesAutoresizingMaskIntoConstraints = false
