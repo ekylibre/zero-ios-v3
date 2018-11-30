@@ -1422,9 +1422,7 @@
                         <outlet property="workingPeriodTapGesture" destination="dX6-ef-4AZ" id="koT-95-9LO"/>
                         <outlet property="workingPeriodUnitLabel" destination="3cP-JT-NmL" id="5Ut-GC-xSX"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecies" id="uas-Qa-jvK"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnits" id="nwb-tQ-9Vq"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showEquipmentTypes" id="EKH-vj-NkS"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSelectedMaterialUnits" id="FE4-xp-aKR"/>
                         <segue destination="1rQ-td-wpq" kind="unwind" identifier="unwindToInterventionVC" unwindAction="unwindToInterventionVCWithSegue:" id="DXp-2Y-Sxs"/>
                     </connections>
                 </viewController>
@@ -1703,8 +1701,4 @@
         <image name="trash" width="32" height="32"/>
         <image name="warning" width="32" height="32"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="FE4-xp-aKR"/>
-        <segue reference="74J-jI-YTr"/>
-    </inferredMetricsTieBreakers>
 </document>

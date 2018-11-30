@@ -864,24 +864,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       destVC.lastSelectedValue = inputsSelectionView.seedView.specieButton.titleLabel?.text
       destVC.rawStrings = species
       destVC.tag = 0
-    case "showMaterialUnits":
-      let destVC = segue.destination as! ListTableViewController
-      destVC.delegate = self
-      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
-                           "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
-      destVC.tag = 1
-    case "showSelectedMaterialUnits":
-      let destVC = segue.destination as! ListTableViewController
-      destVC.delegate = self
-      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
-                           "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
-      destVC.tag = 2
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.lastSelectedValue = equipmentsSelectionView.creationView.typeButton.titleLabel?.text
       destVC.rawStrings = equipmentTypes
-      destVC.tag = 3
+      destVC.tag = 1
     default:
       return
     }
@@ -899,11 +887,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       inputsSelectionView.seedView.rawSpecie = value
       inputsSelectionView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
-      materialsSelectionView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
-    case 2:
-      selectedMaterials[1][selectedRow].setValue(value, forKey: "unit")
-      selectedMaterialsTableView.reloadData()
-    case 3:
       let imageName = value.lowercased().replacingOccurrences(of: "_", with: "-")
 
       equipmentsSelectionView.creationView.typeImageView.image = UIImage(named: imageName)
