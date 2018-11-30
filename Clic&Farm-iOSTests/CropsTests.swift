@@ -48,8 +48,8 @@ class CropsTests: XCTestCase {
     addInterventionVC.cropsView.selectedSurfaceArea = surfaceArea
     addInterventionVC.cropsView.updateSelectedCropsLabel()
 
-    // Then
-    let expectedString = String(format: "crop".localized, 1) + " • 23.1 ha"
+    //Then
+    let expectedString = "crop".localized + " • 23.1 ha"
     XCTAssertEqual(addInterventionVC.cropsView.selectedCropsLabel.text, expectedString,
                    "Selected crops label should change if a crop have been selected")
   }
