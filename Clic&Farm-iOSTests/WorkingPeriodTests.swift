@@ -163,7 +163,7 @@ class WorkingPeriodTests: XCTestCase {
     addInterventionVC.workingPeriodDateButton.sendActions(for: .touchUpInside)
     XCTAssertFalse(addInterventionVC.selectDateView.isHidden,
                    "Select date view must not be hidden after touching dateButton")
-    addInterventionVC.selectDateView.validateButton.sendActions(for: .touchUpInside)
+    addInterventionVC.selectDateView.doneButton.sendActions(for: .touchUpInside)
 
     // Then
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,
@@ -197,7 +197,7 @@ class WorkingPeriodTests: XCTestCase {
     XCTAssertFalse(addInterventionVC.selectDateView.isHidden,
                    "Select date view must not be hidden after touching dateButton")
     addInterventionVC.selectDateView.datePicker.date = date
-    addInterventionVC.selectDateView.validateButton.sendActions(for: .touchUpInside)
+    addInterventionVC.selectDateView.doneButton.sendActions(for: .touchUpInside)
 
     // Then
     XCTAssertTrue(addInterventionVC.selectDateView.isHidden,

@@ -131,13 +131,6 @@ extension AddInterventionViewController {
     selectedMaterials[1][indexPath!.row].setValue(sender.text?.floatValue, forKey: "quantity")
   }
 
-  @objc func showSelectedMaterialUnits(sender: UIButton) {
-    let cell = sender.superview?.superview as! SelectedMaterialCell
-
-    selectedRow = selectedMaterialsTableView.indexPath(for: cell)!.row
-    performSegue(withIdentifier: "showSelectedMaterialUnits", sender: self)
-  }
-
   @objc private func showMaterialUnits() {
     performSegue(withIdentifier: "showMaterialUnits", sender: self)
   }
@@ -175,6 +168,20 @@ extension AddInterventionViewController {
     materialsSelectionView.tableView.reloadData()
   }
 
+  @objc private func showSelectedMaterialUnits(sender: UIButton) {
+    guard let cell = sender.superview?.superview as? UITableViewCell else { return }
+    guard let indexPath = selectedMaterialsTableView.indexPath(for: cell) else { return }
+
+    customPickerView.values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                               "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      self.selectedMaterials[1][indexPath.row].setValue(value, forKey: "unit")
+      self.selectedMaterialsTableView.reloadData()
+    }
+    customPickerView.isHidden = false
+  }
+
   func selectedMaterialsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath)
     -> SelectedMaterialCell {
       let name = selectedMaterials[0][indexPath.row].value(forKey: "name") as? String
@@ -199,6 +206,7 @@ extension AddInterventionViewController {
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
+      cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)
       return cell
   }
 }

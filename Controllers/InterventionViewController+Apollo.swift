@@ -1087,13 +1087,10 @@ extension InterventionViewController {
     intervention.type = fetchedIntervention.type.rawValue
     intervention.infos = fetchedIntervention.description
     intervention.waterUnit = fetchedIntervention.waterUnit?.rawValue
-    (intervention.type == InterventionType.Irrigation.rawValue) ? intervention.waterQuantity = Float(fetchedIntervention.waterQuantity!) : nil
+    (intervention.type == InterventionType.Irrigation.rawValue) ?
+      intervention.waterQuantity = Float(fetchedIntervention.waterQuantity!) : nil
     intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
-    if intervention.workingPeriods?.count == 0 {
-      intervention.addToWorkingPeriods(saveWorkingDays(fetchedDay: fetchedIntervention.workingDays.first!))
-    }
     intervention.weather = weather as? Weather
-    intervention = saveEntitiesIntoIntervention(intervention: intervention, fetchedIntervention: fetchedIntervention)
     intervention.status = status
     for fetchedInput in fetchedIntervention.inputs! {
       intervention = saveInputsInIntervention(fetchedInput: fetchedInput, intervention: intervention)
