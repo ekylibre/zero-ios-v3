@@ -21,15 +21,6 @@ extension AddInterventionViewController {
     }()
 
     selectDateView = SelectDateView(frame: CGRect.zero)
-    view.addSubview(selectDateView)
-
-    NSLayoutConstraint.activate([
-      selectDateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      selectDateView.heightAnchor.constraint(equalToConstant: 250),
-      selectDateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      selectDateView.widthAnchor.constraint(equalToConstant: 350),
-      ])
-
     workingPeriodDurationTextField.delegate = self
     workingPeriodDateButton.setTitle(currentDateString, for: .normal)
     workingPeriodDateButton.layer.borderWidth = 0.5
@@ -41,7 +32,8 @@ extension AddInterventionViewController {
     workingPeriodDurationTextField.layer.cornerRadius = 5
     workingPeriodDurationTextField.clipsToBounds = true
     workingPeriodDurationTextField.addTarget(self, action: #selector(updateDurationUnit), for: .editingChanged)
-    selectDateView.validateButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
+    selectDateView.cancelButton.addTarget(self, action: #selector(cancelSelection), for: .touchUpInside)
+    selectDateView.doneButton.addTarget(self, action: #selector(validateDate), for: .touchUpInside)
   }
 
   // MARK: - Actions
@@ -64,12 +56,37 @@ extension AddInterventionViewController {
   }
 
   @IBAction private func selectDate(_ sender: Any) {
-    dimView.isHidden = false
-    selectDateView.isHidden = false
+    selectDateView.show()
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
+  }
+
+  @objc private func cancelSelection() {
+    selectDateView.close()
+
+    UIView.animate(withDuration: 0.5, animations: {
+      UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
+    }, completion: { _ in
+      self.resetPickerDate()
+    })
+  }
+
+  private func resetPickerDate() {
+    guard let title = self.workingPeriodDateButton.titleLabel?.text else { return }
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMM"
+      return dateFormatter
+    }()
+    guard let titleDate = dateFormatter.date(from: title) else { return }
+    var components = Calendar.current.dateComponents([.day, .month, .year], from: titleDate)
+    components.year = Calendar.current.component(.year, from: Date())
+    guard let selectedDate = Calendar.current.date(from: components) else { return }
+
+    self.selectDateView.datePicker.date = selectedDate
   }
 
   @objc func validateDate() {
@@ -81,8 +98,7 @@ extension AddInterventionViewController {
     }()
 
     workingPeriodDateButton.setTitle(selectedDate, for: .normal)
-    selectDateView.isHidden = true
-    dimView.isHidden = true
+    selectDateView.close()
 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
