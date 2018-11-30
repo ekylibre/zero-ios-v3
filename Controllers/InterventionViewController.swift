@@ -63,7 +63,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   private func setupNavigationBar() {
     let cropsButton = UIButton()
-    let logoutButton = UIButton()
+    let menuButton = UIButton()
 
     navigationController?.navigationBar.isHidden = true
     farmNameLabel = UILabel()
@@ -73,19 +73,19 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cropsButton.setImage(UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate), for: .normal)
     cropsButton.tintColor = .white
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
-    logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
-    logoutButton.tintColor = .white
-    logoutButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
+    menuButton.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    menuButton.tintColor = .white
+    menuButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
 
     NSLayoutConstraint.activate([
-      cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
-      cropsButton.heightAnchor.constraint(equalToConstant: 32.0),
-      logoutButton.widthAnchor.constraint(equalToConstant: 32.0),
-      logoutButton.heightAnchor.constraint(equalToConstant: 32.0)
+      cropsButton.widthAnchor.constraint(equalToConstant: 32),
+      cropsButton.heightAnchor.constraint(equalToConstant: 32),
+      menuButton.widthAnchor.constraint(equalToConstant: 32),
+      menuButton.heightAnchor.constraint(equalToConstant: 32)
       ])
 
     navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
-    navItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton), UIBarButtonItem(customView: cropsButton)]
+    navItem.rightBarButtonItems = [UIBarButtonItem(customView: menuButton), UIBarButtonItem(customView: cropsButton)]
     navigationBar.setItems([navItem], animated: true)
   }
 
