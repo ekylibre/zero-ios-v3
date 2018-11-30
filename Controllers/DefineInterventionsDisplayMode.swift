@@ -179,7 +179,7 @@ extension AddInterventionViewController {
     cropsView.isHidden = true
     warningView.isHidden = false
     warningMessage.text = "you_are_in_consult_mode".localized
-    notesTextView.text = (currentIntervention?.infos == "" ? "notes".localized : currentIntervention?.infos)
+    notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
     notesTextView.textColor = .lightGray
     bottomBarView.isHidden = true
     bottomView.isHidden = true
@@ -205,8 +205,8 @@ extension AddInterventionViewController {
   private func loadInterventionInEditableMode() {
     interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "edit")
-    notesTextView.text = (currentIntervention?.infos == "" ? "notes".localized : currentIntervention?.infos)
-    notesTextView.textColor = .lightGray
+    notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
+    notesTextView.textColor = (notesTextView.text == "notes".localized ? .lightGray : .black)
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
     weather = currentIntervention?.weather

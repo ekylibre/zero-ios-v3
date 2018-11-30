@@ -204,6 +204,9 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     setupWeatherView()
     customPickerView = CustomPickerView(superview: view)
 
+    notesTextView.delegate = self
+    setTextViewPlaceholder()
+
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
     cropsView.interventionState = interventionState
@@ -218,9 +221,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
 
     initUnitMeasurePickerViews()
-
-    notesTextView.delegate = self
-    setTextViewPlaceholder()
 
     setupViewsAccordingInterventionType()
   }
