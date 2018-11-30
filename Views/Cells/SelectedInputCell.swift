@@ -10,7 +10,6 @@ import UIKit
 
 protocol SelectedInputCellDelegate: class {
   func removeInputCell(_ indexPath: IndexPath)
-  func saveSelectedRow(_ indexPath: IndexPath)
 }
 
 class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
@@ -275,11 +274,13 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let units = defineInputsUnitsBasedOnCreatedUnit(unit: inputUnit)
 
     if units != nil && units!.count > 1 {
-      addInterventionViewController?.inputsUnitPickerView.values = units!
-      addInterventionViewController?.inputsUnitPickerView.isHidden = false
-      addInterventionViewController?.dimView.isHidden = false
-      addInterventionViewController?.inputsUnitPickerView.reloadAllComponents()
-      cellDelegate?.saveSelectedRow(indexPath)
+      addInterventionViewController?.customPickerView.values = units!
+      addInterventionViewController?.customPickerView.pickerView.reloadComponent(0)
+      addInterventionViewController?.customPickerView.closure = { (value) in
+        self.addInterventionViewController?.selectedInputs[self.indexPath.row].setValue(value, forKey: "unit")
+        self.addInterventionViewController?.selectedInputsTableView.reloadData()
+      }
+      addInterventionViewController?.customPickerView.isHidden = false
     }
   }
 

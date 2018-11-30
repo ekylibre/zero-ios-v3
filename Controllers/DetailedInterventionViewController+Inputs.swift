@@ -36,7 +36,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.bounces = false
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
-    initInputsUnitPickerView()
     inputsSelectionView.addInterventionViewController = self
     inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
@@ -46,15 +45,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       self, action: #selector(showInputsCreationUnits), for: .touchUpInside)
     inputsSelectionView.fertilizerView.unitButton.addTarget(
       self, action: #selector(showInputsCreationUnits), for: .touchUpInside)
-  }
-
-  private func initInputsUnitPickerView() {
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-
-    inputsUnitPickerView = CustomPickerView(frame: frame, ["KILOGRAM"], superview: view)
-    inputsUnitPickerView.reference = self
-    inputsUnitPickerView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(inputsUnitPickerView)
   }
 
   private func loadSpecies() -> [String] {
@@ -110,10 +100,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     inputsExpandImageView.isHidden = !shouldExpand
     updateInputsCountLabel()
     selectedInputsTableView.reloadData()
-  }
-
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
   }
 
   @IBAction func openInputsSelectionView(_ sender: Any) {

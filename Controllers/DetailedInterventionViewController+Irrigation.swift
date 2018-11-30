@@ -8,14 +8,11 @@
 
 import UIKit
 
-extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewProtocol {
+extension AddInterventionViewController: UITextFieldDelegate {
 
   // MARK: - Initialization
 
   func setupIrrigationView() {
-    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    let units = ["CUBIC_METER", "LITER", "HECTOLITER"]
-
     irrigationVolumeTextField.delegate = self
     irrigationVolumeTextField.layer.borderWidth = 0.5
     irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
@@ -27,61 +24,11 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
     irrigationUnitButton.layer.cornerRadius = 5
     irrigationUnitButton.clipsToBounds = false
     irrigationUnitButton.setTitle("m³", for: .normal)
-    irrigationPickerView = CustomPickerView(frame: frame, units, superview: view)
-    irrigationPickerView.reference = self
     setupActions()
   }
 
   private func setupActions() {
     irrigationVolumeTextField.addTarget(self, action: #selector(updateIrrigation), for: .editingChanged)
-  }
-
-  // MARK: - Picker view
-
-  func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?) {
-    guard let unit = selectedValue else {
-      return
-    }
-
-    switch pickerView {
-    case harvestNaturePickerView:
-      harvestType.setTitle(unit.localized, for: .normal)
-      harvestSelectedType = unit
-      harvestNaturePickerView.isHidden = true
-      dimView.isHidden = true
-    case harvestUnitPickerView:
-      selectedHarvests[cellIndexPath.row].unit = unit
-      harvestUnitPickerView.isHidden = true
-      dimView.isHidden = true
-      harvestTableView.reloadData()
-    case storagesPickerView:
-      let predicate = NSPredicate(format: "name == %@", unit)
-      let searchedStorage = fetchStorages(predicate: predicate)
-
-      selectedHarvests[cellIndexPath.row].storage = searchedStorage?.first
-      storagesPickerView.isHidden = true
-      dimView.isHidden = true
-      harvestTableView.reloadData()
-    case storagesTypes:
-      storageCreationView.typeButton.setTitle(unit.localized, for: .normal)
-      storageCreationView.selectedType = unit
-      storagesTypes.isHidden = true
-    case irrigationPickerView:
-      let volume = irrigationVolumeTextField.text!.floatValue
-
-      irrigationUnitButton.setTitle(selectedValue?.localized, for: .normal)
-      selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, unit.localized)
-      updateInfoLabel(volume, unit)
-      irrigationPickerView.isHidden = true
-      dimView.isHidden = true
-    case inputsUnitPickerView:
-      selectedInputs[cellIndexPath.row].setValue(unit, forKey: "unit")
-      selectedInputsTableView.reloadData()
-      inputsUnitPickerView.isHidden = true
-      dimView.isHidden = true
-    default:
-      return
-    }
   }
 
   // MARK: - Actions
@@ -121,7 +68,15 @@ extension AddInterventionViewController: UITextFieldDelegate, CustomPickerViewPr
   }
 
   @IBAction func tapUnit() {
-    dimView.isHidden = false
-    irrigationPickerView.isHidden = false
+    customPickerView.values = ["CUBIC_METER", "LITER", "HECTOLITER"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      let volume = self.irrigationVolumeTextField.text!.floatValue
+
+      self.irrigationUnitButton.setTitle(value.localized, for: .normal)
+      self.selectedIrrigationLabel.text = String(format: "%@ • %g %@", "volume".localized, volume, value.localized)
+      self.updateInfoLabel(volume, value)
+    }
+    customPickerView.isHidden = false
   }
 }
