@@ -1288,6 +1288,7 @@ extension InterventionViewController {
 
       workingDaysAttributes.append(workingDayAttributes)
     }
+    print("\nWorking day: \(workingDaysAttributes)")
     return workingDaysAttributes
   }
 
@@ -1540,6 +1541,7 @@ extension InterventionViewController {
 
       equipmentsAttributes.append(equipmentAttributes)
     }
+    print("\nEquipment: \(equipmentsAttributes)")
     return equipmentsAttributes
   }
 
@@ -1584,6 +1586,7 @@ extension InterventionViewController {
 
       operatorsAttributes.append(operatorAttributes)
     }
+    print("\nOperatorAttributes: \(operatorsAttributes)")
     return operatorsAttributes
   }
 

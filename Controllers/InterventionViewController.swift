@@ -456,6 +456,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
+    print("FarmID: \(String(describing: farmID))")
     queryFarms { (success) in
       if success {
         self.updateFarmNameLabel()

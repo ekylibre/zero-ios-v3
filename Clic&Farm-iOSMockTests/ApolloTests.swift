@@ -32,7 +32,8 @@ class ApolloTests: XCTestCase {
   override func setUp() {
     client = ApolloClient(networkTransport: networkTransport, store: store)
     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-    interventionVC = storyboard.instantiateViewController(withIdentifier: "InterventionViewController") as? InterventionViewController
+    interventionVC = storyboard.instantiateViewController(withIdentifier: "InterventionViewController")
+      as? InterventionViewController
     let _ = interventionVC.view
   }
 
@@ -42,9 +43,12 @@ class ApolloTests: XCTestCase {
   }
 
   func test_queryFarmID_shouldHaveResult() {
+    // Given
     let query = ProfileQuery()
     let expectation = self.expectation(description: "Fetching profile query")
 
+    // When
+    let _ = client.clearCache()
     client.fetch(query: query, resultHandler: { (result, error) in
       defer { expectation.fulfill() }
 
@@ -60,9 +64,12 @@ class ApolloTests: XCTestCase {
   }
 
   func test_queryFarmLabel_shouldHaveResult() {
+    // Given
     let query = ProfileQuery()
     let expectation = self.expectation(description: "Fetching profile query")
 
+    // When
+    let _ = client.clearCache()
     client.fetch(query: query, resultHandler: { (result, error) in
       defer { expectation.fulfill() }
 
@@ -78,6 +85,7 @@ class ApolloTests: XCTestCase {
   }
 
   func test_equipmentMutation_withAnEquipment_shouldSaveIt() {
+    // Given
     let expectation = self.expectation(description: "Mutating equipment")
     let mutation = PushEquipmentMutation(
       farmId: farmID,
@@ -87,6 +95,8 @@ class ApolloTests: XCTestCase {
       indicator1: "1",
       indicator2: nil)
 
+    // When
+    let _ = client.clearCache()
     client.perform(mutation: mutation, resultHandler: { (result, error) in
       defer { expectation.fulfill() }
 
@@ -102,9 +112,12 @@ class ApolloTests: XCTestCase {
   }
 
   func test_queryCrops_shouldHaveResult() {
+    // Given
     let query = FarmQuery()
-    let expectation = self.expectation(description: "Fetchin crops")
+    let expectation = self.expectation(description: "Fetching crops")
 
+    // When
+    let _ = client.clearCache()
     client.fetch(query: query, resultHandler: { (result, error) in
       defer { expectation.fulfill() }
 
@@ -121,76 +134,16 @@ class ApolloTests: XCTestCase {
     waitForExpectations(timeout: 30, handler: nil)
   }
 
-  func defineTargetAttributes() -> [InterventionTargetAttributes] {
-    let cropID = "6165E585-2068-430E-8B59-E5C243E718D1"
-    let targetAttribute = InterventionTargetAttributes(cropId: cropID, workAreaPercentage: 100)
-
-    return [targetAttribute]
-  }
-
-  func defineWorkingDays() -> [InterventionWorkingDayAttributes] {
-    let workingDay = InterventionWorkingDayAttributes(executionDate: Date(), hourDuration: 7.9)
-
-    return [workingDay]
-  }
-
-  func test_pushNewIntervention_shouldPushIt() {
-    let expectation = self.expectation(description: "Pushing intervention")
-    let mutation = PushInterMutation(
-      farmId: farmID,
-      procedure: .irrigation,
-      cropList: defineTargetAttributes(),
-      workingDays: defineWorkingDays(),
-      waterQuantity: 52,
-      waterUnit: InterventionWaterVolumeUnitEnum(rawValue: "HECTOLITER"),
-      inputs: nil,
-      outputs: nil,
-      globalOutputs: false,
-      tools: nil,
-      operators: nil,
-      weather: nil,
-      description: "Pushing intervention from unit test")
-
-    client.perform(mutation: mutation, resultHandler: { (result, error) in
-      defer { expectation.fulfill() }
-
-      if let error = error {
-        XCTFail("Got an error: \(error)")
-      } else if let resultError = result?.errors {
-        XCTFail("Got an result error: \(resultError)")
-      } else {
-        XCTAssertNotNil(result?.data?.createIntervention?.intervention?.id, "InterventionID should be populated")
-      }
-    })
-    waitForExpectations(timeout: 30, handler: nil)
-  }
-
-  func test_removePushedIntervention_shouldRemoveIt() {
-    let interventionEkyID = "1602"
-    let mutation = DeleteInterMutation(id: interventionEkyID, farmId: farmID)
-    let expectation = self.expectation(description: "Deleting intervention")
-
-    client.perform(mutation: mutation, resultHandler: { (result, error) in
-      defer { expectation.fulfill() }
-
-      if let error = error {
-        XCTFail("Got an error: \(error)")
-      } else if let resultError = result?.errors {
-        XCTFail("Got an result error: \(resultError)")
-      } else {
-        XCTAssertNotNil(result?.data, "Data should be populated")
-      }
-    })
-    waitForExpectations(timeout: 30, handler: nil)
-  }
-
   func test_personMutation_withValidPerson_shouldSaveIt() {
+    // Given
     let expectation = self.expectation(description: "Mutating person")
     let mutation = PushPersonMutation(
       farmId: farmID,
-      firstName: "personne",
+      firstName: "Person",
       lastName: "apollo")
 
+    // When
+    let _ = client.clearCache()
     client.perform(mutation: mutation, resultHandler: { (result, error) in
       defer { expectation.fulfill() }
 
