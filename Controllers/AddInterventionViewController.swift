@@ -135,6 +135,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var cellIndexPath: IndexPath!
   var selectedRow: Int!
   var selectedValue: String!
+  var customPickerView: CustomPickerView!
   var cropsView: CropsView!
   var selectDateView: SelectDateView!
   var inputsSelectionView: InputsView!
@@ -152,12 +153,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var selectedHarvests = [Harvest]()
   var storages = [Storage]()
   var harvestSelectedType: String!
-  var harvestNaturePickerView: CustomPickerView!
-  var harvestUnitPickerView: CustomPickerView!
   var storageCreationView: StorageCreationView!
-  var storagesPickerView: CustomPickerView!
-  var storagesTypes: CustomPickerView!
-  var irrigationPickerView: CustomPickerView!
   var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
@@ -195,7 +191,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-
     setupNavigationBar()
     setupDimView()
     saveInterventionButton.layer.cornerRadius = 3
@@ -207,6 +202,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     setupEquipmentsView()
     setupPersonsView()
     setupWeatherView()
+    customPickerView = CustomPickerView(superview: view)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
@@ -996,12 +992,10 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
       for selectedCrop in selectedCrops {
         if selectedCrop.species != firstCrop {
-          let alert = UIAlertController(
-            title: "impossible_to_carry_out_implantation_on_crops_different_varieties".localized,
-            message: nil,
-            preferredStyle: .alert)
+          let alert = UIAlertController(title: "implantation_on_different_varieties".localized,
+                                        message: nil, preferredStyle: .alert)
 
-          alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+          alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
           present(alert, animated: true)
           return false
         }
