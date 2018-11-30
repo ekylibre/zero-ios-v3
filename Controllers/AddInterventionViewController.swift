@@ -854,13 +854,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       destVC.lastSelectedValue = equipmentsSelectionView.creationView.typeButton.titleLabel?.text
       destVC.rawStrings = equipmentTypes
       destVC.tag = 3
-    case "showInputsCreationUnits":
-      let destVC = segue.destination as! ListTableViewController
-      destVC.delegate = self
-      destVC.needToSort = false
-      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
-                           "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
-      destVC.tag = 4
     default:
       return
     }
@@ -904,8 +897,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       equipmentsSelectionView.creationView.typeImageView.image = UIImage(named: imageName)
       equipmentsSelectionView.creationView.typeButton.setTitle(value.localized, for: .normal)
       equipmentsSelectionView.defineIndicatorsIfNeeded(value.lowercased())
-    case 4:
-      defineInputsUnitButtonTitle(value: value)
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }
