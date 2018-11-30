@@ -15,7 +15,6 @@ class InterventionMutationTests: XCTestCase {
   let farmID = "884263ee-49a4-424e-ac1e-6043370eeadd"
   var interventionVC: InterventionViewController!
   var client: ApolloClient!
-  var interventionEkyID: String?
   let networkTransport: HTTPNetworkTransport = {
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
@@ -56,6 +55,17 @@ class InterventionMutationTests: XCTestCase {
     return [workingDay]
   }
 
+  func defineOutputAttributes() -> [InterventionOutputAttributes] {
+    let outputAttribute = InterventionOutputAttributes(
+      quantity: nil,
+      nature: nil,
+      unit: nil,
+      approximative: nil,
+      loads: nil)
+
+    return [outputAttribute]
+  }
+
   func defineEquipmentAttributes() -> [InterventionToolAttributes] {
     let equipmentAttributes = InterventionToolAttributes(equipmentId: "546")
 
@@ -79,23 +89,23 @@ class InterventionMutationTests: XCTestCase {
     return weatherAttributes
   }
 
-  func test_pushNewIntervention_shouldPushIt() {
+  func test_1_pushNewIntervention_shouldPushIt() {
     // Given
     let expectation = self.expectation(description: "Pushing intervention")
     let mutation = PushInterMutation(
       farmId: farmID,
-      procedure: .care,
+      procedure: .irrigation,
       cropList: defineTargetAttributes(),
       workingDays: defineWorkingDays(),
-      waterQuantity: nil,//52
-      waterUnit: nil,//InterventionWaterVolumeUnitEnum(rawValue: "HECTOLITER"),
-      inputs: nil,
-      outputs: nil,
+      waterQuantity: 52,
+      waterUnit: InterventionWaterVolumeUnitEnum(rawValue: "HECTOLITER"),
+      inputs: [InterventionInputAttributes](),
+      outputs: [InterventionOutputAttributes](),
       globalOutputs: false,
       tools: defineEquipmentAttributes(),
       operators: defineOperatorAttributes(),
       weather: defineWeatherAttributes(),
-      description: "Pushing intervention from unit test")
+      description: "Intervention pushed from unit test")
 
     // When
     let _ = client.clearCache()
@@ -108,13 +118,35 @@ class InterventionMutationTests: XCTestCase {
         XCTFail("Got an result error: \(resultError)")
       } else {
         XCTAssertNotNil(result?.data?.createIntervention?.intervention?.id, "InterventionID should be populated")
-        self.interventionEkyID = result?.data?.createIntervention?.intervention?.id
       }
     })
     waitForExpectations(timeout: 30, handler: nil)
   }
 
-  func test_removePushedIntervention_shouldRemoveIt() {
+  func fetchLastInterventionToRemoveIt() -> String? {
+    let query = InterventionQuery()
+    let expectation = self.expectation(description: "Fetching profile query")
+    var interventionID: String?
+
+    let _ = client.clearCache()
+    client.fetch(query: query, resultHandler: { (result, error) in
+      defer { expectation.fulfill() }
+
+      if let error = error {
+        print("Got an error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Got an result error: \(resultError)")
+      } else {
+        interventionID = result!.data!.farms.first!.interventions.last!.id
+      }
+    })
+    waitForExpectations(timeout: 30, handler: nil)
+    return interventionID
+  }
+
+  func test_2_removePushedIntervention_shouldRemoveIt() {
+    let interventionEkyID = fetchLastInterventionToRemoveIt()
+
     if interventionEkyID != nil {
       // Given
       let mutation = DeleteInterMutation(id: interventionEkyID!, farmId: farmID)
