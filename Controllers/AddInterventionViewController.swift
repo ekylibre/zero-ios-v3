@@ -135,6 +135,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var cellIndexPath: IndexPath!
   var selectedRow: Int!
   var selectedValue: String!
+  var customPickerView: CustomPickerView!
   var cropsView: CropsView!
   var selectDateView: SelectDateView!
   var inputsSelectionView: InputsView!
@@ -152,12 +153,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var selectedHarvests = [Harvest]()
   var storages = [Storage]()
   var harvestSelectedType: String!
-  var harvestNaturePickerView: CustomPickerView!
-  var harvestUnitPickerView: CustomPickerView!
   var storageCreationView: StorageCreationView!
-  var storagesPickerView: CustomPickerView!
-  var storagesTypes: CustomPickerView!
-  var irrigationPickerView: CustomPickerView!
   var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
@@ -195,7 +191,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     super.hideKeyboardWhenTappedAround()
 
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
-
     setupNavigationBar()
     setupDimView()
     saveInterventionButton.layer.cornerRadius = 3
@@ -207,6 +202,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     setupEquipmentsView()
     setupPersonsView()
     setupWeatherView()
+    customPickerView = CustomPickerView(superview: view)
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
