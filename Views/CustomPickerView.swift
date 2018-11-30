@@ -8,49 +8,79 @@
 
 import UIKit
 
-protocol CustomPickerViewProtocol {
-  func customPickerDidSelectRow(_ pickerView: UIPickerView, _ selectedValue: String?)
-}
-
-class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
+class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
 
   // MARK: - Properties
 
-  var reference: CustomPickerViewProtocol?
-  var values: [String]
+  var values: [String]! = ["initial value"]
+  var closure: (_ value: String) -> Void = { _ in
+    print("initial closure")
+  }
+
+  lazy var dimView: UIView = {
+    let dimView = UIView(frame: CGRect.zero)
+    dimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    dimView.translatesAutoresizingMaskIntoConstraints = false
+    return dimView
+  }()
+
+  lazy var pickerView: UIPickerView = {
+    let pickerView = UIPickerView(frame: CGRect.zero)
+    pickerView.backgroundColor = AppColor.CellColors.LightGray
+    pickerView.delegate = self
+    pickerView.dataSource = self
+    pickerView.translatesAutoresizingMaskIntoConstraints = false
+    return pickerView
+  }()
 
   // MARK: - Initialization
 
-  init(frame: CGRect, _ values: [String], superview: UIView) {
-    self.values = values
-    super.init(frame: frame)
+  init(superview: UIView) {
+    super.init(frame: CGRect.zero)
     setupView(superview)
   }
 
   private func setupView(_ superview: UIView) {
     isHidden = true
-    backgroundColor = AppColor.CellColors.LightGray
-    delegate = self
-    dataSource = self
     translatesAutoresizingMaskIntoConstraints = false
+    addSubview(dimView)
+    addSubview(pickerView)
     superview.addSubview(self)
-    setupLayout()
+    setupLayout(superview)
+    setupGestureRecognizers()
   }
 
-  private func setupLayout() {
+  private func setupLayout(_ superview: UIView) {
     NSLayoutConstraint.activate([
-      bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
-      heightAnchor.constraint(equalToConstant: 216),
-      centerXAnchor.constraint(equalTo: superview!.centerXAnchor),
-      widthAnchor.constraint(equalTo: superview!.widthAnchor)
+      leftAnchor.constraint(equalTo: superview.leftAnchor),
+      rightAnchor.constraint(equalTo: superview.rightAnchor),
+      topAnchor.constraint(equalTo: superview.topAnchor),
+      bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+      dimView.leftAnchor.constraint(equalTo: leftAnchor),
+      dimView.rightAnchor.constraint(equalTo: rightAnchor),
+      dimView.topAnchor.constraint(equalTo: topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
+      pickerView.leftAnchor.constraint(equalTo: leftAnchor),
+      pickerView.rightAnchor.constraint(equalTo: rightAnchor),
+      pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+      pickerView.heightAnchor.constraint(equalToConstant: 216)
       ])
+  }
+
+  private func setupGestureRecognizers() {
+    let dimViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(dimViewTapped))
+    let pickerTapGesture = UITapGestureRecognizer(target: self, action: #selector(pickerTapped))
+
+    dimView.addGestureRecognizer(dimViewTapGesture)
+    pickerTapGesture.delegate = self
+    pickerView.addGestureRecognizer(pickerTapGesture)
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Data source
+  // MARK: - Picker view
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -60,15 +90,39 @@ class CustomPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSour
     return values.count
   }
 
-  // MARK: - Delegate
-
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return values[row].localized
   }
 
-  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    let selectedValue = values[row]
+  // MARK: - Gesture recognizer
 
-    reference?.customPickerDidSelectRow(pickerView, selectedValue)
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return true
+  }
+
+  // MARK: - Actions
+
+  @objc private func dimViewTapped() {
+    let selectedRow = pickerView.selectedRow(inComponent: 0)
+    let selectedValue = values[selectedRow]
+
+    closure(selectedValue)
+    isHidden = true
+  }
+
+  @objc private func pickerTapped(tapRecognizer: UITapGestureRecognizer) {
+    if tapRecognizer.state != .ended { return }
+    let rowHeight = pickerView.rowSize(forComponent: 0).height
+    let selectedRowFrame = pickerView.bounds.insetBy(dx: 0, dy: (pickerView.frame.height - rowHeight) / 2)
+    let userTappedOnSelectedRow = selectedRowFrame.contains(tapRecognizer.location(in: pickerView))
+
+    if userTappedOnSelectedRow {
+      let selectedRow = pickerView.selectedRow(inComponent: 0)
+      let selectedValue = values[selectedRow]
+
+      closure(selectedValue)
+      isHidden = true
+    }
   }
 }

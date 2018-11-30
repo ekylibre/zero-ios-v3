@@ -6,6 +6,8 @@
  Copyright © 2018 Ekylibre. All rights reserved.
 */
 
+"locale" = "fr_FR";
+
 // Vegetal species
 "ALLIUM_ASCALONICUM" = "Échalotte";
 "ALLIUM_CEPA" = "Oignon";
@@ -208,6 +210,10 @@
 "UREA_46_FERTILIZER" = "Urée 46 %";
 "WINE_VINASSE" = "Vinasse de distillerie";
 
+// Fetilizer natures
+"organic" = "Organique";
+"mineral" = "Minéral";
+
 // Equipments
 "AIRPLANTER" = "Semoir monograines";
 "BALER_WRAPPER" = "Presse enrubanneuse";
@@ -252,24 +258,20 @@
 "WRAPPER" = "Enrubanneuse";
 
 // Plurals
-"crop" = "%d culture";
+"crop" = "1 culture";
 "crops" = "%d cultures";
+"hour" = "heure";
+"hours" = "heures";
 "input" = "1 intrant";
 "inputs" = "%d intrants";
+"load" = "1 chargement";
+"loads" = "%d chargements";
 "material" = "1 matériau";
 "materials" = "%d matériaux";
 "equipment" = "1 équipement";
 "equipments" = "%d équipements";
 "person" = "1 opérateur";
 "persons" = "%d opérateurs";
-"load" = "1 chargement";
-"loads" = "%d chargements";
-"day" = "%d jour";
-"days" = "%d jours";
-"hour" = "heure";
-"hours" = "heures";
-"x_hour" = "%d heure";
-"x_hours" = "%d heures";
 
 // Volume units
 "LITER" = "l";
@@ -323,72 +325,29 @@
 "SILO" = "Silo";
 "BUILDING" = "Bâtiment";
 
-// Fetilizer nature
-
-"organic" = "Organique";
-"mineral" = "Minéral";
-
 // App strings
-"app_name" = "Clic&Farm";
 "welcome_text" = "Bienvenue dans l'application mobile Clic&Farm ! \nPour commencer, identifiez-vous avec votre compte Ekylibre…";
-"nav_button" = "Nav";
-"prompt_email" = "Email";
-"prompt_password" = "Mot de passe";
-"action_sign_in" = "Connexion";
 "menu_logout" = "Me déconnecter";
 "cancel" = "Annuler";
+"done" = "OK";
 "validate" = "Valider";
+"create" = "Créer";
 "delete" = "Supprimer";
 "close" = "Fermer";
-"no" = "Non";
-"yes" = "Oui";
 
-"starting_intervention_text" = "Commencer une intervention de…";
-"finishing_intervention_text" = "Enregistrer une intervention de…";
-"starting_intervention" = "Qui commence";
-"finished_intervention" = "Déjà réalisée";
-"register_an_intervention" = "Enregistrer une intervention";
-"save_intervention" = "Enregistrer";
-
-"recyclerview_nodata" = "Commencez à utiliser l'application en ajoutant votre première intervention !";
 "none" = "Aucun";
-"unspecified" = "Non renseigné";
-"not_provided" = "Non renseignée";
-
-"label_working_period" = "Temps de travail";
-"label_inputs" = "Intrants";
-"label_equipments" = "Équipements";
-"label_materials" = "Matériaux";
-"label_persons" = "Opérateurs";
-"label_crops" = "Cultures";
-"label_irrigation" = "Irrigation";
-"label_weather" = "Météo";
-"label_harvest" = "Récolte";
-
-"starting_date" = "Débuté le";
-"duration" = "Durée";
-
-"add_input" = "+ Ajouter un intrant";
 "quantity" = "Quantité";
-"default_quantity_value" = "0";
-"default_unit" = "kg";
-"default_input_summary" = "Pas d'intrants";
-"inputs_count" = "%d intrants";
 
+"select_crops" = "+ Sélectionner";
+
+// Selection views
+"no_crop_selected" = "Aucune sélection";
 "seeds" = "Semences";
 "fertilizers" = "Fertilisants";
 "phytos" = "Phyto.";
-"all" = "Tout";
-
-"add" = "+ Ajouter";
-"add_equipment" = "+ Ajouter un équipement";
-"add_material" = "+ Ajouter un matériau";
-"add_person" = "+ Ajouter un opérateur";
-"add_load" = "+ Ajouter un chargement";
-"select_crops" = "+ Sélectionner";
-"no_crop_selected" = "Aucune sélection";
 
 "selecting_crops" = "Sélectionnez des cultures";
+"selecting_date" = "Sélectionnez une date";
 "selecting_materials" = "Sélectionnez un matériau";
 "selecting_equipments" = "Sélectionnez un équipement";
 "selecting_persons" = "Sélectionnez un opérateur";
@@ -400,6 +359,7 @@
 "create_new_equipment" = "+ Créer un nouvel équipement";
 "create_new_person" = "+ Créer un opérateur";
 
+// Creation views
 "create_seed_title" = "Création d'une semence";
 "create_phyto_title" = "Création d'un produit phyto";
 "create_ferti_title" = "Création d'un fertilisant";
@@ -407,6 +367,20 @@
 "create_material_title" = "Création d'un matériau";
 "create_equipment_title" = "Création d'un équipement";
 "create_person_title" = "Création d'un opérateur";
+
+"chose_specie" = "Espèce";
+"variety" = "Variété";
+"name" = "Nom";
+"brand" = "Marque";
+"mmaid_number" = "N° AMM";
+"reentry_delay" = "Délai de ré-entrée";
+"in_hours" = "En heures";
+"chose_nature" = "Nature";
+"chose_unit" = "Unité";
+"chose_type" = "Type";
+"number" = "Numéro";
+"first_name" = "Prénom";
+"last_name" = "Nom de famille";
 
 "seed_variety_is_empty" = "La variété de la semence ne peut être vide";
 "phyto_name_is_empty" = "Le nom du phyto ne peut être vide";
@@ -425,23 +399,47 @@
 "equipment_number_not_available" = "Ce numéro d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
+// Dates
+"date_format" = "dd/MM/yyyy";
+"today_last_synchronization" = "Dernière synchronisation %02d:%02d";
+"last_synchronization" = "Dernière synchronisation %@";
+"no_synchronization_listed" = "Aucune synchonisation répertoriée";
+"today" = "Aujourd'hui";
+"yesterday" = "Hier";
+
+// Alerts
+"start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
+"disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
+
 "delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
-"delete_harvest_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
+"delete_load_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
 "delete_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
 "delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
 "delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
-"chose_specie" = "Espèce";
-"chose_nature" = "Nature";
-"chose_type" = "Type";
-"chose_unit" = "Unité";
+"date_not_corresponding_to_crop" = "La date d'intervention ne correspond pas aux dates des cultures";
+"crops_start_date" = "La date de début des cultures sélectionnées est le %@";
+"crops_end_date" = "La date de fin des cultures sélectionnées est le %@";
+"you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
+"you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
+"you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
+"you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
+"you_must_select_seed" = "Vous devez ajouter au moins une semence !";
+"you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
+"you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
+"you_must_enter_a_water_volume" = "Vous devez rentrer le volume d'eau utilisé !";
+"you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
+"you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
+"confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
+"implantation_on_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
 
-"temperature" = "Température";
-"temp" = "Temp.: %@ °C |";
-"wind_label" = "Vent";
-"wind" = " vent: %@ km/h";
-"wind_speed" = "Vitesse du vent";
+"location_request_title" = "Services de Localisation Désactivés";
+"location_request_message" = "Veuillez activer les services de localisation.";
+"authorization_request_title" = "Services de Localisation Désactivés";
+"authorization_request_message" = "Veuillez activer les services de localisation pour cette application.";
+"settings" = "Réglages";
 
+// Weather
 "not_filled_in" = "Non renseignée";
 "temp" = "Temp.: %@ °C |";
 "wind" = " vent: %@ km/h";
@@ -454,54 +452,25 @@
 "thunderstorm" = "Orage";
 "clear_sky" = "Soleil";
 
-"quantity_cannot_be_null" = "Quantité ne peut être nulle";
-"stock_place" = "Stockage";
-"number" = "Numéro";
-"name" = "Nom";
+// My crops view
+"my_crops_title" = "Mes cultures";
+"filter_by_proximity" = "Filtrer par proximité";
+"from" = "Du";
+"to" = "Au";
+"yield" = "Rendement";
 
+// Others
+"quantity_cannot_be_null" = "Quantité ne peut être nulle";
 "sync_failure" = "Échec de la synchronisation…";
-"network_failure" = "Erreur de connexion, votre smartphone n'est peut-être pas connecté. Veuillez réessayer plus tard.";
 "login_failure" = "Identifiant inconnu ou mot de passe incorrect. Veuillez réessayer.";
-"loading_initial_data" = "Chargement des données de référence…";
-"authentificating" = "Tentative de connection, merci de patienter…";
-"create" = "Créer";
 "volume" = "Volume";
 "volume_cannot_be_null" = "Le volume ne peut être nul";
-"finish" = "Terminer";
-"pause" = "Pause";
-"speed" = "Vitesse";
 "working_width" = "Largeur de\ntravail";
 "worked_area" = "Surface\ntravaillée";
 "surface_area" = "%.1f ha travaillés";
-"preparation" = "Préparation";
-"mooving" = "Déplacement";
 "intervention" = "Intervention";
 "notes" = "Notes";
-"no_connexion_try_again" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
-"date_not_corresponding_to_crop" = "La date d'intervention doit correspondre aux dates de la culture !";
-"you_have_to_select_a_crop" = "Vous devez sélectionner au moins une culture !";
-"you_have_to_enter_quantity" = "Vous devez rentrer une quantité pour le produit !";
-"you_have_to_enter_phyto" = "Vous devez ajouter au moins un produit phytosanitaire !";
-"implantation_have_to_be_on_same_crop_nature" = "Vous ne pouvez pas semer sur des productions de natures différentes !";
-"you_have_to_enter_seed_quantity" = "Vous devez rentrer une quantité pour la semence !";
-"you_must_select_seed" = "Vous devez ajouter au moins une semence !";
-"you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
-"you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
-"you_must_enter_a_water_volume" = "Vous devez rentrer le volume d'eau utilisé !";
-"you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
-"you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
-"confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
-"start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
-"title" = "Titre";
-"first_name" = "Prénom";
-"last_name" = "Nom de famille";
 "driver" = "Conducteur";
-"disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes données non synchronisées seront perdues.";
-"my_cultures" = "Mes cultures";
-"unknown_login_failure" = "Désolé, une erreur inconnue s\'est produite, veuillez contacter le support.";
-"no_internet" = "Vous devez être connecté à internet pour vous identifier la première fois.";
-"no_parcells" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
-"no_internet_try_later" = "Vous n'êtes pas connecté à internet. Veuillez essayer plus tard.";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
 "you_are_in_consult_mode" = "Vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
 "non_authorized_mix" = "Mélange non autorisé";
@@ -509,52 +478,9 @@
 "celsius" = "°C";
 "km_per_hour" = "km/h";
 "ok" = "Ok";
-"crop_list" = "Liste des cultures";
-"waiting_for_gps" = "Recherche d'une position GPS…";
-"brand" = "Marque";
-"mmaid_number" = "N° AMM";
-"reentry_delay" = "Délai de ré-entrée";
-"in_hours" = "En heures";
-"variety" = "Variété";
 "provided_by_collector" = "Fourni par le collecteur";
 "invalid_dose" = "Dose invalide";
-"approximate_amount" = "Quantité approximative";
 "unauthorized_mixing" = "Mélange non autorisé";
-"gps_is_off" = "Le GPS de votre smartphone est éteint.";
-"waiting_gps_signal" = "En attente d'un signal GPS…";
-"my_crops_title" = "Mes cultures";
-"filter_by_proximity" = "Filtrer par proximité";
-"from" = "Du";
-"to" = "Au";
-"yield" = "Rendement";
-"location_request_title" = "Services de Localisation Désactivés";
-"location_request_message" = "Veuillez activer les services de localisation.";
-"authorization_request_title" = "Services de Localisation Désactivés";
-"authorization_request_message" = "Veuillez activer les services de localisation pour cette application.";
-"settings" = "Réglages";
-
-// Date
-"locale" = "fr_FR";
-"date_format" = "dd-MM-yyyy";
-
-// Synchronization
-"today_last_synchronization" = "Dernière synchronisation %02d:%02d";
-"last_synchronization" = "Dernière synchronisation %@";
-"no_synchronization_listed" = "Aucune synchonisation répertoriée";
-
-// Errors
-
-"impossible_to_carry_out_implantation_on_crops_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
-
-// Working Periods
-
-"working_periods_is_invalid" = "Le temps de travail est invalide";
-"started_must_be_on_or_after" = "Débuté le doit être le ou après le %@";
-"started_must_be_on_or_before" = "Débuté le doit être le ou avant le %@";
-"today" = "Aujourd'hui";
-"yesterday" = "Hier";
-
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
-
 "forgotten_password" = "Mot de passe oublié ?";
