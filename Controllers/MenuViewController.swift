@@ -18,6 +18,7 @@ class MenuViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeCommands()
+    setupNavigationBar()
     setupTableView()
   }
 
@@ -26,6 +27,19 @@ class MenuViewController: UITableViewController {
     let logoutCommand = Command(name: "logout", assetName: "logout", closure: presentLogoutAlert)
 
     commands = [termsCommand, logoutCommand]
+  }
+
+  private func setupNavigationBar() {
+    let menuImageView: UIImageView = {
+      let menuImageView = UIImageView(frame: CGRect.zero)
+      menuImageView.contentMode = .scaleAspectFit
+      menuImageView.image = UIImage(named: "menu")?.withRenderingMode(.alwaysTemplate)
+      menuImageView.tintColor = UIColor.darkGray
+      menuImageView.translatesAutoresizingMaskIntoConstraints = false
+      return menuImageView
+    }()
+
+    navigationItem.titleView = menuImageView
   }
 
   private func setupTableView() {
