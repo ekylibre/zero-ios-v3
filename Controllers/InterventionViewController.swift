@@ -63,7 +63,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
   private func setupNavigationBar() {
     let cropsButton = UIButton()
-    let logoutButton = UIButton()
+    let menuButton = UIButton()
 
     navigationController?.navigationBar.isHidden = true
     farmNameLabel = UILabel()
@@ -73,26 +73,27 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cropsButton.setImage(UIImage(named: "plots")?.withRenderingMode(.alwaysTemplate), for: .normal)
     cropsButton.tintColor = .white
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
-    logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
-    logoutButton.tintColor = .white
-    logoutButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
+    menuButton.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    menuButton.tintColor = .white
+    menuButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
 
     NSLayoutConstraint.activate([
-      cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
-      cropsButton.heightAnchor.constraint(equalToConstant: 32.0),
-      logoutButton.widthAnchor.constraint(equalToConstant: 32.0),
-      logoutButton.heightAnchor.constraint(equalToConstant: 32.0)
+      cropsButton.widthAnchor.constraint(equalToConstant: 32),
+      cropsButton.heightAnchor.constraint(equalToConstant: 32),
+      menuButton.widthAnchor.constraint(equalToConstant: 32),
+      menuButton.heightAnchor.constraint(equalToConstant: 32)
       ])
 
     navItem.leftBarButtonItem = UIBarButtonItem(customView: farmNameLabel)
-    navItem.rightBarButtonItems = [UIBarButtonItem(customView: logoutButton), UIBarButtonItem(customView: cropsButton)]
+    navItem.rightBarButtonItems = [UIBarButtonItem(customView: menuButton), UIBarButtonItem(customView: cropsButton)]
     navigationBar.setItems([navItem], animated: true)
   }
 
   private func setupTableView() {
     tableView.bringSubviewToFront(syncView)
     tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
-    tableView.rowHeight = 80
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 80
     tableView.delegate = self
     tableView.dataSource = self
     tableView.refreshControl = refreshControl
@@ -120,8 +121,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       interventionTypeButton.tag = index
       interventionTypeButton.backgroundColor = UIColor.white
-      interventionTypeButton.setBackgroundImage(image, for: .normal)
+      interventionTypeButton.setImage(image, for: .normal)
       interventionTypeButton.layer.cornerRadius = 3
+      interventionTypeButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
       interventionTypeButton.isHidden = true
       interventionTypeButton.addTarget(self, action: #selector(presentAddInterventionVC), for: .touchUpInside)
       interventionTypeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -296,7 +298,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.typeImageView.image = UIImage(named: assetName)
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]??.withRenderingMode(.alwaysTemplate)
-    cell.stateImageView.tintColor = (intervention.status == 0) ? UIColor.orange : UIColor.green
+    cell.stateImageView.tintColor = (intervention.status > 0) ? AppColor.AppleColors.Green : AppColor.AppleColors.Orange
     cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
     cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
     cell.notesLabel.text = intervention.infos

@@ -89,10 +89,13 @@ extension AddInterventionViewController {
   }
 
   func updateSelectedEquipmentsView(calledFromCreatedIntervention: Bool) {
+    let isCollapsed = equipmentsHeightConstraint.constant == 70
     let shouldExpand = selectedEquipments.count > 0
     let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 
     if !calledFromCreatedIntervention {
+      isCollapsed ? equipmentsExpandImageView.transform =
+        equipmentsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       equipmentsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     }
