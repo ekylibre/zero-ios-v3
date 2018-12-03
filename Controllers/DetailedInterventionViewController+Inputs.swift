@@ -322,6 +322,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
+  func checkPhytoIndex(_ interventionPhyto: InterventionPhytosanitary) -> Int? {
+    for index in 0..<selectedInputs.count {
+      if selectedInputs[index] == interventionPhyto {
+        return index
+      }
+    }
+    return nil
+  }
+
+  func displayWarningIfInvalidDose(_ cell: SelectedInputCell) {
+
+  }
+
   func selectedInputsTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> SelectedInputCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedInputCell", for: indexPath) as! SelectedInputCell
 
@@ -347,10 +360,12 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       case is InterventionPhytosanitary:
         let interventionPhyto = selectedInput as! InterventionPhytosanitary
 
+
         cell.nameLabel.text = interventionPhyto.phyto?.name
         cell.infoLabel.text = interventionPhyto.phyto?.firmName
         cell.type = "Phyto"
         cell.inputImageView.image = UIImage(named: "phytosanitary")
+        cell.displayWaringIfInvalidDoses(interventionPhyto)
         displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber?)?.stringValue,
                                            unit: interventionPhyto.unit, cell: cell)
       case is InterventionFertilizer:

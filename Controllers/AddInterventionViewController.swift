@@ -223,6 +223,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     initUnitMeasurePickerViews()
 
     setupViewsAccordingInterventionType()
+    updateAllQuantityLabels()
   }
 
   private func setupNavigationBar() {
@@ -969,7 +970,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     dimView.isHidden = false
     cropsView.isHidden = false
 
-    updateAllQuantityLabels()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })
