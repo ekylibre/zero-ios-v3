@@ -96,6 +96,9 @@
 		6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11318B219C6791002272F0 /* WeatherTests.swift */; };
 		6B28441C219D877500DED846 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28441B219D877500DED846 /* StorageManager.swift */; };
 		6B3A01E021B5346D003EDB10 /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01DF21B5346D003EDB10 /* SideMenuNavigationController.swift */; };
+		6B3A01E221B53879003EDB10 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01E121B53879003EDB10 /* MenuViewController.swift */; };
+		6B3A01E421B54B5F003EDB10 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01E321B54B5F003EDB10 /* CommandCell.swift */; };
+		6B3A01E621B5587C003EDB10 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01E521B5587C003EDB10 /* Command.swift */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B6866A42194691400D5645B /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6866A32194691300D5645B /* String+Error.swift */; };
 		6B6C084C2193142200F54D29 /* sample_location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084B2193142200F54D29 /* sample_location.gpx */; };
@@ -237,6 +240,9 @@
 		6B11318B219C6791002272F0 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
 		6B28441B219D877500DED846 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		6B3A01DF21B5346D003EDB10 /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuNavigationController.swift; sourceTree = "<group>"; };
+		6B3A01E121B53879003EDB10 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		6B3A01E321B54B5F003EDB10 /* CommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
+		6B3A01E521B5587C003EDB10 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B61065721B529BD00AA853D /* SideMenu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SideMenu.framework; path = Carthage/Build/iOS/SideMenu.framework; sourceTree = "<group>"; };
 		6B6866A32194691300D5645B /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
@@ -349,6 +355,7 @@
 				0479C41621A40935008DA4C2 /* ListProtocol.swift */,
 				0479C41C21A40936008DA4C2 /* ListTableViewController.swift */,
 				0479C41521A40935008DA4C2 /* LoginViewController.swift */,
+				6B3A01E121B53879003EDB10 /* MenuViewController.swift */,
 				6B3A01DF21B5346D003EDB10 /* SideMenuNavigationController.swift */,
 				0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */,
 			);
@@ -385,6 +392,7 @@
 		047BF0B22105D20B009F3945 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6B3A01E521B5587C003EDB10 /* Command.swift */,
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
 				041028AA2191ACBD0015978B /* DateConverter.swift */,
 				04131399213FFC3E005437F0 /* Decodables.swift */,
@@ -430,6 +438,7 @@
 		04998B69217DB8DE000A5D2F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6B3A01E321B54B5F003EDB10 /* CommandCell.swift */,
 				6B923FFC218861EC00FDFCFC /* CropCell.swift */,
 				04998B75217DB8DE000A5D2F /* EquipmentCell.swift */,
 				04998B74217DB8DE000A5D2F /* FertilizerCell.swift */,
@@ -676,6 +685,7 @@
 				04163C4321A401D7001315C7 /* CropsView.swift in Sources */,
 				0479C42021A40936008DA4C2 /* DetailedInterventionViewController+Harvests.swift in Sources */,
 				6B28441C219D877500DED846 /* StorageManager.swift in Sources */,
+				6B3A01E621B5587C003EDB10 /* Command.swift in Sources */,
 				6B8DB97421871D9A005E2A71 /* ProductionCell.swift in Sources */,
 				0479C42521A40936008DA4C2 /* DetailedInterventionViewController+Persons.swift in Sources */,
 				041028AB2191ACBD0015978B /* DateConverter.swift in Sources */,
@@ -708,6 +718,7 @@
 				04998B99217DB8DF000A5D2F /* PersonCreationView.swift in Sources */,
 				04998B97217DB8DF000A5D2F /* PlotCell.swift in Sources */,
 				04998B92217DB8DF000A5D2F /* MaterialCell.swift in Sources */,
+				6B3A01E421B54B5F003EDB10 /* CommandCell.swift in Sources */,
 				048D2AF82178C8D6002EDF62 /* String+FloatValue.swift in Sources */,
 				04998B94217DB8DF000A5D2F /* InterventionCell.swift in Sources */,
 				04998B7B217DB8DF000A5D2F /* RoundedButton.swift in Sources */,
@@ -730,6 +741,7 @@
 				0479C42221A40936008DA4C2 /* HandleAddInterventionErrors.swift in Sources */,
 				04998B83217DB8DF000A5D2F /* SeedCreationView.swift in Sources */,
 				04998B95217DB8DF000A5D2F /* FertilizerCell.swift in Sources */,
+				6B3A01E221B53879003EDB10 /* MenuViewController.swift in Sources */,
 				04998B7C217DB8DF000A5D2F /* SelectionView.swift in Sources */,
 				6B6866A42194691400D5645B /* String+Error.swift in Sources */,
 				04998B79217DB8DE000A5D2F /* InputsView.swift in Sources */,

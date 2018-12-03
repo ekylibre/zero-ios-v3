@@ -135,26 +135,29 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="ASj-oZ-CYc" kind="relationship" relationship="rootViewController" id="4q0-Qn-ouS"/>
+                        <segue destination="SBV-qh-U1e" kind="relationship" relationship="rootViewController" id="dBQ-VV-Xzi"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KWl-a1-a3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1998" y="-439"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="J5h-3V-WC3">
+        <!--Menu View Controller-->
+        <scene sceneID="kv8-p2-alp">
             <objects>
-                <viewController id="ASj-oZ-CYc" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gag-Fw-Tmf">
+                <tableViewController id="SBV-qh-U1e" customClass="MenuViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="use-70-pOj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="XwS-Y0-nNg"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="WmC-YF-91r"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DD3-WB-Njw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <connections>
+                            <outlet property="dataSource" destination="SBV-qh-U1e" id="Ml3-Xc-1F0"/>
+                            <outlet property="delegate" destination="SBV-qh-U1e" id="Rdp-nd-uCd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="4kD-hC-P8e"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bQb-sH-gNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2854" y="-439"/>
         </scene>
