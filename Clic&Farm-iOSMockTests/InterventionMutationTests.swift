@@ -42,11 +42,15 @@ class InterventionMutationTests: XCTestCase {
     interventionVC = nil
   }
 
-  func defineTargetAttributes() -> [InterventionTargetAttributes] {
-    let cropID = "6165E585-2068-430E-8B59-E5C243E718D1"
-    let targetAttribute = InterventionTargetAttributes(cropId: cropID, workAreaPercentage: 100)
+  func defineTargetAttributes(cropsNumber: Int) -> [InterventionTargetAttributes] {
+    var targetsAttributes = [InterventionTargetAttributes]()
+    let cropsID = ["2C1879A1-6A17-4CDF-9FD6-67F0B29F696D", "E79DC921-EC4A-4029-B161-64A229607427",
+                   "A09AB0A6-CA2A-4805-9964-226987EA91E3", "841A2F30-BE08-43BF-B2A0-06AA577211FF"]
 
-    return [targetAttribute]
+    for index in 0..<cropsNumber {
+      targetsAttributes.append(InterventionTargetAttributes(cropId: cropsID[index], workAreaPercentage: 100))
+    }
+    return targetsAttributes
   }
 
   func defineWorkingDays() -> [InterventionWorkingDayAttributes] {
@@ -66,18 +70,27 @@ class InterventionMutationTests: XCTestCase {
     return [outputAttribute]
   }
 
-  func defineEquipmentAttributes() -> [InterventionToolAttributes] {
-    let equipmentAttributes = InterventionToolAttributes(equipmentId: "546")
+  func defineEquipmentAttributes(equipmentsNumber: Int) -> [InterventionToolAttributes] {
+    var equipmentsAttributes = [InterventionToolAttributes]()
+    let equipmentsID = ["545", "546"]
 
-    return [equipmentAttributes]
+    for index in 0..<equipmentsNumber {
+      equipmentsAttributes.append(InterventionToolAttributes(equipmentId: equipmentsID[index]))
+    }
+    return equipmentsAttributes
   }
 
-  func defineOperatorAttributes() -> [InterventionOperatorAttributes] {
-    let operatorAttributes = InterventionOperatorAttributes(
-      personId: "1076",
-      role: OperatorRoleEnum(rawValue: "OPERATOR"))
+  func defineOperatorAttributes(personsNumber: Int) -> [InterventionOperatorAttributes] {
+    var operatorsAttributes = [InterventionOperatorAttributes]()
+    let personsID = ["1076", "1078", "1079", "1103", "1104"]
 
-    return [operatorAttributes]
+    for index in 0..<personsNumber {
+      let role = (Int.random(in: 0..<1) == 0 ? "OPERATOR" : "DRIVER")
+
+      operatorsAttributes.append(InterventionOperatorAttributes(
+        personId: personsID[index], role: OperatorRoleEnum(rawValue: role)))
+    }
+    return operatorsAttributes
   }
 
   func defineWeatherAttributes() -> WeatherAttributes {
@@ -95,15 +108,15 @@ class InterventionMutationTests: XCTestCase {
     let mutation = PushInterMutation(
       farmId: farmID,
       procedure: .irrigation,
-      cropList: defineTargetAttributes(),
+      cropList: defineTargetAttributes(cropsNumber: 1),
       workingDays: defineWorkingDays(),
       waterQuantity: 52,
       waterUnit: InterventionWaterVolumeUnitEnum(rawValue: "HECTOLITER"),
       inputs: [InterventionInputAttributes](),
       outputs: [InterventionOutputAttributes](),
       globalOutputs: false,
-      tools: defineEquipmentAttributes(),
-      operators: defineOperatorAttributes(),
+      tools: defineEquipmentAttributes(equipmentsNumber: 1),
+      operators: defineOperatorAttributes(personsNumber: 2),
       weather: defineWeatherAttributes(),
       description: "Intervention pushed from unit test")
 
@@ -123,10 +136,73 @@ class InterventionMutationTests: XCTestCase {
     waitForExpectations(timeout: 30, handler: nil)
   }
 
-  func fetchLastInterventionToRemoveIt() -> String? {
+  func test_2_pushCareIntervention_shouldPushIt() {
+    // Given
+    let expectation = self.expectation(description: "Pushing intervention")
+    let mutation = PushInterMutation(
+      farmId: farmID,
+      procedure: .care,
+      cropList: defineTargetAttributes(cropsNumber: 4),
+      workingDays: defineWorkingDays(),
+      waterQuantity: nil,
+      waterUnit: nil,
+      inputs: [InterventionInputAttributes](),
+      outputs: [InterventionOutputAttributes](),
+      globalOutputs: false,
+      tools: defineEquipmentAttributes(equipmentsNumber: 2),
+      operators: defineOperatorAttributes(personsNumber: 5),
+      weather: defineWeatherAttributes(),
+      description: "Care intervention pushed from unit test")
+
+    // When
+    let _ = client.clearCache()
+    client.perform(mutation: mutation, resultHandler: { (result, error) in
+      defer { expectation.fulfill() }
+
+      if let error = error {
+        XCTFail("Got an error: \(error)")
+      } else if let resultError = result?.errors {
+        XCTFail("Got an result error: \(resultError)")
+      } else {
+        XCTAssertNotNil(result?.data?.createIntervention?.intervention?.id, "InterventionID should be populated")
+      }
+    })
+    waitForExpectations(timeout: 30, handler: nil)
+  }
+
+  func test_3_removePushedInterventions_shouldRemoveIt() {
+    let interventionEkyID = fetchLastInterventionToRemoveIt()
+
+    if interventionEkyID.count > 0 {
+      // Given
+      for ekyID in interventionEkyID {
+        let mutation = DeleteInterMutation(id: ekyID!, farmId: farmID)
+        let expectation = self.expectation(description: "Deleting intervention")
+
+        // When
+        let _ = client.clearCache()
+        client.perform(mutation: mutation, resultHandler: { (result, error) in
+          defer { expectation.fulfill() }
+
+          if let error = error {
+            XCTFail("Got an error: \(error)")
+          } else if let resultError = result?.errors {
+            XCTFail("Got an result error: \(resultError)")
+          } else {
+            XCTAssertNotNil(result?.data, "Data should be populated")
+          }
+        })
+      }
+      waitForExpectations(timeout: 30, handler: nil)
+    } else {
+      XCTFail("No intervention to remove")
+    }
+  }
+
+  func fetchLastInterventionToRemoveIt() -> [String?] {
     let query = InterventionQuery()
     let expectation = self.expectation(description: "Fetching profile query")
-    var interventionID: String?
+    var interventionsID = [String?]()
 
     let _ = client.clearCache()
     client.fetch(query: query, resultHandler: { (result, error) in
@@ -137,37 +213,17 @@ class InterventionMutationTests: XCTestCase {
       } else if let resultError = result?.errors {
         print("Got an result error: \(resultError)")
       } else {
-        interventionID = result!.data!.farms.first!.interventions.last!.id
+        let interventions = result?.data?.farms.first?.interventions
+
+        if interventions != nil && interventions!.count > 1 {
+          interventionsID.append(interventions?[interventions!.count - 1].id)
+          interventionsID.append(interventions?[interventions!.count - 2].id)
+        } else if interventions != nil && interventions!.count > 0 {
+          interventionsID.append(interventions?[interventions!.count].id)
+        }
       }
     })
     waitForExpectations(timeout: 30, handler: nil)
-    return interventionID
-  }
-
-  func test_2_removePushedIntervention_shouldRemoveIt() {
-    let interventionEkyID = fetchLastInterventionToRemoveIt()
-
-    if interventionEkyID != nil {
-      // Given
-      let mutation = DeleteInterMutation(id: interventionEkyID!, farmId: farmID)
-      let expectation = self.expectation(description: "Deleting intervention")
-
-      // When
-      let _ = client.clearCache()
-      client.perform(mutation: mutation, resultHandler: { (result, error) in
-        defer { expectation.fulfill() }
-
-        if let error = error {
-          XCTFail("Got an error: \(error)")
-        } else if let resultError = result?.errors {
-          XCTFail("Got an result error: \(resultError)")
-        } else {
-          XCTAssertNotNil(result?.data, "Data should be populated")
-        }
-      })
-      waitForExpectations(timeout: 30, handler: nil)
-    } else {
-      XCTFail("No intervention to remove")
-    }
+    return interventionsID
   }
 }

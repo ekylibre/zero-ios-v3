@@ -130,4 +130,28 @@ class ApolloTests: XCTestCase {
     })
     waitForExpectations(timeout: 30, handler: nil)
   }
+
+  func test_personMutation_withNoFirstName_shouldSaveIt() {
+    // Given
+    let expectation = self.expectation(description: "Mutating person")
+    let mutation = PushPersonMutation(
+      farmId: farmID,
+      firstName: nil,
+      lastName: "Apollo")
+
+    // When
+    let _ = client.clearCache()
+    client.perform(mutation: mutation, resultHandler: { (result, error) in
+      defer { expectation.fulfill() }
+
+      if let error = error {
+        XCTFail("Got an error: \(error)")
+      } else if let resultError = result?.errors {
+        XCTFail("Got an result error: \(resultError)")
+      } else {
+        XCTAssertNotNil(result?.data?.createPerson?.person?.id, "PersonID should be populated")
+      }
+    })
+    waitForExpectations(timeout: 30, handler: nil)
+  }
 }
