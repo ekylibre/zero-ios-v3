@@ -15,5 +15,6 @@ class SideMenuNavigationController: UISideMenuNavigationController {
   override func viewDidLoad() {
     super.viewDidLoad()
     sideMenuManager.menuPresentMode = .menuSlideIn
+    sideMenuManager.menuAnimationFadeStrength = 0.4
   }
 }
