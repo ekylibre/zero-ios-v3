@@ -17,10 +17,7 @@ class MenuViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeCommands()
-    tableView.register(CommandCell.self, forCellReuseIdentifier: "CommandCell")
-    tableView.rowHeight = 50
-    tableView.delegate = self
-    tableView.dataSource = self
+    setupTableView()
   }
 
   private func initializeCommands() {
@@ -28,6 +25,14 @@ class MenuViewController: UITableViewController {
     let logoutCommand = Command(name: "logout", assetName: "logout", closure: logout)
 
     commands = [termsCommand, logoutCommand]
+  }
+
+  private func setupTableView() {
+    tableView.register(CommandCell.self, forCellReuseIdentifier: "CommandCell")
+    tableView.rowHeight = 50
+    tableView.tableFooterView = UIView()
+    tableView.delegate = self
+    tableView.dataSource = self
   }
 
   // MARK: - Table view
@@ -44,7 +49,7 @@ class MenuViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "CommandCell", for: indexPath) as! CommandCell
     let command = commands[indexPath.row]
 
-    cell.commandImageView.image = UIImage(named: command.assetName)
+    cell.commandImageView.image = UIImage(named: command.assetName)?.withRenderingMode(.alwaysTemplate)
     cell.commandLabel.text = command.name.localized
     return cell
   }
@@ -57,11 +62,11 @@ class MenuViewController: UITableViewController {
 
   // MARK: - Actions
 
-  private func test() -> Void {
+  private func test() {
     print("cgu")
   }
 
-  private func logout() -> Void {
+  private func logout() {
     print("logout")
   }
 }
