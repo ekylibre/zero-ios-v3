@@ -91,7 +91,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func setupView() {
-    print("\nSetupView")
     backgroundColor = UIColor.white
     layer.cornerRadius = 3
     clipsToBounds = true
@@ -133,17 +132,14 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Table view
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    print("\nNumberOfSections")
     return 1
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    print("\nnumberOfRowsInSection")
     return crops.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    print("\nCellForRowAt")
     let cell = tableView.dequeueReusableCell(withIdentifier: "PlotCell", for: indexPath) as! PlotCell
     let crops = self.crops[indexPath.row]
     let surfaceArea = getPlotSurfaceArea(crops)
@@ -173,7 +169,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func getPlotSurfaceArea(_ crops: [Crop]) -> Float {
-    print("\nGetPlotSurfaceArea")
     var surfaceArea: Float = 0
 
     for crop in crops {
@@ -183,7 +178,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func showPlotIfReadOnly() {
-    print("\nSwhoPlotIfReadOnly")
     if interventionState == InterventionState.Validated.rawValue {
       for index in 0..<selectedCrops.count {
         let indexPath = IndexPath.init(row: index, section: 0)
@@ -197,7 +191,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    print("\nDidSelectRowAt")
     selectedIndexPath = indexPath
     let cell = tableView.cellForRow(at: indexPath) as! PlotCell
 
@@ -223,7 +216,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Core Data
 
   func fetchCrops() {
-    print("\nFetchCrops")
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -252,7 +244,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func loadSelectedTargets() {
-    print("\nLoadSelectedTargets")
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -288,7 +279,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func organizeCropsByPlot(_ crops: [Crop]) {
-    print("\nOrganizeCropsByPlot")
     var cropsFromSamePlot = [Crop]()
     var name = crops.first?.plotName
 
@@ -304,7 +294,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func checkIfTargetMatch() -> [Target]? {
-    print("\nCheckIfTargetMatch")
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -323,7 +312,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func loadAllTargetAndSelectThem(_ crops: [Crop]) {
-    print("\nLoadAllTargetAndSelectThem")
     let targets = checkIfTargetMatch()
     var cropsFromSamePlot = [Crop]()
     var name = crops.first?.plotName
@@ -347,7 +335,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func createCropViews() {
-    print("\nCreateCropViews")
     var frame: CGRect
     var cropViews = [CropView]()
     var view: CropView
@@ -385,7 +372,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   // MARK: - Actions
 
   @objc private func tapCheckbox(_ sender: UIButton) {
-    print("\nTapCheckBox")
     if interventionState == InterventionState.Validated.rawValue {
       return
     }
@@ -404,7 +390,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func selectPlot(_ crops: [Crop], _ indexPath: IndexPath) {
-    print("\nSelectPlot")
     selectedSurfaceArea += getPlotSurfaceArea(crops)
 
     for (index, crop) in crops.enumerated() {
@@ -414,7 +399,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func deselectPlot(_ crops: [Crop], _ cell: PlotCell) {
-    print("\nDeselectPlot")
     var index: Int = 0
 
     for case let view as CropView in cell.contentView.subviews {
@@ -431,7 +415,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   func initCropsViewInAppropriateMode(view: CropView) {
-    print("\nInitCropsViewInAppropriateMode")
     if interventionState != nil {
       if selectedCrops.contains(view.crop) {
         view.checkboxImageView.isHighlighted = true
@@ -441,7 +424,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   @objc private func tapCropView(sender: UIGestureRecognizer) {
-    print("\nTapCropView")
     if interventionState == InterventionState.Validated.rawValue {
       return
     }
@@ -463,18 +445,15 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
   }
 
   private func selectCrop(_ crop: Crop, _ cell: PlotCell) {
-    print("\nSelectCrop")
     if !cell.checkboxButton.isSelected {
       cell.checkboxButton.isSelected = true
     }
 
-    print("\nSelectCrop: \(crop)")
     selectedSurfaceArea += crop.surfaceArea
     selectedCrops.append(crop)
   }
 
   private func deselectCrop(_ crop: Crop, _ crops: [Crop], _ cell: PlotCell) {
-    print("\nDeselectCrop")
     var index: Int = 1
 
     for case let view as CropView in cell.contentView.subviews {
@@ -489,13 +468,11 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     selectedSurfaceArea -= crop.surfaceArea
 
     if let index = selectedCrops.firstIndex(of: crop) {
-      print("\nDeselectCrop: \(selectedCrops[index])")
       selectedCrops.remove(at: index)
     }
   }
 
   func updateSelectedCropsLabel() {
-    print("\nUpdateSelectedCropsLabel")
     if selectedCrops.count == 0 {
       selectedCropsLabel.text = "no_crop_selected".localized
     } else {
