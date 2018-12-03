@@ -143,9 +143,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
-  // MARK: -
-
   private func closeInputsSelectionView() {
+    let isCollapsed = inputsHeightConstraint.constant == 70
     dimView.isHidden = true
     inputsSelectionView.isHidden = true
 
@@ -158,7 +157,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       selectedInputsTableView.isHidden = false
       inputsTableViewHeightConstraint.constant = selectedInputsTableView.contentSize.height
       inputsHeightConstraint.constant = inputsTableViewHeightConstraint.constant + 100
-      inputsExpandImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+      isCollapsed ? inputsExpandImageView.transform = inputsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       view.layoutIfNeeded()
     }
     selectedInputsTableView.reloadData()

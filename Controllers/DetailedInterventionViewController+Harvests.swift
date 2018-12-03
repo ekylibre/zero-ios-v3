@@ -267,10 +267,12 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction func addHarvest(_ sender: UIButton) {
+    let isCollapsed = harvestViewHeightConstraint.constant == 70
     createHarvest(nil, nil, nil, nil, nil)
     if selectedHarvests.count > 0 {
       let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 150 : selectedHarvests.count * 150
 
+      isCollapsed ? harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       harvestNature.isHidden = false
       harvestType.isHidden = false
       harvestTableView.isHidden = false
@@ -290,6 +292,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
     harvestTableView.isHidden = false
     harvestTableView.reloadData()
     if selectedHarvests.count < 4 {
+      harvestExpandImageView.isHidden = false
+      harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
       harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
       harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
     }

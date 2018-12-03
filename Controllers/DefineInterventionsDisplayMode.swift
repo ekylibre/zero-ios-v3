@@ -62,6 +62,8 @@ extension AddInterventionViewController {
       updateIrrigation()
       if interventionState == InterventionState.Validated.rawValue {
         irrigationExpandImageView.isHidden = true
+      } else {
+        irrigationExpandImageView.transform = irrigationExpandImageView.transform.rotated(by: CGFloat.pi)
       }
       tapIrrigationView(self)
     }
