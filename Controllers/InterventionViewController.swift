@@ -438,6 +438,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     collapseBottomView()
   }
 
+  @objc private func presentSideMenu(sender: UIButton) {
+    collapseBottomView()
+    performSegue(withIdentifier: "presentSideMenu", sender: sender)
+  }
+
   // MARK: - Actions
 
   private func updateFarmNameLabel() {
@@ -567,11 +572,5 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.isHidden = true
     heightConstraint.constant = 60
     createInterventionButton.isHidden = false
-  }
-
-  // MARK: - Side menu
-
-  @objc private func presentSideMenu(sender: UIButton) {
-    performSegue(withIdentifier: "presentSideMenu", sender: sender)
   }
 }

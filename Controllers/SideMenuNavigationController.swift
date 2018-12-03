@@ -10,10 +10,12 @@ import SideMenu
 
 class SideMenuNavigationController: UISideMenuNavigationController {
 
-  // MARK: - Initialization
-
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    let screenRect = UIScreen.main.bounds
+
+    sideMenuManager.menuWidth = max(round(min((screenRect.width), (screenRect.height)) * 0.75), 250)
     sideMenuManager.menuPresentMode = .menuSlideIn
     sideMenuManager.menuAnimationFadeStrength = 0.4
   }

@@ -70,7 +70,7 @@ class MenuViewController: UITableViewController {
   // MARK: - Logout
 
   private func presentLogoutAlert() {
-    let alert = UIAlertController(title: "disconnect_prompt".localized, message: nil, preferredStyle: .actionSheet)
+    let alert = UIAlertController(title: "disconnect_prompt".localized, message: nil, preferredStyle: .alert)
     let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
     let logoutAction = UIAlertAction(title: "logout".localized, style: .destructive, handler: { action in
       self.logoutUser()
