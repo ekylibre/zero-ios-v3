@@ -84,33 +84,6 @@ class ApolloTests: XCTestCase {
     waitForExpectations(timeout: 30, handler: nil)
   }
 
-  func test_equipmentMutation_withAnEquipment_shouldSaveIt() {
-    // Given
-    let expectation = self.expectation(description: "Mutating equipment")
-    let mutation = PushEquipmentMutation(
-      farmId: farmID,
-      type: .tractor,
-      name: "tracteur apollo",
-      number: "1000",
-      indicator1: "1",
-      indicator2: nil)
-
-    // When
-    let _ = client.clearCache()
-    client.perform(mutation: mutation, resultHandler: { (result, error) in
-      defer { expectation.fulfill() }
-
-      if let error = error {
-        XCTFail("Got an error: \(error)")
-      } else if let resultError = result?.errors {
-        XCTFail("Got an result error: \(resultError)")
-      } else {
-        XCTAssertNotNil(result?.data?.createEquipment?.equipment?.id, "EquipmentID should be populated")
-      }
-    })
-    waitForExpectations(timeout: 30, handler: nil)
-  }
-
   func test_queryCrops_shouldHaveResult() {
     // Given
     let query = FarmQuery()
@@ -140,7 +113,7 @@ class ApolloTests: XCTestCase {
     let mutation = PushPersonMutation(
       farmId: farmID,
       firstName: "Person",
-      lastName: "apollo")
+      lastName: "Apollo")
 
     // When
     let _ = client.clearCache()
