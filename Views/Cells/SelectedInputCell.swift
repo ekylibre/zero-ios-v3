@@ -30,7 +30,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var nameLabel: UILabel = {
     let nameLabel = UILabel(frame: CGRect.zero)
-    nameLabel.lineBreakMode = .byTruncatingTail
     nameLabel.font = UIFont.systemFont(ofSize: 14)
     nameLabel.translatesAutoresizingMaskIntoConstraints = false
     return nameLabel
@@ -38,7 +37,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var infoLabel: UILabel = {
     let infoLabel = UILabel(frame: CGRect.zero)
-    infoLabel.lineBreakMode = .byTruncatingTail
     infoLabel.font = UIFont.boldSystemFont(ofSize: 14)
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
     return infoLabel
@@ -48,8 +46,9 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     let deleteButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
     deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
     deleteButton.tintColor = UIColor.red
+    deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    deleteButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
   }()
@@ -96,18 +95,15 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var surfaceQuantity: UILabel = {
     let surfaceQuantity = UILabel(frame: CGRect.zero)
-
     surfaceQuantity.isHidden = true
     surfaceQuantity.font = UIFont.systemFont(ofSize: 15)
     surfaceQuantity.textColor = AppColor.TextColors.DarkGray
-    surfaceQuantity.text = ""
     surfaceQuantity.translatesAutoresizingMaskIntoConstraints = false
     return surfaceQuantity
   }()
 
   lazy var warningImageView: UIImageView = {
     let warningImageView = UIImageView(frame: CGRect.zero)
-
     warningImageView.isHidden = true
     warningImageView.image = UIImage(named: "warning")
     warningImageView.tintColor = .red
@@ -117,7 +113,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   lazy var warningLabel: UILabel = {
     let warningLabel = UILabel(frame: CGRect.zero)
-
     warningLabel.isHidden = true
     warningLabel.font = UIFont.systemFont(ofSize: 13)
     warningLabel.textColor = .red
@@ -166,39 +161,37 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      inputImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      inputImageView.heightAnchor.constraint(equalToConstant: 24),
       inputImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      inputImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       inputImageView.widthAnchor.constraint(equalToConstant: 24),
-      nameLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
+      inputImageView.heightAnchor.constraint(equalToConstant: 24),
       nameLabel.leadingAnchor.constraint(equalTo: inputImageView.trailingAnchor, constant: 10),
-      infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
+      nameLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       infoLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
-      quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
+      infoLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
+      infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      deleteButton.widthAnchor.constraint(equalToConstant: 40),
+      deleteButton.heightAnchor.constraint(equalToConstant: 40),
       quantityLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-      quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
-      quantityTextField.heightAnchor.constraint(equalToConstant: 30),
+      quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
       quantityTextField.leadingAnchor.constraint(equalTo: quantityLabel.trailingAnchor, constant: 15),
+      quantityTextField.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       quantityTextField.widthAnchor.constraint(equalToConstant: 70),
-      unitButton.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
-      unitButton.heightAnchor.constraint(equalToConstant: 30),
+      quantityTextField.heightAnchor.constraint(equalToConstant: 30),
       unitButton.leadingAnchor.constraint(equalTo: quantityTextField.trailingAnchor, constant: 10),
+      unitButton.centerYAnchor.constraint(equalTo: quantityLabel.centerYAnchor),
       unitButton.widthAnchor.constraint(equalToConstant: 70),
-      warningImageView.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 5),
-      warningImageView.heightAnchor.constraint(equalToConstant: 10),
+      unitButton.heightAnchor.constraint(equalToConstant: 30),
       warningImageView.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
+      warningImageView.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 5),
       warningImageView.widthAnchor.constraint(equalToConstant: 10),
-      warningLabel.centerYAnchor.constraint(equalTo: warningImageView.centerYAnchor),
+      warningImageView.heightAnchor.constraint(equalToConstant: 10),
       warningLabel.leadingAnchor.constraint(equalTo: warningImageView.trailingAnchor, constant: 3),
-      surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: infoLabel.trailingAnchor,
-                                            multiplier: 1)
-      ]
-    )
+      warningLabel.centerYAnchor.constraint(equalTo: warningImageView.centerYAnchor),
+      surfaceQuantity.leadingAnchor.constraint(equalTo: quantityTextField.leadingAnchor)
+      ])
   }
 
   required init?(coder aDecoder: NSCoder) {

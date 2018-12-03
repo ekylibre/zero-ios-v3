@@ -69,10 +69,13 @@ extension AddInterventionViewController {
   }
 
   func updateSelectedMaterialsView(calledFromCreatedIntervention: Bool) {
+    let isCollapsed = materialsHeightConstraint.constant == 70
     let shouldExpand = selectedMaterials[0].count > 0
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
     if !calledFromCreatedIntervention {
+      isCollapsed ? materialsExpandImageView.transform =
+        materialsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     }
