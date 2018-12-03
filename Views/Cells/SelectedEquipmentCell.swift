@@ -32,6 +32,7 @@ class SelectedEquipmentCell: UITableViewCell {
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
     deleteButton.setImage(tintedImage, for: .normal)
     deleteButton.tintColor = UIColor.red
+    deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
   }()
@@ -64,21 +65,20 @@ class SelectedEquipmentCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      typeImageView.heightAnchor.constraint(equalToConstant: 35),
       typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-      typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
-      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      typeImageView.widthAnchor.constraint(equalToConstant: 35),
+      typeImageView.heightAnchor.constraint(equalToConstant: 35),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+      nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
+      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      deleteButton.widthAnchor.constraint(equalToConstant: 40),
+      deleteButton.heightAnchor.constraint(equalToConstant: 40),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
       infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: nameLabel.trailingAnchor,
-                                            multiplier: 1)
+      infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
       ])
   }
 
