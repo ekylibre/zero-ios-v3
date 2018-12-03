@@ -9,6 +9,7 @@
 import UIKit
 import Apollo
 import CoreData
+import SideMenu
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -75,7 +76,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
     logoutButton.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysTemplate), for: .normal)
     logoutButton.tintColor = .white
-    logoutButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
+    logoutButton.addTarget(self, action: #selector(presentSideMenu), for: .touchUpInside)
 
     NSLayoutConstraint.activate([
       cropsButton.widthAnchor.constraint(equalToConstant: 32.0),
@@ -564,6 +565,12 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.isHidden = true
     heightConstraint.constant = 60
     createInterventionButton.isHidden = false
+  }
+
+  // MARK: - Side menu
+
+  @objc private func presentSideMenu(sender: UIButton) {
+    performSegue(withIdentifier: "presentSideMenu", sender: sender)
   }
 
   // MARK: - Logout
