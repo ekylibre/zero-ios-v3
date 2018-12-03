@@ -42,6 +42,7 @@ class SelectedPersonCell: UITableViewCell {
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
     deleteButton.setImage(tintedImage, for: .normal)
     deleteButton.tintColor = UIColor.red
+    deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
   }()
@@ -87,25 +88,23 @@ class SelectedPersonCell: UITableViewCell {
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      personImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      personImageView.heightAnchor.constraint(equalToConstant: 45),
       personImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-      personImageView.widthAnchor.constraint(equalTo: personImageView.heightAnchor),
-      firstNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+      personImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      personImageView.widthAnchor.constraint(equalToConstant: 45),
+      personImageView.heightAnchor.constraint(equalToConstant: 45),
       firstNameLabel.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 10),
-      lastNameLabel.centerYAnchor.constraint(equalTo: firstNameLabel.centerYAnchor),
+      firstNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       lastNameLabel.leadingAnchor.constraint(equalTo: firstNameLabel.trailingAnchor, constant: 5),
       lastNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
-      driverSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7.5),
+      lastNameLabel.centerYAnchor.constraint(equalTo: firstNameLabel.centerYAnchor),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      deleteButton.widthAnchor.constraint(equalToConstant: 40),
+      deleteButton.heightAnchor.constraint(equalToConstant: 40),
       driverSwitch.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 7.5),
-      driverLabel.centerYAnchor.constraint(equalTo: driverSwitch.centerYAnchor),
+      driverSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7.5),
       driverLabel.leadingAnchor.constraint(equalTo: driverSwitch.trailingAnchor, constant: 5),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      deleteButton.heightAnchor.constraint(equalToConstant: 20),
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      deleteButton.widthAnchor.constraint(equalToConstant: 20),
-      deleteButton.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: lastNameLabel.trailingAnchor,
-                                            multiplier: 1)
+      driverLabel.centerYAnchor.constraint(equalTo: driverSwitch.centerYAnchor)
       ])
   }
 

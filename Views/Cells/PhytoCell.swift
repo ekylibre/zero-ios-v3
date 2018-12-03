@@ -123,7 +123,7 @@ class PhytoCell: UITableViewCell {
       maaIDLabel.leadingAnchor.constraint(equalTo: maaLabel.trailingAnchor, constant: 15),
       reentryLabel.topAnchor.constraint(equalTo: maaLabel.bottomAnchor),
       reentryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-      inFieldReentryDelayLabel.topAnchor.constraint(equalTo: maaIDLabel.bottomAnchor),
+      inFieldReentryDelayLabel.centerYAnchor.constraint(equalTo: reentryLabel.centerYAnchor),
       inFieldReentryDelayLabel.leadingAnchor.constraint(equalTo: reentryLabel.trailingAnchor, constant: 15),
       starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       starImageView.heightAnchor.constraint(equalToConstant: 20),

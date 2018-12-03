@@ -67,10 +67,12 @@ extension AddInterventionViewController {
   }
 
   func updateSelectedPersonsView(calledFromCreatedIntervention: Bool) {
+    let isCollapsed = personsHeightConstraint.constant == 70
     let shouldExpand = selectedPersons[0].count > 0
     let tableViewHeight = (selectedPersons[0].count > 10) ? 10 * 65 : selectedPersons[0].count * 65
 
     if !calledFromCreatedIntervention {
+      isCollapsed ? personsExpandImageView.transform = personsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       personsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
     }
