@@ -339,18 +339,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func displayInputQuantityInReadOnlyMode(quantity: String?, unit: String?, cell: SelectedInputCell) {
-    if interventionState == InterventionState.Validated.rawValue {
-      cell.quantityTextField.placeholder = quantity
-      cell.unitButton.setTitle(unit?.localized, for: .normal)
-      cell.unitButton.setTitleColor(.lightGray, for: .normal)
-    } else if quantity == "0" || quantity == nil {
-      cell.quantityTextField.placeholder = "0"
-    } else {
-      cell.quantityTextField.text = quantity
-    }
-  }
-
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch tableView {
     case selectedInputsTableView:
