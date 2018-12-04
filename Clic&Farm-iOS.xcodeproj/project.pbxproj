@@ -105,6 +105,7 @@
 		6B6C084F219318BD00F54D29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
 		6B79D26621A5A3E000EBDB9D /* UIView+ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */; };
+		6B8353EF21B6926700DA8C35 /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */; };
 		6B8DB97421871D9A005E2A71 /* ProductionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97321871D9A005E2A71 /* ProductionCell.swift */; };
 		6B8DB97621875BFF005E2A71 /* CropDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */; };
 		6B923FFD218861EC00FDFCFC /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B923FFC218861EC00FDFCFC /* CropCell.swift */; };
@@ -251,6 +252,7 @@
 		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B77AD3C219B046E00839053 /* IrrigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrrigationTests.swift; sourceTree = "<group>"; };
 		6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ParentViewController.swift"; sourceTree = "<group>"; };
+		6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
 		6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropDetailedView.swift; sourceTree = "<group>"; };
 		6B923FFC218861EC00FDFCFC /* CropCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropCell.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				0479C41521A40935008DA4C2 /* LoginViewController.swift */,
 				6B3A01E121B53879003EDB10 /* MenuViewController.swift */,
 				6B3A01DF21B5346D003EDB10 /* SideMenuNavigationController.swift */,
+				6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */,
 				0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */,
 			);
 			path = Controllers;
@@ -674,6 +677,7 @@
 				0479C43721A40CCB008DA4C2 /* SelectedInputCell.swift in Sources */,
 				0479C43821A40CCB008DA4C2 /* EquipmentCreationView.swift in Sources */,
 				0479C43921A40CCB008DA4C2 /* PersonsView.swift in Sources */,
+				6B8353EF21B6926700DA8C35 /* TermsOfUseViewController.swift in Sources */,
 				04137127218C5DD40034128A /* UserDefaults+isFirstLaunch.swift in Sources */,
 				0471092F21806F7800DC262C /* ColorConstants.swift in Sources */,
 				0471092E21806F6E00DC262C /* AppDelegate.swift in Sources */,

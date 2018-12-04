@@ -156,10 +156,47 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="4kD-hC-P8e"/>
+                    <connections>
+                        <segue destination="Gei-ai-tdB" kind="show" identifier="presentTermsOfUse" id="Exg-ba-w1X"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQb-sH-gNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2854" y="-439"/>
+        </scene>
+        <!--Terms of Use-->
+        <scene sceneID="2qB-NC-dMf">
+            <objects>
+                <viewController title="Terms of Use" id="Gei-ai-tdB" customClass="TermsOfUseViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nRz-AA-FRE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOP-9E-wkP">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="81M-tr-iyv" firstAttribute="trailing" secondItem="uOP-9E-wkP" secondAttribute="trailing" id="Fn5-Hd-EOm"/>
+                            <constraint firstItem="uOP-9E-wkP" firstAttribute="leading" secondItem="81M-tr-iyv" secondAttribute="leading" id="YaO-JS-ndF"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="uOP-9E-wkP" secondAttribute="bottom" id="gte-Nh-uR6"/>
+                            <constraint firstItem="uOP-9E-wkP" firstAttribute="top" secondItem="81M-tr-iyv" secondAttribute="top" id="rbs-yR-72W"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="81M-tr-iyv"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="uOP-9E-wkP" id="5H2-s2-Yfg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dp7-Yd-UZ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3717.5999999999999" y="-439.43028485757122"/>
         </scene>
         <!--Interventions By Crop View Controller-->
         <scene sceneID="mjm-Z2-dcZ">

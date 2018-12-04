@@ -23,10 +23,10 @@ class MenuViewController: UITableViewController {
   }
 
   private func initializeCommands() {
-    let termsCommand = Command(name: "privacy_policy", assetName: "doc", closure: test)
+    let termsOfUseCommand = Command(name: "terms_of_use", assetName: "doc", closure: presentTermsOfUse)
     let logoutCommand = Command(name: "logout", assetName: "logout", closure: presentLogoutAlert)
 
-    commands = [termsCommand, logoutCommand]
+    commands = [termsOfUseCommand, logoutCommand]
   }
 
   private func setupNavigationBar() {
@@ -75,10 +75,10 @@ class MenuViewController: UITableViewController {
     command.closure()
   }
 
-  // MARK: - Actions
+  // MARK: - Terms of use
 
-  private func test() {
-    print("cgu")
+  private func presentTermsOfUse() {
+    performSegue(withIdentifier: "presentTermsOfUse", sender: self)
   }
 
   // MARK: - Logout
