@@ -173,10 +173,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   // MARK: - Table view
 
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return isSearching ? filteredEquipments.count : equipments.count
   }

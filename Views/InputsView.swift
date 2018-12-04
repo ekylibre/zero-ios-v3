@@ -179,10 +179,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Table view
 
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if isSearching {
       return filteredInputs.count

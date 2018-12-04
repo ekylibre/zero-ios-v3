@@ -309,10 +309,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   // MARK: - Table view data source
 
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch tableView {
     case selectedInputsTableView:

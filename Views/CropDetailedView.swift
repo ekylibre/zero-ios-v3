@@ -139,19 +139,6 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
 
   // MARK: - Table view
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let interventionsByCropVC = parentViewController as? InterventionsByCropViewController else {
-      return
-    }
-
-    toUpdateIntervention = interventions[indexPath.row]
-    interventionsByCropVC.performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
-  }
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return interventions.count
   }
@@ -172,6 +159,15 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.notesLabel.text = intervention.infos
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let interventionsByCropVC = parentViewController as? InterventionsByCropViewController else {
+      return
+    }
+
+    toUpdateIntervention = interventions[indexPath.row]
+    interventionsByCropVC.performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
   }
 
   private func updateDateLabel(_ workingPeriods: NSSet) -> String {
