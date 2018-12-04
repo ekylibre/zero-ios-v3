@@ -1,5 +1,6 @@
 github "apollostack/apollo-ios" "0.9.4"
 github "daltoniam/Starscream" "3.0.6"
 github "hackiftekhar/IQKeyboardManager" "v6.2.0"
+github "jonkykong/SideMenu" "3a18cb2b07c83cd9123ab2267e328105e15215fe"
 github "p2/OAuth2" "4.0.1"
 github "stephencelis/SQLite.swift" "0.11.5"

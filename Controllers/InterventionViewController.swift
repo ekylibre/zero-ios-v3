@@ -9,6 +9,7 @@
 import UIKit
 import Apollo
 import CoreData
+import SideMenu
 
 class InterventionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -75,7 +76,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cropsButton.addTarget(self, action: #selector(presentInterventionsByCrop), for: .touchUpInside)
     menuButton.setImage(UIImage(named: "user")?.withRenderingMode(.alwaysTemplate), for: .normal)
     menuButton.tintColor = .white
-    menuButton.addTarget(self, action: #selector(presentLogoutAlert), for: .touchUpInside)
+    menuButton.addTarget(self, action: #selector(presentSideMenu), for: .touchUpInside)
 
     NSLayoutConstraint.activate([
       cropsButton.widthAnchor.constraint(equalToConstant: 32),
@@ -405,6 +406,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if indexPath != nil {
         let intervention = interventions[(indexPath?.row)!]
 
+        destVC.interventionType = intervention.type
         destVC.currentIntervention = intervention
         destVC.interventionState = intervention.status
       }
@@ -431,6 +433,11 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     performSegue(withIdentifier: "showInterventionsByCrop", sender: sender)
     collapseBottomView()
+  }
+
+  @objc private func presentSideMenu(sender: UIButton) {
+    collapseBottomView()
+    performSegue(withIdentifier: "presentSideMenu", sender: sender)
   }
 
   // MARK: - Actions
@@ -562,55 +569,5 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.isHidden = true
     heightConstraint.constant = 60
     createInterventionButton.isHidden = false
-  }
-
-  // MARK: - Logout
-
-  @objc private func presentLogoutAlert() {
-    let alert = UIAlertController(title: "disconnect_prompt".localized, message: nil, preferredStyle: .actionSheet)
-    let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
-    let logoutAction = UIAlertAction(title: "menu_logout".localized, style: .destructive, handler: { action in
-      self.logoutUser()
-    })
-
-    alert.addAction(cancelAction)
-    alert.addAction(logoutAction)
-    present(alert, animated: true)
-  }
-
-  private func logoutUser() {
-    let authentificationService = AuthentificationService(username: "", password: "")
-
-    authentificationService.logout()
-    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-    UserDefaults.standard.synchronize()
-    emptyAllCoreData()
-    navigationController?.popViewController(animated: true)
-  }
-
-  private func emptyAllCoreData() {
-    let entityNames = appDelegate.persistentContainer.managedObjectModel.entities.map({ (entity) -> String in
-      return entity.name!
-    })
-
-    for entityName in entityNames {
-      batchDeleteEntity(name: entityName)
-    }
-  }
-
-  private func batchDeleteEntity(name: String) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-    let request = NSBatchDeleteRequest(fetchRequest: fetch)
-
-    do {
-      try managedContext.execute(request)
-    } catch let error as NSError {
-      print("Could not remove data. \(error), \(error.userInfo)")
-    }
   }
 }
