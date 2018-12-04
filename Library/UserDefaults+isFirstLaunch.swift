@@ -19,4 +19,14 @@ extension UserDefaults {
     }
     return isFirstLaunch
   }
+
+  static func userIsLogged() -> Bool {
+    let userIsLogged = UserDefaults.standard.bool(forKey: "userIsLogged")
+
+    if !userIsLogged {
+      UserDefaults.standard.set(false, forKey: "userIsLogged")
+      UserDefaults.standard.synchronize()
+    }
+    return userIsLogged
+  }
 }

@@ -20,7 +20,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   @IBOutlet weak var forgottenPassword: UIButton!
 
   var authentificationService: AuthentificationService?
-  var buttonIsPressed: Bool = false
 
   // MARK: - Initialization
 
@@ -32,10 +31,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     super.viewDidLoad()
     super.hideKeyboardWhenTappedAround()
 
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
 
     tfUsername.delegate = self
@@ -44,23 +39,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
     forgottenPassword.underline()
 
-    struct staticIndex {
-      static var firstLaunch = false
+    authentificationService = AuthentificationService()
+    authentificationService?.setupOauthPasswordGrant(username: nil, password: nil)
+    if !UserDefaults.userIsLogged() && authentificationService?.oauth2?.accessToken != nil {
+      authentificationService?.logout()
     }
-    if !staticIndex.firstLaunch {
-      authentificationService = AuthentificationService(username: "", password: "")
-      if appDelegate.entityIsEmpty(entity: "User") && authentificationService?.oauth2.accessToken != nil {
-        authentificationService?.logout()
-      }
-      authentifyUser()
-      staticIndex.firstLaunch = true
-    }
+    authentifyUser(calledFromUserInteraction: false)
   }
 
   // MARK: - Navigation
 
   private func checkLoggedStatus(token: String?) {
-    if token == nil || !(authentificationService?.oauth2.hasUnexpiredAccessToken())! {
+    if token == nil || !(authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
         navigationController?.navigationBar.isHidden = false
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
@@ -74,9 +64,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         present(alert, animated: true)
       }
-    } else if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
+    } else if token != nil && (authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
       let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-      let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController") as UIViewController
+      let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController")
+        as UIViewController
 
       tfUsername.text = nil
       tfPassword.text = nil
@@ -103,48 +94,47 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
 
   // MARK: - Actions
 
-  private func authentifyUser() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
+  func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
+    var token: String?
 
-    if !appDelegate.entityIsEmpty(entity: "User") {
+    if firstLoggin {
       authentificationService?.authorize(presenting: self)
-      var token = authentificationService?.oauth2.accessToken
-
-      authentificationService?.oauth2.afterAuthorizeOrFail = { authParameters, error in
-        token = self.authentificationService?.oauth2.accessToken
+      authentificationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
+        token = self.authentificationService?.oauth2?.accessToken
         self.checkLoggedStatus(token: token)
       }
-      if token != nil && (authentificationService?.oauth2.hasUnexpiredAccessToken())! {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController")
-          as UIViewController
+    } else {
+       authentificationService?.authorize(presenting: self)
+       token = self.authentificationService?.oauth2?.accessToken
+       checkLoggedStatus(token: token)
+    }
+  }
 
-        navigationController?.pushViewController(interventionVC, animated: false)
-      }
-    } else if buttonIsPressed && tfUsername.text!.count > 0 {
-      authentificationService?.addNewUser(userName: tfUsername.text!)
-      authentifyUser()
+  private func authentifyUser(calledFromUserInteraction: Bool) {
+    if UserDefaults.userIsLogged() {
+      checkAuthentificationSuccessOrFailure(firstLoggin: false)
+    } else if calledFromUserInteraction {
+      checkAuthentificationSuccessOrFailure(firstLoggin: true)
     }
   }
 
   @IBAction func checkAuthentification(sender: Any) {
-    buttonIsPressed = true
-    authentificationService = AuthentificationService(username: tfUsername.text!, password: tfPassword.text!)
-    authentifyUser()
-    buttonIsPressed = false
+    authentificationService = AuthentificationService()
+    authentificationService?.setupOauthPasswordGrant(username: tfUsername.text, password: tfPassword.text)
+    authentifyUser(calledFromUserInteraction: true)
   }
 
   @IBAction func openForgottenPasswordLink(sender: UIButton) {
     var keys: NSDictionary!
+
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
       keys = NSDictionary(contentsOfFile: path)
-    }
-    if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
-      UIApplication.shared.open(URL(string: "\(keys["parseUrl"]!)/password/new")!,
-                                options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
-                                completionHandler: nil)
+      if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
+        UIApplication.shared.open(
+          URL(string: "\(keys["parseUrl"]!)/password/new")!,
+          options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil
+        )
+      }
     }
   }
 }
