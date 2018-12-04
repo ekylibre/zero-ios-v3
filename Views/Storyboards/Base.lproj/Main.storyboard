@@ -118,12 +118,85 @@
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="showAddInterventionVC" id="74J-jI-YTr"/>
                         <segue destination="pQK-Bk-vqJ" kind="showDetail" identifier="updateIntervention" id="sUz-8n-dYb"/>
                         <segue destination="6i8-BA-FKm" kind="presentation" identifier="showInterventionsByCrop" id="Og0-d3-16l"/>
+                        <segue destination="9l1-Yr-R77" kind="presentation" identifier="presentSideMenu" id="I0E-jY-LCq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PiJ-pd-vhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1rQ-td-wpq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1135" y="-100"/>
+        </scene>
+        <!--Side Menu Navigation Controller-->
+        <scene sceneID="8dl-6Y-rjj">
+            <objects>
+                <navigationController id="9l1-Yr-R77" customClass="SideMenuNavigationController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bya-P0-Hgw">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="SBV-qh-U1e" kind="relationship" relationship="rootViewController" id="dBQ-VV-Xzi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KWl-a1-a3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1998" y="-439"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="kv8-p2-alp">
+            <objects>
+                <tableViewController id="SBV-qh-U1e" customClass="MenuViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="use-70-pOj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <outlet property="dataSource" destination="SBV-qh-U1e" id="Ml3-Xc-1F0"/>
+                            <outlet property="delegate" destination="SBV-qh-U1e" id="Rdp-nd-uCd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="4kD-hC-P8e"/>
+                    <connections>
+                        <segue destination="Gei-ai-tdB" kind="show" identifier="presentTermsOfUse" id="Exg-ba-w1X"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bQb-sH-gNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2854" y="-439"/>
+        </scene>
+        <!--Terms of Use-->
+        <scene sceneID="2qB-NC-dMf">
+            <objects>
+                <viewController title="Terms of Use" id="Gei-ai-tdB" customClass="TermsOfUseViewController" customModule="clic_and_farm" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nRz-AA-FRE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOP-9E-wkP">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="81M-tr-iyv" firstAttribute="trailing" secondItem="uOP-9E-wkP" secondAttribute="trailing" id="Fn5-Hd-EOm"/>
+                            <constraint firstItem="uOP-9E-wkP" firstAttribute="leading" secondItem="81M-tr-iyv" secondAttribute="leading" id="YaO-JS-ndF"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="uOP-9E-wkP" secondAttribute="bottom" id="gte-Nh-uR6"/>
+                            <constraint firstItem="uOP-9E-wkP" firstAttribute="top" secondItem="81M-tr-iyv" secondAttribute="top" id="rbs-yR-72W"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="81M-tr-iyv"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="uOP-9E-wkP" id="5H2-s2-Yfg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dp7-Yd-UZ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3717.5999999999999" y="-439.43028485757122"/>
         </scene>
         <!--Interventions By Crop View Controller-->
         <scene sceneID="mjm-Z2-dcZ">
@@ -163,7 +236,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDt-wo-rZF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1535" y="634"/>
+            <point key="canvasLocation" x="1134" y="634"/>
         </scene>
         <!--Add Intervention View Controller-->
         <scene sceneID="PGn-fO-1Ks">
@@ -1476,7 +1549,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1991.2" y="-100.29985007496252"/>
+            <point key="canvasLocation" x="1998" y="277"/>
         </scene>
         <!--List Table View Controller-->
         <scene sceneID="Gxg-d7-MJI">
@@ -1524,7 +1597,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJ5-V0-hFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2873" y="-99"/>
+            <point key="canvasLocation" x="2854" y="277"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="qGL-rz-WS6">
@@ -1705,6 +1778,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="uas-Qa-jvK"/>
-        <segue reference="74J-jI-YTr"/>
+        <segue reference="tOu-ZL-mF8"/>
     </inferredMetricsTieBreakers>
 </document>
