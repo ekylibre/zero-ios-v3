@@ -31,11 +31,13 @@ extension InterventionViewController {
 
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
-    let authService = AuthentificationService(username: "", password: "")
-    let token = authService.oauth2.accessToken!
+    let authService = AuthentificationService()
 
-    configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
-    appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+    authService.setupOauthPasswordGrant(username: nil, password: nil)
+    if let token = authService.oauth2?.accessToken {
+      configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
+      appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+    }
   }
 
   func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
@@ -447,14 +449,8 @@ extension InterventionViewController {
 
       if let localArticle = localArticle {
         updateArticle(local: localArticle, updated: article)
-      } else {
-        let referenceIDIsNull = (article.referenceId == nil)
-        let referenceIDEqualZero = (article.referenceId == "0")
-        let predicate = NSPredicate(format: "referenceID == %@", article.referenceId!)
-
-        if !referenceIDIsNull && !referenceIDEqualZero && fetchArticle(type: type, predicate: predicate) == nil {
-          insertArticle(type, article)
-        }
+      } else if article.referenceId == nil {
+        insertArticle(type, article)
       }
     }
   }
