@@ -92,7 +92,7 @@ class MenuViewController: UITableViewController {
   }
 
   private func logoutUser() {
-    let authentificationService = AuthentificationService(username: "", password: "")
+    let authentificationService = AuthentificationService()
 
     authentificationService.logout()
     UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
