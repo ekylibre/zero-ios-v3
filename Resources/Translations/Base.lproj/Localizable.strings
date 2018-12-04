@@ -331,7 +331,8 @@
 
 // App strings
 "welcome_text" = "Welcome in Clic&Farm app! \nTo get started, sign in with your Ekylibre account…";
-"menu_logout" = "Log out";
+"terms_of_use" = "Terms of Use";
+"logout" = "Log Out";
 "cancel" = "Cancel";
 "done" = "Done";
 "validate" = "Validate";
