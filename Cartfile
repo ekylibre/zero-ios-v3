@@ -1,3 +1,4 @@
 github "p2/OAuth2"
 github "apollostack/apollo-ios"
 github "hackiftekhar/IQKeyboardManager"
+github "jonkykong/SideMenu" "master"
