@@ -75,6 +75,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
   }
 
+  @IBAction private func unwindToLoginVC(_ segue: UIStoryboardSegue) {}
+
   // MARK: - Text Field Delegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {

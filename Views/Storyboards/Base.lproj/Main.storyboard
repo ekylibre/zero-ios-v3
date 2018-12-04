@@ -158,9 +158,11 @@
                     <navigationItem key="navigationItem" id="4kD-hC-P8e"/>
                     <connections>
                         <segue destination="Gei-ai-tdB" kind="show" identifier="presentTermsOfUse" id="Exg-ba-w1X"/>
+                        <segue destination="viH-em-ncZ" kind="unwind" identifier="unwindToLoginVC" unwindAction="unwindToLoginVC:" id="6D3-na-kfi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQb-sH-gNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="viH-em-ncZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2854" y="-439"/>
         </scene>
@@ -1774,4 +1776,8 @@
         <image name="trash" width="32" height="32"/>
         <image name="warning" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uas-Qa-jvK"/>
+        <segue reference="tOu-ZL-mF8"/>
+    </inferredMetricsTieBreakers>
 </document>
