@@ -18,19 +18,18 @@ class InterventionMutationTests: XCTestCase {
   let networkTransport: HTTPNetworkTransport = {
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
-    let authService = AuthentificationService(username: "", password: "")
-    let token = authService.oauth2.accessToken!
-    configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
+    let authService = AuthentificationService()
+
+    authService.setupOauthPasswordGrant(username: nil, password: nil)
+    if let token = authService.oauth2?.accessToken {
+      configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
+      return HTTPNetworkTransport(url: url, configuration: configuation)
+    }
     return HTTPNetworkTransport(url: url, configuration: configuation)
   }()
 
-  let store = ApolloStore(cache: InMemoryNormalizedCache(records: [
-    "QUERY_ROOT": ["hero": Reference(key: "hero")],
-    "hero": ["__typename": "Droid", "name": "R2-D2"]
-    ]))
-
   override func setUp() {
-    client = ApolloClient(networkTransport: networkTransport, store: store)
+    client = ApolloClient(networkTransport: networkTransport)
     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
     interventionVC = storyboard.instantiateViewController(withIdentifier: "InterventionViewController")
       as? InterventionViewController
