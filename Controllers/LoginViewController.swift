@@ -125,13 +125,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   }
 
   @IBAction func openForgottenPasswordLink(sender: UIButton) {
-    var keys: NSDictionary!
-
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
-      keys = NSDictionary(contentsOfFile: path)
-      if UIApplication.shared.canOpenURL(URL(string: "\(keys["parseUrl"]!)/password/new")!) {
+      let keys = NSDictionary(contentsOfFile: path)
+      #if DEBUG
+      let url = keys?["testURL"]
+      #else
+      let url = keys?["releasedURL"]
+      #endif
+      if url != nil && UIApplication.shared.canOpenURL(URL(string: "\(url!)/password/new")!) {
         UIApplication.shared.open(
-          URL(string: "\(keys["parseUrl"]!)/password/new")!,
+          URL(string: "\(url!)/password/new")!,
           options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil
         )
       }

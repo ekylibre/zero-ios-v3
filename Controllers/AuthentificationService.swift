@@ -20,14 +20,23 @@ class AuthentificationService {
   // MARK: - Initialization
 
   public func setupOauthPasswordGrant(username: String?, password: String?) {
-    var keys: NSDictionary!
-
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
-      keys = NSDictionary(contentsOfFile: path)
+      let keys = NSDictionary(contentsOfFile: path)
+
+      #if DEBUG
+      let clientID = keys?["testClientID"] as? String
+      let clientSecret = keys?["testClientSecret"] as? String
+      let url = keys?["testURL"] as? String
+      #else
+      let clientID = keys!["releasedClientID"] as? String
+      let clientSecret = keys!["releasedClientSecret"] as? String
+      let url = keys!["releasedURL"] as? String
+      #endif
+
       oauth2 = OAuth2PasswordGrant(settings: [
-        "client_id": keys["parseClientId"]!,
-        "client_secret": keys["parseClientSecret"]!,
-        "token_uri": "\(keys["parseUrl"]!)/oauth/token",
+        "client_id": clientID!,
+        "client_secret": clientSecret!,
+        "token_uri": "\(url!)/oauth/token",
         "username": username as Any,
         "password": password as Any,
         "grant_type": "password",
