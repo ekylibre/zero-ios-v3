@@ -25,7 +25,6 @@ class ReadOnlyEquipmentsTests: XCTestCase {
     super.tearDown()
   }
 
-
   func test_updateEquipmentsCountLabelWithoutEquipment_shouldNotChange() {
     // When
     addInterventionVC.selectedEquipments.removeAll()
