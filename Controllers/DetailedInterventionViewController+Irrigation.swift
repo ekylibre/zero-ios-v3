@@ -67,7 +67,7 @@ extension AddInterventionViewController: UITextFieldDelegate {
     }
   }
 
-  @IBAction func tapUnit() {
+  @IBAction private func tapUnit() {
     customPickerView.values = ["CUBIC_METER", "LITER", "HECTOLITER"]
     customPickerView.pickerView.reloadComponent(0)
     customPickerView.closure = { (_ value: String) in

@@ -188,17 +188,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
   }
 
-  func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
-    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
-      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
-        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
-          return false
-        }
-      }
-    }
-    return true
-  }
-
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
@@ -414,6 +403,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Actions
 
+  private func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
+    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
+      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
+        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   @objc private func changeSegment() {
     let searchText = searchBar.text!
     let createButtonTitles = [
@@ -488,7 +488,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  @objc func createInput() {
+  @objc private func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       if !checkSeedName() {

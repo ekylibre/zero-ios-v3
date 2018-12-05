@@ -166,28 +166,6 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     return cell
   }
 
-  private func getPlotSurfaceArea(_ crops: [Crop]) -> Float {
-    var surfaceArea: Float = 0
-
-    for crop in crops {
-      surfaceArea += crop.surfaceArea
-    }
-    return surfaceArea
-  }
-
-  func showPlotIfReadOnly() {
-    if interventionState == InterventionState.Validated.rawValue {
-      for index in 0..<selectedCrops.count {
-        let indexPath = IndexPath.init(row: index, section: 0)
-
-        selectedIndexPath = indexPath
-        if !indexPaths.contains(selectedIndexPath!) {
-          indexPaths += [selectedIndexPath!]
-        }
-      }
-    }
-  }
-
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     selectedIndexPath = indexPath
     let cell = tableView.cellForRow(at: indexPath) as! PlotCell
@@ -209,6 +187,28 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
       return CGFloat(count * 60 + 15)
     }
     return 60
+  }
+
+  private func getPlotSurfaceArea(_ crops: [Crop]) -> Float {
+    var surfaceArea: Float = 0
+
+    for crop in crops {
+      surfaceArea += crop.surfaceArea
+    }
+    return surfaceArea
+  }
+
+  private func showPlotIfReadOnly() {
+    if interventionState == InterventionState.Validated.rawValue {
+      for index in 0..<selectedCrops.count {
+        let indexPath = IndexPath.init(row: index, section: 0)
+
+        selectedIndexPath = indexPath
+        if !indexPaths.contains(selectedIndexPath!) {
+          indexPaths += [selectedIndexPath!]
+        }
+      }
+    }
   }
 
   // MARK: - Core Data
@@ -412,7 +412,7 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  func initCropsViewInAppropriateMode(view: CropView) {
+  private func initCropsViewInAppropriateMode(view: CropView) {
     if interventionState != nil {
       if selectedCrops.contains(view.crop) {
         view.checkboxImageView.isHighlighted = true

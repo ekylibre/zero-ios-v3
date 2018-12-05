@@ -516,7 +516,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     group.wait()
   }
 
-  func updateInterventionIfNeeded() {
+  private func updateInterventionIfNeeded() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -560,7 +560,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @objc func collapseBottomView() {
+  @objc private func collapseBottomView() {
     for index in 0...6 {
       interventionTypeButtons[index].isHidden = true
       interventionTypeLabels[index].isHidden = true

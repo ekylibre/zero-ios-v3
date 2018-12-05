@@ -26,27 +26,27 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
   var addInterventionController: AddInterventionViewController?
   var indexPath: IndexPath!
 
-  @IBAction func removeCell(_ sender: UIButton) {
+  @IBAction private func removeCell(_ sender: UIButton) {
     cellDelegate?.removeHarvestCell(indexPath)
   }
 
-  @IBAction func defineUnit(_ sender: Any) {
+  @IBAction private func defineUnit(_ sender: Any) {
     cellDelegate?.defineUnit(indexPath)
   }
 
-  @IBAction func defineStorage(_ sender: Any) {
+  @IBAction private func defineStorage(_ sender: Any) {
     cellDelegate?.defineStorage(indexPath)
   }
 
-  @IBAction func defineQuantity(_ sender: Any) {
+  @IBAction private func defineQuantity(_ sender: Any) {
     addInterventionController?.selectedHarvests[indexPath.row].quantity = (quantity.text! as NSString).doubleValue
   }
 
-  @IBAction func defineNumber(_ sender: Any) {
+  @IBAction private func defineNumber(_ sender: Any) {
     addInterventionController?.selectedHarvests[indexPath.row].number = number.text!
   }
 
-  @IBAction func createStorage(_ sender: Any) {
+  @IBAction private func createStorage(_ sender: Any) {
     addInterventionController?.dimView.isHidden = false
     addInterventionController?.storageCreationView.isHidden = false
   }

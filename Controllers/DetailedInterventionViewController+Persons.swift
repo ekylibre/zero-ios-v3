@@ -93,7 +93,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction func tapPersonsView() {
+  @IBAction private func tapPersonsView() {
     let shouldExpand = (personsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedPersons[0].count > 10) ? 10 * 65 : selectedPersons[0].count * 65
 
@@ -123,14 +123,14 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc func updateIsDriver(sender: UISwitch) {
+  @objc private func updateIsDriver(sender: UISwitch) {
     let cell = sender.superview?.superview as! SelectedPersonCell
     let indexPath = selectedPersonsTableView.indexPath(for: cell)
 
     selectedPersons[1][indexPath!.row].setValue(sender.isOn, forKey: "isDriver")
   }
 
-  @objc func tapPersonsDeleteButton(sender: UIButton) {
+  @objc private func tapPersonsDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedPersonCell
     let indexPath = selectedPersonsTableView.indexPath(for: cell)!
     let alert = UIAlertController(title: "delete_person_prompt".localized, message: nil, preferredStyle: .alert)

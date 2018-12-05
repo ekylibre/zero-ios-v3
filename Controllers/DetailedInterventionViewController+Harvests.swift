@@ -26,7 +26,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     setupStorageCreationView()
   }
 
-  func defineUnit(_ indexPath: IndexPath) {
+  internal func defineUnit(_ indexPath: IndexPath) {
     customPickerView.values = ["KILOGRAM", "QUINTAL", "TON"]
     customPickerView.pickerView.reloadComponent(0)
     customPickerView.closure = { (_ value: String) in
@@ -37,7 +37,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     cellIndexPath = indexPath
   }
 
-  func defineStorage(_ indexPath: IndexPath) {
+  internal func defineStorage(_ indexPath: IndexPath) {
     if storages.count > 0 {
       customPickerView.values = fetchStoragesName()
       customPickerView.pickerView.reloadComponent(0)
@@ -80,7 +80,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   // MARK: - Actions
 
-  @IBAction func tapHarvestView() {
+  @IBAction private func tapHarvestView() {
     let shouldExpand = (harvestViewHeightConstraint.constant == 70)
     let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 150 : selectedHarvests.count * 150
 
@@ -154,7 +154,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     customPickerView.isHidden = false
   }
 
-  func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
+  private func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -172,7 +172,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     return nil
   }
 
-  func fetchStoragesName() -> [String]? {
+  private func fetchStoragesName() -> [String]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -230,7 +230,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
   }
 
-  @IBAction func changeHarvestNature(_ sender: UIButton) {
+  @IBAction private func changeHarvestNature(_ sender: UIButton) {
     customPickerView.values = ["GRAIN", "SILAGE", "STRAW"]
     customPickerView.pickerView.reloadComponent(0)
     customPickerView.closure = { (_ value: String) in
@@ -266,7 +266,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     present(alert, animated: true)
   }
 
-  @IBAction func addHarvest(_ sender: UIButton) {
+  @IBAction private func addHarvest(_ sender: UIButton) {
     let isCollapsed = harvestViewHeightConstraint.constant == 70
     createHarvest(nil, nil, nil, nil, nil)
     if selectedHarvests.count > 0 {
@@ -297,11 +297,6 @@ extension AddInterventionViewController: HarvestCellDelegate {
       harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
       harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
     }
-    showEntitiesNumber(
-      entities: selectedInputs,
-      constraint: inputsHeightConstraint,
-      numberLabel: inputsCountLabel,
-      addEntityButton: inputsAddButton)
   }
 
   private func setupObjectsLayer(_ button: UIButton, _ textField: UITextField) {

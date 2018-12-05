@@ -108,7 +108,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     cellIndexPath = indexPath
   }
 
-  @IBAction func openInputsSelectionView(_ sender: Any) {
+  @IBAction private func openInputsSelectionView(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
     inputsSelectionView.tableView.reloadData()
@@ -117,7 +117,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     })
   }
 
-  @IBAction func tapInputsView() {
+  @IBAction private func tapInputsView() {
     let shouldExpand = (inputsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedInputs.count > 10) ? 10 * 110 : selectedInputs.count * 110
 
@@ -326,6 +326,18 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func updateAllQuantityLabels() {
     for (index, _) in selectedInputs.enumerated() {
       updateQuantityLabel(indexPath: IndexPath(row: index, section: 0))
+    }
+  }
+
+  private func displayInputQuantityInReadOnlyMode(quantity: String?, unit: String?, cell: SelectedInputCell) {
+    if interventionState == InterventionState.Validated.rawValue {
+      cell.quantityTextField.placeholder = quantity
+      cell.unitButton.setTitle(unit?.localized, for: .normal)
+      cell.unitButton.setTitleColor(.lightGray, for: .normal)
+    } else if quantity == "0" || quantity == nil {
+      cell.quantityTextField.placeholder = "0"
+    } else {
+      cell.quantityTextField.text = quantity
     }
   }
 

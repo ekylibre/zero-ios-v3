@@ -244,7 +244,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     cellDelegate?.saveSelectedRow(indexPath)
   }
 
-  @objc func removeCell() {
+  @objc private func removeCell() {
     cellDelegate?.removeInputCell(indexPath)
   }
 
