@@ -433,6 +433,8 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "implantation_on_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
+"unable_load_terms" = "Impossible de Charger les Conditions d'Utilisation";
+"try_again_later" = "Veuillez réessayer plus tard.";
 
 "location_request_title" = "Services de Localisation Désactivés";
 "location_request_message" = "Veuillez activer les services de localisation.";

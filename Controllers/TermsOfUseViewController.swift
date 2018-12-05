@@ -47,5 +47,14 @@ class TermsOfUseViewController: UIViewController, WKNavigationDelegate {
 
   func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
     activityIndicator.stopAnimating()
+    presentFailAlert()
+  }
+
+  private func presentFailAlert() {
+    let alert = UIAlertController(title: "unable_load_terms".localized, message: "try_again_later".localized,
+                                  preferredStyle: .alert)
+
+    alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .cancel, handler: nil))
+    present(alert, animated: true)
   }
 }
