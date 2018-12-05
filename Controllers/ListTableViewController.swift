@@ -15,13 +15,12 @@ class ListTableViewController: UITableViewController {
   var delegate: WriteValueBackDelegate?
   var lastSelectedValue: String?
   var rawStrings: [String]!
-  var needToSort = true
   var tag: Int!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    needToSort ? sortByLocales() : nil
+    sortByLocales()
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.tableFooterView = UIView()
     scrollToLastSelectedValue()
