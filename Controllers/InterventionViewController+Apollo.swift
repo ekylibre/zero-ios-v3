@@ -29,7 +29,11 @@ extension InterventionViewController {
       return
     }
 
+    #if DEBUG
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
+    #else
+    let url = URL(string: "https://api.ekylibre.com/v1/graphql")!
+    #endif
     let configuation = URLSessionConfiguration.default
     let authService = AuthentificationService()
 
