@@ -31,7 +31,7 @@ class IrrigationTests: XCTestCase {
     let unit = "HECTOLITER"
 
     // When
-    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedCrops.append(Crop())
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
@@ -49,7 +49,7 @@ class IrrigationTests: XCTestCase {
     let unit = "HECTOLITER"
 
     // When
-    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedCrops.append(Crop())
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
@@ -82,7 +82,7 @@ class IrrigationTests: XCTestCase {
     let unit = "HECTOLITER"
 
     // When
-    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedCrops.append(Crop())
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = nil
@@ -100,7 +100,7 @@ class IrrigationTests: XCTestCase {
     let unit = "HECTOLITER"
 
     // When
-    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedCrops.append(Crop())
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
@@ -117,7 +117,7 @@ class IrrigationTests: XCTestCase {
     let unit = "LITER"
 
     // When
-    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedCrops.append(Crop())
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = nil
@@ -135,7 +135,7 @@ class IrrigationTests: XCTestCase {
     let unit = "LITER"
 
     // When
-    addInterventionVC.cropsView.selectedCropsCount = 1
+    addInterventionVC.cropsView.selectedCrops.append(Crop())
     addInterventionVC.cropsView.selectedSurfaceArea = 1
     addInterventionVC.totalLabel.text = "selected"
     addInterventionVC.irrigationVolumeTextField.text = String(volume)
