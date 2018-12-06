@@ -25,9 +25,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     nameTextField.placeholder = "name".localized
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
-    nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
     nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
