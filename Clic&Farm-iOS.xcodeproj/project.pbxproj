@@ -50,7 +50,6 @@
 		0479C42E21A40936008DA4C2 /* DetailedInterventionViewController+Irrigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41821A40935008DA4C2 /* DetailedInterventionViewController+Irrigation.swift */; };
 		0479C42F21A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41921A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift */; };
 		0479C43021A40936008DA4C2 /* InterventionsByCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41A21A40936008DA4C2 /* InterventionsByCropViewController.swift */; };
-		0479C43121A40936008DA4C2 /* UnitMeasurePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */; };
 		0479C43221A40936008DA4C2 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41C21A40936008DA4C2 /* ListTableViewController.swift */; };
 		0479C43321A40BD8008DA4C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
 		0479C43421A40CCB008DA4C2 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
@@ -189,7 +188,6 @@
 		0479C41821A40935008DA4C2 /* DetailedInterventionViewController+Irrigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Irrigation.swift"; sourceTree = "<group>"; };
 		0479C41921A40936008DA4C2 /* DetailedInterventionViewController+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Inputs.swift"; sourceTree = "<group>"; };
 		0479C41A21A40936008DA4C2 /* InterventionsByCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionsByCropViewController.swift; sourceTree = "<group>"; };
-		0479C41B21A40936008DA4C2 /* UnitMeasurePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitMeasurePickerView.swift; sourceTree = "<group>"; };
 		0479C41C21A40936008DA4C2 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		0479C43A21A40FA1008DA4C2 /* CustomTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTypes.swift; sourceTree = "<group>"; };
 		048D2AF32178C8D6002EDF62 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };

@@ -68,8 +68,11 @@ extension AddInterventionViewController: UITextFieldDelegate {
   }
 
   @IBAction private func tapUnit() {
+    guard let selectedUnit = irrigationUnitButton.title(for: .normal) else { return }
+
     customPickerView.values = ["CUBIC_METER", "LITER", "HECTOLITER"]
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedUnit)
     customPickerView.closure = { (_ value: String) in
       let volume = self.irrigationVolumeTextField.text!.floatValue
 
