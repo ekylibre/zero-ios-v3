@@ -24,9 +24,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     let nameTextField = UITextField(frame: CGRect.zero)
     nameTextField.placeholder = "name".localized
     nameTextField.delegate = self
-    nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
     nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
