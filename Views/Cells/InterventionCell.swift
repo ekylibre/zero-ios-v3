@@ -10,7 +10,7 @@ import UIKit
 
 class InterventionCell: UITableViewCell {
 
-  // MARK:- Properties
+  // MARK: - Properties
 
   lazy var typeImageView: UIImageView = {
     let typeImageView = UIImageView(frame: CGRect.zero)

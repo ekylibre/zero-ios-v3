@@ -4,7 +4,7 @@
 
  Created by Jonathan DE HAAY on 05/09/2018.
  Copyright © 2018 Ekylibre. All rights reserved.
-*/
+ */
 
 "locale" = "en_EN";
 
@@ -299,9 +299,13 @@
 "TON_PER_SQUARE_METER" = "ton/m²";
 
 // Other units
-"METER" = "Meter";
-"UNITY" = "Unity";
-"THOUSAND" = "Thousand";
+"METER" = "meter";
+"UNITY" = "unity";
+"UNITY_PER_HECTARE" = "unity/ha";
+"UNITY_PER_SQUARE_METER" = "unity/m²";
+"THOUSAND" = "thousand";
+"THOUSAND_PER_HECTARE" = "thousand/ha";
+"THOUSAND_PER_SQUARE_METER" = "thousand/m²";
 "FRENCH_HORSEPOWER" = "French horsepower";
 
 // Equipment indicators
@@ -432,6 +436,8 @@
 "you_must_create_a_harvest_load" = "You must add a load to create a crop!";
 "confirm_deleting_intervention" = "Are you sure you want to delete the intervention?";
 "implantation_on_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
+"unable_load_terms" = "Unable to Load Terms of Use";
+"try_again_later" = "Please try again later.";
 
 "location_request_title" = "Location Services Disabled";
 "location_request_message" = "Please enable location services.";

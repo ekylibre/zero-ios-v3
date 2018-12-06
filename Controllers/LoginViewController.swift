@@ -75,6 +75,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
   }
 
+  @IBAction private func unwindToLoginVC(_ segue: UIStoryboardSegue) {}
+
   // MARK: - Text Field Delegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -94,7 +96,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
 
   // MARK: - Actions
 
-  func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
+  private func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
     var token: String?
 
     if firstLoggin {
@@ -103,10 +105,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         token = self.authentificationService?.oauth2?.accessToken
         self.checkLoggedStatus(token: token)
       }
+    } else if authentificationService?.oauth2 != nil && authentificationService!.oauth2!.hasUnexpiredAccessToken() {
+      authentificationService?.authorize(presenting: self)
+      token = self.authentificationService?.oauth2?.accessToken
+      checkLoggedStatus(token: token)
     } else {
-       authentificationService?.authorize(presenting: self)
-       token = self.authentificationService?.oauth2?.accessToken
-       checkLoggedStatus(token: token)
+      authentificationService?.authorize(presenting: self)
+      token = self.authentificationService?.oauth2?.accessToken
+      checkLoggedStatus(token: token)
     }
   }
 
@@ -118,13 +124,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
   }
 
-  @IBAction func checkAuthentification(sender: Any) {
+  @IBAction private func checkAuthentification(sender: Any) {
     authentificationService = AuthentificationService()
     authentificationService?.setupOauthPasswordGrant(username: tfUsername.text, password: tfPassword.text)
     authentifyUser(calledFromUserInteraction: true)
   }
 
-  @IBAction func openForgottenPasswordLink(sender: UIButton) {
+  @IBAction private func openForgottenPasswordLink(sender: UIButton) {
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
       let keys = NSDictionary(contentsOfFile: path)
       #if DEBUG

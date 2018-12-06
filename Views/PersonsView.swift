@@ -90,10 +90,6 @@ class PersonsView: SelectionView, UISearchBarDelegate, UITableViewDataSource, UI
 
   // MARK: - Table view
 
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return isSearching ? filteredPersons.count : persons.count
   }

@@ -97,7 +97,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction func tapMaterialsView() {
+  @IBAction private func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
@@ -127,7 +127,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc func updateMaterialQuantity(sender: UITextField) {
+  @objc private func updateMaterialQuantity(sender: UITextField) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)
 
@@ -135,10 +135,17 @@ extension AddInterventionViewController {
   }
 
   @objc private func showMaterialUnits() {
-    performSegue(withIdentifier: "showMaterialUnits", sender: self)
+    customPickerView.values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                               "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      self.materialsSelectionView.creationView.unitButton.setTitle(value.localized, for: .normal)
+      self.selectedValue = value
+    }
+    customPickerView.isHidden = false
   }
 
-  @objc func tapDeleteButton(sender: UIButton) {
+  @objc private func tapDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)!
     let alert = UIAlertController(title: "delete_material_prompt".localized, message: nil, preferredStyle: .alert)
@@ -174,10 +181,12 @@ extension AddInterventionViewController {
   @objc private func showSelectedMaterialUnits(sender: UIButton) {
     guard let cell = sender.superview?.superview as? UITableViewCell else { return }
     guard let indexPath = selectedMaterialsTableView.indexPath(for: cell) else { return }
+    guard let selectedUnit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String else { return }
 
     customPickerView.values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                                "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedUnit.localized)
     customPickerView.closure = { (_ value: String) in
       self.selectedMaterials[1][indexPath.row].setValue(value, forKey: "unit")
       self.selectedMaterialsTableView.reloadData()
@@ -207,7 +216,6 @@ extension AddInterventionViewController {
       }
       cell.nameLabel.text = name
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)

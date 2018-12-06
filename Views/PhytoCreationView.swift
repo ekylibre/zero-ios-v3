@@ -26,9 +26,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
     nameTextField.tag = 10
-    nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
     nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
@@ -51,9 +49,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     firmNameTextField.autocorrectionType = .no
     firmNameTextField.delegate = self
     firmNameTextField.tag = 11
-    firmNameTextField.borderStyle = .none
     firmNameTextField.layer.backgroundColor = UIColor.white.cgColor
-    firmNameTextField.layer.masksToBounds = false
     firmNameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     firmNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     firmNameTextField.layer.shadowOpacity = 1
@@ -69,9 +65,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     maaTextField.autocorrectionType = .no
     maaTextField.delegate = self
     maaTextField.tag = 12
-    maaTextField.borderStyle = .none
     maaTextField.layer.backgroundColor = UIColor.white.cgColor
-    maaTextField.layer.masksToBounds = false
     maaTextField.layer.shadowColor = UIColor.darkGray.cgColor
     maaTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     maaTextField.layer.shadowOpacity = 1
@@ -87,9 +81,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     reentryDelayTextField.autocorrectionType = .no
     reentryDelayTextField.delegate = self
     reentryDelayTextField.tag = 13
-    reentryDelayTextField.borderStyle = .none
     reentryDelayTextField.layer.backgroundColor = UIColor.white.cgColor
-    reentryDelayTextField.layer.masksToBounds = false
     reentryDelayTextField.layer.shadowColor = UIColor.darkGray.cgColor
     reentryDelayTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     reentryDelayTextField.layer.shadowOpacity = 1
@@ -98,13 +90,33 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     return reentryDelayTextField
   }()
 
-  lazy var unitLabel: UILabel = {
+  lazy var reentryUnitLabel: UILabel = {
     let unitLabel = UILabel(frame: CGRect.zero)
     unitLabel.text = "in_hours".localized.lowercased()
     unitLabel.font = UIFont.systemFont(ofSize: 14)
     unitLabel.textColor = UIColor.lightGray
     unitLabel.translatesAutoresizingMaskIntoConstraints = false
     return unitLabel
+  }()
+
+  lazy var unitLabel: UILabel = {
+    let unitLabel = UILabel(frame: CGRect.zero)
+    unitLabel.text = "chose_unit".localized
+    unitLabel.font = UIFont.systemFont(ofSize: 15)
+    unitLabel.textColor = AppColor.TextColors.DarkGray
+    unitLabel.translatesAutoresizingMaskIntoConstraints = false
+    return unitLabel
+  }()
+
+  lazy var unitButton: UIButton = {
+    let unitButton = UIButton(frame: CGRect.zero)
+    unitButton.setTitle("LITER".localized, for: .normal)
+    unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    unitButton.setTitleColor(UIColor.black, for: .normal)
+    unitButton.contentHorizontalAlignment = .leading
+    unitButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
+    unitButton.translatesAutoresizingMaskIntoConstraints = false
+    return unitButton
   }()
 
   lazy var cancelButton: UIButton = {
@@ -127,6 +139,8 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
+  var rawUnit = "LITER"
+
   // MARK: - Initialization
 
   override init(frame: CGRect) {
@@ -145,7 +159,9 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     addSubview(firmNameTextField)
     addSubview(maaTextField)
     addSubview(reentryDelayTextField)
+    addSubview(reentryUnitLabel)
     addSubview(unitLabel)
+    addSubview(unitButton)
     addSubview(cancelButton)
     addSubview(createButton)
     setupLayout()
@@ -171,8 +187,13 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
       reentryDelayTextField.topAnchor.constraint(equalTo: maaTextField.bottomAnchor, constant: 35),
       reentryDelayTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       reentryDelayTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      unitLabel.topAnchor.constraint(equalTo: reentryDelayTextField.bottomAnchor, constant: 5),
+      reentryUnitLabel.topAnchor.constraint(equalTo: reentryDelayTextField.bottomAnchor, constant: 5),
+      reentryUnitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitLabel.topAnchor.constraint(equalTo: reentryUnitLabel.bottomAnchor, constant: 30),
       unitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
+      unitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.trailingAnchor.constraint(equalToSystemSpacingAfter: trailingAnchor, multiplier: 60),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),

@@ -299,9 +299,13 @@
 "TON_PER_SQUARE_METER" = "t/m²";
 
 // Other units
-"METER" = "Mètre";
-"UNITY" = "Unité";
-"THOUSAND" = "Millier";
+"METER" = "mètre";
+"UNITY" = "unité";
+"UNITY_PER_HECTARE" = "unité/ha";
+"UNITY_PER_SQUARE_METER" = "unité/m²";
+"THOUSAND" = "millier";
+"THOUSAND_PER_HECTARE" = "millier/ha";
+"THOUSAND_PER_SQUARE_METER" = "millier/m²";
 "FRENCH_HORSEPOWER" = "Cheval-vapeur français (ch)";
 
 // Equipment indicators
@@ -433,6 +437,8 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "implantation_on_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
+"unable_load_terms" = "Impossible de Charger les Conditions d'Utilisation";
+"try_again_later" = "Veuillez réessayer plus tard.";
 
 "location_request_title" = "Services de Localisation Désactivés";
 "location_request_message" = "Veuillez activer les services de localisation.";

@@ -1,5 +1,5 @@
 //
-//  HandleKeyboard.swift
+//  UIViewController+Keyboard.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 14/09/2018.
@@ -15,7 +15,7 @@ extension UIViewController {
     view.addGestureRecognizer(tap)
   }
 
-  @objc func dismissKeyboard() {
+  @objc private func dismissKeyboard() {
     view.endEditing(true)
     view.frame.origin.y = 0
   }
