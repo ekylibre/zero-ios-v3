@@ -32,7 +32,7 @@
 		047109332180716100DC262C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		0479C41D21A40936008DA4C2 /* AddInterventionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */; };
 		0479C41E21A40936008DA4C2 /* DetailedInterventionViewController+Equipments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */; };
-		0479C41F21A40936008DA4C2 /* HandleKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40921A40935008DA4C2 /* HandleKeyboard.swift */; };
+		0479C41F21A40936008DA4C2 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40921A40935008DA4C2 /* UIViewController+Keyboard.swift */; };
 		0479C42021A40936008DA4C2 /* DetailedInterventionViewController+Harvests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */; };
 		0479C42121A40936008DA4C2 /* DetailedInterventionViewController+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40B21A40935008DA4C2 /* DetailedInterventionViewController+Weather.swift */; };
 		0479C42221A40936008DA4C2 /* HandleAddInterventionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40C21A40935008DA4C2 /* HandleAddInterventionErrors.swift */; };
@@ -170,7 +170,7 @@
 		045F6F8F219EBD2700308D8B /* InputsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputsTests.swift; sourceTree = "<group>"; };
 		0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterventionViewController.swift; sourceTree = "<group>"; };
 		0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Equipments.swift"; sourceTree = "<group>"; };
-		0479C40921A40935008DA4C2 /* HandleKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleKeyboard.swift; sourceTree = "<group>"; };
+		0479C40921A40935008DA4C2 /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Harvests.swift"; sourceTree = "<group>"; };
 		0479C40B21A40935008DA4C2 /* DetailedInterventionViewController+Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Weather.swift"; sourceTree = "<group>"; };
 		0479C40C21A40935008DA4C2 /* HandleAddInterventionErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleAddInterventionErrors.swift; sourceTree = "<group>"; };
@@ -335,7 +335,6 @@
 			isa = PBXGroup;
 			children = (
 				0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */,
-				0479C41121A40935008DA4C2 /* AuthentificationService.swift */,
 				0479C41421A40935008DA4C2 /* DefineInterventionsDisplayMode.swift */,
 				0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */,
 				0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */,
@@ -346,7 +345,6 @@
 				0479C40B21A40935008DA4C2 /* DetailedInterventionViewController+Weather.swift */,
 				0479C41021A40935008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift */,
 				0479C40C21A40935008DA4C2 /* HandleAddInterventionErrors.swift */,
-				0479C40921A40935008DA4C2 /* HandleKeyboard.swift */,
 				0479C41A21A40936008DA4C2 /* InterventionsByCropViewController.swift */,
 				0479C40D21A40935008DA4C2 /* InterventionsByCropViewController+GPS.swift */,
 				0479C40E21A40935008DA4C2 /* InterventionViewController.swift */,
@@ -393,6 +391,7 @@
 		047BF0B22105D20B009F3945 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0479C41121A40935008DA4C2 /* AuthentificationService.swift */,
 				6B3A01E521B5587C003EDB10 /* Command.swift */,
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
 				041028AA2191ACBD0015978B /* DateConverter.swift */,
@@ -421,6 +420,7 @@
 				6BDA19AA2191D2CF00726D4A /* String+Subscript.swift */,
 				048D2AF52178C8D6002EDF62 /* UIApplication+StatusBar.swift */,
 				6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */,
+				0479C40921A40935008DA4C2 /* UIViewController+Keyboard.swift */,
 				048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */,
 			);
 			path = Library;
@@ -702,7 +702,7 @@
 				6B3A01E021B5346D003EDB10 /* SideMenuNavigationController.swift in Sources */,
 				04998B86217DB8DF000A5D2F /* EquipmentsView.swift in Sources */,
 				041248082179C05900A78D08 /* InterventionType.swift in Sources */,
-				0479C41F21A40936008DA4C2 /* HandleKeyboard.swift in Sources */,
+				0479C41F21A40936008DA4C2 /* UIViewController+Keyboard.swift in Sources */,
 				04998B80217DB8DF000A5D2F /* CustomPickerView.swift in Sources */,
 				0479C43021A40936008DA4C2 /* InterventionsByCropViewController.swift in Sources */,
 				04998B8B217DB8DF000A5D2F /* HarvestCell.swift in Sources */,

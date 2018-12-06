@@ -113,7 +113,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @IBAction func setTemperatureToNegative(_ sender: UIButton) {
+  @IBAction private func setTemperatureToNegative(_ sender: UIButton) {
     if temperatureSign.title(for: .normal) == "-" {
       temperatureSign.setTitle("+", for: .normal)
     } else {
@@ -142,7 +142,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @IBAction func tapWeatherView(_ sender: Any) {
+  @IBAction private func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
     view.endEditing(true)
@@ -161,7 +161,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @IBAction func selectWeather(_ sender: UIButton) {
+  @IBAction private func selectWeather(_ sender: UIButton) {
     let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW",
                                "THUNDERSTORM"]
 
@@ -178,7 +178,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc func saveCurrentWeather() {
+  @objc private func saveCurrentWeather() {
     checkTemperatureTextField()
     if temperatureTextField.text == "" && windSpeedTextField.text == "" {
       if weather.weatherDescription != nil {

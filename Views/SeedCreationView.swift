@@ -67,9 +67,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     varietyTextField.placeholder = "variety".localized
     varietyTextField.autocorrectionType = .no
     varietyTextField.delegate = self
-    varietyTextField.borderStyle = .none
     varietyTextField.layer.backgroundColor = UIColor.white.cgColor
-    varietyTextField.layer.masksToBounds = false
     varietyTextField.layer.shadowColor = UIColor.darkGray.cgColor
     varietyTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     varietyTextField.layer.shadowOpacity = 1

@@ -1131,7 +1131,7 @@ extension InterventionViewController {
     }
   }
 
-  func updateEquipments(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
+  private func updateEquipments(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsFetchRequest: NSFetchRequest<InterventionEquipment> = InterventionEquipment.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1151,7 +1151,7 @@ extension InterventionViewController {
     }
   }
 
-  func updatePersons(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
+  private func updatePersons(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let personsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1171,7 +1171,7 @@ extension InterventionViewController {
     }
   }
 
-  func deleteInterventionInputs(_ entityName: String, intervention: Intervention) {
+  private func deleteInterventionInputs(_ entityName: String, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let inputsFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1189,7 +1189,7 @@ extension InterventionViewController {
     }
   }
 
-  func updateInputs(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Intervention) {
+  private func updateInputs(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Intervention) {
     deleteInterventionInputs("InterventionSeed", intervention: intervention)
     deleteInterventionInputs("InterventionPhytosanitary", intervention: intervention)
     deleteInterventionInputs("InterventionFertilizer", intervention: intervention)
@@ -1199,7 +1199,7 @@ extension InterventionViewController {
     }
   }
 
-  func updateIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
+  private func updateIntervention(fetchedIntervention: InterventionQuery.Data.Farm.Intervention) {
     let predicate = NSPredicate(format: "ekyID == %d", Int32(fetchedIntervention.id)!)
     var intervention = returnEntityIfSame(entityName: "Intervention", predicate: predicate) as? Intervention
 
@@ -1479,7 +1479,7 @@ extension InterventionViewController {
     return id
   }
 
-  func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
+  private func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }

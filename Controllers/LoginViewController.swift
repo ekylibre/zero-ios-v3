@@ -96,7 +96,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
 
   // MARK: - Actions
 
-  func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
+  private func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
     var token: String?
 
     if firstLoggin {
@@ -111,10 +111,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       checkLoggedStatus(token: token)
     } else {
       authentificationService?.authorize(presenting: self)
-      authentificationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
-        token = self.authentificationService?.oauth2?.accessToken
-        self.checkLoggedStatus(token: token)
-      }
+      token = self.authentificationService?.oauth2?.accessToken
+      checkLoggedStatus(token: token)
     }
   }
 
@@ -126,13 +124,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
   }
 
-  @IBAction func checkAuthentification(sender: Any) {
+  @IBAction private func checkAuthentification(sender: Any) {
     authentificationService = AuthentificationService()
     authentificationService?.setupOauthPasswordGrant(username: tfUsername.text, password: tfPassword.text)
     authentifyUser(calledFromUserInteraction: true)
   }
 
-  @IBAction func openForgottenPasswordLink(sender: UIButton) {
+  @IBAction private func openForgottenPasswordLink(sender: UIButton) {
     var keys: NSDictionary!
 
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {

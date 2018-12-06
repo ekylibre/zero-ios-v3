@@ -40,7 +40,7 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
-  @IBAction func tapWorkingPeriodView(_ sender: Any) {
+  @IBAction private func tapWorkingPeriodView(_ sender: Any) {
     let shouldExpand = (workingPeriodHeightConstraint.constant == 70)
     let dateString = workingPeriodDateButton.titleLabel!.text!
     let duration = workingPeriodDurationTextField.text!.floatValue
@@ -91,7 +91,7 @@ extension AddInterventionViewController {
     self.selectDateView.datePicker.date = selectedDate
   }
 
-  @objc func validateDate() {
+  @objc private func validateDate() {
     let selectedDate: String = {
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "locale".localized)

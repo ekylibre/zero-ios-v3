@@ -26,20 +26,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Properties
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-  var interventions = [Intervention]() {
-    didSet {
-      tableView.reloadData()
-    }
-  }
   let navItem = UINavigationItem()
   let refreshControl = UIRefreshControl()
   let dimView = UIView(frame: CGRect.zero)
   var interventionTypeButtons = [UIButton]()
   var interventionTypeLabels = [UILabel]()
   var farmNameLabel: UILabel!
+  var farmID: String!
+  var interventions = [Intervention]() {
+    didSet {
+      tableView.reloadData()
+    }
+  }
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
-  var farmID: String!
 
   // MARK: - Initialization
 
@@ -109,7 +109,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createInterventionButton.layer.masksToBounds = false
     createInterventionButton.layer.cornerRadius = 3
     createInterventionButton.addTarget(self, action: #selector(expandBottomView), for: .touchUpInside)
-
     setupInterventionTypeButtons()
     setupInterventionTypeLabels()
   }
@@ -124,7 +123,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       interventionTypeButton.backgroundColor = UIColor.white
       interventionTypeButton.setImage(image, for: .normal)
       interventionTypeButton.layer.cornerRadius = 3
-      interventionTypeButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
       interventionTypeButton.isHidden = true
       interventionTypeButton.addTarget(self, action: #selector(presentAddInterventionVC), for: .touchUpInside)
       interventionTypeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -276,10 +274,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   // MARK: - Table view
-  
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return interventions.count
@@ -517,7 +511,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  func updateInterventionIfNeeded() {
+  private func updateInterventionIfNeeded() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -556,7 +550,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
 
-  @objc func collapseBottomView() {
+  @objc private func collapseBottomView() {
     for index in 0...6 {
       interventionTypeButtons[index].isHidden = true
       interventionTypeLabels[index].isHidden = true

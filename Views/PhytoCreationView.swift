@@ -26,9 +26,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
     nameTextField.tag = 10
-    nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
     nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
@@ -51,9 +49,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     firmNameTextField.autocorrectionType = .no
     firmNameTextField.delegate = self
     firmNameTextField.tag = 11
-    firmNameTextField.borderStyle = .none
     firmNameTextField.layer.backgroundColor = UIColor.white.cgColor
-    firmNameTextField.layer.masksToBounds = false
     firmNameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     firmNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     firmNameTextField.layer.shadowOpacity = 1
@@ -69,9 +65,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     maaTextField.autocorrectionType = .no
     maaTextField.delegate = self
     maaTextField.tag = 12
-    maaTextField.borderStyle = .none
     maaTextField.layer.backgroundColor = UIColor.white.cgColor
-    maaTextField.layer.masksToBounds = false
     maaTextField.layer.shadowColor = UIColor.darkGray.cgColor
     maaTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     maaTextField.layer.shadowOpacity = 1
@@ -87,9 +81,7 @@ class PhytoCreationView: UIView, UITextFieldDelegate {
     reentryDelayTextField.autocorrectionType = .no
     reentryDelayTextField.delegate = self
     reentryDelayTextField.tag = 13
-    reentryDelayTextField.borderStyle = .none
     reentryDelayTextField.layer.backgroundColor = UIColor.white.cgColor
-    reentryDelayTextField.layer.masksToBounds = false
     reentryDelayTextField.layer.shadowColor = UIColor.darkGray.cgColor
     reentryDelayTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     reentryDelayTextField.layer.shadowOpacity = 1

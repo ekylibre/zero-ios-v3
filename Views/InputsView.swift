@@ -179,10 +179,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Table view
 
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if isSearching {
       return filteredInputs.count
@@ -190,17 +186,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
     var countToUse = [0: seeds.count, 1: phytos.count, 2: fertilizers.count]
     return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
-  }
-
-  func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
-    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
-      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
-        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
-          return false
-        }
-      }
-    }
-    return true
   }
 
   private func checkIfInputIsSelected(fromInput: NSManagedObject) -> Bool {
@@ -442,6 +427,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Actions
 
+  private func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
+    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
+      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
+        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   @objc private func changeSegment() {
     let searchText = searchBar.text!
     let createButtonTitles = [
@@ -516,7 +512,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  @objc func createInput() {
+  @objc private func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       if !checkSeedName() {

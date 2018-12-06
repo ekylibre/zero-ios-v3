@@ -97,7 +97,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction func tapMaterialsView() {
+  @IBAction private func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 
@@ -127,7 +127,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @objc func updateMaterialQuantity(sender: UITextField) {
+  @objc private func updateMaterialQuantity(sender: UITextField) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)
 
@@ -145,7 +145,7 @@ extension AddInterventionViewController {
     customPickerView.isHidden = false
   }
 
-  @objc func tapDeleteButton(sender: UIButton) {
+  @objc private func tapDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)!
     let alert = UIAlertController(title: "delete_material_prompt".localized, message: nil, preferredStyle: .alert)

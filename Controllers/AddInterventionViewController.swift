@@ -239,7 +239,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       ])
   }
 
-  func setupViewsAccordingInterventionType() {
+  private func setupViewsAccordingInterventionType() {
     switch interventionType {
     case InterventionType.Care.rawValue:
       materialsView.isHidden = false
@@ -280,19 +280,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     cropsView.frame.origin.y = navigationBar.frame.origin.y + 15
   }
 
-  @objc func showList() {
-    performSegue(withIdentifier: "showSpecies", sender: self)
-  }
-
-  @objc func showAlert() {
-    present(inputsSelectionView.fertilizerView.natureAlertController, animated: true, completion: nil)
-  }
-
   // MARK: - Table view data source
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch tableView {
@@ -433,7 +421,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func updateEquipments(_ intervention: Intervention) {
+  private func updateEquipments(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -461,7 +449,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func updateTargets(_ intervention: Intervention) {
+  private func updateTargets(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -483,7 +471,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func updatePersons(_ intervention: Intervention) {
+  private func updatePersons(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -513,7 +501,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func updateHarvest(_ intervention: Intervention) {
+  private func updateHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -547,7 +535,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func deleteInput(_ intervention: Intervention, _ inputName: String) {
+  private func deleteInput(_ intervention: Intervention, _ inputName: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -569,7 +557,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func updateInputs(_ intervention: Intervention) {
+  private func updateInputs(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -658,7 +646,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  func createTargets(_ intervention: Intervention) {
+  private func createTargets(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -804,7 +792,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   // MARK: - Navigation
 
-  @IBAction func saveOrUpdateIntervention() {
+  @IBAction private func saveOrUpdateIntervention() {
     if interventionState == nil {
       createIntervention()
     } else if interventionState == InterventionState.Created.rawValue ||
@@ -814,7 +802,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   // INFO: Needed to perform the unwind segue
-  @IBAction func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
+  @IBAction private func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //super.prepare(for: segue, sender: sender)
@@ -836,7 +824,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  @objc func goBackToInterventionViewController() {
+  @objc private func goBackToInterventionViewController() {
     dismiss(animated: true, completion: nil)
   }
 
@@ -941,7 +929,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   // MARK: - Actions
 
-  @IBAction func selectCrops(_ sender: Any) {
+  @IBAction private func selectCrops(_ sender: Any) {
     view.endEditing(true)
     dimView.isHidden = false
     cropsView.isHidden = false
@@ -993,41 +981,10 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     })
   }
 
-  @IBAction func cancelAdding(_ sender: Any) {
+  @IBAction private func cancelAdding(_ sender: Any) {
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
     dismiss(animated: true, completion: nil)
-  }
-
-  func showEntitiesNumber(entities: [NSManagedObject], constraint: NSLayoutConstraint,
-                          numberLabel: UILabel, addEntityButton: UIButton) {
-    if entities.count > 0 && constraint.constant == 70 {
-      addEntityButton.isHidden = true
-      numberLabel.isHidden = false
-      switch entities {
-      case selectedInputs:
-        numberLabel.text = (entities.count == 1 ? "input".localized :
-          String(format: "inputs".localized, entities.count))
-      case selectedMaterials[1]:
-        numberLabel.text = (entities.count == 1 ? "material".localized :
-          String(format: "materials".localized, entities.count))
-      case selectedEquipments:
-        numberLabel.text = (entities.count == 1 ? "equipment".localized :
-          String(format: "equipments".localized, entities.count))
-      case selectedPersons[1]:
-        numberLabel.text = (entities.count == 1 ? "person".localized :
-          String(format: "persons".localized, entities.count))
-      default:
-        return
-      }
-    } else if interventionState == InterventionState.Validated.rawValue {
-      addEntityButton.isHidden = true
-      numberLabel.isHidden = (constraint.constant != 70)
-      numberLabel.text = "none".localized
-    } else {
-      numberLabel.isHidden = true
-      addEntityButton.isHidden = false
-    }
   }
 }
