@@ -72,37 +72,26 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   func defineIndicatorsIfNeeded(_ equipmentNature: String) {
     let indicators = loadEquipmentIndicators(equipmentNature)
 
-    switch indicators.count {
-    case 2:
+    if indicators.count > 1 {
       let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
       let indicatorTwo = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
 
-      creationView.heighConstraint.constant = 475
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.secondEquipmentParameter.placeholder = indicators[1].localized
       creationView.firstParameterUnit.text = indicatorOne
       creationView.secondParameterUnit.text = indicatorTwo
-      creationView.firstEquipmentParameter.isHidden = false
-      creationView.firstParameterUnit.isHidden = false
-      creationView.secondEquipmentParameter.isHidden = false
-      creationView.secondParameterUnit.isHidden = false
-    case 1:
+    } else if indicators.count > 0 {
       let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
 
-      creationView.heighConstraint.constant = 400
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.firstParameterUnit.text = indicatorOne
-      creationView.firstEquipmentParameter.isHidden = false
-      creationView.firstParameterUnit.isHidden = false
-      creationView.secondEquipmentParameter.isHidden = true
-      creationView.secondParameterUnit.isHidden = true
-    default:
-      creationView.heighConstraint.constant = 350
-      creationView.firstEquipmentParameter.isHidden = true
-      creationView.firstParameterUnit.isHidden = true
-      creationView.secondEquipmentParameter.isHidden = true
-      creationView.secondParameterUnit.isHidden = true
     }
+
+    creationView.heighConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
+    creationView.firstEquipmentParameter.isHidden = (indicators.count < 1)
+    creationView.firstParameterUnit.isHidden = (indicators.count < 1)
+    creationView.secondEquipmentParameter.isHidden = (indicators.count < 2)
+    creationView.secondParameterUnit.isHidden = (indicators.count < 2)
   }
 
   // MARK: - Initialization

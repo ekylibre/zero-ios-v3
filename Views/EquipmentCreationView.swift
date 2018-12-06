@@ -227,7 +227,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       firstParameterUnit.topAnchor.constraint(equalTo: firstEquipmentParameter.bottomAnchor, constant: 10),
       secondEquipmentParameter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       secondEquipmentParameter.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      secondEquipmentParameter.topAnchor.constraint(equalTo: firstParameterUnit.bottomAnchor, constant: 35),
+      secondEquipmentParameter.topAnchor.constraint(equalTo: firstEquipmentParameter.bottomAnchor, constant: 35),
       secondParameterUnit.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       secondParameterUnit.topAnchor.constraint(equalTo: secondEquipmentParameter.bottomAnchor, constant: 10),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
