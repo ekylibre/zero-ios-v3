@@ -15,7 +15,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
 
   func setupInputsView() {
     species = loadSpecies()
-    inputsSelectionView = InputsView(firstSpecie: getFirstSpecie(),frame: CGRect.zero)
+    inputsSelectionView = InputsView(firstSpecie: getFirstSpecie(), frame: CGRect.zero)
     inputsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(inputsSelectionView)
 
@@ -172,6 +172,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   private func checkAllMixCategoryCode() {
+    var selectedPhytos = [InterventionPhytosanitary]()
     var firstMixCategoryCode: String?
     var unauthorized = false
 
@@ -186,7 +187,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         }
       }
     }
-    var selectedPhytos = [InterventionPhytosanitary]()
 
     for case let selectedPhyto as InterventionPhytosanitary in selectedInputs {
       selectedPhytos.append(selectedPhyto)
@@ -203,10 +203,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func checkMixCategoryCode(_ firstMixCode: String, _ secondMixCode: String) -> Bool {
     let autorizedMix = ["1":"1234", "2":"134", "3":"14", "4":"14", "5":""]
 
-    if !autorizedMix[firstMixCode]!.contains(secondMixCode) {
-      return false
-    }
-    return true
+    return autorizedMix[firstMixCode]!.contains(secondMixCode)
   }
 
   func selectInput(_ input: NSManagedObject, quantity: Float?, unit: String?,
