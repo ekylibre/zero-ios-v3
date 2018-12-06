@@ -159,12 +159,10 @@ class CropsView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.surfaceAreaLabel.text = String(format: "%.1f ha", surfaceArea)
     cell.surfaceAreaLabel.sizeToFit()
     cell.selectionStyle = UITableViewCell.SelectionStyle.none
-    if interventionState != nil {
-      for crop in crops {
-        if selectedCrops.contains(crop) {
-          cell.checkboxButton.isSelected = true
-          break
-        }
+    for crop in crops {
+      if selectedCrops.contains(crop) {
+        cell.checkboxButton.isSelected = true
+        break
       }
     }
     return cell

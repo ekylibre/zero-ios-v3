@@ -135,7 +135,14 @@ extension AddInterventionViewController {
   }
 
   @objc private func showMaterialUnits() {
-    performSegue(withIdentifier: "showMaterialUnits", sender: self)
+    customPickerView.values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                               "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (_ value: String) in
+      self.materialsSelectionView.creationView.unitButton.setTitle(value.localized, for: .normal)
+      self.selectedValue = value
+    }
+    customPickerView.isHidden = false
   }
 
   @objc func tapDeleteButton(sender: UIButton) {
@@ -209,7 +216,6 @@ extension AddInterventionViewController {
       }
       cell.nameLabel.text = name
       cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
-      cell.quantityTextField.text = (quantity == 0) ? "" : String(format: "%g", quantity)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)

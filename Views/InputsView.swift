@@ -203,17 +203,41 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
+  private func checkIfInputIsSelected(fromInput: NSManagedObject) -> Bool {
+    let selectedInputs = addInterventionViewController!.selectedInputs
+
+    for interventionInput in selectedInputs {
+      var input: NSManagedObject?
+
+      switch interventionInput {
+      case is InterventionSeed:
+        input = interventionInput.value(forKey: "seed") as? NSManagedObject
+      case is InterventionPhytosanitary:
+        input = interventionInput.value(forKey: "phyto") as? NSManagedObject
+      case is InterventionFertilizer:
+        input = interventionInput.value(forKey: "fertilizer") as? NSManagedObject
+      default:
+        return false
+      }
+
+      if input == fromInput {
+        return true
+      }
+    }
+    return false
+  }
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
-      let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
+      let isSelected = checkIfInputIsSelected(fromInput: fromSeeds[indexPath.row])
       let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
       let isRegistered = fromSeeds[indexPath.row].value(forKey: "registered") as! Bool
 
-      cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.isUserInteractionEnabled = !isSelected
+      cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
       cell.specieLabel.text = specie?.localized
       cell.starImageView.isHidden = isRegistered
@@ -221,7 +245,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs : phytos
-      let used = fromPhytos[indexPath.row].value(forKey: "used") as! Bool
+      let isSelected = checkIfInputIsSelected(fromInput: fromPhytos[indexPath.row])
       let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
       let unit: String = inFieldReentryDelay > 1 ? "hours".localized : "hour".localized
       let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
@@ -229,8 +253,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       cell.unauthorizedMixingLabel.isHidden = authorized
       cell.unauthorizedMixingImage.isHidden = authorized
-      cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.isUserInteractionEnabled = !isSelected
+      cell.backgroundColor = (isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
@@ -240,13 +264,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
-      let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
+      let isSelected = checkIfInputIsSelected(fromInput: fromFertilizers[indexPath.row])
       let name = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
       let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
 
-      cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.isUserInteractionEnabled = !isSelected
+      cell.backgroundColor = (isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = name?.localized
       cell.natureLabel.text = nature?.localized
       cell.starImageView.isHidden = isRegistered

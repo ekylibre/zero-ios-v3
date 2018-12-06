@@ -465,6 +465,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
+    UIApplication.shared.beginIgnoringInteractionEvents()
     queryFarms { (success) in
       if success {
         self.updateFarmNameLabel()
@@ -487,6 +488,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()
+      UIApplication.shared.endIgnoringInteractionEvents()
     }
   }
 
@@ -498,10 +500,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionsFetchRequest: NSFetchRequest<Intervention> = Intervention.fetchRequest()
     let predicate = NSPredicate(format: "ekyID == %d", 0)
-    let group = DispatchGroup()
 
     interventionsFetchRequest.predicate = predicate
-    group.enter()
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
@@ -511,13 +511,10 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
           intervention.status = Int16(InterventionState.Synced.rawValue)
         }
       }
-      group.leave()
       try managedContext.save()
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
-      group.leave()
     }
-    group.wait()
   }
 
   func updateInterventionIfNeeded() {
@@ -530,10 +527,8 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let ekyIDPredicate = NSPredicate(format: "ekyID != %d", 0)
     let statusPredicate = NSPredicate(format: "status == %d", InterventionState.Created.rawValue)
     let predicates = NSCompoundPredicate(type: .and, subpredicates: [ekyIDPredicate, statusPredicate])
-    let group = DispatchGroup()
 
     interventionsFetchRequest.predicate = predicates
-    group.enter()
     do {
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
@@ -541,12 +536,9 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         pushUpdatedIntervention(intervention: intervention)
       }
       try managedContext.save()
-      group.leave()
     } catch let error as NSError {
       print("Could not fetch: \(error), \(error.userInfo)")
-      group.leave()
     }
-    group.wait()
   }
 
   @objc private func expandBottomView() {
