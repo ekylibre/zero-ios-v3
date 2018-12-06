@@ -25,9 +25,9 @@ class AuthentificationService {
     if let path = Bundle.main.path(forResource: "oauthInfo", ofType: "plist") {
       keys = NSDictionary(contentsOfFile: path)
       oauth2 = OAuth2PasswordGrant(settings: [
-        "client_id": keys["parseClientId"]!,
-        "client_secret": keys["parseClientSecret"]!,
-        "token_uri": "\(keys["parseUrl"]!)/oauth/token",
+        "client_id": keys["releasedClientID"]!,
+        "client_secret": keys["releasedClientSecret"]!,
+        "token_uri": "\(keys["releasedURL"]!)/oauth/token",
         "username": username as Any,
         "password": password as Any,
         "grant_type": "password",

@@ -337,7 +337,6 @@
 			isa = PBXGroup;
 			children = (
 				0479C40721A40935008DA4C2 /* AddInterventionViewController.swift */,
-				0479C41121A40935008DA4C2 /* AuthentificationService.swift */,
 				0479C41421A40935008DA4C2 /* DefineInterventionsDisplayMode.swift */,
 				0479C40821A40935008DA4C2 /* DetailedInterventionViewController+Equipments.swift */,
 				0479C40A21A40935008DA4C2 /* DetailedInterventionViewController+Harvests.swift */,
@@ -394,6 +393,7 @@
 		047BF0B22105D20B009F3945 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0479C41121A40935008DA4C2 /* AuthentificationService.swift */,
 				6B3A01E521B5587C003EDB10 /* Command.swift */,
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
 				041028AA2191ACBD0015978B /* DateConverter.swift */,
