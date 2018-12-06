@@ -178,6 +178,9 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     setupWeatherView()
     customPickerView = CustomPickerView(superview: view)
 
+    notesTextView.delegate = self
+    setTextViewPlaceholder()
+
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
     cropsView.interventionState = interventionState
@@ -191,10 +194,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
 
-    notesTextView.delegate = self
-    setTextViewPlaceholder()
-
     setupViewsAccordingInterventionType()
+    updateAllQuantityLabels()
   }
 
   private func setupNavigationBar() {
@@ -366,6 +367,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     createTargets(currentIntervention)
     createMaterials(currentIntervention)
     createEquipments(currentIntervention)
+    createPersons(currentIntervention)
     saveHarvest(currentIntervention)
     saveInterventionInputs(currentIntervention)
     saveWeather(currentIntervention)
@@ -666,28 +668,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     }
   }
 
-  private func createInterventionPersons(_ intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-
-    for selectedPerson in selectedPersons[1] {
-      let interventionPerson = InterventionPerson(context: managedContext)
-
-      interventionPerson.intervention = intervention
-      interventionPerson.isDriver = (selectedPerson as! InterventionPerson).isDriver
-      interventionPerson.person = (selectedPerson as! InterventionPerson).person
-    }
-
-    do {
-      try managedContext.save()
-    } catch let error as NSError {
-      print("Could not save. \(error), \(error.userInfo)")
-    }
-  }
-
   private func saveHarvest(_ intervention: Intervention) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -745,6 +725,27 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
       interventionEquipment.intervention = intervention
       interventionEquipment.equipment = selectedEquipment
+    }
+
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func createPersons(_ intervention: Intervention) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    for case let interventionPerson as InterventionPerson in selectedPersons[1] {
+      let index = selectedPersons[1].firstIndex(of: interventionPerson)!
+
+      interventionPerson.intervention = intervention
+      interventionPerson.person = selectedPersons[0][index] as? Person
     }
 
     do {
@@ -812,24 +813,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       destVC.lastSelectedValue = inputsSelectionView.seedView.specieButton.titleLabel?.text
       destVC.rawStrings = species
       destVC.tag = 0
-    case "showMaterialUnits":
-      let destVC = segue.destination as! ListTableViewController
-      destVC.delegate = self
-      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
-                           "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
-      destVC.tag = 1
-    case "showSelectedMaterialUnits":
-      let destVC = segue.destination as! ListTableViewController
-      destVC.delegate = self
-      destVC.rawStrings = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
-                           "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
-      destVC.tag = 2
     case "showEquipmentTypes":
       let destVC = segue.destination as! ListTableViewController
       destVC.delegate = self
       destVC.lastSelectedValue = equipmentsSelectionView.creationView.typeButton.titleLabel?.text
       destVC.rawStrings = equipmentTypes
-      destVC.tag = 3
+      destVC.tag = 1
     default:
       return
     }
@@ -863,11 +852,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       inputsSelectionView.seedView.rawSpecie = value
       inputsSelectionView.seedView.specieButton.setTitle(value.localized, for: .normal)
     case 1:
-      materialsSelectionView.creationView.unitButton.setTitle(value.localized.lowercased(), for: .normal)
-    case 2:
-      selectedMaterials[1][selectedRow].setValue(value, forKey: "unit")
-      selectedMaterialsTableView.reloadData()
-    case 3:
       let imageName = value.lowercased().replacingOccurrences(of: "_", with: "-")
 
       equipmentsSelectionView.creationView.typeImageView.image = UIImage(named: imageName)
@@ -950,7 +934,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     dimView.isHidden = false
     cropsView.isHidden = false
 
-    updateAllQuantityLabels()
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Black
     })

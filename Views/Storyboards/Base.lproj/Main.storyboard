@@ -158,9 +158,11 @@
                     <navigationItem key="navigationItem" id="4kD-hC-P8e"/>
                     <connections>
                         <segue destination="Gei-ai-tdB" kind="show" identifier="presentTermsOfUse" id="Exg-ba-w1X"/>
+                        <segue destination="viH-em-ncZ" kind="unwind" identifier="unwindToLoginVC" unwindAction="unwindToLoginVC:" id="6D3-na-kfi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQb-sH-gNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="viH-em-ncZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2854" y="-439"/>
         </scene>
@@ -172,7 +174,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOP-9E-wkP">
+                            <wkWebView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOP-9E-wkP">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
@@ -180,17 +182,23 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="YhM-4T-5qQ">
+                                <rect key="frame" x="177" y="355" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="YhM-4T-5qQ" firstAttribute="centerX" secondItem="uOP-9E-wkP" secondAttribute="centerX" id="Emu-H9-bbD"/>
                             <constraint firstItem="81M-tr-iyv" firstAttribute="trailing" secondItem="uOP-9E-wkP" secondAttribute="trailing" id="Fn5-Hd-EOm"/>
                             <constraint firstItem="uOP-9E-wkP" firstAttribute="leading" secondItem="81M-tr-iyv" secondAttribute="leading" id="YaO-JS-ndF"/>
+                            <constraint firstItem="YhM-4T-5qQ" firstAttribute="centerY" secondItem="uOP-9E-wkP" secondAttribute="centerY" id="gHI-3y-jWJ"/>
                             <constraint firstAttribute="bottomMargin" secondItem="uOP-9E-wkP" secondAttribute="bottom" id="gte-Nh-uR6"/>
                             <constraint firstItem="uOP-9E-wkP" firstAttribute="top" secondItem="81M-tr-iyv" secondAttribute="top" id="rbs-yR-72W"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="81M-tr-iyv"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="YhM-4T-5qQ" id="Kr7-OG-fMT"/>
                         <outlet property="webView" destination="uOP-9E-wkP" id="5H2-s2-Yfg"/>
                     </connections>
                 </viewController>
@@ -1102,19 +1110,19 @@
                                                             <action selector="setTemperatureToNegative:" destination="pQK-Bk-vqJ" eventType="touchUpInside" id="yqk-yb-eMx"/>
                                                         </connections>
                                                     </button>
-                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pOP-WE-pVI" userLabel="Temperature Text Field">
-                                                        <rect key="frame" x="147.5" y="59.5" width="168" height="35"/>
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pOP-WE-pVI" userLabel="Temperature Text Field">
+                                                        <rect key="frame" x="147.5" y="59.5" width="75" height="35"/>
                                                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="Cuf-YJ-l1Z"/>
+                                                            <constraint firstAttribute="width" constant="75" id="Cuf-YJ-l1Z"/>
                                                             <constraint firstAttribute="height" constant="35" id="vcM-zb-GX5"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="as1-Zg-NLq">
-                                                        <rect key="frame" x="320.5" y="68" width="34.5" height="18"/>
+                                                        <rect key="frame" x="227.5" y="68" width="127.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1125,19 +1133,19 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzs-kF-ytJ" userLabel="Wind speed Text Field">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzs-kF-ytJ" userLabel="Wind speed Text Field">
                                                         <rect key="frame" x="147.5" y="109.5" width="75" height="35"/>
                                                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="34S-Dt-aNo"/>
+                                                            <constraint firstAttribute="width" constant="75" id="34S-Dt-aNo"/>
                                                             <constraint firstAttribute="height" constant="35" id="Zqq-Fp-Rh0"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="km/h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1a-qv-ooU">
-                                                        <rect key="frame" x="320.5" y="118" width="34.5" height="18"/>
+                                                        <rect key="frame" x="227.5" y="118" width="127.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1495,9 +1503,7 @@
                         <outlet property="workingPeriodTapGesture" destination="dX6-ef-4AZ" id="koT-95-9LO"/>
                         <outlet property="workingPeriodUnitLabel" destination="3cP-JT-NmL" id="5Ut-GC-xSX"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showSpecies" id="uas-Qa-jvK"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showMaterialUnits" id="nwb-tQ-9Vq"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showEquipmentTypes" id="EKH-vj-NkS"/>
-                        <segue destination="mHI-gi-QLg" kind="show" identifier="showSelectedMaterialUnits" id="FE4-xp-aKR"/>
                         <segue destination="1rQ-td-wpq" kind="unwind" identifier="unwindToInterventionVC" unwindAction="unwindToInterventionVCWithSegue:" id="DXp-2Y-Sxs"/>
                         <segue destination="mHI-gi-QLg" kind="show" identifier="showInputsCreationUnits" id="Loh-BY-grD"/>
                     </connections>

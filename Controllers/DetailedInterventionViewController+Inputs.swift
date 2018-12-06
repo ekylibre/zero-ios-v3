@@ -273,15 +273,32 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
+  private func deleteSelectedInput(_ indexPath: IndexPath) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    do {
+      let input = selectedInputs[indexPath.row]
+      managedContext.delete(input)
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not delete: \(error), \(error.userInfo)")
+    }
+  }
+
   func removeInputCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "delete_input_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.resetInputsUsedAttribute(index: indexPath.row)
+      self.deleteSelectedInput(indexPath)
       self.selectedInputs.remove(at: indexPath.row)
-      self.checkAllMixCategoryCode()
       self.selectedInputsTableView.reloadData()
+      self.checkAllMixCategoryCode()
       if self.selectedInputs.count == 0 {
         self.selectedInputsTableView.isHidden = true
         self.inputsExpandImageView.isHidden = true
@@ -344,15 +361,19 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
-  private func displayInputQuantityInReadOnlyMode(quantity: String?, unit: String?, cell: SelectedInputCell) {
+  private func displayInputQuantityInReadOnlyMode(_ interventionInput: NSManagedObject, cell: SelectedInputCell) {
+    let unit = interventionInput.value(forKey: "unit") as? String
+    let quantity = interventionInput.value(forKey: "quantity") as? Float
+
     if interventionState == InterventionState.Validated.rawValue {
-      cell.quantityTextField.placeholder = quantity
+      cell.quantityTextField.placeholder = (quantity as NSNumber?)?.stringValue
       cell.unitButton.setTitle(unit?.localized, for: .normal)
       cell.unitButton.setTitleColor(.lightGray, for: .normal)
-    } else if quantity == "0" || quantity == nil {
+    } else if quantity == 0 || quantity == nil {
       cell.quantityTextField.placeholder = "0"
+      cell.quantityTextField.text = nil
     } else {
-      cell.quantityTextField.text = quantity
+      cell.quantityTextField.text = (quantity as NSNumber?)?.stringValue
     }
   }
 
@@ -363,6 +384,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       let selectedInput = selectedInputs[indexPath.row]
       let unit = selectedInput.value(forKey: "unit") as? String
 
+      cell.warningLabel.isHidden = true
+      cell.warningImageView.isHidden = true
       cell.cellDelegate = self
       cell.addInterventionViewController = self
       cell.indexPath = indexPath
@@ -377,8 +400,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         cell.infoLabel.text = interventionSeed.seed?.variety
         cell.type = "Seed"
         cell.inputImageView.image = UIImage(named: "seed")
-        displayInputQuantityInReadOnlyMode(quantity: (interventionSeed.quantity as NSNumber?)?.stringValue,
-                                           unit: interventionSeed.unit, cell: cell)
+        displayInputQuantityInReadOnlyMode(selectedInput, cell: cell)
       case is InterventionPhytosanitary:
         let interventionPhyto = selectedInput as! InterventionPhytosanitary
 
@@ -386,8 +408,8 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         cell.infoLabel.text = interventionPhyto.phyto?.firmName
         cell.type = "Phyto"
         cell.inputImageView.image = UIImage(named: "phytosanitary")
-        displayInputQuantityInReadOnlyMode(quantity: (interventionPhyto.quantity as NSNumber?)?.stringValue,
-                                           unit: interventionPhyto.unit, cell: cell)
+        cell.displayWaringIfInvalidDoses(interventionPhyto)
+        displayInputQuantityInReadOnlyMode(selectedInput, cell: cell)
       case is InterventionFertilizer:
         let interventionFertilizer = selectedInput as! InterventionFertilizer
 
@@ -395,8 +417,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
         cell.infoLabel.text = interventionFertilizer.fertilizer?.nature?.localized
         cell.type = "Fertilizer"
         cell.inputImageView.image = UIImage(named: "fertilizer")
-        displayInputQuantityInReadOnlyMode(quantity: (interventionFertilizer.quantity as NSNumber?)?.stringValue,
-                                           unit: interventionFertilizer.unit, cell: cell)
+        displayInputQuantityInReadOnlyMode(selectedInput, cell: cell)
       default:
         fatalError("Unknown input type for: \(String(describing: selectedInput))")
       }

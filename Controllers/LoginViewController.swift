@@ -75,6 +75,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
   }
 
+  @IBAction private func unwindToLoginVC(_ segue: UIStoryboardSegue) {}
+
   // MARK: - Text Field Delegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -103,6 +105,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         token = self.authentificationService?.oauth2?.accessToken
         self.checkLoggedStatus(token: token)
       }
+    } else if authentificationService?.oauth2 != nil && authentificationService!.oauth2!.hasUnexpiredAccessToken() {
+      authentificationService?.authorize(presenting: self)
+      token = self.authentificationService?.oauth2?.accessToken
+      checkLoggedStatus(token: token)
     } else {
       authentificationService?.authorize(presenting: self)
       token = self.authentificationService?.oauth2?.accessToken

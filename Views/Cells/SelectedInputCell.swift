@@ -305,6 +305,20 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return true
   }
 
+  func displayWaringIfInvalidDoses(_ interventionPhyto: InterventionPhytosanitary) {
+    let phytoID = interventionPhyto.phyto?.referenceID
+
+    if phytoID != nil && !checkPhytosanitaryDoses(phytoID!, interventionPhyto.quantity) {
+      warningLabel.isHidden = false
+      warningImageView.isHidden = false
+      surfaceQuantityTopConstraint.constant = 20
+    } else {
+      warningLabel.isHidden = true
+      warningImageView.isHidden = true
+      surfaceQuantityTopConstraint.constant = 5
+    }
+  }
+
   @objc private func saveQuantity() {
     if addInterventionViewController?.selectedInputs[indexPath.row] is InterventionPhytosanitary {
       let phytoID = (addInterventionViewController?.selectedInputs[indexPath.row] as!
