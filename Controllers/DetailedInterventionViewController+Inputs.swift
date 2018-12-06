@@ -36,9 +36,15 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.bounces = false
     selectedInputsTableView.delegate = self
     selectedInputsTableView.dataSource = self
+    inputsSelectionView.addInterventionViewController = self
     inputsSelectionView.seedView.specieButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     inputsSelectionView.fertilizerView.natureButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
-    inputsSelectionView.addInterventionViewController = self
+    inputsSelectionView.seedView.unitButton.addTarget(
+      self, action: #selector(showInputsCreationUnits), for: .touchUpInside)
+    inputsSelectionView.phytoView.unitButton.addTarget(
+      self, action: #selector(showInputsCreationUnits), for: .touchUpInside)
+    inputsSelectionView.fertilizerView.unitButton.addTarget(
+      self, action: #selector(showInputsCreationUnits), for: .touchUpInside)
   }
 
   private func loadSpecies() -> [String] {
@@ -96,10 +102,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-  }
-
   @IBAction func openInputsSelectionView(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
@@ -141,6 +143,18 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     } else {
       inputsCountLabel.text = String(format: "inputs".localized, selectedInputs.count)
     }
+  }
+
+  @objc private func showInputsCreationUnits() {
+    let units = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                 "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+
+    customPickerView.values = units
+    customPickerView.pickerView.reloadComponent(0)
+    customPickerView.closure = { (value) in
+      self.defineInputsUnitButtonTitle(value: value)
+    }
+    customPickerView.isHidden = false
   }
 
   private func closeInputsSelectionView() {
@@ -332,6 +346,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
       cell.addInterventionViewController = self
       cell.indexPath = indexPath
       cell.unitButton.setTitle(unit?.localized, for: .normal)
+      cell.inputUnit = unit
 
       switch selectedInput {
       case is InterventionSeed:

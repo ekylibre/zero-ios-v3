@@ -42,6 +42,26 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     return specieButton
   }()
 
+  lazy var unitLabel: UILabel = {
+    let unitLabel = UILabel(frame: CGRect.zero)
+    unitLabel.text = "chose_unit".localized
+    unitLabel.font = UIFont.systemFont(ofSize: 15)
+    unitLabel.textColor = AppColor.TextColors.DarkGray
+    unitLabel.translatesAutoresizingMaskIntoConstraints = false
+    return unitLabel
+  }()
+
+  lazy var unitButton: UIButton = {
+    let unitButton = UIButton(frame: CGRect.zero)
+    unitButton.setTitle("KILOGRAM".localized, for: .normal)
+    unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    unitButton.setTitleColor(UIColor.black, for: .normal)
+    unitButton.contentHorizontalAlignment = .leading
+    unitButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
+    unitButton.translatesAutoresizingMaskIntoConstraints = false
+    return unitButton
+  }()
+
   lazy var varietyTextField: UITextField = {
     let varietyTextField = UITextField(frame: CGRect.zero)
     varietyTextField.placeholder = "variety".localized
@@ -87,6 +107,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
   }()
 
   var firstSpecie: String
+  var rawUnit = "KILOGRAM"
 
   // MARK: - Initialization
 
@@ -105,6 +126,8 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     addSubview(titleLabel)
     addSubview(specieLabel)
     addSubview(specieButton)
+    addSubview(unitLabel)
+    addSubview(unitButton)
     addSubview(varietyTextField)
     addSubview(errorLabel)
     addSubview(cancelButton)
@@ -122,7 +145,12 @@ class SeedCreationView: UIView, UITextFieldDelegate {
       specieButton.topAnchor.constraint(equalTo: specieLabel.bottomAnchor),
       specieButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       specieButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 60),
-      varietyTextField.topAnchor.constraint(equalTo: specieButton.bottomAnchor, constant: 50),
+      unitLabel.topAnchor.constraint(equalTo: specieButton.bottomAnchor, constant: 15),
+      unitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
+      unitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 60),
+      varietyTextField.topAnchor.constraint(equalTo: unitButton.bottomAnchor, constant: 30),
       varietyTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       varietyTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       errorLabel.topAnchor.constraint(equalTo: varietyTextField.bottomAnchor, constant: 5),

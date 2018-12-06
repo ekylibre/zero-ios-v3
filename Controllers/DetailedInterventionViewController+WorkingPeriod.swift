@@ -27,6 +27,8 @@ extension AddInterventionViewController {
     workingPeriodDateButton.layer.borderColor = UIColor.lightGray.cgColor
     workingPeriodDateButton.layer.cornerRadius = 5
     workingPeriodDateButton.clipsToBounds = true
+    workingPeriodDurationTextField.placeholder = "0"
+    workingPeriodDurationTextField.text = "7"
     workingPeriodDurationTextField.layer.borderWidth = 0.5
     workingPeriodDurationTextField.layer.borderColor = UIColor.lightGray.cgColor
     workingPeriodDurationTextField.layer.cornerRadius = 5

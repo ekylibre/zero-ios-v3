@@ -157,32 +157,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
-  var pickerValue: String?
-  var massUnitPicker = UIPickerView()
-  var volumeUnitPicker = UIPickerView()
-  let massUnitMeasure = [
-    "GRAM",
-    "GRAM_PER_HECTARE",
-    "GRAM_PER_SQUARE_METER",
-    "KILOGRAM",
-    "KILOGRAM_PER_HECTARE",
-    "KILOGRAM_PER_SQUARE_METER",
-    "QUINTAL",
-    "QUINTAL_PER_HECTARE",
-    "QUINTAL_PER_SQUARE_METER",
-    "TON",
-    "TON_PER_HECTARE",
-    "TON_PER_SQUARE_METER"]
-  let volumeUnitMeasure = [
-    "LITER",
-    "LITER_PER_HECTARE",
-    "LITER_PER_SQUARE_METER",
-    "HECTOLITER",
-    "HECTOLITER_PER_HECTARE",
-    "HECTOLITER_PER_SQUARE_METER",
-    "CUBIC_METER",
-    "CUBIC_METER_PER_HECTARE",
-    "CUBIC_METER_PER_SQUARE_METER"]
 
   // MARK: - Initialization
 
@@ -216,8 +190,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       totalLabel.text = cropsView.selectedCropsLabel.text
       totalLabel.textColor = AppColor.TextColors.DarkGray
     }
-
-    initUnitMeasurePickerViews()
 
     notesTextView.delegate = self
     setTextViewPlaceholder()
@@ -889,6 +861,22 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   @objc func goBackToInterventionViewController() {
     dismiss(animated: true, completion: nil)
+  }
+
+  func defineInputsUnitButtonTitle(value: String) {
+    switch inputsSelectionView.segmentedControl.selectedSegmentIndex {
+    case 0:
+      inputsSelectionView.seedView.unitButton.setTitle(value.localized, for: .normal)
+      inputsSelectionView.seedView.rawUnit = value
+    case 1:
+      inputsSelectionView.phytoView.unitButton.setTitle(value.localized, for: .normal)
+      inputsSelectionView.phytoView.rawUnit = value
+    case 2:
+      inputsSelectionView.fertilizerView.unitButton.setTitle(value.localized, for: .normal)
+      inputsSelectionView.fertilizerView.rawUnit = value
+    default:
+      return
+    }
   }
 
   func writeValueBack(tag: Int, value: String) {
