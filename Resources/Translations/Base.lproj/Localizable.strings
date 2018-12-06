@@ -299,13 +299,13 @@
 "TON_PER_SQUARE_METER" = "ton/m²";
 
 // Other units
-"METER" = "Meter";
-"UNITY" = "Unity";
-"UNITY_PER_HECTARE" = "Unity/ha";
-"UNITY_PER_SQUARE_METER" = "Unity/m²";
-"THOUSAND" = "Thousand";
-"THOUSAND_PER_HECTARE" = "Thousand/ha";
-"THOUSAND_PER_SQUARE_METER" = "Thousand/m²";
+"METER" = "meter";
+"UNITY" = "unity";
+"UNITY_PER_HECTARE" = "unity/ha";
+"UNITY_PER_SQUARE_METER" = "unity/m²";
+"THOUSAND" = "thousand";
+"THOUSAND_PER_HECTARE" = "thousand/ha";
+"THOUSAND_PER_SQUARE_METER" = "thousand/m²";
 "FRENCH_HORSEPOWER" = "French horsepower";
 
 // Equipment indicators
