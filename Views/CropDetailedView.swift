@@ -79,6 +79,8 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     tableView.rowHeight = UITableView.automaticDimension
     tableView.estimatedRowHeight = 80
     tableView.register(InterventionCell.self, forCellReuseIdentifier: "InterventionCell")
+    tableView.separatorStyle = .none
+    tableView.tableFooterView = UIView()
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -100,8 +102,6 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     backgroundColor = UIColor.white
     layer.cornerRadius = 5
     clipsToBounds = true
-    tableView.separatorStyle = .none
-    tableView.tableFooterView = UIView()
     addSubview(headerView)
     addSubview(tableView)
     setupLayout()
