@@ -103,6 +103,14 @@ class CustomPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource, UI
 
   // MARK: - Actions
 
+  func selectLastValue(_ selectedValue: String) {
+    for (index, value) in values.enumerated() {
+      if value.localized == selectedValue {
+        pickerView.selectRow(index, inComponent: 0, animated: false)
+      }
+    }
+  }
+
   @objc private func dimViewTapped() {
     let selectedRow = pickerView.selectedRow(inComponent: 0)
     let selectedValue = values[selectedRow]
