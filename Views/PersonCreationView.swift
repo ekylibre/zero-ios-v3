@@ -24,14 +24,12 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     let firstNameTextField = UITextField(frame: CGRect.zero)
     firstNameTextField.placeholder = "first_name".localized
     firstNameTextField.autocorrectionType = .no
-    firstNameTextField.delegate = self
-    firstNameTextField.borderStyle = .none
     firstNameTextField.layer.backgroundColor = UIColor.white.cgColor
-    firstNameTextField.layer.masksToBounds = false
     firstNameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     firstNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     firstNameTextField.layer.shadowOpacity = 1
     firstNameTextField.layer.shadowRadius = 0
+    firstNameTextField.delegate = self
     firstNameTextField.translatesAutoresizingMaskIntoConstraints = false
     return firstNameTextField
   }()
@@ -40,7 +38,7 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     let firstNameErrorLabel = UILabel(frame: CGRect.zero)
     firstNameErrorLabel.text = "person_first_name_is_empty".localized
     firstNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
-    firstNameErrorLabel.textColor = AppColor.TextColors.Red
+    firstNameErrorLabel.textColor = AppColor.AppleColors.Red
     firstNameErrorLabel.isHidden = true
     firstNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
     return firstNameErrorLabel
@@ -50,14 +48,12 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     let lastNameTextField = UITextField(frame: CGRect.zero)
     lastNameTextField.placeholder = "last_name".localized
     lastNameTextField.autocorrectionType = .no
-    lastNameTextField.delegate = self
-    lastNameTextField.borderStyle = .none
     lastNameTextField.layer.backgroundColor = UIColor.white.cgColor
-    lastNameTextField.layer.masksToBounds = false
     lastNameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     lastNameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     lastNameTextField.layer.shadowOpacity = 1
     lastNameTextField.layer.shadowRadius = 0
+    lastNameTextField.delegate = self
     lastNameTextField.translatesAutoresizingMaskIntoConstraints = false
     return lastNameTextField
   }()
@@ -66,7 +62,7 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     let lastNameErrorLabel = UILabel(frame: CGRect.zero)
     lastNameErrorLabel.text = "person_last_name_is_empty".localized
     lastNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
-    lastNameErrorLabel.textColor = AppColor.TextColors.Red
+    lastNameErrorLabel.textColor = AppColor.AppleColors.Red
     lastNameErrorLabel.isHidden = true
     lastNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
     return lastNameErrorLabel
@@ -153,7 +149,11 @@ class PersonCreationView: UIView, UITextFieldDelegate {
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
+    if textField == firstNameTextField {
+      lastNameTextField.becomeFirstResponder()
+    } else {
+      textField.resignFirstResponder()
+    }
     return false
   }
 }
