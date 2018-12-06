@@ -26,20 +26,20 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Properties
 
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-  var interventions = [Intervention]() {
-    didSet {
-      tableView.reloadData()
-    }
-  }
   let navItem = UINavigationItem()
   let refreshControl = UIRefreshControl()
   let dimView = UIView(frame: CGRect.zero)
   var interventionTypeButtons = [UIButton]()
   var interventionTypeLabels = [UILabel]()
   var farmNameLabel: UILabel!
+  var farmID: String!
+  var interventions = [Intervention]() {
+    didSet {
+      tableView.reloadData()
+    }
+  }
   let interventionTypes = ["IMPLANTATION", "GROUND_WORK", "IRRIGATION", "HARVEST",
                            "CARE", "FERTILIZATION", "CROP_PROTECTION"]
-  var farmID: String!
 
   // MARK: - Initialization
 
@@ -109,7 +109,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     createInterventionButton.layer.masksToBounds = false
     createInterventionButton.layer.cornerRadius = 3
     createInterventionButton.addTarget(self, action: #selector(expandBottomView), for: .touchUpInside)
-
     setupInterventionTypeButtons()
     setupInterventionTypeLabels()
   }
