@@ -145,8 +145,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @objc private func showStorageTypes() {
+    guard let selectedType = storageCreationView.typeButton.title(for: .normal) else { return }
+
     customPickerView.values = ["BUILDING", "HEAP", "SILO"]
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedType)
     customPickerView.closure = { (_ value: String) in
       self.storageCreationView.typeButton.setTitle(value.localized, for: .normal)
       self.storageCreationView.selectedType = value
@@ -231,8 +234,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction func changeHarvestNature(_ sender: UIButton) {
+    guard let selectedNature = harvestType.title(for: .normal) else { return }
+
     customPickerView.values = ["GRAIN", "SILAGE", "STRAW"]
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedNature)
     customPickerView.closure = { (_ value: String) in
       self.harvestType.setTitle(value.localized, for: .normal)
       self.harvestSelectedType = value

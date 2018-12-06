@@ -181,10 +181,12 @@ extension AddInterventionViewController {
   @objc private func showSelectedMaterialUnits(sender: UIButton) {
     guard let cell = sender.superview?.superview as? UITableViewCell else { return }
     guard let indexPath = selectedMaterialsTableView.indexPath(for: cell) else { return }
+    guard let selectedUnit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String else { return }
 
     customPickerView.values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                                "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedUnit.localized)
     customPickerView.closure = { (_ value: String) in
       self.selectedMaterials[1][indexPath.row].setValue(value, forKey: "unit")
       self.selectedMaterialsTableView.reloadData()

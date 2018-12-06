@@ -299,9 +299,13 @@
 "TON_PER_SQUARE_METER" = "ton/m²";
 
 // Other units
-"METER" = "Meter";
-"UNITY" = "Unity";
-"THOUSAND" = "Thousand";
+"METER" = "meter";
+"UNITY" = "unity";
+"UNITY_PER_HECTARE" = "unity/ha";
+"UNITY_PER_SQUARE_METER" = "unity/m²";
+"THOUSAND" = "thousand";
+"THOUSAND_PER_HECTARE" = "thousand/ha";
+"THOUSAND_PER_SQUARE_METER" = "thousand/m²";
 "FRENCH_HORSEPOWER" = "French horsepower";
 
 // Equipment indicators
