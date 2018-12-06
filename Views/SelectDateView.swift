@@ -143,9 +143,9 @@ class SelectDateView: UIView {
     dialogView.layer.opacity = 1
 
     UIView.animate(withDuration: 0.2, animations: {
-        self.backgroundColor = UIColor.clear
-        self.dialogView.layer.transform = CATransform3DConcat(currentTransform, CATransform3DMakeScale(0.6, 0.6, 1))
-        self.dialogView.layer.opacity = 0
+      self.backgroundColor = UIColor.clear
+      self.dialogView.layer.transform = CATransform3DConcat(currentTransform, CATransform3DMakeScale(0.6, 0.6, 1))
+      self.dialogView.layer.opacity = 0
     }) { (_) in
       for subview in self.subviews {
         subview.removeFromSuperview()

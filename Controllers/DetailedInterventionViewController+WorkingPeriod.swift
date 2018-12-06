@@ -27,6 +27,8 @@ extension AddInterventionViewController {
     workingPeriodDateButton.layer.borderColor = UIColor.lightGray.cgColor
     workingPeriodDateButton.layer.cornerRadius = 5
     workingPeriodDateButton.clipsToBounds = true
+    workingPeriodDurationTextField.placeholder = "0"
+    workingPeriodDurationTextField.text = "7"
     workingPeriodDurationTextField.layer.borderWidth = 0.5
     workingPeriodDurationTextField.layer.borderColor = UIColor.lightGray.cgColor
     workingPeriodDurationTextField.layer.cornerRadius = 5
@@ -38,7 +40,7 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
-  @IBAction func tapWorkingPeriodView(_ sender: Any) {
+  @IBAction private func tapWorkingPeriodView(_ sender: Any) {
     let shouldExpand = (workingPeriodHeightConstraint.constant == 70)
     let dateString = workingPeriodDateButton.titleLabel!.text!
     let duration = workingPeriodDurationTextField.text!.floatValue
@@ -89,7 +91,7 @@ extension AddInterventionViewController {
     self.selectDateView.datePicker.date = selectedDate
   }
 
-  @objc func validateDate() {
+  @objc private func validateDate() {
     let selectedDate: String = {
       let dateFormatter = DateFormatter()
       dateFormatter.locale = Locale(identifier: "locale".localized)

@@ -29,7 +29,7 @@ class PhytoCreationViewTests: XCTestCase {
     // Then
     XCTAssertFalse(
       addInterventionVC.inputsSelectionView.phytoView.textFieldShouldReturn(
-      addInterventionVC.inputsSelectionView.phytoView.maaTextField),
+        addInterventionVC.inputsSelectionView.phytoView.maaTextField),
       "Next text field should become first responder when pressing return button")
   }
 

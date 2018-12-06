@@ -15,7 +15,7 @@ extension AddInterventionViewController {
 
   func setupEquipmentsView() {
     equipmentTypes = loadEquipmentTypes()
-    equipmentsSelectionView = EquipmentsView(firstType: getFirstEquipmentType(),frame: CGRect.zero)
+    equipmentsSelectionView = EquipmentsView(firstType: getFirstEquipmentType(), frame: CGRect.zero)
     equipmentsSelectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(equipmentsSelectionView)
 
@@ -117,7 +117,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction func tapEquipmentsView() {
+  @IBAction private func tapEquipmentsView() {
     let shouldExpand = (equipmentsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 
@@ -152,7 +152,7 @@ extension AddInterventionViewController {
     performSegue(withIdentifier: "showEquipmentTypes", sender: self)
   }
 
-  @objc func tapEquipmentsDeleteButton(sender: UIButton) {
+  @objc private func tapEquipmentsDeleteButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedEquipmentCell
     let indexPath = selectedEquipmentsTableView.indexPath(for: cell)!
     let alert = UIAlertController(title: "delete_equipment_prompt".localized, message: nil, preferredStyle: .alert)

@@ -25,9 +25,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     nameTextField.placeholder = "name".localized
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
-    nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
     nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
@@ -54,6 +52,26 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     natureButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
     natureButton.translatesAutoresizingMaskIntoConstraints = false
     return natureButton
+  }()
+
+  lazy var unitLabel: UILabel = {
+    let unitLabel = UILabel(frame: CGRect.zero)
+    unitLabel.text = "chose_unit".localized
+    unitLabel.font = UIFont.systemFont(ofSize: 15)
+    unitLabel.textColor = AppColor.TextColors.DarkGray
+    unitLabel.translatesAutoresizingMaskIntoConstraints = false
+    return unitLabel
+  }()
+
+  lazy var unitButton: UIButton = {
+    let unitButton = UIButton(frame: CGRect.zero)
+    unitButton.setTitle("KILOGRAM".localized, for: .normal)
+    unitButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    unitButton.setTitleColor(UIColor.black, for: .normal)
+    unitButton.contentHorizontalAlignment = .leading
+    unitButton.titleEdgeInsets = UIEdgeInsets(top: 13, left: 8, bottom: 0, right: 0)
+    unitButton.translatesAutoresizingMaskIntoConstraints = false
+    return unitButton
   }()
 
   lazy var natureAlertController: UIAlertController = {
@@ -91,6 +109,8 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     return createButton
   }()
 
+  var rawUnit = "KILOGRAM"
+
   // MARK: - Initialization
 
   override init(frame: CGRect) {
@@ -108,6 +128,8 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     addSubview(errorLabel)
     addSubview(natureLabel)
     addSubview(natureButton)
+    addSubview(unitLabel)
+    addSubview(unitButton)
     addSubview(cancelButton)
     addSubview(createButton)
     setupLayout()
@@ -129,6 +151,11 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
       natureButton.topAnchor.constraint(equalTo: natureLabel.bottomAnchor),
       natureButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       natureButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
+      unitLabel.topAnchor.constraint(equalTo: natureButton.bottomAnchor, constant: 15),
+      unitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
+      unitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      unitButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 60),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),

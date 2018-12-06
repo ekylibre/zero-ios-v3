@@ -94,11 +94,12 @@ class MenuViewController: UITableViewController {
   private func logoutUser() {
     let authentificationService = AuthentificationService()
 
+    authentificationService.setupOauthPasswordGrant(username: nil, password: nil)
     authentificationService.logout()
     UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
     UserDefaults.standard.synchronize()
     emptyAllCoreData()
-    navigationController?.popViewController(animated: true)
+    performSegue(withIdentifier: "unwindToLoginVC", sender: self)
   }
 
   private func emptyAllCoreData() {

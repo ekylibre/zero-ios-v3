@@ -334,6 +334,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let destVC = segue.destination as? AddInterventionViewController
     destVC?.currentIntervention = cropDetailedView.toUpdateIntervention
     destVC?.interventionState = cropDetailedView.toUpdateIntervention?.status
+    destVC?.interventionType = cropDetailedView.toUpdateIntervention?.type
   }
 
   // MARK: - Actions
@@ -353,5 +354,9 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     UIView.animate(withDuration: 0.5, animations: {
       UIApplication.shared.statusBarView?.backgroundColor = AppColor.StatusBarColors.Blue
     })
+
+    if cropDetailedView.tableView.numberOfRows(inSection: 0) > 0 {
+      cropDetailedView.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+    }
   }
 }

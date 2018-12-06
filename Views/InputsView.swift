@@ -141,9 +141,9 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
-    bindFrameToSuperViewBounds(seedView, height: 250)
-    bindFrameToSuperViewBounds(phytoView, height: 340)
-    bindFrameToSuperViewBounds(fertilizerView, height: 230)
+    bindFrameToSuperViewBounds(seedView, height: 260)
+    bindFrameToSuperViewBounds(phytoView, height: 400)
+    bindFrameToSuperViewBounds(fertilizerView, height: 300)
   }
 
   private func bindFrameToSuperViewBounds(_ view: UIView, height: CGFloat) {
@@ -179,10 +179,6 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
   // MARK: - Table view
 
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if isSearching {
       return filteredInputs.count
@@ -192,15 +188,28 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return countToUse[segmentedControl.selectedSegmentIndex] ?? 0
   }
 
-  func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
-    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
-      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
-        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
-          return false
-        }
+  private func checkIfInputIsSelected(fromInput: NSManagedObject) -> Bool {
+    let selectedInputs = addInterventionViewController!.selectedInputs
+
+    for interventionInput in selectedInputs {
+      var input: NSManagedObject?
+
+      switch interventionInput {
+      case is InterventionSeed:
+        input = interventionInput.value(forKey: "seed") as? NSManagedObject
+      case is InterventionPhytosanitary:
+        input = interventionInput.value(forKey: "phyto") as? NSManagedObject
+      case is InterventionFertilizer:
+        input = interventionInput.value(forKey: "fertilizer") as? NSManagedObject
+      default:
+        return false
+      }
+
+      if input == fromInput {
+        return true
       }
     }
-    return true
+    return false
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -208,12 +217,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 0:
       let cell = tableView.dequeueReusableCell(withIdentifier: "SeedCell", for: indexPath) as! SeedCell
       let fromSeeds = isSearching ? filteredInputs : seeds
-      let used = fromSeeds[indexPath.row].value(forKey: "used") as! Bool
+      let isSelected = checkIfInputIsSelected(fromInput: fromSeeds[indexPath.row])
       let specie = fromSeeds[indexPath.row].value(forKey: "specie") as? String
       let isRegistered = fromSeeds[indexPath.row].value(forKey: "registered") as! Bool
 
-      cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.isUserInteractionEnabled = !isSelected
+      cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
       cell.varietyLabel.text = fromSeeds[indexPath.row].value(forKey: "variety") as? String
       cell.specieLabel.text = specie?.localized
       cell.starImageView.isHidden = isRegistered
@@ -221,7 +230,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 1:
       let cell = tableView.dequeueReusableCell(withIdentifier: "PhytoCell", for: indexPath) as! PhytoCell
       let fromPhytos = isSearching ? filteredInputs : phytos
-      let used = fromPhytos[indexPath.row].value(forKey: "used") as! Bool
+      let isSelected = checkIfInputIsSelected(fromInput: fromPhytos[indexPath.row])
       let inFieldReentryDelay = fromPhytos[indexPath.row].value(forKey: "inFieldReentryDelay") as! Int
       let unit: String = inFieldReentryDelay > 1 ? "hours".localized : "hour".localized
       let isRegistered = fromPhytos[indexPath.row].value(forKey: "registered") as! Bool
@@ -229,8 +238,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
 
       cell.unauthorizedMixingLabel.isHidden = authorized
       cell.unauthorizedMixingImage.isHidden = authorized
-      cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.isUserInteractionEnabled = !isSelected
+      cell.backgroundColor = (isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = fromPhytos[indexPath.row].value(forKey: "name") as? String
       cell.firmNameLabel.text = fromPhytos[indexPath.row].value(forKey: "firmName") as? String
       cell.maaIDLabel.text = fromPhytos[indexPath.row].value(forKey: "maaID") as? String
@@ -240,13 +249,13 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "FertilizerCell", for: indexPath) as! FertilizerCell
       let fromFertilizers = isSearching ? filteredInputs : fertilizers
-      let used = fromFertilizers[indexPath.row].value(forKey: "used") as! Bool
+      let isSelected = checkIfInputIsSelected(fromInput: fromFertilizers[indexPath.row])
       let name = fromFertilizers[indexPath.row].value(forKey: "name") as? String
       let nature = fromFertilizers[indexPath.row].value(forKey: "nature") as? String
       let isRegistered = fromFertilizers[indexPath.row].value(forKey: "registered") as! Bool
 
-      cell.isUserInteractionEnabled = !used
-      cell.backgroundColor = (used ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
+      cell.isUserInteractionEnabled = !isSelected
+      cell.backgroundColor = (isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White)
       cell.nameLabel.text = name?.localized
       cell.natureLabel.text = nature?.localized
       cell.starImageView.isHidden = isRegistered
@@ -341,7 +350,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createSeed(variety: String, specie: String) {
+  private func createSeed(variety: String, specie: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -355,7 +364,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     seed.referenceID = 0
     seed.specie = formattedSpecie
     seed.variety = variety
-    seed.unit = "KILOGRAM_PER_HECTARE"
+    seed.unit = unit
     seed.used = false
     seeds.append(seed)
 
@@ -366,7 +375,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createPhyto(name: String, firmName: String, _ maaID: String, _ inFieldReentryDelay: Int) {
+  private func createPhyto(name: String, firmName: String, _ maaID: String, _ inFieldReentryDelay: Int, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -381,7 +390,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     phyto.firmName = firmName
     phyto.maaID = maaID
     phyto.inFieldReentryDelay = Int32(inFieldReentryDelay)
-    phyto.unit = "LITER_PER_HECTARE"
+    phyto.unit = unit
     phyto.used = false
     phytos.append(phyto)
 
@@ -392,7 +401,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     }
   }
 
-  private func createFertilizer(name: String, nature: String) {
+  private func createFertilizer(name: String, nature: String, unit: String) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -405,7 +414,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     fertilizer.referenceID = 0
     fertilizer.name = name
     fertilizer.nature = nature
-    fertilizer.unit = "KILOGRAM_PER_HECTARE"
+    fertilizer.unit = unit
     fertilizer.used = false
     fertilizers.append(fertilizer)
 
@@ -417,6 +426,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }
 
   // MARK: - Actions
+
+  private func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
+    for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
+      if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
+        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
+          return false
+        }
+      }
+    }
+    return true
+  }
 
   @objc private func changeSegment() {
     let searchText = searchBar.text!
@@ -492,14 +512,17 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
     return true
   }
 
-  @objc func createInput() {
+  @objc private func createInput() {
     switch segmentedControl.selectedSegmentIndex {
     case 0:
       if !checkSeedName() {
         return
       }
 
-      createSeed(variety: seedView.varietyTextField.text!, specie: seedView.rawSpecie)
+      createSeed(
+        variety: seedView.varietyTextField.text!,
+        specie: seedView.rawSpecie,
+        unit: seedView.rawUnit)
       seedView.specieButton.setTitle(firstSpecie.localized, for: .normal)
       seedView.varietyTextField.text = ""
       sortInputs()
@@ -515,8 +538,12 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       let maaID = phytoView.maaTextField.text!.isEmpty ? "0" : phytoView.maaTextField.text!
       let inFieldReentryDelay = phytoView.reentryDelayTextField.text!.isEmpty ? 0 : reentryDelay
 
-      createPhyto(name: phytoView.nameTextField.text!, firmName: phytoView.firmNameTextField.text!, maaID,
-                  inFieldReentryDelay!)
+      createPhyto(
+        name: phytoView.nameTextField.text!,
+        firmName: phytoView.firmNameTextField.text!,
+        maaID,
+        inFieldReentryDelay!,
+        unit: phytoView.rawUnit)
       for subview in phytoView.subviews {
         if subview is UITextField {
           let textField = subview as! UITextField
@@ -532,7 +559,10 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
         return
       }
 
-      createFertilizer(name: fertilizerView.nameTextField.text!, nature: fertilizerView.natureButton.titleLabel!.text!)
+      createFertilizer(
+        name: fertilizerView.nameTextField.text!,
+        nature: fertilizerView.natureButton.titleLabel!.text!,
+        unit: fertilizerView.rawUnit)
       fertilizerView.nameTextField.text = ""
       fertilizerView.natureButton.setTitle("organic".localized, for: .normal)
       sortInputs()
