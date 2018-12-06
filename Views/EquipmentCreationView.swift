@@ -66,9 +66,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     nameTextField.placeholder = "name".localized
     nameTextField.autocorrectionType = .no
     nameTextField.delegate = self
-    nameTextField.borderStyle = .none
     nameTextField.layer.backgroundColor = UIColor.white.cgColor
-    nameTextField.layer.masksToBounds = false
     nameTextField.layer.shadowColor = UIColor.darkGray.cgColor
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
@@ -91,9 +89,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     numberTextField.placeholder = "number".localized
     numberTextField.autocorrectionType = .no
     numberTextField.delegate = self
-    numberTextField.borderStyle = .none
     numberTextField.layer.backgroundColor = UIColor.white.cgColor
-    numberTextField.layer.masksToBounds = false
     numberTextField.layer.shadowColor = UIColor.darkGray.cgColor
     numberTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     numberTextField.layer.shadowOpacity = 1
@@ -105,13 +101,10 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   lazy var firstEquipmentParameter: UITextField = {
     let firstEquipmentParameter = UITextField(frame: CGRect.zero)
     firstEquipmentParameter.keyboardType = .decimalPad
-    firstEquipmentParameter.text = nil
     firstEquipmentParameter.isHidden = true
     firstEquipmentParameter.autocorrectionType = .no
     firstEquipmentParameter.delegate = self
-    firstEquipmentParameter.borderStyle = .none
     firstEquipmentParameter.layer.backgroundColor = UIColor.white.cgColor
-    firstEquipmentParameter.layer.masksToBounds = false
     firstEquipmentParameter.layer.shadowColor = UIColor.darkGray.cgColor
     firstEquipmentParameter.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     firstEquipmentParameter.layer.shadowOpacity = 1
@@ -132,13 +125,10 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   lazy var secondEquipmentParameter: UITextField = {
     let secondEquipmentParameter = UITextField(frame: CGRect.zero)
     secondEquipmentParameter.keyboardType = .decimalPad
-    secondEquipmentParameter.text = nil
     secondEquipmentParameter.isHidden = true
     secondEquipmentParameter.autocorrectionType = .no
     secondEquipmentParameter.delegate = self
-    secondEquipmentParameter.borderStyle = .none
     secondEquipmentParameter.layer.backgroundColor = UIColor.white.cgColor
-    secondEquipmentParameter.layer.masksToBounds = false
     secondEquipmentParameter.layer.shadowColor = UIColor.darkGray.cgColor
     secondEquipmentParameter.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     secondEquipmentParameter.layer.shadowOpacity = 1
