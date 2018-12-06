@@ -1,5 +1,5 @@
 //
-//  HandleKeyboard.swift
+//  UIViewController+Keyboard.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 14/09/2018.
