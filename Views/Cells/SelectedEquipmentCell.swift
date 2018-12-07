@@ -31,7 +31,7 @@ class SelectedEquipmentCell: UITableViewCell {
     let deleteButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
     deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.tintColor = UIColor.red
+    deleteButton.tintColor = AppColor.AppleColors.Red
     deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     deleteButton.translatesAutoresizingMaskIntoConstraints = false
     return deleteButton
