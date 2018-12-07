@@ -55,10 +55,10 @@ extension AddInterventionViewController: UITextFieldDelegate {
   private func updateInfoLabel(_ volume: Float, _ unit: String) {
     if volume == 0 {
       irrigationErrorLabel.text = "volume_cannot_be_null".localized
-      irrigationErrorLabel.textColor = AppColor.TextColors.Red
+      irrigationErrorLabel.textColor = AppColor.AppleColors.Red
     } else if totalLabel.text == "select_crops".localized.uppercased() {
       irrigationErrorLabel.text = "no_crop_selected".localized
-      irrigationErrorLabel.textColor = AppColor.TextColors.Red
+      irrigationErrorLabel.textColor = AppColor.AppleColors.Red
     } else {
       let efficiency = volume / cropsView.selectedSurfaceArea
 

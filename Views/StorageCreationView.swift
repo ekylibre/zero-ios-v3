@@ -38,7 +38,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.isHidden = true
     errorLabel.font = UIFont.systemFont(ofSize: 13)
-    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.textColor = AppColor.AppleColors.Red
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()

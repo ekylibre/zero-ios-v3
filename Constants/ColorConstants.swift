@@ -32,7 +32,6 @@ struct AppColor {
     static let Green = UIColor(red: 154/255, green: 200/255, blue: 106/255, alpha: 1)
     static let LightBlue = Blue.withAlphaComponent(0.3)
     static let LightGreen = Green.withAlphaComponent(0.3)
-    static let Red = UIColor.red
     static let White = UIColor.white
   }
 
