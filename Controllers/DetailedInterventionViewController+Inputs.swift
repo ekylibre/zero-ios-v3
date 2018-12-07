@@ -346,10 +346,10 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if quantity == 0 || quantity == nil {
       let error = (cell?.type == "Phyto") ? "volume_cannot_be_null".localized : "quantity_cannot_be_null".localized
       cell?.surfaceQuantity.text = error
-      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
+      cell?.surfaceQuantity.textColor = AppColor.AppleColors.Red
     } else if totalLabel.text == "select_crops".localized.uppercased() {
       cell?.surfaceQuantity.text = "no_crop_selected".localized
-      cell?.surfaceQuantity.textColor = AppColor.TextColors.Red
+      cell?.surfaceQuantity.textColor = AppColor.AppleColors.Red
     } else {
       defineQuantityInFunctionOfSurface(unit: unit!.localized, quantity: quantity!, indexPath: indexPath)
     }

@@ -37,7 +37,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
   lazy var errorLabel: UILabel = {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
-    errorLabel.textColor = AppColor.TextColors.Red
+    errorLabel.textColor = AppColor.AppleColors.Red
     errorLabel.isHidden = true
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
