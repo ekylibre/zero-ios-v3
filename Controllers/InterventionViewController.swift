@@ -460,7 +460,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    UIApplication.shared.beginIgnoringInteractionEvents()
     queryFarms { (success) in
       if success {
         self.updateFarmNameLabel()
@@ -483,7 +482,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()
-      UIApplication.shared.endIgnoringInteractionEvents()
     }
   }
 
