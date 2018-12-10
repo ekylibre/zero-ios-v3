@@ -80,18 +80,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   // MARK: - Text Field Delegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    view.frame.origin.y = 0
-    textField.resignFirstResponder()
-    switch textField {
-    case tfUsername:
+    if textField == tfUsername {
       tfPassword.becomeFirstResponder()
-      return false
-    case tfPassword:
+    } else {
+      textField.resignFirstResponder()
       checkAuthentification(sender: self)
-      return false
-    default:
-      return false
     }
+    return false
   }
 
   // MARK: - Actions
@@ -99,16 +94,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   private func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
     var token: String?
 
-    if firstLoggin {
+    if firstLoggin || (authentificationService?.oauth2 != nil &&
+      !authentificationService!.oauth2!.hasUnexpiredAccessToken()) {
       authentificationService?.authorize(presenting: self)
       authentificationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
         token = self.authentificationService?.oauth2?.accessToken
         self.checkLoggedStatus(token: token)
       }
-    } else if authentificationService?.oauth2 != nil && authentificationService!.oauth2!.hasUnexpiredAccessToken() {
-      authentificationService?.authorize(presenting: self)
-      token = self.authentificationService?.oauth2?.accessToken
-      checkLoggedStatus(token: token)
     } else {
       authentificationService?.authorize(presenting: self)
       token = self.authentificationService?.oauth2?.accessToken
