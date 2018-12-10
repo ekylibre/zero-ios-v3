@@ -1426,7 +1426,7 @@ extension InterventionViewController {
         case is Person:
           (entity as! Person).ekyID = pushPerson(person: entity as! Person)
         case is Seed:
-          (entity as! Seed).ekyID = pushSeed(seed: entity as! Seed)
+          pushSeed(seed: entity as! Seed)
         case is Phyto:
           let phyto = (entity as! Phyto)
           pushInput(input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
