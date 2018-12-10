@@ -25,10 +25,6 @@ extension InterventionViewController {
   }
 
   private func initializeApolloClient() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     #if DEBUG
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     #else
@@ -40,19 +36,14 @@ extension InterventionViewController {
     authService.setupOauthPasswordGrant(username: nil, password: nil)
     if let token = authService.oauth2?.accessToken {
       configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
-      appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+      apolloClient = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
     }
   }
 
   func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let apollo = appDelegate.apollo!
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    apollo.fetch(query: query) { result, error in
+    apolloClient.fetch(query: query) { result, error in
       if let error = error {
         print("Error: \(error)")
         endResult(false)
@@ -264,18 +255,13 @@ extension InterventionViewController {
   // MARK: - Articles
 
   private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
     var id: Int32 = 0
-    let apollo = appDelegate.apollo!
     let group = DispatchGroup()
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
-    let _ = apollo.clearCache()
+    let _ = apolloClient.clearCache()
 
     group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -294,14 +280,9 @@ extension InterventionViewController {
   }
 
   private func pushSeed(seed: Seed) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
     var id: Int32 = 0
     let group = DispatchGroup()
-    let apollo = appDelegate.apollo!
-    let _ = apollo.clearCache()
+    let _ = apolloClient.clearCache()
     let mutation = PushArticleMutation(
       farmId: farmID,
       unit: ArticleUnitEnum.kilogram,
@@ -311,7 +292,7 @@ extension InterventionViewController {
       variety: seed.variety)
 
     group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -614,12 +595,9 @@ extension InterventionViewController {
   }
 
   private func loadEquipments() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -661,12 +639,9 @@ extension InterventionViewController {
   }
 
   private func loadPersons(completion: @escaping (_ success: Bool) -> Void) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         completion(false)
@@ -693,19 +668,14 @@ extension InterventionViewController {
   // MARK: Storages
 
   private func pushStorages(storage: Storage) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
     var id: Int32 = 0
-    let apollo = appDelegate.apollo!
     let group = DispatchGroup()
-    let _ = apollo.clearCache()
+    let _ = apolloClient.clearCache()
     let mutation = PushStorageMutation(farmId: farmID, type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
                                        name: storage.name!)
 
     group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -743,12 +713,9 @@ extension InterventionViewController {
   }
 
   private func loadStorage() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1225,14 +1192,11 @@ extension InterventionViewController {
   }
 
   private func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = InterventionQuery(modifiedSince: getLastSyncDate())
     let group = DispatchGroup()
 
     group.enter()
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         onCompleted(false)
@@ -1256,23 +1220,19 @@ extension InterventionViewController {
     }
 
     group.notify(queue: DispatchQueue.main) {
-      let _ = appDelegate.apollo?.clearCache()
+      _ = self.apolloClient.clearCache()
       onCompleted(true)
     }
   }
 
   func updateInterventionIfChangedOnApi() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     let group = DispatchGroup()
+    let query = InterventionQuery(modifiedSince: getLastSyncDate())
+
 
     group.enter()
-    let query = InterventionQuery(modifiedSince: getLastSyncDate())
-    let _ = appDelegate.apollo?.clearCache()
-
-    appDelegate.apollo?.fetch(query: query, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.fetch(query: query, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1452,20 +1412,15 @@ extension InterventionViewController {
   }
 
   private func pushEquipment(equipment: Equipment) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
     var id: Int32 = 0
-    let apollo = appDelegate.apollo!
     let group = DispatchGroup()
-    let _ = apollo.clearCache()
+    let _ = apolloClient.clearCache()
     let mutation = PushEquipmentMutation(farmId: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
                                          name: equipment.name!, number: equipment.number,
                                          indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
     group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1558,18 +1513,13 @@ extension InterventionViewController {
   }
 
   private func pushPerson(person: Person) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
     var id: Int32 = 0
-    let apollo = appDelegate.apollo!
     let group = DispatchGroup()
     let mutation = PushPersonMutation(farmId: farmID, firstName: person.firstName, lastName: person.lastName!)
-    let _ = apollo.clearCache()
+    let _ = apolloClient.clearCache()
 
     group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.data?.createPerson?.errors {
@@ -1631,18 +1581,13 @@ extension InterventionViewController {
   }
 
   func pushIntervention(intervention: Intervention) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
     var id: Int32 = 0
     let group = DispatchGroup()
-    let apollo = appDelegate.apollo
-    let _ = apollo?.clearCache()
+    let _ = apolloClient.clearCache()
     let mutation = setupMutation(intervention)
 
     group.enter()
-    apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1663,13 +1608,8 @@ extension InterventionViewController {
   }
 
   func pushUpdatedIntervention(intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     let group = DispatchGroup()
-    let apollo = appDelegate.apollo
-    let _ = apollo?.clearCache()
+    let _ = apolloClient.clearCache()
     let updateMutation = UpdateInterMutation(
       interventionId: String(intervention.ekyID),
       farmId: farmID!,
@@ -1686,7 +1626,7 @@ extension InterventionViewController {
       description: intervention.infos)
 
     group.enter()
-    apollo?.perform(mutation: updateMutation, queue: DispatchQueue.global(), resultHandler: { (error, result) in
+    apolloClient.perform(mutation: updateMutation, queue: DispatchQueue.global(), resultHandler: { (error, result) in
       if let error = error?.errors {
         print("Error: \(String(describing: error))")
       } else {

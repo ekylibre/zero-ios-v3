@@ -28,6 +28,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
   let navItem = UINavigationItem()
   let refreshControl = UIRefreshControl()
+  var apolloClient: ApolloClient!
   let dimView = UIView(frame: CGRect.zero)
   var interventionTypeButtons = [UIButton]()
   var interventionTypeLabels = [UILabel]()
