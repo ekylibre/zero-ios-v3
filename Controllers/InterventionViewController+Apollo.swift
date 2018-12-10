@@ -268,7 +268,7 @@ extension InterventionViewController {
       }
 
       guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
-        print("Could not unwrap id")
+        print("Could not unwrap article id")
         return
       }
 
@@ -291,7 +291,7 @@ extension InterventionViewController {
       }
 
       guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
-        print("Could not unwrap id")
+        print("Could not unwrap seed id")
         return
       }
 
@@ -671,7 +671,7 @@ extension InterventionViewController {
       }
 
       guard let graphqlID = result?.data?.createStorage?.storage?.id, let id = Int32(graphqlID) else {
-        print("Could not unwrap id")
+        print("Could not unwrap storage id")
         return
       }
 
@@ -1391,7 +1391,7 @@ extension InterventionViewController {
       }
 
       guard let graphqlID = result?.data?.createEquipment?.equipment?.id, let id = Int32(graphqlID) else {
-        print("Could not unwrap id")
+        print("Could not unwrap equipment id")
         return
       }
 
@@ -1418,7 +1418,7 @@ extension InterventionViewController {
         case is Equipment:
           pushEquipment(equipment: entity as! Equipment)
         case is Person:
-          (entity as! Person).ekyID = pushPerson(person: entity as! Person)
+          pushPerson(person: entity as! Person)
         case is Seed:
           pushSeed(seed: entity as! Seed)
         case is Phyto:
@@ -1473,27 +1473,26 @@ extension InterventionViewController {
     return equipmentsAttributes
   }
 
-  private func pushPerson(person: Person) -> Int32 {
-    var id: Int32 = 0
-    let group = DispatchGroup()
+  private func pushPerson(person: Person) {
     let mutation = PushPersonMutation(farmId: farmID, firstName: person.firstName, lastName: person.lastName!)
-    let _ = apolloClient.clearCache()
 
-    group.enter()
-    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
-      } else if let resultError = result?.data?.createPerson?.errors {
-        print("Error: \(resultError)")
-      } else {
-        if result?.data?.createPerson?.person?.id != nil {
-          id = Int32(result!.data!.createPerson!.person!.id)!
-        }
+      } else if let resultError = result?.errors {
+        print("ResultError: \(resultError)")
+      } else if let dataError = result?.data?.createPerson?.errors {
+        print("DataError: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createPerson?.person?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap person id")
+        return
+      }
+
+      person.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   private func defineOperatorAttributesFrom(intervention: Intervention) -> [InterventionOperatorAttributes] {
