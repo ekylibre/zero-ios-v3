@@ -230,9 +230,11 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let crop = Crop(context: managedContext)
+    let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
+    let surfaceArea = Float(splitString.first!)!
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
 
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     crop.uuid = UUID(uuidString: new.uuid)
     crop.plotName = new.name
     crop.productionID = Int32(new.productionNature.id)!
@@ -241,8 +243,6 @@ extension InterventionViewController {
     crop.species = new.species.rawValue
     crop.startDate = new.startDate!
     crop.stopDate = new.stopDate!
-    let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
-    let surfaceArea = Float(splitString.first!)!
     crop.surfaceArea = surfaceArea
 
     do {
@@ -592,7 +592,12 @@ extension InterventionViewController {
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
       } else {
-        for farm in (result?.data?.farms)! {
+        guard let farms = result?.data?.farms else {
+          print("Could not unwrap farms")
+          return
+        }
+
+        for farm in farms {
           for equipment in farm.equipments {
 
             let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
@@ -640,7 +645,12 @@ extension InterventionViewController {
         completion(false)
         return
       } else {
-        for farm in (result?.data?.farms)! {
+        guard let farms = result?.data?.farms else {
+          print("Could not unwrap farms")
+          return
+        }
+
+        for farm in farms {
           for person in farm.people {
             let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
 
@@ -707,7 +717,11 @@ extension InterventionViewController {
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
       } else {
-        let farm = (result?.data?.farms.first)!
+        guard let farm = result?.data?.farms.first else {
+          print("Could not unwrap farms")
+          return
+        }
+
         for storage in farm.storages {
           let predicate = NSPredicate(format: "storageID == %d", (storage.id as NSString).intValue)
 
