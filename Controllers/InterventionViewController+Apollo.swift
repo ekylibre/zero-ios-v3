@@ -656,30 +656,27 @@ extension InterventionViewController {
 
   // MARK: Storages
 
-  private func pushStorages(storage: Storage) -> Int32 {
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let _ = apolloClient.clearCache()
-    let mutation = PushStorageMutation(farmId: farmID, type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
+  private func pushStorage(storage: Storage) {
+    let mutation = PushStorageMutation(farmId: farmID, type: StorageTypeEnum(rawValue: storage.type!),
                                        name: storage.name!)
 
-    group.enter()
-    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("ResultError: \(resultError)")
-      } else  {
-        if let dataError = result?.data?.createStorage?.errors {
-          print("DataError: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createStorage!.storage!.id)!
-        }
+      } else if let dataError = result?.data?.createStorage?.errors {
+        print("DataError: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createStorage?.storage?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap id")
+        return
+      }
+
+      storage.storageID = id
     })
-    group.wait()
-    return id
   }
 
   private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage){
@@ -1378,31 +1375,28 @@ extension InterventionViewController {
     return harvestsAttributes
   }
 
-  private func pushEquipment(equipment: Equipment) -> Int32 {
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let _ = apolloClient.clearCache()
+  private func pushEquipment(equipment: Equipment) {
     let mutation = PushEquipmentMutation(farmId: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
                                          name: equipment.name!, number: equipment.number,
                                          indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
-    group.enter()
-    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("ResultError: \(resultError)")
-      } else  {
-        if let dataError = result?.data?.createEquipment?.errors {
-          print("DataError: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createEquipment!.equipment!.id)!
-        }
+      } else if let dataError = result?.data?.createEquipment?.errors {
+        print("DataError: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createEquipment?.equipment?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap id")
+        return
+      }
+
+      equipment.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   private func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
@@ -1422,7 +1416,7 @@ extension InterventionViewController {
       for entity in entities {
         switch entity {
         case is Equipment:
-          (entity as! Equipment).ekyID = pushEquipment(equipment: entity as! Equipment)
+          pushEquipment(equipment: entity as! Equipment)
         case is Person:
           (entity as! Person).ekyID = pushPerson(person: entity as! Person)
         case is Seed:
@@ -1437,7 +1431,7 @@ extension InterventionViewController {
           let material = (entity as! Material)
           pushInput(input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
         case is Storage:
-          (entity as! Storage).storageID = pushStorages(storage: entity as! Storage)
+          pushStorage(storage: entity as! Storage)
         default:
           return
         }
