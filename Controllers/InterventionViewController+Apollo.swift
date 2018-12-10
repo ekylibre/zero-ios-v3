@@ -1204,13 +1204,11 @@ extension InterventionViewController {
   }
 
   func updateInterventionIfChangedOnApi() {
-    let group = DispatchGroup()
     let query = InterventionQuery(modifiedSince: getLastSyncDate())
 
 
-    group.enter()
     _ = apolloClient.clearCache()
-    apolloClient.fetch(query: query, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.fetch(query: query, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1221,9 +1219,7 @@ extension InterventionViewController {
           self.updateIntervention(fetchedIntervention: intervention)
         }
       }
-      group.leave()
     })
-    group.wait()
   }
 
   // MARK: - Mutations: Interventions
@@ -1420,10 +1416,8 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let group = DispatchGroup()
 
     entitiesFetchRequest.predicate = predicate
-    group.enter()
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
@@ -1451,12 +1445,9 @@ extension InterventionViewController {
         }
       }
       try managedContext.save()
-      group.leave()
     } catch let error as NSError {
       print("Could not fetch or save. \(error), \(error.userInfo)")
-      group.leave()
     }
-    group.wait()
   }
 
   func pushEntities() {
@@ -1577,8 +1568,6 @@ extension InterventionViewController {
   }
 
   func pushUpdatedIntervention(intervention: Intervention) {
-    let group = DispatchGroup()
-    let _ = apolloClient.clearCache()
     let updateMutation = UpdateInterMutation(
       interventionId: String(intervention.ekyID),
       farmId: farmID!,
@@ -1594,15 +1583,13 @@ extension InterventionViewController {
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
-    group.enter()
-    apolloClient.perform(mutation: updateMutation, queue: DispatchQueue.global(), resultHandler: { (error, result) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: updateMutation, resultHandler: { (error, result) in
       if let error = error?.errors {
         print("Error: \(String(describing: error))")
       } else {
         intervention.status = InterventionState.Synced.rawValue
       }
-      group.leave()
     })
-    group.wait()
   }
 }
