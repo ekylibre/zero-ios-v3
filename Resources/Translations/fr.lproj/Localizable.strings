@@ -413,6 +413,7 @@
 "yesterday" = "Hier";
 
 // Alerts
+"please_wait_sync_ending" = "Veuillez Attendre la Fin de la Synchronisation";
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes les données non synchronisées seront perdues.";
 

@@ -426,7 +426,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func presentInterventionsByCrop(_ sender: Any) {
-    if !checkCropsData() {
+    if !checkSyncState() || !checkCropsData() {
       return
     }
 
@@ -476,6 +476,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         }
         self.syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
+        UserDefaults.standard.set(true, forKey: "hasSyncedBefore")
         UserDefaults.standard.synchronize()
       } else {
         self.syncLabel.text = "sync_failure".localized
@@ -535,7 +536,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func expandBottomView() {
-    if !checkCropsData() {
+    if !checkSyncState() || !checkCropsData() {
       return
     }
 
@@ -558,5 +559,17 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.isHidden = true
     heightConstraint.constant = 60
     createInterventionButton.isHidden = false
+  }
+
+  private func checkSyncState() -> Bool {
+    if !UserDefaults.standard.bool(forKey: "hasSyncedBefore") {
+      let alert = UIAlertController(title: "please_wait_sync_ending".localized, message: nil, preferredStyle: .alert)
+      let action = UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil)
+
+      alert.addAction(action)
+      present(alert, animated: true)
+      return false
+    }
+    return true
   }
 }
