@@ -256,55 +256,47 @@ extension InterventionViewController {
 
   private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) {
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
-    let _ = apolloClient.clearCache()
 
+    _ = apolloClient.clearCache()
     apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else { return }
-
-          input.setValue(id, forKey: "ekyID")
-          print(input.value(forKey: "ekyID"))
-        }
+      } else if let dataError = result?.data?.createArticle?.errors {
+        print("Data error: \(dataError)")
       }
+
+      guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap id")
+        return
+      }
+
+      input.setValue(id, forKey: "ekyID")
     })
   }
 
-  private func pushSeed(seed: Seed) -> Int32{
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let _ = apolloClient.clearCache()
-    let mutation = PushArticleMutation(
-      farmId: farmID,
-      unit: ArticleUnitEnum.kilogram,
-      name: seed.variety!,
-      type: ArticleTypeEnum.seed,
-      specie: SpecieEnum(rawValue: seed.specie!),
-      variety: seed.variety)
+  private func pushSeed(seed: Seed) {
+    let mutation = PushArticleMutation(farmId: farmID, unit: ArticleUnitEnum.kilogram, name: seed.variety!,
+                                       type: .seed, specie: SpecieEnum(rawValue: seed.specie!), variety: seed.variety)
 
-    group.enter()
-    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createArticle!.article!.id)!
-        }
+      } else if let dataError = result?.data?.createArticle?.errors {
+        print("Data error: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap id")
+        return
+      }
+
+      seed.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
