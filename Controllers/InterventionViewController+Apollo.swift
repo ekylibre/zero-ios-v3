@@ -1554,31 +1554,26 @@ extension InterventionViewController {
     return mutation
   }
 
-  func pushIntervention(intervention: Intervention) -> Int32 {
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let _ = apolloClient.clearCache()
+  func pushIntervention(_ intervention: Intervention) {
     let mutation = setupMutation(intervention)
 
-    group.enter()
-    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createIntervention?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          if result?.data?.createIntervention?.intervention?.id != nil {
-            id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
-          }
-        }
+      } else if let dataError = result?.data?.createIntervention?.errors {
+        print("Data error: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createIntervention?.intervention?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap intervention id")
+        return
+      }
+
+      intervention.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   func pushUpdatedIntervention(intervention: Intervention) {

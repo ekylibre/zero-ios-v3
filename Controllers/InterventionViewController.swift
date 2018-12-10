@@ -501,7 +501,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
       for intervention in interventions {
-        intervention.ekyID = pushIntervention(intervention: intervention)
+        pushIntervention(intervention)
         if intervention.ekyID != 0 {
           intervention.status = Int16(InterventionState.Synced.rawValue)
         }
