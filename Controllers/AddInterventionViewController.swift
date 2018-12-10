@@ -239,7 +239,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       ])
   }
 
-  private func setupViewsAccordingInterventionType() {
+  func setupViewsAccordingInterventionType() {
     switch interventionType {
     case InterventionType.Care.rawValue:
       materialsView.isHidden = false
