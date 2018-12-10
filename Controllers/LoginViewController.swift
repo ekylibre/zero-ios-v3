@@ -111,8 +111,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       checkLoggedStatus(token: token)
     } else {
       authentificationService?.authorize(presenting: self)
-      token = self.authentificationService?.oauth2?.accessToken
-      checkLoggedStatus(token: token)
+      authentificationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
+        token = self.authentificationService?.oauth2?.accessToken
+        self.checkLoggedStatus(token: token)
+      }
     }
   }
 
