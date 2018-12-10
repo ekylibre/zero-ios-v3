@@ -80,18 +80,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   // MARK: - Text Field Delegate
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    view.frame.origin.y = 0
-    textField.resignFirstResponder()
-    switch textField {
-    case tfUsername:
+    if textField == tfUsername {
       tfPassword.becomeFirstResponder()
-      return false
-    case tfPassword:
+    } else {
+      textField.resignFirstResponder()
       checkAuthentification(sender: self)
-      return false
-    default:
-      return false
     }
+    return false
   }
 
   // MARK: - Actions
