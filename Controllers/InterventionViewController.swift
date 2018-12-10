@@ -265,7 +265,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     if crops.count == 0 {
       let alert = UIAlertController(title: "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
-      let action = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
+      let action = UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil)
 
       alert.addAction(action)
       present(alert, animated: true)
