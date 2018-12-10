@@ -142,6 +142,8 @@ extension InterventionViewController {
 
     for crop in crops {
       let newCrop = Crop(context: managedContext)
+      let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
+      let surfaceArea = Float(splitString.first!)!
 
       newCrop.uuid = UUID(uuidString: crop.uuid)
       newCrop.plotName = crop.name
@@ -151,8 +153,6 @@ extension InterventionViewController {
       newCrop.species = crop.species.rawValue
       newCrop.startDate = crop.startDate!
       newCrop.stopDate = crop.stopDate!
-      let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
-      let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
       newCrop.centroid = crop.centroid.jsonValue as? String
     }
@@ -800,7 +800,7 @@ extension InterventionViewController {
                                             intervention: Intervention) -> InterventionEquipment {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipment(context: managedContext)
-    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!)) // Warning("Check predicate")
+    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!))
     let equipment = returnEntityIfSame(entityName: "Equipment", predicate: predicate)
 
     if equipment != nil {
