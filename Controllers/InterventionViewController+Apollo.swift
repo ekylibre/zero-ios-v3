@@ -254,14 +254,11 @@ extension InterventionViewController {
 
   // MARK: - Articles
 
-  private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) -> Int32 {
-    var id: Int32 = 0
-    let group = DispatchGroup()
+  private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) {
     let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
     let _ = apolloClient.clearCache()
 
-    group.enter()
-    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -270,13 +267,13 @@ extension InterventionViewController {
         if let dataError = result?.data?.createArticle?.errors {
           print("Data error: \(dataError)")
         } else {
-          id = Int32(result!.data!.createArticle!.article!.id)!
+          guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else { return }
+
+          input.setValue(id, forKey: "ekyID")
+          print(input.value(forKey: "ekyID"))
         }
       }
-      group.leave()
     })
-    group.wait()
-    return id
   }
 
   private func pushSeed(seed: Seed) -> Int32{
@@ -1440,13 +1437,13 @@ extension InterventionViewController {
           (entity as! Seed).ekyID = pushSeed(seed: entity as! Seed)
         case is Phyto:
           let phyto = (entity as! Phyto)
-          phyto.ekyID = pushInput(input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
+          pushInput(input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
         case is Fertilizer:
           let fertilizer = (entity as! Fertilizer)
-          fertilizer.ekyID = pushInput(input: entity as! NSManagedObject, type: .fertilizer, unit: ArticleUnitEnum(rawValue: fertilizer.unit!)!)
+          pushInput(input: entity as! NSManagedObject, type: .fertilizer, unit: ArticleUnitEnum(rawValue: fertilizer.unit!)!)
         case is Material:
           let material = (entity as! Material)
-          material.ekyID = pushInput(input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
+          pushInput(input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
         case is Storage:
           (entity as! Storage).storageID = pushStorages(storage: entity as! Storage)
         default:
