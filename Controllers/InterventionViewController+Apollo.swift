@@ -889,28 +889,6 @@ extension InterventionViewController {
     return harvest
   }
 
-  private func returnStorageIfSame(storageID: Int32?) -> Storage? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
-
-    do {
-      let storages = try managedContext.fetch(storagesFetchRequest)
-
-      for storage in storages {
-        if storageID == storage.storageID {
-          return storage
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
   private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load,
                                       intervention: Intervention, nature: String) -> Harvest {
     let managedContext = appDelegate.persistentContainer.viewContext
