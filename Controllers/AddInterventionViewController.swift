@@ -819,6 +819,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       destVC.lastSelectedValue = equipmentsSelectionView.creationView.typeButton.titleLabel?.text
       destVC.rawStrings = equipmentTypes
       destVC.tag = 1
+    case "editEquipmentType":
+      let destVC = segue.destination as! ListTableViewController
+      destVC.delegate = self
+      destVC.lastSelectedValue = equipmentsSelectionView.editionView.typeButton.titleLabel?.text
+      destVC.rawStrings = equipmentTypes
+      destVC.tag = 2
     default:
       return
     }
@@ -856,7 +862,17 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
       equipmentsSelectionView.creationView.typeImageView.image = UIImage(named: imageName)
       equipmentsSelectionView.creationView.typeButton.setTitle(value.localized, for: .normal)
+      equipmentsSelectionView.creationView.firstEquipmentParameter.text = nil
+      equipmentsSelectionView.creationView.secondEquipmentParameter.text = nil
       equipmentsSelectionView.defineIndicatorsIfNeeded(value.lowercased())
+    case 2:
+      let imageName = value.lowercased().replacingOccurrences(of: "_", with: "-")
+
+      equipmentsSelectionView.editionView.typeImageView.image = UIImage(named: imageName)
+      equipmentsSelectionView.editionView.typeButton.setTitle(value.localized, for: .normal)
+      equipmentsSelectionView.editionView.firstIndicatorTextField.text = nil
+      equipmentsSelectionView.editionView.secondIndicatorTextField.text = nil
+      equipmentsSelectionView.editionView.updateIndicators(nature: value.lowercased(), equipmentsSelectionView)
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }

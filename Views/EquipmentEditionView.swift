@@ -244,6 +244,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   }
 
   private func setupActions() {
+    typeButton.addTarget(self, action: #selector(editEquipmentType), for: .touchUpInside)
     cancelButton.addTarget(self, action: #selector(cancelEdition), for: .touchUpInside)
     saveButton.addTarget(self, action: #selector(saveChanges), for: .touchUpInside)
   }
@@ -302,7 +303,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     }
   }
 
-  private func updateIndicators(nature: String, _ equipmentsView: EquipmentsView) {
+  func updateIndicators(nature: String, _ equipmentsView: EquipmentsView) {
     let indicators = equipmentsView.loadEquipmentIndicators(nature)
 
     if indicators.count > 1 {
@@ -325,6 +326,12 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     firstIndicatorLabel.isHidden = (indicators.count < 1)
     secondIndicatorTextField.isHidden = (indicators.count < 2)
     secondIndicatorLabel.isHidden = (indicators.count < 2)
+  }
+
+  @objc private func editEquipmentType() {
+    guard let viewController = parentViewController else { return }
+
+    viewController.performSegue(withIdentifier: "editEquipmentType", sender: self)
   }
 
   @objc private func cancelEdition() {
