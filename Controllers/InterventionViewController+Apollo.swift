@@ -833,7 +833,7 @@ extension InterventionViewController {
                                             intervention: Intervention) -> InterventionEquipment {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipment(context: managedContext)
-    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!)) // Warning("Check predicate")
+    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!))
     let equipment = returnEntityIfSame(entityName: "Equipment", predicate: predicate)
 
     if equipment != nil {
