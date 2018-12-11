@@ -117,7 +117,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction private func tapEquipmentsView() {
+  @IBAction func tapEquipmentsView() {
     let shouldExpand = (equipmentsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedEquipments.count > 10) ? 10 * 55 : selectedEquipments.count * 55
 

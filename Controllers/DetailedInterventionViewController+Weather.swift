@@ -142,7 +142,7 @@ extension AddInterventionViewController {
     }
   }
 
-  @IBAction private func tapWeatherView(_ sender: Any) {
+  @IBAction func tapWeatherView(_ sender: Any) {
     let shouldExpand: Bool = (weatherViewHeightConstraint.constant == 70)
 
     view.endEditing(true)

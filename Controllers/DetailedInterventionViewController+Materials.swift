@@ -97,7 +97,7 @@ extension AddInterventionViewController {
     })
   }
 
-  @IBAction private func tapMaterialsView() {
+  @IBAction func tapMaterialsView() {
     let shouldExpand = (materialsHeightConstraint.constant == 70)
     let tableViewHeight = (selectedMaterials[0].count > 10) ? 10 * 80 : selectedMaterials[0].count * 80
 

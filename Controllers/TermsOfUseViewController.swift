@@ -16,11 +16,16 @@ class TermsOfUseViewController: UIViewController, WKNavigationDelegate {
 
   // MARK: - Initialization
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
 
     title = "terms_of_use".localized
     navigationController?.navigationBar.isHidden = false
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     activityIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
     startLoadingView()
     activityIndicator.startAnimating()
