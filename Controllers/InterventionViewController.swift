@@ -28,6 +28,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   let appDelegate = UIApplication.shared.delegate as! AppDelegate
   let navItem = UINavigationItem()
   let refreshControl = UIRefreshControl()
+  var apolloClient: ApolloClient!
   let dimView = UIView(frame: CGRect.zero)
   var interventionTypeButtons = [UIButton]()
   var interventionTypeLabels = [UILabel]()
@@ -264,7 +265,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
     if crops.count == 0 {
       let alert = UIAlertController(title: "start_online_with_crops".localized, message: nil, preferredStyle: .alert)
-      let action = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
+      let action = UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil)
 
       alert.addAction(action)
       present(alert, animated: true)
@@ -426,7 +427,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func presentInterventionsByCrop(_ sender: Any) {
-    if !checkCropsData() {
+    if !checkSyncState() || !checkCropsData() {
       return
     }
 
@@ -460,7 +461,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     let hour = calendar.component(.hour, from: date)
     let minute = calendar.component(.minute, from: date)
 
-    UIApplication.shared.beginIgnoringInteractionEvents()
     queryFarms { (success) in
       if success {
         self.updateFarmNameLabel()
@@ -477,13 +477,13 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         }
         self.syncLabel.text = String(format: "today_last_synchronization".localized, hour, minute)
         UserDefaults.standard.set(date, forKey: "lastSyncDate")
+        UserDefaults.standard.set(true, forKey: "hasSyncedBefore")
         UserDefaults.standard.synchronize()
       } else {
         self.syncLabel.text = "sync_failure".localized
       }
       self.refreshControl.endRefreshing()
       self.tableView.reloadData()
-      UIApplication.shared.endIgnoringInteractionEvents()
     }
   }
 
@@ -501,7 +501,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let interventions = try managedContext.fetch(interventionsFetchRequest)
 
       for intervention in interventions {
-        intervention.ekyID = pushIntervention(intervention: intervention)
+        pushIntervention(intervention)
         if intervention.ekyID != 0 {
           intervention.status = Int16(InterventionState.Synced.rawValue)
         }
@@ -537,7 +537,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   @objc private func expandBottomView() {
-    if !checkCropsData() {
+    if !checkSyncState() || !checkCropsData() {
       return
     }
 
@@ -560,5 +560,17 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     dimView.isHidden = true
     heightConstraint.constant = 60
     createInterventionButton.isHidden = false
+  }
+
+  private func checkSyncState() -> Bool {
+    if !UserDefaults.standard.bool(forKey: "hasSyncedBefore") {
+      let alert = UIAlertController(title: "please_wait_sync_ending".localized, message: nil, preferredStyle: .alert)
+      let action = UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil)
+
+      alert.addAction(action)
+      present(alert, animated: true)
+      return false
+    }
+    return true
   }
 }

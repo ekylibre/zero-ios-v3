@@ -26,7 +26,7 @@ class AuthentificationService {
       let clientID = keys?["testClientID"] as? String
       let clientSecret = keys?["testClientSecret"] as? String
       let url = keys?["testURL"] as? String
-      #else
+      #
       let clientID = keys!["releasedClientID"] as? String
       let clientSecret = keys!["releasedClientSecret"] as? String
       let url = keys!["releasedURL"] as? String
