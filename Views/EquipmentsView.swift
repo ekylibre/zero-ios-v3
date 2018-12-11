@@ -24,7 +24,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
 
-  private func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
     if let asset = NSDataAsset(name: "equipment-types") {
       do {
         let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
@@ -50,7 +50,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return [String]()
   }
 
-  private func defineIndicatorsUnits(_ key: String, _ textField: UITextField) -> String? {
+  func defineIndicatorUnit(_ key: String, textField: UITextField) -> String? {
     let units = [
       "plowshare_count": "UNITY",
       "motor_power": "FRENCH_HORSEPOWER",
@@ -74,18 +74,18 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     let indicators = loadEquipmentIndicators(equipmentNature)
 
     if indicators.count > 1 {
-      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
-      let indicatorTwo = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
+      let firstUnit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
+      let secondUnit = defineIndicatorUnit(indicators[1], textField: creationView.secondEquipmentParameter)
 
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
       creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = indicatorOne
-      creationView.secondParameterUnit.text = indicatorTwo
+      creationView.firstParameterUnit.text = firstUnit?.localized
+      creationView.secondParameterUnit.text = secondUnit?.localized
     } else if indicators.count > 0 {
-      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
+      let unit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
 
       creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = indicatorOne
+      creationView.firstParameterUnit.text = unit?.localized
     }
 
     creationView.heighConstraint.constant = 350 + (CGFloat(indicators.count) * 50)

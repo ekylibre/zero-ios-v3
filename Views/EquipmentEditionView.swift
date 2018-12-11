@@ -268,6 +268,49 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
 
   // MARK: - Actions
 
+  func updateView(cell: UITableViewCell) {
+    guard let equipmentsView = superview as? EquipmentsView else { return }
+    guard let indexPath = equipmentsView.tableView.indexPath(for: cell) else { return }
+    let equipment = equipmentsView.equipments[indexPath.row]
+
+    if let assetName = equipment.type?.lowercased().replacingOccurrences(of: "_", with: "-") {
+      equipmentsView.editionView.typeImageView.image = UIImage(named: assetName)
+    }
+    equipmentsView.editionView.typeButton.setTitle(equipment.type?.localized, for: .normal)
+    equipmentsView.editionView.nameTextField.text = equipment.name
+    equipmentsView.editionView.numberTextField.text = equipment.number
+    if let equipmentNature = equipment.type?.lowercased() {
+      firstIndicatorTextField.text = equipment.indicatorOne
+      secondIndicatorTextField.text = equipment.indicatorTwo
+      updateIndicators(nature: equipmentNature, equipmentsView)
+    }
+  }
+
+  private func updateIndicators(nature: String, _ equipmentsView: EquipmentsView) {
+    let indicators = equipmentsView.loadEquipmentIndicators(nature)
+
+    if indicators.count > 1 {
+      let firstUnit = equipmentsView.defineIndicatorUnit(indicators[0], textField: firstIndicatorTextField)
+      let secondUnit = equipmentsView.defineIndicatorUnit(indicators[1], textField: secondIndicatorTextField)
+
+      firstIndicatorTextField.placeholder = indicators[0].localized
+      firstIndicatorLabel.text = firstUnit?.localized
+      secondIndicatorTextField.placeholder = indicators[1].localized
+      secondIndicatorLabel.text = secondUnit?.localized
+    } else if indicators.count > 0 {
+      let unit = equipmentsView.defineIndicatorUnit(indicators[0], textField: firstIndicatorTextField)
+
+      firstIndicatorTextField.placeholder = indicators[0].localized
+      firstIndicatorLabel.text = unit?.localized
+    }
+
+    heightConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
+    firstIndicatorTextField.isHidden = (indicators.count < 1)
+    firstIndicatorLabel.isHidden = (indicators.count < 1)
+    secondIndicatorTextField.isHidden = (indicators.count < 2)
+    secondIndicatorLabel.isHidden = (indicators.count < 2)
+  }
+
   @objc private func cancelEdition() {
     guard let equipmentsView = superview as? EquipmentsView else { return }
 

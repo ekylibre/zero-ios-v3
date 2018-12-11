@@ -75,15 +75,8 @@ class EquipmentCell: UITableViewCell {
   @objc private func openEditionView(_ sender: UILongPressGestureRecognizer) {
     guard let cell = sender.view?.superview as? UITableViewCell else { return }
     guard let equipmentsView = cell.superview?.superview as? EquipmentsView else { return }
-    guard let indexPath = equipmentsView.tableView.indexPath(for: cell) else { return }
-    let equipment = equipmentsView.equipments[indexPath.row]
 
-    if let assetName = equipment.type?.lowercased().replacingOccurrences(of: "_", with: "-") {
-      equipmentsView.editionView.typeImageView.image = UIImage(named: assetName)
-    }
-    equipmentsView.editionView.typeButton.setTitle(equipment.type?.localized, for: .normal)
-    equipmentsView.editionView.nameTextField.text = equipment.name
-    equipmentsView.editionView.numberTextField.text = equipment.number
+    equipmentsView.editionView.updateView(cell: cell)
     equipmentsView.dimView.isHidden = false
     equipmentsView.editionView.isHidden = false
   }
