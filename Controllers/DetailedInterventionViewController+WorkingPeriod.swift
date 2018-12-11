@@ -40,7 +40,7 @@ extension AddInterventionViewController {
 
   // MARK: - Actions
 
-  @IBAction private func tapWorkingPeriodView(_ sender: Any) {
+  @IBAction func tapWorkingPeriodView(_ sender: Any) {
     let shouldExpand = (workingPeriodHeightConstraint.constant == 70)
     let dateString = workingPeriodDateButton.titleLabel!.text!
     let duration = workingPeriodDurationTextField.text!.floatValue

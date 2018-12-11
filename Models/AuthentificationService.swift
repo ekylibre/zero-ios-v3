@@ -15,7 +15,6 @@ class AuthentificationService {
   // MARK: - Properties
 
   public var oauth2: OAuth2PasswordGrant?
-  let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
   // MARK: - Initialization
 
@@ -58,7 +57,6 @@ class AuthentificationService {
         UserDefaults.standard.set(true, forKey: "userIsLogged")
       }
       UserDefaults.standard.synchronize()
-      self.appDelegate.saveContext()
     }
   }
 
