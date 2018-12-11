@@ -27,6 +27,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   // MARK: - Initialization
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     setupNavigationBar()
     fetchCrops()
     sortProductionsByName()
