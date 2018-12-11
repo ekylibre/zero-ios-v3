@@ -27,6 +27,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   // MARK: - Initialization
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     setupNavigationBar()
     fetchCrops()
     sortProductionsByName()
@@ -331,6 +332,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
     let destVC = segue.destination as? AddInterventionViewController
     destVC?.currentIntervention = cropDetailedView.toUpdateIntervention
     destVC?.interventionState = cropDetailedView.toUpdateIntervention?.status

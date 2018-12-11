@@ -18,7 +18,7 @@ class InterventionMutationTests: XCTestCase {
   let networkTransport: HTTPNetworkTransport = {
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     let configuation = URLSessionConfiguration.default
-    let authService = AuthentificationService()
+    let authService = AuthenticationService()
 
     authService.setupOauthPasswordGrant(username: nil, password: nil)
     if let token = authService.oauth2?.accessToken {

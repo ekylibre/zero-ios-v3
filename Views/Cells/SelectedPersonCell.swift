@@ -66,7 +66,7 @@ class SelectedPersonCell: UITableViewCell {
     driverLabel.translatesAutoresizingMaskIntoConstraints = false
     return driverLabel
   }()
-  
+
   // MARK: - Initialization
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

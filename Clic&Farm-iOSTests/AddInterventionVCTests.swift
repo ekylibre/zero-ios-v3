@@ -10,7 +10,7 @@ import XCTest
 @testable import Clic_Farm_iOS
 
 class AddInterventionVCTests: XCTestCase {
-  
+
   var addInterventionVC: AddInterventionViewController!
 
   override func setUp() {
