@@ -314,21 +314,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.secondEquipmentParameter.text = nil
   }
 
-  private func checkEquipmentNumber() -> Bool {
-    let equipmentsWithSameNumber = equipments.filter({(equipment: Equipment) -> Bool in
-      let number = equipment.number
-
-      return number?.range(of: creationView.numberTextField.text!, options: .caseInsensitive) != nil
-    })
-
-    if equipmentsWithSameNumber.count > 0 {
-      creationView.errorLabel.text = "equipment_number_not_available".localized
-      creationView.errorLabel.isHidden = false
-      return false
-    }
-    return true
-  }
-
   func checkEquipmentName() -> Bool {
     if creationView.nameTextField.text!.isEmpty {
       creationView.errorLabel.text = "equipment_name_is_empty".localized
@@ -336,6 +321,15 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       return false
     } else if equipments.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
       creationView.errorLabel.text = "equipment_name_not_available".localized
+      creationView.errorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
+  private func checkEquipmentNumber() -> Bool {
+    if equipments.contains(where: { $0.number == creationView.numberTextField.text }) {
+      creationView.errorLabel.text = "equipment_number_not_available".localized
       creationView.errorLabel.isHidden = false
       return false
     }
