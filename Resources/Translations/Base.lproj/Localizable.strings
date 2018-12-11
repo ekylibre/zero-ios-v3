@@ -412,7 +412,7 @@
 "yesterday" = "Yesterday";
 
 // Alerts
-"please_wait_sync_ending" = "Please wait synchronization ending";
+"please_wait_sync_ending" = "Please wait for the sync to end";
 "start_online_with_crops" = "You don't have any assolled plots. Go online to get started!";
 "disconnect_prompt" = "Are you sure you want to log out? Any unsynchronized data will be lost.";
 
