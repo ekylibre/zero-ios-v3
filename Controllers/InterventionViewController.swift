@@ -379,7 +379,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       return dateString
     }
   }
-  
+
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()
@@ -390,6 +390,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Navigation
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
     switch segue.identifier {
     case "showAddInterventionVC":
       let destVC = segue.destination as! AddInterventionViewController

@@ -11,7 +11,7 @@ import CoreData
 @testable import Clic_Farm_iOS
 
 class PersonsTests: XCTestCase {
-  
+
   var addInterventionVC: AddInterventionViewController!
   var sut: StorageManager!
   let managedObjectModel: NSManagedObjectModel = {

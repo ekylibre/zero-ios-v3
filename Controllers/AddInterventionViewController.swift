@@ -157,6 +157,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
+  let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN",
+                             "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
 
   // MARK: - Initialization
 
@@ -805,7 +807,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBAction private func unwindToInterventionVCWithSegue(_ segue: UIStoryboardSegue) { }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //super.prepare(for: segue, sender: sender)
+    super.prepare(for: segue, sender: sender)
     switch segue.identifier {
     case "showSpecies":
       let destVC = segue.destination as! ListTableViewController

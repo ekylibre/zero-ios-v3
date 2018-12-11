@@ -92,10 +92,10 @@ class MenuViewController: UITableViewController {
   }
 
   private func logoutUser() {
-    let authentificationService = AuthentificationService()
+    let authenticationService = AuthenticationService()
 
-    authentificationService.setupOauthPasswordGrant(username: nil, password: nil)
-    authentificationService.logout()
+    authenticationService.setupOauthPasswordGrant(username: nil, password: nil)
+    authenticationService.logout()
     UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
     UserDefaults.standard.synchronize()
     emptyAllCoreData()

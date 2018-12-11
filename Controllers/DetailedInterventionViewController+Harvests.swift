@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 extension AddInterventionViewController: HarvestCellDelegate {
-  
+
   // MARK: - Initialization
 
   func setupHarvestView() {
@@ -313,7 +313,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     textField.layer.borderWidth = 1
     textField.layer.cornerRadius = 5
   }
-  
+
   func harvestTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> HarvestCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
     let harvest = selectedHarvests[indexPath.row]

@@ -69,7 +69,8 @@ class SelectDateView: UIView {
 
   private func createContainerView() -> UIView {
     let screenSize = UIScreen.main.bounds.size
-    let containerFrame = CGRect(x: (screenSize.width - 300) / 2, y: (screenSize.height - 281) / 2, width: 300, height: 281)
+    let containerFrame = CGRect(
+      x: (screenSize.width - 300) / 2, y: (screenSize.height - 281) / 2, width: 300, height: 281)
     let container = UIView(frame: containerFrame)
     let gradient = CAGradientLayer(layer: layer)
 

@@ -31,7 +31,7 @@ extension InterventionViewController {
     let url = URL(string: "https://api.ekylibre.com/v1/graphql")!
     #endif
     let configuation = URLSessionConfiguration.default
-    let authService = AuthentificationService()
+    let authService = AuthenticationService()
 
     authService.setupOauthPasswordGrant(username: nil, password: nil)
     if let token = authService.oauth2?.accessToken {

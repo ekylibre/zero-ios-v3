@@ -339,8 +339,9 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   func updateQuantityLabel(indexPath: IndexPath) {
     let cell = selectedInputsTableView.cellForRow(at: indexPath) as? SelectedInputCell
     let isValidated = (interventionState == InterventionState.Validated.rawValue)
-    let quantity = (isValidated ? cell?.quantityTextField.placeholder?.floatValue : cell?.quantityTextField.text?.floatValue)
     let unit = cell?.unitButton.titleLabel?.text
+    let quantity = (isValidated ? cell?.quantityTextField.placeholder?.floatValue :
+      cell?.quantityTextField.text?.floatValue)
 
     cell?.surfaceQuantity.isHidden = false
     if quantity == 0 || quantity == nil {
