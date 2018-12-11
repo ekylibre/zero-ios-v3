@@ -27,11 +27,13 @@ extension AddInterventionViewController {
     temperatureTextField.layer.borderWidth = 0.5
     temperatureTextField.layer.borderColor = UIColor.lightGray.cgColor
     temperatureTextField.layer.cornerRadius = 5
+    temperatureTextField.placeholder = "0"
     temperatureTextField.clipsToBounds = true
     temperatureTextField.delegate = self
     windSpeedTextField.layer.borderWidth = 0.5
     windSpeedTextField.layer.borderColor = UIColor.lightGray.cgColor
     windSpeedTextField.layer.cornerRadius = 5
+    windSpeedTextField.placeholder = "0"
     windSpeedTextField.clipsToBounds = true
     windSpeedTextField.delegate = self
     initializeWeatherButtons()
