@@ -339,6 +339,7 @@
 "create" = "Créer";
 "delete" = "Supprimer";
 "close" = "Fermer";
+"save" = "Sauvegarder";
 
 "none" = "Aucun";
 "quantity" = "Quantité";
@@ -364,7 +365,7 @@
 "create_new_equipment" = "+ Créer un nouvel équipement";
 "create_new_person" = "+ Créer un opérateur";
 
-// Creation views
+// Creation and edition views
 "create_seed_title" = "Création d'une semence";
 "create_phyto_title" = "Création d'un produit phyto";
 "create_ferti_title" = "Création d'un fertilisant";
@@ -372,6 +373,8 @@
 "create_material_title" = "Création d'un matériau";
 "create_equipment_title" = "Création d'un équipement";
 "create_person_title" = "Création d'un opérateur";
+
+"edit_equipment_title" = "Modification d'un équipement";
 
 "chose_specie" = "Espèce";
 "variety" = "Variété";

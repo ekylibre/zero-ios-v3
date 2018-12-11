@@ -339,6 +339,7 @@
 "create" = "Create";
 "delete" = "Delete";
 "close" = "Close";
+"save" = "Save";
 
 "none" = "None";
 "quantity" = "Quantity";
@@ -364,7 +365,7 @@
 "create_new_equipment" = "+ Create new equipment";
 "create_new_person" = "+ Create new person";
 
-// Creation views
+// Creation and edition views
 "create_seed_title" = "Create new seed";
 "create_phyto_title" = "Create new phyto";
 "create_ferti_title" = "Create new fertilizer";
@@ -372,6 +373,8 @@
 "create_material_title" = "Create new material";
 "create_equipment_title" = "Create new equipment";
 "create_person_title" = "Create new person";
+
+"edit_equipment_title" = "Edit an equipment";
 
 "chose_specie" = "Specie";
 "variety" = "Variety";
