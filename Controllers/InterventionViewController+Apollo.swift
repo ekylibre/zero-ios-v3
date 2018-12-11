@@ -293,7 +293,7 @@ extension InterventionViewController {
     return id
   }
 
-  private func pushSeed(seed: Seed) -> Int32{
+  private func pushSeed(seed: Seed) -> Int32 {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return 0
     }

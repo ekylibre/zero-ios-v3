@@ -121,7 +121,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
       typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 10),
       typeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      createButton.bottomAnchor.constraint(equalTo:bottomAnchor, constant: -15),
+      createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       createButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -15),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: createButton.leftAnchor, constant: -15)
