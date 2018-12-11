@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04051B4F21C0024900FA2790 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04051B4E21C0024900FA2790 /* AuthenticationService.swift */; };
 		040D6AAA21B134DF00664B73 /* InterventionMutationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D6AA921B134DF00664B73 /* InterventionMutationTests.swift */; };
 		04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3BCBD2178DA3D00C01690 /* IQKeyboardManagerSwift.framework */; };
 		0418C907219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */; };
@@ -48,7 +49,6 @@
 		6B1BB45121B9883100E96A16 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01E121B53879003EDB10 /* MenuViewController.swift */; };
 		6B1BB45221B9883100E96A16 /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01DF21B5346D003EDB10 /* SideMenuNavigationController.swift */; };
 		6B1BB45321B9883100E96A16 /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */; };
-		6B1BB45421B9883100E96A16 /* AuthentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C41121A40935008DA4C2 /* AuthentificationService.swift */; };
 		6B1BB45521B9883100E96A16 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3A01E521B5587C003EDB10 /* Command.swift */; };
 		6B1BB45621B9883100E96A16 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65E02105CD8A0072840F /* Connectivity.swift */; };
 		6B1BB45721B9883100E96A16 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041028AA2191ACBD0015978B /* DateConverter.swift */; };
@@ -150,6 +150,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04051B4E21C0024900FA2790 /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		040D6AA921B134DF00664B73 /* InterventionMutationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterventionMutationTests.swift; sourceTree = "<group>"; };
 		040D8598216B9F1B008E1628 /* queries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = queries.graphql; sourceTree = "<group>"; };
 		040D859A216B9F4E008E1628 /* mutations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = mutations.graphql; sourceTree = "<group>"; };
@@ -187,7 +188,6 @@
 		0479C40E21A40935008DA4C2 /* InterventionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterventionViewController.swift; sourceTree = "<group>"; };
 		0479C40F21A40935008DA4C2 /* DetailedInterventionViewController+Persons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+Persons.swift"; sourceTree = "<group>"; };
 		0479C41021A40935008DA4C2 /* DetailedInterventionViewController+WorkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedInterventionViewController+WorkingPeriod.swift"; sourceTree = "<group>"; };
-		0479C41121A40935008DA4C2 /* AuthentificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationService.swift; sourceTree = "<group>"; };
 		0479C41221A40935008DA4C2 /* InterventionViewController+Apollo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Apollo.swift"; sourceTree = "<group>"; };
 		0479C41321A40935008DA4C2 /* InterventionViewController+Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InterventionViewController+Lexicon.swift"; sourceTree = "<group>"; };
 		0479C41421A40935008DA4C2 /* DefineInterventionsDisplayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefineInterventionsDisplayMode.swift; sourceTree = "<group>"; };
@@ -409,7 +409,7 @@
 		047BF0B22105D20B009F3945 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0479C41121A40935008DA4C2 /* AuthentificationService.swift */,
+				04051B4E21C0024900FA2790 /* AuthenticationService.swift */,
 				6B3A01E521B5587C003EDB10 /* Command.swift */,
 				6BEA65E02105CD8A0072840F /* Connectivity.swift */,
 				041028AA2191ACBD0015978B /* DateConverter.swift */,
@@ -778,7 +778,6 @@
 				6B1BB45121B9883100E96A16 /* MenuViewController.swift in Sources */,
 				6B1BB45221B9883100E96A16 /* SideMenuNavigationController.swift in Sources */,
 				6B1BB45321B9883100E96A16 /* TermsOfUseViewController.swift in Sources */,
-				6B1BB45421B9883100E96A16 /* AuthentificationService.swift in Sources */,
 				6B1BB45521B9883100E96A16 /* Command.swift in Sources */,
 				6B1BB45621B9883100E96A16 /* Connectivity.swift in Sources */,
 				6B1BB45721B9883100E96A16 /* DateConverter.swift in Sources */,
@@ -819,6 +818,7 @@
 				6B1BB47A21B9883100E96A16 /* RoundedButton.swift in Sources */,
 				6B1BB47B21B9883100E96A16 /* SeedCreationView.swift in Sources */,
 				6B1BB47C21B9883100E96A16 /* SelectDateView.swift in Sources */,
+				04051B4F21C0024900FA2790 /* AuthenticationService.swift in Sources */,
 				6B1BB47D21B9883100E96A16 /* SelectionView.swift in Sources */,
 				6B1BB47E21B9883100E96A16 /* StorageCreationView.swift in Sources */,
 				6B1BB47F21B9883100E96A16 /* Clic_Farm_iOS.xcdatamodeld in Sources */,

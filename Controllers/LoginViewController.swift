@@ -19,7 +19,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   @IBOutlet weak var tfPassword: UITextField!
   @IBOutlet weak var forgottenPassword: UIButton!
 
-  var authentificationService: AuthentificationService?
+  var authenticationService: AuthenticationService?
 
   // MARK: - Initialization
 
@@ -40,10 +40,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     forgottenPassword.setTitle("forgotten_password".localized, for: .normal)
     forgottenPassword.underline()
 
-    authentificationService = AuthentificationService()
-    authentificationService?.setupOauthPasswordGrant(username: nil, password: nil)
-    if !UserDefaults.userIsLogged() && authentificationService?.oauth2?.accessToken != nil {
-      authentificationService?.logout()
+    authenticationService = AuthenticationService()
+    authenticationService?.setupOauthPasswordGrant(username: nil, password: nil)
+    if !UserDefaults.userIsLogged() && authenticationService?.oauth2?.accessToken != nil {
+      authenticationService?.logout()
     }
     authentifyUser(calledFromUserInteraction: false)
   }
@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
   // MARK: - Navigation
 
   private func checkLoggedStatus(token: String?) {
-    if token == nil || !(authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
+    if token == nil || !(authenticationService?.oauth2?.hasUnexpiredAccessToken())! {
       if !Connectivity.isConnectedToInternet() {
         navigationController?.navigationBar.isHidden = false
         performSegue(withIdentifier: "showNoInternetVC", sender: self)
@@ -65,7 +65,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         alert.addAction(UIAlertAction(title: "ok".localized.uppercased(), style: .default, handler: nil))
         present(alert, animated: true)
       }
-    } else if token != nil && (authentificationService?.oauth2?.hasUnexpiredAccessToken())! {
+    } else if token != nil && (authenticationService?.oauth2?.hasUnexpiredAccessToken())! {
       let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
       let interventionVC = mainStoryboard.instantiateViewController(withIdentifier: "InterventionViewController")
         as UIViewController
@@ -85,41 +85,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
       tfPassword.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()
-      checkAuthentification(sender: self)
+      checkAuthentication(sender: self)
     }
     return false
   }
 
   // MARK: - Actions
 
-  private func checkAuthentificationSuccessOrFailure(firstLoggin: Bool) {
+  private func checkAuthenticationSuccessOrFailure(firstLoggin: Bool) {
     var token: String?
 
-    if firstLoggin || (authentificationService?.oauth2 != nil &&
-      !authentificationService!.oauth2!.hasUnexpiredAccessToken()) {
-      authentificationService?.authorize(presenting: self)
-      authentificationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
-        token = self.authentificationService?.oauth2?.accessToken
+    if firstLoggin || (authenticationService?.oauth2 != nil &&
+      !authenticationService!.oauth2!.hasUnexpiredAccessToken()) {
+      authenticationService?.authorize(presenting: self)
+      authenticationService?.oauth2?.afterAuthorizeOrFail = { authParameters, error in
+        token = self.authenticationService?.oauth2?.accessToken
         self.checkLoggedStatus(token: token)
       }
     } else {
-      authentificationService?.authorize(presenting: self)
-      token = self.authentificationService?.oauth2?.accessToken
+      authenticationService?.authorize(presenting: self)
+      token = self.authenticationService?.oauth2?.accessToken
       checkLoggedStatus(token: token)
     }
   }
 
   private func authentifyUser(calledFromUserInteraction: Bool) {
     if UserDefaults.userIsLogged() {
-      checkAuthentificationSuccessOrFailure(firstLoggin: false)
+      checkAuthenticationSuccessOrFailure(firstLoggin: false)
     } else if calledFromUserInteraction {
-      checkAuthentificationSuccessOrFailure(firstLoggin: true)
+      checkAuthenticationSuccessOrFailure(firstLoggin: true)
     }
   }
 
-  @IBAction private func checkAuthentification(sender: Any) {
-    authentificationService = AuthentificationService()
-    authentificationService?.setupOauthPasswordGrant(username: tfUsername.text, password: tfPassword.text)
+  @IBAction private func checkAuthentication(sender: Any) {
+    authenticationService = AuthenticationService()
+    authenticationService?.setupOauthPasswordGrant(username: tfUsername.text, password: tfPassword.text)
     authentifyUser(calledFromUserInteraction: true)
   }
 

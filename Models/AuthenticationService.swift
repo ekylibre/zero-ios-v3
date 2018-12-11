@@ -1,5 +1,5 @@
 //
-//  AuthentificationService.swift
+//  AuthenticationService.swift
 //  Clic&Farm-iOS
 //
 //  Created by Jonathan DE HAAY on 25/07/2018.
@@ -10,7 +10,7 @@ import UIKit
 import OAuth2
 import CoreData
 
-class AuthentificationService {
+class AuthenticationService {
 
   // MARK: - Properties
 
@@ -26,7 +26,7 @@ class AuthentificationService {
       let clientID = keys?["testClientID"] as? String
       let clientSecret = keys?["testClientSecret"] as? String
       let url = keys?["testURL"] as? String
-      #
+      #else
       let clientID = keys!["releasedClientID"] as? String
       let clientSecret = keys!["releasedClientSecret"] as? String
       let url = keys!["releasedURL"] as? String
