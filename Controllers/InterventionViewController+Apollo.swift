@@ -25,10 +25,6 @@ extension InterventionViewController {
   }
 
   private func initializeApolloClient() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
     #if DEBUG
     let url = URL(string: "https://api.ekylibre-test.com/v1/graphql")!
     #else
@@ -40,19 +36,14 @@ extension InterventionViewController {
     authService.setupOauthPasswordGrant(username: nil, password: nil)
     if let token = authService.oauth2?.accessToken {
       configuation.httpAdditionalHeaders = ["Authorization": "Bearer \(token)"]
-      appDelegate.apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
+      apolloClient = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuation))
     }
   }
 
   func queryFarms(endResult: @escaping (_ success: Bool) -> ()) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let apollo = appDelegate.apollo!
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    apollo.fetch(query: query) { result, error in
+    apolloClient.fetch(query: query) { result, error in
       if let error = error {
         print("Error: \(error)")
         endResult(false)
@@ -151,6 +142,8 @@ extension InterventionViewController {
 
     for crop in crops {
       let newCrop = Crop(context: managedContext)
+      let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
+      let surfaceArea = Float(splitString.first!)!
 
       newCrop.uuid = UUID(uuidString: crop.uuid)
       newCrop.plotName = crop.name
@@ -160,8 +153,6 @@ extension InterventionViewController {
       newCrop.species = crop.species.rawValue
       newCrop.startDate = crop.startDate!
       newCrop.stopDate = crop.stopDate!
-      let splitString = crop.surfaceArea.split(separator: " ", maxSplits: 1)
-      let surfaceArea = Float(splitString.first!)!
       newCrop.surfaceArea = surfaceArea
       newCrop.centroid = crop.centroid.jsonValue as? String
     }
@@ -239,9 +230,11 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let crop = Crop(context: managedContext)
+    let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
+    let surfaceArea = Float(splitString.first!)!
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
 
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     crop.uuid = UUID(uuidString: new.uuid)
     crop.plotName = new.name
     crop.productionID = Int32(new.productionNature.id)!
@@ -250,8 +243,6 @@ extension InterventionViewController {
     crop.species = new.species.rawValue
     crop.startDate = new.startDate!
     crop.stopDate = new.stopDate!
-    let splitString = new.surfaceArea.split(separator: " ", maxSplits: 1)
-    let surfaceArea = Float(splitString.first!)!
     crop.surfaceArea = surfaceArea
 
     do {
@@ -263,70 +254,50 @@ extension InterventionViewController {
 
   // MARK: - Articles
 
-  private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
+  private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) {
+    let mutation = PushArticleMutation(
+      farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
 
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let group = DispatchGroup()
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
-    let _ = apollo.clearCache()
-
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createArticle!.article!.id)!
-        }
+      } else if let dataError = result?.data?.createArticle?.errors {
+        print("Data error: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap article id")
+        return
+      }
+
+      input.setValue(id, forKey: "ekyID")
     })
-    group.wait()
-    return id
   }
 
-  private func pushSeed(seed: Seed) -> Int32{
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
+  private func pushSeed(seed: Seed) {
+    let mutation = PushArticleMutation(farmId: farmID, unit: ArticleUnitEnum.kilogram, name: seed.variety!,
+                                       type: .seed, specie: SpecieEnum(rawValue: seed.specie!), variety: seed.variety)
 
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let apollo = appDelegate.apollo!
-    let _ = apollo.clearCache()
-    let mutation = PushArticleMutation(
-      farmId: farmID,
-      unit: ArticleUnitEnum.kilogram,
-      name: seed.variety!,
-      type: ArticleTypeEnum.seed,
-      specie: SpecieEnum(rawValue: seed.specie!),
-      variety: seed.variety)
-
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createArticle?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createArticle!.article!.id)!
-        }
+      } else if let dataError = result?.data?.createArticle?.errors {
+        print("Data error: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap seed id")
+        return
+      }
+
+      seed.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
@@ -614,18 +585,20 @@ extension InterventionViewController {
   }
 
   private func loadEquipments() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
       } else {
-        for farm in (result?.data?.farms)! {
+        guard let farms = result?.data?.farms else {
+          print("Could not unwrap farms")
+          return
+        }
+
+        for farm in farms {
           for equipment in farm.equipments {
 
             let predicate = NSPredicate(format: "ekyID == %d", (equipment.id as NSString).intValue)
@@ -661,12 +634,9 @@ extension InterventionViewController {
   }
 
   private func loadPersons(completion: @escaping (_ success: Bool) -> Void) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         completion(false)
@@ -676,7 +646,12 @@ extension InterventionViewController {
         completion(false)
         return
       } else {
-        for farm in (result?.data?.farms)! {
+        guard let farms = result?.data?.farms else {
+          print("Could not unwrap farms")
+          return
+        }
+
+        for farm in farms {
           for person in farm.people {
             let predicate = NSPredicate(format: "ekyID == %d", (person.id as NSString).intValue)
 
@@ -692,38 +667,30 @@ extension InterventionViewController {
 
   // MARK: Storages
 
-  private func pushStorages(storage: Storage) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let group = DispatchGroup()
-    let _ = apollo.clearCache()
-    let mutation = PushStorageMutation(farmId: farmID, type: storage.type.map { StorageTypeEnum(rawValue: $0) }!,
+  private func pushStorage(storage: Storage) {
+    let mutation = PushStorageMutation(farmId: farmID, type: StorageTypeEnum(rawValue: storage.type!),
                                        name: storage.name!)
 
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("ResultError: \(resultError)")
-      } else  {
-        if let dataError = result?.data?.createStorage?.errors {
-          print("DataError: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createStorage!.storage!.id)!
-        }
+      } else if let dataError = result?.data?.createStorage?.errors {
+        print("DataError: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createStorage?.storage?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap storage id")
+        return
+      }
+
+      storage.storageID = id
     })
-    group.wait()
-    return id
   }
 
-  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage){
+  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -743,18 +710,19 @@ extension InterventionViewController {
   }
 
   private func loadStorage() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = FarmQuery(modifiedSince: getLastSyncDate())
 
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
       } else {
-        let farm = (result?.data?.farms.first)!
+        guard let farm = result?.data?.farms.first else {
+          print("Could not unwrap farms")
+          return
+        }
+
         for storage in farm.storages {
           let predicate = NSPredicate(format: "storageID == %d", (storage.id as NSString).intValue)
 
@@ -833,7 +801,7 @@ extension InterventionViewController {
                                             intervention: Intervention) -> InterventionEquipment {
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionEquipment = InterventionEquipment(context: managedContext)
-    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!)) // Warning("Check predicate")
+    let predicate = NSPredicate(format: "ekyID == %d", (Int32(fetchedEquipment.equipment!.id)!))
     let equipment = returnEntityIfSame(entityName: "Equipment", predicate: predicate)
 
     if equipment != nil {
@@ -920,28 +888,6 @@ extension InterventionViewController {
       print("Could not save. \(error), \(error.userInfo)")
     }
     return harvest
-  }
-
-  private func returnStorageIfSame(storageID: Int32?) -> Storage? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let storagesFetchRequest: NSFetchRequest<Storage> = Storage.fetchRequest()
-
-    do {
-      let storages = try managedContext.fetch(storagesFetchRequest)
-
-      for storage in storages {
-        if storageID == storage.storageID {
-          return storage
-        }
-      }
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
   }
 
   private func saveLoadToIntervention(fetchedLoad: InterventionQuery.Data.Farm.Intervention.Output.Load,
@@ -1135,7 +1081,8 @@ extension InterventionViewController {
     }
   }
 
-  private func updateEquipments(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
+  private func updateEquipments(
+    fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsFetchRequest: NSFetchRequest<InterventionEquipment> = InterventionEquipment.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1148,14 +1095,16 @@ extension InterventionViewController {
         managedContext.delete(equipment)
       }
       for fetchedEquipment in fetchedIntervention.tools! {
-        intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
+        intervention.addToInterventionEquipments(
+          saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
-  private func updatePersons(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
+  private func updatePersons(
+    fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let personsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1168,7 +1117,8 @@ extension InterventionViewController {
         managedContext.delete(person)
       }
       for fetchedPerson in fetchedIntervention.operators! {
-        intervention.addToInterventionPersons(saveInterventionPersonsToIntervention(fetchedOperator: fetchedPerson, intervention: intervention))
+        intervention.addToInterventionPersons(
+          saveInterventionPersonsToIntervention(fetchedOperator: fetchedPerson, intervention: intervention))
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -1193,7 +1143,8 @@ extension InterventionViewController {
     }
   }
 
-  private func updateInputs(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Intervention) {
+  private func updateInputs(
+    fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Intervention) {
     deleteInterventionInputs("InterventionSeed", intervention: intervention)
     deleteInterventionInputs("InterventionPhytosanitary", intervention: intervention)
     deleteInterventionInputs("InterventionFertilizer", intervention: intervention)
@@ -1209,15 +1160,18 @@ extension InterventionViewController {
 
     if intervention != nil {
       let date = fetchedIntervention.workingDays.first!.executionDate!
+      let status = (fetchedIntervention.validatedAt == nil ?
+        InterventionState.Synced : InterventionState.Validated).rawValue
 
       intervention?.workingPeriods?.setValue(date, forKey: "executionDate")
-      intervention?.workingPeriods?.setValue(fetchedIntervention.workingDays.first?.hourDuration, forKey: "hourDuration")
+      intervention?.workingPeriods?.setValue(
+        fetchedIntervention.workingDays.first?.hourDuration, forKey: "hourDuration")
       intervention?.weather?.temperature = fetchedIntervention.weather?.temperature as NSNumber?
       intervention?.weather?.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
       intervention?.weather?.weatherDescription = (fetchedIntervention.weather?.description).map { $0.rawValue }
       intervention?.infos = fetchedIntervention.description
       intervention?.type = fetchedIntervention.type.rawValue
-      intervention?.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
+      intervention?.status = Int16(status)
       updateEquipments(fetchedIntervention: fetchedIntervention, intervention: intervention!)
       updatePersons(fetchedIntervention: fetchedIntervention, intervention: intervention!)
       updateInputs(fetchedIntervention: fetchedIntervention, intervention: &intervention!)
@@ -1225,14 +1179,11 @@ extension InterventionViewController {
   }
 
   private func loadIntervention(onCompleted: @escaping ((_ success: Bool) -> ())) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
     let query = InterventionQuery(modifiedSince: getLastSyncDate())
     let group = DispatchGroup()
 
     group.enter()
-    appDelegate.apollo?.fetch(query: query) { (result, error) in
+    apolloClient.fetch(query: query) { (result, error) in
       if let error = error {
         print("Error: \(error)")
         onCompleted(false)
@@ -1256,23 +1207,17 @@ extension InterventionViewController {
     }
 
     group.notify(queue: DispatchQueue.main) {
-      let _ = appDelegate.apollo?.clearCache()
+      _ = self.apolloClient.clearCache()
       onCompleted(true)
     }
   }
 
   func updateInterventionIfChangedOnApi() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let group = DispatchGroup()
-
-    group.enter()
     let query = InterventionQuery(modifiedSince: getLastSyncDate())
-    let _ = appDelegate.apollo?.clearCache()
 
-    appDelegate.apollo?.fetch(query: query, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+
+    _ = apolloClient.clearCache()
+    apolloClient.fetch(query: query, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1283,9 +1228,7 @@ extension InterventionViewController {
           self.updateIntervention(fetchedIntervention: intervention)
         }
       }
-      group.leave()
     })
-    group.wait()
   }
 
   // MARK: - Mutations: Interventions
@@ -1451,36 +1394,28 @@ extension InterventionViewController {
     return harvestsAttributes
   }
 
-  private func pushEquipment(equipment: Equipment) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let group = DispatchGroup()
-    let _ = apollo.clearCache()
+  private func pushEquipment(equipment: Equipment) {
     let mutation = PushEquipmentMutation(farmId: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
                                          name: equipment.name!, number: equipment.number,
                                          indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("ResultError: \(resultError)")
-      } else  {
-        if let dataError = result?.data?.createEquipment?.errors {
-          print("DataError: \(dataError)")
-        } else {
-          id = Int32(result!.data!.createEquipment!.equipment!.id)!
-        }
+      } else if let dataError = result?.data?.createEquipment?.errors {
+        print("DataError: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createEquipment?.equipment?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap equipment id")
+        return
+      }
+
+      equipment.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   private func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
@@ -1490,43 +1425,41 @@ extension InterventionViewController {
 
     let managedContext = appDelegate.persistentContainer.viewContext
     let entitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-    let group = DispatchGroup()
 
     entitiesFetchRequest.predicate = predicate
-    group.enter()
     do {
       let entities = try managedContext.fetch(entitiesFetchRequest)
 
       for entity in entities {
         switch entity {
         case is Equipment:
-          (entity as! Equipment).ekyID = pushEquipment(equipment: entity as! Equipment)
+          pushEquipment(equipment: entity as! Equipment)
         case is Person:
-          (entity as! Person).ekyID = pushPerson(person: entity as! Person)
+          pushPerson(person: entity as! Person)
         case is Seed:
-          (entity as! Seed).ekyID = pushSeed(seed: entity as! Seed)
+          pushSeed(seed: entity as! Seed)
         case is Phyto:
           let phyto = (entity as! Phyto)
-          phyto.ekyID = pushInput(input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
+          pushInput(
+            input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
         case is Fertilizer:
           let fertilizer = (entity as! Fertilizer)
-          fertilizer.ekyID = pushInput(input: entity as! NSManagedObject, type: .fertilizer, unit: ArticleUnitEnum(rawValue: fertilizer.unit!)!)
+          pushInput(
+            input: entity as! NSManagedObject, type: .fertilizer, unit: ArticleUnitEnum(rawValue: fertilizer.unit!)!)
         case is Material:
           let material = (entity as! Material)
-          material.ekyID = pushInput(input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
+          pushInput(
+            input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
         case is Storage:
-          (entity as! Storage).storageID = pushStorages(storage: entity as! Storage)
+          pushStorage(storage: entity as! Storage)
         default:
           return
         }
       }
       try managedContext.save()
-      group.leave()
     } catch let error as NSError {
       print("Could not fetch or save. \(error), \(error.userInfo)")
-      group.leave()
     }
-    group.wait()
   }
 
   func pushEntities() {
@@ -1557,32 +1490,26 @@ extension InterventionViewController {
     return equipmentsAttributes
   }
 
-  private func pushPerson(person: Person) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let apollo = appDelegate.apollo!
-    let group = DispatchGroup()
+  private func pushPerson(person: Person) {
     let mutation = PushPersonMutation(farmId: farmID, firstName: person.firstName, lastName: person.lastName!)
-    let _ = apollo.clearCache()
 
-    group.enter()
-    apollo.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
-      } else if let resultError = result?.data?.createPerson?.errors {
-        print("Error: \(resultError)")
-      } else {
-        if result?.data?.createPerson?.person?.id != nil {
-          id = Int32(result!.data!.createPerson!.person!.id)!
-        }
+      } else if let resultError = result?.errors {
+        print("ResultError: \(resultError)")
+      } else if let dataError = result?.data?.createPerson?.errors {
+        print("DataError: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createPerson?.person?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap person id")
+        return
+      }
+
+      person.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   private func defineOperatorAttributesFrom(intervention: Intervention) -> [InterventionOperatorAttributes] {
@@ -1630,46 +1557,29 @@ extension InterventionViewController {
     return mutation
   }
 
-  func pushIntervention(intervention: Intervention) -> Int32 {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return 0
-    }
-
-    var id: Int32 = 0
-    let group = DispatchGroup()
-    let apollo = appDelegate.apollo
-    let _ = apollo?.clearCache()
+  func pushIntervention(_ intervention: Intervention) {
     let mutation = setupMutation(intervention)
 
-    group.enter()
-    apollo?.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
         print("Result error: \(resultError)")
-      } else {
-        if let dataError = result?.data?.createIntervention?.errors {
-          print("Data error: \(dataError)")
-        } else {
-          if result?.data?.createIntervention?.intervention?.id != nil {
-            id = Int32((result?.data?.createIntervention?.intervention?.id)!)!
-          }
-        }
+      } else if let dataError = result?.data?.createIntervention?.errors {
+        print("Data error: \(dataError)")
       }
-      group.leave()
+
+      guard let graphqlID = result?.data?.createIntervention?.intervention?.id, let id = Int32(graphqlID) else {
+        print("Could not unwrap intervention id")
+        return
+      }
+
+      intervention.ekyID = id
     })
-    group.wait()
-    return id
   }
 
   func pushUpdatedIntervention(intervention: Intervention) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
-    let group = DispatchGroup()
-    let apollo = appDelegate.apollo
-    let _ = apollo?.clearCache()
     let updateMutation = UpdateInterMutation(
       interventionId: String(intervention.ekyID),
       farmId: farmID!,
@@ -1685,15 +1595,13 @@ extension InterventionViewController {
       weather: defineWeatherAttributesFrom(intervention: intervention),
       description: intervention.infos)
 
-    group.enter()
-    apollo?.perform(mutation: updateMutation, queue: DispatchQueue.global(), resultHandler: { (error, result) in
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: updateMutation, resultHandler: { (error, result) in
       if let error = error?.errors {
         print("Error: \(String(describing: error))")
       } else {
         intervention.status = InterventionState.Synced.rawValue
       }
-      group.leave()
     })
-    group.wait()
   }
 }
