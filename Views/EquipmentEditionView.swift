@@ -184,6 +184,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     addSubview(cancelButton)
     addSubview(saveButton)
     setupLayout()
+    setupActions()
   }
 
   private func setupLayout() {
@@ -226,6 +227,11 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
       ])
   }
 
+  private func setupActions() {
+    cancelButton.addTarget(self, action: #selector(cancelEdition), for: .touchUpInside)
+    saveButton.addTarget(self, action: #selector(saveChanges), for: .touchUpInside)
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -258,5 +264,21 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
+  }
+
+  // MARK: - Actions
+
+  @objc private func cancelEdition() {
+    guard let equipmentsView = superview as? EquipmentsView else { return }
+
+    isHidden = true
+    equipmentsView.dimView.isHidden = true
+  }
+
+  @objc private func saveChanges() {
+    guard let equipmentsView = superview as? EquipmentsView else { return }
+
+    isHidden = true
+    equipmentsView.dimView.isHidden = true
   }
 }
