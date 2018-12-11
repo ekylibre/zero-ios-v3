@@ -61,13 +61,14 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     return nameTextField
   }()
 
-  lazy var errorLabel: UILabel = {
-    let errorLabel = UILabel(frame: CGRect.zero)
-    errorLabel.font = UIFont.systemFont(ofSize: 13)
-    errorLabel.textColor = AppColor.AppleColors.Red
-    errorLabel.isHidden = true
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    return errorLabel
+  lazy var nameErrorLabel: UILabel = {
+    let nameErrorLabel = UILabel(frame: CGRect.zero)
+    nameErrorLabel.font = UIFont.systemFont(ofSize: 13)
+    nameErrorLabel.textColor = AppColor.AppleColors.Red
+    nameErrorLabel.numberOfLines = 0
+    nameErrorLabel.isHidden = true
+    nameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return nameErrorLabel
   }()
 
   lazy var numberTextField: UITextField = {
@@ -82,6 +83,17 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     numberTextField.layer.shadowRadius = 0
     numberTextField.translatesAutoresizingMaskIntoConstraints = false
     return numberTextField
+  }()
+
+  lazy var numberErrorLabel: UILabel = {
+    let numberErrorLabel = UILabel(frame: CGRect.zero)
+    numberErrorLabel.text = "equipment_number_not_available".localized
+    numberErrorLabel.font = UIFont.systemFont(ofSize: 13)
+    numberErrorLabel.textColor = AppColor.AppleColors.Red
+    numberErrorLabel.numberOfLines = 0
+    numberErrorLabel.isHidden = true
+    numberErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return numberErrorLabel
   }()
 
   lazy var firstIndicatorTextField: UITextField = {
@@ -175,8 +187,9 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     addSubview(typeLabel)
     addSubview(typeButton)
     addSubview(nameTextField)
-    addSubview(errorLabel)
+    addSubview(nameErrorLabel)
     addSubview(numberTextField)
+    addSubview(numberErrorLabel)
     addSubview(firstIndicatorTextField)
     addSubview(firstIndicatorLabel)
     addSubview(secondIndicatorTextField)
@@ -204,12 +217,15 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 35),
       nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      nameErrorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      nameErrorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameErrorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       numberTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
       numberTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       numberTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      numberErrorLabel.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: 5),
+      numberErrorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      numberErrorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firstIndicatorTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       firstIndicatorTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firstIndicatorTextField.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: 35),

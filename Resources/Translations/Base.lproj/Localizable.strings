@@ -405,6 +405,7 @@
 "storage_name_not_available" = "This storage name is not available. Please choose another one";
 "material_name_not_available" = "This material name is not available. Please choose another one";
 "equipment_name_not_available" = "This equipment name is not available. Please choose another one";
+"equipment_number_not_available" = "This equipment number is not available. Please choose another one";
 
 // Dates
 "date_format" = "dd/MM/yyyy";

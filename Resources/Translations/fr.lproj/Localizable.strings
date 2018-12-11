@@ -402,10 +402,10 @@
 "seed_variety_not_available" = "Cette variété de semence est déjà utilisée. Veuillez en choisir un autre";
 "phyto_name_not_available" = "Ce nom de phyto est déjà utilisé. Veuillez en choisir un autre";
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
+"storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "equipment_number_not_available" = "Ce numéro d'équipement est déjà utilisé. Veuillez en choisir un autre";
-"storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 // Dates
 "date_format" = "dd/MM/yyyy";

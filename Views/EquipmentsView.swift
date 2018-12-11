@@ -263,8 +263,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   @objc private func nameDidChange() {
-    if !creationView.errorLabel.isHidden {
-      creationView.errorLabel.isHidden = true
+    if !creationView.nameErrorLabel.isHidden {
+      creationView.nameErrorLabel.isHidden = true
     }
   }
 
@@ -277,8 +277,9 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.typeImageView.image = UIImage(named: imageName)
     creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     creationView.nameTextField.text = ""
-    creationView.errorLabel.isHidden = true
+    creationView.nameErrorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.numberErrorLabel.isHidden = true
     creationView.firstEquipmentParameter.text = nil
     creationView.secondEquipmentParameter.text = nil
   }
@@ -308,20 +309,21 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.typeImageView.image = UIImage(named: imageName)
     creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     creationView.nameTextField.text = ""
-    creationView.errorLabel.isHidden = true
+    creationView.nameErrorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.numberErrorLabel.isHidden = true
     creationView.firstEquipmentParameter.text = nil
     creationView.secondEquipmentParameter.text = nil
   }
 
   func checkEquipmentName() -> Bool {
     if creationView.nameTextField.text!.isEmpty {
-      creationView.errorLabel.text = "equipment_name_is_empty".localized
-      creationView.errorLabel.isHidden = false
+      creationView.nameErrorLabel.text = "equipment_name_is_empty".localized
+      creationView.nameErrorLabel.isHidden = false
       return false
     } else if equipments.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
-      creationView.errorLabel.text = "equipment_name_not_available".localized
-      creationView.errorLabel.isHidden = false
+      creationView.nameErrorLabel.text = "equipment_name_not_available".localized
+      creationView.nameErrorLabel.isHidden = false
       return false
     }
     return true
@@ -329,8 +331,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   private func checkEquipmentNumber() -> Bool {
     if equipments.contains(where: { $0.number == creationView.numberTextField.text }) {
-      creationView.errorLabel.text = "equipment_number_not_available".localized
-      creationView.errorLabel.isHidden = false
+      creationView.numberErrorLabel.isHidden = false
       return false
     }
     return true
