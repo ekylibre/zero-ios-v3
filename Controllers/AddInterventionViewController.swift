@@ -157,6 +157,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var weather: Weather!
   var weatherIsSelected: Bool = false
   var weatherButtons = [UIButton]()
+  let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN",
+                             "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
 
   // MARK: - Initialization
 
