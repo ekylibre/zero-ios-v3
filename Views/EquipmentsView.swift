@@ -13,13 +13,8 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   // MARK: - Properties
 
-  lazy var creationView: EquipmentCreationView = {
-    let creationView = EquipmentCreationView(firstType: firstEquipmentType, frame: CGRect.zero)
-    creationView.translatesAutoresizingMaskIntoConstraints = false
-    return creationView
-  }()
-
-  var editionView: EquipmentEditionView!
+  lazy var creationView = EquipmentCreationView(firstType: firstEquipmentType)
+  lazy var editionView = EquipmentEditionView(firstType: firstEquipmentType)
   var equipments = [Equipment]()
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
@@ -88,7 +83,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
       creationView.firstParameterUnit.text = unit?.localized
     }
 
-    creationView.heighConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
+    creationView.heightConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
     creationView.firstEquipmentParameter.isHidden = (indicators.count < 1)
     creationView.firstParameterUnit.isHidden = (indicators.count < 1)
     creationView.secondEquipmentParameter.isHidden = (indicators.count < 2)
@@ -119,7 +114,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func setupCreationAndEditionViews() {
-    editionView = EquipmentEditionView(firstType: firstEquipmentType)
     addSubview(creationView)
     addSubview(editionView)
 

@@ -12,20 +12,6 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 
-  lazy var heighConstraint: NSLayoutConstraint = {
-    let heightConstraint = NSLayoutConstraint(
-      item: self,
-      attribute: .height,
-      relatedBy: .equal,
-      toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1,
-      constant: 350)
-
-    heightConstraint.isActive = true
-    return heightConstraint
-  }()
-
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "create_equipment_title".localized
@@ -179,12 +165,14 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   }()
 
   var firstEquipmentType: String
+  lazy var heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
+                                                 attribute: .notAnAttribute, multiplier: 1, constant: 350)
 
   // MARK: - Initialization
 
-  init(firstType: String, frame: CGRect) {
+  init(firstType: String) {
     firstEquipmentType = firstType
-    super.init(frame: frame)
+    super.init(frame: CGRect.zero)
     setupView()
   }
 
@@ -193,6 +181,7 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     layer.cornerRadius = 5
     clipsToBounds = true
     isHidden = true
+    translatesAutoresizingMaskIntoConstraints = false
     addSubview(titleLabel)
     addSubview(typeImageView)
     addSubview(typeLabel)
@@ -207,12 +196,12 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     addSubview(secondParameterUnit)
     addSubview(cancelButton)
     addSubview(createButton)
-    addConstraint(heighConstraint)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
+      heightConstraint,
       titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
