@@ -255,7 +255,8 @@ extension InterventionViewController {
   // MARK: - Articles
 
   private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) {
-    let mutation = PushArticleMutation(farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
+    let mutation = PushArticleMutation(
+      farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
 
     _ = apolloClient.clearCache()
     apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
@@ -689,7 +690,7 @@ extension InterventionViewController {
     })
   }
 
-  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage){
+  private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -1080,7 +1081,8 @@ extension InterventionViewController {
     }
   }
 
-  private func updateEquipments(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
+  private func updateEquipments(
+    fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let equipmentsFetchRequest: NSFetchRequest<InterventionEquipment> = InterventionEquipment.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1093,14 +1095,16 @@ extension InterventionViewController {
         managedContext.delete(equipment)
       }
       for fetchedEquipment in fetchedIntervention.tools! {
-        intervention.addToInterventionEquipments(saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
+        intervention.addToInterventionEquipments(
+          saveEquipmentsToIntervention(fetchedEquipment: fetchedEquipment, intervention: intervention))
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
   }
 
-  private func updatePersons(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
+  private func updatePersons(
+    fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: Intervention) {
     let managedContext = appDelegate.persistentContainer.viewContext
     let personsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
@@ -1113,7 +1117,8 @@ extension InterventionViewController {
         managedContext.delete(person)
       }
       for fetchedPerson in fetchedIntervention.operators! {
-        intervention.addToInterventionPersons(saveInterventionPersonsToIntervention(fetchedOperator: fetchedPerson, intervention: intervention))
+        intervention.addToInterventionPersons(
+          saveInterventionPersonsToIntervention(fetchedOperator: fetchedPerson, intervention: intervention))
       }
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
@@ -1138,7 +1143,8 @@ extension InterventionViewController {
     }
   }
 
-  private func updateInputs(fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Intervention) {
+  private func updateInputs(
+    fetchedIntervention: InterventionQuery.Data.Farm.Intervention, intervention: inout Intervention) {
     deleteInterventionInputs("InterventionSeed", intervention: intervention)
     deleteInterventionInputs("InterventionPhytosanitary", intervention: intervention)
     deleteInterventionInputs("InterventionFertilizer", intervention: intervention)
@@ -1154,15 +1160,18 @@ extension InterventionViewController {
 
     if intervention != nil {
       let date = fetchedIntervention.workingDays.first!.executionDate!
+      let status = (fetchedIntervention.validatedAt == nil ?
+        InterventionState.Synced : InterventionState.Validated).rawValue
 
       intervention?.workingPeriods?.setValue(date, forKey: "executionDate")
-      intervention?.workingPeriods?.setValue(fetchedIntervention.workingDays.first?.hourDuration, forKey: "hourDuration")
+      intervention?.workingPeriods?.setValue(
+        fetchedIntervention.workingDays.first?.hourDuration, forKey: "hourDuration")
       intervention?.weather?.temperature = fetchedIntervention.weather?.temperature as NSNumber?
       intervention?.weather?.windSpeed = fetchedIntervention.weather?.windSpeed as NSNumber?
       intervention?.weather?.weatherDescription = (fetchedIntervention.weather?.description).map { $0.rawValue }
       intervention?.infos = fetchedIntervention.description
       intervention?.type = fetchedIntervention.type.rawValue
-      intervention?.status = Int16((fetchedIntervention.validatedAt == nil ? InterventionState.Synced : InterventionState.Validated).rawValue)
+      intervention?.status = Int16(status)
       updateEquipments(fetchedIntervention: fetchedIntervention, intervention: intervention!)
       updatePersons(fetchedIntervention: fetchedIntervention, intervention: intervention!)
       updateInputs(fetchedIntervention: fetchedIntervention, intervention: &intervention!)
@@ -1431,13 +1440,16 @@ extension InterventionViewController {
           pushSeed(seed: entity as! Seed)
         case is Phyto:
           let phyto = (entity as! Phyto)
-          pushInput(input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
+          pushInput(
+            input: entity as! NSManagedObject, type: .chemical, unit: ArticleUnitEnum(rawValue: phyto.unit!)!)
         case is Fertilizer:
           let fertilizer = (entity as! Fertilizer)
-          pushInput(input: entity as! NSManagedObject, type: .fertilizer, unit: ArticleUnitEnum(rawValue: fertilizer.unit!)!)
+          pushInput(
+            input: entity as! NSManagedObject, type: .fertilizer, unit: ArticleUnitEnum(rawValue: fertilizer.unit!)!)
         case is Material:
           let material = (entity as! Material)
-          pushInput(input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
+          pushInput(
+            input: entity as! NSManagedObject, type: .material, unit: ArticleUnitEnum(rawValue: material.unit!)!)
         case is Storage:
           pushStorage(storage: entity as! Storage)
         default:
