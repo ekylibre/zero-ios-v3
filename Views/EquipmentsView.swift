@@ -19,77 +19,6 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
 
-  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
-    if let asset = NSDataAsset(name: "equipment-types") {
-      do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredEquipments = jsonResult as? [[String: Any]]
-
-        for registeredEquipment in registeredEquipments! {
-          if equipmentNature == registeredEquipment["nature"] as! String {
-            var indicators = [String]()
-
-            !(registeredEquipment["main_frozen_indicator_name"] is NSNull)
-              ? indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String) : nil
-            !(registeredEquipment["other_frozen_indicator_name"] is NSNull)
-              ? indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String) : nil
-            return indicators
-          }
-        }
-      } catch {
-        print("Lexicon error")
-      }
-    } else {
-      print("equipment-types.json not found")
-    }
-    return [String]()
-  }
-
-  func defineIndicatorUnit(_ key: String, textField: UITextField) -> String? {
-    let units = [
-      "plowshare_count": "UNITY",
-      "motor_power": "FRENCH_HORSEPOWER",
-      "application_width": "METER",
-      "rows_count": "UNITY",
-      "nominal_storable_net_volume": "CUBIC_METER",
-      "nominal_storable_net_mass": "KILOGRAM",
-      "diameter": "METER",
-      "width": "METER",
-      "length": "METER"]
-
-    if units[key] == "UNITY" {
-      textField.keyboardType = .numberPad
-    } else {
-      textField.keyboardType = .decimalPad
-    }
-    return units[key]
-  }
-
-  func defineIndicatorsIfNeeded(_ equipmentNature: String) {
-    let indicators = loadEquipmentIndicators(equipmentNature)
-
-    if indicators.count > 1 {
-      let firstUnit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
-      let secondUnit = defineIndicatorUnit(indicators[1], textField: creationView.secondEquipmentParameter)
-
-      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = firstUnit?.localized
-      creationView.secondParameterUnit.text = secondUnit?.localized
-    } else if indicators.count > 0 {
-      let unit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
-
-      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = unit?.localized
-    }
-
-    creationView.heightConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
-    creationView.firstEquipmentParameter.isHidden = (indicators.count < 1)
-    creationView.firstParameterUnit.isHidden = (indicators.count < 1)
-    creationView.secondEquipmentParameter.isHidden = (indicators.count < 2)
-    creationView.secondParameterUnit.isHidden = (indicators.count < 2)
-  }
-
   // MARK: - Initialization
 
   init(firstType: String, frame: CGRect) {
@@ -333,5 +262,78 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     endEditing(true)
+  }
+
+  // MARK: - Indicators
+
+  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+    if let asset = NSDataAsset(name: "equipment-types") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredEquipments = jsonResult as? [[String: Any]]
+
+        for registeredEquipment in registeredEquipments! {
+          if equipmentNature == registeredEquipment["nature"] as! String {
+            var indicators = [String]()
+
+            !(registeredEquipment["main_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String) : nil
+            !(registeredEquipment["other_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String) : nil
+            return indicators
+          }
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("equipment-types.json not found")
+    }
+    return [String]()
+  }
+
+  func defineIndicatorUnit(_ key: String, textField: UITextField) -> String? {
+    let units = [
+      "plowshare_count": "UNITY",
+      "motor_power": "FRENCH_HORSEPOWER",
+      "application_width": "METER",
+      "rows_count": "UNITY",
+      "nominal_storable_net_volume": "CUBIC_METER",
+      "nominal_storable_net_mass": "KILOGRAM",
+      "diameter": "METER",
+      "width": "METER",
+      "length": "METER"]
+
+    if units[key] == "UNITY" {
+      textField.keyboardType = .numberPad
+    } else {
+      textField.keyboardType = .decimalPad
+    }
+    return units[key]
+  }
+
+  func defineIndicatorsIfNeeded(_ equipmentNature: String) {
+    let indicators = loadEquipmentIndicators(equipmentNature)
+
+    if indicators.count > 1 {
+      let firstUnit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
+      let secondUnit = defineIndicatorUnit(indicators[1], textField: creationView.secondEquipmentParameter)
+
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.secondEquipmentParameter.placeholder = indicators[1].localized
+      creationView.firstParameterUnit.text = firstUnit?.localized
+      creationView.secondParameterUnit.text = secondUnit?.localized
+    } else if indicators.count > 0 {
+      let unit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
+
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.firstParameterUnit.text = unit?.localized
+    }
+
+    creationView.heightConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
+    creationView.firstEquipmentParameter.isHidden = (indicators.count < 1)
+    creationView.firstParameterUnit.isHidden = (indicators.count < 1)
+    creationView.secondEquipmentParameter.isHidden = (indicators.count < 2)
+    creationView.secondParameterUnit.isHidden = (indicators.count < 2)
   }
 }
