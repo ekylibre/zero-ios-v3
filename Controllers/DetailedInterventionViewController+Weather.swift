@@ -65,7 +65,8 @@ extension AddInterventionViewController {
   // MARK: - Actions
 
   func loadWeatherInEditableMode() {
-    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN",
+                               "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
 
     for index in 0..<weatherDescriptions.count {
       if weather.weatherDescription == weatherDescriptions[index] {
@@ -84,7 +85,8 @@ extension AddInterventionViewController {
   }
 
   func loadWeatherInReadOnlyMode() {
-    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN",
+                               "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
 
     temperatureTextField.placeholder = (weather.temperature as NSNumber?)?.stringValue
     windSpeedTextField.placeholder = (weather.windSpeed as NSNumber?)?.stringValue
@@ -162,8 +164,8 @@ extension AddInterventionViewController {
   }
 
   @IBAction private func selectWeather(_ sender: UIButton) {
-    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN", "MIST", "SHOWER_RAIN", "SNOW",
-                               "THUNDERSTORM"]
+    let weatherDescriptions = ["BROKEN_CLOUDS", "CLEAR_SKY", "FEW_CLOUDS", "LIGHT_RAIN",
+                               "MIST", "SHOWER_RAIN", "SNOW", "THUNDERSTORM"]
 
     if sender.layer.borderColor == UIColor.lightGray.cgColor {
       resetSelectedWeather()

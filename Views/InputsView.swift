@@ -430,7 +430,8 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   private func checkPhytoMixCategoryCode(_ phyto: Phyto) -> Bool {
     for case let selectedInput as InterventionPhytosanitary in addInterventionViewController!.selectedInputs {
       if selectedInput.phyto?.mixCategoryCode != nil && phyto.mixCategoryCode != nil {
-        if !addInterventionViewController!.checkMixCategoryCode(selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
+        if !addInterventionViewController!.checkMixCategoryCode(
+          selectedInput.phyto!.mixCategoryCode!, phyto.mixCategoryCode!) {
           return false
         }
       }
@@ -504,7 +505,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       fertilizerView.errorLabel.text = "ferti_name_is_empty".localized
       fertilizerView.errorLabel.isHidden = false
       return false
-    } else if fertilizers.contains(where: { $0.name?.lowercased() == fertilizerView.nameTextField.text?.lowercased() }) {
+    } else if fertilizers.contains(where: { $0.name?.lowercased() == fertilizerView.nameTextField.text?.lowercased()}) {
       fertilizerView.errorLabel.text = "ferti_name_not_available".localized
       fertilizerView.errorLabel.isHidden = false
       return false
