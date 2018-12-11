@@ -19,6 +19,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     return creationView
   }()
 
+  var editionView: EquipmentEditionView!
   var equipments = [Equipment]()
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
@@ -113,17 +114,22 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     tableView.rowHeight = 65
     tableView.delegate = self
     tableView.dataSource = self
-    setupCreationView()
+    setupCreationAndEditionViews()
     setupActions()
   }
 
-  private func setupCreationView() {
+  private func setupCreationAndEditionViews() {
+    editionView = EquipmentEditionView(firstType: firstEquipmentType)
     addSubview(creationView)
+    addSubview(editionView)
 
     NSLayoutConstraint.activate([
-      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
       creationView.leftAnchor.constraint(equalTo: leftAnchor),
       creationView.rightAnchor.constraint(equalTo: rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      editionView.leftAnchor.constraint(equalTo: leftAnchor),
+      editionView.rightAnchor.constraint(equalTo: rightAnchor),
+      editionView.centerYAnchor.constraint(equalTo: centerYAnchor)
       ])
   }
 

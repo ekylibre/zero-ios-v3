@@ -42,9 +42,12 @@ class EquipmentCell: UITableViewCell {
   }
 
   private func setupCell() {
+    let gesture = UILongPressGestureRecognizer(target: self, action: #selector(openEditionView))
+
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(infosLabel)
+    contentView.addGestureRecognizer(gesture)
     setupLayout()
   }
 
@@ -65,5 +68,15 @@ class EquipmentCell: UITableViewCell {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  @objc private func openEditionView(_ sender: UILongPressGestureRecognizer) {
+    guard let cell = sender.view?.superview else { return }
+    guard let equipmentsView = cell.superview?.superview as? EquipmentsView else { return }
+
+    equipmentsView.dimView.isHidden = false
+    equipmentsView.editionView.isHidden = false
   }
 }
