@@ -378,7 +378,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       return dateString
     }
   }
-  
+
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView.contentOffset.y < -75 && !refreshControl.isRefreshing {
       refreshControl.beginRefreshing()

@@ -11,5 +11,5 @@ import UIKit
 class ListCell: UITableViewCell {
 
   @IBOutlet weak var label: UILabel!
-  
+
 }
