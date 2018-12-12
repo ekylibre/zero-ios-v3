@@ -14,7 +14,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   // MARK: - Properties
 
   lazy var creationView = EquipmentCreationView(firstType: firstEquipmentType)
-  lazy var editionView = EquipmentEditionView(firstType: firstEquipmentType)
+  lazy var editionView = EquipmentEditionView()
   var equipments = [Equipment]()
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String

@@ -21,8 +21,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   }()
 
   lazy var typeImageView: UIImageView = {
-    let imageName = firstEquipmentType.lowercased().replacingOccurrences(of: "_", with: "-")
-    let typeImageView = UIImageView(image: UIImage(named: imageName))
+    let typeImageView = UIImageView(frame: CGRect.zero)
     typeImageView.translatesAutoresizingMaskIntoConstraints = false
     return typeImageView
   }()
@@ -38,7 +37,6 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
 
   lazy var typeButton: UIButton = {
     let typeButton = UIButton(frame: CGRect.zero)
-    typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     typeButton.setTitleColor(UIColor.black, for: .normal)
     typeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     typeButton.contentHorizontalAlignment = .leading
@@ -175,14 +173,12 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   }()
 
   var equipment: Equipment!
-  var firstEquipmentType: String
   lazy var heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
                                                  attribute: .notAnAttribute, multiplier: 1, constant: 350)
 
   // MARK: - Initialization
 
-  init(firstType: String) {
-    firstEquipmentType = firstType
+  init() {
     super.init(frame: CGRect.zero)
     setupView()
   }
