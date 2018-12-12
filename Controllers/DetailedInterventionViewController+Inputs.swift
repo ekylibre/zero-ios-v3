@@ -290,7 +290,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
   }
 
   func removeInputCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(title: "delete_input_prompt".localized, message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "remove_input_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in

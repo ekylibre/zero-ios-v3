@@ -145,19 +145,19 @@ extension AddInterventionViewController {
     customPickerView.isHidden = false
   }
 
-  @objc private func tapDeleteButton(sender: UIButton) {
+  @objc private func tapRemoveButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedMaterialCell
     let indexPath = selectedMaterialsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: "delete_material_prompt".localized, message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "remove_material_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
-      self.deleteMaterial(indexPath.row)
+    alert.addAction(UIAlertAction(title: "remove".localized, style: .destructive, handler: { action in
+      self.removeMaterial(indexPath.row)
     }))
     present(alert, animated: true)
   }
 
-  private func deleteMaterial(_ index: Int)  {
+  private func removeMaterial(_ index: Int)  {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -215,7 +215,7 @@ extension AddInterventionViewController {
         cell.unitButton.setTitle(unit?.localized, for: .normal)
       }
       cell.nameLabel.text = name
-      cell.deleteButton.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
+      cell.removeButton.addTarget(self, action: #selector(tapRemoveButton), for: .touchUpInside)
       cell.quantityTextField.addTarget(self, action: #selector(updateMaterialQuantity), for: .editingChanged)
       cell.unitButton.setTitle(unit?.localized.lowercased(), for: .normal)
       cell.unitButton.addTarget(self, action: #selector(showSelectedMaterialUnits), for: .touchUpInside)

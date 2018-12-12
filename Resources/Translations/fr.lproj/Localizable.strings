@@ -337,6 +337,7 @@
 "done" = "OK";
 "validate" = "Valider";
 "create" = "Créer";
+"remove" = "Supprimer";
 "delete" = "Supprimer";
 "close" = "Fermer";
 "save" = "Sauvegarder";
@@ -420,11 +421,13 @@
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes les données non synchronisées seront perdues.";
 
-"delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
-"delete_load_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
+"remove_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
+"remove_load_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
+"remove_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
+"remove_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
+"remove_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
+
 "delete_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
-"delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
-"delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
 "date_not_corresponding_to_crop" = "La date d'intervention ne correspond pas aux dates des cultures";
 "crops_start_date" = "La date de début des cultures sélectionnées est le %@";
