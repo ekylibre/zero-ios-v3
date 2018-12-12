@@ -875,6 +875,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       equipmentsSelectionView.editionView.firstIndicatorTextField.text = nil
       equipmentsSelectionView.editionView.secondIndicatorTextField.text = nil
       equipmentsSelectionView.editionView.updateIndicators(nature: value.lowercased(), equipmentsSelectionView)
+      equipmentsSelectionView.editionView.selectedType = value
     default:
       fatalError("writeValueBack: Unknown value for tag")
     }

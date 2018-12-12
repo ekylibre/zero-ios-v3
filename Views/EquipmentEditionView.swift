@@ -173,6 +173,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   }()
 
   var equipment: Equipment!
+  var selectedType: String!
   lazy var heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
                                                  attribute: .notAnAttribute, multiplier: 1, constant: 350)
 
@@ -302,6 +303,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     let equipment = equipmentsView.equipments[indexPath.row]
 
     self.equipment = equipment
+    selectedType = equipment.type
     if let assetName = equipment.type?.lowercased().replacingOccurrences(of: "_", with: "-") {
       equipmentsView.editionView.typeImageView.image = UIImage(named: assetName)
     }
