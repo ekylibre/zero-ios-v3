@@ -818,6 +818,19 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
         }
         infos.append(materialInfos)
       }
+    case .GroundWork:
+      for case let interventionEquipment as InterventionEquipment in currentIntervention!.interventionEquipments! {
+        guard let equipment = interventionEquipment.equipment else { return infos }
+        var equipmentInfos = equipment.name!
+
+        if let number = equipment.number {
+          equipmentInfos.append(String(format: " #%@", number))
+        }
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(equipmentInfos)
+      }
     case .Irrigation:
       guard let unit = currentIntervention.waterUnit?.localized else { return infos }
 
