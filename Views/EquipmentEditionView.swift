@@ -55,6 +55,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     nameTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     nameTextField.layer.shadowOpacity = 1
     nameTextField.layer.shadowRadius = 0
+    nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
     nameTextField.translatesAutoresizingMaskIntoConstraints = false
     return nameTextField
   }()
@@ -79,6 +80,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     numberTextField.layer.shadowOffset = CGSize(width: 0, height: 0.5)
     numberTextField.layer.shadowOpacity = 1
     numberTextField.layer.shadowRadius = 0
+    numberTextField.addTarget(self, action: #selector(numberDidChange), for: .editingChanged)
     numberTextField.translatesAutoresizingMaskIntoConstraints = false
     return numberTextField
   }()
@@ -305,14 +307,17 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     self.equipment = equipment
     selectedType = equipment.type
     if let assetName = equipment.type?.lowercased().replacingOccurrences(of: "_", with: "-") {
-      equipmentsView.editionView.typeImageView.image = UIImage(named: assetName)
+      typeImageView.image = UIImage(named: assetName)
     }
-    equipmentsView.editionView.typeButton.setTitle(equipment.type?.localized, for: .normal)
-    equipmentsView.editionView.nameTextField.text = equipment.name
-    equipmentsView.editionView.numberTextField.text = equipment.number
+    typeButton.setTitle(equipment.type?.localized, for: .normal)
+    nameTextField.text = equipment.name
+    nameErrorLabel.isHidden = true
+    numberTextField.text = equipment.number
+    numberErrorLabel.isHidden = true
+    firstIndicatorTextField.text = equipment.indicatorOne
+    secondIndicatorTextField.text = equipment.indicatorTwo
+
     if let equipmentNature = equipment.type?.lowercased() {
-      firstIndicatorTextField.text = equipment.indicatorOne
-      secondIndicatorTextField.text = equipment.indicatorTwo
       updateIndicators(nature: equipmentNature, equipmentsView)
     }
   }
@@ -396,6 +401,10 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     let context = appDelegate.persistentContainer.viewContext
 
+    if !checkEquipmentName(equipmentsView) || !checkEquipmentNumber(equipmentsView) {
+      return
+    }
+
     equipment.type = selectedType
     equipment.name = nameTextField.text
     equipment.number = numberTextField.text!.isEmpty ? nil : numberTextField.text
@@ -409,6 +418,41 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
       try context.save()
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func checkEquipmentName(_ equipmentsView: EquipmentsView) -> Bool {
+    if nameTextField.text!.isEmpty {
+      nameErrorLabel.text = "equipment_name_is_empty".localized
+      nameErrorLabel.isHidden = false
+      return false
+    } else if equipment.name != nameTextField.text &&
+      equipmentsView.equipments.contains(where: { $0.name?.lowercased() == nameTextField.text?.lowercased() }) {
+      nameErrorLabel.text = "equipment_name_not_available".localized
+      nameErrorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
+  private func checkEquipmentNumber(_ equipmentsView: EquipmentsView) -> Bool {
+    if equipment.number != numberTextField.text &&
+      equipmentsView.equipments.contains(where: { $0.number == numberTextField.text }) {
+      numberErrorLabel.isHidden = false
+      return false
+    }
+    return true
+  }
+
+  @objc private func nameDidChange() {
+    if !nameErrorLabel.isHidden {
+      nameErrorLabel.isHidden = true
+    }
+  }
+
+  @objc private func numberDidChange() {
+    if !numberErrorLabel.isHidden {
+      numberErrorLabel.isHidden = true
     }
   }
 }

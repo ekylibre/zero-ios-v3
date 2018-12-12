@@ -69,7 +69,7 @@ class EquipmentCell: UITableViewCell {
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
       nameLabel.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: -5),
       nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-      editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       editButton.widthAnchor.constraint(equalToConstant: 44),
       editButton.heightAnchor.constraint(equalToConstant: 44),
