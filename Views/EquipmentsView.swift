@@ -59,6 +59,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   private func setupActions() {
     createButton.addTarget(self, action: #selector(openCreationView), for: .touchUpInside)
     creationView.nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
+    creationView.numberTextField.addTarget(self, action: #selector(numberDidChange), for: .editingChanged)
     creationView.cancelButton.addTarget(self, action: #selector(cancelCreation), for: .touchUpInside)
     creationView.createButton.addTarget(self, action: #selector(validateCreation), for: .touchUpInside)
   }
@@ -188,6 +189,12 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   @objc private func nameDidChange() {
     if !creationView.nameErrorLabel.isHidden {
       creationView.nameErrorLabel.isHidden = true
+    }
+  }
+
+  @objc private func numberDidChange() {
+    if !creationView.numberErrorLabel.isHidden {
+      creationView.numberErrorLabel.isHidden = true
     }
   }
 
