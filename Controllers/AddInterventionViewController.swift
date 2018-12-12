@@ -483,7 +483,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let interventionPersonsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
 
-
     interventionPersonsFetchRequest.predicate = predicate
     do {
       let interventionPersons = try managedContext.fetch(interventionPersonsFetchRequest)

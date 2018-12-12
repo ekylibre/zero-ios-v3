@@ -186,7 +186,6 @@ extension AddInterventionViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedEquipmentCell", for: indexPath)
         as! SelectedEquipmentCell
 
-
       cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       cell.nameLabel.text = selectedEquipment.name
       cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)

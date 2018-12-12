@@ -51,7 +51,6 @@ class HarvestCell: UITableViewCell, UITextFieldDelegate {
     addInterventionController?.storageCreationView.isHidden = false
   }
 
-
   // MARK: - Text field
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,

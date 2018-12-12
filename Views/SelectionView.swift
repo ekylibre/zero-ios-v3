@@ -66,7 +66,6 @@ class SelectionView: UIView {
     return tableView
   }()
 
-
   lazy var dimView: UIView = {
     let dimView = UIView(frame: CGRect.zero)
     dimView.backgroundColor = UIColor.black

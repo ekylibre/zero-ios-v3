@@ -1215,7 +1215,6 @@ extension InterventionViewController {
   func updateInterventionIfChangedOnApi() {
     let query = InterventionQuery(modifiedSince: getLastSyncDate())
 
-
     _ = apolloClient.clearCache()
     apolloClient.fetch(query: query, resultHandler: { (result, error) in
       if let error = error {
