@@ -396,6 +396,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     currentIntervention?.workingPeriods?.setValue(duration, forKey: "hourDuration")
     notes ? currentIntervention.infos = notesTextView.text : nil
     changeWaterUnit()
+    currentIntervention.weather = weather
     updateTargets(currentIntervention)
     updateEquipments(currentIntervention)
     updatePersons(currentIntervention)

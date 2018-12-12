@@ -198,7 +198,9 @@ extension AddInterventionViewController {
     loadEquipments()
     loadPersons()
     loadHarvest()
-    weather = currentIntervention?.weather
+    weather.temperature = currentIntervention.weather?.temperature
+    weather.windSpeed = currentIntervention.weather?.windSpeed
+    weather.weatherDescription = currentIntervention.weather?.weatherDescription
     changeTemperatureSignButton()
     loadWeatherInReadOnlyMode()
     disableUserInteraction()
@@ -211,7 +213,9 @@ extension AddInterventionViewController {
     notesTextView.textColor = (notesTextView.text == "notes".localized ? .lightGray : .black)
     interventionType = currentIntervention?.type
     loadWorkingPeriod()
-    weather = currentIntervention?.weather
+    weather.temperature = currentIntervention.weather?.temperature
+    weather.windSpeed = currentIntervention.weather?.windSpeed
+    weather.weatherDescription = currentIntervention.weather?.weatherDescription
     changeTemperatureSignButton()
     loadInputs()
     loadMaterials()
