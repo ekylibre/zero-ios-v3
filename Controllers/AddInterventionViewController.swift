@@ -853,6 +853,17 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
         }
         infos.append(equipmentInfos)
       }
+    case .Implantation:
+      for case let interventionSeed as InterventionSeed in currentIntervention!.interventionSeeds! {
+        guard let seed = interventionSeed.seed else { return infos }
+        guard let unit = interventionSeed.unit?.localized else { return infos }
+        let seedInfos = String(format: "%@ • %g %@", seed.name!, interventionSeed.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(seedInfos)
+      }
     case .Irrigation:
       guard let unit = currentIntervention.waterUnit?.localized else { return infos }
 
