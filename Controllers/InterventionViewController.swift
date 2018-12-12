@@ -396,7 +396,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let destVC = segue.destination as! AddInterventionViewController
       let type = interventionTypes[((sender as? UIButton)?.tag)!]
 
-      destVC.interventionType = type
+      destVC.interventionType = InterventionType(rawValue: type)
       destVC.interventionState = nil
       destVC.currentIntervention = nil
     case "updateIntervention":
@@ -406,7 +406,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if indexPath != nil {
         let intervention = interventions[(indexPath?.row)!]
 
-        destVC.interventionType = intervention.type
+        destVC.interventionType = InterventionType(rawValue: intervention.type!)
         destVC.currentIntervention = intervention
         destVC.interventionState = intervention.status
       }
