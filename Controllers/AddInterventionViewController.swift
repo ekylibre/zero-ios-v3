@@ -818,6 +818,28 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
         }
         infos.append(materialInfos)
       }
+    case .CropProtection:
+      for case let interventionPhyto as InterventionPhytosanitary in currentIntervention!.interventionPhytosanitaries! {
+        guard let phyto = interventionPhyto.phyto else { return infos }
+        guard let unit = interventionPhyto.unit?.localized else { return infos }
+        let phytoInfos = String(format: "%@ • %g %@", phyto.name!, interventionPhyto.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(phytoInfos)
+      }
+    case .Fertilization:
+      for case let interventionFertilizer as InterventionFertilizer in currentIntervention!.interventionFertilizers! {
+        guard let fertilizer = interventionFertilizer.fertilizer else { return infos }
+        guard let unit = interventionFertilizer.unit?.localized else { return infos }
+        let fertilizerInfos = String(format: "%@ • %g %@", fertilizer.name!, interventionFertilizer.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(fertilizerInfos)
+      }
     case .GroundWork:
       for case let interventionEquipment as InterventionEquipment in currentIntervention!.interventionEquipments! {
         guard let equipment = interventionEquipment.equipment else { return infos }
