@@ -26,6 +26,16 @@ class EquipmentCell: UITableViewCell {
     return nameLabel
   }()
 
+  lazy var editButton: UIButton = {
+    let editButton = UIButton(frame: CGRect.zero)
+    let image = UIImage(named: "edit")?.withRenderingMode(.alwaysTemplate)
+    editButton.setImage(image, for: .normal)
+    editButton.tintColor = UIColor.darkGray
+    editButton.addTarget(self, action: #selector(openEditionView), for: .touchUpInside)
+    editButton.translatesAutoresizingMaskIntoConstraints = false
+    return editButton
+  }()
+
   lazy var infosLabel: UILabel = {
     let infosLabel = UILabel(frame: CGRect.zero)
     infosLabel.font = UIFont.systemFont(ofSize: 14)
@@ -42,27 +52,29 @@ class EquipmentCell: UITableViewCell {
   }
 
   private func setupCell() {
-    let gesture = UILongPressGestureRecognizer(target: self, action: #selector(openEditionView))
-
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
+    contentView.addSubview(editButton)
     contentView.addSubview(infosLabel)
-    contentView.addGestureRecognizer(gesture)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
-      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      typeImageView.heightAnchor.constraint(equalToConstant: 35),
       typeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-      typeImageView.widthAnchor.constraint(equalTo: typeImageView.heightAnchor),
-      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+      typeImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      typeImageView.widthAnchor.constraint(equalToConstant: 35),
+      typeImageView.heightAnchor.constraint(equalToConstant: 35),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
       nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-      infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
+      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+      editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      editButton.widthAnchor.constraint(equalToConstant: 24),
+      editButton.heightAnchor.constraint(equalToConstant: 24),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+      infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15)
       ])
   }
 
@@ -72,8 +84,8 @@ class EquipmentCell: UITableViewCell {
 
   // MARK: - Actions
 
-  @objc private func openEditionView(_ sender: UILongPressGestureRecognizer) {
-    guard let cell = sender.view?.superview as? UITableViewCell else { return }
+  @objc private func openEditionView(_ sender: UIButton) {
+    guard let cell = sender.superview?.superview as? UITableViewCell else { return }
     guard let equipmentsView = cell.superview?.superview as? EquipmentsView else { return }
 
     equipmentsView.editionView.updateView(cell: cell)
