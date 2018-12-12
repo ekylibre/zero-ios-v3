@@ -174,6 +174,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     return saveButton
   }()
 
+  var equipment: Equipment!
   var firstEquipmentType: String
   lazy var heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
                                                  attribute: .notAnAttribute, multiplier: 1, constant: 350)
@@ -258,6 +259,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
 
   private func setupActions() {
     typeButton.addTarget(self, action: #selector(editEquipmentType), for: .touchUpInside)
+    deleteButton.addTarget(self, action: #selector(presentDeleteAlert), for: .touchUpInside)
     cancelButton.addTarget(self, action: #selector(cancelEdition), for: .touchUpInside)
     saveButton.addTarget(self, action: #selector(saveChanges), for: .touchUpInside)
   }
@@ -303,6 +305,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     guard let indexPath = equipmentsView.tableView.indexPath(for: cell) else { return }
     let equipment = equipmentsView.equipments[indexPath.row]
 
+    self.equipment = equipment
     if let assetName = equipment.type?.lowercased().replacingOccurrences(of: "_", with: "-") {
       equipmentsView.editionView.typeImageView.image = UIImage(named: assetName)
     }
@@ -345,6 +348,42 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     guard let viewController = parentViewController else { return }
 
     viewController.performSegue(withIdentifier: "editEquipmentType", sender: self)
+  }
+
+  @objc private func presentDeleteAlert() {
+    guard let viewController = parentViewController else { return }
+    let alert = UIAlertController(title: "delete_equipment_prompt".localized, message: nil, preferredStyle: .alert)
+
+    alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
+      self.deleteEquipment()
+    }))
+    viewController.present(alert, animated: true)
+  }
+
+  private func deleteEquipment() {
+    guard let equipmentsView = superview as? EquipmentsView else { return }
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    let context = appDelegate.persistentContainer.viewContext
+
+    if let index = equipmentsView.equipments.firstIndex(of: equipment) {
+      equipmentsView.equipments.remove(at: index)
+      equipmentsView.tableView.reloadData()
+
+      if equipmentsView.tableView.numberOfRows(inSection: 0) > 0 {
+        equipmentsView.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+      }
+    }
+
+    context.delete(equipment)
+    isHidden = true
+    equipmentsView.dimView.isHidden = true
+
+    do {
+      try context.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 
   @objc private func cancelEdition() {
