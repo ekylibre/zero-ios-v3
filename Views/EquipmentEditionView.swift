@@ -393,8 +393,22 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
 
   @objc private func saveChanges() {
     guard let equipmentsView = superview as? EquipmentsView else { return }
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    let context = appDelegate.persistentContainer.viewContext
 
+    equipment.type = selectedType
+    equipment.name = nameTextField.text
+    equipment.number = numberTextField.text!.isEmpty ? nil : numberTextField.text
+    equipment.indicatorOne = firstIndicatorTextField.text!.isEmpty ? nil : firstIndicatorTextField.text
+    equipment.indicatorTwo = secondIndicatorTextField.text!.isEmpty ? nil : secondIndicatorTextField.text
+    equipmentsView.tableView.reloadData()
     isHidden = true
     equipmentsView.dimView.isHidden = true
+
+    do {
+      try context.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 }
