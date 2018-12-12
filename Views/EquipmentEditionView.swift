@@ -302,7 +302,8 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   func updateView(cell: UITableViewCell) {
     guard let equipmentsView = superview as? EquipmentsView else { return }
     guard let indexPath = equipmentsView.tableView.indexPath(for: cell) else { return }
-    let equipment = equipmentsView.equipments[indexPath.row]
+    let equipment = equipmentsView.isSearching ? equipmentsView.filteredEquipments[indexPath.row] :
+      equipmentsView.equipments[indexPath.row]
 
     self.equipment = equipment
     selectedType = equipment.type
