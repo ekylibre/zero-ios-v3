@@ -857,7 +857,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       for case let interventionSeed as InterventionSeed in currentIntervention!.interventionSeeds! {
         guard let seed = interventionSeed.seed else { return infos }
         guard let unit = interventionSeed.unit?.localized else { return infos }
-        let seedInfos = String(format: "%@ • %g %@", seed.name!, interventionSeed.quantity, unit)
+        let seedInfos = String(format: "%@ • %g %@", seed.variety!, interventionSeed.quantity, unit)
 
         if !infos.isEmpty {
           infos.append("\n")
