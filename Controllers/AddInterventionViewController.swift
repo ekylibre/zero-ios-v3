@@ -853,6 +853,17 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
         }
         infos.append(equipmentInfos)
       }
+    case .Harvest:
+      for case let harvest as Harvest in currentIntervention!.harvests! {
+        guard let type = harvest.type?.localized else { return infos }
+        guard let unit = harvest.unit?.localized else { return infos }
+        let harvestInfos = String(format: "%@ • %g %@", type, harvest.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(harvestInfos)
+      }
     case .Implantation:
       for case let interventionSeed as InterventionSeed in currentIntervention!.interventionSeeds! {
         guard let seed = interventionSeed.seed else { return infos }
@@ -868,8 +879,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       guard let unit = currentIntervention.waterUnit?.localized else { return infos }
 
       infos = String(format: "%@ • %g %@", "volume".localized, currentIntervention.waterQuantity, unit)
-    default:
-      return infos
     }
     return infos
   }
