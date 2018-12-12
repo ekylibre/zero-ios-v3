@@ -31,6 +31,7 @@ class EquipmentCell: UITableViewCell {
     let image = UIImage(named: "edit")?.withRenderingMode(.alwaysTemplate)
     editButton.setImage(image, for: .normal)
     editButton.tintColor = UIColor.darkGray
+    editButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     editButton.addTarget(self, action: #selector(openEditionView), for: .touchUpInside)
     editButton.translatesAutoresizingMaskIntoConstraints = false
     return editButton
@@ -66,14 +67,14 @@ class EquipmentCell: UITableViewCell {
       typeImageView.widthAnchor.constraint(equalToConstant: 35),
       typeImageView.heightAnchor.constraint(equalToConstant: 35),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      nameLabel.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: -5),
       nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
       editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
       editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      editButton.widthAnchor.constraint(equalToConstant: 24),
-      editButton.heightAnchor.constraint(equalToConstant: 24),
+      editButton.widthAnchor.constraint(equalToConstant: 44),
+      editButton.heightAnchor.constraint(equalToConstant: 44),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      infosLabel.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: -5),
       infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15)
       ])
   }
