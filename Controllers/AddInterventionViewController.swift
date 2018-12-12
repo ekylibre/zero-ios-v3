@@ -373,6 +373,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     saveHarvest(currentIntervention)
     saveInterventionInputs(currentIntervention)
     saveWeather(currentIntervention)
+    saveInfos()
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
@@ -790,6 +791,41 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
+  }
+
+  private func saveInfos() {
+    let infos = getInfos()
+
+    if infos.isEmpty && notesTextView.text != "Notes" {
+      currentIntervention.infos = notesTextView.text
+    } else {
+      currentIntervention.infos = infos
+    }
+  }
+
+  private func getInfos() -> String {
+    var infos = ""
+
+    switch interventionType! {
+    case .Care:
+      for case let interventionMaterial as InterventionMaterial in currentIntervention!.interventionMaterials! {
+        guard let material = interventionMaterial.material else { return infos }
+        guard let unit = interventionMaterial.unit?.localized else { return infos }
+        let materialInfos = String(format: "%@ • %g %@", material.name!, interventionMaterial.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(materialInfos)
+      }
+    case .Irrigation:
+      guard let unit = currentIntervention.waterUnit?.localized else { return infos }
+
+      infos = String(format: "%@ • %g %@", "volume".localized, currentIntervention.waterQuantity, unit)
+    default:
+      return infos
+    }
+    return infos
   }
 
   // MARK: - Navigation
