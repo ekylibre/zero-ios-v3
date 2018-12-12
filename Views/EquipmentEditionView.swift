@@ -144,6 +144,16 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     return secondIndicatorLabel
   }()
 
+  lazy var deleteButton: UIButton = {
+    let deleteButton = UIButton(frame: CGRect.zero)
+    deleteButton.setTitle("delete".localized.uppercased(), for: .normal)
+    deleteButton.setTitleColor(AppColor.AppleColors.Red, for: .normal)
+    deleteButton.setTitleColor(AppColor.AppleColors.Red.withAlphaComponent(0.3), for: .highlighted)
+    deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    deleteButton.translatesAutoresizingMaskIntoConstraints = false
+    return deleteButton
+  }()
+
   lazy var cancelButton: UIButton = {
     let cancelButton = UIButton(frame: CGRect.zero)
     cancelButton.setTitle("cancel".localized.uppercased(), for: .normal)
@@ -194,6 +204,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     addSubview(firstIndicatorLabel)
     addSubview(secondIndicatorTextField)
     addSubview(secondIndicatorLabel)
+    addSubview(deleteButton)
     addSubview(cancelButton)
     addSubview(saveButton)
     setupLayout()
@@ -236,6 +247,8 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
       secondIndicatorTextField.topAnchor.constraint(equalTo: firstIndicatorTextField.bottomAnchor, constant: 35),
       secondIndicatorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       secondIndicatorLabel.topAnchor.constraint(equalTo: secondIndicatorTextField.bottomAnchor, constant: 10),
+      deleteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+      deleteButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
       cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
       cancelButton.rightAnchor.constraint(equalTo: saveButton.leftAnchor, constant: -15),
       saveButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
