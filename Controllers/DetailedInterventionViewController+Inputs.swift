@@ -157,12 +157,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
-  @objc private func showInputsCreationUnits() {
-    let units = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+  @objc private func showInputsCreationUnits(sender: UIButton) {
+    guard let selectedUnit = sender.titleLabel?.text else { return }
+    let values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                  "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
 
-    customPickerView.values = units
+    customPickerView.values = values
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedUnit)
     customPickerView.closure = { (value) in
       self.defineInputsUnitButtonTitle(value: value)
     }
