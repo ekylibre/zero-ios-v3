@@ -1159,7 +1159,9 @@ extension InterventionViewController {
     var intervention = returnEntityIfSame(entityName: "Intervention", predicate: predicate) as? Intervention
 
     if intervention != nil {
-      let date = fetchedIntervention.workingDays.first!.executionDate!
+      guard let date = fetchedIntervention.workingDays.first?.executionDate else {
+        return
+      }
       let status = (fetchedIntervention.validatedAt == nil ?
         InterventionState.Synced : InterventionState.Validated).rawValue
 
