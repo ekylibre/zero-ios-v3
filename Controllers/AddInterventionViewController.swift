@@ -831,9 +831,9 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       }
     case .Fertilization:
       for case let interventionFertilizer as InterventionFertilizer in currentIntervention!.interventionFertilizers! {
-        guard let fertilizer = interventionFertilizer.fertilizer else { return infos }
+        guard let name = interventionFertilizer.fertilizer?.name?.localized else { return infos }
         guard let unit = interventionFertilizer.unit?.localized else { return infos }
-        let fertilizerInfos = String(format: "%@ • %g %@", fertilizer.name!, interventionFertilizer.quantity, unit)
+        let fertilizerInfos = String(format: "%@ • %g %@", name, interventionFertilizer.quantity, unit)
 
         if !infos.isEmpty {
           infos.append("\n")
