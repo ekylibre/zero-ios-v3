@@ -104,4 +104,43 @@ class InterventionCell: UITableViewCell {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  // MARK: - Update
+
+  func updateCropsLabel(_ targets: NSSet) -> String {
+    let cropString = (targets.count == 1) ? "crop".localized : String(format: "crops".localized, targets.count)
+    var totalSurfaceArea: Float = 0
+
+    for case let target as Target in targets {
+      let crop = target.crop!
+
+      totalSurfaceArea += crop.surfaceArea
+    }
+    return cropString + String(format: " • %.1f ha", totalSurfaceArea)
+  }
+
+  func updateDateLabel(_ workingPeriods: NSSet) -> String? {
+    guard let workingPeriod = workingPeriods.allObjects.first as? WorkingPeriod else { return nil }
+    guard let date = workingPeriod.executionDate else { return nil }
+    let calendar = Calendar.current
+    let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "locale".localized)
+      dateFormatter.dateFormat = "d MMM"
+      return dateFormatter
+    }()
+    var dateString = dateFormatter.string(from: date)
+    let year = calendar.component(.year, from: date)
+
+    if calendar.isDateInToday(date) {
+      return "today".localized.lowercased()
+    } else if calendar.isDateInYesterday(date) {
+      return "yesterday".localized.lowercased()
+    } else {
+      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
+        dateString.append(" \(year)")
+      }
+      return dateString
+    }
+  }
 }
