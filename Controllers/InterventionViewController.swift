@@ -303,7 +303,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
     performSegue(withIdentifier: "updateIntervention", sender: self)
   }
 
@@ -410,6 +409,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
         destVC.interventionType = intervention.type
         destVC.currentIntervention = intervention
         destVC.interventionState = intervention.status
+        tableView.deselectRow(at: indexPath!, animated: true)
       }
     default:
       return
