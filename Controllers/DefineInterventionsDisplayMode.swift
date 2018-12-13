@@ -187,7 +187,6 @@ extension AddInterventionViewController {
     bottomView.isHidden = true
     scrollViewBottomConstraint.isActive = false
     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-    interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "read-only")
     cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
     interventionType = currentIntervention?.type

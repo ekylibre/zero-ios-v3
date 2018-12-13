@@ -46,7 +46,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Synchro Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qI5-Ep-5Qd">
-                                            <rect key="frame" x="15" y="14" width="570" height="16"/>
+                                            <rect key="frame" x="15" y="14" width="345" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -313,7 +313,7 @@
                                                         <color key="textColor" red="0.60392156860000001" green="0.7843137255" blue="0.41568627450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="read-only" translatesAutoresizingMaskIntoConstraints="NO" id="vCU-ev-h2j">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="read-only" translatesAutoresizingMaskIntoConstraints="NO" id="vCU-ev-h2j">
                                                         <rect key="frame" x="330" y="22.5" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="YAn-G1-zuh"/>
@@ -727,7 +727,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="raS-Jl-PM3">
-                                                                            <rect key="frame" x="520" y="20" width="20" height="20"/>
+                                                                            <rect key="frame" x="295" y="20" width="20" height="20"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="20" id="ePY-W6-Npz"/>
                                                                                 <constraint firstAttribute="height" constant="20" id="y16-yR-J7z"/>
@@ -745,7 +745,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNe-gr-L3f">
-                                                                            <rect key="frame" x="84" y="60" width="436" height="30"/>
+                                                                            <rect key="frame" x="84" y="60" width="211" height="30"/>
                                                                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                             <state key="normal">
                                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -755,7 +755,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mM8-c5-dl6">
-                                                                            <rect key="frame" x="525" y="65" width="20" height="20"/>
+                                                                            <rect key="frame" x="300" y="65" width="20" height="20"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="20" id="AQa-Aq-YP4"/>
                                                                                 <constraint firstAttribute="height" constant="20" id="E8f-wm-4sJ"/>
@@ -773,7 +773,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zF5-GL-OXu">
-                                                                            <rect key="frame" x="84" y="100" width="456" height="30"/>
+                                                                            <rect key="frame" x="84" y="100" width="231" height="30"/>
                                                                             <nil key="textColor"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits"/>
