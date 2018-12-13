@@ -114,7 +114,6 @@
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
 		6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61065721B529BD00AA853D /* SideMenu.framework */; };
-		6BA94B2321B52AEC00221EA3 /* SideMenu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61065721B529BD00AA853D /* SideMenu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -134,20 +133,6 @@
 			remoteInfo = "Clic&Farm-iOS";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6BA94B2421B52AEC00221EA3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6BA94B2321B52AEC00221EA3 /* SideMenu.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		04051B4E21C0024900FA2790 /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
@@ -288,10 +273,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */,
-				6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */,
 				6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */,
 				04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */,
+				6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */,
+				6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +548,6 @@
 				6B491D0E21ABEABD00EADC22 /* Sources */,
 				6B491D0F21ABEABD00EADC22 /* Frameworks */,
 				6B491D1021ABEABD00EADC22 /* Resources */,
-				6B491D2021AC1F4700EADC22 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -583,8 +567,7 @@
 				6BEA65692105C5EE0072840F /* Sources */,
 				6BEA656A2105C5EE0072840F /* Frameworks */,
 				6BEA656B2105C5EE0072840F /* Resources */,
-				0411295B2110939D00AE884D /* ShellScript */,
-				6BA94B2421B52AEC00221EA3 /* Embed Frameworks */,
+				0411295B2110939D00AE884D /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -690,7 +673,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0411295B2110939D00AE884D /* ShellScript */ = {
+		0411295B2110939D00AE884D /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -699,24 +682,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SideMenu.framework",
 			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		6B491D2021AC1F4700EADC22 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
