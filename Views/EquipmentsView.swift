@@ -104,6 +104,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
     cell.nameLabel.text = equipment.name
+    cell.editButton.isHidden = isSelected
     cell.infosLabel.text = getEquipmentInfos(equipment)
     cell.isUserInteractionEnabled = !isSelected
     cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
