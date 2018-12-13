@@ -132,7 +132,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var currentIntervention: Intervention!
   var interventionType: String!
   var dimView = UIView(frame: CGRect.zero)
-  var cellIndexPath: IndexPath!
   var selectedRow: Int!
   var selectedValue: String!
   var customPickerView: CustomPickerView!

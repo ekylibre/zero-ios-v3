@@ -110,10 +110,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     selectedInputsTableView.reloadData()
   }
 
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
-  }
-
   @IBAction private func openInputsSelectionView(_ sender: Any) {
     dimView.isHidden = false
     inputsSelectionView.isHidden = false
