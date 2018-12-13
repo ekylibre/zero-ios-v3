@@ -300,6 +300,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let crop = cropsByProduction[indexPath.section][indexPath.row]
 
+    tableView.deselectRow(at: indexPath, animated: true)
     updateCropDetailedView(crop)
     dimView.isHidden = false
     cropDetailedView.isHidden = false
@@ -346,10 +347,6 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   }
 
   @objc private func hideCropDetailedView() {
-    if let selectedIndexPath = cropsTableView.indexPathForSelectedRow {
-      cropsTableView.deselectRow(at: selectedIndexPath, animated: false)
-    }
-
     cropDetailedView.isHidden = true
     dimView.isHidden = true
 

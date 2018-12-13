@@ -166,6 +166,7 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
       return
     }
 
+    tableView.deselectRow(at: indexPath, animated: true)
     toUpdateIntervention = interventions[indexPath.row]
     interventionsByCropVC.performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
   }
