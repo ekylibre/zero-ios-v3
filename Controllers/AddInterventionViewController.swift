@@ -854,16 +854,20 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
         infos.append(equipmentInfos)
       }
     case .Harvest:
-      for case let harvest as Harvest in currentIntervention!.harvests! {
-        guard let type = harvest.type?.localized else { return infos }
-        guard let unit = harvest.unit?.localized else { return infos }
-        let harvestInfos = String(format: "%@ • %g %@", type, harvest.quantity, unit)
+      guard let loads = currentIntervention.harvests?.allObjects as? [Harvest] else { return infos }
+      guard let load = loads.first else { return infos }
+      guard let type = load.type?.localized else { return infos }
+      guard let unit = load.unit?.localized else { return infos }
+      var harvestInfos = String(format: "%@ • %g %@", type, load.quantity, unit)
 
-        if !infos.isEmpty {
-          infos.append("\n")
-        }
-        infos.append(harvestInfos)
+      if loads.count > 2 {
+        harvestInfos.append("\n")
+        harvestInfos.append(String(format: "and_x_more_loads".localized, loads.count - 1))
+      } else if loads.count == 2 {
+        harvestInfos.append("\n")
+        harvestInfos.append("and_1_more_load".localized)
       }
+      infos.append(harvestInfos)
     case .Implantation:
       for case let interventionSeed as InterventionSeed in currentIntervention!.interventionSeeds! {
         guard let seed = interventionSeed.seed else { return infos }
