@@ -144,17 +144,15 @@ class InterventionCell: UITableViewCell {
     }
   }
 
-  func updateInfosLabel(_ intervention: Intervention) -> String {
-    let infos = getInfos(intervention)
-
-    if infos.isEmpty, let notes = intervention.infos {
-      return notes
+  func updateInfosLabel(_ intervention: Intervention) -> String? {
+    if let infos = getInfos(intervention) {
+      return infos
     }
-    return infos
+    return intervention.infos
   }
 
-  private func getInfos(_ intervention: Intervention) -> String {
-    guard let interventionType = InterventionType(rawValue: intervention.type!) else { return "" }
+  private func getInfos(_ intervention: Intervention) -> String? {
+    guard let interventionType = InterventionType(rawValue: intervention.type!) else { return nil }
     var infos = ""
 
     switch interventionType {
@@ -205,10 +203,10 @@ class InterventionCell: UITableViewCell {
         infos.append(equipmentInfos)
       }
     case .Harvest:
-      guard let loads = intervention.harvests?.allObjects as? [Harvest] else { return infos }
-      guard let load = loads.first else { return infos }
-      guard let type = load.type?.localized else { return infos }
-      guard let unit = load.unit?.localized else { return infos }
+      guard let loads = intervention.harvests?.allObjects as? [Harvest] else { return nil }
+      guard let load = loads.first else { return nil }
+      guard let type = load.type?.localized else { return nil }
+      guard let unit = load.unit?.localized else { return nil }
       var harvestInfos = String(format: "%@ • %g %@", type, load.quantity, unit)
 
       if loads.count > 2 {
@@ -231,7 +229,7 @@ class InterventionCell: UITableViewCell {
         infos.append(seedInfos)
       }
     case .Irrigation:
-      guard let unit = intervention.waterUnit?.localized else { return infos }
+      guard let unit = intervention.waterUnit?.localized else { return nil }
 
       infos = String(format: "%@ • %g %@", "volume".localized, intervention.waterQuantity, unit)
     }
