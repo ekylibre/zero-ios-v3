@@ -306,44 +306,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     performSegue(withIdentifier: "updateIntervention", sender: self)
   }
 
-  func fetchTargets(_ intervention: Intervention) -> [Target]? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-    targetsFetchRequest.predicate = predicate
-
-    do {
-      let targets = try managedContext.fetch(targetsFetchRequest)
-      return targets
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-    workingPeriodsFetchRequest.predicate = predicate
-
-    do {
-      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
-      return workingPeriods.first
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
   private func updateCropsLabel(_ targets: NSSet) -> String {
     let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
     var totalSurfaceArea: Float = 0
