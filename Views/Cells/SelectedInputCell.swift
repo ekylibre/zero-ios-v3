@@ -264,11 +264,13 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @objc private func showUnitMeasure(sender: UIButton) {
+    guard let selectedUnit = sender.titleLabel?.text else { return }
     let units = defineInputsUnitsBasedOnCreatedUnit(unit: inputUnit)
 
     if units != nil && units!.count > 1 {
       addInterventionViewController?.customPickerView.values = units!
       addInterventionViewController?.customPickerView.pickerView.reloadComponent(0)
+      addInterventionViewController?.customPickerView.selectLastValue(selectedUnit)
       addInterventionViewController?.customPickerView.closure = { (value) in
         self.addInterventionViewController?.selectedInputs[self.indexPath.row].setValue(value, forKey: "unit")
         self.addInterventionViewController?.selectedInputsTableView.reloadData()
