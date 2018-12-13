@@ -297,7 +297,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.stateImageView.tintColor = (intervention.status > 0) ? AppColor.AppleColors.Green : AppColor.AppleColors.Orange
     cell.dateLabel.text = cell.updateDateLabel(intervention.workingPeriods!)
     cell.cropsLabel.text = cell.updateCropsLabel(intervention.targets!)
-    cell.notesLabel.text = intervention.infos
+    cell.notesLabel.text = cell.updateInfosLabel(intervention)
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
     return cell
   }

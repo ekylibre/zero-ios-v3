@@ -349,10 +349,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     if !checkErrorsAccordingInterventionType() {
       return
     }
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriod = WorkingPeriod(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
@@ -373,7 +370,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     saveHarvest(currentIntervention)
     saveInterventionInputs(currentIntervention)
     saveWeather(currentIntervention)
-    saveInfos()
     resetInputsAttributes(entity: "Seed")
     resetInputsAttributes(entity: "Phyto")
     resetInputsAttributes(entity: "Fertilizer")
@@ -791,100 +787,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
-  }
-
-  private func saveInfos() {
-    let infos = getInfos()
-
-    if infos.isEmpty && notesTextView.text != "Notes" {
-      currentIntervention.infos = notesTextView.text
-    } else {
-      currentIntervention.infos = infos
-    }
-  }
-
-  private func getInfos() -> String {
-    var infos = ""
-
-    switch interventionType! {
-    case .Care:
-      for case let interventionMaterial as InterventionMaterial in currentIntervention!.interventionMaterials! {
-        guard let material = interventionMaterial.material else { return infos }
-        guard let unit = interventionMaterial.unit?.localized else { return infos }
-        let materialInfos = String(format: "%@ • %g %@", material.name!, interventionMaterial.quantity, unit)
-
-        if !infos.isEmpty {
-          infos.append("\n")
-        }
-        infos.append(materialInfos)
-      }
-    case .CropProtection:
-      for case let interventionPhyto as InterventionPhytosanitary in currentIntervention!.interventionPhytosanitaries! {
-        guard let phyto = interventionPhyto.phyto else { return infos }
-        guard let unit = interventionPhyto.unit?.localized else { return infos }
-        let phytoInfos = String(format: "%@ • %g %@", phyto.name!, interventionPhyto.quantity, unit)
-
-        if !infos.isEmpty {
-          infos.append("\n")
-        }
-        infos.append(phytoInfos)
-      }
-    case .Fertilization:
-      for case let interventionFertilizer as InterventionFertilizer in currentIntervention!.interventionFertilizers! {
-        guard let name = interventionFertilizer.fertilizer?.name?.localized else { return infos }
-        guard let unit = interventionFertilizer.unit?.localized else { return infos }
-        let fertilizerInfos = String(format: "%@ • %g %@", name, interventionFertilizer.quantity, unit)
-
-        if !infos.isEmpty {
-          infos.append("\n")
-        }
-        infos.append(fertilizerInfos)
-      }
-    case .GroundWork:
-      for case let interventionEquipment as InterventionEquipment in currentIntervention!.interventionEquipments! {
-        guard let equipment = interventionEquipment.equipment else { return infos }
-        var equipmentInfos = equipment.name!
-
-        if let number = equipment.number {
-          equipmentInfos.append(String(format: " #%@", number))
-        }
-        if !infos.isEmpty {
-          infos.append("\n")
-        }
-        infos.append(equipmentInfos)
-      }
-    case .Harvest:
-      guard let loads = currentIntervention.harvests?.allObjects as? [Harvest] else { return infos }
-      guard let load = loads.first else { return infos }
-      guard let type = load.type?.localized else { return infos }
-      guard let unit = load.unit?.localized else { return infos }
-      var harvestInfos = String(format: "%@ • %g %@", type, load.quantity, unit)
-
-      if loads.count > 2 {
-        harvestInfos.append("\n")
-        harvestInfos.append(String(format: "and_x_more_loads".localized, loads.count - 1))
-      } else if loads.count == 2 {
-        harvestInfos.append("\n")
-        harvestInfos.append("and_1_more_load".localized)
-      }
-      infos.append(harvestInfos)
-    case .Implantation:
-      for case let interventionSeed as InterventionSeed in currentIntervention!.interventionSeeds! {
-        guard let seed = interventionSeed.seed else { return infos }
-        guard let unit = interventionSeed.unit?.localized else { return infos }
-        let seedInfos = String(format: "%@ • %g %@", seed.variety!, interventionSeed.quantity, unit)
-
-        if !infos.isEmpty {
-          infos.append("\n")
-        }
-        infos.append(seedInfos)
-      }
-    case .Irrigation:
-      guard let unit = currentIntervention.waterUnit?.localized else { return infos }
-
-      infos = String(format: "%@ • %g %@", "volume".localized, currentIntervention.waterQuantity, unit)
-    }
-    return infos
   }
 
   // MARK: - Navigation

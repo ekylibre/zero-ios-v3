@@ -143,4 +143,98 @@ class InterventionCell: UITableViewCell {
       return dateString
     }
   }
+
+  func updateInfosLabel(_ intervention: Intervention) -> String {
+    let infos = getInfos(intervention)
+
+    if infos.isEmpty, let notes = intervention.infos {
+      return notes
+    }
+    return infos
+  }
+
+  private func getInfos(_ intervention: Intervention) -> String {
+    guard let interventionType = InterventionType(rawValue: intervention.type!) else { return "" }
+    var infos = ""
+
+    switch interventionType {
+    case .Care:
+      for case let interventionMaterial as InterventionMaterial in intervention.interventionMaterials! {
+        guard let material = interventionMaterial.material else { return infos }
+        guard let unit = interventionMaterial.unit?.localized else { return infos }
+        let materialInfos = String(format: "%@ • %g %@", material.name!, interventionMaterial.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(materialInfos)
+      }
+    case .CropProtection:
+      for case let interventionPhyto as InterventionPhytosanitary in intervention.interventionPhytosanitaries! {
+        guard let phyto = interventionPhyto.phyto else { return infos }
+        guard let unit = interventionPhyto.unit?.localized else { return infos }
+        let phytoInfos = String(format: "%@ • %g %@", phyto.name!, interventionPhyto.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(phytoInfos)
+      }
+    case .Fertilization:
+      for case let interventionFertilizer as InterventionFertilizer in intervention.interventionFertilizers! {
+        guard let name = interventionFertilizer.fertilizer?.name?.localized else { return infos }
+        guard let unit = interventionFertilizer.unit?.localized else { return infos }
+        let fertilizerInfos = String(format: "%@ • %g %@", name, interventionFertilizer.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(fertilizerInfos)
+      }
+    case .GroundWork:
+      for case let interventionEquipment as InterventionEquipment in intervention.interventionEquipments! {
+        guard let equipment = interventionEquipment.equipment else { return infos }
+        var equipmentInfos = equipment.name!
+
+        if let number = equipment.number {
+          equipmentInfos.append(String(format: " #%@", number))
+        }
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(equipmentInfos)
+      }
+    case .Harvest:
+      guard let loads = intervention.harvests?.allObjects as? [Harvest] else { return infos }
+      guard let load = loads.first else { return infos }
+      guard let type = load.type?.localized else { return infos }
+      guard let unit = load.unit?.localized else { return infos }
+      var harvestInfos = String(format: "%@ • %g %@", type, load.quantity, unit)
+
+      if loads.count > 2 {
+        harvestInfos.append("\n")
+        harvestInfos.append(String(format: "and_x_more_loads".localized, loads.count - 1))
+      } else if loads.count == 2 {
+        harvestInfos.append("\n")
+        harvestInfos.append("and_1_more_load".localized)
+      }
+      infos.append(harvestInfos)
+    case .Implantation:
+      for case let interventionSeed as InterventionSeed in intervention.interventionSeeds! {
+        guard let seed = interventionSeed.seed else { return infos }
+        guard let unit = interventionSeed.unit?.localized else { return infos }
+        let seedInfos = String(format: "%@ • %g %@", seed.variety!, interventionSeed.quantity, unit)
+
+        if !infos.isEmpty {
+          infos.append("\n")
+        }
+        infos.append(seedInfos)
+      }
+    case .Irrigation:
+      guard let unit = intervention.waterUnit?.localized else { return infos }
+
+      infos = String(format: "%@ • %g %@", "volume".localized, intervention.waterQuantity, unit)
+    }
+    return infos
+  }
 }
