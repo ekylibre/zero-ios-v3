@@ -182,6 +182,9 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     notesTextView.delegate = self
     setTextViewPlaceholder()
 
+    interventionLogo.isHidden = false
+    interventionLogo.image = UIImage(named: "edit")
+
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
     cropsView.interventionState = interventionState

@@ -207,8 +207,6 @@ extension AddInterventionViewController {
   }
 
   private func loadInterventionInEditableMode() {
-    interventionLogo.isHidden = false
-    interventionLogo.image = UIImage(named: "edit")
     notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
     notesTextView.textColor = (notesTextView.text == "notes".localized ? .lightGray : .black)
     interventionType = currentIntervention?.type
