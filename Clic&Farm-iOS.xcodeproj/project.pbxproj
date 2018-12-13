@@ -103,19 +103,19 @@
 		6B1BB48821B9883100E96A16 /* UIView+ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */; };
 		6B1BB48921B9883100E96A16 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479C40921A40935008DA4C2 /* UIViewController+Keyboard.swift */; };
 		6B1BB48A21B9883100E96A16 /* UserDefaults+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D2AF62178C8D6002EDF62 /* UserDefaults+isFirstLaunch.swift */; };
-		6B1BB48B21B9885300E96A16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
-		6B1BB48C21B9885300E96A16 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998B67217DB8DE000A5D2F /* Main.strings */; };
-		6B1BB48D21B9885300E96A16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
-		6B1BB48E21B9885300E96A16 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
-		6B1BB49021B9885300E96A16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
-		6B1BB49121B9885300E96A16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
 		6B491D1521ABEABD00EADC22 /* ApolloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B491D1421ABEABD00EADC22 /* ApolloTests.swift */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
 		6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */; };
+		6B7D67DA21C269FE001315F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */; };
+		6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
+		6B7D67DC21C269FE001315F7 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998B67217DB8DE000A5D2F /* Main.strings */; };
+		6B7D67DD21C269FE001315F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
+		6B7D67DE21C269FE001315F7 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
+		6B7D67DF21C269FE001315F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
+		6B7D67E021C269FE001315F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
 		6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61065721B529BD00AA853D /* SideMenu.framework */; };
-		6BA94B2321B52AEC00221EA3 /* SideMenu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61065721B529BD00AA853D /* SideMenu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -135,20 +135,6 @@
 			remoteInfo = "Clic&Farm-iOS";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6BA94B2421B52AEC00221EA3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6BA94B2321B52AEC00221EA3 /* SideMenu.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		04051B4E21C0024900FA2790 /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
@@ -258,7 +244,6 @@
 		6B4CA8A2214F9C560052073D /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		6B61065721B529BD00AA853D /* SideMenu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SideMenu.framework; path = Carthage/Build/iOS/SideMenu.framework; sourceTree = "<group>"; };
 		6B6866A32194691300D5645B /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
-		6B6C084B2193142200F54D29 /* sample_location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_location.gpx; sourceTree = "<group>"; };
 		6B6C084E219318BD00F54D29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B77AD3C219B046E00839053 /* IrrigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrrigationTests.swift; sourceTree = "<group>"; };
@@ -291,10 +276,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */,
-				6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */,
 				6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */,
 				04134B27217DB2F2009E32C2 /* IQKeyboardManagerSwift.framework in Frameworks */,
+				6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */,
+				6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,7 +482,6 @@
 				6BA3713E213963230086DF9B /* Assets.xcassets */,
 				6BA37140213963230086DF9B /* Info.plist */,
 				04134B28217DB36A009E32C2 /* oauthInfo.plist */,
-				6B6C084B2193142200F54D29 /* sample_location.gpx */,
 				041313AC21401483005437F0 /* Translations */,
 			);
 			path = Resources;
@@ -568,7 +552,6 @@
 				6B491D0E21ABEABD00EADC22 /* Sources */,
 				6B491D0F21ABEABD00EADC22 /* Frameworks */,
 				6B491D1021ABEABD00EADC22 /* Resources */,
-				6B491D2021AC1F4700EADC22 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -588,8 +571,7 @@
 				6BEA65692105C5EE0072840F /* Sources */,
 				6BEA656A2105C5EE0072840F /* Frameworks */,
 				6BEA656B2105C5EE0072840F /* Resources */,
-				0411295B2110939D00AE884D /* ShellScript */,
-				6BA94B2421B52AEC00221EA3 /* Embed Frameworks */,
+				0411295B2110939D00AE884D /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -676,12 +658,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B1BB48B21B9885300E96A16 /* Main.storyboard in Resources */,
-				6B1BB48C21B9885300E96A16 /* Main.strings in Resources */,
-				6B1BB48D21B9885300E96A16 /* Assets.xcassets in Resources */,
-				6B1BB48E21B9885300E96A16 /* oauthInfo.plist in Resources */,
-				6B1BB49021B9885300E96A16 /* Localizable.strings in Resources */,
-				6B1BB49121B9885300E96A16 /* InfoPlist.strings in Resources */,
+				6B7D67DA21C269FE001315F7 /* LaunchScreen.storyboard in Resources */,
+				6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */,
+				6B7D67DC21C269FE001315F7 /* Main.strings in Resources */,
+				6B7D67DD21C269FE001315F7 /* Assets.xcassets in Resources */,
+				6B7D67DE21C269FE001315F7 /* oauthInfo.plist in Resources */,
+				6B7D67DF21C269FE001315F7 /* Localizable.strings in Resources */,
+				6B7D67E021C269FE001315F7 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,7 +678,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0411295B2110939D00AE884D /* ShellScript */ = {
+		0411295B2110939D00AE884D /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -704,24 +687,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/OAuth2.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SideMenu.framework",
 			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		6B491D2021AC1F4700EADC22 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
