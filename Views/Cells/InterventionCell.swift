@@ -48,12 +48,12 @@ class InterventionCell: UITableViewCell {
     return cropsLabel
   }()
 
-  lazy var notesLabel: UILabel = {
-    let notesLabel = UILabel(frame: CGRect.zero)
-    notesLabel.font = UIFont.systemFont(ofSize: 14)
-    notesLabel.numberOfLines = 0
-    notesLabel.translatesAutoresizingMaskIntoConstraints = false
-    return notesLabel
+  lazy var infosLabel: UILabel = {
+    let infosLabel = UILabel(frame: CGRect.zero)
+    infosLabel.font = UIFont.systemFont(ofSize: 14)
+    infosLabel.numberOfLines = 0
+    infosLabel.translatesAutoresizingMaskIntoConstraints = false
+    return infosLabel
   }()
 
   // MARK: - Initialization
@@ -69,7 +69,7 @@ class InterventionCell: UITableViewCell {
     contentView.addSubview(stateImageView)
     contentView.addSubview(dateLabel)
     contentView.addSubview(cropsLabel)
-    contentView.addSubview(notesLabel)
+    contentView.addSubview(infosLabel)
     setupLayout()
   }
 
@@ -94,10 +94,10 @@ class InterventionCell: UITableViewCell {
       dateLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor),
       cropsLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
       cropsLabel.centerYAnchor.constraint(equalTo: typeImageView.centerYAnchor),
-      notesLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
-      notesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-      notesLabel.topAnchor.constraint(equalTo: cropsLabel.bottomAnchor, constant: 2),
-      notesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12.5)
+      infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 15),
+      infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+      infosLabel.topAnchor.constraint(equalTo: cropsLabel.bottomAnchor, constant: 2),
+      infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12.5)
       ])
   }
 
