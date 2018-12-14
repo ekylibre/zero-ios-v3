@@ -107,18 +107,6 @@ class InterventionCell: UITableViewCell {
 
   // MARK: - Update
 
-  func updateCropsLabel(_ targets: NSSet) -> String {
-    let cropString = (targets.count == 1) ? "crop".localized : String(format: "crops".localized, targets.count)
-    var totalSurfaceArea: Float = 0
-
-    for case let target as Target in targets {
-      let crop = target.crop!
-
-      totalSurfaceArea += crop.surfaceArea
-    }
-    return cropString + String(format: " • %.1f ha", totalSurfaceArea)
-  }
-
   func updateDateLabel(_ workingPeriods: NSSet) -> String? {
     guard let workingPeriod = workingPeriods.allObjects.first as? WorkingPeriod else { return nil }
     guard let date = workingPeriod.executionDate else { return nil }
@@ -142,6 +130,18 @@ class InterventionCell: UITableViewCell {
       }
       return dateString
     }
+  }
+
+  func updateCropsLabel(_ targets: NSSet) -> String? {
+    let cropString = (targets.count == 1) ? "crop".localized : String(format: "crops".localized, targets.count)
+    var totalSurfaceArea: Float = 0
+
+    for case let target as Target in targets {
+      guard let crop = target.crop else { return nil }
+
+      totalSurfaceArea += crop.surfaceArea
+    }
+    return cropString + String(format: " • %.1f ha", totalSurfaceArea)
   }
 
   func updateInfosLabel(_ intervention: Intervention) -> String? {
