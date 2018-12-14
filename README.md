@@ -1,7 +1,9 @@
-# zero-ios-v3
-The iOS version of Ekylibre's Zero mobile app
+# Clic&Farm for iOS
+
+Download on the [App Store](https://itunes.apple.com/us/app/clic-farm/id1445541915).
 
 ## Sreenshots
+
 <p align="center">
   <img src="doc/screenshots/screenshot_1.png" width="250" />
   <img src="doc/screenshots/screenshot_2.png" width="250" />
