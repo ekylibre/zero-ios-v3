@@ -80,6 +80,7 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
     errorLabel.textColor = AppColor.AppleColors.Red
+    errorLabel.numberOfLines = 0
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()
