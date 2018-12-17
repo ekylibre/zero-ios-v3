@@ -18,11 +18,9 @@ extension AddInterventionViewController: UITextFieldDelegate {
     irrigationVolumeTextField.layer.borderColor = UIColor.lightGray.cgColor
     irrigationVolumeTextField.layer.cornerRadius = 5
     irrigationVolumeTextField.placeholder = "0"
-    irrigationVolumeTextField.clipsToBounds = false
     irrigationUnitButton.layer.borderWidth = 0.5
     irrigationUnitButton.layer.borderColor = UIColor.lightGray.cgColor
     irrigationUnitButton.layer.cornerRadius = 5
-    irrigationUnitButton.clipsToBounds = false
     irrigationUnitButton.setTitle("m³", for: .normal)
     setupActions()
   }

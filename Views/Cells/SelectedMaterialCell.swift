@@ -57,7 +57,6 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
     quantityTextField.layer.borderWidth = 0.5
     quantityTextField.layer.borderColor = UIColor.lightGray.cgColor
     quantityTextField.layer.cornerRadius = 5
-    quantityTextField.clipsToBounds = false
     quantityTextField.delegate = self
     quantityTextField.translatesAutoresizingMaskIntoConstraints = false
     return quantityTextField
@@ -72,7 +71,6 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
     unitButton.layer.borderWidth = 0.5
     unitButton.layer.borderColor = UIColor.lightGray.cgColor
     unitButton.layer.cornerRadius = 5
-    unitButton.clipsToBounds = false
     unitButton.translatesAutoresizingMaskIntoConstraints = false
     return unitButton
   }()

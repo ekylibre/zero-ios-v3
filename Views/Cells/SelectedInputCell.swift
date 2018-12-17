@@ -70,7 +70,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     quantityTextField.layer.borderWidth = 0.5
     quantityTextField.layer.borderColor = UIColor.lightGray.cgColor
     quantityTextField.layer.cornerRadius = 5
-    quantityTextField.clipsToBounds = false
     quantityTextField.delegate = self
     quantityTextField.addTarget(self, action: #selector(saveQuantity), for: .editingChanged)
     quantityTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +85,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     unitButton.layer.borderWidth = 0.5
     unitButton.layer.borderColor = UIColor.lightGray.cgColor
     unitButton.layer.cornerRadius = 5
-    unitButton.clipsToBounds = false
     unitButton.addTarget(self, action: #selector(showUnitMeasure), for: .touchUpInside)
     unitButton.translatesAutoresizingMaskIntoConstraints = false
     return unitButton
