@@ -1581,7 +1581,7 @@ extension InterventionViewController {
 
   func pushUpdatedIntervention(intervention: Intervention) {
     let updateMutation = UpdateInterMutation(
-      interventionId: String(intervention.ekyID),
+      interventionID: String(intervention.ekyID),
       farmId: farmID!,
       procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
       cropList: defineTargetAttributesFrom(intervention: intervention),

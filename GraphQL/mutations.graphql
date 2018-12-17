@@ -41,7 +41,7 @@ mutation pushInter(
 }
 
 mutation updateInter(
-  $interventionId: ID!
+  $interventionID: ID!
   $farmId: ID!,
   $procedure: InterventionTypeEnum!,
   $cropList: [InterventionTargetAttributes!]!,
@@ -59,7 +59,7 @@ mutation updateInter(
   updateIntervention(
     input: {
       intervention: {
-        interventionId: $interventionId
+        interventionID: $interventionID
         farmID: $farmId
         type: $procedure
         targets: $cropList
@@ -103,6 +103,30 @@ mutation pushEquipment(
     equipment {
       id
     }
+  }
+}
+
+mutation updateEquipment(
+  $farmId: ID!,
+  $type: EquipmentTypeEnum!,
+  $name: String!,
+  $number: String,
+  $indicator1: String,
+  $indicator2: String
+) {
+  updateEquipment(
+    input: {
+      equipment: {
+        farmID: $farmId
+        type: $type
+        name: $name
+        number: $number
+        field1Value: $indicator1
+        field2Value: $indicator2
+      }
+    }
+  ) {
+    errors
   }
 }
 
