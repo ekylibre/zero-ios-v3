@@ -311,7 +311,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     case selectedPersonsTableView:
       return selectedPersonsTableViewCellForRowAt(tableView, indexPath)
     case loadsTableView:
-      return harvestTableViewCellForRowAt(tableView, indexPath)
+      return loadTableViewCellForRowAt(tableView, indexPath)
     default:
       fatalError("Unknown tableView: \(tableView)")
     }

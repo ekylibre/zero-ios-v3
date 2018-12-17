@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: HarvestCellDelegate {
+extension AddInterventionViewController: LoadCellDelegate {
 
   // MARK: - Initialization
 
@@ -56,7 +56,9 @@ extension AddInterventionViewController: HarvestCellDelegate {
   private func initializeHarvestTableView() {
     loadsTableView.layer.borderWidth  = 0.5
     loadsTableView.layer.borderColor = UIColor.lightGray.cgColor
-    loadsTableView.layer.cornerRadius = 4
+    loadsTableView.layer.cornerRadius = 5
+    loadsTableView.register(LoadCell.self, forCellReuseIdentifier: "LoadCell")
+    loadsTableView.bounces = false
     loadsTableView.dataSource = self
     loadsTableView.delegate = self
   }
@@ -245,7 +247,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     customPickerView.isHidden = false
   }
 
-  func removeHarvestCell(_ indexPath: IndexPath) {
+  func removeLoadCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "delete_load_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
@@ -301,44 +303,28 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
   }
 
-  private func setupObjectsLayer(_ button: UIButton, _ textField: UITextField) {
-    button.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    button.layer.borderWidth = 1
-    button.layer.cornerRadius = 5
-    textField.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    textField.layer.borderWidth = 1
-    textField.layer.cornerRadius = 5
-  }
-
-  func harvestTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> HarvestCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
+  func loadTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> LoadCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "LoadCell", for: indexPath) as! LoadCell
     let harvest = selectedHarvests[indexPath.row]
     let unit = harvest.unit
 
     if interventionState == InterventionState.Validated.rawValue {
-      cell.quantity.placeholder = String(harvest.quantity)
-      cell.number.placeholder = harvest.number
+      cell.quantityTextField.placeholder = String(harvest.quantity)
+      cell.numberTextField.placeholder = harvest.number
     } else if harvest.quantity == 0 {
-      cell.quantity.placeholder = "0"
-      cell.number.text = harvest.number
+      cell.quantityTextField.placeholder = "0"
+      cell.numberTextField.text = harvest.number
     } else {
-      cell.quantity.text = String(harvest.quantity)
-      cell.number.text = harvest.number
+      cell.quantityTextField.text = String(harvest.quantity)
+      cell.numberTextField.text = harvest.number
     }
     cell.addInterventionController = self
     cell.cellDelegate = self
     cell.indexPath = indexPath
-    cell.unit.setTitle(unit?.localized, for: .normal)
-    cell.storage.backgroundColor = AppColor.ThemeColors.White
-    cell.storage.setTitle(harvest.storage?.name ?? "---", for: .normal)
-    cell.quantity.keyboardType = .decimalPad
-    cell.quantity.text = String(harvest.quantity)
-    cell.quantity.delegate = cell
-    cell.number.text = harvest.number
-    cell.number.delegate = cell
-    cell.selectionStyle = .none
-    setupObjectsLayer(cell.unit, cell.quantity)
-    setupObjectsLayer(cell.storage, cell.number)
+    cell.unitButton.setTitle(unit?.localized, for: .normal)
+    cell.storageButton.setTitle(harvest.storage?.name ?? "---", for: .normal)
+    cell.quantityTextField.text = String(harvest.quantity)
+    cell.numberTextField.text = harvest.number
     return cell
   }
 }
