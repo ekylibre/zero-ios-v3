@@ -1577,6 +1577,10 @@ extension InterventionViewController {
       }
 
       intervention.ekyID = id
+      if id != 0 {
+        intervention.status = InterventionState.Synced.rawValue
+        self.tableView.reloadData()
+      }
     })
   }
 

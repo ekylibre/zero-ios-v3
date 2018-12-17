@@ -503,9 +503,6 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
 
       for intervention in interventions {
         pushIntervention(intervention)
-        if intervention.ekyID != 0 {
-          intervention.status = Int16(InterventionState.Synced.rawValue)
-        }
       }
       try managedContext.save()
     } catch let error as NSError {
