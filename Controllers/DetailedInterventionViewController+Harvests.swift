@@ -19,8 +19,8 @@ extension AddInterventionViewController: LoadCellDelegate {
     fetchedStorages != nil ? storages = fetchedStorages! : nil
     harvestSelectedType = "STRAW"
     harvestNatureButton.setTitle(harvestNatureButton.titleLabel?.text!.localized, for: .normal)
-    harvestNatureButton.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    harvestNatureButton.layer.borderWidth = 1
+    harvestNatureButton.layer.borderWidth = 0.5
+    harvestNatureButton.layer.borderColor = UIColor.lightGray.cgColor
     harvestNatureButton.layer.cornerRadius = 5
     harvestTapGesture.delegate = self
     initializeHarvestTableView()
