@@ -209,5 +209,9 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     nameTextField.text = ""
     natureButton.setTitle("organic".localized, for: .normal)
     self.isHidden = true
+
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
   }
 }

@@ -71,19 +71,19 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
   }()
 
   lazy var seedView: SeedCreationView = {
-    let seedView = SeedCreationView(firstSpecie: firstSpecie, frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let seedView = SeedCreationView(firstSpecie: firstSpecie, frame: CGRect.zero)
     seedView.translatesAutoresizingMaskIntoConstraints = false
     return seedView
   }()
 
   lazy var phytoView: PhytoCreationView = {
-    let phytoView = PhytoCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let phytoView = PhytoCreationView(frame: CGRect.zero)
     phytoView.translatesAutoresizingMaskIntoConstraints = false
     return phytoView
   }()
 
   lazy var fertilizerView: FertilizerCreationView = {
-    let fertilizerView = FertilizerCreationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let fertilizerView = FertilizerCreationView(frame: CGRect.zero)
     fertilizerView.translatesAutoresizingMaskIntoConstraints = false
     return fertilizerView
   }()
@@ -141,7 +141,7 @@ class InputsView: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBa
       ])
 
     bindFrameToSuperViewBounds(dimView, height: 0)
-    bindFrameToSuperViewBounds(seedView, height: 260)
+    bindFrameToSuperViewBounds(seedView, height: 290)
     bindFrameToSuperViewBounds(phytoView, height: 400)
     bindFrameToSuperViewBounds(fertilizerView, height: 300)
   }

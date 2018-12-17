@@ -200,5 +200,9 @@ class SeedCreationView: UIView, UITextFieldDelegate {
     specieButton.setTitle(firstSpecie.localized, for: .normal)
     varietyTextField.text = ""
     self.isHidden = true
+
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
   }
 }
