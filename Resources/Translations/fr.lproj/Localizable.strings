@@ -434,8 +434,9 @@
 "you_have_to_enter_a_product_quantity" = "Vous devez rentrer une quantité pour le produit !";
 "you_must_select_a_fertilizer" = "Vous devez ajouter au moins un produit fertilisant !";
 "you_must_enter_a_water_volume" = "Vous devez rentrer le volume d'eau utilisé !";
-"you_must_enter_harvest_quantity" = "Vous devez rentrer une quantité pour la récolte !";
-"you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
+"you_must_enter_load_quantity" = "Vous devez rentrer une quantité pour le chargement !";
+"you_must_enter_load_number" = "Vous devez rentrer un nombre pour le chargement !";
+"you_must_create_a_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "implantation_on_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
 "unable_load_terms" = "Impossible de charger les conditions d'utilisation";
