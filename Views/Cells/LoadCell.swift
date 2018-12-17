@@ -142,6 +142,7 @@ class LoadCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(numberLabel)
     contentView.addSubview(numberTextField)
     setupLayout()
+    setupActions()
   }
 
   private func setupLayout() {
@@ -178,6 +179,15 @@ class LoadCell: UITableViewCell, UITextFieldDelegate {
       numberTextField.centerYAnchor.constraint(equalTo: numberLabel.centerYAnchor),
       numberTextField.heightAnchor.constraint(equalToConstant: 30)
       ])
+  }
+
+  private func setupActions() {
+    quantityTextField.addTarget(self, action: #selector(defineQuantity), for: .editingChanged)
+    unitButton.addTarget(self, action: #selector(defineUnit), for: .touchUpInside)
+    deleteButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
+    storageButton.addTarget(self, action: #selector(defineStorage), for: .touchUpInside)
+    createStorageButton.addTarget(self, action: #selector(createStorage), for: .touchUpInside)
+    numberTextField.addTarget(self, action: #selector(defineNumber), for: .editingChanged)
   }
 
   required init?(coder aDecoder: NSCoder) {
