@@ -320,7 +320,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   func defineTableViewsHeightForRow(_ tableView: UITableView) -> CGFloat {
     switch tableView {
     case loadsTableView:
-      return 150
+      return 125
     case selectedInputsTableView:
       return 110
     case selectedMaterialsTableView:

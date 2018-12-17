@@ -84,7 +84,7 @@ extension AddInterventionViewController: LoadCellDelegate {
 
   @IBAction private func tapHarvestView() {
     let shouldExpand = (harvestViewHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 150 : selectedHarvests.count * 150
+    let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 125 : selectedHarvests.count * 125
 
     if selectedHarvests.count == 0 {
       return
@@ -276,7 +276,7 @@ extension AddInterventionViewController: LoadCellDelegate {
     let isCollapsed = harvestViewHeightConstraint.constant == 70
     createHarvest(nil, nil, nil, nil, nil)
     if selectedHarvests.count > 0 {
-      let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 150 : selectedHarvests.count * 150
+      let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 125 : selectedHarvests.count * 125
 
       isCollapsed ? harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       harvestNatureButton.isHidden = false
