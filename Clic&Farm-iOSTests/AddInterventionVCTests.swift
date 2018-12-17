@@ -27,7 +27,7 @@ class AddInterventionVCTests: XCTestCase {
 
   func test_setupViewsAccordingInterventionType_withCareType() {
     // When
-    addInterventionVC.interventionType = InterventionType.Care.rawValue
+    addInterventionVC.interventionType = .Care
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -37,7 +37,7 @@ class AddInterventionVCTests: XCTestCase {
 
   func test_setupViewsAccordingInterventionType_withCropProtectionType() {
     // When
-    addInterventionVC.interventionType = InterventionType.CropProtection.rawValue
+    addInterventionVC.interventionType = .CropProtection
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -49,7 +49,7 @@ class AddInterventionVCTests: XCTestCase {
 
   func test_setupViewsAccordingInterventionType_withFertilizationType() {
     // When
-    addInterventionVC.interventionType = InterventionType.Fertilization.rawValue
+    addInterventionVC.interventionType = .Fertilization
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -61,7 +61,7 @@ class AddInterventionVCTests: XCTestCase {
 
   func test_setupViewsAccordingInterventionType_withGroundWorkType() {
     // When
-    addInterventionVC.interventionType = InterventionType.GroundWork.rawValue
+    addInterventionVC.interventionType = .GroundWork
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -71,7 +71,7 @@ class AddInterventionVCTests: XCTestCase {
 
   func test_setupViewsAccordingInterventionType_withHarvestType() {
     // When
-    addInterventionVC.interventionType = InterventionType.Harvest.rawValue
+    addInterventionVC.interventionType = .Harvest
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -83,7 +83,7 @@ class AddInterventionVCTests: XCTestCase {
 
   func test_setupViewsAccordingInterventionType_withIrrigationType() {
     // When
-    addInterventionVC.interventionType = InterventionType.Irrigation.rawValue
+    addInterventionVC.interventionType = .Irrigation
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then

@@ -266,6 +266,8 @@
 "inputs" = "%d intrants";
 "load" = "1 chargement";
 "loads" = "%d chargements";
+"and_1_more_load" = "et 1 chargement supplémentaire…";
+"and_x_more_loads" = "et %d chargements supplémentaires…";
 "material" = "1 matériau";
 "materials" = "%d matériaux";
 "equipment" = "1 équipement";

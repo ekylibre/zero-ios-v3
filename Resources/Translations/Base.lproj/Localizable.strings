@@ -266,6 +266,8 @@
 "inputs" = "%d inputs";
 "load" = "1 load";
 "loads" = "%d loads";
+"and_1_more_load" = "and 1 more load…";
+"and_x_more_load" = "and %d more loads…";
 "material" = "1 material";
 "materials" = "%d materials";
 "equipment" = "1 equipment";
