@@ -89,26 +89,26 @@ extension AddInterventionViewController: HarvestCellDelegate {
     }
 
     if interventionState != InterventionState.Validated.rawValue {
-      harvestAddButton.isHidden = !shouldExpand
+      loadsAddButton.isHidden = !shouldExpand
     }
     view.endEditing(true)
     updateHarvestCountLabel()
     harvestNatureButton.isHidden = !shouldExpand
     loadsTableView.isHidden = !shouldExpand
-    harvestCountLabel.isHidden = shouldExpand
+    loadsCountLabel.isHidden = shouldExpand
     harvestExpandImageView.isHidden = (selectedHarvests.count == 0)
     harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
     harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 125) : 70
-    harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    loadsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
   }
 
   private func updateHarvestCountLabel() {
     if selectedHarvests.count == 1 {
-      harvestCountLabel.text = "load".localized
+      loadsCountLabel.text = "load".localized
     } else if selectedHarvests.count > 1 {
-      harvestCountLabel.text = String(format: "loads".localized, selectedHarvests.count)
+      loadsCountLabel.text = String(format: "loads".localized, selectedHarvests.count)
     } else {
-      harvestCountLabel.text = "none".localized
+      loadsCountLabel.text = "none".localized
     }
   }
 
@@ -260,8 +260,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
           self.harvestViewHeightConstraint.constant = 70
         } else if self.selectedHarvests.count < 4 {
           UIView.animate(withDuration: 0.5, animations: {
-            self.harvestTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
-            self.harvestViewHeightConstraint.constant = self.harvestTableViewHeightConstraint.constant + 125
+            self.loadsTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
+            self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 125
             self.view.layoutIfNeeded()
           })
         }
@@ -279,11 +279,11 @@ extension AddInterventionViewController: HarvestCellDelegate {
       isCollapsed ? harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       harvestNatureButton.isHidden = false
       loadsTableView.isHidden = false
-      harvestAddButton.isHidden = false
-      harvestCountLabel.isHidden = true
+      loadsAddButton.isHidden = false
+      loadsCountLabel.isHidden = true
       harvestExpandImageView.isHidden = false
       harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 125)
-      harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      loadsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
       view.layoutIfNeeded()
     }
     loadsTableView.reloadData()
@@ -296,8 +296,8 @@ extension AddInterventionViewController: HarvestCellDelegate {
     if selectedHarvests.count < 4 {
       harvestExpandImageView.isHidden = false
       harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
-      harvestTableViewHeightConstraint.constant = loadsTableView.contentSize.height
-      harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
+      loadsTableViewHeightConstraint.constant = loadsTableView.contentSize.height
+      harvestViewHeightConstraint.constant = loadsTableViewHeightConstraint.constant + 125
     }
   }
 

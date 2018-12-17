@@ -131,7 +131,7 @@ extension AddInterventionViewController {
         createHarvest(storage, type, number, unit, quantity)
       }
     }
-    harvestAddButton.isHidden = (interventionState == InterventionState.Validated.rawValue)
+    loadsAddButton.isHidden = (interventionState == InterventionState.Validated.rawValue)
     if selectedHarvests.count > 0 {
       harvestNatureButton.setTitle(selectedHarvests.first?.type, for: .normal)
       refreshHarvestView()

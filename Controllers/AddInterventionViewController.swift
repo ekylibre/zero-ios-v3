@@ -60,12 +60,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet var harvestTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var harvestView: UIView!
   @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var harvestAddButton: UIButton!
-  @IBOutlet weak var harvestCountLabel: UILabel!
+  @IBOutlet weak var loadsAddButton: UIButton!
+  @IBOutlet weak var loadsCountLabel: UILabel!
   @IBOutlet weak var harvestExpandImageView: UIImageView!
   @IBOutlet weak var harvestNatureButton: UIButton!
   @IBOutlet weak var loadsTableView: UITableView!
-  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var loadsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var harvestSeparatorView: UIView!
 
   // Materials

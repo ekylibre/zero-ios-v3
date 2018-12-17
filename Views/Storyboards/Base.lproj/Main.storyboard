@@ -1427,12 +1427,9 @@
                         <outlet property="equipmentsTableViewHeightConstraint" destination="fXC-sa-Rfz" id="wRF-cB-qPI"/>
                         <outlet property="equipmentsTapGesture" destination="lAp-Ke-r70" id="Bh3-3C-DnF"/>
                         <outlet property="fewClouds" destination="4EX-oh-FEb" id="c0B-CS-QRO"/>
-                        <outlet property="harvestAddButton" destination="G1D-nr-BV3" id="JDc-NH-EQk"/>
-                        <outlet property="harvestCountLabel" destination="bOv-z2-sDi" id="6e0-Mw-rPZ"/>
                         <outlet property="harvestExpandImageView" destination="QaX-Vb-LEa" id="jOZ-Ua-zzZ"/>
                         <outlet property="harvestNatureButton" destination="vEX-tE-fGs" id="c2F-mN-S3u"/>
                         <outlet property="harvestSeparatorView" destination="wwg-W9-lKx" id="dVi-4C-rCZ"/>
-                        <outlet property="harvestTableViewHeightConstraint" destination="DpE-um-EV5" id="2lh-In-4jv"/>
                         <outlet property="harvestTapGesture" destination="RIg-ho-rBu" id="CSp-ED-4bG"/>
                         <outlet property="harvestView" destination="Ygo-6L-lF7" id="hbM-Nd-a1S"/>
                         <outlet property="harvestViewHeightConstraint" destination="KT9-Ox-5zi" id="kP1-Ik-Xoo"/>
@@ -1456,7 +1453,10 @@
                         <outlet property="irrigationView" destination="dFL-Ez-GIj" id="ZYv-Z5-sbA"/>
                         <outlet property="irrigationVolumeTextField" destination="YLy-wG-9j5" id="xis-9I-5yy"/>
                         <outlet property="lightRain" destination="lr9-gj-MXe" id="kzO-5e-b5V"/>
+                        <outlet property="loadsAddButton" destination="G1D-nr-BV3" id="KC2-h1-3YU"/>
+                        <outlet property="loadsCountLabel" destination="bOv-z2-sDi" id="oIG-6x-yII"/>
                         <outlet property="loadsTableView" destination="MEy-aE-eC5" id="xXP-wJ-dbT"/>
+                        <outlet property="loadsTableViewHeightConstraint" destination="DpE-um-EV5" id="xic-tx-ama"/>
                         <outlet property="materialsAddButton" destination="Z8d-2d-zQQ" id="CPJ-7Q-9od"/>
                         <outlet property="materialsCountLabel" destination="ud1-SY-1fL" id="nAY-xC-szE"/>
                         <outlet property="materialsExpandImageView" destination="A3m-nu-nvW" id="Ogb-gb-NwQ"/>
