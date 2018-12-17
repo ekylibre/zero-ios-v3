@@ -917,6 +917,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     switch gestureRecognizer {
     case inputsTapGesture:
       return !selectedInputsTableView.bounds.contains(touch.location(in: selectedInputsTableView))
+    case harvestTapGesture:
+      return !loadsTableView.bounds.contains(touch.location(in: loadsTableView))
     case materialsTapGesture:
       return !selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView))
     case equipmentsTapGesture:

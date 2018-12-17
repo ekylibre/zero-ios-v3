@@ -22,6 +22,7 @@ extension AddInterventionViewController: LoadCellDelegate {
     harvestNatureButton.layer.borderColor = AppColor.CellColors.LightGray.cgColor
     harvestNatureButton.layer.borderWidth = 1
     harvestNatureButton.layer.cornerRadius = 5
+    harvestTapGesture.delegate = self
     initializeHarvestTableView()
     setupStorageCreationView()
   }
