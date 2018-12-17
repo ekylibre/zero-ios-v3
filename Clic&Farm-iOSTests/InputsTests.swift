@@ -220,13 +220,10 @@ class InputsTests: XCTestCase {
   }
 
   func test_selectedSegment_withImplantationType_shouldBeFirst() {
-    // Given
-    let interventionType = InterventionType.Implantation.rawValue
-
     // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first before changing intervnetionType")
-    addInterventionVC.interventionType = interventionType
+    addInterventionVC.interventionType = .Implantation
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -238,13 +235,10 @@ class InputsTests: XCTestCase {
   }
 
   func test_selectedSegment_withCropProtectionType_shouldBeSecond() {
-    // Given
-    let interventionType = InterventionType.CropProtection.rawValue
-
     // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first before changing intervnetionType")
-    addInterventionVC.interventionType = interventionType
+    addInterventionVC.interventionType = .CropProtection
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
@@ -256,13 +250,10 @@ class InputsTests: XCTestCase {
   }
 
   func test_selectedSegment_withFertilizationType_shouldBeThird() {
-    // Given
-    let interventionType = InterventionType.Fertilization.rawValue
-
     // When
     XCTAssertEqual(addInterventionVC.inputsSelectionView.segmentedControl.selectedSegmentIndex, 0,
                    "selectedSegment must be first before changing intervnetionType")
-    addInterventionVC.interventionType = interventionType
+    addInterventionVC.interventionType = .Fertilization
     addInterventionVC.setupViewsAccordingInterventionType()
 
     // Then
