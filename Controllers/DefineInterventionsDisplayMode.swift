@@ -133,7 +133,7 @@ extension AddInterventionViewController {
     }
     loadsAddButton.isHidden = (interventionState == InterventionState.Validated.rawValue)
     if selectedHarvests.count > 0 {
-      harvestNatureButton.setTitle(selectedHarvests.first?.type, for: .normal)
+      harvestNatureButton.setTitle(selectedHarvests.first?.type?.localized, for: .normal)
       tapHarvestView()
       tapHarvestView()
     }
