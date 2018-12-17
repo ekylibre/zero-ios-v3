@@ -82,7 +82,7 @@ extension AddInterventionViewController: LoadCellDelegate {
 
   // MARK: - Actions
 
-  @IBAction private func tapHarvestView() {
+  @IBAction func tapHarvestView() {
     let shouldExpand = (harvestViewHeightConstraint.constant == 70)
     let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 125 : selectedHarvests.count * 125
 
@@ -289,18 +289,6 @@ extension AddInterventionViewController: LoadCellDelegate {
       view.layoutIfNeeded()
     }
     loadsTableView.reloadData()
-  }
-
-  func refreshHarvestView() {
-    harvestNatureButton.isHidden = false
-    loadsTableView.isHidden = false
-    loadsTableView.reloadData()
-    if selectedHarvests.count < 4 {
-      harvestExpandImageView.isHidden = false
-      harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
-      loadsTableViewHeightConstraint.constant = loadsTableView.contentSize.height
-      harvestViewHeightConstraint.constant = loadsTableViewHeightConstraint.constant + 125
-    }
   }
 
   func loadTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> LoadCell {
