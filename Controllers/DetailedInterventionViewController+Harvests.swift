@@ -302,7 +302,7 @@ extension AddInterventionViewController: LoadCellDelegate {
       cell.numberTextField.placeholder = harvest.number
     } else if harvest.quantity == 0 {
       cell.quantityTextField.placeholder = "0"
-      cell.numberTextField.text = harvest.number
+      cell.quantityTextField.text = nil
     } else {
       cell.quantityTextField.text = String(harvest.quantity)
       cell.numberTextField.text = harvest.number
@@ -312,8 +312,6 @@ extension AddInterventionViewController: LoadCellDelegate {
     cell.indexPath = indexPath
     cell.unitButton.setTitle(unit?.localized, for: .normal)
     cell.storageButton.setTitle(harvest.storage?.name ?? "---", for: .normal)
-    cell.quantityTextField.text = String(harvest.quantity)
-    cell.numberTextField.text = harvest.number
     return cell
   }
 }
