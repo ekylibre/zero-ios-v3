@@ -130,7 +130,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   var interventionState: InterventionState.RawValue!
   var currentIntervention: Intervention!
-  var interventionType: InterventionType!
+  var interventionType: InterventionType?
   var dimView = UIView(frame: CGRect.zero)
   var cellIndexPath: IndexPath!
   var selectedRow: Int!
@@ -206,7 +206,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let typeLabel = UILabel()
 
     if interventionType != nil {
-      typeLabel.text = interventionType.rawValue.localized
+      typeLabel.text = interventionType?.rawValue.localized
     }
     typeLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
     typeLabel.textColor = .white
@@ -242,25 +242,25 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   func setupViewsAccordingInterventionType() {
-    switch interventionType! {
-    case .Care:
+    switch interventionType {
+    case .Care?:
       materialsView.isHidden = false
       materialsSeparatorView.isHidden = false
-    case .CropProtection:
+    case .CropProtection?:
       inputsSelectionView.segmentedControl.selectedSegmentIndex = 1
       inputsSelectionView.createButton.setTitle("create_new_phyto".localized.uppercased(), for: .normal)
-    case .Fertilization:
+    case .Fertilization?:
       inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
       inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
-    case .GroundWork:
+    case .GroundWork?:
       inputsView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case .Harvest:
+    case .Harvest?:
       harvestView.isHidden = false
       harvestSeparatorView.isHidden = false
       inputsView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case .Irrigation:
+    case .Irrigation?:
       irrigationView.isHidden = false
       irrigationSeparatorView.isHidden = false
       inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
@@ -356,7 +356,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let notes = (notesTextView.text != "notes".localized)
 
     currentIntervention = Intervention(context: managedContext)
-    currentIntervention.type = interventionType.rawValue
+    currentIntervention.type = interventionType?.rawValue
     currentIntervention.status = InterventionState.Created.rawValue
     notes ? currentIntervention.infos = notesTextView.text : nil
     changeWaterUnit()
