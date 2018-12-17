@@ -154,9 +154,9 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]??.withRenderingMode(.alwaysTemplate)
     cell.stateImageView.tintColor = (intervention.status > 0) ? AppColor.AppleColors.Green : AppColor.AppleColors.Orange
-    cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
-    cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
-    cell.notesLabel.text = intervention.infos
+    cell.dateLabel.text = cell.updateDateLabel(intervention.workingPeriods!)
+    cell.cropsLabel.text = cell.updateCropsLabel(intervention.targets!)
+    cell.infosLabel.text = cell.updateInfosLabel(intervention)
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.LightGray : AppColor.CellColors.White
     return cell
   }
@@ -169,41 +169,5 @@ class CropDetailedView: UIView, UITableViewDataSource, UITableViewDelegate {
     tableView.deselectRow(at: indexPath, animated: true)
     toUpdateIntervention = interventions[indexPath.row]
     interventionsByCropVC.performSegue(withIdentifier: "updateInterventionByCrop", sender: self)
-  }
-
-  private func updateDateLabel(_ workingPeriods: NSSet) -> String {
-    let date = (workingPeriods.allObjects as! [WorkingPeriod]).first!.executionDate!
-    let calendar = Calendar.current
-    let dateFormatter: DateFormatter = {
-      let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "locale".localized)
-      dateFormatter.dateFormat = "d MMM"
-      return dateFormatter
-    }()
-    var dateString = dateFormatter.string(from: date)
-    let year = calendar.component(.year, from: date)
-
-    if calendar.isDateInToday(date) {
-      return "today".localized.lowercased()
-    } else if calendar.isDateInYesterday(date) {
-      return "yesterday".localized.lowercased()
-    } else {
-      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
-        dateString.append(" \(year)")
-      }
-      return dateString
-    }
-  }
-
-  private func updateCropsLabel(_ targets: NSSet) -> String {
-    let cropString = (targets.count < 2) ? "crop".localized : String(format: "crops".localized, targets.count)
-    var totalSurfaceArea: Float = 0
-
-    for case let target as Target in targets {
-      let crop = target.crop!
-
-      totalSurfaceArea += crop.surfaceArea
-    }
-    return cropString + String(format: " • %.1f ha", totalSurfaceArea)
   }
 }

@@ -337,7 +337,7 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
     let destVC = segue.destination as? AddInterventionViewController
     destVC?.currentIntervention = cropDetailedView.toUpdateIntervention
     destVC?.interventionState = cropDetailedView.toUpdateIntervention?.status
-    destVC?.interventionType = cropDetailedView.toUpdateIntervention?.type
+    destVC?.interventionType = InterventionType(rawValue: cropDetailedView.toUpdateIntervention!.type!)
   }
 
   // MARK: - Actions

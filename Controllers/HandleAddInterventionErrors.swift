@@ -172,16 +172,16 @@ extension AddInterventionViewController {
     if !cropErrorHandler() || !checkIfSelectedDateMatchProductionPeriod(selectedDate: selectDateView.datePicker.date) {
       return false
     }
-    switch interventionType {
-    case InterventionType.CropProtection.rawValue:
+    switch interventionType! {
+    case .CropProtection:
       return cropProtectionErrorHandler()
-    case InterventionType.Fertilization.rawValue:
+    case .Fertilization:
       return fertilizationErrorHandler()
-    case InterventionType.Harvest.rawValue:
+    case .Harvest:
       return harvestErrorHandler()
-    case InterventionType.Implantation.rawValue:
+    case .Implantation:
       return implantationErrorHandler()
-    case InterventionType.Irrigation.rawValue:
+    case .Irrigation:
       return irrigationErrorHandler()
     default:
       return true

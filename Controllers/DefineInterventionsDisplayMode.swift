@@ -54,7 +54,7 @@ extension AddInterventionViewController {
   }
 
   private func loadIrrigation() {
-    if interventionType == InterventionType.Irrigation.rawValue {
+    if interventionType == .Irrigation {
       let waterQuantity = currentIntervention?.waterQuantity
 
       irrigationVolumeTextField.text = (waterQuantity as NSNumber?)?.stringValue
@@ -189,7 +189,7 @@ extension AddInterventionViewController {
     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     interventionLogo.image = UIImage(named: "read-only")
     cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
-    interventionType = currentIntervention?.type
+    interventionType = InterventionType(rawValue: currentIntervention.type!)
     loadWorkingPeriod()
     loadInputs()
     loadMaterials()
@@ -208,7 +208,7 @@ extension AddInterventionViewController {
   private func loadInterventionInEditableMode() {
     notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
     notesTextView.textColor = (notesTextView.text == "notes".localized ? .lightGray : .black)
-    interventionType = currentIntervention?.type
+    interventionType = InterventionType(rawValue: currentIntervention.type!)
     loadWorkingPeriod()
     weather.temperature = currentIntervention.weather?.temperature
     weather.windSpeed = currentIntervention.weather?.windSpeed

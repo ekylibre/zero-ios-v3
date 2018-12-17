@@ -130,7 +130,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   var interventionState: InterventionState.RawValue!
   var currentIntervention: Intervention!
-  var interventionType: String!
+  var interventionType: InterventionType?
   var dimView = UIView(frame: CGRect.zero)
   var selectedRow: Int!
   var selectedValue: String!
@@ -207,7 +207,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let typeLabel = UILabel()
 
     if interventionType != nil {
-      typeLabel.text = interventionType.localized
+      typeLabel.text = interventionType?.rawValue.localized
     }
     typeLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
     typeLabel.textColor = .white
@@ -244,24 +244,24 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   func setupViewsAccordingInterventionType() {
     switch interventionType {
-    case InterventionType.Care.rawValue:
+    case .Care?:
       materialsView.isHidden = false
       materialsSeparatorView.isHidden = false
-    case InterventionType.CropProtection.rawValue:
+    case .CropProtection?:
       inputsSelectionView.segmentedControl.selectedSegmentIndex = 1
       inputsSelectionView.createButton.setTitle("create_new_phyto".localized.uppercased(), for: .normal)
-    case InterventionType.Fertilization.rawValue:
+    case .Fertilization?:
       inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
       inputsSelectionView.createButton.setTitle("create_new_ferti".localized.uppercased(), for: .normal)
-    case InterventionType.GroundWork.rawValue:
+    case .GroundWork?:
       inputsView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case InterventionType.Harvest.rawValue:
+    case .Harvest?:
       harvestView.isHidden = false
       harvestSeparatorView.isHidden = false
       inputsView.isHidden = true
       inputsSeparatorView.isHidden = true
-    case InterventionType.Irrigation.rawValue:
+    case .Irrigation?:
       irrigationView.isHidden = false
       irrigationSeparatorView.isHidden = false
       inputsSelectionView.segmentedControl.selectedSegmentIndex = 2
@@ -350,17 +350,14 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     if !checkErrorsAccordingInterventionType() {
       return
     }
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return
-    }
-
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     let managedContext = appDelegate.persistentContainer.viewContext
     let workingPeriod = WorkingPeriod(context: managedContext)
     let duration = workingPeriodDurationTextField.text!.floatValue
     let notes = (notesTextView.text != "notes".localized)
 
     currentIntervention = Intervention(context: managedContext)
-    currentIntervention.type = interventionType
+    currentIntervention.type = interventionType?.rawValue
     currentIntervention.status = InterventionState.Created.rawValue
     notes ? currentIntervention.infos = notesTextView.text : nil
     changeWaterUnit()
@@ -408,7 +405,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   private func changeWaterUnit() {
-    if interventionType == "IRRIGATION" {
+    if interventionType == .Irrigation {
       let waterVolume = irrigationVolumeTextField.text!.floatValue
 
       currentIntervention?.waterQuantity = waterVolume
@@ -943,8 +940,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   }
 
   private func checkCropsProduction() -> Bool {
-    if interventionType == InterventionType.Harvest.rawValue ||
-      interventionType == InterventionType.Implantation.rawValue {
+    if interventionType == .Harvest || interventionType == .Implantation {
       let selectedCrops = cropsView.selectedCrops
       let firstCrop = selectedCrops.first?.species
 

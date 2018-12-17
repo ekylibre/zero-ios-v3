@@ -295,89 +295,15 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
     cell.typeLabel.text = intervention.type?.localized
     cell.stateImageView.image = stateImages[intervention.status]??.withRenderingMode(.alwaysTemplate)
     cell.stateImageView.tintColor = (intervention.status > 0) ? AppColor.AppleColors.Green : AppColor.AppleColors.Orange
-    cell.dateLabel.text = updateDateLabel(intervention.workingPeriods!)
-    cell.cropsLabel.text = updateCropsLabel(intervention.targets!)
-    cell.notesLabel.text = intervention.infos
+    cell.dateLabel.text = cell.updateDateLabel(intervention.workingPeriods!)
+    cell.cropsLabel.text = cell.updateCropsLabel(intervention.targets!)
+    cell.infosLabel.text = cell.updateInfosLabel(intervention)
     cell.backgroundColor = (indexPath.row % 2 == 0) ? AppColor.CellColors.White : AppColor.CellColors.LightGray
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     performSegue(withIdentifier: "updateIntervention", sender: self)
-  }
-
-  func fetchTargets(_ intervention: Intervention) -> [Target]? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let targetsFetchRequest: NSFetchRequest<Target> = Target.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-    targetsFetchRequest.predicate = predicate
-
-    do {
-      let targets = try managedContext.fetch(targetsFetchRequest)
-      return targets
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  func fetchWorkingPeriod(_ intervention: Intervention) -> WorkingPeriod? {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-      return nil
-    }
-
-    let managedContext = appDelegate.persistentContainer.viewContext
-    let workingPeriodsFetchRequest: NSFetchRequest<WorkingPeriod> = WorkingPeriod.fetchRequest()
-    let predicate = NSPredicate(format: "intervention == %@", intervention)
-    workingPeriodsFetchRequest.predicate = predicate
-
-    do {
-      let workingPeriods = try managedContext.fetch(workingPeriodsFetchRequest)
-      return workingPeriods.first
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
-  private func updateCropsLabel(_ targets: NSSet) -> String {
-    let cropString = (targets.count < 2) ? "crop".localized : "crops".localized
-    var totalSurfaceArea: Float = 0
-
-    for case let target as Target in targets {
-      let crop = target.crop!
-
-      totalSurfaceArea += crop.surfaceArea
-    }
-    return String(format: cropString, targets.count) + String(format: " • %.1f ha", totalSurfaceArea)
-  }
-
-  private func updateDateLabel(_ workingPeriods: NSSet) -> String {
-    let date = (workingPeriods.allObjects as! [WorkingPeriod]).first!.executionDate!
-    let calendar = Calendar.current
-    let dateFormatter: DateFormatter = {
-      let dateFormatter = DateFormatter()
-      dateFormatter.locale = Locale(identifier: "locale".localized)
-      dateFormatter.dateFormat = "d MMM"
-      return dateFormatter
-    }()
-    var dateString = dateFormatter.string(from: date)
-    let year = calendar.component(.year, from: date)
-
-    if calendar.isDateInToday(date) {
-      return "today".localized.lowercased()
-    } else if calendar.isDateInYesterday(date) {
-      return "yesterday".localized.lowercased()
-    } else {
-      if !calendar.isDate(Date(), equalTo: date, toGranularity: .year) {
-        dateString.append(" \(year)")
-      }
-      return dateString
-    }
   }
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -396,7 +322,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       let destVC = segue.destination as! AddInterventionViewController
       let type = interventionTypes[((sender as? UIButton)?.tag)!]
 
-      destVC.interventionType = type
+      destVC.interventionType = InterventionType(rawValue: type)
       destVC.interventionState = nil
       destVC.currentIntervention = nil
     case "updateIntervention":
@@ -406,7 +332,7 @@ class InterventionViewController: UIViewController, UITableViewDelegate, UITable
       if indexPath != nil {
         let intervention = interventions[(indexPath?.row)!]
 
-        destVC.interventionType = intervention.type
+        destVC.interventionType = InterventionType(rawValue: intervention.type!)
         destVC.currentIntervention = intervention
         destVC.interventionState = intervention.status
         tableView.deselectRow(at: indexPath!, animated: true)
