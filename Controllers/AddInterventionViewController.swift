@@ -63,9 +63,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var harvestAddButton: UIButton!
   @IBOutlet weak var harvestCountLabel: UILabel!
   @IBOutlet weak var harvestExpandImageView: UIImageView!
-  @IBOutlet weak var harvestNature: UILabel!
-  @IBOutlet weak var harvestType: UIButton!
-  @IBOutlet weak var harvestTableView: UITableView!
+  @IBOutlet weak var harvestNatureButton: UIButton!
+  @IBOutlet weak var loadsTableView: UITableView!
   @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var harvestSeparatorView: UIView!
 
@@ -294,7 +293,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       return selectedEquipments.count
     case selectedPersonsTableView:
       return selectedPersons[0].count
-    case harvestTableView:
+    case loadsTableView:
       return selectedHarvests.count
     default:
       return 1
@@ -311,7 +310,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       return selectedEquipmentsTableViewCellForRowAt(tableView, indexPath)
     case selectedPersonsTableView:
       return selectedPersonsTableViewCellForRowAt(tableView, indexPath)
-    case harvestTableView:
+    case loadsTableView:
       return harvestTableViewCellForRowAt(tableView, indexPath)
     default:
       fatalError("Unknown tableView: \(tableView)")
@@ -320,7 +319,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   func defineTableViewsHeightForRow(_ tableView: UITableView) -> CGFloat {
     switch tableView {
-    case harvestTableView:
+    case loadsTableView:
       return 150
     case selectedInputsTableView:
       return 110
@@ -522,7 +521,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       }
       for harvestEntity in selectedHarvests {
         let harvest = Harvest(context: managedContext)
-        let type = harvestType.titleLabel?.text
+        let type = harvestNatureButton.titleLabel?.text
 
         harvest.intervention = intervention
         harvest.type = type
