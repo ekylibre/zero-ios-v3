@@ -518,10 +518,9 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       }
       for harvestEntity in selectedHarvests {
         let harvest = Harvest(context: managedContext)
-        let type = harvestNatureButton.titleLabel?.text
 
         harvest.intervention = intervention
-        harvest.type = type
+        harvest.type = harvestSelectedType
         harvest.number = harvestEntity.number
         harvest.quantity = harvestEntity.quantity
         harvest.unit = harvestEntity.unit

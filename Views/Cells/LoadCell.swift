@@ -113,6 +113,7 @@ class LoadCell: UITableViewCell, UITextFieldDelegate {
     let numberTextField = UITextField(frame: CGRect.zero)
     numberTextField.keyboardType = .decimalPad
     numberTextField.textAlignment = .center
+    numberTextField.placeholder = "provided_by_collector".localized
     numberTextField.backgroundColor = AppColor.ThemeColors.White
     numberTextField.layer.borderWidth = 0.5
     numberTextField.layer.borderColor = UIColor.lightGray.cgColor

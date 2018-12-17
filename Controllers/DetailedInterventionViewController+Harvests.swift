@@ -17,7 +17,7 @@ extension AddInterventionViewController: LoadCellDelegate {
     let fetchedStorages = fetchStorages(predicate: nil)
 
     fetchedStorages != nil ? storages = fetchedStorages! : nil
-    harvestSelectedType = "STRAW"
+    harvestSelectedType = "GRAIN"
     harvestNatureButton.setTitle(harvestNatureButton.titleLabel?.text!.localized, for: .normal)
     harvestNatureButton.layer.borderWidth = 0.5
     harvestNatureButton.layer.borderColor = UIColor.lightGray.cgColor
