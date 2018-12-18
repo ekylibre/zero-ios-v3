@@ -296,13 +296,10 @@ extension AddInterventionViewController: LoadCellDelegate {
     let unit = harvest.unit
 
     if interventionState == InterventionState.Validated.rawValue {
-      cell.quantityTextField.placeholder = String(harvest.quantity)
+      cell.quantityTextField.placeholder = String(format: "%g", harvest.quantity)
       cell.numberTextField.placeholder = harvest.number
-    } else if harvest.quantity == 0 {
-      cell.quantityTextField.placeholder = "0"
-      cell.quantityTextField.text = nil
     } else {
-      cell.quantityTextField.text = String(harvest.quantity)
+      cell.quantityTextField.text = harvest.quantity != 0 ? String(format: "%g", harvest.quantity) : nil
       cell.numberTextField.text = harvest.number
     }
     cell.addInterventionController = self
