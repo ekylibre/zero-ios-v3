@@ -195,6 +195,7 @@ extension AddInterventionViewController: LoadCellDelegate {
           storagesNames.append(storage.name!)
         }
       }
+      storagesNames.append("---")
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
