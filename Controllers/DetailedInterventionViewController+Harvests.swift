@@ -101,7 +101,7 @@ extension AddInterventionViewController: LoadCellDelegate {
     loadsCountLabel.isHidden = shouldExpand
     harvestExpandImageView.isHidden = (selectedHarvests.count == 0)
     harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
-    harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 125) : 70
+    harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 130) : 70
     loadsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
   }
 
@@ -264,7 +264,7 @@ extension AddInterventionViewController: LoadCellDelegate {
         self.harvestViewHeightConstraint.constant = 70
       } else if self.selectedHarvests.count < 10 {
         self.loadsTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
-        self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 125
+        self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 130
         self.view.layoutIfNeeded()
       }
     }))
@@ -283,7 +283,7 @@ extension AddInterventionViewController: LoadCellDelegate {
       loadsAddButton.isHidden = false
       loadsCountLabel.isHidden = true
       harvestExpandImageView.isHidden = false
-      harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 125)
+      harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 130)
       loadsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
       view.layoutIfNeeded()
     }
