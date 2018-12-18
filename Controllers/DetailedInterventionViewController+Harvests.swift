@@ -73,7 +73,7 @@ extension AddInterventionViewController: LoadCellDelegate {
       storageCreationView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
       storageCreationView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
       storageCreationView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30),
-      storageCreationView.heightAnchor.constraint(equalToConstant: 300)
+      storageCreationView.heightAnchor.constraint(equalToConstant: 250)
       ])
     storageCreationView.selectedType = "BUILDING"
     storageCreationView.createButton.addTarget(self, action: #selector(createNewStorage), for: .touchUpInside)
