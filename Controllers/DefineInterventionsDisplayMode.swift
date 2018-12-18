@@ -179,8 +179,9 @@ extension AddInterventionViewController {
   private func loadInterventionInReadOnlyMode() {
     dimView.isHidden = true
     cropsView.isHidden = true
-    warningView.isHidden = false
     warningMessage.text = "you_are_in_consult_mode".localized
+    warningView.isHidden = false
+    warningSeparatorView.isHidden = false
     notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
     notesTextView.textColor = .lightGray
     bottomBarView.isHidden = true

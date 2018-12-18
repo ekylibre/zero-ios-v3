@@ -22,6 +22,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var interventionLogo: UIImageView!
   @IBOutlet weak var warningView: UIView!
   @IBOutlet weak var warningMessage: UILabel!
+  @IBOutlet weak var warningSeparatorView: UIView!
 
   // Working period
   @IBOutlet var workingPeriodTapGesture: UITapGestureRecognizer!
