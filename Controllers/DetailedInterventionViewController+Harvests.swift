@@ -256,18 +256,14 @@ extension AddInterventionViewController: LoadCellDelegate {
       self.selectedHarvests.remove(at: indexPath.row)
       self.loadsTableView.reloadData()
       if self.selectedHarvests.count == 0 {
-        if self.selectedHarvests.count == 0 {
-          self.harvestExpandImageView.isHidden = true
-          self.loadsTableView.isHidden = true
-          self.harvestNatureButton.isHidden = true
-          self.harvestViewHeightConstraint.constant = 70
-        } else if self.selectedHarvests.count < 4 {
-          UIView.animate(withDuration: 0.5, animations: {
-            self.loadsTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
-            self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 125
-            self.view.layoutIfNeeded()
-          })
-        }
+        self.harvestExpandImageView.isHidden = true
+        self.loadsTableView.isHidden = true
+        self.harvestNatureButton.isHidden = true
+        self.harvestViewHeightConstraint.constant = 70
+      } else if self.selectedHarvests.count < 4 {
+        self.loadsTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
+        self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 125
+        self.view.layoutIfNeeded()
       }
     }))
     present(alert, animated: true)
