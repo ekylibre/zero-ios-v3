@@ -260,7 +260,7 @@ extension AddInterventionViewController: LoadCellDelegate {
         self.loadsTableView.isHidden = true
         self.harvestNatureButton.isHidden = true
         self.harvestViewHeightConstraint.constant = 70
-      } else if self.selectedHarvests.count < 4 {
+      } else if self.selectedHarvests.count < 10 {
         self.loadsTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
         self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 125
         self.view.layoutIfNeeded()
