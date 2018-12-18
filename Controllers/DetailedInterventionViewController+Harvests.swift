@@ -131,9 +131,10 @@ extension AddInterventionViewController: LoadCellDelegate {
 
   @objc private func cancelStorageCreation() {
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
-    storageCreationView.nameTextField.text = ""
+    storageCreationView.nameTextField.text = nil
     dimView.isHidden = true
     storageCreationView.isHidden = true
+    storageCreationView.errorLabel.isHidden = true
   }
 
   @objc private func createNewStorage() {
