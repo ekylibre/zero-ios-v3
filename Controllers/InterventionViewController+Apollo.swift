@@ -74,6 +74,7 @@ extension InterventionViewController {
         self.saveFarmID()
         self.checkCropsData(crops: farms.first!.crops)
         self.checkArticlesData(articles: farms.first!.articles)
+        self.updateEditedEquipments()
         self.loadEquipments()
         self.loadStorage()
         self.loadPersons { (success) -> Void in
@@ -511,6 +512,41 @@ extension InterventionViewController {
 
   private func getLastSyncDate() -> Date? {
     return UserDefaults.standard.value(forKey: "lastSyncDate") as? Date
+  }
+
+  private func updateEditedEquipments() {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    let context = appDelegate.persistentContainer.viewContext
+    let request: NSFetchRequest<Equipment> = Equipment.fetchRequest()
+    let predicate = NSPredicate(format: "edited == %@", NSNumber(value: true))
+
+    request.predicate = predicate
+
+    do {
+      let equipments = try context.fetch(request)
+
+      for equipment in equipments {
+        updateEquipment(equipment)
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
+  private func updateEquipment(_ equipment: Equipment) {
+    guard let type = EquipmentTypeEnum(rawValue: equipment.type!) else { return }
+    let mutation = UpdateEquipmentMutation(id: String(equipment.ekyID), farmId: farmID, type: type,
+                                           name: equipment.name!, number: equipment.number,
+                                           indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
+
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (error, result) in
+      if let error = error?.errors {
+        print("Error: \(String(describing: error))")
+      } else {
+        equipment.edited = false
+      }
+    })
   }
 
   // MARK: - Queries: Equipments
