@@ -549,6 +549,35 @@ extension InterventionViewController {
     })
   }
 
+  // MARK: - Delete
+
+  func deleteEquipment(_ equipment: Equipment, viewController: UIViewController) {
+    guard let addInterventionVC = viewController as? AddInterventionViewController else { fatalError() }
+    let mutation: DeleteEquipmentMutation
+
+    saveFarmID()
+    initializeApolloClient()
+    mutation = DeleteEquipmentMutation(id: String(equipment.ekyID), farmId: farmID)
+
+    _ = apolloClient.clearCache()
+    apolloClient.perform(mutation: mutation, resultHandler: { (error, message) in
+      if let error = error?.errors {
+        print("Error: \(String(describing: error))")
+        self.presentErrorAlert(message: "equipment_cannot_be_deleted".localized, viewController: viewController)
+      } else {
+        addInterventionVC.equipmentsSelectionView.editionView.deleteEquipmentLocally()
+      }
+    })
+  }
+
+  private func presentErrorAlert(message: String, viewController: UIViewController) {
+    let alert = UIAlertController(title: "an_error_occured".localized, message: message, preferredStyle: .alert)
+    let cancelAction = UIAlertAction(title: "ok".localized.uppercased(), style: .cancel, handler: nil)
+
+    alert.addAction(cancelAction)
+    viewController.present(alert, animated: true)
+  }
+
   // MARK: - Queries: Equipments
 
   private func checkIfNewEntity(entityName: String, predicate: NSPredicate) -> Bool {

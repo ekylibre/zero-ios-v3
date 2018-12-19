@@ -360,12 +360,20 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
-      self.deleteEquipment()
+      let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+      guard let interventionVC = storyboard.instantiateViewController(withIdentifier: "InterventionViewController")
+        as? InterventionViewController else { fatalError() }
+
+      if self.equipment.ekyID != 0 {
+        interventionVC.deleteEquipment(self.equipment, viewController: viewController)
+      } else {
+        self.deleteEquipmentLocally()
+      }
     }))
     viewController.present(alert, animated: true)
   }
 
-  private func deleteEquipment() {
+  func deleteEquipmentLocally() {
     guard let equipmentsView = superview as? EquipmentsView else { return }
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     let context = appDelegate.persistentContainer.viewContext

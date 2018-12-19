@@ -447,6 +447,8 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "implantation_on_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
+"an_error_occured" = "Une erreur est survenue";
+"equipment_cannot_be_deleted" = "Vous ne pouvez pas supprimer un équipement selectionné dans des interventions";
 "unable_load_terms" = "Impossible de charger les conditions d'utilisation";
 "try_again_later" = "Veuillez réessayer plus tard.";
 

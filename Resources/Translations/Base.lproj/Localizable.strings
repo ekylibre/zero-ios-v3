@@ -447,6 +447,8 @@
 "you_must_create_a_harvest_load" = "You must add a load to create a crop!";
 "confirm_deleting_intervention" = "Are you sure you want to delete the intervention?";
 "implantation_on_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
+"an_error_occured" = "An error occured";
+"equipment_cannot_be_deleted" = "Equipment selected in interventions can not be deleted";
 "unable_load_terms" = "Unable to load terms of use";
 "try_again_later" = "Please try again later.";
 
