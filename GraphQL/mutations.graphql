@@ -107,6 +107,7 @@ mutation pushEquipment(
 }
 
 mutation updateEquipment(
+  $id: ID!,
   $farmId: ID!,
   $type: EquipmentTypeEnum!,
   $name: String!,
@@ -117,6 +118,7 @@ mutation updateEquipment(
   updateEquipment(
     input: {
       equipment: {
+        id: $id
         farmID: $farmId
         type: $type
         name: $name
