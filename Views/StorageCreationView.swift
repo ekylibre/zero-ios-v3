@@ -39,6 +39,7 @@ class StorageCreationView: UIView, UITextFieldDelegate {
     errorLabel.isHidden = true
     errorLabel.font = UIFont.systemFont(ofSize: 13)
     errorLabel.textColor = AppColor.AppleColors.Red
+    errorLabel.numberOfLines = 0
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()
@@ -116,9 +117,9 @@ class StorageCreationView: UIView, UITextFieldDelegate {
       errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
       errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      typeLabel.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 15),
+      typeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 40),
       typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-      typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 10),
+      typeButton.topAnchor.constraint(equalTo: typeLabel.bottomAnchor),
       typeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       createButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),

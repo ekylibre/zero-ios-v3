@@ -60,7 +60,6 @@
 		6B1BB45D21B9883100E96A16 /* CropCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B923FFC218861EC00FDFCFC /* CropCell.swift */; };
 		6B1BB45E21B9883100E96A16 /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B75217DB8DE000A5D2F /* EquipmentCell.swift */; };
 		6B1BB45F21B9883100E96A16 /* FertilizerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B74217DB8DE000A5D2F /* FertilizerCell.swift */; };
-		6B1BB46021B9883100E96A16 /* HarvestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B6A217DB8DE000A5D2F /* HarvestCell.swift */; };
 		6B1BB46121B9883100E96A16 /* InterventionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B73217DB8DE000A5D2F /* InterventionCell.swift */; };
 		6B1BB46221B9883100E96A16 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B70217DB8DE000A5D2F /* ListCell.swift */; };
 		6B1BB46321B9883100E96A16 /* MaterialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04998B71217DB8DE000A5D2F /* MaterialCell.swift */; };
@@ -107,6 +106,7 @@
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
 		6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */; };
+		6B7A2BDF21C7BFAA007A928D /* LoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */; };
 		6B7D67DA21C269FE001315F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */; };
 		6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
 		6B7D67DC21C269FE001315F7 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998B67217DB8DE000A5D2F /* Main.strings */; };
@@ -208,7 +208,6 @@
 		04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04998B66217DB8DE000A5D2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04998B68217DB8DE000A5D2F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
-		04998B6A217DB8DE000A5D2F /* HarvestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestCell.swift; sourceTree = "<group>"; };
 		04998B6B217DB8DE000A5D2F /* PhytoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhytoCell.swift; sourceTree = "<group>"; };
 		04998B6C217DB8DE000A5D2F /* PersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
 		04998B6D217DB8DE000A5D2F /* SelectedPersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPersonCell.swift; sourceTree = "<group>"; };
@@ -249,6 +248,7 @@
 		6B77AD3C219B046E00839053 /* IrrigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrrigationTests.swift; sourceTree = "<group>"; };
 		6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ParentViewController.swift"; sourceTree = "<group>"; };
 		6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentEditionView.swift; sourceTree = "<group>"; };
+		6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCell.swift; sourceTree = "<group>"; };
 		6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
 		6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropDetailedView.swift; sourceTree = "<group>"; };
@@ -449,9 +449,9 @@
 				6B923FFC218861EC00FDFCFC /* CropCell.swift */,
 				04998B75217DB8DE000A5D2F /* EquipmentCell.swift */,
 				04998B74217DB8DE000A5D2F /* FertilizerCell.swift */,
-				04998B6A217DB8DE000A5D2F /* HarvestCell.swift */,
 				04998B73217DB8DE000A5D2F /* InterventionCell.swift */,
 				04998B70217DB8DE000A5D2F /* ListCell.swift */,
+				6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */,
 				04998B71217DB8DE000A5D2F /* MaterialCell.swift */,
 				04998B6C217DB8DE000A5D2F /* PersonCell.swift */,
 				04998B6B217DB8DE000A5D2F /* PhytoCell.swift */,
@@ -735,6 +735,7 @@
 				6B1BB44321B9883100E96A16 /* DetailedInterventionViewController+Irrigation.swift in Sources */,
 				6B1BB44421B9883100E96A16 /* DetailedInterventionViewController+Materials.swift in Sources */,
 				6B1BB44521B9883100E96A16 /* DetailedInterventionViewController+Persons.swift in Sources */,
+				6B7A2BDF21C7BFAA007A928D /* LoadCell.swift in Sources */,
 				6B1BB44621B9883100E96A16 /* DetailedInterventionViewController+Weather.swift in Sources */,
 				6B1BB44721B9883100E96A16 /* DetailedInterventionViewController+WorkingPeriod.swift in Sources */,
 				6B1BB44821B9883100E96A16 /* HandleAddInterventionErrors.swift in Sources */,
@@ -762,7 +763,6 @@
 				6B1BB45D21B9883100E96A16 /* CropCell.swift in Sources */,
 				6B1BB45E21B9883100E96A16 /* EquipmentCell.swift in Sources */,
 				6B1BB45F21B9883100E96A16 /* FertilizerCell.swift in Sources */,
-				6B1BB46021B9883100E96A16 /* HarvestCell.swift in Sources */,
 				6B1BB46121B9883100E96A16 /* InterventionCell.swift in Sources */,
 				6B1BB46221B9883100E96A16 /* ListCell.swift in Sources */,
 				6B1BB46321B9883100E96A16 /* MaterialCell.swift in Sources */,

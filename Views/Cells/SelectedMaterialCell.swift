@@ -12,8 +12,6 @@ class SelectedMaterialCell: UITableViewCell, UITextFieldDelegate {
 
   // MARK: - Properties
 
-  var indexPath: IndexPath!
-
   lazy var materialImageView: UIImageView = {
     let materialImageView = UIImageView(frame: CGRect.zero)
     materialImageView.image = UIImage(named: "material")

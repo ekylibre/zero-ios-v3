@@ -13,8 +13,8 @@ extension AddInterventionViewController {
 
   private func disableUserInteraction() {
     if interventionState == InterventionState.Validated.rawValue {
-      harvestTableView.isUserInteractionEnabled = false
-      harvestType.isUserInteractionEnabled = false
+      loadsTableView.isUserInteractionEnabled = false
+      harvestNatureButton.isUserInteractionEnabled = false
       cropsView.tableView.isUserInteractionEnabled = false
       workingPeriodTapGesture.isEnabled = false
       selectedInputsTableView.isUserInteractionEnabled = false
@@ -131,10 +131,11 @@ extension AddInterventionViewController {
         createHarvest(storage, type, number, unit, quantity)
       }
     }
-    harvestAddButton.isHidden = (interventionState == InterventionState.Validated.rawValue)
+    loadsAddButton.isHidden = (interventionState == InterventionState.Validated.rawValue)
     if selectedHarvests.count > 0 {
-      harvestType.setTitle(selectedHarvests.first?.type, for: .normal)
-      refreshHarvestView()
+      harvestNatureButton.setTitle(selectedHarvests.first?.type?.localized, for: .normal)
+      tapHarvestView()
+      tapHarvestView()
     }
   }
 

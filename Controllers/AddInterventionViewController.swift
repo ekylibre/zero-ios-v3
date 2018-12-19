@@ -60,13 +60,12 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet var harvestTapGesture: UITapGestureRecognizer!
   @IBOutlet weak var harvestView: UIView!
   @IBOutlet weak var harvestViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var harvestAddButton: UIButton!
-  @IBOutlet weak var harvestCountLabel: UILabel!
+  @IBOutlet weak var loadsAddButton: UIButton!
+  @IBOutlet weak var loadsCountLabel: UILabel!
   @IBOutlet weak var harvestExpandImageView: UIImageView!
-  @IBOutlet weak var harvestNature: UILabel!
-  @IBOutlet weak var harvestType: UIButton!
-  @IBOutlet weak var harvestTableView: UITableView!
-  @IBOutlet weak var harvestTableViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var harvestNatureButton: UIButton!
+  @IBOutlet weak var loadsTableView: UITableView!
+  @IBOutlet weak var loadsTableViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var harvestSeparatorView: UIView!
 
   // Materials
@@ -294,7 +293,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       return selectedEquipments.count
     case selectedPersonsTableView:
       return selectedPersons[0].count
-    case harvestTableView:
+    case loadsTableView:
       return selectedHarvests.count
     default:
       return 1
@@ -311,8 +310,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       return selectedEquipmentsTableViewCellForRowAt(tableView, indexPath)
     case selectedPersonsTableView:
       return selectedPersonsTableViewCellForRowAt(tableView, indexPath)
-    case harvestTableView:
-      return harvestTableViewCellForRowAt(tableView, indexPath)
+    case loadsTableView:
+      return loadTableViewCellForRowAt(tableView, indexPath)
     default:
       fatalError("Unknown tableView: \(tableView)")
     }
@@ -320,8 +319,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
   func defineTableViewsHeightForRow(_ tableView: UITableView) -> CGFloat {
     switch tableView {
-    case harvestTableView:
-      return 150
+    case loadsTableView:
+      return 125
     case selectedInputsTableView:
       return 110
     case selectedMaterialsTableView:
@@ -519,10 +518,9 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
       }
       for harvestEntity in selectedHarvests {
         let harvest = Harvest(context: managedContext)
-        let type = harvestType.titleLabel?.text
 
         harvest.intervention = intervention
-        harvest.type = type
+        harvest.type = harvestSelectedType
         harvest.number = harvestEntity.number
         harvest.quantity = harvestEntity.quantity
         harvest.unit = harvestEntity.unit
@@ -932,6 +930,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     switch gestureRecognizer {
     case inputsTapGesture:
       return !selectedInputsTableView.bounds.contains(touch.location(in: selectedInputsTableView))
+    case harvestTapGesture:
+      return !loadsTableView.bounds.contains(touch.location(in: loadsTableView))
     case materialsTapGesture:
       return !selectedMaterialsTableView.bounds.contains(touch.location(in: selectedMaterialsTableView))
     case equipmentsTapGesture:

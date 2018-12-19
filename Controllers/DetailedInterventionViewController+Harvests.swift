@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-extension AddInterventionViewController: HarvestCellDelegate {
+extension AddInterventionViewController: LoadCellDelegate {
 
   // MARK: - Initialization
 
@@ -17,11 +17,12 @@ extension AddInterventionViewController: HarvestCellDelegate {
     let fetchedStorages = fetchStorages(predicate: nil)
 
     fetchedStorages != nil ? storages = fetchedStorages! : nil
-    harvestSelectedType = "STRAW"
-    harvestType.setTitle(harvestType.titleLabel?.text!.localized, for: .normal)
-    harvestType.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    harvestType.layer.borderWidth = 1
-    harvestType.layer.cornerRadius = 5
+    harvestSelectedType = "GRAIN"
+    harvestNatureButton.setTitle(harvestNatureButton.titleLabel?.text!.localized, for: .normal)
+    harvestNatureButton.layer.borderWidth = 0.5
+    harvestNatureButton.layer.borderColor = UIColor.lightGray.cgColor
+    harvestNatureButton.layer.cornerRadius = 5
+    harvestTapGesture.delegate = self
     initializeHarvestTableView()
     setupStorageCreationView()
   }
@@ -31,7 +32,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
     customPickerView.pickerView.reloadComponent(0)
     customPickerView.closure = { (_ value: String) in
       self.selectedHarvests[self.cellIndexPath.row].unit = value
-      self.harvestTableView.reloadData()
+      self.loadsTableView.reloadData()
     }
     customPickerView.isHidden = false
     cellIndexPath = indexPath
@@ -46,7 +47,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
         let searchedStorage = self.fetchStorages(predicate: predicate)
 
         self.selectedHarvests[self.cellIndexPath.row].storage = searchedStorage?.first
-        self.harvestTableView.reloadData()
+        self.loadsTableView.reloadData()
       }
       customPickerView.isHidden = false
       cellIndexPath = indexPath
@@ -54,11 +55,13 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   private func initializeHarvestTableView() {
-    harvestTableView.layer.borderWidth  = 0.5
-    harvestTableView.layer.borderColor = UIColor.lightGray.cgColor
-    harvestTableView.layer.cornerRadius = 4
-    harvestTableView.dataSource = self
-    harvestTableView.delegate = self
+    loadsTableView.layer.borderWidth  = 0.5
+    loadsTableView.layer.borderColor = UIColor.lightGray.cgColor
+    loadsTableView.layer.cornerRadius = 5
+    loadsTableView.register(LoadCell.self, forCellReuseIdentifier: "LoadCell")
+    loadsTableView.bounces = false
+    loadsTableView.dataSource = self
+    loadsTableView.delegate = self
   }
 
   private func setupStorageCreationView() {
@@ -70,7 +73,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
       storageCreationView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
       storageCreationView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
       storageCreationView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -30),
-      storageCreationView.heightAnchor.constraint(equalToConstant: 300)
+      storageCreationView.heightAnchor.constraint(equalToConstant: 250)
       ])
     storageCreationView.selectedType = "BUILDING"
     storageCreationView.createButton.addTarget(self, action: #selector(createNewStorage), for: .touchUpInside)
@@ -80,36 +83,35 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   // MARK: - Actions
 
-  @IBAction private func tapHarvestView() {
+  @IBAction func tapHarvestView() {
     let shouldExpand = (harvestViewHeightConstraint.constant == 70)
-    let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 150 : selectedHarvests.count * 150
+    let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 125 : selectedHarvests.count * 125
 
     if selectedHarvests.count == 0 {
       return
     }
 
     if interventionState != InterventionState.Validated.rawValue {
-      harvestAddButton.isHidden = !shouldExpand
+      loadsAddButton.isHidden = !shouldExpand
     }
     view.endEditing(true)
     updateHarvestCountLabel()
-    harvestNature.isHidden = !shouldExpand
-    harvestType.isHidden = !shouldExpand
-    harvestTableView.isHidden = !shouldExpand
-    harvestCountLabel.isHidden = shouldExpand
+    harvestNatureButton.isHidden = !shouldExpand
+    loadsTableView.isHidden = !shouldExpand
+    loadsCountLabel.isHidden = shouldExpand
     harvestExpandImageView.isHidden = (selectedHarvests.count == 0)
     harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
-    harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 125) : 70
-    harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+    harvestViewHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 130) : 70
+    loadsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
   }
 
   private func updateHarvestCountLabel() {
     if selectedHarvests.count == 1 {
-      harvestCountLabel.text = "load".localized
+      loadsCountLabel.text = "load".localized
     } else if selectedHarvests.count > 1 {
-      harvestCountLabel.text = String(format: "loads".localized, selectedHarvests.count)
+      loadsCountLabel.text = String(format: "loads".localized, selectedHarvests.count)
     } else {
-      harvestCountLabel.text = "none".localized
+      loadsCountLabel.text = "none".localized
     }
   }
 
@@ -129,9 +131,10 @@ extension AddInterventionViewController: HarvestCellDelegate {
 
   @objc private func cancelStorageCreation() {
     storageCreationView.typeButton.setTitle(storageCreationView.returnTypesInSortedOrder()[0], for: .normal)
-    storageCreationView.nameTextField.text = ""
+    storageCreationView.nameTextField.text = nil
     dimView.isHidden = true
     storageCreationView.isHidden = true
+    storageCreationView.errorLabel.isHidden = true
   }
 
   @objc private func createNewStorage() {
@@ -192,6 +195,7 @@ extension AddInterventionViewController: HarvestCellDelegate {
           storagesNames.append(storage.name!)
         }
       }
+      storagesNames.append("---")
     } catch let error as NSError {
       print("Could not fetch. \(error), \(error.userInfo)")
     }
@@ -234,39 +238,34 @@ extension AddInterventionViewController: HarvestCellDelegate {
   }
 
   @IBAction private func changeHarvestNature(_ sender: UIButton) {
-    guard let selectedNature = harvestType.title(for: .normal) else { return }
+    guard let selectedNature = harvestNatureButton.title(for: .normal) else { return }
 
     customPickerView.values = ["GRAIN", "SILAGE", "STRAW"]
     customPickerView.pickerView.reloadComponent(0)
     customPickerView.selectLastValue(selectedNature)
     customPickerView.closure = { (_ value: String) in
-      self.harvestType.setTitle(value.localized, for: .normal)
+      self.harvestNatureButton.setTitle(value.localized, for: .normal)
       self.harvestSelectedType = value
     }
     customPickerView.isHidden = false
   }
 
-  func removeHarvestCell(_ indexPath: IndexPath) {
+  func removeLoadCell(_ indexPath: IndexPath) {
     let alert = UIAlertController(title: "remove_load_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "remove".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.selectedHarvests.remove(at: indexPath.row)
-      self.harvestTableView.reloadData()
+      self.loadsTableView.reloadData()
       if self.selectedHarvests.count == 0 {
-        if self.selectedHarvests.count == 0 {
-          self.harvestExpandImageView.isHidden = true
-          self.harvestTableView.isHidden = true
-          self.harvestType.isHidden = true
-          self.harvestNature.isHidden = true
-          self.harvestViewHeightConstraint.constant = 70
-        } else if self.selectedHarvests.count < 4 {
-          UIView.animate(withDuration: 0.5, animations: {
-            self.harvestTableViewHeightConstraint.constant = self.harvestTableView.contentSize.height
-            self.harvestViewHeightConstraint.constant = self.harvestTableViewHeightConstraint.constant + 125
-            self.view.layoutIfNeeded()
-          })
-        }
+        self.harvestExpandImageView.isHidden = true
+        self.loadsTableView.isHidden = true
+        self.harvestNatureButton.isHidden = true
+        self.harvestViewHeightConstraint.constant = 70
+      } else if self.selectedHarvests.count < 10 {
+        self.loadsTableViewHeightConstraint.constant = self.loadsTableView.contentSize.height
+        self.harvestViewHeightConstraint.constant = self.loadsTableViewHeightConstraint.constant + 130
+        self.view.layoutIfNeeded()
       }
     }))
     present(alert, animated: true)
@@ -276,73 +275,38 @@ extension AddInterventionViewController: HarvestCellDelegate {
     let isCollapsed = harvestViewHeightConstraint.constant == 70
     createHarvest(nil, nil, nil, nil, nil)
     if selectedHarvests.count > 0 {
-      let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 150 : selectedHarvests.count * 150
+      let tableViewHeight = (selectedHarvests.count > 10) ? 10 * 125 : selectedHarvests.count * 125
 
       isCollapsed ? harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi) : nil
-      harvestNature.isHidden = false
-      harvestType.isHidden = false
-      harvestTableView.isHidden = false
-      harvestAddButton.isHidden = false
-      harvestCountLabel.isHidden = true
+      harvestNatureButton.isHidden = false
+      loadsTableView.isHidden = false
+      loadsAddButton.isHidden = false
+      loadsCountLabel.isHidden = true
       harvestExpandImageView.isHidden = false
-      harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 125)
-      harvestTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      harvestViewHeightConstraint.constant = CGFloat(tableViewHeight + 130)
+      loadsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
       view.layoutIfNeeded()
     }
-    harvestTableView.reloadData()
+    loadsTableView.reloadData()
   }
 
-  func refreshHarvestView() {
-    harvestNature.isHidden = false
-    harvestType.isHidden = false
-    harvestTableView.isHidden = false
-    harvestTableView.reloadData()
-    if selectedHarvests.count < 4 {
-      harvestExpandImageView.isHidden = false
-      harvestExpandImageView.transform = harvestExpandImageView.transform.rotated(by: CGFloat.pi)
-      harvestTableViewHeightConstraint.constant = harvestTableView.contentSize.height
-      harvestViewHeightConstraint.constant = harvestTableViewHeightConstraint.constant + 125
-    }
-  }
-
-  private func setupObjectsLayer(_ button: UIButton, _ textField: UITextField) {
-    button.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    button.layer.borderWidth = 1
-    button.layer.cornerRadius = 5
-    textField.layer.borderColor = AppColor.CellColors.LightGray.cgColor
-    textField.layer.borderWidth = 1
-    textField.layer.cornerRadius = 5
-  }
-
-  func harvestTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> HarvestCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "HarvestCell", for: indexPath) as! HarvestCell
+  func loadTableViewCellForRowAt(_ tableView: UITableView, _ indexPath: IndexPath) -> LoadCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "LoadCell", for: indexPath) as! LoadCell
     let harvest = selectedHarvests[indexPath.row]
     let unit = harvest.unit
 
     if interventionState == InterventionState.Validated.rawValue {
-      cell.quantity.placeholder = String(harvest.quantity)
-      cell.number.placeholder = harvest.number
-    } else if harvest.quantity == 0 {
-      cell.quantity.placeholder = "0"
-      cell.number.text = harvest.number
+      cell.quantityTextField.placeholder = String(format: "%g", harvest.quantity)
+      cell.numberTextField.placeholder = harvest.number
     } else {
-      cell.quantity.text = String(harvest.quantity)
-      cell.number.text = harvest.number
+      cell.quantityTextField.text = harvest.quantity != 0 ? String(format: "%g", harvest.quantity) : nil
+      cell.numberTextField.text = harvest.number
     }
     cell.addInterventionController = self
     cell.cellDelegate = self
     cell.indexPath = indexPath
-    cell.unit.setTitle(unit?.localized, for: .normal)
-    cell.storage.backgroundColor = AppColor.ThemeColors.White
-    cell.storage.setTitle(harvest.storage?.name ?? "---", for: .normal)
-    cell.quantity.keyboardType = .decimalPad
-    cell.quantity.text = String(harvest.quantity)
-    cell.quantity.delegate = cell
-    cell.number.text = harvest.number
-    cell.number.delegate = cell
-    cell.selectionStyle = .none
-    setupObjectsLayer(cell.unit, cell.quantity)
-    setupObjectsLayer(cell.storage, cell.number)
+    cell.unitButton.setTitle(unit?.localized, for: .normal)
+    cell.storageButton.setTitle(harvest.storage?.name ?? "---", for: .normal)
     return cell
   }
 }
