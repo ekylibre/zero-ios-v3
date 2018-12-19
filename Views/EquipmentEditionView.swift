@@ -411,6 +411,7 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
     equipment.number = numberTextField.text!.isEmpty ? nil : numberTextField.text
     equipment.indicatorOne = firstIndicatorTextField.text!.isEmpty ? nil : firstIndicatorTextField.text
     equipment.indicatorTwo = secondIndicatorTextField.text!.isEmpty ? nil : secondIndicatorTextField.text
+    equipment.edited = true
     equipmentsView.tableView.reloadData()
     isHidden = true
     equipmentsView.dimView.isHidden = true
