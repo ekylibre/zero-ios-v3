@@ -344,6 +344,7 @@
 
 "none" = "None";
 "quantity" = "Quantity";
+"storage" = "Storage";
 
 "select_crops" = "+ Select";
 
