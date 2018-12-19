@@ -252,13 +252,14 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
   }
 
   private func updateInterventionImages(crop: Crop, cell: CropCell) {
+    let targets = fetchTargets(crop)
     var column = 0
 
     for imageView in cell.interventionImageViews {
       imageView.isHidden = true
     }
 
-    for case let target as Target in crop.targets! {
+    for target in targets {
       let assetName = target.intervention!.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
       cell.interventionImageViews[column].image = UIImage(named: assetName)
@@ -269,6 +270,28 @@ class InterventionsByCropViewController: UIViewController, UITableViewDelegate, 
         return
       }
     }
+  }
+
+  private func fetchTargets(_ crop: Crop) -> [Target] {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [Target]() }
+    let context = appDelegate.persistentContainer.viewContext
+    let request: NSFetchRequest<Target> = Target.fetchRequest()
+    let predicate = NSPredicate(format: "crop == %@", crop)
+
+    request.predicate = predicate
+
+    do {
+      let targets = try context.fetch(request)
+      return targets.sorted(by: {
+        let firstWorkingPeriods = $0.intervention!.workingPeriods!.allObjects as! [WorkingPeriod]
+        let secondWorkingPeriods = $1.intervention!.workingPeriods!.allObjects as! [WorkingPeriod]
+
+        return firstWorkingPeriods.first!.executionDate! < secondWorkingPeriods.first!.executionDate!
+      })
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+    return [Target]()
   }
 
   private func updateDistanceLabel(crop: Crop, cell: CropCell) {
