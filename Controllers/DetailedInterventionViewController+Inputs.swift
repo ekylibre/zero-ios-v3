@@ -95,7 +95,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if interventionState == InterventionState.Validated.rawValue {
       inputsAddButton.isHidden = true
       inputsCountLabel.isHidden = false
-    } else if interventionState != nil {
+    } else {
       inputsCountLabel.isHidden = !shouldExpand
       inputsAddButton.isHidden = !inputsCountLabel.isHidden
     }

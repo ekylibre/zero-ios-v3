@@ -82,8 +82,8 @@ extension AddInterventionViewController {
     if interventionState == InterventionState.Validated.rawValue {
       equipmentsAddButton.isHidden = true
       equipmentsCountLabel.isHidden = false
-    } else if interventionState != nil {
-      equipmentsCountLabel.isHidden = !shouldExpand
+    } else {
+      equipmentsCountLabel.isHidden = shouldExpand
       equipmentsAddButton.isHidden = !equipmentsCountLabel.isHidden
     }
   }
@@ -98,9 +98,11 @@ extension AddInterventionViewController {
         equipmentsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       equipmentsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       equipmentsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      checkButtonDisplayStatus(shouldExpand: shouldExpand)
+    } else {
+      checkButtonDisplayStatus(shouldExpand: !shouldExpand)
     }
     equipmentsExpandImageView.isHidden = !shouldExpand
-    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     updateEquipmentsCountLabel()
     selectedEquipmentsTableView.reloadData()
   }
