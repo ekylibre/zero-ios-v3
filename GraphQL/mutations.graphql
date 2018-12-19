@@ -79,6 +79,21 @@ mutation updateInter(
   }
 }
 
+mutation deleteInter(
+  $id: ID!,
+  $farmId: ID!
+) {
+  deleteIntervention(
+    input: {
+      id: $id
+      farmID: $farmId
+    }
+  ) {
+    errors,
+    message
+  }
+}
+
 mutation pushEquipment(
   $farmId: ID!,
   $type: EquipmentTypeEnum!,
@@ -129,6 +144,21 @@ mutation updateEquipment(
     }
   ) {
     errors
+  }
+}
+
+mutation deleteEquipment(
+  $id: ID!,
+  $farmId: ID!
+) {
+  deleteEquipment(
+    input: {
+      id: $id
+      farmID: $farmId
+    }
+  ) {
+    errors,
+    message
   }
 }
 
@@ -198,20 +228,5 @@ mutation pushStorage(
     storage {
       id
     }
-  }
-}
-
-mutation deleteInter(
-  $id: ID!,
-  $farmId: ID!
-) {
-  deleteIntervention(
-    input: {
-      id: $id
-      farmID: $farmId
-    }
-  ) {
-    errors,
-    message
   }
 }
