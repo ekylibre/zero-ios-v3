@@ -27,14 +27,14 @@ class SelectedEquipmentCell: UITableViewCell {
     return nameLabel
   }()
 
-  lazy var deleteButton: UIButton = {
-    let deleteButton = UIButton(frame: CGRect.zero)
+  lazy var removeButton: UIButton = {
+    let removeButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
-    deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.tintColor = AppColor.AppleColors.Red
-    deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    deleteButton.translatesAutoresizingMaskIntoConstraints = false
-    return deleteButton
+    removeButton.setImage(tintedImage, for: .normal)
+    removeButton.tintColor = AppColor.AppleColors.Red
+    removeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    removeButton.translatesAutoresizingMaskIntoConstraints = false
+    return removeButton
   }()
 
   lazy var infosLabel: UILabel = {
@@ -58,7 +58,7 @@ class SelectedEquipmentCell: UITableViewCell {
     selectionStyle = .none
     contentView.addSubview(typeImageView)
     contentView.addSubview(nameLabel)
-    contentView.addSubview(deleteButton)
+    contentView.addSubview(removeButton)
     contentView.addSubview(infosLabel)
     setupLayout()
   }
@@ -70,12 +70,12 @@ class SelectedEquipmentCell: UITableViewCell {
       typeImageView.widthAnchor.constraint(equalToConstant: 35),
       typeImageView.heightAnchor.constraint(equalToConstant: 35),
       nameLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
-      nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
+      nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: removeButton.leadingAnchor, constant: -10),
       nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-      deleteButton.widthAnchor.constraint(equalToConstant: 40),
-      deleteButton.heightAnchor.constraint(equalToConstant: 40),
+      removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      removeButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      removeButton.widthAnchor.constraint(equalToConstant: 40),
+      removeButton.heightAnchor.constraint(equalToConstant: 40),
       infosLabel.leadingAnchor.constraint(equalTo: typeImageView.trailingAnchor, constant: 10),
       infosLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       infosLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)

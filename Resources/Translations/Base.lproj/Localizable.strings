@@ -339,8 +339,10 @@
 "done" = "Done";
 "validate" = "Validate";
 "create" = "Create";
+"remove" = "Remove";
 "delete" = "Delete";
 "close" = "Close";
+"save" = "Save";
 
 "none" = "None";
 "quantity" = "Quantity";
@@ -367,7 +369,7 @@
 "create_new_equipment" = "+ Create new equipment";
 "create_new_person" = "+ Create new person";
 
-// Creation views
+// Creation and edition views
 "create_seed_title" = "Create new seed";
 "create_phyto_title" = "Create new phyto";
 "create_ferti_title" = "Create new fertilizer";
@@ -375,6 +377,8 @@
 "create_material_title" = "Create new material";
 "create_equipment_title" = "Create new equipment";
 "create_person_title" = "Create new person";
+
+"edit_equipment_title" = "Edit an equipment";
 
 "chose_specie" = "Specie";
 "variety" = "Variety";
@@ -405,6 +409,7 @@
 "storage_name_not_available" = "This storage name is not available. Please choose another one";
 "material_name_not_available" = "This material name is not available. Please choose another one";
 "equipment_name_not_available" = "This equipment name is not available. Please choose another one";
+"equipment_number_not_available" = "This equipment number is not available. Please choose another one";
 
 // Dates
 "date_format" = "dd/MM/yyyy";
@@ -419,11 +424,13 @@
 "start_online_with_crops" = "You don't have any assolled plots. Go online to get started!";
 "disconnect_prompt" = "Are you sure you want to log out? Any unsynchronized data will be lost.";
 
-"delete_input_prompt" = "Are you sure you want to remove the input?";
-"delete_load_prompt" = "Are you sure you want to remove the load?";
-"delete_material_prompt" = "Are you sure you want to remove the material?";
-"delete_equipment_prompt" = "Are you sure you want to remove the equipment?";
-"delete_person_prompt" = "Are you sure you want to remove the person?";
+"remove_input_prompt" = "Are you sure you want to remove the input?";
+"remove_load_prompt" = "Are you sure you want to remove the load?";
+"remove_material_prompt" = "Are you sure you want to remove the material?";
+"remove_equipment_prompt" = "Are you sure you want to remove the equipment?";
+"remove_person_prompt" = "Are you sure you want to remove the person?";
+
+"delete_equipment_prompt" = "Are you sure you want to delete the equipment?";
 
 "date_not_corresponding_to_crop" = "The intervention date does not correspond to the dates of the crops";
 "crops_start_date" = "Selected crops start date is %@";
@@ -441,6 +448,8 @@
 "you_must_create_a_load" = "You must add a load to create a harvest!";
 "confirm_deleting_intervention" = "Are you sure you want to delete the intervention?";
 "implantation_on_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
+"an_error_occured" = "An error occured";
+"equipment_cannot_be_deleted" = "Equipment selected in interventions can not be deleted";
 "unable_load_terms" = "Unable to load terms of use";
 "try_again_later" = "Please try again later.";
 

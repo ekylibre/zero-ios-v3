@@ -132,19 +132,19 @@ extension AddInterventionViewController {
     selectedPersons[1][indexPath!.row].setValue(sender.isOn, forKey: "isDriver")
   }
 
-  @objc private func tapPersonsDeleteButton(sender: UIButton) {
+  @objc private func tapPersonsRemoveButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedPersonCell
     let indexPath = selectedPersonsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: "delete_person_prompt".localized, message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "remove_person_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
-      self.deletePerson(indexPath.row)
+    alert.addAction(UIAlertAction(title: "remove".localized, style: .destructive, handler: { action in
+      self.removePerson(indexPath.row)
     }))
     present(alert, animated: true)
   }
 
-  private func deletePerson(_ index: Int)  {
+  private func removePerson(_ index: Int)  {
     selectedPersons[0].remove(at: index)
     selectedPersons[1].remove(at: index)
     updateSelectedPersonsView(calledFromCreatedIntervention: false)
@@ -161,7 +161,7 @@ extension AddInterventionViewController {
     }
     cell.firstNameLabel.text = selectedPerson.value(forKey: "firstName") as? String
     cell.lastNameLabel.text = selectedPerson.value(forKey: "lastName") as? String
-    cell.deleteButton.addTarget(self, action: #selector(tapPersonsDeleteButton), for: .touchUpInside)
+    cell.removeButton.addTarget(self, action: #selector(tapPersonsRemoveButton), for: .touchUpInside)
     cell.driverSwitch.addTarget(self, action: #selector(updateIsDriver), for: .valueChanged)
     return cell
   }

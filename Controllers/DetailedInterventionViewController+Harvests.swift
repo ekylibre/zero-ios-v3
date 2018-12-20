@@ -224,10 +224,10 @@ extension AddInterventionViewController: LoadCellDelegate {
   }
 
   func removeLoadCell(_ indexPath: IndexPath) {
-    let alert = UIAlertController(title: "delete_load_prompt".localized, message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "remove_load_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { (action: UIAlertAction!) in
+    alert.addAction(UIAlertAction(title: "remove".localized, style: .destructive, handler: { (action: UIAlertAction!) in
       self.selectedHarvests.remove(at: indexPath.row)
       self.loadsTableView.reloadData()
       if self.selectedHarvests.count == 0 {

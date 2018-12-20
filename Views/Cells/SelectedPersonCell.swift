@@ -37,14 +37,14 @@ class SelectedPersonCell: UITableViewCell {
     return lastNameLabel
   }()
 
-  lazy var deleteButton: UIButton = {
-    let deleteButton = UIButton(frame: CGRect.zero)
+  lazy var removeButton: UIButton = {
+    let removeButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
-    deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.tintColor = AppColor.AppleColors.Red
-    deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    deleteButton.translatesAutoresizingMaskIntoConstraints = false
-    return deleteButton
+    removeButton.setImage(tintedImage, for: .normal)
+    removeButton.tintColor = AppColor.AppleColors.Red
+    removeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    removeButton.translatesAutoresizingMaskIntoConstraints = false
+    return removeButton
   }()
 
   lazy var driverSwitch: UISwitch = {
@@ -80,7 +80,7 @@ class SelectedPersonCell: UITableViewCell {
     contentView.addSubview(personImageView)
     contentView.addSubview(firstNameLabel)
     contentView.addSubview(lastNameLabel)
-    contentView.addSubview(deleteButton)
+    contentView.addSubview(removeButton)
     contentView.addSubview(driverSwitch)
     contentView.addSubview(driverLabel)
     setupLayout()
@@ -95,12 +95,12 @@ class SelectedPersonCell: UITableViewCell {
       firstNameLabel.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 10),
       firstNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       lastNameLabel.leadingAnchor.constraint(equalTo: firstNameLabel.trailingAnchor, constant: 5),
-      lastNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
+      lastNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: removeButton.leadingAnchor, constant: -10),
       lastNameLabel.centerYAnchor.constraint(equalTo: firstNameLabel.centerYAnchor),
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-      deleteButton.widthAnchor.constraint(equalToConstant: 40),
-      deleteButton.heightAnchor.constraint(equalToConstant: 40),
+      removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      removeButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      removeButton.widthAnchor.constraint(equalToConstant: 40),
+      removeButton.heightAnchor.constraint(equalToConstant: 40),
       driverSwitch.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 7.5),
       driverSwitch.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7.5),
       driverLabel.leadingAnchor.constraint(equalTo: driverSwitch.trailingAnchor, constant: 5),

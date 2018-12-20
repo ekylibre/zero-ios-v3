@@ -41,15 +41,15 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     return infoLabel
   }()
 
-  lazy var deleteButton: UIButton = {
-    let deleteButton = UIButton(frame: CGRect.zero)
+  lazy var removeButton: UIButton = {
+    let removeButton = UIButton(frame: CGRect.zero)
     let tintedImage = UIImage(named: "trash")?.withRenderingMode(.alwaysTemplate)
-    deleteButton.setImage(tintedImage, for: .normal)
-    deleteButton.tintColor = AppColor.AppleColors.Red
-    deleteButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    deleteButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
-    deleteButton.translatesAutoresizingMaskIntoConstraints = false
-    return deleteButton
+    removeButton.setImage(tintedImage, for: .normal)
+    removeButton.tintColor = AppColor.AppleColors.Red
+    removeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    removeButton.addTarget(self, action: #selector(removeCell), for: .touchUpInside)
+    removeButton.translatesAutoresizingMaskIntoConstraints = false
+    return removeButton
   }()
 
   lazy var quantityLabel: UILabel = {
@@ -147,7 +147,7 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     contentView.addSubview(inputImageView)
     contentView.addSubview(nameLabel)
     contentView.addSubview(infoLabel)
-    contentView.addSubview(deleteButton)
+    contentView.addSubview(removeButton)
     contentView.addSubview(quantityLabel)
     contentView.addSubview(quantityTextField)
     contentView.addSubview(unitButton)
@@ -167,12 +167,12 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
       nameLabel.leadingAnchor.constraint(equalTo: inputImageView.trailingAnchor, constant: 10),
       nameLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
       infoLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
-      infoLabel.trailingAnchor.constraint(lessThanOrEqualTo: deleteButton.leadingAnchor, constant: -10),
+      infoLabel.trailingAnchor.constraint(lessThanOrEqualTo: removeButton.leadingAnchor, constant: -10),
       infoLabel.centerYAnchor.constraint(equalTo: inputImageView.centerYAnchor),
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-      deleteButton.widthAnchor.constraint(equalToConstant: 40),
-      deleteButton.heightAnchor.constraint(equalToConstant: 40),
+      removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      removeButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      removeButton.widthAnchor.constraint(equalToConstant: 40),
+      removeButton.heightAnchor.constraint(equalToConstant: 40),
       quantityLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       quantityLabel.topAnchor.constraint(equalTo: inputImageView.bottomAnchor, constant: 15),
       quantityTextField.leadingAnchor.constraint(equalTo: quantityLabel.trailingAnchor, constant: 15),
