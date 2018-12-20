@@ -751,7 +751,6 @@
 				6B1BB45221B9883100E96A16 /* SideMenuNavigationController.swift in Sources */,
 				6B1BB45321B9883100E96A16 /* TermsOfUseViewController.swift in Sources */,
 				6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */,
-				6B1BB45421B9883100E96A16 /* AuthentificationService.swift in Sources */,
 				6B1BB45521B9883100E96A16 /* Command.swift in Sources */,
 				6B1BB45621B9883100E96A16 /* Connectivity.swift in Sources */,
 				6B1BB45721B9883100E96A16 /* DateConverter.swift in Sources */,
