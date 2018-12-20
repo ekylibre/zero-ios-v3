@@ -20,9 +20,6 @@
 /* Class = "UILabel"; text = "Started on"; ObjectID = "K0b-DY-NwG"; */
 "K0b-DY-NwG.text" = "Débuté le";
 
-/* Class = "UIButton"; normalTitle = "date"; ObjectID = "MxI-Pz-rtl"; */
-"MxI-Pz-rtl.normalTitle" = "date";
-
 /* Class = "UILabel"; text = "+ SELECT"; ObjectID = "N64-8y-rWg"; */
 "N64-8y-rWg.text" = "+ SÉLECTIONNER";
 
@@ -59,14 +56,8 @@
 /* Class = "UILabel"; text = "No connection possible"; ObjectID = "nRw-M6-Pts"; */
 "nRw-M6-Pts.text" = "Connexion impossible";
 
-/* Class = "UILabel"; text = "Doers Number"; ObjectID = "orv-Jv-Mfq"; */
-"orv-Jv-Mfq.text" = "Doers Number";
-
 /* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "qD8-2V-ooz"; */
 "qD8-2V-ooz.normalTitle" = "ANNULER";
-
-/* Class = "UILabel"; text = "Synchro Label"; ObjectID = "qI5-Ep-5Qd"; */
-"qI5-Ep-5Qd.text" = "Synchro Label";
 
 /* Class = "UILabel"; text = "Working time"; ObjectID = "tS7-0f-DOT"; */
 "tS7-0f-DOT.text" = "Temps de travail";
@@ -101,7 +92,7 @@
 /* Class = "UILabel"; text = "Nature"; ObjectID = "mNi-kd-EFz"; */
 "mNi-kd-EFz.text" = "Nature";
 
-/* Class = "UIButton"; normalTitle = "GRAIN"; ObjectID = "yGb-zU-Lzj"; */
+/* Class = "UIButton"; normalTitle = "Grain"; ObjectID = "yGb-zU-Lzj"; */
 "vEX-tE-fGs.normalTitle" = "Grain";
 
 /* Class = "UILabel"; text = "Unauthorized mixing"; ObjectID = "iR3-Um-nVa"; */

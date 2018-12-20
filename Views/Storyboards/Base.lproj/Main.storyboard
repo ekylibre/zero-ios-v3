@@ -667,7 +667,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="0UA-b8-3zL"/>
                                                         </constraints>
-                                                        <state key="normal" title="GRAIN">
+                                                        <state key="normal" title="Grain">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
