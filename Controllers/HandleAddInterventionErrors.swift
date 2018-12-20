@@ -79,8 +79,6 @@ extension AddInterventionViewController {
       for harvest in selectedHarvests {
         if harvest.quantity == 0 {
           alert.title = "you_must_enter_load_quantity".localized
-        } else if harvest.number == nil {
-          alert.title = "you_must_enter_load_number".localized
         }
       }
     }

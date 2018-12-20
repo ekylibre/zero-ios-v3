@@ -444,7 +444,6 @@
 "you_must_select_a_fertilizer" = "You must add at least one fertilizer product!";
 "you_must_enter_a_water_volume" = "You must enter the volume of water used!";
 "you_must_enter_load_quantity" = "You must enter a quantity for the load!";
-"you_must_enter_load_number" = "You must enter a number for the load!";
 "you_must_create_a_load" = "You must add a load to create a harvest!";
 "confirm_deleting_intervention" = "Are you sure you want to delete the intervention?";
 "implantation_on_different_varieties" = "Impossible to carry out a implantation procedure on crops of different varieties.";
