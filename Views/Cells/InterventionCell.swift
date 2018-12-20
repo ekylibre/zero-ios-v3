@@ -233,6 +233,6 @@ class InterventionCell: UITableViewCell {
 
       infos = String(format: "%@ • %g %@", "volume".localized, intervention.waterQuantity, unit)
     }
-    return infos
+    return infos.isEmpty ? nil : infos
   }
 }
