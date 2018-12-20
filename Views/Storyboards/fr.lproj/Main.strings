@@ -92,8 +92,5 @@
 /* Class = "UILabel"; text = "Nature"; ObjectID = "mNi-kd-EFz"; */
 "mNi-kd-EFz.text" = "Nature";
 
-/* Class = "UIButton"; normalTitle = "Grain"; ObjectID = "yGb-zU-Lzj"; */
-"vEX-tE-fGs.normalTitle" = "Grain";
-
 /* Class = "UILabel"; text = "Unauthorized mixing"; ObjectID = "iR3-Um-nVa"; */
 "iR3-Um-nVa.text" = "Mélange non autorisé";
