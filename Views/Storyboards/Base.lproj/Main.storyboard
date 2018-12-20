@@ -667,7 +667,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="0UA-b8-3zL"/>
                                                         </constraints>
-                                                        <state key="normal" title="GRAIN">
+                                                        <state key="normal" title="Grain">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
@@ -1469,7 +1469,7 @@
         <!--Login View Controller-->
         <scene sceneID="qGL-rz-WS6">
             <objects>
-                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="Clic_Farm_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="krK-gd-8UN" customClass="LoginViewController" customModule="Clic_Farm_iOS" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ybY-bV-jLm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1588,14 +1588,17 @@
         <!--No Internet On First ConnectionVC-->
         <scene sceneID="20c-UI-Xxq">
             <objects>
-                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnectionVC" sceneMemberID="viewController">
+                <viewController id="CoO-3Z-MeU" customClass="NoInternetOnFirstConnectionVC" customModule="Clic_Farm_iOS" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i5Q-WN-VSA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="You must be connected to the Internet to be able to identify yourself the first time." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tUn-Ea-mE2">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="You must be connected to the Internet to be able to identify yourself the first time." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tUn-Ea-mE2">
                                 <rect key="frame" x="25" y="270" width="325" height="127"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1620,6 +1623,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Z7W-h9-04e"/>
                     </view>
+                    <connections>
+                        <outlet property="noInternetTextView" destination="tUn-Ea-mE2" id="kRW-9Y-IKj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2VX-T0-wrZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

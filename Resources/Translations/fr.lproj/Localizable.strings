@@ -462,7 +462,7 @@
 "not_filled_in" = "Non renseignée";
 "temp" = "Temp.: %@ °C |";
 "wind" = " vent: %@ km/h";
-"Broken_clouds" = "Nuages";
+"broken_clouds" = "Nuages";
 "few_clouds" = "Passages-nuageux";
 "mist" = "Brouillard";
 "shower_rain" = "Pluie";
@@ -492,10 +492,6 @@
 "driver" = "Conducteur";
 "sync_help_text" = "Pour synchroniser vos interventions, tirez la liste vers le bas.";
 "you_are_in_consult_mode" = "Vous ne pouvez pas modifier cette intervention car elle a été validée en ligne.";
-"non_authorized_mix" = "Mélange non autorisé";
-"nature" = "Nature";
-"celsius" = "°C";
-"km_per_hour" = "km/h";
 "ok" = "Ok";
 "provided_by_collector" = "Fourni par le collecteur";
 "invalid_dose" = "Dose invalide";
@@ -503,3 +499,4 @@
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
 "forgotten_password" = "Mot de passe oublié ?";
+"no_internet_on_first_connection" = "Vous devez être connecté à Internet pour pouvoir vous identifier la première fois.";

@@ -14,6 +14,7 @@
 		0418C909219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */; };
 		0418C90B219D70B40066CBB0 /* ReadOnlyInputsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */; };
 		0418C90D219D718D0066CBB0 /* ReadOnlyPersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */; };
+		041B910521CBC88200F511FC /* NoInternetOnFirstConnectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B910421CBC88200F511FC /* NoInternetOnFirstConnectionVC.swift */; };
 		041D87CC219DB45D00DFBC62 /* SeedCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */; };
 		041D87CE219DB78800DFBC62 /* StorageCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */; };
 		041D87D0219DBD8600DFBC62 /* PhytoCreationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */; };
@@ -105,7 +106,6 @@
 		6B491D1521ABEABD00EADC22 /* ApolloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B491D1421ABEABD00EADC22 /* ApolloTests.swift */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
-		6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */; };
 		6B7A2BDF21C7BFAA007A928D /* LoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */; };
 		6B7D67DA21C269FE001315F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */; };
 		6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
@@ -114,6 +114,7 @@
 		6B7D67DE21C269FE001315F7 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
 		6B7D67DF21C269FE001315F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		6B7D67E021C269FE001315F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
+		6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */; };
 		6BA94B2121B52AE800221EA3 /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041129592110937300AE884D /* OAuth2.framework */; };
 		6BA94B2221B52AEC00221EA3 /* SideMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61065721B529BD00AA853D /* SideMenu.framework */; };
 		6BEA65892105C5EF0072840F /* Clic_Farm_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA65882105C5EF0072840F /* Clic_Farm_iOSTests.swift */; };
@@ -160,6 +161,7 @@
 		0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyMaterialsTests.swift; sourceTree = "<group>"; };
 		0418C90A219D70B40066CBB0 /* ReadOnlyInputsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyInputsTests.swift; sourceTree = "<group>"; };
 		0418C90C219D718D0066CBB0 /* ReadOnlyPersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyPersonsTests.swift; sourceTree = "<group>"; };
+		041B910421CBC88200F511FC /* NoInternetOnFirstConnectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetOnFirstConnectionVC.swift; sourceTree = "<group>"; };
 		041D87CB219DB45D00DFBC62 /* SeedCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedCreationViewTests.swift; sourceTree = "<group>"; };
 		041D87CD219DB78800DFBC62 /* StorageCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationViewTests.swift; sourceTree = "<group>"; };
 		041D87CF219DBD8600DFBC62 /* PhytoCreationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhytoCreationViewTests.swift; sourceTree = "<group>"; };
@@ -247,8 +249,8 @@
 		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B77AD3C219B046E00839053 /* IrrigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrrigationTests.swift; sourceTree = "<group>"; };
 		6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ParentViewController.swift"; sourceTree = "<group>"; };
-		6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentEditionView.swift; sourceTree = "<group>"; };
 		6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCell.swift; sourceTree = "<group>"; };
+		6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentEditionView.swift; sourceTree = "<group>"; };
 		6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
 		6B8DB97521875BFF005E2A71 /* CropDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropDetailedView.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				0479C41C21A40936008DA4C2 /* ListTableViewController.swift */,
 				0479C41521A40935008DA4C2 /* LoginViewController.swift */,
 				6B3A01E121B53879003EDB10 /* MenuViewController.swift */,
+				041B910421CBC88200F511FC /* NoInternetOnFirstConnectionVC.swift */,
 				6B3A01DF21B5346D003EDB10 /* SideMenuNavigationController.swift */,
 				6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */,
 			);
@@ -794,6 +797,7 @@
 				6B1BB47D21B9883100E96A16 /* SelectionView.swift in Sources */,
 				6B1BB47E21B9883100E96A16 /* StorageCreationView.swift in Sources */,
 				6B1BB47F21B9883100E96A16 /* Clic_Farm_iOS.xcdatamodeld in Sources */,
+				041B910521CBC88200F511FC /* NoInternetOnFirstConnectionVC.swift in Sources */,
 				6B1BB48021B9883100E96A16 /* API.swift in Sources */,
 				6B1BB48121B9883100E96A16 /* CustomTypes.swift in Sources */,
 				6B1BB48221B9883100E96A16 /* ColorConstants.swift in Sources */,

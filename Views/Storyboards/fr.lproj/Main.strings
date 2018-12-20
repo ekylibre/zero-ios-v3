@@ -2,9 +2,6 @@
 /* Class = "UILabel"; text = "Temperature"; ObjectID = "2Et-nE-Npz"; */
 "2Et-nE-Npz.text" = "Température";
 
-/* Class = "UILabel"; text = "Infos Label"; ObjectID = "342-8b-SlZ"; */
-"342-8b-SlZ.text" = "Infos Label";
-
 /* Class = "UITextField"; text = "7"; ObjectID = "3Fz-6d-VQ1"; */
 "3Fz-6d-VQ1.text" = "7";
 
@@ -17,20 +14,11 @@
 /* Class = "UILabel"; text = "Wind speed"; ObjectID = "BK3-QQ-YBa"; */
 "BK3-QQ-YBa.text" = "Vitesse du vent";
 
-/* Class = "UILabel"; text = "Crops Label"; ObjectID = "EgV-or-pGj"; */
-"EgV-or-pGj.text" = "Crops Label";
-
 /* Class = "UILabel"; text = "People"; ObjectID = "IAh-c6-yzZ"; */
 "IAh-c6-yzZ.text" = "Opérateurs";
 
-/* Class = "UILabel"; text = "Date Label"; ObjectID = "Ii2-La-EhX"; */
-"Ii2-La-EhX.text" = "Date Label";
-
 /* Class = "UILabel"; text = "Started on"; ObjectID = "K0b-DY-NwG"; */
 "K0b-DY-NwG.text" = "Débuté le";
-
-/* Class = "UIButton"; normalTitle = "date"; ObjectID = "MxI-Pz-rtl"; */
-"MxI-Pz-rtl.normalTitle" = "date";
 
 /* Class = "UILabel"; text = "+ SELECT"; ObjectID = "N64-8y-rWg"; */
 "N64-8y-rWg.text" = "+ SÉLECTIONNER";
@@ -68,26 +56,11 @@
 /* Class = "UILabel"; text = "No connection possible"; ObjectID = "nRw-M6-Pts"; */
 "nRw-M6-Pts.text" = "Connexion impossible";
 
-/* Class = "UILabel"; text = "Doers Number"; ObjectID = "orv-Jv-Mfq"; */
-"orv-Jv-Mfq.text" = "Doers Number";
-
 /* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "qD8-2V-ooz"; */
 "qD8-2V-ooz.normalTitle" = "ANNULER";
 
-/* Class = "UILabel"; text = "Synchro Label"; ObjectID = "qI5-Ep-5Qd"; */
-"qI5-Ep-5Qd.text" = "Synchro Label";
-
-/* Class = "UILabel"; text = "Type Label"; ObjectID = "qg1-zw-twO"; */
-"qg1-zw-twO.text" = "Type Label";
-
 /* Class = "UILabel"; text = "Working time"; ObjectID = "tS7-0f-DOT"; */
 "tS7-0f-DOT.text" = "Temps de travail";
-
-/* Class = "UITextView"; text = "You must be connected to the Internet to be able to identify yourself the first time."; ObjectID = "tUn-Ea-mE2"; */
-"tUn-Ea-mE2.text" = "Vous devez être connecté à Internet pour pouvoir vous identifier la première fois.";
-
-/* Class = "UITextField"; placeholder = "Notes"; ObjectID = "uGn-VV-4Ti"; */
-"uGn-VV-4Ti.placeholder" = "Notes";
 
 /* Class = "UILabel"; text = "Equipments"; ObjectID = "v4G-sV-gkh"; */
 "v4G-sV-gkh.text" = "Équipements";
@@ -115,18 +88,6 @@
 
 /* Class = "UILabel"; text = "Nature"; ObjectID = "mNi-kd-EFz"; */
 "mNi-kd-EFz.text" = "Nature";
-
-/* Class = "UIButton"; normalTitle = "GRAIN"; ObjectID = "yGb-zU-Lzj"; */
-"vEX-tE-fGs.normalTitle" = "Grain";
-
-/* Class = "UILabel"; text = "Quantity"; ObjectID = "ZjH-1x-xh7"; */
-"ZjH-1x-xh7.text" = "Quantité";
-
-/* Class = "UILabel"; text = "Storage"; ObjectID = "8zl-tA-sjx"; */
-"8zl-tA-sjx.text" = "Stockage";
-
-/* Class = "UILabel"; text = "Number"; ObjectID = "k4t-Fe-Hr6"; */
-"k4t-Fe-Hr6.text" = "Numéro";
 
 /* Class = "UILabel"; text = "Unauthorized mixing"; ObjectID = "iR3-Um-nVa"; */
 "iR3-Um-nVa.text" = "Mélange non autorisé";
