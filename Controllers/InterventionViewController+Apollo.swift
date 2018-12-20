@@ -257,7 +257,7 @@ extension InterventionViewController {
 
   private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) {
     let mutation = PushArticleMutation(
-      farmId: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
+      farmID: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
 
     _ = apolloClient.clearCache()
     apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
@@ -279,7 +279,7 @@ extension InterventionViewController {
   }
 
   private func pushSeed(seed: Seed) {
-    let mutation = PushArticleMutation(farmId: farmID, unit: ArticleUnitEnum.kilogram, name: seed.variety!,
+    let mutation = PushArticleMutation(farmID: farmID, unit: ArticleUnitEnum.kilogram, name: seed.variety!,
                                        type: .seed, specie: SpecieEnum(rawValue: seed.specie!), variety: seed.variety)
 
     _ = apolloClient.clearCache()
@@ -535,7 +535,7 @@ extension InterventionViewController {
 
   private func updateEquipment(_ equipment: Equipment) {
     guard let type = EquipmentTypeEnum(rawValue: equipment.type!) else { return }
-    let mutation = UpdateEquipmentMutation(id: String(equipment.ekyID), farmId: farmID, type: type,
+    let mutation = UpdateEquipmentMutation(id: String(equipment.ekyID), farmID: farmID, type: type,
                                            name: equipment.name!, number: equipment.number,
                                            indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
@@ -557,7 +557,7 @@ extension InterventionViewController {
 
     saveFarmID()
     initializeApolloClient()
-    mutation = DeleteEquipmentMutation(id: String(equipment.ekyID), farmId: farmID)
+    mutation = DeleteEquipmentMutation(id: String(equipment.ekyID), farmID: farmID)
 
     _ = apolloClient.clearCache()
     apolloClient.perform(mutation: mutation, resultHandler: { (error, message) in
@@ -733,7 +733,7 @@ extension InterventionViewController {
   // MARK: Storages
 
   private func pushStorage(storage: Storage) {
-    let mutation = PushStorageMutation(farmId: farmID, type: StorageTypeEnum(rawValue: storage.type!),
+    let mutation = PushStorageMutation(farmID: farmID, type: StorageTypeEnum(rawValue: storage.type!),
                                        name: storage.name!)
 
     _ = apolloClient.clearCache()
@@ -1460,7 +1460,7 @@ extension InterventionViewController {
   }
 
   private func pushEquipment(equipment: Equipment) {
-    let mutation = PushEquipmentMutation(farmId: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
+    let mutation = PushEquipmentMutation(farmID: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
                                          name: equipment.name!, number: equipment.number,
                                          indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
@@ -1556,7 +1556,7 @@ extension InterventionViewController {
   }
 
   private func pushPerson(person: Person) {
-    let mutation = PushPersonMutation(farmId: farmID, firstName: person.firstName, lastName: person.lastName!)
+    let mutation = PushPersonMutation(farmID: farmID, firstName: person.firstName, lastName: person.lastName!)
 
     _ = apolloClient.clearCache()
     apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
@@ -1604,7 +1604,7 @@ extension InterventionViewController {
 
   private func setupMutation(_ intervention: Intervention) -> PushInterMutation {
     let mutation = PushInterMutation(
-      farmId: farmID,
+      farmID: farmID,
       procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
       cropList: defineTargetAttributesFrom(intervention: intervention),
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),
@@ -1647,7 +1647,7 @@ extension InterventionViewController {
   func pushUpdatedIntervention(intervention: Intervention) {
     let updateMutation = UpdateInterMutation(
       interventionID: String(intervention.ekyID),
-      farmId: farmID!,
+      farmID: farmID!,
       procedure: InterventionTypeEnum(rawValue: intervention.type!)!,
       cropList: defineTargetAttributesFrom(intervention: intervention),
       workingDays: defineWorkingDayAttributesFrom(intervention: intervention),

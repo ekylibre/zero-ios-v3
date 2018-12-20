@@ -1,5 +1,5 @@
 mutation pushInter(
-  $farmId: ID!,
+  $farmID: ID!,
   $procedure: InterventionTypeEnum!,
   $cropList: [InterventionTargetAttributes!]!,
   $workingDays: [InterventionWorkingDayAttributes!],
@@ -17,7 +17,7 @@ mutation pushInter(
   createIntervention(
     input: {
       intervention: {
-        farmID: $farmId
+        farmID: $farmID
         type: $procedure
         targets: $cropList
         workingDays: $workingDays
@@ -42,7 +42,7 @@ mutation pushInter(
 
 mutation updateInter(
   $interventionID: ID!
-  $farmId: ID!,
+  $farmID: ID!,
   $procedure: InterventionTypeEnum!,
   $cropList: [InterventionTargetAttributes!]!,
   $workingDays: [InterventionWorkingDayAttributes!],
@@ -60,7 +60,7 @@ mutation updateInter(
     input: {
       intervention: {
         interventionID: $interventionID
-        farmID: $farmId
+        farmID: $farmID
         type: $procedure
         targets: $cropList
         workingDays: $workingDays
@@ -81,12 +81,12 @@ mutation updateInter(
 
 mutation deleteInter(
   $id: ID!,
-  $farmId: ID!
+  $farmID: ID!
 ) {
   deleteIntervention(
     input: {
       id: $id
-      farmID: $farmId
+      farmID: $farmID
     }
   ) {
     errors,
@@ -95,7 +95,7 @@ mutation deleteInter(
 }
 
 mutation pushEquipment(
-  $farmId: ID!,
+  $farmID: ID!,
   $type: EquipmentTypeEnum!,
   $name: String!,
   $number: String,
@@ -105,7 +105,7 @@ mutation pushEquipment(
   createEquipment(
     input: {
       equipment: {
-        farmID: $farmId
+        farmID: $farmID
         type: $type
         name: $name
         number: $number
@@ -123,7 +123,7 @@ mutation pushEquipment(
 
 mutation updateEquipment(
   $id: ID!,
-  $farmId: ID!,
+  $farmID: ID!,
   $type: EquipmentTypeEnum!,
   $name: String!,
   $number: String,
@@ -134,7 +134,7 @@ mutation updateEquipment(
     input: {
       equipment: {
         id: $id
-        farmID: $farmId
+        farmID: $farmID
         type: $type
         name: $name
         number: $number
@@ -149,12 +149,12 @@ mutation updateEquipment(
 
 mutation deleteEquipment(
   $id: ID!,
-  $farmId: ID!
+  $farmID: ID!
 ) {
   deleteEquipment(
     input: {
       id: $id
-      farmID: $farmId
+      farmID: $farmID
     }
   ) {
     errors,
@@ -163,7 +163,7 @@ mutation deleteEquipment(
 }
 
 mutation pushArticle(
-  $farmId: ID!,
+  $farmID: ID!,
   $unit: ArticleUnitEnum!,
   $name: String!,
   $type: ArticleTypeEnum!,
@@ -173,7 +173,7 @@ mutation pushArticle(
   createArticle(
     input: {
       article: {
-        farmID: $farmId
+        farmID: $farmID
         unit: $unit
         name: $name
         nature: $type
@@ -190,14 +190,14 @@ mutation pushArticle(
 }
 
 mutation pushPerson(
-  $farmId: ID!,
+  $farmID: ID!,
   $firstName: String
   $lastName: String!
 ) {
   createPerson(
     input: {
       person: {
-        farmID: $farmId
+        farmID: $farmID
         firstName: $firstName
         lastName: $lastName
       }
@@ -211,14 +211,14 @@ mutation pushPerson(
 }
 
 mutation pushStorage(
-  $farmId: ID!,
+  $farmID: ID!,
   $type: StorageTypeEnum,
   $name: String!,
 ) {
   createStorage(
     input: {
       storage: {
-        farmID: $farmId
+        farmID: $farmID
         type: $type
         name: $name
       }
