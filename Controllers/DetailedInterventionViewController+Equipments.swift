@@ -152,19 +152,19 @@ extension AddInterventionViewController {
     performSegue(withIdentifier: "showEquipmentTypes", sender: self)
   }
 
-  @objc private func tapEquipmentsDeleteButton(sender: UIButton) {
+  @objc private func tapEquipmentsRemoveButton(sender: UIButton) {
     let cell = sender.superview?.superview as! SelectedEquipmentCell
     let indexPath = selectedEquipmentsTableView.indexPath(for: cell)!
-    let alert = UIAlertController(title: "delete_equipment_prompt".localized, message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "remove_equipment_prompt".localized, message: nil, preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-    alert.addAction(UIAlertAction(title: "delete".localized, style: .destructive, handler: { action in
-      self.deleteEquipment(indexPath.row)
+    alert.addAction(UIAlertAction(title: "remove".localized, style: .destructive, handler: { action in
+      self.removeEquipment(indexPath.row)
     }))
     present(alert, animated: true)
   }
 
-  private func deleteEquipment(_ index: Int)  {
+  private func removeEquipment(_ index: Int)  {
     selectedEquipments.remove(at: index)
     updateSelectedEquipmentsView(calledFromCreatedIntervention: false)
     equipmentsSelectionView.tableView.reloadData()
@@ -189,7 +189,7 @@ extension AddInterventionViewController {
 
       cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       cell.nameLabel.text = selectedEquipment.name
-      cell.deleteButton.addTarget(self, action: #selector(tapEquipmentsDeleteButton), for: .touchUpInside)
+      cell.removeButton.addTarget(self, action: #selector(tapEquipmentsRemoveButton), for: .touchUpInside)
       cell.infosLabel.text = getSelectedEquipmentInfos(selectedEquipment)
       return cell
   }

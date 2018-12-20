@@ -339,8 +339,10 @@
 "done" = "OK";
 "validate" = "Valider";
 "create" = "Créer";
+"remove" = "Supprimer";
 "delete" = "Supprimer";
 "close" = "Fermer";
+"save" = "Sauvegarder";
 
 "none" = "Aucun";
 "quantity" = "Quantité";
@@ -367,7 +369,7 @@
 "create_new_equipment" = "+ Créer un nouvel équipement";
 "create_new_person" = "+ Créer un opérateur";
 
-// Creation views
+// Creation and edition views
 "create_seed_title" = "Création d'une semence";
 "create_phyto_title" = "Création d'un produit phyto";
 "create_ferti_title" = "Création d'un fertilisant";
@@ -375,6 +377,8 @@
 "create_material_title" = "Création d'un matériau";
 "create_equipment_title" = "Création d'un équipement";
 "create_person_title" = "Création d'un opérateur";
+
+"edit_equipment_title" = "Modification d'un équipement";
 
 "chose_specie" = "Espèce";
 "variety" = "Variété";
@@ -402,10 +406,10 @@
 "seed_variety_not_available" = "Cette variété de semence est déjà utilisée. Veuillez en choisir un autre";
 "phyto_name_not_available" = "Ce nom de phyto est déjà utilisé. Veuillez en choisir un autre";
 "ferti_name_not_available" = "Ce nom de fertilisant est déjà utilisé. Veuillez en choisir un autre";
+"storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 "material_name_not_available" = "Ce nom de matériau est déjà utilisé. Veuillez en choisir un autre";
 "equipment_name_not_available" = "Ce nom d'équipement est déjà utilisé. Veuillez en choisir un autre";
 "equipment_number_not_available" = "Ce numéro d'équipement est déjà utilisé. Veuillez en choisir un autre";
-"storage_name_not_available" = "Ce nom de stockage est déjà utilisé. Veuillez en choisir un autre";
 
 // Dates
 "date_format" = "dd/MM/yyyy";
@@ -420,11 +424,13 @@
 "start_online_with_crops" = "Vous n'avez aucune parcelle assolée. Rendez-vous en ligne pour commencer !";
 "disconnect_prompt" = "Êtes-vous sûr de vouloir vous déconnecter ? Toutes les données non synchronisées seront perdues.";
 
-"delete_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
-"delete_load_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
+"remove_input_prompt" = "Êtes-vous sûr de vouloir supprimer l'intrant ?";
+"remove_load_prompt" = "Êtes-vous sûr de vouloir supprimer le chargement ?";
+"remove_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
+"remove_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
+"remove_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
+
 "delete_equipment_prompt" = "Êtes-vous sûr de vouloir supprimer l'équipement ?";
-"delete_material_prompt" = "Êtes-vous sûr de vouloir supprimer le matériau ?";
-"delete_person_prompt" = "Êtes-vous sûr de vouloir supprimer l'opérateur ?";
 
 "date_not_corresponding_to_crop" = "La date d'intervention ne correspond pas aux dates des cultures";
 "crops_start_date" = "La date de début des cultures sélectionnées est le %@";
@@ -441,6 +447,8 @@
 "you_must_create_a_harvest_load" = "Vous devez ajouter un chargement pour créer une récolte !";
 "confirm_deleting_intervention" = "Etes-vous sûr de vouloir supprimer l'intervention ?";
 "implantation_on_different_varieties" = "Impossible d'effectuer une intervention de Semis sur des cultures de variétés différentes.";
+"an_error_occured" = "Une erreur est survenue";
+"equipment_cannot_be_deleted" = "Vous ne pouvez pas supprimer un équipement selectionné dans des interventions";
 "unable_load_terms" = "Impossible de charger les conditions d'utilisation";
 "try_again_later" = "Veuillez réessayer plus tard.";
 

@@ -12,20 +12,6 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
 
   // MARK: - Properties
 
-  lazy var heighConstraint: NSLayoutConstraint = {
-    let heightConstraint = NSLayoutConstraint(
-      item: self,
-      attribute: .height,
-      relatedBy: .equal,
-      toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1,
-      constant: 350)
-
-    heightConstraint.isActive = true
-    return heightConstraint
-  }()
-
   lazy var titleLabel: UILabel = {
     let titleLabel = UILabel(frame: CGRect.zero)
     titleLabel.text = "create_equipment_title".localized
@@ -75,13 +61,14 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     return nameTextField
   }()
 
-  lazy var errorLabel: UILabel = {
-    let errorLabel = UILabel(frame: CGRect.zero)
-    errorLabel.font = UIFont.systemFont(ofSize: 13)
-    errorLabel.textColor = AppColor.AppleColors.Red
-    errorLabel.isHidden = true
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    return errorLabel
+  lazy var nameErrorLabel: UILabel = {
+    let nameErrorLabel = UILabel(frame: CGRect.zero)
+    nameErrorLabel.font = UIFont.systemFont(ofSize: 13)
+    nameErrorLabel.textColor = AppColor.AppleColors.Red
+    nameErrorLabel.numberOfLines = 0
+    nameErrorLabel.isHidden = true
+    nameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return nameErrorLabel
   }()
 
   lazy var numberTextField: UITextField = {
@@ -96,6 +83,17 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     numberTextField.layer.shadowRadius = 0
     numberTextField.translatesAutoresizingMaskIntoConstraints = false
     return numberTextField
+  }()
+
+  lazy var numberErrorLabel: UILabel = {
+    let numberErrorLabel = UILabel(frame: CGRect.zero)
+    numberErrorLabel.text = "equipment_number_not_available".localized
+    numberErrorLabel.font = UIFont.systemFont(ofSize: 13)
+    numberErrorLabel.textColor = AppColor.AppleColors.Red
+    numberErrorLabel.numberOfLines = 0
+    numberErrorLabel.isHidden = true
+    numberErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+    return numberErrorLabel
   }()
 
   lazy var firstEquipmentParameter: UITextField = {
@@ -167,12 +165,14 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
   }()
 
   var firstEquipmentType: String
+  lazy var heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
+                                                 attribute: .notAnAttribute, multiplier: 1, constant: 350)
 
   // MARK: - Initialization
 
-  init(firstType: String, frame: CGRect) {
+  init(firstType: String) {
     firstEquipmentType = firstType
-    super.init(frame: frame)
+    super.init(frame: CGRect.zero)
     setupView()
   }
 
@@ -181,25 +181,27 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
     layer.cornerRadius = 5
     clipsToBounds = true
     isHidden = true
+    translatesAutoresizingMaskIntoConstraints = false
     addSubview(titleLabel)
     addSubview(typeImageView)
     addSubview(typeLabel)
     addSubview(typeButton)
     addSubview(nameTextField)
-    addSubview(errorLabel)
+    addSubview(nameErrorLabel)
     addSubview(numberTextField)
+    addSubview(numberErrorLabel)
     addSubview(firstEquipmentParameter)
     addSubview(firstParameterUnit)
     addSubview(secondEquipmentParameter)
     addSubview(secondParameterUnit)
     addSubview(cancelButton)
     addSubview(createButton)
-    addConstraint(heighConstraint)
     setupLayout()
   }
 
   private func setupLayout() {
     NSLayoutConstraint.activate([
+      heightConstraint,
       titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       typeImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
@@ -214,12 +216,15 @@ class EquipmentCreationView: UIView, UITextFieldDelegate {
       nameTextField.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 35),
       nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-      errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-      errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      nameErrorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+      nameErrorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      nameErrorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       numberTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 35),
       numberTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       numberTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+      numberErrorLabel.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: 5),
+      numberErrorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+      numberErrorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firstEquipmentParameter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       firstEquipmentParameter.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       firstEquipmentParameter.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: 35),

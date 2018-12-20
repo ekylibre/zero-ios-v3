@@ -14,6 +14,7 @@
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Target" inverseName="crop" inverseEntity="Target" syncable="YES"/>
     </entity>
     <entity name="Equipment" representedClassName="Equipment" syncable="YES" codeGenerationType="class">
+        <attribute name="edited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="ekyID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="indicatorOne" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="indicatorTwo" optional="YES" attributeType="String" syncable="YES"/>
@@ -170,7 +171,7 @@
     </entity>
     <elements>
         <element name="Crop" positionX="886.87890625" positionY="171.3515625" width="128" height="225"/>
-        <element name="Equipment" positionX="627.27734375" positionY="-479.38671875" width="128" height="150"/>
+        <element name="Equipment" positionX="627.27734375" positionY="-479.38671875" width="128" height="165"/>
         <element name="Farm" positionX="164.53515625" positionY="209.62890625" width="128" height="75"/>
         <element name="Fertilizer" positionX="-557.37890625" positionY="-327.46484375" width="128" height="270"/>
         <element name="Harvest" positionX="-117.140625" positionY="-449.8359375" width="128" height="150"/>
