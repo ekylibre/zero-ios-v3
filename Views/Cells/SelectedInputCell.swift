@@ -70,7 +70,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     quantityTextField.layer.borderWidth = 0.5
     quantityTextField.layer.borderColor = UIColor.lightGray.cgColor
     quantityTextField.layer.cornerRadius = 5
-    quantityTextField.clipsToBounds = false
     quantityTextField.delegate = self
     quantityTextField.addTarget(self, action: #selector(saveQuantity), for: .editingChanged)
     quantityTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +85,6 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
     unitButton.layer.borderWidth = 0.5
     unitButton.layer.borderColor = UIColor.lightGray.cgColor
     unitButton.layer.cornerRadius = 5
-    unitButton.clipsToBounds = false
     unitButton.addTarget(self, action: #selector(showUnitMeasure), for: .touchUpInside)
     unitButton.translatesAutoresizingMaskIntoConstraints = false
     return unitButton
@@ -264,11 +262,13 @@ class SelectedInputCell: UITableViewCell, UITextFieldDelegate {
   }
 
   @objc private func showUnitMeasure(sender: UIButton) {
+    guard let selectedUnit = sender.titleLabel?.text else { return }
     let units = defineInputsUnitsBasedOnCreatedUnit(unit: inputUnit)
 
     if units != nil && units!.count > 1 {
       addInterventionViewController?.customPickerView.values = units!
       addInterventionViewController?.customPickerView.pickerView.reloadComponent(0)
+      addInterventionViewController?.customPickerView.selectLastValue(selectedUnit)
       addInterventionViewController?.customPickerView.closure = { (value) in
         self.addInterventionViewController?.selectedInputs[self.indexPath.row].setValue(value, forKey: "unit")
         self.addInterventionViewController?.selectedInputsTableView.reloadData()

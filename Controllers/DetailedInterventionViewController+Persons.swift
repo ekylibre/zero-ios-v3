@@ -61,7 +61,7 @@ extension AddInterventionViewController {
       personsAddButton.isHidden = true
       personsCountLabel.isHidden = false
     } else if interventionState != nil {
-      personsCountLabel.isHidden = !shouldExpand
+      personsCountLabel.isHidden = shouldExpand
       personsAddButton.isHidden = !personsCountLabel.isHidden
     }
   }
@@ -75,9 +75,11 @@ extension AddInterventionViewController {
       isCollapsed ? personsExpandImageView.transform = personsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       personsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       personsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      checkButtonDisplayStatus(shouldExpand: shouldExpand)
+    } else {
+      checkButtonDisplayStatus(shouldExpand: !shouldExpand)
     }
     personsExpandImageView.isHidden = !shouldExpand
-    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     updatePersonsCountLabel()
     selectedPersonsTableView.reloadData()
   }

@@ -10,8 +10,6 @@ import UIKit
 
 protocol LoadCellDelegate: class {
   func removeLoadCell(_ indexPath: IndexPath)
-  func defineUnit(_ indexPath: IndexPath)
-  func defineStorage(_ indexPath: IndexPath)
 }
 
 class LoadCell: UITableViewCell, UITextFieldDelegate {
@@ -235,16 +233,41 @@ class LoadCell: UITableViewCell, UITextFieldDelegate {
     addInterventionController?.selectedHarvests[indexPath.row].quantity = (quantityTextField.text! as NSString).doubleValue
   }
 
-  @objc private func defineUnit() {
-    cellDelegate?.defineUnit(indexPath)
+  @objc private func defineUnit(_ sender: UIButton) {
+    guard let selectedUnit = sender.titleLabel?.text else { return }
+
+    addInterventionController?.customPickerView.values = ["KILOGRAM", "QUINTAL", "TON"]
+    addInterventionController?.customPickerView.pickerView.reloadComponent(0)
+    addInterventionController?.customPickerView.selectLastValue(selectedUnit)
+    addInterventionController?.customPickerView.closure = { (value) in
+      self.addInterventionController?.selectedHarvests[self.indexPath.row].unit = value
+      self.addInterventionController?.loadsTableView.reloadData()
+    }
+    addInterventionController?.customPickerView.isHidden = false
   }
 
   @objc private func removeCell() {
     cellDelegate?.removeLoadCell(indexPath)
   }
 
-  @objc private func defineStorage() {
-    cellDelegate?.defineStorage(indexPath)
+  @objc private func defineStorage(_ sender: UIButton) {
+    guard let selectedUnit = sender.titleLabel?.text else { return }
+
+    if let storagesNumber = addInterventionController?.storages.count {
+      if storagesNumber > 0 {
+        addInterventionController?.customPickerView.values = addInterventionController?.fetchStoragesName()
+        addInterventionController?.customPickerView.pickerView.reloadComponent(0)
+        addInterventionController?.customPickerView.selectLastValue(selectedUnit)
+        addInterventionController?.customPickerView.closure = { (value) in
+          let predicate = NSPredicate(format: "name == %@", value)
+          let searchedStorage = self.addInterventionController?.fetchStorages(predicate: predicate)
+
+          self.addInterventionController?.selectedHarvests[self.indexPath.row].storage = searchedStorage?.first
+          self.addInterventionController?.loadsTableView.reloadData()
+        }
+        addInterventionController?.customPickerView.isHidden = false
+      }
+    }
   }
 
   @objc private func createStorage() {

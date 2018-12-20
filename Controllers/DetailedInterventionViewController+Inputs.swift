@@ -95,7 +95,7 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     if interventionState == InterventionState.Validated.rawValue {
       inputsAddButton.isHidden = true
       inputsCountLabel.isHidden = false
-    } else if interventionState != nil {
+    } else {
       inputsCountLabel.isHidden = !shouldExpand
       inputsAddButton.isHidden = !inputsCountLabel.isHidden
     }
@@ -108,10 +108,6 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     inputsExpandImageView.isHidden = !shouldExpand
     updateInputsCountLabel()
     selectedInputsTableView.reloadData()
-  }
-
-  func saveSelectedRow(_ indexPath: IndexPath) {
-    cellIndexPath = indexPath
   }
 
   @IBAction private func openInputsSelectionView(_ sender: Any) {
@@ -157,12 +153,14 @@ extension AddInterventionViewController: SelectedInputCellDelegate {
     }
   }
 
-  @objc private func showInputsCreationUnits() {
-    let units = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+  @objc private func showInputsCreationUnits(sender: UIButton) {
+    guard let selectedUnit = sender.titleLabel?.text else { return }
+    let values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
                  "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
 
-    customPickerView.values = units
+    customPickerView.values = values
     customPickerView.pickerView.reloadComponent(0)
+    customPickerView.selectLastValue(selectedUnit)
     customPickerView.closure = { (value) in
       self.defineInputsUnitButtonTitle(value: value)
     }

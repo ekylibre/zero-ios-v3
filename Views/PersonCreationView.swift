@@ -39,6 +39,7 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     firstNameErrorLabel.text = "person_first_name_is_empty".localized
     firstNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
     firstNameErrorLabel.textColor = AppColor.AppleColors.Red
+    firstNameErrorLabel.numberOfLines = 0
     firstNameErrorLabel.isHidden = true
     firstNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
     return firstNameErrorLabel
@@ -63,6 +64,7 @@ class PersonCreationView: UIView, UITextFieldDelegate {
     lastNameErrorLabel.text = "person_last_name_is_empty".localized
     lastNameErrorLabel.font = UIFont.systemFont(ofSize: 13)
     lastNameErrorLabel.textColor = AppColor.AppleColors.Red
+    lastNameErrorLabel.numberOfLines = 0
     lastNameErrorLabel.isHidden = true
     lastNameErrorLabel.translatesAutoresizingMaskIntoConstraints = false
     return lastNameErrorLabel

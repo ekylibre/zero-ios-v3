@@ -74,11 +74,11 @@ extension AddInterventionViewController {
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
     if selectedHarvests.count == 0 {
-      alert.title = "you_must_create_a_harvest_load".localized
+      alert.title = "you_must_create_a_load".localized
     } else {
       for harvest in selectedHarvests {
         if harvest.quantity == 0 {
-          alert.title = "you_must_enter_harvest_quantity".localized
+          alert.title = "you_must_enter_load_quantity".localized
         }
       }
     }

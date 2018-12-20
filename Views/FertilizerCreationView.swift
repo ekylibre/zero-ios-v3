@@ -85,6 +85,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
     errorLabel.textColor = AppColor.AppleColors.Red
+    errorLabel.numberOfLines = 0
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
   }()
@@ -146,7 +147,7 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
       errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
       errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      natureLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
+      natureLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 40),
       natureLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       natureButton.topAnchor.constraint(equalTo: natureLabel.bottomAnchor),
       natureButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
@@ -208,5 +209,9 @@ class FertilizerCreationView: UIView, UITextFieldDelegate {
     nameTextField.text = ""
     natureButton.setTitle("organic".localized, for: .normal)
     self.isHidden = true
+
+    if !errorLabel.isHidden {
+      errorLabel.isHidden = true
+    }
   }
 }

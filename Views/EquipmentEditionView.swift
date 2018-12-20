@@ -446,7 +446,9 @@ class EquipmentEditionView: UIView, UITextFieldDelegate {
   }
 
   private func checkEquipmentNumber(_ equipmentsView: EquipmentsView) -> Bool {
-    if equipment.number != numberTextField.text &&
+    if numberTextField.text!.isEmpty {
+      return true
+    } else if equipment.number != numberTextField.text &&
       equipmentsView.equipments.contains(where: { $0.number == numberTextField.text }) {
       numberErrorLabel.isHidden = false
       return false

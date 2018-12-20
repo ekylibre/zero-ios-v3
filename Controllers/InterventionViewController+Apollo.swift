@@ -256,11 +256,13 @@ extension InterventionViewController {
   // MARK: - Articles
 
   private func pushInput(input: NSManagedObject, type: ArticleTypeEnum, unit: ArticleUnitEnum) {
+    let dispatchGroup = DispatchGroup()
     let mutation = PushArticleMutation(
       farmID: farmID, unit: unit, name: input.value(forKey: "name") as! String, type: type)
 
+    dispatchGroup.enter()
     _ = apolloClient.clearCache()
-    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -271,19 +273,24 @@ extension InterventionViewController {
 
       guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
         print("Could not unwrap article id")
+        dispatchGroup.leave()
         return
       }
 
       input.setValue(id, forKey: "ekyID")
+      dispatchGroup.leave()
     })
+    dispatchGroup.wait()
   }
 
   private func pushSeed(seed: Seed) {
+    let dispatchGroup = DispatchGroup()
     let mutation = PushArticleMutation(farmID: farmID, unit: ArticleUnitEnum.kilogram, name: seed.variety!,
                                        type: .seed, specie: SpecieEnum(rawValue: seed.specie!), variety: seed.variety)
 
+    dispatchGroup.enter()
     _ = apolloClient.clearCache()
-    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -294,11 +301,14 @@ extension InterventionViewController {
 
       guard let graphqlID = result?.data?.createArticle?.article?.id, let id = Int32(graphqlID) else {
         print("Could not unwrap seed id")
+        dispatchGroup.leave()
         return
       }
 
       seed.ekyID = id
+      dispatchGroup.leave()
     })
+    dispatchGroup.wait()
   }
 
   private func saveArticles(articles: [FarmQuery.Data.Farm.Article]) {
@@ -563,7 +573,7 @@ extension InterventionViewController {
     apolloClient.perform(mutation: mutation, resultHandler: { (error, message) in
       if let error = error?.errors {
         print("Error: \(String(describing: error))")
-        self.presentErrorAlert(message: "equipment_cannot_be_deleted".localized, viewController: viewController)
+        self.presentErrorAlert(message: "equipment_deletion_message".localized, viewController: viewController)
       } else {
         addInterventionVC.equipmentsSelectionView.editionView.deleteEquipmentLocally()
       }
@@ -571,7 +581,7 @@ extension InterventionViewController {
   }
 
   private func presentErrorAlert(message: String, viewController: UIViewController) {
-    let alert = UIAlertController(title: "an_error_occured".localized, message: message, preferredStyle: .alert)
+    let alert = UIAlertController(title: "be_careful".localized, message: message, preferredStyle: .alert)
     let cancelAction = UIAlertAction(title: "ok".localized.uppercased(), style: .cancel, handler: nil)
 
     alert.addAction(cancelAction)
@@ -733,11 +743,13 @@ extension InterventionViewController {
   // MARK: Storages
 
   private func pushStorage(storage: Storage) {
+    let dispatchGroup = DispatchGroup()
     let mutation = PushStorageMutation(farmID: farmID, type: StorageTypeEnum(rawValue: storage.type!),
                                        name: storage.name!)
 
+    dispatchGroup.enter()
     _ = apolloClient.clearCache()
-    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -748,11 +760,14 @@ extension InterventionViewController {
 
       guard let graphqlID = result?.data?.createStorage?.storage?.id, let id = Int32(graphqlID) else {
         print("Could not unwrap storage id")
+        dispatchGroup.leave()
         return
       }
 
       storage.storageID = id
+      dispatchGroup.leave()
     })
+    dispatchGroup.wait()
   }
 
   private func saveStorage(fetchedStorage: FarmQuery.Data.Farm.Storage) {
@@ -1224,7 +1239,9 @@ extension InterventionViewController {
     var intervention = returnEntityIfSame(entityName: "Intervention", predicate: predicate) as? Intervention
 
     if intervention != nil {
-      let date = fetchedIntervention.workingDays.first!.executionDate!
+      guard let date = fetchedIntervention.workingDays.first?.executionDate else {
+        return
+      }
       let status = (fetchedIntervention.validatedAt == nil ?
         InterventionState.Synced : InterventionState.Validated).rawValue
 
@@ -1279,7 +1296,6 @@ extension InterventionViewController {
 
   func updateInterventionIfChangedOnApi() {
     let query = InterventionQuery(modifiedSince: getLastSyncDate())
-
 
     _ = apolloClient.clearCache()
     apolloClient.fetch(query: query, resultHandler: { (result, error) in
@@ -1460,12 +1476,14 @@ extension InterventionViewController {
   }
 
   private func pushEquipment(equipment: Equipment) {
+    let dispatchGroup = DispatchGroup()
     let mutation = PushEquipmentMutation(farmID: farmID, type: EquipmentTypeEnum(rawValue: equipment.type!)!,
                                          name: equipment.name!, number: equipment.number,
                                          indicator1: equipment.indicatorOne, indicator2: equipment.indicatorTwo)
 
+    dispatchGroup.enter()
     _ = apolloClient.clearCache()
-    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1476,11 +1494,14 @@ extension InterventionViewController {
 
       guard let graphqlID = result?.data?.createEquipment?.equipment?.id, let id = Int32(graphqlID) else {
         print("Could not unwrap equipment id")
+        dispatchGroup.leave()
         return
       }
 
       equipment.ekyID = id
+      dispatchGroup.leave()
     })
+    dispatchGroup.wait()
   }
 
   private func pushEntitiesIfNeeded(_ entityName: String, _ predicate: NSPredicate) {
@@ -1556,10 +1577,12 @@ extension InterventionViewController {
   }
 
   private func pushPerson(person: Person) {
+    let dispatchGroup = DispatchGroup()
     let mutation = PushPersonMutation(farmID: farmID, firstName: person.firstName, lastName: person.lastName!)
 
+    dispatchGroup.enter()
     _ = apolloClient.clearCache()
-    apolloClient.perform(mutation: mutation, resultHandler: { (result, error) in
+    apolloClient.perform(mutation: mutation, queue: DispatchQueue.global(), resultHandler: { (result, error) in
       if let error = error {
         print("Error: \(error)")
       } else if let resultError = result?.errors {
@@ -1570,11 +1593,14 @@ extension InterventionViewController {
 
       guard let graphqlID = result?.data?.createPerson?.person?.id, let id = Int32(graphqlID) else {
         print("Could not unwrap person id")
+        dispatchGroup.leave()
         return
       }
 
       person.ekyID = id
+      dispatchGroup.leave()
     })
+    dispatchGroup.wait()
   }
 
   private func defineOperatorAttributesFrom(intervention: Intervention) -> [InterventionOperatorAttributes] {
@@ -1641,6 +1667,10 @@ extension InterventionViewController {
       }
 
       intervention.ekyID = id
+      if id != 0 {
+        intervention.status = InterventionState.Synced.rawValue
+        self.tableView.reloadData()
+      }
     })
   }
 

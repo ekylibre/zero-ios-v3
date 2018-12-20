@@ -180,15 +180,15 @@ extension AddInterventionViewController {
   private func loadInterventionInReadOnlyMode() {
     dimView.isHidden = true
     cropsView.isHidden = true
-    warningView.isHidden = false
     warningMessage.text = "you_are_in_consult_mode".localized
+    warningView.isHidden = false
+    warningSeparatorView.isHidden = false
     notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
     notesTextView.textColor = .lightGray
     bottomBarView.isHidden = true
     bottomView.isHidden = true
     scrollViewBottomConstraint.isActive = false
     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-    interventionLogo.isHidden = false
     interventionLogo.image = UIImage(named: "read-only")
     cropsView.validateButton.setTitle("ok".localized.uppercased(), for: .normal)
     interventionType = InterventionType(rawValue: currentIntervention.type!)
@@ -199,20 +199,22 @@ extension AddInterventionViewController {
     loadEquipments()
     loadPersons()
     loadHarvest()
-    weather = currentIntervention?.weather
+    weather.temperature = currentIntervention.weather?.temperature
+    weather.windSpeed = currentIntervention.weather?.windSpeed
+    weather.weatherDescription = currentIntervention.weather?.weatherDescription
     changeTemperatureSignButton()
     loadWeatherInReadOnlyMode()
     disableUserInteraction()
   }
 
   private func loadInterventionInEditableMode() {
-    interventionLogo.isHidden = false
-    interventionLogo.image = UIImage(named: "edit")
     notesTextView.text = (currentIntervention?.infos == nil ? "notes".localized : currentIntervention?.infos)
     notesTextView.textColor = (notesTextView.text == "notes".localized ? .lightGray : .black)
     interventionType = InterventionType(rawValue: currentIntervention.type!)
     loadWorkingPeriod()
-    weather = currentIntervention?.weather
+    weather.temperature = currentIntervention.weather?.temperature
+    weather.windSpeed = currentIntervention.weather?.windSpeed
+    weather.weatherDescription = currentIntervention.weather?.weatherDescription
     changeTemperatureSignButton()
     loadInputs()
     loadMaterials()

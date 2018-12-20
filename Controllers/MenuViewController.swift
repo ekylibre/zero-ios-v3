@@ -111,6 +111,7 @@ class MenuViewController: UITableViewController {
     for entityName in entityNames {
       batchDeleteEntity(name: entityName)
     }
+    appDelegate.persistentContainer.viewContext.reset()
   }
 
   private func batchDeleteEntity(name: String) {

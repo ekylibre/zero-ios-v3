@@ -27,33 +27,6 @@ extension AddInterventionViewController: LoadCellDelegate {
     setupStorageCreationView()
   }
 
-  internal func defineUnit(_ indexPath: IndexPath) {
-    customPickerView.values = ["KILOGRAM", "QUINTAL", "TON"]
-    customPickerView.pickerView.reloadComponent(0)
-    customPickerView.closure = { (_ value: String) in
-      self.selectedHarvests[self.cellIndexPath.row].unit = value
-      self.loadsTableView.reloadData()
-    }
-    customPickerView.isHidden = false
-    cellIndexPath = indexPath
-  }
-
-  internal func defineStorage(_ indexPath: IndexPath) {
-    if storages.count > 0 {
-      customPickerView.values = fetchStoragesName()
-      customPickerView.pickerView.reloadComponent(0)
-      customPickerView.closure = { (_ value: String) in
-        let predicate = NSPredicate(format: "name == %@", value)
-        let searchedStorage = self.fetchStorages(predicate: predicate)
-
-        self.selectedHarvests[self.cellIndexPath.row].storage = searchedStorage?.first
-        self.loadsTableView.reloadData()
-      }
-      customPickerView.isHidden = false
-      cellIndexPath = indexPath
-    }
-  }
-
   private func initializeHarvestTableView() {
     loadsTableView.layer.borderWidth  = 0.5
     loadsTableView.layer.borderColor = UIColor.lightGray.cgColor
@@ -160,7 +133,7 @@ extension AddInterventionViewController: LoadCellDelegate {
     customPickerView.isHidden = false
   }
 
-  private func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
+  func fetchStorages(predicate: NSPredicate?) -> [Storage]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }
@@ -178,7 +151,7 @@ extension AddInterventionViewController: LoadCellDelegate {
     return nil
   }
 
-  private func fetchStoragesName() -> [String]? {
+  func fetchStoragesName() -> [String]? {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return nil
     }

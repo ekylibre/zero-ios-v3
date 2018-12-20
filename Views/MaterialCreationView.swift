@@ -38,6 +38,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
     let errorLabel = UILabel(frame: CGRect.zero)
     errorLabel.font = UIFont.systemFont(ofSize: 13)
     errorLabel.textColor = AppColor.AppleColors.Red
+    errorLabel.numberOfLines = 0
     errorLabel.isHidden = true
     errorLabel.translatesAutoresizingMaskIntoConstraints = false
     return errorLabel
@@ -115,7 +116,7 @@ class MaterialCreationView: UIView, UITextFieldDelegate {
       errorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
       errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-      unitLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 25),
+      unitLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 40),
       unitLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
       unitButton.topAnchor.constraint(equalTo: unitLabel.bottomAnchor),
       unitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),

@@ -22,6 +22,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   @IBOutlet weak var interventionLogo: UIImageView!
   @IBOutlet weak var warningView: UIView!
   @IBOutlet weak var warningMessage: UILabel!
+  @IBOutlet weak var warningSeparatorView: UIView!
 
   // Working period
   @IBOutlet var workingPeriodTapGesture: UITapGestureRecognizer!
@@ -131,7 +132,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
   var currentIntervention: Intervention!
   var interventionType: InterventionType?
   var dimView = UIView(frame: CGRect.zero)
-  var cellIndexPath: IndexPath!
   var selectedRow: Int!
   var selectedValue: String!
   var customPickerView: CustomPickerView!
@@ -181,6 +181,8 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
 
     notesTextView.delegate = self
     setTextViewPlaceholder()
+
+    interventionLogo.image = UIImage(named: "edit")
 
     cropsView = CropsView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
     cropsView.currentIntervention = currentIntervention
@@ -392,6 +394,7 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     currentIntervention?.workingPeriods?.setValue(duration, forKey: "hourDuration")
     notes ? currentIntervention.infos = notesTextView.text : nil
     changeWaterUnit()
+    currentIntervention.weather = weather
     updateTargets(currentIntervention)
     updateEquipments(currentIntervention)
     updatePersons(currentIntervention)
@@ -477,7 +480,6 @@ UIGestureRecognizerDelegate, WriteValueBackDelegate, XMLParserDelegate, UITextVi
     let managedContext = appDelegate.persistentContainer.viewContext
     let interventionPersonsFetchRequest: NSFetchRequest<InterventionPerson> = InterventionPerson.fetchRequest()
     let predicate = NSPredicate(format: "intervention == %@", intervention)
-
 
     interventionPersonsFetchRequest.predicate = predicate
     do {

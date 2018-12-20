@@ -62,8 +62,8 @@ extension AddInterventionViewController {
     if interventionState == InterventionState.Validated.rawValue {
       materialsAddButton.isHidden = true
       materialsCountLabel.isHidden = false
-    } else if interventionState != nil {
-      materialsCountLabel.isHidden = !shouldExpand
+    } else {
+      materialsCountLabel.isHidden = shouldExpand
       materialsAddButton.isHidden = !materialsCountLabel.isHidden
     }
   }
@@ -78,8 +78,10 @@ extension AddInterventionViewController {
         materialsExpandImageView.transform.rotated(by: CGFloat.pi) : nil
       materialsHeightConstraint.constant = shouldExpand ? CGFloat(tableViewHeight + 90) : 70
       materialsTableViewHeightConstraint.constant = CGFloat(tableViewHeight)
+      checkButtonDisplayStatus(shouldExpand: shouldExpand)
+    } else {
+      checkButtonDisplayStatus(shouldExpand: !shouldExpand)
     }
-    checkButtonDisplayStatus(shouldExpand: shouldExpand)
     materialsExpandImageView.isHidden = !shouldExpand
     updateMaterialsCountLabel()
     selectedMaterialsTableView.reloadData()
@@ -182,9 +184,10 @@ extension AddInterventionViewController {
     guard let cell = sender.superview?.superview as? UITableViewCell else { return }
     guard let indexPath = selectedMaterialsTableView.indexPath(for: cell) else { return }
     guard let selectedUnit = selectedMaterials[1][indexPath.row].value(forKey: "unit") as? String else { return }
+    let values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
+                  "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
 
-    customPickerView.values = ["METER", "UNITY", "THOUSAND", "LITER", "HECTOLITER",
-                               "CUBIC_METER", "GRAM", "KILOGRAM", "QUINTAL", "TON"]
+    customPickerView.values = values
     customPickerView.pickerView.reloadComponent(0)
     customPickerView.selectLastValue(selectedUnit.localized)
     customPickerView.closure = { (_ value: String) in
