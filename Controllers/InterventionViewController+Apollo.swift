@@ -573,7 +573,7 @@ extension InterventionViewController {
     apolloClient.perform(mutation: mutation, resultHandler: { (error, message) in
       if let error = error?.errors {
         print("Error: \(String(describing: error))")
-        self.presentErrorAlert(message: "equipment_cannot_be_deleted".localized, viewController: viewController)
+        self.presentErrorAlert(message: "equipment_deletion_message".localized, viewController: viewController)
       } else {
         addInterventionVC.equipmentsSelectionView.editionView.deleteEquipmentLocally()
       }
@@ -581,7 +581,7 @@ extension InterventionViewController {
   }
 
   private func presentErrorAlert(message: String, viewController: UIViewController) {
-    let alert = UIAlertController(title: "an_error_occured".localized, message: message, preferredStyle: .alert)
+    let alert = UIAlertController(title: "be_careful".localized, message: message, preferredStyle: .alert)
     let cancelAction = UIAlertAction(title: "ok".localized.uppercased(), style: .cancel, handler: nil)
 
     alert.addAction(cancelAction)
