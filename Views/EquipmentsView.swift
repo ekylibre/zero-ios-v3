@@ -261,7 +261,9 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   private func checkEquipmentNumber() -> Bool {
-    if equipments.contains(where: { $0.number == creationView.numberTextField.text }) {
+    if creationView.numberTextField.text!.isEmpty {
+      return true
+    } else if equipments.contains(where: { $0.number == creationView.numberTextField.text }) {
       creationView.numberErrorLabel.isHidden = false
       return false
     }
