@@ -499,3 +499,4 @@
 "input_quantity" = "Soit %.1f %@";
 "input_quantity_per_surface" = "Soit %.1f %@ par hectare";
 "forgotten_password" = "Mot de passe oublié ?";
+"no_internet_on_first_connection" = "Vous devez être connecté à Internet pour pouvoir vous identifier la première fois.";

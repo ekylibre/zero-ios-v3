@@ -62,9 +62,6 @@
 /* Class = "UILabel"; text = "Working time"; ObjectID = "tS7-0f-DOT"; */
 "tS7-0f-DOT.text" = "Temps de travail";
 
-/* Class = "UITextView"; text = "You must be connected to the Internet to be able to identify yourself the first time."; ObjectID = "tUn-Ea-mE2"; */
-"tUn-Ea-mE2.text" = "Vous devez être connecté à Internet pour pouvoir vous identifier la première fois.";
-
 /* Class = "UILabel"; text = "Equipments"; ObjectID = "v4G-sV-gkh"; */
 "v4G-sV-gkh.text" = "Équipements";
 
