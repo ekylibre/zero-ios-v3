@@ -12,8 +12,8 @@ class NoInternetOnFirstConnectionVC: UIViewController {
 
   @IBOutlet weak var noInternetTextView: UITextView!
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     noInternetTextView.text = "no_internet_on_first_connection".localized
   }
 }
