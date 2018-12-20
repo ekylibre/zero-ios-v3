@@ -105,6 +105,7 @@
 		6B491D1521ABEABD00EADC22 /* ApolloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B491D1421ABEABD00EADC22 /* ApolloTests.swift */; };
 		6B4CA8A3214F9C560052073D /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CA8A2214F9C560052073D /* Apollo.framework */; };
 		6B77AD3D219B046E00839053 /* IrrigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B77AD3C219B046E00839053 /* IrrigationTests.swift */; };
+		6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */; };
 		6B7A2BDF21C7BFAA007A928D /* LoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */; };
 		6B7D67DA21C269FE001315F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B64217DB8DE000A5D2F /* LaunchScreen.storyboard */; };
 		6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
@@ -246,6 +247,7 @@
 		6B6C0850219318C100F54D29 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B77AD3C219B046E00839053 /* IrrigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrrigationTests.swift; sourceTree = "<group>"; };
 		6B79D26521A5A3E000EBDB9D /* UIView+ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ParentViewController.swift"; sourceTree = "<group>"; };
+		6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentEditionView.swift; sourceTree = "<group>"; };
 		6B7A2BDE21C7BFAA007A928D /* LoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCell.swift; sourceTree = "<group>"; };
 		6B8353EE21B6926700DA8C35 /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		6B8DB97321871D9A005E2A71 /* ProductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCell.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				04998B5A217DB8DD000A5D2F /* CropView.swift */,
 				04998B5B217DB8DD000A5D2F /* CustomPickerView.swift */,
 				04998B5C217DB8DD000A5D2F /* EquipmentCreationView.swift */,
+				6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */,
 				04998B61217DB8DE000A5D2F /* EquipmentsView.swift */,
 				04998B55217DB8DD000A5D2F /* FertilizerCreationView.swift */,
 				04998B54217DB8DD000A5D2F /* InputsView.swift */,
@@ -747,6 +750,7 @@
 				6B1BB45121B9883100E96A16 /* MenuViewController.swift in Sources */,
 				6B1BB45221B9883100E96A16 /* SideMenuNavigationController.swift in Sources */,
 				6B1BB45321B9883100E96A16 /* TermsOfUseViewController.swift in Sources */,
+				6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */,
 				6B1BB45521B9883100E96A16 /* Command.swift in Sources */,
 				6B1BB45621B9883100E96A16 /* Connectivity.swift in Sources */,
 				6B1BB45721B9883100E96A16 /* DateConverter.swift in Sources */,

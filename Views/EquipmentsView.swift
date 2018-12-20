@@ -13,86 +13,11 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   // MARK: - Properties
 
-  lazy var creationView: EquipmentCreationView = {
-    let creationView = EquipmentCreationView(firstType: firstEquipmentType, frame: CGRect.zero)
-    creationView.translatesAutoresizingMaskIntoConstraints = false
-    return creationView
-  }()
-
+  lazy var creationView = EquipmentCreationView(firstType: firstEquipmentType)
+  lazy var editionView = EquipmentEditionView()
   var equipments = [Equipment]()
   var filteredEquipments = [Equipment]()
   var firstEquipmentType: String
-
-  private func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
-    if let asset = NSDataAsset(name: "equipment-types") {
-      do {
-        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
-        let registeredEquipments = jsonResult as? [[String: Any]]
-
-        for registeredEquipment in registeredEquipments! {
-          if equipmentNature == registeredEquipment["nature"] as! String {
-            var indicators = [String]()
-
-            !(registeredEquipment["main_frozen_indicator_name"] is NSNull)
-              ? indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String) : nil
-            !(registeredEquipment["other_frozen_indicator_name"] is NSNull)
-              ? indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String) : nil
-            return indicators
-          }
-        }
-      } catch {
-        print("Lexicon error")
-      }
-    } else {
-      print("equipment-types.json not found")
-    }
-    return [String]()
-  }
-
-  private func defineIndicatorsUnits(_ key: String, _ textField: UITextField) -> String? {
-    let units = [
-      "plowshare_count": "UNITY",
-      "motor_power": "FRENCH_HORSEPOWER",
-      "application_width": "METER",
-      "rows_count": "UNITY",
-      "nominal_storable_net_volume": "CUBIC_METER",
-      "nominal_storable_net_mass": "KILOGRAM",
-      "diameter": "METER",
-      "width": "METER",
-      "length": "METER"]
-
-    if units[key] == "UNITY" {
-      textField.keyboardType = .numberPad
-    } else {
-      textField.keyboardType = .decimalPad
-    }
-    return units[key]
-  }
-
-  func defineIndicatorsIfNeeded(_ equipmentNature: String) {
-    let indicators = loadEquipmentIndicators(equipmentNature)
-
-    if indicators.count > 1 {
-      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
-      let indicatorTwo = defineIndicatorsUnits(indicators[1], creationView.secondEquipmentParameter)?.localized
-
-      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.secondEquipmentParameter.placeholder = indicators[1].localized
-      creationView.firstParameterUnit.text = indicatorOne
-      creationView.secondParameterUnit.text = indicatorTwo
-    } else if indicators.count > 0 {
-      let indicatorOne = defineIndicatorsUnits(indicators[0], creationView.firstEquipmentParameter)?.localized
-
-      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
-      creationView.firstParameterUnit.text = indicatorOne
-    }
-
-    creationView.heighConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
-    creationView.firstEquipmentParameter.isHidden = (indicators.count < 1)
-    creationView.firstParameterUnit.isHidden = (indicators.count < 1)
-    creationView.secondEquipmentParameter.isHidden = (indicators.count < 2)
-    creationView.secondParameterUnit.isHidden = (indicators.count < 2)
-  }
 
   // MARK: - Initialization
 
@@ -113,23 +38,28 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     tableView.rowHeight = 65
     tableView.delegate = self
     tableView.dataSource = self
-    setupCreationView()
+    setupCreationAndEditionViews()
     setupActions()
   }
 
-  private func setupCreationView() {
+  private func setupCreationAndEditionViews() {
     addSubview(creationView)
+    addSubview(editionView)
 
     NSLayoutConstraint.activate([
-      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
       creationView.leftAnchor.constraint(equalTo: leftAnchor),
       creationView.rightAnchor.constraint(equalTo: rightAnchor),
+      creationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      editionView.leftAnchor.constraint(equalTo: leftAnchor),
+      editionView.rightAnchor.constraint(equalTo: rightAnchor),
+      editionView.centerYAnchor.constraint(equalTo: centerYAnchor)
       ])
   }
 
   private func setupActions() {
     createButton.addTarget(self, action: #selector(openCreationView), for: .touchUpInside)
     creationView.nameTextField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
+    creationView.numberTextField.addTarget(self, action: #selector(numberDidChange), for: .editingChanged)
     creationView.cancelButton.addTarget(self, action: #selector(cancelCreation), for: .touchUpInside)
     creationView.createButton.addTarget(self, action: #selector(validateCreation), for: .touchUpInside)
   }
@@ -174,6 +104,7 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
     cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
     cell.nameLabel.text = equipment.name
+    cell.editButton.isHidden = isSelected
     cell.infosLabel.text = getEquipmentInfos(equipment)
     cell.isUserInteractionEnabled = !isSelected
     cell.backgroundColor = isSelected ? AppColor.CellColors.LightGray : AppColor.CellColors.White
@@ -257,8 +188,14 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
   }
 
   @objc private func nameDidChange() {
-    if !creationView.errorLabel.isHidden {
-      creationView.errorLabel.isHidden = true
+    if !creationView.nameErrorLabel.isHidden {
+      creationView.nameErrorLabel.isHidden = true
+    }
+  }
+
+  @objc private func numberDidChange() {
+    if !creationView.numberErrorLabel.isHidden {
+      creationView.numberErrorLabel.isHidden = true
     }
   }
 
@@ -271,8 +208,9 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.typeImageView.image = UIImage(named: imageName)
     creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     creationView.nameTextField.text = ""
-    creationView.errorLabel.isHidden = true
+    creationView.nameErrorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.numberErrorLabel.isHidden = true
     creationView.firstEquipmentParameter.text = nil
     creationView.secondEquipmentParameter.text = nil
   }
@@ -302,35 +240,29 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     creationView.typeImageView.image = UIImage(named: imageName)
     creationView.typeButton.setTitle(firstEquipmentType.localized, for: .normal)
     creationView.nameTextField.text = ""
-    creationView.errorLabel.isHidden = true
+    creationView.nameErrorLabel.isHidden = true
     creationView.numberTextField.text = ""
+    creationView.numberErrorLabel.isHidden = true
     creationView.firstEquipmentParameter.text = nil
     creationView.secondEquipmentParameter.text = nil
   }
 
-  private func checkEquipmentNumber() -> Bool {
-    let equipmentsWithSameNumber = equipments.filter({(equipment: Equipment) -> Bool in
-      let number = equipment.number
-
-      return number?.range(of: creationView.numberTextField.text!, options: .caseInsensitive) != nil
-    })
-
-    if equipmentsWithSameNumber.count > 0 {
-      creationView.errorLabel.text = "equipment_number_not_available".localized
-      creationView.errorLabel.isHidden = false
+  func checkEquipmentName() -> Bool {
+    if creationView.nameTextField.text!.isEmpty {
+      creationView.nameErrorLabel.text = "equipment_name_is_empty".localized
+      creationView.nameErrorLabel.isHidden = false
+      return false
+    } else if equipments.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
+      creationView.nameErrorLabel.text = "equipment_name_not_available".localized
+      creationView.nameErrorLabel.isHidden = false
       return false
     }
     return true
   }
 
-  func checkEquipmentName() -> Bool {
-    if creationView.nameTextField.text!.isEmpty {
-      creationView.errorLabel.text = "equipment_name_is_empty".localized
-      creationView.errorLabel.isHidden = false
-      return false
-    } else if equipments.contains(where: { $0.name?.lowercased() == creationView.nameTextField.text?.lowercased() }) {
-      creationView.errorLabel.text = "equipment_name_not_available".localized
-      creationView.errorLabel.isHidden = false
+  private func checkEquipmentNumber() -> Bool {
+    if equipments.contains(where: { $0.number == creationView.numberTextField.text }) {
+      creationView.numberErrorLabel.isHidden = false
       return false
     }
     return true
@@ -338,5 +270,78 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     endEditing(true)
+  }
+
+  // MARK: - Indicators
+
+  func loadEquipmentIndicators(_ equipmentNature: String) -> [String] {
+    if let asset = NSDataAsset(name: "equipment-types") {
+      do {
+        let jsonResult = try JSONSerialization.jsonObject(with: asset.data)
+        let registeredEquipments = jsonResult as? [[String: Any]]
+
+        for registeredEquipment in registeredEquipments! {
+          if equipmentNature == registeredEquipment["nature"] as! String {
+            var indicators = [String]()
+
+            !(registeredEquipment["main_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["main_frozen_indicator_name"] as! String) : nil
+            !(registeredEquipment["other_frozen_indicator_name"] is NSNull)
+              ? indicators.append(registeredEquipment["other_frozen_indicator_name"] as! String) : nil
+            return indicators
+          }
+        }
+      } catch {
+        print("Lexicon error")
+      }
+    } else {
+      print("equipment-types.json not found")
+    }
+    return [String]()
+  }
+
+  func defineIndicatorUnit(_ key: String, textField: UITextField) -> String? {
+    let units = [
+      "plowshare_count": "UNITY",
+      "motor_power": "FRENCH_HORSEPOWER",
+      "application_width": "METER",
+      "rows_count": "UNITY",
+      "nominal_storable_net_volume": "CUBIC_METER",
+      "nominal_storable_net_mass": "KILOGRAM",
+      "diameter": "METER",
+      "width": "METER",
+      "length": "METER"]
+
+    if units[key] == "UNITY" {
+      textField.keyboardType = .numberPad
+    } else {
+      textField.keyboardType = .decimalPad
+    }
+    return units[key]
+  }
+
+  func defineIndicatorsIfNeeded(_ equipmentNature: String) {
+    let indicators = loadEquipmentIndicators(equipmentNature)
+
+    if indicators.count > 1 {
+      let firstUnit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
+      let secondUnit = defineIndicatorUnit(indicators[1], textField: creationView.secondEquipmentParameter)
+
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.secondEquipmentParameter.placeholder = indicators[1].localized
+      creationView.firstParameterUnit.text = firstUnit?.localized
+      creationView.secondParameterUnit.text = secondUnit?.localized
+    } else if indicators.count > 0 {
+      let unit = defineIndicatorUnit(indicators[0], textField: creationView.firstEquipmentParameter)
+
+      creationView.firstEquipmentParameter.placeholder = indicators[0].localized
+      creationView.firstParameterUnit.text = unit?.localized
+    }
+
+    creationView.heightConstraint.constant = 350 + (CGFloat(indicators.count) * 50)
+    creationView.firstEquipmentParameter.isHidden = (indicators.count < 1)
+    creationView.firstParameterUnit.isHidden = (indicators.count < 1)
+    creationView.secondEquipmentParameter.isHidden = (indicators.count < 2)
+    creationView.secondParameterUnit.isHidden = (indicators.count < 2)
   }
 }
