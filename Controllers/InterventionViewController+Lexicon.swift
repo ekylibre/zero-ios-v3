@@ -12,7 +12,7 @@ import CoreData
 extension InterventionViewController {
 
   func loadRegisteredInputs() {
-    let assets = openAssets()
+    guard let assets = openAssets() else { return }
     let decoder = JSONDecoder()
 
     do {
@@ -28,7 +28,7 @@ extension InterventionViewController {
     }
   }
 
-  private func openAssets() -> [NSDataAsset] {
+  private func openAssets() -> [NSDataAsset]? {
     var assets = [NSDataAsset]()
     let assetNames = ["seeds", "phytosanitary-products", "fertilizers"]
 
@@ -36,7 +36,8 @@ extension InterventionViewController {
       if let asset = NSDataAsset(name: assetName) {
         assets.append(asset)
       } else {
-        fatalError(assetName + " not found")
+        print(assetName + ": asset not found")
+        return nil
       }
     }
     return assets
