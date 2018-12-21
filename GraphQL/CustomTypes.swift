@@ -9,6 +9,8 @@
 import Apollo
 import MapKit
 
+public typealias DateTime = Date
+
 extension Date: JSONDecodable, JSONEncodable {
   public init(jsonValue value: JSONValue) throws {
     guard let string = value as? String else {
