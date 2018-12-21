@@ -1696,6 +1696,7 @@ extension InterventionViewController {
         print("Error: \(String(describing: error))")
       } else {
         intervention.status = InterventionState.Synced.rawValue
+        self.tableView.reloadData()
       }
     })
   }
