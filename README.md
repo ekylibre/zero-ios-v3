@@ -7,9 +7,10 @@ Download on the [App Store](https://itunes.apple.com/us/app/clic-farm/id14455419
 To get started, you will need to install carthage (`brew install carthage`), then run these instructions:
 
 1. `git clone git@github.com:ekylibre/zero-ios-v3.git`
-2. `cd zero-ios-v3`
-3. `carthage update`
-4. `open Clic\&Farm-iOS.xcodeproj/`
+1. `cd zero-ios-v3`
+1. Create `oauthInfo.plist` file in `Resources` group, add login informations to this file
+1. `carthage update`
+1. `open Clic\&Farm-iOS.xcodeproj/`
 
 ## Sreenshots
 
