@@ -561,6 +561,50 @@ extension InterventionViewController {
 
   // MARK: - Delete
 
+  func deleteInterventions() {
+    let query = DeletedInterventionsQuery(modifiedSince: getLastSyncDate())
+    let context = appDelegate.persistentContainer.viewContext
+
+    _ = apolloClient.clearCache()
+    apolloClient.fetch(query: query, resultHandler: { (result, error) in
+      if let error = error {
+        print("Error: \(error)")
+      } else if let resultError = result?.errors {
+        print("Result error: \(resultError)")
+      } else {
+        let farm = (result?.data?.farms.first)!
+
+        for deletedIntervention in farm.deletedInterventions {
+          self.deleteInterventionLocally(graphQLID: deletedIntervention.id)
+        }
+      }
+    })
+
+    do {
+      try context.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+
+  func deleteInterventionLocally(graphQLID: GraphQLID) {
+    guard let id = Int32(graphQLID) else { return }
+    let context = appDelegate.persistentContainer.viewContext
+    let request: NSFetchRequest<Intervention> = Intervention.fetchRequest()
+
+    request.predicate = NSPredicate(format: "ekyID == %d", id)
+
+    do {
+      let result = try context.fetch(request)
+
+      for intervention in result {
+        context.delete(intervention)
+      }
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
+
   func deleteEquipment(_ equipment: Equipment, viewController: UIViewController) {
     guard let addInterventionVC = viewController as? AddInterventionViewController else { fatalError() }
     let mutation: DeleteEquipmentMutation
@@ -1696,6 +1740,7 @@ extension InterventionViewController {
         print("Error: \(String(describing: error))")
       } else {
         intervention.status = InterventionState.Synced.rawValue
+        self.tableView.reloadData()
       }
     })
   }
