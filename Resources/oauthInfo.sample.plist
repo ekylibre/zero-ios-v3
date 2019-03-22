@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>testClientID</key>
+	<string></string>
+	<key>testClientSecret</key>
+	<string></string>
+	<key>testURL</key>
+	<string></string>
+	<key>releasedClientID</key>
+	<string></string>
+	<key>releaseClientSecret</key>
+	<string></string>
+	<key>releaseURL</key>
+	<string></string>
+</dict>
+</plist>

@@ -41,10 +41,11 @@ Carthage/Build
 oauthInfo.plist
 
 # Assets
-Resources/Assets.xcassets/lexicon/
+Resources/Assets.xcassets/lexicon
 
 # Node Modules
 node_modules
+package-lock.json
 
 # API auto-generated files
 GraphQL/API.swift

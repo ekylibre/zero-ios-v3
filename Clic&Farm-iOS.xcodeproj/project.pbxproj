@@ -24,6 +24,7 @@
 		04A58E43219C706900F01EC6 /* PersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A58E42219C706900F01EC6 /* PersonsTests.swift */; };
 		04BE4BCA219D823A000707A1 /* AddInterventionVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */; };
 		04BE4BCC219D8B96000707A1 /* AddInterventionVCTableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */; };
+		057D659C220873F300FD6F96 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 057D659B220873F300FD6F96 /* oauthInfo.plist */; };
 		6B113188219C39D7002272F0 /* WorkingPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */; };
 		6B11318A219C3CAA002272F0 /* CropsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B113189219C3CAA002272F0 /* CropsTests.swift */; };
 		6B11318C219C6791002272F0 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B11318B219C6791002272F0 /* WeatherTests.swift */; };
@@ -111,7 +112,6 @@
 		6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04998B65217DB8DE000A5D2F /* Main.storyboard */; };
 		6B7D67DC21C269FE001315F7 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998B67217DB8DE000A5D2F /* Main.strings */; };
 		6B7D67DD21C269FE001315F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA3713E213963230086DF9B /* Assets.xcassets */; };
-		6B7D67DE21C269FE001315F7 /* oauthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04134B28217DB36A009E32C2 /* oauthInfo.plist */; };
 		6B7D67DF21C269FE001315F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 041313AE21401483005437F0 /* Localizable.strings */; };
 		6B7D67E021C269FE001315F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B6C084D219318BD00F54D29 /* InfoPlist.strings */; };
 		6B82D7FB21BFB3B300E99C4A /* EquipmentEditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B82D7FA21BFB3B300E99C4A /* EquipmentEditionView.swift */; };
@@ -155,7 +155,6 @@
 		04131399213FFC3E005437F0 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		041313B021401483005437F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		041313B121401483005437F0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		04134B28217DB36A009E32C2 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = oauthInfo.plist; sourceTree = "<group>"; };
 		04143AC5219C554800CFA700 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0418C906219D6FC50066CBB0 /* ReadOnlyEquipmentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyEquipmentsTests.swift; sourceTree = "<group>"; };
 		0418C908219D700E0066CBB0 /* ReadOnlyMaterialsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyMaterialsTests.swift; sourceTree = "<group>"; };
@@ -231,6 +230,7 @@
 		04BE4BC9219D823A000707A1 /* AddInterventionVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionVCTests.swift; sourceTree = "<group>"; };
 		04BE4BCB219D8B96000707A1 /* AddInterventionVCTableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInterventionVCTableViewTests.swift; sourceTree = "<group>"; };
 		04C0D5BE218CA96700EEECD8 /* StorageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCreationView.swift; sourceTree = "<group>"; };
+		057D659B220873F300FD6F96 /* oauthInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = oauthInfo.plist; path = Resources/oauthInfo.plist; sourceTree = "<group>"; };
 		6B113187219C39D7002272F0 /* WorkingPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPeriodTests.swift; sourceTree = "<group>"; };
 		6B113189219C3CAA002272F0 /* CropsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropsTests.swift; sourceTree = "<group>"; };
 		6B11318B219C6791002272F0 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
@@ -484,7 +484,6 @@
 			children = (
 				6BA3713E213963230086DF9B /* Assets.xcassets */,
 				6BA37140213963230086DF9B /* Info.plist */,
-				04134B28217DB36A009E32C2 /* oauthInfo.plist */,
 				041313AC21401483005437F0 /* Translations */,
 			);
 			path = Resources;
@@ -493,6 +492,7 @@
 		6BEA65642105C5EE0072840F = {
 			isa = PBXGroup;
 			children = (
+				057D659B220873F300FD6F96 /* oauthInfo.plist */,
 				6BB2253E211849090036E167 /* AppDelegate.swift */,
 				047BF0B02105D1D2009F3945 /* Controllers */,
 				047BF0B22105D20B009F3945 /* Models */,
@@ -664,8 +664,8 @@
 				6B7D67DA21C269FE001315F7 /* LaunchScreen.storyboard in Resources */,
 				6B7D67DB21C269FE001315F7 /* Main.storyboard in Resources */,
 				6B7D67DC21C269FE001315F7 /* Main.strings in Resources */,
+				057D659C220873F300FD6F96 /* oauthInfo.plist in Resources */,
 				6B7D67DD21C269FE001315F7 /* Assets.xcassets in Resources */,
-				6B7D67DE21C269FE001315F7 /* oauthInfo.plist in Resources */,
 				6B7D67DF21C269FE001315F7 /* Localizable.strings in Resources */,
 				6B7D67E021C269FE001315F7 /* InfoPlist.strings in Resources */,
 			);
@@ -710,8 +710,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd $PROJECT_DIR/GraphQL\n\n$PROJECT_DIR/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift --passthroughCustomScalars\n";
+			shellPath = /usr/local/bin/zsh;
+			shellScript = "cd $PROJECT_DIR/GraphQL\nexport PATH=\"/usr/local/opt/node@8/bin:$PATH\"\n$PROJECT_DIR/Carthage/Build/iOS/Apollo.framework/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift --passthroughCustomScalars\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1078,6 +1078,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.clic-farm.ios";
 				PRODUCT_MODULE_NAME = Clic_Farm_iOS;
@@ -1103,6 +1104,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ekylibre.clic-farm.ios";
 				PRODUCT_MODULE_NAME = Clic_Farm_iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";

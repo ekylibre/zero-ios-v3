@@ -100,6 +100,12 @@ class EquipmentsView: SelectionView, UISearchBarDelegate, UITableViewDataSource,
     let cell = tableView.dequeueReusableCell(withIdentifier: "EquipmentCell", for: indexPath) as! EquipmentCell
     let equipment = isSearching ? filteredEquipments[indexPath.row] : equipments[indexPath.row]
     let isSelected = addInterventionViewController!.selectedEquipments.contains(equipment)
+    if (equipment.type != nil) {
+        print("type not null \(equipment.type!)")
+    } else {
+        print("equipment type is null")
+        equipment.type = "tractor"
+    }
     let imageName = equipment.type!.lowercased().replacingOccurrences(of: "_", with: "-")
 
     cell.typeImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)

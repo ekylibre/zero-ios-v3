@@ -4,6 +4,23 @@ Download on the [App Store](https://itunes.apple.com/us/app/clic-farm/id14455419
 
 ## Installation
 
+### Node environment
+
+Install nodenv to manage node environment :
+```bash
+brew install nodenv
+```
+
+Add nodenv to your `$PATH` :
+```bash
+echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
+```
+
+Then, install latest node LTS (recommended for Apollo GraphQL) :
+```bash
+nodenv install
+```
+
 To get started, you will need to install carthage (`brew install carthage`), then run these instructions:
 
 1. `git clone git@github.com:ekylibre/zero-ios-v3.git`
